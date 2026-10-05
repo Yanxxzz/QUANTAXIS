@@ -49,7 +49,15 @@ Copy-Item config\panda-alpha.example.json config\panda-alpha.local.json
 
 同步任务区分 `stock_day`、`stock_xdxr`、`stock_list` 和 `calendar`。股票样本同步、当前沪深列表、完整历史 A 股、退市股票、分钟数据与财务公告 PIT 是不同的证据层级。复权需要成功来源凭证，不能因为数据库有几行数据就标完整。
 
-本机已启动数据库并验证真实来源：60 只股票、2026-01-05 至 2026-09-18、174 个独立核验交易日，取得 10,432 条可交易行情；另有 8 条来源明确标记的停牌记录，保留排除原因，没有补零。3 只股票的前后复权价格与 BaoStock 官方接口逐日对照通过。6 个新候选完成本地代理评估并形成下一代 10 个研究候选；历史定义仍等待重新验证，实际池因子值、历史股票池和成交约束验收仍为 pending。本次未发起官网付费回测或 LLM 请求。脱敏验收记录见 [`deployment_validation.json`](research_bootstrap/deployment_validation.json)。
+首次部署的 60 股验收与 3 股复权对照保留在 [`deployment_validation.json`](research_bootstrap/deployment_validation.json)。2026-10-05 继续迁移后，已完成公告索引 235,188 条、修订映射 20,825 条、财务提取版本 541 条和三张财务简表 469,736 条。其中 503 条原文金额在已提供文档范围内通过验证，财务简表为本次取得的最新重述快照，全部 `pit_usable=false`；不能根据旧 `NOTICE_DATE` 把今天的数值回填到历史。
+
+沪深来源元数据包含 5,561 个身份，目标窗口内 5,452 个，包括 231 个退市身份。全量同步合并断点完成 1,245 只（含 90 只退市）的行情与因子查询，取得 1,944,246 条对应原始行情；来源明确标记的 9,518 个停牌日已保留，未出现无法解释的缺失交易日。实际库存另含较早样本及中断前成功的部分查询，不能把库存行数等同于完整证券数。6 只已下载证券的 IPO 复权基准仍未认证。
+
+北交所官方当前目录 348 只、18 页已全量取得；结合旧新代码和 5 份官方退出公告，保存 353 个历史身份（目标窗口内 349）。5 只退市/转板的实际退出日期已经核对原文 SHA。行情仅保留此前取得的 920002 共 563 日原始记录，后复权面板缺失；当前目录的 2026-09-30 快照不反推目标窗口内的历史状态，也不认证历史全集。
+
+剩余行情目前受外部来源阻断：BaoStock 匿名登录返回 `10001011`，SDK 定义为 `BSERR_BLACKLIST_USER`；北交所行情接口连接失败。用户选择保留断点等待恢复。源级熔断停止新派发、保留成功数据与凭证；失败尝试另存，未访问证券不计作行情缺失。恢复后需显式 `--resume-after-source-unblock`，默认单 worker。完整历史股票池、全市场原始财务 PIT、分钟数据及实际成交验收仍为 pending，因此 `can_retire_legacy=false`。
+
+最新脱敏库存、已完成归档、来源阻断、原始验收报告哈希与测试结果见 [`migration_checkpoint_20261005.json`](research_bootstrap/migration_checkpoint_20261005.json)。本地完整断点在 `research_runs/market_sync/checkpoint.json`；剩余沪深 4,207 只等待来源恢复，不能把本轮局部股票数或旧缓存副本标为全市场覆盖。
 
 ```powershell
 $env:PYTHONPATH = "$PWD\.runtime\python"
@@ -58,6 +66,27 @@ python scripts\axis_sync.py --source baostock --codes 000001 600000 600519 --sta
 ```
 
 `coverage` 输出逐能力阻塞项和 `can_retire_legacy`。新包没有 StockDB/AKShare fallback。只有对应覆盖、复权、历史股票池及需要的财务/分钟能力通过后，才可归档并删除原渠道；未验收时保留旧原始证据，不能把渠道换名当作缺失问题已解决。
+
+```powershell
+# 离线核实实际库存、来源凭证和剩余身份，不创建收益标签。
+python scripts\verify_axis_migration.py --output research_runs\migration_acceptance.json
+python scripts\migrate_financial.py --help
+
+# 仅在外部来源已经恢复后显式解除本地熔断；成功下载记录会复用。
+python scripts\axis_market_sync.py --start 2019-09-20 --end 2026-09-18 --workers 1 --resume-after-source-unblock
+# 已下载但 IPO 基准缺证据的证券，另验收同源原生 HFQ 相对窗口。
+python scripts\repair_axis_adjustments.py --start 2019-09-20 --end 2026-09-18 --resume-after-source-unblock
+```
+
+`verify_axis_migration.py` 是库存审计，不凭旧回执或记录数自行授权删除渠道。财务原始版本通过 `AxisProvider.financial_asof(code, report_date, decision_date)` 查询，报告期、可用日期及修订链分别保存；新公告尚未解析或修订范围不明时阻止沿用旧值。最新财务简表位于独立的 `stock_financial_provider_snapshot`。
+
+旧离线行情迁入独立的 `stock_day_legacy_archive`，原始数值、文件 SHA 和逐来源清单保留；不覆盖新的 `stock_day`，不参与自动 fallback，也不把尚未证明的单位、复权或股票池语义升级为已验证。封存窗口内的数据只归档，不重新评估。旧入口清单与退出前提见 [`legacy_channel_retirement.md`](research_bootstrap/legacy_channel_retirement.md)。
+
+```powershell
+python scripts\migrate_legacy_prices.py --files ..\stockdb_factor_eval\cache\execution_bars_20210922_20260921.parquet ..\stockdb_factor_eval\cache\batch28_warmup_20200803_20210921.parquet
+```
+
+两份离线行情共 7,214,771 行，先复算文件 SHA、全量逻辑 SHA、schema、日期/证券分母和唯一键，再流式归档并保存行游标。原 source dictionary 连同 null/NaN/0 均保留；单位转换独立对照本机已验证的同日原始成交量/成交额。分层资金流和流通股本缓存另作带哈希的隔离清单，缺历史可见版本或字段映射的特征不进入新研究计算。
 
 BaoStock 通过 QUANTAXIS 已支持的来源接口进入同一 schema。日行情保存原始价格，成交量从 shares 转换为 QA 的手数并保留 shares，成交额为人民币元。累计复权因子与交易日历独立保存。当前列表同步不能替代历史包含退市股票的股票池。
 
@@ -69,6 +98,26 @@ BaoStock 通过 QUANTAXIS 已支持的来源接口进入同一 schema。日行�
 ```
 
 三个股票只适合来源冒烟测试，不能通过默认至少 30 股票的统计/去相关门槛。正式研究应给完整可交易股票池和已登记池的 `--pool-values`。缺官方池因子值时，数值独立性保持 pending。
+
+2026-10-05 的首轮工程初测固定了 300 股哈希样本（SH 62 / SZ 238，来源同步途中可用池 745，只用于管线验收）。窗口 2026-06-18 至 2026-09-18，HFQ，66 个完整交易日、19,800 条行情，缺失/重复/日历外记录为 0；6 个假设的方向在测试前冻结，累计检验分母为 415 + 13 = 428，本批新增 6，成本档不重复计数。
+
+| 新机制 | 30bp 净累计代理收益 | 50bp 净累计代理收益 |
+| --- | ---: | ---: |
+| 短期反转 | -4.65% | -8.64% |
+| 趋势效率 | -10.86% | -12.73% |
+| 跳空恢复 | -7.39% | -10.23% |
+| 流动性冲击 | +12.58% | +11.71% |
+| 波幅压缩 | +3.61% | +0.35% |
+| 参与度背离 | -2.07% | -3.19% |
+
+不同公式的暖机时间和有效持仓日数不同；表中包含暖机期间空仓现金日，不能直接凭短样本排序或入池。真实因子值产生 15 对相关检验：10 对覆盖达标、5 对暖机覆盖不足；最大观察到的每日绝对秩相关均值 0.497，5 对 pending 不视作独立。既有官网池缺实际因子面板，增量独立性尚待核验。1,984 个目标订单全部 pending，未核实实际成交与现金流，代理收益不能作为可执行净值。脱敏摘要及完整面板哈希见 [`initial_test_20261005.json`](research_bootstrap/initial_test_20261005.json)。
+
+```powershell
+# 可重复的工程测试；本轮完整明细已保存在 research_runs/initial_axis_300。
+python scripts\initial_axis_test.py --sample-size 300 --output research_runs\initial_axis_300
+```
+
+再次运行会取得当时的新来源池快照；保留首次 `sample.json`、`candidates_frozen.json`、来源凭证、完整因子面板、成本结果及报告，不能把两次样本变化当作同一实验。反思结果只写本次报告，不更新永久机制黑名单或官方池；本轮未使用封存 OOS、官网回测或付费 LLM。
 
 本地公式解释器仅支持受限的已知算子，不执行任意生成 Python。复杂 Python 因子在平台沙箱测试。历史 F141/F174/F253 等原公式可能包含旧私有算子；只有字段映射、方向、PIT 和官网语义核验通过，才能成为可执行新定义。
 

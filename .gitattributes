@@ -4,3 +4,8 @@ research_bootstrap/** -text
 research_bootstrap/manifest.json text eol=lf
 research_bootstrap/pool.json text eol=lf
 research_bootstrap/deployment_validation.json text eol=lf
+research_bootstrap/execution_rules_2026.json text eol=lf
+research_bootstrap/initial_test_20261005.json text eol=lf
+research_bootstrap/legacy_channel_retirement.json text eol=lf
+research_bootstrap/legacy_channel_retirement.md text eol=lf
+research_bootstrap/migration_checkpoint_20261005.json text eol=lf

@@ -1,0 +1,680 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-10-05T13:48:59.038742+08:00",
+  "status": "FINANCIAL_SNAPSHOT_AND_OFFLINE_PRICE_ARCHIVE_COMPLETE; INITIAL_TEST_COMPLETE; ONLINE_FULL_MIGRATION_BLOCKED",
+  "user_source_decision": "保留断点等待来源恢复；不继续网络重试或创建自动监控",
+  "window": {
+    "start": "2019-09-20",
+    "end": "2026-09-18"
+  },
+  "stored_collections": {
+    "stock_lifecycle": 5914,
+    "stock_day": 1948246,
+    "stock_adj": 20228,
+    "stock_adjusted_day": 0,
+    "trade_calendar": 1697,
+    "stock_filing_index": 235188,
+    "stock_financial_pit": 541,
+    "stock_financial_revision": 20825,
+    "stock_financial_provider_snapshot": 469736,
+    "stock_day_legacy_archive": 7214771,
+    "panda_financial_provenance": 1837
+  },
+  "market": {
+    "run_id": "5df8c730eec3a0c9c0d50616",
+    "started_at": "2026-10-05T05:13:00.848333+00:00",
+    "updated_at": "2026-10-05T05:34:40.677128+00:00",
+    "total_codes": 5452,
+    "attempted_codes": 1277,
+    "transport_complete_codes": 1245,
+    "remaining_codes": 4207,
+    "failed_codes": 0,
+    "source_blocked_attempts": 32,
+    "raw_day_rows": 1944246,
+    "factor_rows": 19931,
+    "inactive_codes_completed": 90,
+    "source_missing_sessions": 0,
+    "suspended_sessions": 9518,
+    "unknown_missing_sessions": 0,
+    "unverified_adjustment_codes": 6,
+    "adjustment_not_downloaded_codes": 31,
+    "status": "source_blocked_checkpoint_preserved",
+    "scope": "baostock_shsz_a_lifecycle",
+    "beijing": "unsupported_live_probe",
+    "migration": {
+      "can_retire_legacy": false,
+      "reason": "Full exchange/BJ, minute and PIT acceptance remain separate"
+    },
+    "physical_raw_rows": 1947683,
+    "physical_raw_codes": 1260,
+    "physical_factor_rows": 20228,
+    "source_state": {
+      "source": "baostock",
+      "error": "Actual unmodified anonymous login returned 10001011; SDK maps BSERR_BLACKLIST_USER. No further source requests authorized.",
+      "error_code": "10001011",
+      "observed_at": "2026-10-05T05:33:56.631156+00:00",
+      "official_name": "BSERR_BLACKLIST_USER",
+      "resume": "Wait for external restoration; explicitly pass --resume-after-source-unblock",
+      "run_id": "5df8c730eec3a0c9c0d50616",
+      "status": "blocked"
+    },
+    "unverified_adjustment_code_list": [
+      "001239",
+      "001326",
+      "001376",
+      "001872",
+      "001914",
+      "600018"
+    ],
+    "sealed_policy": "Raw storage/date completeness only; no holdout returns or factor evaluation"
+  },
+  "raw_query_inventory": {
+    "completed_count": 1249,
+    "incomplete_count": 4552,
+    "receipt_set_sha256": "5d8907e4839e3a264af0b384dbb4eb59e7cc52e4834f939e10c460f99c1edf4c",
+    "quality_counts": {
+      "source_missing_dates": 0,
+      "suspended_dates": 9518,
+      "unknown_missing_dates": 0,
+      "off_lifecycle_dates": 0,
+      "duplicate_dates": 0
+    }
+  },
+  "adjustment_ready_count": 1239,
+  "beijing": {
+    "current_directory_count": 348,
+    "lifecycle_identities": 353,
+    "window_identity_count": 349,
+    "directory_pages": 18,
+    "directory_source_snapshot": "2026-09-30",
+    "metadata_sha256": "06bf668e404070e28d07b1686c545fb2de7d29ea5f292823b39295188aebb10c",
+    "verified_exit_identities": [
+      {
+        "code": "832317",
+        "name": "观典防务",
+        "delisted_date": "2022-04-26",
+        "exit_kind": "exchange_transfer"
+      },
+      {
+        "code": "833874",
+        "name": "泰祥股份",
+        "delisted_date": "2022-07-18",
+        "exit_kind": "exchange_transfer"
+      },
+      {
+        "code": "833994",
+        "name": "翰博高新",
+        "delisted_date": "2022-07-25",
+        "exit_kind": "exchange_transfer"
+      },
+      {
+        "code": "920305",
+        "name": "云创退",
+        "delisted_date": "2026-07-30",
+        "exit_kind": "delisting"
+      },
+      {
+        "code": "920680",
+        "name": "广道退",
+        "delisted_date": "2026-01-05",
+        "exit_kind": "delisting"
+      }
+    ],
+    "raw_imports": [
+      {
+        "code": "920002",
+        "rows": 563,
+        "first": "2024-05-30",
+        "last": "2026-09-18",
+        "artifact_sha256": "00ed300516b57f10c33357a7918cd5a41782c72dda8a6ef8fea8d91c1289a91b"
+      }
+    ],
+    "adjusted_price_rows": 0,
+    "source_connection": {
+      "stop": true,
+      "reason": "Public EastMoney raw/HFQ source ProxyError; preserve checkpoint and wait for recovery.",
+      "retry_policy": "wait_for_source_recovery_no_additional_network_attempts"
+    },
+    "historical_universe_complete": false
+  },
+  "financial": {
+    "announcement_count": 235188,
+    "correction_count": 20825,
+    "extraction_records": 541,
+    "verified_values_within_supplied_documents": 503,
+    "original_financial_pit_status": "partial",
+    "source_provenance": {
+      "original_pdf_hashes_recorded": 537,
+      "source_files": 1837,
+      "source_manifest_sha256": "a2f2ca54d069cf7d8b220fafcf74b909150c6764a2fd90111cdd7035e3ef447e",
+      "availability_policy": "publication_next_calendar_day_then_trading_calendar",
+      "publication_is_separate_from_report_period": true,
+      "missing_values_filled_with_zero": false
+    },
+    "source_file_windows_incomplete": [],
+    "provider_snapshot_status": "verified",
+    "provider_tables": {
+      "income": {
+        "rows": 158113,
+        "unique_records": 158113,
+        "accepted_pages": 317,
+        "code_count": 5601,
+        "report_period_count": 30,
+        "complete_provider_snapshot": true,
+        "source_pages_hash": "a83874f6fe99a1f02e8345afc9f783aed7c5a07a689b81e1ade734a2603c3f6d",
+        "pit_usable": false
+      },
+      "balance": {
+        "rows": 153779,
+        "unique_records": 153779,
+        "accepted_pages": 308,
+        "code_count": 5601,
+        "report_period_count": 30,
+        "complete_provider_snapshot": true,
+        "source_pages_hash": "3a435dc246c66ea40ab83d3afb45505e85205aa7f31adab70c9d1a9396423bd6",
+        "pit_usable": false
+      },
+      "cashflow": {
+        "rows": 157844,
+        "unique_records": 157844,
+        "accepted_pages": 316,
+        "code_count": 5601,
+        "report_period_count": 30,
+        "complete_provider_snapshot": true,
+        "source_pages_hash": "2dee6e6c0577a2dc14f976361f37647726f414b895dd27694bdb9d9a3a0eaf0d",
+        "pit_usable": false
+      }
+    },
+    "full_original_financial_pit_verified": false
+  },
+  "legacy_price_archive": {
+    "status": "archive_custody_verified",
+    "physical_rows": 7214771,
+    "unique_codes": 5400,
+    "source_ids": [
+      "9bde9829f8b8b94f69d11a29ec84a25078df570d5e911ecfe619fa111b6d9cc6",
+      "39adbafa7300f1ce2e46ab19cfac45bb88607119464ce09a32b9196f9c2a3144"
+    ],
+    "stored_sources": 2,
+    "fixed_all_field_checks": 12,
+    "sealed_rows": 1164107,
+    "outside_requested_window_rows": 5173,
+    "policy": "Isolation and custody only; no adjustment/PIT/all-A acceptance or research fallback"
+  },
+  "legacy_features": {
+    "schema_version": 1,
+    "created_at": "2026-10-05T05:40:57.268359+00:00",
+    "scope": "offline_non_price_cache_inventory",
+    "sources": [
+      {
+        "path": "legacy_workspace/stockdb_factor_eval/cache/float_supply_20200803_20260921.parquet",
+        "relative_path": "stockdb_factor_eval/cache/float_supply_20200803_20260921.parquet",
+        "file_sha256": "b17a45cd374218dc61fd893ee131d348d0b81f8fbcb9d7a143434bdc7c2e3f0a",
+        "bytes": 1257280,
+        "file_mtime_utc_observation_only": "2026-09-23T16:58:05.193326+00:00",
+        "parquet": {
+          "rows": 7214771,
+          "row_groups": 7,
+          "schema": [
+            {
+              "name": "date",
+              "type": "int32",
+              "nullable": true,
+              "null_count": 0,
+              "min": 20200803,
+              "max": 20260921
+            },
+            {
+              "name": "code",
+              "type": "string",
+              "nullable": true,
+              "null_count": 0,
+              "min": "000001",
+              "max": "689009"
+            },
+            {
+              "name": "float_share",
+              "type": "int64",
+              "nullable": true,
+              "null_count": 0,
+              "min": 7517116,
+              "max": 319244210777
+            },
+            {
+              "name": "total_share",
+              "type": "int64",
+              "nullable": true,
+              "null_count": 0,
+              "min": 36228719,
+              "max": 356406257089
+            }
+          ],
+          "columns": [
+            "date",
+            "code",
+            "float_share",
+            "total_share"
+          ]
+        },
+        "keys": {
+          "unique_codes": 5400,
+          "code_min": "000001",
+          "code_max": "689009",
+          "unique_dates": 1490,
+          "date_min": "2020-08-03",
+          "date_max": "2026-09-21",
+          "null_keys": 0,
+          "invalid_codes": 0,
+          "declared_sort_order": "code_date",
+          "sort_order_verified": true,
+          "duplicate_code_date_keys": 0,
+          "duplicate_audit_method": "streaming_sorted_keys_with_batch_boundary_check",
+          "board_prefix_counts": {
+            "000": 454,
+            "001": 115,
+            "002": 966,
+            "003": 42,
+            "300": 974,
+            "301": 458,
+            "600": 819,
+            "601": 228,
+            "603": 621,
+            "605": 113,
+            "688": 609,
+            "689": 1,
+            "920": 0
+          },
+          "requested_global_window": "2019-09-20..2026-09-18",
+          "starts_after_requested_global_window": true,
+          "rows_after_requested_global_end": 5173
+        },
+        "manifest": {
+          "exists": false,
+          "path": null,
+          "sha256": null,
+          "declared": null,
+          "checks": {},
+          "all_declared_checks_match": null,
+          "logical_hash_computed": null,
+          "hash_library": null
+        },
+        "producer_evidence": {
+          "source_declared": "StockDB daily fields float_share,total_share",
+          "code_path": "legacy_workspace/stockdb_factor_eval/audit_float_supply_source.py",
+          "code_sha256": "64b0d76cd195cbba173299c442d5e60cdce7c7789d9d8714f677848247069e43",
+          "producer_code_read_only_not_executed": true,
+          "original_provider_access_not_performed": true
+        },
+        "data_purpose": "legacy_non_price_supply_features_only",
+        "is_market_price_data": false,
+        "is_return_label_or_factor_result": false,
+        "isolation_policy": {
+          "namespace": "legacy_feature_quarantine",
+          "preserve_source_file": true,
+          "new_research_enabled": false,
+          "silent_fallback_allowed": false,
+          "mongo_stock_day_import_allowed": false,
+          "official_factor_equivalence_verified": false,
+          "historical_pit_vintage_verified": false,
+          "usable_for": "explicit_offline_feature_archive_and_source_reconciliation",
+          "requires_before_new_research": [
+            "explicit_source_selection_and_label_blind_admission",
+            "current_source_and_field_semantics_reconciliation",
+            "historical_availability_and_revision_evidence",
+            "new_AXIS_independent_coverage_acceptance"
+          ]
+        },
+        "provenance_limits": [
+          "This is an old StockDB-derived local export; byte integrity does not certify its upstream truth.",
+          "No original request/response pages or upstream immutable version ledger are stored in these Parquet files.",
+          "Trading date is not independently verified release/publication availability; historical restatements remain unknown.",
+          "Current official PandaAI field parity and complete exchange/delisted-universe scope are unverified.",
+          "No labels/nav/results were opened, no new network calls were made, and no factor returns were calculated.",
+          "No adjacent independent manifest exists; this inventory establishes a current preservation hash only."
+        ]
+      },
+      {
+        "path": "legacy_workspace/stockdb_factor_eval/cache/segmented_flow_20210922_20260918.parquet",
+        "relative_path": "stockdb_factor_eval/cache/segmented_flow_20210922_20260918.parquet",
+        "file_sha256": "e005079782296f7d12a3bb5888147cd427de45e1e2109ae5a8a67e448785a24f",
+        "bytes": 362277619,
+        "file_mtime_utc_observation_only": "2026-09-22T03:50:00.107791+00:00",
+        "parquet": {
+          "rows": 5962525,
+          "row_groups": 6,
+          "schema": [
+            {
+              "name": "date",
+              "type": "int64",
+              "nullable": true,
+              "null_count": 0,
+              "min": 20210922,
+              "max": 20260918
+            },
+            {
+              "name": "code",
+              "type": "string",
+              "nullable": true,
+              "null_count": 0,
+              "min": "000001",
+              "max": "689009"
+            },
+            {
+              "name": "main_net",
+              "type": "double",
+              "nullable": true,
+              "null_count": 0,
+              "min": -12074206707.9399,
+              "max": 8827639404.46
+            },
+            {
+              "name": "jumbo_net",
+              "type": "double",
+              "nullable": true,
+              "null_count": 0,
+              "min": -14390000345.26,
+              "max": 7777557031.0
+            },
+            {
+              "name": "big_net",
+              "type": "double",
+              "nullable": true,
+              "null_count": 0,
+              "min": -3602732823.9599,
+              "max": 3227697826.03
+            },
+            {
+              "name": "mid_net",
+              "type": "double",
+              "nullable": true,
+              "null_count": 0,
+              "min": -8193533510.86,
+              "max": 9116055665.34
+            },
+            {
+              "name": "small_net",
+              "type": "double",
+              "nullable": true,
+              "null_count": 0,
+              "min": -8340240035.2499,
+              "max": 5779176752.76
+            },
+            {
+              "name": "main_in",
+              "type": "double",
+              "nullable": true,
+              "null_count": 0,
+              "min": -0.0,
+              "max": 53879066071.3
+            },
+            {
+              "name": "main_out",
+              "type": "double",
+              "nullable": true,
+              "null_count": 0,
+              "min": -0.0,
+              "max": 65953272779.24
+            },
+            {
+              "name": "retail_in",
+              "type": "double",
+              "nullable": true,
+              "null_count": 0,
+              "min": -0.0,
+              "max": 36158581272.67
+            },
+            {
+              "name": "retail_out",
+              "type": "double",
+              "nullable": true,
+              "null_count": 0,
+              "min": -0.0,
+              "max": 24383869599.01
+            }
+          ],
+          "columns": [
+            "date",
+            "code",
+            "main_net",
+            "jumbo_net",
+            "big_net",
+            "mid_net",
+            "small_net",
+            "main_in",
+            "main_out",
+            "retail_in",
+            "retail_out"
+          ]
+        },
+        "keys": {
+          "unique_codes": 5196,
+          "code_min": "000001",
+          "code_max": "689009",
+          "unique_dates": 1211,
+          "date_min": "2021-09-22",
+          "date_max": "2026-09-18",
+          "null_keys": 0,
+          "invalid_codes": 0,
+          "declared_sort_order": "date_code",
+          "sort_order_verified": true,
+          "duplicate_code_date_keys": 0,
+          "duplicate_audit_method": "streaming_sorted_keys_with_batch_boundary_check",
+          "board_prefix_counts": {
+            "000": 413,
+            "001": 115,
+            "002": 921,
+            "003": 42,
+            "300": 937,
+            "301": 458,
+            "600": 753,
+            "601": 225,
+            "603": 612,
+            "605": 113,
+            "688": 606,
+            "689": 1,
+            "920": 0
+          },
+          "requested_global_window": "2019-09-20..2026-09-18",
+          "starts_after_requested_global_window": true,
+          "rows_after_requested_global_end": 0
+        },
+        "manifest": {
+          "exists": true,
+          "path": "legacy_workspace/stockdb_factor_eval/cache/segmented_flow_20210922_20260918.parquet.manifest.json",
+          "sha256": "ef9434bcb46b7560f7713ae20a25e6568e00889ae2a467c4f933dfbb52830ce1",
+          "declared": {
+            "schema_version": 1,
+            "created_at": "2026-09-22T03:50:00.108790+00:00",
+            "source": "StockDB local table 资金流",
+            "rows": 5962525,
+            "codes": 5196,
+            "start": 20210922,
+            "end": 20260918,
+            "columns": [
+              "date",
+              "code",
+              "main_net",
+              "jumbo_net",
+              "big_net",
+              "mid_net",
+              "small_net",
+              "main_in",
+              "main_out",
+              "retail_in",
+              "retail_out"
+            ],
+            "logical_hash": "1f25b05a54cbb38dd2c86cb2b9bf3967c2d5a0a58f735e791a24ce38817fd035",
+            "file_sha256": "e005079782296f7d12a3bb5888147cd427de45e1e2109ae5a8a67e448785a24f"
+          },
+          "checks": {
+            "file_sha256": true,
+            "rows": true,
+            "codes": true,
+            "start": true,
+            "end": true,
+            "columns": true,
+            "logical_hash": true
+          },
+          "all_declared_checks_match": true,
+          "logical_hash_computed": "1f25b05a54cbb38dd2c86cb2b9bf3967c2d5a0a58f735e791a24ce38817fd035",
+          "hash_library": "2.2.3"
+        },
+        "producer_evidence": {
+          "source_declared": "StockDB local table 资金流",
+          "code_path": "legacy_workspace/stockdb_factor_eval/evaluate_batch18.py",
+          "code_sha256": "bc1a680c32d6439b5d26ec41aa9a58d830457c99a667e0de35c7314bc0e74fae",
+          "producer_code_read_only_not_executed": true,
+          "original_provider_access_not_performed": true
+        },
+        "data_purpose": "legacy_segmented_flow_features_only",
+        "is_market_price_data": false,
+        "is_return_label_or_factor_result": false,
+        "isolation_policy": {
+          "namespace": "legacy_feature_quarantine",
+          "preserve_source_file": true,
+          "new_research_enabled": false,
+          "silent_fallback_allowed": false,
+          "mongo_stock_day_import_allowed": false,
+          "official_factor_equivalence_verified": false,
+          "historical_pit_vintage_verified": false,
+          "usable_for": "explicit_offline_feature_archive_and_source_reconciliation",
+          "requires_before_new_research": [
+            "explicit_source_selection_and_label_blind_admission",
+            "current_source_and_field_semantics_reconciliation",
+            "historical_availability_and_revision_evidence",
+            "new_AXIS_independent_coverage_acceptance"
+          ]
+        },
+        "provenance_limits": [
+          "This is an old StockDB-derived local export; byte integrity does not certify its upstream truth.",
+          "No original request/response pages or upstream immutable version ledger are stored in these Parquet files.",
+          "Trading date is not independently verified release/publication availability; historical restatements remain unknown.",
+          "Current official PandaAI field parity and complete exchange/delisted-universe scope are unverified.",
+          "No labels/nav/results were opened, no new network calls were made, and no factor returns were calculated.",
+          "Order-size bucket and main/retail classification semantics are provider-specific; the old evaluator declared exact official transfer unavailable."
+        ]
+      }
+    ],
+    "source_count": 2,
+    "total_feature_rows": 13177296,
+    "read_policy": {
+      "network_accessed": false,
+      "StockDB_or_AKShare_called": false,
+      "source_files_modified": false,
+      "market_price_cache_files_opened": false,
+      "results_directory_files_opened": false,
+      "labels_or_nav_read": false,
+      "factor_returns_computed": false
+    },
+    "excluded_by_ownership": [
+      "execution_bars_20210922_20260921.parquet",
+      "batch28_warmup_20200803_20210921.parquet"
+    ],
+    "integration_status": "quarantine_inventory_only_no_new_research_fallback",
+    "verification": {
+      "sources": 2,
+      "all_keys_unique": true,
+      "all_present_manifests_match": true,
+      "all_isolated": true
+    }
+  },
+  "initial_test": {
+    "summary": "research_bootstrap/initial_test_20261005.json",
+    "sample_count": 300,
+    "window": [
+      "2026-06-18",
+      "2026-09-18"
+    ],
+    "sample_sha256": "c5f7f34190fb5e05ffc79947440170af9caa902c12bb71b7c790d6243de32471",
+    "trial_ledger": {
+      "path": "research_runs/research_trials.sqlite3",
+      "historical": 415,
+      "new_tested": 13,
+      "total": 428,
+      "cost_variants_not_separate_hypotheses": true,
+      "batch_unique_trials": 6,
+      "batch_newly_registered": 6
+    },
+    "economic_and_official_admission": "pending"
+  },
+  "migration": {
+    "can_retire_legacy": false,
+    "blockers": [
+      "all_a independent acceptance pending",
+      "delisted independent acceptance pending",
+      "pit_financial independent acceptance pending",
+      "source-supported lifecycle raw histories incomplete",
+      "same-source adjustment evidence incomplete",
+      "inventory does not perform full-panel price/calendar/PIT acceptance"
+    ],
+    "acceptance_scope": "receipt and database inventory only; independent full-panel validation required",
+    "missing_values_imputed": false,
+    "archival_legacy_is_active_fallback": false
+  },
+  "verification": {
+    "pytest": {
+      "passed": 168,
+      "command": "python -m pytest tests -q"
+    },
+    "local_artifacts": [
+      {
+        "path": "research_runs/migration_acceptance.json",
+        "sha256": "0b8b0f9d622cd4ab9246868d91e04bdd67bce249e7ee78a9b1d952e97e459ded",
+        "availability": "private ignored research_runs directory"
+      },
+      {
+        "path": "research_runs/market_sync/checkpoint.json",
+        "sha256": "42aea9e6ac096ee1fbb23b499cfffb29d7047865ceb0950045a2810fe2e913af",
+        "availability": "private ignored research_runs directory"
+      },
+      {
+        "path": "research_runs/beijing_market_sync.json",
+        "sha256": "5ffb1c90585a3e20ac7238ab4e0e599a711a55488a4924ca8ad2f6d5c9d6ac8d",
+        "availability": "private ignored research_runs directory"
+      },
+      {
+        "path": "research_runs/financial_migration.json",
+        "sha256": "261843cc0740abc7a1c78261ac19e48130ed3daa744d2ae4807e3403fa02d21d",
+        "availability": "private ignored research_runs directory"
+      },
+      {
+        "path": "research_runs/eastmoney_financial_snapshot.json",
+        "sha256": "99293722f77c7faaf3377558fefdebcdd48cdccf377735da34c8e10edc64f7cc",
+        "availability": "private ignored research_runs directory"
+      },
+      {
+        "path": "research_runs/legacy_prices_archive/verification.json",
+        "sha256": "f226ce2586a0e80b5d0036653f820b6bdb725f7164993b66db91a7d2dacd2397",
+        "availability": "private ignored research_runs directory"
+      },
+      {
+        "path": "research_runs/legacy_prices_archive/receipts.json",
+        "sha256": "ef1c7f833428480e90ca1e78ccad31f4d54270d762a765b52bde26a5555968ac",
+        "availability": "private ignored research_runs directory"
+      },
+      {
+        "path": "research_runs/legacy_prices_archive/unit_comparison.json",
+        "sha256": "29a544de340a0c92cd780028cc0941733bd4e2690d542cb8252d5ac6119365a4",
+        "availability": "private ignored research_runs directory"
+      },
+      {
+        "path": "research_runs/legacy_feature_inventory.json",
+        "sha256": "bf4d077bd5e94499b8635728549dad0c65185a5cd72ee1e8945b6c21e6268dd2",
+        "availability": "private ignored research_runs directory"
+      },
+      {
+        "path": "research_runs/initial_axis_300/report.json",
+        "sha256": "5273001423edd923e00dced6dd14c45287b703aa311d3c3de19612b69694d074",
+        "availability": "private ignored research_runs directory"
+      }
+    ]
+  },
+  "permissions": {
+    "raw_evidence_deleted": false,
+    "sealed_oos_evaluations": 0,
+    "platform_runs": 0,
+    "recharge_spend": 0,
+    "llm_calls": 0,
+    "pool_admissions": 0
+  }
+}

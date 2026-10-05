@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "observed_at": "2026-10-05T04:57:30.707860+00:00",
-  "status": "IMPLEMENTED_AND_SAMPLE_VALIDATED; FULL_DATA_MIGRATION_PENDING",
+  "status": "FINANCIAL_SNAPSHOT_AND_OFFLINE_PRICE_ARCHIVE_COMPLETE; INITIAL_TEST_COMPLETE; ONLINE_FULL_MIGRATION_BLOCKED",
   "runtime": {
     "mongo_uri": "mongodb://127.0.0.1:27018",
     "database": "quantaxis",
@@ -271,19 +271,23 @@
   },
   "multiple_testing": {
     "historical_denominator": 415,
-    "total_tested_denominator": 422,
-    "note": "Conservatively retains one earlier proxy attempt on an unrevalidated historical definition; invalid for admission. Later guard blocks it before labels."
+    "total_tested_denominator": 428,
+    "note": "Conservatively retains one earlier proxy attempt on an unrevalidated historical definition; invalid for admission. Later guard blocks it before labels.",
+    "initial_deployment_total": 422
   },
   "migration": {
     "can_retire_legacy": false,
     "blockers": [
-      "daily quality violations require reconciliation",
-      "all_a acceptance pending",
-      "delisted acceptance pending",
-      "pit_financial acceptance pending"
+      "all_a independent acceptance pending",
+      "delisted independent acceptance pending",
+      "pit_financial independent acceptance pending",
+      "source-supported lifecycle raw histories incomplete",
+      "same-source adjustment evidence incomplete",
+      "inventory does not perform full-panel price/calendar/PIT acceptance"
     ],
-    "min_daily_coverage": 0.98,
-    "action": "retain legacy evidence; use AXIS for verified scope"
+    "acceptance_scope": "receipt and database inventory only; independent full-panel validation required",
+    "missing_values_imputed": false,
+    "archival_legacy_is_active_fallback": false
   },
   "compute_policy": {
     "gift_priority": true,
@@ -294,7 +298,7 @@
   "verification": {
     "pytest": {
       "command": "python -m pytest tests -q",
-      "passed": 93
+      "passed": 168
     },
     "raw_legacy_evidence_deleted": false,
     "legacy_channels_retired": false,
@@ -324,6 +328,20 @@
         "sha256": "1aa4907b16683869077a56d60e1de3611dab663ac2ff88afcb30ea33b85cf864",
         "availability": "private ignored research_runs directory"
       }
-    ]
+    ],
+    "initial_deployment_pytest_passed": 93
+  },
+  "follow_up_migration": "research_bootstrap/migration_checkpoint_20261005.json",
+  "follow_up_initial_test": "research_bootstrap/initial_test_20261005.json",
+  "initial_deployment_migration": {
+    "can_retire_legacy": false,
+    "blockers": [
+      "daily quality violations require reconciliation",
+      "all_a acceptance pending",
+      "delisted acceptance pending",
+      "pit_financial acceptance pending"
+    ],
+    "min_daily_coverage": 0.98,
+    "action": "retain legacy evidence; use AXIS for verified scope"
   }
 }

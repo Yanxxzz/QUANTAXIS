@@ -180,7 +180,7 @@ def fetch_xdxr(api, code: str):
     out = []
     for row in batch:
         date = f"{row['year']:04d}-{row['month']:02d}-{row['day']:02d}"
-        out.append({"code": code, "date": date,
+        out.append({"code": code, "date": date, "source": "tdx",
                     **{rename.get(k, k): v for k, v in row.items() if k not in {"year", "month", "day"}}})
     return out
 

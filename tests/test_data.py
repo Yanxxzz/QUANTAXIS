@@ -41,7 +41,7 @@ def bar(date, code="000001", close=10):
 
 
 def action(date, **kwargs):
-    return {"date": date, "code": "000001", "category": 1, "fenhong": 0,
+    return {"date": date, "code": "000001", "source": "tdx", "category": 1, "fenhong": 0,
             "peigu": 0, "peigujia": 0, "songzhuangu": 0, **kwargs}
 
 
@@ -51,7 +51,7 @@ class AxisDataTests(unittest.TestCase):
             "stock_day": FakeCollection([bar("2024-01-02"), bar("2024-01-03", close=9)]),
             "stock_xdxr": FakeCollection([action("2024-01-03", fenhong=10)]),
             "panda_axis_sync": FakeCollection([{"dataset": "stock_xdxr", "code": "000001",
-                                                "status": "complete", "through": "2024-01-05"}]),
+                                                "source": "tdx", "status": "complete", "through": "2024-01-05"}]),
             "stock_list": FakeCollection([{"code": "000001"}]),
         })
 
@@ -62,6 +62,26 @@ class AxisDataTests(unittest.TestCase):
         self.assertEqual(result.frame["volume"].tolist(), [100, 100])
         self.assertEqual(result.coverage["daily"]["coverage"], 1)
         self.assertFalse(migration_gate(result.coverage)["can_retire_legacy"])
+
+    def test_lifecycle_dates_reconcile_pre_ipo_and_delisted_calendar_days(self):
+        db = self.database()
+        db["stock_day"] = FakeCollection([bar("2024-01-03")])
+        db["stock_lifecycle"] = FakeCollection([{"code": "000001", "ipo_date": "2024-01-03",
+                                                  "delisted_date": "2024-01-04", "lifecycle_issues": []}])
+        result = AxisProvider(db=db).daily(["000001"], "2024-01-02", "2024-01-04", "none",
+                                          expected_dates=["2024-01-02", "2024-01-03", "2024-01-04"])
+        self.assertEqual(result.coverage["daily"]["expected_rows"], 1)
+        self.assertEqual(result.coverage["daily"]["coverage"], 1)
+        self.assertEqual(result.coverage["daily"]["missing_by_code"], {"000001": []})
+        self.assertEqual(result.frame["raw_close"].tolist(), [10])
+        db["stock_day"].records.append(bar("2024-01-02"))
+        result = AxisProvider(db=db).daily(["000001"], "2024-01-02", "2024-01-04", "none",
+                                          expected_dates=["2024-01-02", "2024-01-03", "2024-01-04"])
+        self.assertEqual(len(result.frame), 1)
+        self.assertEqual(result.coverage["daily"]["excluded_rows"][0]["reason"], "off_lifecycle_raw_bar")
+        self.assertFalse(migration_gate(result.coverage, require_adjustment=False,
+                                       require_all_a=False, require_delisted=False,
+                                       require_pit_financial=False)["can_retire_legacy"])
 
     def test_unverified_or_empty_corporate_actions_cannot_be_assumed_complete(self):
         db = self.database()
@@ -115,7 +135,10 @@ class AxisDataTests(unittest.TestCase):
             expected_dates=["2024-01-02", "2024-01-03", "2024-01-04", "2024-01-05", "2024-01-06"])
         self.assertEqual(len(result.frame), 2)
         self.assertEqual(result.coverage["daily"]["invalid_rows"], 3)
-        self.assertEqual(result.coverage["daily"]["coverage"], 0.4)
+        self.assertEqual(result.coverage["daily"]["coverage"], 0.8)
+        self.assertEqual(result.coverage["daily"]["tradable_price_coverage"], 0.4)
+        self.assertEqual(result.coverage["daily"]["known_suspended_rows"], 2)
+        self.assertEqual(result.coverage["daily"]["unexplained_invalid_rows"], 1)
         self.assertEqual([r["reason"] for r in result.coverage["daily"]["excluded_rows"]],
                          ["source_explicit_suspension", "invalid_or_missing_raw_bar", "source_explicit_suspension"])
 
@@ -123,10 +146,16 @@ class AxisDataTests(unittest.TestCase):
         db = self.database()
         db["panda_axis_validation"] = FakeCollection([
             {"capability": name, "status": "verified", "start": "2024-01-01", "end": "2024-01-05",
-             "evidence": "independent-acceptance-record"} for name in ["all_a", "delisted", "pit_financial"]])
+             "evidence": "independent-acceptance-record", "evidence_sha256": "a" * 64,
+             "full_universe_complete": True, "scope": "all_a_historical"}
+             for name in ["all_a", "delisted", "pit_financial"]])
         result = AxisProvider(db=db).daily(["000001"], "2024-01-02", "2024-01-03",
                                           expected_dates=["2024-01-02", "2024-01-03"])
         self.assertTrue(migration_gate(result.coverage)["can_retire_legacy"])
+        db["panda_axis_validation"].records[0]["scope"] = "sample"
+        result = AxisProvider(db=db).daily(["000001"], "2024-01-02", "2024-01-03",
+                                          expected_dates=["2024-01-02", "2024-01-03"])
+        self.assertFalse(migration_gate(result.coverage)["can_retire_legacy"])
         self.assertFalse(migration_gate(result.coverage, require_minutes=True)["can_retire_legacy"])
 
     def test_financial_report_date_is_not_announcement_date(self):

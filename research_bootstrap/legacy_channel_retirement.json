@@ -1,0 +1,4453 @@
+{
+  "schema_version": 1,
+  "audit_status": "read_only_static_call_inventory_no_legacy_modification",
+  "reviewed_on": "2026-10-05",
+  "legacy_workspace": "D:\\PandaAI-Alpha",
+  "no_runtime_source_calls": true,
+  "no_deleted_files": true,
+  "migration_boundary": "new AXIS/provider outputs require field/calendar/universe/adjustment/PIT revalidation; old channels are not fallbacks",
+  "entries": [
+    {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\stockdb_research_loop.py",
+      "line": 212,
+      "entrypoint": "simulate --execute / cycle --execute",
+      "call_relation": "dedicated_runner(config) -> run_<batch_id>.py (if present) else research_pipeline.py; run_simulation -> subprocess.run",
+      "recommended_action": "retire_old_research_execution_route",
+      "retain_note": "idea/feedback and prior evidence APIs remain useful",
+      "source_sha256": "e507ae7d441f7cd25c4678b3af0b25db7bcaa7f357d497aedeee60318d23232a"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\research_pipeline.py",
+      "line": 761,
+      "entrypoint": "run --execute",
+      "call_relation": "evaluator_command -> config.paths.evaluator; run_logged called at 2653/2783",
+      "recommended_action": "retire_old_research_execution_route",
+      "retain_note": "specific evaluator may only read frozen cache; do not delete frozen manifests or validators",
+      "source_sha256": "11f2710d1ea9d711c17c1a191b3e92ee1e6a35cdca56d47724e22e8a0e16771a"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\evaluate.py",
+      "line": 244,
+      "entrypoint": "main / init_stockdb",
+      "call_relation": "init_stockdb -> stockdb.init(127.0.0.1:7899); fetch_calendar/fetch_prefix/market_context -> rd.vals",
+      "recommended_action": "retire_stockdb_acquisition",
+      "retain_note": "retain source and all prior results/cache evidence",
+      "source_sha256": "8a87560d78505ddbe2cd9d0ca3b57e109024ab5dddf49adb41b64abb370e6a9d"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\evaluate_batch18.py",
+      "line": 146,
+      "entrypoint": "main / init_stockdb",
+      "call_relation": "init_stockdb -> stockdb.init; fetch_or_load_flow",
+      "recommended_action": "retire_stockdb_acquisition",
+      "retain_note": "cached inputs and frozen decisions remain useful",
+      "source_sha256": "bc1a680c32d6439b5d26ec41aa9a58d830457c99a667e0de35c7314bc0e74fae"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\evaluate_batch19.py",
+      "line": 258,
+      "entrypoint": "main / init_stockdb / fetch_prefix",
+      "call_relation": "init_stockdb -> stockdb.init; rd.vals via calendar/chunk/prefix/context",
+      "recommended_action": "retire_stockdb_acquisition",
+      "retain_note": "also imported by fetch_batch28_warmup",
+      "source_sha256": "4e43cad6cbb2b2be8de7382dde1896e125bed03194383ab8d21637451a0f9b15"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\fetch_batch28_warmup.py",
+      "line": 25,
+      "entrypoint": "main",
+      "call_relation": "evaluate_batch19.fetch_prefix -> engine_v2.cache.write_bar_cache",
+      "recommended_action": "retire_stockdb_acquisition",
+      "retain_note": "2020/2021 warmup includes sealed range; no rerun or return-label evaluation",
+      "source_sha256": "cd07a0a299795b1e44fcfe13cb711a78c5daa4a3521756929cd88145a8101ace"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\minute_kurtosis_feasibility.py",
+      "line": 34,
+      "entrypoint": "main / init_stockdb",
+      "call_relation": "main -> init_stockdb -> rd.vals daily/calendar and minute stock-days",
+      "recommended_action": "retire_stockdb_minute_acquisition",
+      "retain_note": "new daily AXIS migration does not establish minute-field parity",
+      "source_sha256": "5b453dc362c324d0ce38713626f0f7e2f4373c02a17cd0aed9a7d368b5fb6ba9"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\minute_rank_memory_2025.py",
+      "line": 263,
+      "entrypoint": "main",
+      "call_relation": "minute_kurtosis_feasibility.init_stockdb -> rd.vals daily and minute stock-months",
+      "recommended_action": "retire_stockdb_minute_acquisition",
+      "retain_note": "retain bounded minute cache and state.json as cold evidence",
+      "source_sha256": "98126919b3a254cfa525bceb9a3737ca31a75fff8be88fdff9e3ac0c621a4aa3"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\minute_rank_memory_2026.py",
+      "line": 263,
+      "entrypoint": "main",
+      "call_relation": "minute_kurtosis_feasibility.init_stockdb -> rd.vals daily and minute stock-months",
+      "recommended_action": "retire_stockdb_minute_acquisition",
+      "retain_note": "retain bounded minute cache and state.json as cold evidence",
+      "source_sha256": "a73bdee9c883d9436cb2f828003bcfe15e5db6b603e0a78f22f33947cdc00124"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\filings_stockdb_universe.py",
+      "line": 40,
+      "entrypoint": "main / snapshot",
+      "call_relation": "_connect -> stockdb.init; snapshot -> rd.vals quarter-end traded A-share denominator",
+      "recommended_action": "retire_after_verified_universe_replacement",
+      "retain_note": "daily bars alone are not a historical listing/delisting or filing-coverage denominator",
+      "source_sha256": "62cb0a1602ac82b38b83b9c9629eba7960121fc5b7f74a67cb1517d2a3566b47"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\work\\c05_order_measurement_20261005\\probe_child.py",
+      "line": 29,
+      "entrypoint": "top-level bounded probe",
+      "call_relation": "native stockdb.pyd import -> one get_ticks(**frozen_request) call",
+      "recommended_action": "retire_stockdb_tick_probe",
+      "retain_note": "native_receipt.json and accepted_quote_sample.json remain source-gap evidence, not completed order-feed parity",
+      "source_sha256": "c1a148777cb1a47bed25da0c3bf61de81883ab2c7e3b1d9c7edfe3097777588f"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\probe_akshare_contract_liability.py",
+      "line": 16,
+      "entrypoint": "main",
+      "call_relation": "akshare.stock_balance_sheet_by_report_em -> offline normalize_balance_sheet/build_yoy_events",
+      "recommended_action": "retire_akshare_financial_probe",
+      "retain_note": "current/latest-vintage financial responses cannot establish announcement-time PIT history",
+      "source_sha256": "439bc25d18977b27ddde9d9a7b88d6b90a7b8203bfc54a230524742909dc6ca4"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\filings_akshare_index.py",
+      "line": 106,
+      "entrypoint": "discover",
+      "call_relation": "importlib.import_module(akshare) -> stock_zh_a_disclosure_report_cninfo",
+      "recommended_action": "retire_after_verified_announcement_index_replacement",
+      "retain_note": "download(), AnnouncementRecord and hashed primary PDFs are independent of AKShare discovery",
+      "source_sha256": "4bda02f66146437b829c362339d8ada4add156c26c7d5cbdc116dcf9080bbad1"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\filings_pit_cli.py",
+      "line": 114,
+      "entrypoint": "fetch CLI",
+      "call_relation": "fetch -> filings_akshare_index.discover/download -> PDF manifest with SHA256",
+      "recommended_action": "retire_akshare_discovery_route_only",
+      "retain_note": "offline extract/value_asof remain valid; existing PDF/announcement-time/revision evidence must remain",
+      "source_sha256": "d3296a79dc0ed552a0baacb1c6c7c61321dfcaaa9a579b87f0787fa05084195e"
+    }
+  ],
+  "dependency_imports": [
+    {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\filings_akshare_index.py",
+      "source_sha256": "4bda02f66146437b829c362339d8ada4add156c26c7d5cbdc116dcf9080bbad1",
+      "imports": [
+        {
+          "line": 131,
+          "module": "akshare",
+          "kind": "direct_provider_dynamic_import"
+        }
+      ],
+      "matched_import_calls": [],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\filings_market_corpus.py",
+      "source_sha256": "9b12143c77d62e9c5e3287bd53efea5d16921a6785bf146e28d15ad330d60f13",
+      "imports": [
+        {
+          "line": 26,
+          "module": "factor_workflow.filings_stockdb_universe",
+          "names": [
+            "A_SHARE"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 276,
+          "call": "A_SHARE.fullmatch"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\filings_market_index.py",
+      "source_sha256": "77e0c28f9c9529efc5377abc5d5e3fa77f72222fb3bb7ba668a23331ff620c5c",
+      "imports": [
+        {
+          "line": 24,
+          "module": "factor_workflow.filings_akshare_index",
+          "names": [
+            "AnnouncementRecord"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 147,
+          "call": "AnnouncementRecord"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\filings_market_pilot.py",
+      "source_sha256": "cb796e3164e7d2bc3af55024c0c61eb68d1b9d25022bb5d37b0961e772036bdd",
+      "imports": [
+        {
+          "line": 21,
+          "module": "factor_workflow.filings_akshare_index",
+          "names": [
+            "AnnouncementRecord",
+            "download"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 149,
+          "call": "AnnouncementRecord"
+        },
+        {
+          "line": 151,
+          "call": "download"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\filings_market_quality.py",
+      "source_sha256": "8dfd5564231423540f48e176d84fc82a348376dde1c374557cf0bb0d148f5f28",
+      "imports": [
+        {
+          "line": 12,
+          "module": "factor_workflow.filings_stockdb_universe",
+          "names": [
+            "A_SHARE"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 22,
+          "call": "A_SHARE.fullmatch"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\filings_pit_cli.py",
+      "source_sha256": "d3296a79dc0ed552a0baacb1c6c7c61321dfcaaa9a579b87f0787fa05084195e",
+      "imports": [
+        {
+          "line": 125,
+          "module": "factor_workflow.filings_akshare_index",
+          "names": [
+            "discover",
+            "download"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 132,
+          "call": "discover"
+        },
+        {
+          "line": 139,
+          "call": "download"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\filings_stockdb_universe.py",
+      "source_sha256": "62cb0a1602ac82b38b83b9c9629eba7960121fc5b7f74a67cb1517d2a3566b47",
+      "imports": [
+        {
+          "line": 45,
+          "module": "stockdb",
+          "name": "stockdb",
+          "kind": "direct_provider_import"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 46,
+          "call": "stockdb.init"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\probe_akshare_contract_liability.py",
+      "source_sha256": "439bc25d18977b27ddde9d9a7b88d6b90a7b8203bfc54a230524742909dc6ca4",
+      "imports": [
+        {
+          "line": 8,
+          "module": "akshare",
+          "name": "ak",
+          "kind": "direct_provider_import"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 25,
+          "call": "ak.stock_balance_sheet_by_report_em"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\run_batch20.py",
+      "source_sha256": "bf05d8e43abc742dcec6cc2a88ab1bc4d889d706f8d758bb4ed5c48f89ad7c4f",
+      "imports": [
+        {
+          "line": 17,
+          "module": "research_pipeline",
+          "name": "workflow",
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 47,
+          "call": "workflow.validate_config"
+        },
+        {
+          "line": 52,
+          "call": "workflow.verify_freeze"
+        },
+        {
+          "line": 225,
+          "call": "workflow.sha256_file"
+        },
+        {
+          "line": 155,
+          "call": "workflow.freeze_path"
+        },
+        {
+          "line": 172,
+          "call": "workflow.sha256_file"
+        },
+        {
+          "line": 294,
+          "call": "workflow.sha256_file"
+        },
+        {
+          "line": 300,
+          "call": "workflow.sha256_file"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\run_batch21.py",
+      "source_sha256": "f8fcc5abf067cc54fd45b85b302a717a315dfee02325cb6bfd2636730ae93059",
+      "imports": [
+        {
+          "line": 17,
+          "module": "research_pipeline",
+          "name": "workflow",
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 36,
+          "call": "workflow.validate_config"
+        },
+        {
+          "line": 46,
+          "call": "workflow.verify_freeze"
+        },
+        {
+          "line": 177,
+          "call": "workflow.sha256_file"
+        },
+        {
+          "line": 111,
+          "call": "workflow.freeze_path"
+        },
+        {
+          "line": 134,
+          "call": "workflow.sha256_file"
+        },
+        {
+          "line": 232,
+          "call": "workflow.sha256_file"
+        },
+        {
+          "line": 235,
+          "call": "workflow.sha256_file"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\run_batch22.py",
+      "source_sha256": "3cd905e0efebde0de7f8f06f15f15caa14c41787057163f43779875828e97413",
+      "imports": [
+        {
+          "line": 11,
+          "module": "research_pipeline",
+          "name": "workflow",
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 30,
+          "call": "workflow.validate_config"
+        },
+        {
+          "line": 42,
+          "call": "workflow.verify_freeze"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\stockdb_research_loop.py",
+      "source_sha256": "e507ae7d441f7cd25c4678b3af0b25db7bcaa7f357d497aedeee60318d23232a",
+      "imports": [
+        {
+          "line": 30,
+          "module": "factor_workflow",
+          "names": [
+            "research_pipeline"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 55,
+          "call": "workflow.sha256_file"
+        },
+        {
+          "line": 90,
+          "call": "workflow.validate_config"
+        },
+        {
+          "line": 94,
+          "call": "workflow.verify_freeze"
+        },
+        {
+          "line": 114,
+          "call": "workflow.freeze_path"
+        },
+        {
+          "line": 266,
+          "call": "workflow.verify_decision_packet_state"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\test_filings_akshare_index.py",
+      "source_sha256": "ce24ece545a8126c3983e976a0f2c2b94a9f32fa7b8b91107a9688c15c274d8a",
+      "imports": [
+        {
+          "line": 10,
+          "module": "factor_workflow.filings_akshare_index",
+          "names": [
+            "AnnouncementRecord",
+            "discover",
+            "download"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 82,
+          "call": "discover"
+        },
+        {
+          "line": 116,
+          "call": "AnnouncementRecord"
+        },
+        {
+          "line": 147,
+          "call": "AnnouncementRecord"
+        },
+        {
+          "line": 96,
+          "call": "discover"
+        },
+        {
+          "line": 99,
+          "call": "discover"
+        },
+        {
+          "line": 108,
+          "call": "discover"
+        },
+        {
+          "line": 131,
+          "call": "download"
+        },
+        {
+          "line": 135,
+          "call": "download"
+        },
+        {
+          "line": 143,
+          "call": "download"
+        },
+        {
+          "line": 153,
+          "call": "download"
+        },
+        {
+          "line": 160,
+          "call": "download"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\test_filings_stockdb_universe.py",
+      "source_sha256": "7b7cdf3b2e1335fbe07ff8694b2767c03f89bc1f944218b8c155ac7b61b0ee1b",
+      "imports": [
+        {
+          "line": 5,
+          "module": "factor_workflow.filings_stockdb_universe",
+          "names": [
+            "quarter_ends",
+            "snapshot"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 32,
+          "call": "snapshot"
+        },
+        {
+          "line": 29,
+          "call": "quarter_ends"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\test_research_pipeline.py",
+      "source_sha256": "83445ff2a539fdf9b3145ae90a07c11a56e3672183b0bd865d4f01c16a305ba3",
+      "imports": [
+        {
+          "line": 12,
+          "module": "research_pipeline",
+          "name": "pipeline",
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 87,
+          "call": "pipeline.validate_config"
+        },
+        {
+          "line": 93,
+          "call": "pipeline.validate_config"
+        },
+        {
+          "line": 95,
+          "call": "pipeline.verify_freeze"
+        },
+        {
+          "line": 254,
+          "call": "pipeline.validate_config"
+        },
+        {
+          "line": 256,
+          "call": "pipeline.build_packet"
+        },
+        {
+          "line": 306,
+          "call": "pipeline.read_classification"
+        },
+        {
+          "line": 429,
+          "call": "pipeline.validate_config"
+        },
+        {
+          "line": 434,
+          "call": "pipeline.resolve_inside_workspace"
+        },
+        {
+          "line": 568,
+          "call": "pipeline.IC_DRAWDOWN_FLOORS.items"
+        },
+        {
+          "line": 575,
+          "call": "pipeline.validate_ic_drawdown_profile_rows"
+        },
+        {
+          "line": 580,
+          "call": "pipeline.validate_ic_drawdown_profile_rows"
+        },
+        {
+          "line": 124,
+          "call": "pipeline.validate_config"
+        },
+        {
+          "line": 126,
+          "call": "pipeline.freeze_payload"
+        },
+        {
+          "line": 127,
+          "call": "pipeline.execution_audit_command"
+        },
+        {
+          "line": 159,
+          "call": "pipeline.validate_config"
+        },
+        {
+          "line": 175,
+          "call": "pipeline.build_execution_audit_packet"
+        },
+        {
+          "line": 235,
+          "call": "pipeline.resolve_inside_workspace"
+        },
+        {
+          "line": 247,
+          "call": "pipeline.validate_config"
+        },
+        {
+          "line": 310,
+          "call": "pipeline.validate_classified_rows"
+        },
+        {
+          "line": 322,
+          "call": "pipeline.validate_config"
+        },
+        {
+          "line": 331,
+          "call": "pipeline.command_export_panda"
+        },
+        {
+          "line": 437,
+          "call": "pipeline.command_run_ic_drawdown"
+        },
+        {
+          "line": 584,
+          "call": "pipeline.validate_ic_drawdown_profile_rows"
+        },
+        {
+          "line": 34,
+          "call": "pipeline.sha256_file"
+        },
+        {
+          "line": 197,
+          "call": "pipeline.write_evaluator_state"
+        },
+        {
+          "line": 200,
+          "call": "pipeline.resolve_inside_workspace"
+        },
+        {
+          "line": 221,
+          "call": "pipeline.write_evaluator_state"
+        },
+        {
+          "line": 224,
+          "call": "pipeline.write_decision_packet_state"
+        },
+        {
+          "line": 272,
+          "call": "pipeline.read_classification"
+        },
+        {
+          "line": 292,
+          "call": "pipeline.read_classification"
+        },
+        {
+          "line": 387,
+          "call": "pipeline.validate_config"
+        },
+        {
+          "line": 422,
+          "call": "pipeline.validate_config"
+        },
+        {
+          "line": 478,
+          "call": "pipeline.command_run_ic_drawdown"
+        },
+        {
+          "line": 601,
+          "call": "pipeline.ic_gate_state_path"
+        },
+        {
+          "line": 191,
+          "call": "pipeline.evaluator_fingerprints"
+        },
+        {
+          "line": 205,
+          "call": "pipeline.verify_evaluator_state"
+        },
+        {
+          "line": 207,
+          "call": "pipeline.evaluator_resume_plan"
+        },
+        {
+          "line": 231,
+          "call": "pipeline.verify_decision_packet_state"
+        },
+        {
+          "line": 643,
+          "call": "pipeline.write_drawdown_audit_state"
+        },
+        {
+          "line": 650,
+          "call": "pipeline.verify_drawdown_audit_state"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\test_stockdb_research_loop.py",
+      "source_sha256": "ec190c7ca04eed236be41d90163f1cc3161c4b66077fce11d6b24fc8b659c86f",
+      "imports": [
+        {
+          "line": 6,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 69,
+          "call": "loop.build_feedback_record"
+        },
+        {
+          "line": 81,
+          "call": "loop.initial_memory"
+        },
+        {
+          "line": 91,
+          "call": "loop.initial_memory"
+        },
+        {
+          "line": 132,
+          "call": "loop.render_lesson"
+        },
+        {
+          "line": 137,
+          "call": "loop.initial_memory"
+        },
+        {
+          "line": 183,
+          "call": "loop.simulation_command"
+        },
+        {
+          "line": 23,
+          "call": "loop.failure_buckets"
+        },
+        {
+          "line": 44,
+          "call": "loop.failure_buckets"
+        },
+        {
+          "line": 83,
+          "call": "loop.apply_idea"
+        },
+        {
+          "line": 84,
+          "call": "loop.apply_idea"
+        },
+        {
+          "line": 88,
+          "call": "loop.apply_idea"
+        },
+        {
+          "line": 106,
+          "call": "loop.apply_idea"
+        },
+        {
+          "line": 108,
+          "call": "loop.apply_idea"
+        },
+        {
+          "line": 117,
+          "call": "loop.apply_idea"
+        },
+        {
+          "line": 164,
+          "call": "loop.apply_feedback"
+        },
+        {
+          "line": 166,
+          "call": "loop.apply_feedback"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\assess_batch22_frozen.py",
+      "source_sha256": "4b581f1aeac31221c61c5c468cb3500e1b70e91858094584e17afc544f4e8b7a",
+      "imports": [
+        {
+          "line": 25,
+          "module": "factor_workflow",
+          "names": [
+            "research_pipeline"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 51,
+          "module": "evaluate_batch19",
+          "names": [
+            "direction_aligned",
+            "safe_corr"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 101,
+          "call": "workflow.validate_config"
+        },
+        {
+          "line": 104,
+          "call": "workflow.verify_freeze"
+        },
+        {
+          "line": 148,
+          "call": "safe_corr"
+        },
+        {
+          "line": 181,
+          "call": "safe_corr"
+        },
+        {
+          "line": 185,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 230,
+          "call": "safe_corr"
+        },
+        {
+          "line": 190,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 205,
+          "call": "safe_corr"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\audit_float_supply_source.py",
+      "source_sha256": "64b0d76cd195cbba173299c442d5e60cdce7c7789d9d8714f677848247069e43",
+      "imports": [
+        {
+          "line": 20,
+          "module": "evaluate_batch19",
+          "names": [
+            "A_SHARE",
+            "fetch_query_chunk"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 52,
+          "call": "fetch_query_chunk"
+        },
+        {
+          "line": 53,
+          "call": "A_SHARE.fullmatch"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\batch20_release_verify.py",
+      "source_sha256": "840e7425249c65d5dd6cccf618136444290a929374978348fb0d9c915d462c25",
+      "imports": [
+        {
+          "line": 19,
+          "module": "factor_workflow",
+          "names": [
+            "research_pipeline"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 424,
+          "call": "workflow.validate_config"
+        },
+        {
+          "line": 429,
+          "call": "workflow.verify_freeze"
+        },
+        {
+          "line": 394,
+          "call": "workflow.freeze_path"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\batch21_release_verify.py",
+      "source_sha256": "3fa7f12815dc45776c779e929fb3a9bb7cbc949ba837df0a849f47eb5d4d4352",
+      "imports": [
+        {
+          "line": 19,
+          "module": "factor_workflow",
+          "names": [
+            "research_pipeline"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 35,
+          "module": "evaluate_batch19",
+          "names": [
+            "safe_corr"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 400,
+          "call": "workflow.validate_config"
+        },
+        {
+          "line": 405,
+          "call": "workflow.verify_freeze"
+        },
+        {
+          "line": 356,
+          "call": "workflow.freeze_path"
+        },
+        {
+          "line": 106,
+          "call": "safe_corr"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\batch22_release_verify.py",
+      "source_sha256": "73f5cbce46542211c3a6859b2cf60942457a07286bb940f5575d222fcfb16a57",
+      "imports": [
+        {
+          "line": 21,
+          "module": "factor_workflow",
+          "names": [
+            "research_pipeline"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 74,
+          "call": "workflow.validate_config"
+        },
+        {
+          "line": 77,
+          "call": "workflow.verify_freeze"
+        },
+        {
+          "line": 228,
+          "call": "workflow.freeze_path"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\classify_batch19_frozen.py",
+      "source_sha256": "6de6250c8d7c390056ab95a114a37ad8581d55e028508b56d1307a38394f3942",
+      "imports": [
+        {
+          "line": 20,
+          "module": "evaluate_batch19",
+          "names": [
+            "direction_aligned",
+            "safe_corr"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 138,
+          "call": "safe_corr"
+        },
+        {
+          "line": 103,
+          "call": "safe_corr"
+        },
+        {
+          "line": 107,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 174,
+          "call": "safe_corr"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\classify_batch20_frozen.py",
+      "source_sha256": "1c319531ac1014d641c829daffeb34b9fde4dc06cd933e14d704c62470033532",
+      "imports": [
+        {
+          "line": 26,
+          "module": "evaluate_batch19",
+          "names": [
+            "direction_aligned",
+            "safe_corr"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 150,
+          "call": "safe_corr"
+        },
+        {
+          "line": 108,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 103,
+          "call": "safe_corr"
+        },
+        {
+          "line": 112,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 197,
+          "call": "safe_corr"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\classify_batch21_frozen.py",
+      "source_sha256": "9437f9fd2a98b2479ecf21de811b53aeeeb56751fba87f33dd316f3c162bd3d3",
+      "imports": [
+        {
+          "line": 32,
+          "module": "evaluate_batch19",
+          "names": [
+            "direction_aligned",
+            "safe_corr"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 132,
+          "call": "safe_corr"
+        },
+        {
+          "line": 104,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 200,
+          "call": "safe_corr"
+        },
+        {
+          "line": 100,
+          "call": "safe_corr"
+        },
+        {
+          "line": 111,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 165,
+          "call": "safe_corr"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\evaluate.py",
+      "source_sha256": "8a87560d78505ddbe2cd9d0ca3b57e109024ab5dddf49adb41b64abb370e6a9d",
+      "imports": [
+        {
+          "line": 249,
+          "module": "stockdb",
+          "name": "stockdb",
+          "kind": "direct_provider_import"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 251,
+          "call": "stockdb.init"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\evaluate_batch18.py",
+      "source_sha256": "bc1a680c32d6439b5d26ec41aa9a58d830457c99a667e0de35c7314bc0e74fae",
+      "imports": [
+        {
+          "line": 151,
+          "module": "stockdb",
+          "name": "stockdb",
+          "kind": "direct_provider_import"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 153,
+          "call": "stockdb.init"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\evaluate_batch19.py",
+      "source_sha256": "4e43cad6cbb2b2be8de7382dde1896e125bed03194383ab8d21637451a0f9b15",
+      "imports": [
+        {
+          "line": 263,
+          "module": "stockdb",
+          "name": "stockdb",
+          "kind": "direct_provider_import"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 265,
+          "call": "stockdb.init"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\evaluate_batch20_cached.py",
+      "source_sha256": "2747937b8a6c1536b099725b4444a570f724d35930059ba91cddec1f3a796b7a",
+      "imports": [
+        {
+          "line": 27,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "cross_section_neutralized_rank",
+            "direction_aligned",
+            "evaluate_candidate",
+            "factor_correlation",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 110,
+          "call": "cross_section_neutralized_rank"
+        },
+        {
+          "line": 115,
+          "call": "cross_section_neutralized_rank"
+        },
+        {
+          "line": 212,
+          "call": "add_screen_score"
+        },
+        {
+          "line": 246,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 267,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 193,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 224,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 231,
+          "call": "direction_aligned"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\evaluate_batch21_cached.py",
+      "source_sha256": "5fa124add2ede48cc95782719d6ef54bc0a53335cdfb8dad3d246446b7d24030",
+      "imports": [
+        {
+          "line": 37,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "factor_correlation",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 342,
+          "call": "add_screen_score"
+        },
+        {
+          "line": 376,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 397,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 315,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 354,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 361,
+          "call": "direction_aligned"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\evaluate_batch22_cached.py",
+      "source_sha256": "a9be3fdc2929f1417dbacb782ab41d60ccc6308a5350c7f9dd9aa2931955ec26",
+      "imports": [
+        {
+          "line": 44,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "factor_correlation",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 69,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "factor_correlation",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 368,
+          "call": "add_screen_score"
+        },
+        {
+          "line": 402,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 423,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 348,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 380,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 387,
+          "call": "direction_aligned"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\evaluate_batch23_cached.py",
+      "source_sha256": "258d184258fabf3f9ac02c76a9c8772b04eb202a01df993139f230ab0aa8af52",
+      "imports": [
+        {
+          "line": 39,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "factor_correlation",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 60,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "factor_correlation",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 307,
+          "call": "add_screen_score"
+        },
+        {
+          "line": 321,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 354,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 270,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 283,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 293,
+          "call": "direction_aligned"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\evaluate_batch24_cached.py",
+      "source_sha256": "b7e53d91015640f3fe714e30be33342f15d215405e0d595621163ce27b6f22ba",
+      "imports": [
+        {
+          "line": 39,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "factor_correlation",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 60,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "factor_correlation",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 308,
+          "call": "add_screen_score"
+        },
+        {
+          "line": 322,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 355,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 271,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 284,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 294,
+          "call": "direction_aligned"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\evaluate_batch25_cached.py",
+      "source_sha256": "1a7736535579340c2cfd67e5102b80ce3963965208e90923f9e12f3c91f4c786",
+      "imports": [
+        {
+          "line": 39,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "factor_correlation",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 60,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "factor_correlation",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 308,
+          "call": "add_screen_score"
+        },
+        {
+          "line": 322,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 355,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 271,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 284,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 294,
+          "call": "direction_aligned"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\evaluate_batch26_cached.py",
+      "source_sha256": "ea82185a89875409e49c5d5bf39b76629de3c7d295ac746592c15c051053c935",
+      "imports": [
+        {
+          "line": 39,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "factor_correlation",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 60,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "factor_correlation",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 308,
+          "call": "add_screen_score"
+        },
+        {
+          "line": 322,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 355,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 271,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 284,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 294,
+          "call": "direction_aligned"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\evaluate_batch27_cached.py",
+      "source_sha256": "c045125fe3948aa83d95d28830d83f88ffef63fe02452be42ef24f829c198936",
+      "imports": [
+        {
+          "line": 27,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "factor_correlation",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 38,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "factor_correlation",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 168,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 174,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 187,
+          "call": "add_screen_score"
+        },
+        {
+          "line": 194,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 208,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 179,
+          "call": "direction_aligned"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\evaluate_batch28_cached.py",
+      "source_sha256": "3e4ed2b129b9f1ec159d371e3639e063788d0648bd24f99633a420004ceb84d6",
+      "imports": [
+        {
+          "line": 21,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "factor_correlation",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 32,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "factor_correlation",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 188,
+          "call": "add_screen_score"
+        },
+        {
+          "line": 193,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 172,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 178,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 224,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 181,
+          "call": "direction_aligned"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\evaluate_batch29_cached.py",
+      "source_sha256": "b654924c53197c55088d0207e686a5992dd4d811fb96821e25b88dd4d00ae776",
+      "imports": [
+        {
+          "line": 27,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "factor_correlation",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 39,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "factor_correlation",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 358,
+          "call": "add_screen_score"
+        },
+        {
+          "line": 365,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 343,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 349,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 385,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 352,
+          "call": "direction_aligned"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\evaluate_batch30_cached.py",
+      "source_sha256": "1ce666337a8d87d654336986f3fc7142e346f5f766ee9f7d9aa13701c961fbc0",
+      "imports": [
+        {
+          "line": 22,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "factor_correlation",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 96,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 100,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 113,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 120,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 108,
+          "call": "add_screen_score"
+        },
+        {
+          "line": 103,
+          "call": "direction_aligned"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\evaluate_f207_cached.py",
+      "source_sha256": "6c9653a6c7b9ef897bba050acdd005808d8c989748efada58ee23059401d849d",
+      "imports": [
+        {
+          "line": 23,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "factor_correlation",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 127,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 134,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 144,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 151,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 142,
+          "call": "add_screen_score"
+        },
+        {
+          "line": 137,
+          "call": "direction_aligned"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\fetch_batch28_warmup.py",
+      "source_sha256": "cd07a0a299795b1e44fcfe13cb711a78c5daa4a3521756929cd88145a8101ace",
+      "imports": [
+        {
+          "line": 11,
+          "module": "evaluate_batch19",
+          "names": [
+            "fetch_prefix"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 14,
+          "module": "evaluate_batch19",
+          "names": [
+            "fetch_prefix"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 33,
+          "call": "fetch_prefix"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\minute_kurtosis_feasibility.py",
+      "source_sha256": "5b453dc362c324d0ce38713626f0f7e2f4373c02a17cd0aed9a7d368b5fb6ba9",
+      "imports": [
+        {
+          "line": 38,
+          "module": "stockdb",
+          "name": "stockdb",
+          "kind": "direct_provider_import"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 40,
+          "call": "stockdb.init"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\minute_rank_memory_2025.py",
+      "source_sha256": "98126919b3a254cfa525bceb9a3737ca31a75fff8be88fdff9e3ac0c621a4aa3",
+      "imports": [
+        {
+          "line": 18,
+          "module": "minute_kurtosis_feasibility",
+          "names": [
+            "calculate_day",
+            "init_stockdb",
+            "save_json"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 111,
+          "call": "save_json"
+        },
+        {
+          "line": 273,
+          "call": "init_stockdb"
+        },
+        {
+          "line": 86,
+          "call": "calculate_day"
+        },
+        {
+          "line": 282,
+          "call": "save_json"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\minute_rank_memory_2026.py",
+      "source_sha256": "a73bdee9c883d9436cb2f828003bcfe15e5db6b603e0a78f22f33947cdc00124",
+      "imports": [
+        {
+          "line": 18,
+          "module": "minute_kurtosis_feasibility",
+          "names": [
+            "calculate_day",
+            "init_stockdb",
+            "save_json"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 120,
+          "call": "save_json"
+        },
+        {
+          "line": 273,
+          "call": "init_stockdb"
+        },
+        {
+          "line": 95,
+          "call": "calculate_day"
+        },
+        {
+          "line": 280,
+          "call": "save_json"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\research_batch38_parameters.py",
+      "source_sha256": "5282198cd04d351408a4ec3dcf573297a5b90e2e36c1168bcfc4a6710aea7fb7",
+      "imports": [
+        {
+          "line": 72,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 142,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 211,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 83,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 104,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 105,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 145,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 102,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 217,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 220,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 222,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 243,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 221,
+          "call": "add_screen_score"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\research_batch39_parameters.py",
+      "source_sha256": "5642dfeda7434b47ad6de7f74977157b5d85a4b8b49faa7ba3e6a40801d8e1f6",
+      "imports": [
+        {
+          "line": 72,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 142,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 211,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 83,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 104,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 105,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 145,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 102,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 217,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 220,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 222,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 243,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 221,
+          "call": "add_screen_score"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\research_batch40_parameters.py",
+      "source_sha256": "4e9f53c19dfc0fa3c5ee9688795288a2eae5ff819a422b91fa4e0b6528f733ab",
+      "imports": [
+        {
+          "line": 74,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 144,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 213,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 85,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 106,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 107,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 147,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 104,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 219,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 222,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 224,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 245,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 223,
+          "call": "add_screen_score"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\research_batch41_parameters.py",
+      "source_sha256": "7c757e8339c715cc306e0e0ed588abe94592906fc89975b25c8517d4d680c524",
+      "imports": [
+        {
+          "line": 74,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 144,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 213,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 85,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 106,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 107,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 147,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 104,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 219,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 222,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 224,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 245,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 223,
+          "call": "add_screen_score"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\research_batch42_risk.py",
+      "source_sha256": "3892b58fe1b83be1379745e530a5c6ee8829dd9a9857acce3735a56861936b97",
+      "imports": [
+        {
+          "line": 74,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 129,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 202,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 82,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 95,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 95,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 135,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 204,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 94,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 211,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 214,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 216,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 237,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 215,
+          "call": "add_screen_score"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\research_batch43_overnight.py",
+      "source_sha256": "7d571992fe008f49652544771451fd1216f895d36ae52a8325b52889fcc0402b",
+      "imports": [
+        {
+          "line": 74,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 123,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 196,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 85,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 91,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 91,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 129,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 198,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 90,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 205,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 208,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 210,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 231,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 209,
+          "call": "add_screen_score"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\research_batch44_momentum.py",
+      "source_sha256": "e03d7fba5ec0f5a9e87fed153a8820c0a134e17e6ee533e0acd994a587dcf3d0",
+      "imports": [
+        {
+          "line": 74,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 123,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 196,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 85,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 91,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 91,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 129,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 198,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 90,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 205,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 208,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 210,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 231,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 209,
+          "call": "add_screen_score"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\research_batch45_consensus.py",
+      "source_sha256": "d55c61d39df5640ebeb57722622c2fd88a677ee7a0b6435870121b728cecf6e4",
+      "imports": [
+        {
+          "line": 74,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 123,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 196,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 85,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 91,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 91,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 129,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 198,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 90,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 205,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 208,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 210,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 231,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 209,
+          "call": "add_screen_score"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\research_batch46_regime.py",
+      "source_sha256": "e1420448bed80a73a4f3ee13b426fdaf9c977292525d45dcf226dd94401fdf94",
+      "imports": [
+        {
+          "line": 75,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 127,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 200,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 86,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 95,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 95,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 133,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 202,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 203,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 94,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 212,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 215,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 217,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 238,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 216,
+          "call": "add_screen_score"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\research_batch47_interactions.py",
+      "source_sha256": "f37ca4346f478c8fd71346dcbee9b337f14f15c78986dd5f6f272c1c58b707ef",
+      "imports": [
+        {
+          "line": 75,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 127,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 200,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 86,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 95,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 95,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 133,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 202,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 203,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 94,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 212,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 215,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 217,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 238,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 216,
+          "call": "add_screen_score"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\research_batch48_persistence.py",
+      "source_sha256": "8b62a9d1c406428e82f2d4d8439da87b6907442810e6866f15f18b311fc95ff0",
+      "imports": [
+        {
+          "line": 75,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 127,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 200,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 86,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 95,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 95,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 133,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 202,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 203,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 94,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 212,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 215,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 217,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 238,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 216,
+          "call": "add_screen_score"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\research_batch49_factor_momentum.py",
+      "source_sha256": "d08db3386864082f36cabb5af21bee3a193538b7efadc037ae6dea6966c7b809",
+      "imports": [
+        {
+          "line": 75,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 127,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 200,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 86,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 95,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 95,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 133,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 202,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 203,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 94,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 212,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 215,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 217,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 238,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 216,
+          "call": "add_screen_score"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\research_batch50_overnight_parameters.py",
+      "source_sha256": "b10b086db15607ac32a31cf08b7ae5506b6c023426e71bd46852adddf3a4c42d",
+      "imports": [
+        {
+          "line": 75,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 127,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 200,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 86,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 95,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 95,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 133,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 202,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 203,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 94,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 212,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 215,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 217,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 238,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 216,
+          "call": "add_screen_score"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\research_batch51_residual_momentum.py",
+      "source_sha256": "f5bb38f0474a4cfa28ed67594a2dd522db7e1cb744ed30d4939172bb85eda94a",
+      "imports": [
+        {
+          "line": 75,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 127,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 200,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 86,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 95,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 95,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 133,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 202,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 203,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 94,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 212,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 215,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 217,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 238,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 216,
+          "call": "add_screen_score"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\research_batch52_residual_reversal.py",
+      "source_sha256": "5856c1d02a5bc38c2ce46259392ad724342279623cfbfef4980360995dacc454",
+      "imports": [
+        {
+          "line": 76,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 128,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 201,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 87,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 96,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 96,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 134,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 203,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 204,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 95,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 213,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 216,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 218,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 239,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 217,
+          "call": "add_screen_score"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\research_batch53_cgo.py",
+      "source_sha256": "68de7df840069757aed046cc49f49e474f537f9aa11fda995fc018c1d06954af",
+      "imports": [
+        {
+          "line": 108,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 222,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 347,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 435,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 126,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 147,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 148,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 224,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 355,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 359,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 362,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 474,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 504,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 505,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 145,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 502,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 365,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 400,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 363,
+          "call": "add_screen_score"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\research_batch54_publication.py",
+      "source_sha256": "c622796f99ddcd925f72abfc221fc5dbda0fdcfd53cc443bf3558d125b15107a",
+      "imports": [
+        {
+          "line": 143,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 250,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 389,
+          "module": "evaluate_batch19",
+          "names": [
+            "add_screen_score",
+            "direction_aligned",
+            "evaluate_candidate",
+            "yearly_summary"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 487,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 161,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 182,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 183,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 550,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 581,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 582,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 180,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 258,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 400,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 401,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 404,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 579,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 407,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 443,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 405,
+          "call": "add_screen_score"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\research_f209_equity_expansion.py",
+      "source_sha256": "2c0bacf1bd3b1f43b00d723320cedcec4354b6f1410d0261c440ffc2115428c8",
+      "imports": [
+        {
+          "line": 159,
+          "module": "evaluate_batch19",
+          "names": [
+            "evaluate_candidate",
+            "factor_correlation",
+            "yearly_summary",
+            "direction_aligned",
+            "add_screen_score"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 176,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 179,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 181,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 184,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 211,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 183,
+          "call": "add_screen_score"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\research_f213_salience.py",
+      "source_sha256": "2f5cc9a02307795caa82b583b54cddc438c448e0329579222981497b711c2b90",
+      "imports": [
+        {
+          "line": 143,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 172,
+          "module": "evaluate_batch19",
+          "names": [
+            "evaluate_candidate",
+            "yearly_summary",
+            "direction_aligned",
+            "add_screen_score"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 147,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 193,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 196,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 198,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 221,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 197,
+          "call": "add_screen_score"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\research_f214_weekly_delay.py",
+      "source_sha256": "0ef4cf8216650d8aaf1d9dca5d251b5af34d4620da2c09538aa79118ccbf7200",
+      "imports": [
+        {
+          "line": 153,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 182,
+          "module": "evaluate_batch19",
+          "names": [
+            "evaluate_candidate",
+            "yearly_summary",
+            "direction_aligned",
+            "add_screen_score"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 157,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 203,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 206,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 208,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 231,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 207,
+          "call": "add_screen_score"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\research_f215_duvol.py",
+      "source_sha256": "73ad3ce95a8a099b496a1ad606034ecb80b3491839763904554efba2d94fa061",
+      "imports": [
+        {
+          "line": 151,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 180,
+          "module": "evaluate_batch19",
+          "names": [
+            "evaluate_candidate",
+            "yearly_summary",
+            "direction_aligned",
+            "add_screen_score"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 155,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 201,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 204,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 206,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 229,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 205,
+          "call": "add_screen_score"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\research_f216_calendar_salience.py",
+      "source_sha256": "fb47ad8220f6b6f2fb58f9f30ec0f2ffbb3fe60c7bf558ad7bb0cbbf04e337f0",
+      "imports": [
+        {
+          "line": 142,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 171,
+          "module": "evaluate_batch19",
+          "names": [
+            "evaluate_candidate",
+            "yearly_summary",
+            "direction_aligned",
+            "add_screen_score"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 146,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 192,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 195,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 197,
+          "call": "direction_aligned"
+        },
+        {
+          "line": 220,
+          "call": "yearly_summary"
+        },
+        {
+          "line": 196,
+          "call": "add_screen_score"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\test_batch19.py",
+      "source_sha256": "9f03bd7e08214e2ec661608647c452d8a41d65b410ff9aa1e959304799c190d8",
+      "imports": [
+        {
+          "line": 18,
+          "module": "evaluate_batch19",
+          "names": [
+            "rolling_market_model_components"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 71,
+          "call": "rolling_market_model_components"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\stockdb_factor_eval\\test_batch20.py",
+      "source_sha256": "523f5fd53ba67a83a8d3b03fcd816ffa0b7be2cc1081f8ad724f40f468e8f93d",
+      "imports": [
+        {
+          "line": 24,
+          "module": "evaluate_batch19",
+          "names": [
+            "cross_section_neutralized_rank"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 103,
+          "call": "cross_section_neutralized_rank"
+        },
+        {
+          "line": 104,
+          "call": "cross_section_neutralized_rank"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\work\\audit_f253_optimization_20260930.py",
+      "source_sha256": "ce970a7e95a199ea7c89d18146c976ea20e2310aec5ad622951260dc1709d697",
+      "imports": [
+        {
+          "line": 15,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 88,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 95,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 95,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 86,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 94,
+          "call": "loop.canonical_hash"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\work\\audit_paper_continuation_20260929.py",
+      "source_sha256": "fea14ed9a6c87bd7b37263a1b0c9785f986b3955cfbeb9f095ec4454dfaa0bf6",
+      "imports": [
+        {
+          "line": 10,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 69,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 78,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 79,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 68,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 76,
+          "call": "loop.canonical_hash"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\work\\diagnose_f253_market_variance.py",
+      "source_sha256": "89750c7991d47cd701c1fa924f2f55c56c3336b024b8f5d105356c696937f684",
+      "imports": [
+        {
+          "line": 14,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 41,
+          "call": "loop.write_json_atomic"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\work\\finalize_local_confirmation_candidate.py",
+      "source_sha256": "609bafa82bd220a3ad0ab1bbc33d04b934b1f12b4a882fdae8535d18f20d6b13",
+      "imports": [
+        {
+          "line": 11,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 52,
+          "call": "loop.load_memory"
+        },
+        {
+          "line": 57,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 110,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 111,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 120,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 103,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 108,
+          "call": "loop.canonical_hash"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\work\\persist_f253_optimization_round.py",
+      "source_sha256": "2efd24c7ba27e835d5d35f02a538092adcff93ecc3eff24e88e8c4825ee5c883",
+      "imports": [
+        {
+          "line": 14,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 134,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 149,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 151,
+          "call": "loop.load_memory"
+        },
+        {
+          "line": 152,
+          "call": "loop.apply_idea"
+        },
+        {
+          "line": 153,
+          "call": "loop.apply_feedback"
+        },
+        {
+          "line": 154,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 158,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 176,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 177,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 174,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 118,
+          "call": "loop.canonical_hash"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\work\\persist_paper_continuation_20260929.py",
+      "source_sha256": "b161926a7dcc2842baecbed4d36768bf045d13e52df0a99f70f90479adea1557",
+      "imports": [
+        {
+          "line": 10,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 87,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 97,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 99,
+          "call": "loop.load_memory"
+        },
+        {
+          "line": 100,
+          "call": "loop.apply_idea"
+        },
+        {
+          "line": 101,
+          "call": "loop.apply_feedback"
+        },
+        {
+          "line": 102,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 107,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 125,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 126,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 123,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 73,
+          "call": "loop.canonical_hash"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\work\\persist_paper_round_20260929.py",
+      "source_sha256": "8a7c3f3efbf863dd9dd223a0d4ed51a79ecc6da1d06e4d47a419c5d07d56f689",
+      "imports": [
+        {
+          "line": 12,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 23,
+          "call": "loop.load_memory"
+        },
+        {
+          "line": 112,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 116,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 72,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 94,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 106,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 108,
+          "call": "loop.apply_idea"
+        },
+        {
+          "line": 109,
+          "call": "loop.apply_feedback"
+        },
+        {
+          "line": 134,
+          "call": "loop.canonical_hash"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\work\\persist_parameter_round.py",
+      "source_sha256": "3218148a185a3e5eac10c4e6bf642d72219f08b338df7a57e263f4a904ea9c95",
+      "imports": [
+        {
+          "line": 13,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 115,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 130,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 132,
+          "call": "loop.load_memory"
+        },
+        {
+          "line": 133,
+          "call": "loop.apply_idea"
+        },
+        {
+          "line": 134,
+          "call": "loop.apply_feedback"
+        },
+        {
+          "line": 135,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 139,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 157,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 158,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 155,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 99,
+          "call": "loop.canonical_hash"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\work\\prepare_f215_duvol_runner.py",
+      "source_sha256": "95fa9a8762134eef68d762d793f23325d012ab9a614c31b19b2d14850b8cfe23",
+      "imports": [
+        {
+          "line": 8,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 67,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 85,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 86,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 83,
+          "call": "loop.canonical_hash"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\work\\prepare_f216_calendar_salience_runner.py",
+      "source_sha256": "bc90d1f0ae0d4b8a18e976624f43b39597b4c731e629a38d04008c221e8da9d9",
+      "imports": [
+        {
+          "line": 8,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 94,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 114,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 115,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 112,
+          "call": "loop.canonical_hash"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\work\\record_nb_user_confirmation.py",
+      "source_sha256": "3de7f1cc9ce163e203a2d7d27506a7cff98a4138646fc42e5e617f6583984008",
+      "imports": [
+        {
+          "line": 9,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 20,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 22,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 25,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 26,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 23,
+          "call": "loop.canonical_hash"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\work\\record_score_snapshot.py",
+      "source_sha256": "30164dfb176bc354b0f044610f94dad74e0cf59039cd5cdefde19c190e2cfaf3",
+      "imports": [
+        {
+          "line": 10,
+          "module": "factor_workflow",
+          "names": [
+            "stockdb_research_loop"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 48,
+          "call": "loop.canonical_hash"
+        },
+        {
+          "line": 53,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 54,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 55,
+          "call": "loop.write_json_atomic"
+        },
+        {
+          "line": 51,
+          "call": "loop.canonical_hash"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\work\\c05_common_pressure_20261005\\market_pressure_runner.py",
+      "source_sha256": "9d27b08c302630695fe156abb50fda08ab614fea41bf3c330d6ab84290992aec",
+      "imports": [
+        {
+          "line": 14,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation",
+            "evaluate_candidate"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 125,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 157,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 159,
+          "call": "evaluate_candidate"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\work\\c05_continuation_20261005\\market_pressure_runner.py",
+      "source_sha256": "328ef35dfc8f94c43b5f17a1369a415391af828c06e39b9b2f10769f972c2914",
+      "imports": [
+        {
+          "line": 14,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation",
+            "evaluate_candidate"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 123,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 155,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 157,
+          "call": "evaluate_candidate"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\work\\c05_next_information_20261004\\candidate_runner.py",
+      "source_sha256": "5a36c7438ff99ed1219c82b36b45f6a941988eaa89e7e6909fea329a848c6628",
+      "imports": [
+        {
+          "line": 116,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 161,
+          "module": "evaluate_batch19",
+          "names": [
+            "evaluate_candidate"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 118,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 164,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 167,
+          "call": "evaluate_candidate"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\work\\c05_optimization_20261003\\research.py",
+      "source_sha256": "89d4f47cb552aba019b58084adc23a91af33167bbd1f5dc81c7064c7f9fc5dc9",
+      "imports": [
+        {
+          "line": 161,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 193,
+          "module": "evaluate_batch19",
+          "names": [
+            "evaluate_candidate"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 162,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 196,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 199,
+          "call": "evaluate_candidate"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\work\\c05_optimization_20261003\\size_conditioned.py",
+      "source_sha256": "defe30ef4b9ae680c89a376951453b0a2e80f60579a5d5b9114fd44b40e119fe",
+      "imports": [
+        {
+          "line": 74,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 110,
+          "module": "evaluate_batch19",
+          "names": [
+            "evaluate_candidate"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 75,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 114,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 117,
+          "call": "evaluate_candidate"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\work\\c05_order_measurement_20261005\\probe_child.py",
+      "source_sha256": "c1a148777cb1a47bed25da0c3bf61de81883ab2c7e3b1d9c7edfe3097777588f",
+      "imports": [
+        {
+          "line": 29,
+          "module": "stockdb",
+          "name": "stockdb",
+          "kind": "direct_provider_import"
+        }
+      ],
+      "matched_import_calls": [],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\work\\c05_structural_20261003\\matched_control.py",
+      "source_sha256": "0b4aa87166884a768a95fb4f65bd5a34b8c98178b15b4716d78a3c878b6e0e5d",
+      "imports": [
+        {
+          "line": 33,
+          "module": "evaluate_batch19",
+          "names": [
+            "evaluate_candidate"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 34,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 37,
+          "call": "evaluate_candidate"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\work\\c05_structural_20261003\\runner.py",
+      "source_sha256": "796803a2cdfe7af3b76e1e8b53658964af56351dee8f636d32228bdf906eba86",
+      "imports": [
+        {
+          "line": 101,
+          "module": "evaluate_batch19",
+          "names": [
+            "factor_correlation"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        },
+        {
+          "line": 147,
+          "module": "evaluate_batch19",
+          "names": [
+            "evaluate_candidate"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 102,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 150,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 153,
+          "call": "evaluate_candidate"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\work\\f409_validation_20261005\\run_validation.py",
+      "source_sha256": "b583e70c8c36a6aec8a1fbef91161de364f6456724e40cbe063f076d4c8c7442",
+      "imports": [
+        {
+          "line": 16,
+          "module": "evaluate_batch19",
+          "names": [
+            "evaluate_candidate",
+            "factor_correlation"
+          ],
+          "kind": "provider_or_workflow_dependency"
+        }
+      ],
+      "matched_import_calls": [
+        {
+          "line": 141,
+          "call": "factor_correlation"
+        },
+        {
+          "line": 244,
+          "call": "evaluate_candidate"
+        },
+        {
+          "line": 247,
+          "call": "evaluate_candidate"
+        }
+      ],
+      "interpretation": "static dependency only; matched import does not establish a live provider call"
+    }
+  ],
+  "retain_categories": [
+    "immutable raw price/minute/tick observations and content hashes",
+    "bar-cache parquet and sidecar manifest.json",
+    "factor-value panels, frozen identities/windows/costs and prior result artifacts",
+    "sealed_windows.json and sealed OOS artifacts (cold, no reevaluation)",
+    "candidate registry and denominator/negative-memory/evidence indexes",
+    "primary filing PDFs and download hashes, original announcement timestamps/revision lineage, PIT ledgers",
+    "official PandaAI response/evaluation evidence independent from old local source name"
+  ],
+  "exclusions": [
+    "external StockDB installation/server is shared infrastructure; no process termination or directory deletion authorized by this audit",
+    "mere use of StockDB in a filename does not prove an active provider call",
+    "CNInfo direct PDF download and offline financial extraction are not AKShare live calls",
+    "new factor evaluation must not silently import old provider or use latest financial vintage as historical PIT"
+  ],
+  "scan_scope": {
+    "source_roots": [
+      "factor_workflow",
+      "stockdb_factor_eval",
+      "work"
+    ],
+    "excluded": [
+      "QUANTAXIS new system",
+      "archive cold copies",
+      "runtime/vendor environments"
+    ],
+    "additional_rg_scan": "legacy .py/.ps1/.bat/.cmd outside QUANTAXIS/archive/runtime, direct imports/init calls"
+  }
+}
