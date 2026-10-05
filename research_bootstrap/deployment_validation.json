@@ -1,0 +1,329 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-10-05T04:57:30.707860+00:00",
+  "status": "IMPLEMENTED_AND_SAMPLE_VALIDATED; FULL_DATA_MIGRATION_PENDING",
+  "runtime": {
+    "mongo_uri": "mongodb://127.0.0.1:27018",
+    "database": "quantaxis",
+    "source": "QUANTAXIS-supported BaoStock into QA-compatible Mongo schemas",
+    "machine_paths_and_credentials": "private configuration excluded from Git"
+  },
+  "validation": {
+    "window": {
+      "start": "2026-01-05",
+      "end": "2026-09-18"
+    },
+    "codes": [
+      "000001",
+      "000002",
+      "000063",
+      "000069",
+      "000100",
+      "000157",
+      "000166",
+      "000333",
+      "000338",
+      "000402",
+      "000538",
+      "000568",
+      "000625",
+      "000651",
+      "000703",
+      "000725",
+      "000768",
+      "000776",
+      "000783",
+      "000858",
+      "000876",
+      "000895",
+      "000938",
+      "000963",
+      "002001",
+      "002007",
+      "002027",
+      "002049",
+      "002142",
+      "002230",
+      "002271",
+      "002304",
+      "002352",
+      "002415",
+      "002475",
+      "002594",
+      "600000",
+      "600009",
+      "600010",
+      "600015",
+      "600016",
+      "600019",
+      "600028",
+      "600030",
+      "600031",
+      "600036",
+      "600048",
+      "600050",
+      "600104",
+      "600111",
+      "600276",
+      "600309",
+      "600406",
+      "600519",
+      "600585",
+      "600690",
+      "600703",
+      "600809",
+      "600887",
+      "601166"
+    ],
+    "calendar": {
+      "status": "verified",
+      "source": "baostock_trade_dates",
+      "sessions": 174
+    },
+    "daily_rows": 10432,
+    "expected_calendar_stock_days": 10440,
+    "coverage": 0.9992337164750957,
+    "excluded_rows": [
+      {
+        "date": "2026-01-05",
+        "symbol": "002049",
+        "reason": "source_explicit_suspension",
+        "trade_status": "0",
+        "missing_numeric_fields": [
+          "volume",
+          "amount"
+        ]
+      },
+      {
+        "date": "2026-01-06",
+        "symbol": "002049",
+        "reason": "source_explicit_suspension",
+        "trade_status": "0",
+        "missing_numeric_fields": [
+          "volume",
+          "amount"
+        ]
+      },
+      {
+        "date": "2026-01-07",
+        "symbol": "002049",
+        "reason": "source_explicit_suspension",
+        "trade_status": "0",
+        "missing_numeric_fields": [
+          "volume",
+          "amount"
+        ]
+      },
+      {
+        "date": "2026-01-08",
+        "symbol": "002049",
+        "reason": "source_explicit_suspension",
+        "trade_status": "0",
+        "missing_numeric_fields": [
+          "volume",
+          "amount"
+        ]
+      },
+      {
+        "date": "2026-01-09",
+        "symbol": "002049",
+        "reason": "source_explicit_suspension",
+        "trade_status": "0",
+        "missing_numeric_fields": [
+          "volume",
+          "amount"
+        ]
+      },
+      {
+        "date": "2026-01-12",
+        "symbol": "002049",
+        "reason": "source_explicit_suspension",
+        "trade_status": "0",
+        "missing_numeric_fields": [
+          "volume",
+          "amount"
+        ]
+      },
+      {
+        "date": "2026-01-13",
+        "symbol": "002049",
+        "reason": "source_explicit_suspension",
+        "trade_status": "0",
+        "missing_numeric_fields": [
+          "volume",
+          "amount"
+        ]
+      },
+      {
+        "date": "2026-01-14",
+        "symbol": "002049",
+        "reason": "source_explicit_suspension",
+        "trade_status": "0",
+        "missing_numeric_fields": [
+          "volume",
+          "amount"
+        ]
+      }
+    ],
+    "adjustment_comparison": {
+      "start": "2026-09-14",
+      "end": "2026-09-18",
+      "source": "BaoStock actual hfq query adjustflag=1",
+      "checks": [
+        {
+          "code": "000001",
+          "rows": 5,
+          "hfq_max_relative_error": 2.220446049250313e-16,
+          "qfq_sample_end_max_relative_error": 2.220446049250313e-16,
+          "accepted": true
+        },
+        {
+          "code": "600000",
+          "rows": 5,
+          "hfq_max_relative_error": 2.220446049250313e-16,
+          "qfq_sample_end_max_relative_error": 2.220446049250313e-16,
+          "accepted": true
+        },
+        {
+          "code": "600519",
+          "rows": 5,
+          "hfq_max_relative_error": 2.220446049250313e-16,
+          "qfq_sample_end_max_relative_error": 2.220446049250313e-16,
+          "accepted": true
+        }
+      ],
+      "accepted": true
+    },
+    "tested_this_batch": 6,
+    "candidate_results": [
+      {
+        "candidate_id": "F-2f32c4f571af75",
+        "status": "PENDING",
+        "reason": "Historical source/operator/direction mapping requires explicit revalidation before labels",
+        "reflection_action": "new_source",
+        "diversity_status": "not_evaluated"
+      },
+      {
+        "candidate_id": "F-9248de01fee5f1",
+        "status": "LOCAL_PROXY",
+        "reflection_action": "abandon",
+        "diversity_status": "pending"
+      },
+      {
+        "candidate_id": "F-aeb2333db4e0df",
+        "status": "LOCAL_PROXY",
+        "reflection_action": "abandon",
+        "diversity_status": "pending"
+      },
+      {
+        "candidate_id": "F-e614924daf7ffd",
+        "status": "PENDING",
+        "reason": "Historical source/operator/direction mapping requires explicit revalidation before labels",
+        "reflection_action": "new_source",
+        "diversity_status": "not_evaluated"
+      },
+      {
+        "candidate_id": "F-de63a91cc044e8",
+        "status": "LOCAL_PROXY",
+        "reflection_action": "abandon",
+        "diversity_status": "pending"
+      },
+      {
+        "candidate_id": "F-5c4eda829b374f",
+        "status": "PENDING",
+        "reason": "Historical source/operator/direction mapping requires explicit revalidation before labels",
+        "reflection_action": "new_source",
+        "diversity_status": "not_evaluated"
+      },
+      {
+        "candidate_id": "F-27b6f0f9f081e2",
+        "status": "LOCAL_PROXY",
+        "reflection_action": "abandon",
+        "diversity_status": "pending"
+      },
+      {
+        "candidate_id": "F-06b463040ffd96",
+        "status": "LOCAL_PROXY",
+        "reflection_action": "abandon",
+        "diversity_status": "pending"
+      },
+      {
+        "candidate_id": "F-33d367747f66f7",
+        "status": "LOCAL_PROXY",
+        "reflection_action": "repair",
+        "diversity_status": "pending"
+      },
+      {
+        "candidate_id": "F-ceedef53956d46",
+        "status": "PENDING",
+        "reason": "Historical source/operator/direction mapping requires explicit revalidation before labels",
+        "reflection_action": "new_source",
+        "diversity_status": "not_evaluated"
+      }
+    ],
+    "next_generation_candidates": 10,
+    "llm_used": false,
+    "official_runs_started": 0,
+    "paid_api_requests": 0,
+    "factor_admission": "pending; no pool changes",
+    "sealed_oos_evaluated": false,
+    "sample_selection": "60 current stocks for engineering validation, not historical all-A performance evidence"
+  },
+  "multiple_testing": {
+    "historical_denominator": 415,
+    "total_tested_denominator": 422,
+    "note": "Conservatively retains one earlier proxy attempt on an unrevalidated historical definition; invalid for admission. Later guard blocks it before labels."
+  },
+  "migration": {
+    "can_retire_legacy": false,
+    "blockers": [
+      "daily quality violations require reconciliation",
+      "all_a acceptance pending",
+      "delisted acceptance pending",
+      "pit_financial acceptance pending"
+    ],
+    "min_daily_coverage": 0.98,
+    "action": "retain legacy evidence; use AXIS for verified scope"
+  },
+  "compute_policy": {
+    "gift_priority": true,
+    "recharge": "explicit confirmation per batch",
+    "gift_only_server_cap_available": false,
+    "dispatch": "pending current cost/cap evidence or specific batch authorization"
+  },
+  "verification": {
+    "pytest": {
+      "command": "python -m pytest tests -q",
+      "passed": 93
+    },
+    "raw_legacy_evidence_deleted": false,
+    "legacy_channels_retired": false,
+    "local_artifacts": [
+      {
+        "path": "research_runs/validation60_final/review.json",
+        "sha256": "0fc88de51ebda2d35bc03bb21cbee53b9409e1d9efe16dcea226ce98b71a6fd5",
+        "availability": "private ignored research_runs directory"
+      },
+      {
+        "path": "research_runs/validation60_final/feedback.json",
+        "sha256": "d43d0a5f12b62c3456a94991fcbe8269676e2200a878e466f0db40d1a4faaeea",
+        "availability": "private ignored research_runs directory"
+      },
+      {
+        "path": "research_runs/generation02_final.json",
+        "sha256": "5e9dac3e929cdc34282ea61e73ecf697011919290cb09130c6f2f01f30319368",
+        "availability": "private ignored research_runs directory"
+      },
+      {
+        "path": "research_runs/baostock_adjustment_acceptance.json",
+        "sha256": "0dc9afc13afb88315c8e3d7e0a96d5d44b473b1a17b2a666359ab94e7a043255",
+        "availability": "private ignored research_runs directory"
+      },
+      {
+        "path": "research_runs/baostock_002049_sync.json",
+        "sha256": "1aa4907b16683869077a56d60e1de3611dab663ac2ff88afcb30ea33b85cf864",
+        "availability": "private ignored research_runs directory"
+      }
+    ]
+  }
+}

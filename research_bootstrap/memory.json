@@ -1,0 +1,2452 @@
+{
+  "as_of": "2026-10-05",
+  "cold_evidence_index": "evidence.jsonl",
+  "cold_index_policy": "all_deduplicated_structured_evidence_and_unregistered_source_findings; resolve_evidence_id_on_demand",
+  "denominator_evidence": [
+    {
+      "source_path": "factor_workflow/context/current.json",
+      "source_sha256": "91e07b4c9e7f3428eb009bcc83f29bf28292971009137a0acb60203c34638ed5",
+      "value": 415
+    },
+    {
+      "source_path": "factor_workflow/knowledge_base.json",
+      "source_sha256": "06afd094c56eaeb5c0238e05ce57f844f0e79cbb348a964a4ae0e5585a99c9c1",
+      "value": 415
+    },
+    {
+      "source_path": "work/c05_common_pressure_20261005/checkpoint.json",
+      "source_sha256": "87770c98771f55adb3e2d2219d84efd55a524f72805a70b4bbe0a938ac81b4e6",
+      "value": 415
+    }
+  ],
+  "denominator_policy": "retain_max_recorded_history_and_recovered_F_identifier; never_reset_after_compaction",
+  "evidence_counts": {
+    "execution_failure": 3,
+    "legacy_gate_failure": 905,
+    "legacy_proxy_backtest": 3660,
+    "narrative_reference": 46,
+    "official_runtime": 4,
+    "official_validation": 6,
+    "registered_hypothesis": 214,
+    "source_audit": 5
+  },
+  "hypotheses": [
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 0,
+      "direction_evidence": [
+        {
+          "direction": 0,
+          "source_path": "factor_workflow/batches/batch17.json",
+          "source_pointer": "/panda_mappings/F141",
+          "source_sha256": "ac6dd30213eec6ce5550c3d456d7927ac923bb8c12c3b631768278d3e7429419"
+        },
+        {
+          "direction": 0,
+          "source_path": "panda_f141_results_20260922/summary.json",
+          "source_pointer": "/results/0",
+          "source_sha256": "a269dcdd48ff3cd34c0f620a9f12ef1a692290696a9a3bec2f18d995f04aff1b"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "fd9a8c86585bd385e68dc095d4da7de86b475d3446f9ff60fe303930f5dd1bc9",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        },
+        {
+          "evidence_id": "51770161b45887e7b4669232c58e989d8a44a619eac4eff36e78b6f4a9371da1",
+          "evidence_kind": "official_runtime",
+          "evidence_status": "reported"
+        },
+        {
+          "evidence_id": "99b4ab5027652d940a0455d90d78d7ea8d4567efacdaac07aecc9fca754828c4",
+          "evidence_kind": "registered_hypothesis",
+          "evidence_status": "literal_input_declaration"
+        },
+        {
+          "evidence_id": "f05505ec7df0970dea6cba94133ded1ce124c5790355a56fcf55cbb6674de063",
+          "evidence_kind": "official_runtime",
+          "evidence_status": "reported"
+        }
+      ],
+      "failure_reasons": [],
+      "family": "idiosyncratic_variance_share",
+      "fields": [
+        "close"
+      ],
+      "formula": "panda_native_factors/f141_residual_variance_share_transfer.py",
+      "historical_evidence_count": 20,
+      "hypothesis_id": "F141",
+      "mechanism": "滚动市场模型每日端点残差在总收益方差中的持续占比"
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 1,
+      "direction_evidence": [
+        {
+          "direction": 1,
+          "source_path": "panda_f174_transfer_manifest_20260922.md",
+          "source_pointer": "registered_formula_line",
+          "source_sha256": "96cde1a98938aefcf5119cda8b96e2545645c74e423c1c698d5364c1a6486eb7"
+        },
+        {
+          "direction": 1,
+          "source_path": "stockdb_factor_eval/results/batch23_formal/decision_packet.json",
+          "source_pointer": "/candidates/0",
+          "source_sha256": "7458e5447fa4f4dc64a8b2909298024383799bfe4c775d55b68a9e4d2fbf5ce0"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "4a738bde3ff3f55d13f06169c88fa8a3a4583ad90e5565a5d35c4b9d91e4e8d5",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        },
+        {
+          "evidence_id": "f4055c93b8420217cc7e0ca4705c22521b1481fc2ac3ac37e0b11450f0b60e1e",
+          "evidence_kind": "official_runtime",
+          "evidence_status": "reported"
+        },
+        {
+          "evidence_id": "52095435355766ae1e928f8b5b9938dd5eef5c4398b627ce9612721ccf8e29e3",
+          "evidence_kind": "registered_hypothesis",
+          "evidence_status": "literal_input_declaration"
+        }
+      ],
+      "failure_reasons": [],
+      "family": "slow_close_to_vwap_dislocation",
+      "fields": [
+        "amount",
+        "close",
+        "volume"
+      ],
+      "formula": "MA(RANK(AMOUNT/VOLUME-CLOSE)/RANK(AMOUNT/VOLUME+CLOSE),20)",
+      "historical_evidence_count": 13,
+      "hypothesis_id": "F174",
+      "mechanism": "Alpha191_120 的低换手版本：收盘低于当日成交均价所反映的尾盘折价与后续修复"
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 1,
+      "direction_evidence": [
+        {
+          "direction": 1,
+          "source_path": "stockdb_factor_eval/results/batch41_user_authorized_parameters/classification.json",
+          "source_pointer": "/frozen_identity/candidate_specs/0",
+          "source_sha256": "8c107e2d14bddf26eab1ed5c26d0b295712207d8944e9a9e4d787a31d658eea8"
+        },
+        {
+          "direction": 1,
+          "source_path": "stockdb_factor_eval/results/batch41_user_authorized_parameters/formal_summary.json",
+          "source_pointer": "/identity/candidate_specs/0",
+          "source_sha256": "beae84383c148b560b658f916136e82782c7575f7b062e7838dd62e107241e70"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "09d29f78aafe07a1656fb2344472d5ea84f16f00e9d93e1ea9f6de948cf88d05",
+          "evidence_kind": "legacy_gate_failure",
+          "evidence_status": "legacy_policy_result"
+        },
+        {
+          "evidence_id": "6866f6965c2c3ed152f333e8ce4b5d44c7ca26a2cd8e02d862f50cfc0a41eb78",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        },
+        {
+          "evidence_id": "57c636945f5b4bf2d226d2fe3da5ed798b1320ff6a27094c0344b0360d2fcf50",
+          "evidence_kind": "official_runtime",
+          "evidence_status": "reported"
+        },
+        {
+          "evidence_id": "5db367bedcc6ddd27bc88413ed280582b5de31255866775b7b984895efd56b01",
+          "evidence_kind": "official_validation",
+          "evidence_status": "official_checks_partial"
+        },
+        {
+          "evidence_id": "e000a796ae78575fdbd3352b6b6ff290ccd4e920601ca16802314bed23eb45a7",
+          "evidence_kind": "registered_hypothesis",
+          "evidence_status": "unvalidated"
+        },
+        {
+          "evidence_id": "1556447a72779c6ebebfef6708837b5a224b34365684c7a2f6d1d7eda2a2a3e7",
+          "evidence_kind": "official_validation",
+          "evidence_status": "reported"
+        }
+      ],
+      "failure_reasons": [
+        "actual pool Sharpe and same-month point increment",
+        "cross-provider factor-value equality",
+        "full-A per-stock finite coverage",
+        "official pool correlation",
+        "size-exclusion robustness"
+      ],
+      "family": "intraday_quality_low_MAX_rank_blend",
+      "fields": [
+        "close",
+        "open",
+        "turnover"
+      ],
+      "formula": "0.4*DIRECTION_ALIGNED_CS_RANK(F231) + 0.15*DIRECTION_ALIGNED_CS_RANK(F66) + 0.25*DIRECTION_ALIGNED_CS_RANK(F141) + 0.2*DIRECTION_ALIGNED_CS_RANK(F76)",
+      "historical_evidence_count": 79,
+      "hypothesis_id": "F253",
+      "mechanism": ""
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 0,
+      "direction_evidence": [
+        {
+          "direction": 0,
+          "source_path": "work/c05_continuation_20261005/market_pressure_plan.json",
+          "source_pointer": "/parameters",
+          "source_sha256": "b987bec0285dd919e27610d442f059143b2dfbb4cab9bccffb70ed64877127b8"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "7ddf0a7eba01fa374cafbfbe49f7a7d7a1f44033d18c5b867e12d4db0ee5ca61",
+          "evidence_kind": "legacy_gate_failure",
+          "evidence_status": "legacy_policy_result"
+        },
+        {
+          "evidence_id": "cd1415214d22f0b4fe62cabcadbbea91c7ae6f6907aa161c85bac84848558c2b",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        },
+        {
+          "evidence_id": "3a24dbc8ba2a3d7b069ccbcf563a16cedeb5c575c8a505a0cb212dbc9ce3025c",
+          "evidence_kind": "registered_hypothesis",
+          "evidence_status": "unvalidated"
+        }
+      ],
+      "failure_reasons": [
+        "failed_neighbour_nonredundant"
+      ],
+      "family": "F414_common_activity_partial_covariance_adjustment",
+      "fields": [
+        "close",
+        "code",
+        "date",
+        "high",
+        "low",
+        "open",
+        "turnover"
+      ],
+      "formula": "x=(2*C-H-L)/(H-L+1e-6). On the same strict own-OHLC/T/market-valid120-session support, R414=R_C05-Cov(T,m)*Cov(m,x)/(Var(m)*(Mean(T)+1e-6/n)); R_C05 retains its original epsilon-weighted-minus-unweighted definition. Require n>=60 and strictly positive stable rolling Var(m); MA20 of20 consecutive finite raw scores, cross-sectional rank, direction0.",
+      "historical_evidence_count": 14,
+      "hypothesis_id": "F414",
+      "mechanism": "A new cross-stock input: daily median log positive turnover of other cached-market stocks, excluding the stock itself; not a new price center, window, smoothing, direction or threshold grid."
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 0,
+      "direction_evidence": [
+        {
+          "direction": 0,
+          "source_path": "work/c05_common_pressure_20261005/market_formal_result.json",
+          "source_pointer": "/summary/C05_MATCHED",
+          "source_sha256": "21af90fac2633adf045aa4f3cfd8bcdec69d9672b2d23f435046d849dd9e227c"
+        },
+        {
+          "direction": 0,
+          "source_path": "work/c05_common_pressure_20261005/market_formal_result.json",
+          "source_pointer": "/summary/F415",
+          "source_sha256": "21af90fac2633adf045aa4f3cfd8bcdec69d9672b2d23f435046d849dd9e227c"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "2795dfdc9237ab858d32478ad9a74077b3c83685e210bdd44b81ae8a061aabe0",
+          "evidence_kind": "legacy_gate_failure",
+          "evidence_status": "legacy_policy_result"
+        },
+        {
+          "evidence_id": "f7a8d04b6f98d5425196e3175922037c5e7c8a1cb0e8e40e438cdca2c118aa0b",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        },
+        {
+          "evidence_id": "b76bb75100354bb9f3411e9aef2ca00d3fa7c77037256372efb5c3d980186325",
+          "evidence_kind": "registered_hypothesis",
+          "evidence_status": "unvalidated"
+        }
+      ],
+      "failure_reasons": [
+        "five_positive_IC_folds",
+        "fold_net_p25",
+        "net30",
+        "net50",
+        "rankIC",
+        "size_net30",
+        "size_net50",
+        "size_rankIC",
+        "study_wide_p"
+      ],
+      "family": "cross_stock_common_activity_pressure_decomposition_F414_F415",
+      "fields": [
+        "close",
+        "code",
+        "date",
+        "high",
+        "low",
+        "open",
+        "turnover"
+      ],
+      "formula": "On the same120-day common support, K=Cov(T,m)*Cov(m,x)/(Var(m)*(Mean(T)+1e-6/n)); MA20 of20 finite K, cross-sectional rank,direction0. K is the fitted common covariance component, not observed fund liquidation. Original C05 matched=F414 raw+K with the original epsilon bridge.",
+      "historical_evidence_count": 13,
+      "hypothesis_id": "F415",
+      "mechanism": "Separate market-common contribution from own residual, using the same new leave-own-out activity input. No direction/window/weight rescue of F414."
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 0,
+      "direction_evidence": [
+        {
+          "direction": 0,
+          "source_path": "stockdb_factor_eval/results/batch6_formal/summary.csv",
+          "source_pointer": "/",
+          "source_sha256": "81babd4b9af746263e479829ffec0c5d367791ca97ec0e25d1db360c7b47c92c"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "d8c67dc98d369bf9c2d9675cb474e25a110bb3bfb84b3dbadd981cc265e6e365",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        }
+      ],
+      "failure_reasons": [],
+      "family": "price_volume_crowding",
+      "fields": [],
+      "formula": "0.55*RANK(MA(MA(TURNOVER,20)/(MA(TURNOVER,120)+0.000001),20))+0.45*RANK(MA(CORR(RETURNS(CLOSE,1),TURNOVER,120),20))",
+      "historical_evidence_count": 5,
+      "hypothesis_id": "F66",
+      "mechanism": "平滑成交冷却叠加平滑价量拥挤"
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 0,
+      "direction_evidence": [
+        {
+          "direction": 0,
+          "source_path": "stockdb_factor_eval/results/batch6_formal/summary.csv",
+          "source_pointer": "/",
+          "source_sha256": "81babd4b9af746263e479829ffec0c5d367791ca97ec0e25d1db360c7b47c92c"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "04a8e92fd0eb71b5c613d98d50ee4c9620767c967d99f516f77a5aa244b54334",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        }
+      ],
+      "failure_reasons": [],
+      "family": "drawdown_and_attention_cooling",
+      "fields": [],
+      "formula": "0.65*RANK(MA(CLOSE/(TS_MAX(HIGH,120)+0.000001),20))+0.35*RANK(MA(TURNOVER,120))",
+      "historical_evidence_count": 5,
+      "hypothesis_id": "F62",
+      "mechanism": "平滑深回撤叠加绝对低换手"
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 0,
+      "direction_evidence": [
+        {
+          "direction": 0,
+          "source_path": "stockdb_factor_eval/results/batch6_formal/summary.csv",
+          "source_pointer": "/",
+          "source_sha256": "81babd4b9af746263e479829ffec0c5d367791ca97ec0e25d1db360c7b47c92c"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "7141f546d82c34c442063367d066c4bfe4c570bd410e61b343c7f16efbeb7730",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        }
+      ],
+      "failure_reasons": [],
+      "family": "drawdown_and_attention_cooling",
+      "fields": [],
+      "formula": "0.65*RANK(MA(CLOSE/(TS_MAX(HIGH,120)+0.000001),20))+0.35*RANK(MA(MA(TURNOVER,20)/(MA(TURNOVER,120)+0.000001),20))",
+      "historical_evidence_count": 5,
+      "hypothesis_id": "F63",
+      "mechanism": "平滑深回撤叠加平滑成交冷却"
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 0,
+      "direction_evidence": [
+        {
+          "direction": 0,
+          "source_path": "stockdb_factor_eval/results/batch8_formal/summary.csv",
+          "source_pointer": "/",
+          "source_sha256": "815a794e22b8f22f61ba5b988cd762cc4a0c249332555508c1c789a1604d56f2"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "3df1138f32adfd8bc7a822bf7f1d1a46fcbb8527d8b9a6e6bb69fa11bc2e9ca9",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        }
+      ],
+      "failure_reasons": [],
+      "family": "anti_lottery",
+      "fields": [],
+      "formula": "RANK(MA(TS_MAX(RETURNS(CLOSE,1),120),20))",
+      "historical_evidence_count": 5,
+      "hypothesis_id": "F76",
+      "mechanism": "平滑反彩票与极端正收益惩罚"
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 0,
+      "direction_evidence": [
+        {
+          "direction": 0,
+          "source_path": "work/c05_next_information_20261004/candidate_formal_result.json",
+          "source_pointer": "/summary/F409",
+          "source_sha256": "47b319ec840d884f9a33dc394fc249bbadde7be70180cd331ad19ebc94faaa30"
+        },
+        {
+          "direction": 0,
+          "source_path": "work/c05_next_information_20261004/candidate_plan.json",
+          "source_pointer": "/",
+          "source_sha256": "df7485d44ffcb69bf6d047adeaf610421d1f7ddbf8caf09a49ad5986d0091396"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "24d0d72eff8655fb16566c7b94adc6dbd2d84a658efdded4af2b73e4d29e16c8",
+          "evidence_kind": "legacy_gate_failure",
+          "evidence_status": "legacy_policy_result"
+        },
+        {
+          "evidence_id": "ed524a6a23b7888dbefa38bf3f156467b8517df3cab89aafae358acc3118a70d",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        },
+        {
+          "evidence_id": "fc9ece7f0307b3579906c5779ef55e3422a0a1a00c0b4e7abbe597baf59090a1",
+          "evidence_kind": "registered_hypothesis",
+          "evidence_status": "unvalidated"
+        }
+      ],
+      "failure_reasons": [
+        "fold_net_p25",
+        "net30",
+        "net50",
+        "size_net30",
+        "size_net50"
+      ],
+      "family": "unclassified",
+      "fields": [
+        "amount",
+        "close",
+        "code",
+        "date",
+        "high",
+        "low",
+        "open",
+        "turnover",
+        "volume"
+      ],
+      "formula": "RANK(MA20(SUM120(v*T*q)/(SUM120(v*T)+1e-6)-SUM120(v*q)/(SUM120(v)+1e-6)))",
+      "historical_evidence_count": 15,
+      "hypothesis_id": "F409",
+      "mechanism": ""
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 0,
+      "direction_evidence": [
+        {
+          "direction": 0,
+          "source_path": "stockdb_factor_eval/results/batch11_formal/frozen_classification.csv",
+          "source_pointer": "/",
+          "source_sha256": "c33f8f1b15d9dc240270a004dbe6a6c14423e8b0bdd41cf85aef03d2e5dbee91"
+        },
+        {
+          "direction": 0,
+          "source_path": "stockdb_factor_eval/results/batch11_formal/summary.csv",
+          "source_pointer": "/",
+          "source_sha256": "a94518aa0f0fd9e1e5c3f906702a4be307e9ffd03841f7c56e7e36c5490d8995"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "3e40880be1b242598cc6a1c8f8adb9f498bd403f72ee988b4a01da75915f4937",
+          "evidence_kind": "legacy_gate_failure",
+          "evidence_status": "legacy_policy_result"
+        },
+        {
+          "evidence_id": "c4ad6177189e34837d8ad946e5beabe86a6b3e8ce97ab92919a7e32495b75f6f",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        }
+      ],
+      "failure_reasons": [
+        "size_net30<2%",
+        "size_net50<=0"
+      ],
+      "family": "raw_daily_orderflow_ratios_and_clv_repairs",
+      "fields": [],
+      "formula": "RANK(MA((SUM(IF((HIGH>LOW)*(TURNOVER>0),(2*CLOSE-HIGH-LOW)/(HIGH-LOW+0.000001)*TURNOVER,0),120)/(SUM(IF((HIGH>LOW)*(TURNOVER>0),TURNOVER,0),120)+0.000001))-(SUM(IF((HIGH>LOW)*(TURNOVER>0),(2*CLOSE-HIGH-LOW)/(HIGH-LOW+0.000001),0),120)/(COUNT((HIGH>LOW)*(TURNOVER>0),120)+0.000001)),20))",
+      "historical_evidence_count": 2,
+      "hypothesis_id": "F105",
+      "mechanism": "成交加权 CLV 减普通 CLV 的追买残差"
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 0,
+      "direction_evidence": [
+        {
+          "direction": 0,
+          "source_path": "stockdb_factor_eval/results/batch26_formal/decision_packet.json",
+          "source_pointer": "/candidates/0",
+          "source_sha256": "133029b9e4e7bdf14521970d90fa24d6f839ebccffb13f59f22f590ad35b1888"
+        },
+        {
+          "direction": 0,
+          "source_path": "stockdb_factor_eval/results/batch26_formal/frozen_classification.csv",
+          "source_pointer": "/",
+          "source_sha256": "b67cc6894cde578c145074a740982f27bef013461e832138caaf520bd9a7722f"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "f7f12300fe9a186afec2bb8869810acf688707c0f596eedab276cacc1a9e5379",
+          "evidence_kind": "legacy_gate_failure",
+          "evidence_status": "legacy_policy_result"
+        },
+        {
+          "evidence_id": "d9da0e92d32abc55915ac7330dcc2205e0d64f0b81dc04cceca708976d358eac",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        }
+      ],
+      "failure_reasons": [
+        "cost_or_turnover",
+        "net50<0.25%",
+        "other:net50<0.25%",
+        "size_net50<=0",
+        "small_cap_dependence",
+        "turnover>15%"
+      ],
+      "family": "raw_long_intraday_drift_and_unit_turnover_impact",
+      "fields": [],
+      "formula": "MA100(LOG(CLOSE/OPEN))",
+      "historical_evidence_count": 4,
+      "hypothesis_id": "F193",
+      "mechanism": "长期日内收益拥挤：规避已反复在日内被追高的股票"
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 1,
+      "direction_evidence": [
+        {
+          "direction": 1,
+          "source_path": "stockdb_factor_eval/results/batch43_f253_overnight/classification.json",
+          "source_pointer": "/frozen_identity/candidate_specs/10",
+          "source_sha256": "0ba7127232b1d116e83a41ac985f0c4222f1f06b98c73700a702882c954862cc"
+        },
+        {
+          "direction": 1,
+          "source_path": "stockdb_factor_eval/results/batch43_f253_overnight/formal_summary.json",
+          "source_pointer": "/identity/candidate_specs/10",
+          "source_sha256": "f774fba69afe46f162e75516a8e809117524f07cd33a86a17e96450afa6cc60f"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "a93091510d6ff5ea5b10839ad78bbeb5dd05392eac97dbc985b7f69d7a5bc89f",
+          "evidence_kind": "legacy_gate_failure",
+          "evidence_status": "legacy_policy_result"
+        },
+        {
+          "evidence_id": "5a4a741dc2ec825942d22219bfefa6e843282f041bcbd3105b2eb93205ec2952",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        },
+        {
+          "evidence_id": "07837abd39dba678fd6919ac3769e69e30d5776574a128189a1dbb62f546f0d4",
+          "evidence_kind": "registered_hypothesis",
+          "evidence_status": "unvalidated"
+        }
+      ],
+      "failure_reasons": [
+        "clear_points_gain_5pct_all_four",
+        "clear_pool_Sharpe_gain_005",
+        "clear_single_Sharpe_gain_025",
+        "period_net_Sharpe_F253_plus_010",
+        "recent_same_month_points_gain"
+      ],
+      "family": "F253_same_parent_weight_window_smoothing_regime_grid",
+      "fields": [],
+      "formula": "0.6*CS_RANK(+F253) + 0.2*CS_RANK(+NSNR100) + 0.2*CS_RANK(-IV120)",
+      "historical_evidence_count": 38,
+      "hypothesis_id": "F287",
+      "mechanism": ""
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 1,
+      "direction_evidence": [
+        {
+          "direction": 1,
+          "source_path": "work/c05_optimization_20261003/formal_result.json",
+          "source_pointer": "/summary/F401",
+          "source_sha256": "70b70dc1c16ce5e0099a260272cb80b2fb9f226b065262846d2998bf883c56a2"
+        },
+        {
+          "direction": 1,
+          "source_path": "work/c05_optimization_20261003/plan.json",
+          "source_pointer": "/",
+          "source_sha256": "913ca7d510f10c8e0eb004b7c558431dbadd9bd06ccde24e74102ef10a2bef2f"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "4d9c1722c8b89549eeb94b82432c3a9b9766bab7012e8d5e189cf331b2abfb14",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        },
+        {
+          "evidence_id": "59eaf730964cd835741e556ea06e2da6279606347e86d32bf1ad4983220613dd",
+          "evidence_kind": "registered_hypothesis",
+          "evidence_status": "unvalidated"
+        }
+      ],
+      "failure_reasons": [],
+      "family": "unclassified",
+      "fields": [],
+      "formula": "",
+      "historical_evidence_count": 5,
+      "hypothesis_id": "F401",
+      "mechanism": "Completed next-session close-location absorption after negative close-location pressure; turnover-conditioned residual relative to the same unweighted pressure response"
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 0,
+      "direction_evidence": [
+        {
+          "direction": 0,
+          "source_path": "work/c05_optimization_20261003/size_conditioned/formal_result.json",
+          "source_pointer": "/summary/F402",
+          "source_sha256": "74c9b77a870cc050d56de52a38c2998574f5aeffe25f4d8c4a65f088b800e6d1"
+        },
+        {
+          "direction": 0,
+          "source_path": "work/c05_optimization_20261003/size_conditioned/plan.json",
+          "source_pointer": "/",
+          "source_sha256": "f5aac0247cedb66e157845fd6664376f0d65144fc60fcbd141733e8ea708affe"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "2935c2908ca19094479e84895e30c4c85bc23bc5786ce5d4560355e800114ac7",
+          "evidence_kind": "legacy_gate_failure",
+          "evidence_status": "legacy_policy_result"
+        },
+        {
+          "evidence_id": "a3167e5245a7c8eb51aedf0270a9590069ff6ea3e188254afca27aa8eb2d141a",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        },
+        {
+          "evidence_id": "c2e8d9ffcce854b29822210f33cc5e7433cbc2819403d30d45b53a6e652825c6",
+          "evidence_kind": "registered_hypothesis",
+          "evidence_status": "unvalidated"
+        }
+      ],
+      "failure_reasons": [],
+      "family": "unclassified",
+      "fields": [],
+      "formula": "Use frozen support-matched C05_CONTROL rank, rank it within same-date market-cap quintiles, then rank the conditional ranks across entire eligible cross-section",
+      "historical_evidence_count": 9,
+      "hypothesis_id": "F402",
+      "mechanism": ""
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence",
+        "needs_direction_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": null,
+      "direction_evidence": [],
+      "direction_status": "needs_direction_evidence",
+      "evidence_refs": [
+        {
+          "evidence_id": "4686414f63108771718088f53267f63c6071fbc6c960f363950fc7830619228e",
+          "evidence_kind": "narrative_reference",
+          "evidence_status": "unverified_narrative"
+        }
+      ],
+      "failure_reasons": [],
+      "family": "initial_attention_gap_and_raw_fundamental_compatibility",
+      "fields": [],
+      "formula": "",
+      "historical_evidence_count": 1,
+      "hypothesis_id": "F01",
+      "mechanism": ""
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence",
+        "needs_direction_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": null,
+      "direction_evidence": [],
+      "direction_status": "needs_direction_evidence",
+      "evidence_refs": [
+        {
+          "evidence_id": "20b06c0423482f321bccab80714c4fd88a36731f18817708a94faf78a7ac86d8",
+          "evidence_kind": "narrative_reference",
+          "evidence_status": "unverified_narrative"
+        }
+      ],
+      "failure_reasons": [],
+      "family": "static_value_and_value_reversal_composites",
+      "fields": [],
+      "formula": "",
+      "historical_evidence_count": 1,
+      "hypothesis_id": "F14",
+      "mechanism": ""
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 0,
+      "direction_evidence": [
+        {
+          "direction": 0,
+          "source_path": "stockdb_factor_eval/results/batch5_formal/summary.csv",
+          "source_pointer": "/",
+          "source_sha256": "b711926b9bd718a62bffd50afc6920911125857dd68188592f25ce515447dde8"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "69b6cf26e530d78f64f48b5ff5dfdc208a9e115b697c229cb56313bd81de59b0",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        }
+      ],
+      "failure_reasons": [],
+      "family": "window_or_weight_retuning_of_existing_price_turnover_factors",
+      "fields": [],
+      "formula": "0.65*RANK(CLOSE/(TS_MAX(HIGH,120)+0.000001))+0.35*RANK(MA(TURNOVER,120))",
+      "historical_evidence_count": 1,
+      "hypothesis_id": "F53",
+      "mechanism": "深回撤叠加绝对低换手"
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 1,
+      "direction_evidence": [
+        {
+          "direction": 1,
+          "source_path": "stockdb_factor_eval/results/batch9_formal/summary.csv",
+          "source_pointer": "/",
+          "source_sha256": "637f94288c103d036144e47ccca4470ce899128aa5217e6a8b74036930c7c3ab"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "c8c5889b9716c13b29691430945e71c002fde3f57e8edcb0c97c072aeb125cd4",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        }
+      ],
+      "failure_reasons": [],
+      "family": "static_pb_pe_quality_proxy",
+      "fields": [],
+      "formula": "RANK(MA(IF((ratio_ep_ttm>0)*(book_to_market_ratio_lf>0),ratio_ep_ttm/(book_to_market_ratio_lf+0.000001),-1),60))",
+      "historical_evidence_count": 1,
+      "hypothesis_id": "F83",
+      "mechanism": "平滑正盈利账面回报质量"
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 0,
+      "direction_evidence": [
+        {
+          "direction": 0,
+          "source_path": "work/c05_continuation_20261005/native_resume_plan.json",
+          "source_pointer": "/",
+          "source_sha256": "7869c44684800189451b3520ae280b900faf0bdbe7fbcac38130718d15bcd84d"
+        },
+        {
+          "direction": 0,
+          "source_path": "work/c05_next_information_20261004/candidate_formal_result.json",
+          "source_pointer": "/summary/C05_CONTROL",
+          "source_sha256": "47b319ec840d884f9a33dc394fc249bbadde7be70180cd331ad19ebc94faaa30"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "e355bc6b4d187b62216b79b05ac2bebbaa7733d587225f25bf76fcda4678c6bb",
+          "evidence_kind": "execution_failure",
+          "evidence_status": "failed"
+        },
+        {
+          "evidence_id": "d483c275dd618f19f2f6bb7e90a61bc40d87f38ab2ff5480aaa33ee2d840edbe",
+          "evidence_kind": "legacy_gate_failure",
+          "evidence_status": "legacy_policy_result"
+        },
+        {
+          "evidence_id": "a4e5f7c9a3040f53c1199a04fe16415d8aa86073a2536cffe484d899623eb616",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        },
+        {
+          "evidence_id": "fb2d5cdfb4b0122cd35be54e935dc427474a56994b4275659926762bdaa0a4de",
+          "evidence_kind": "registered_hypothesis",
+          "evidence_status": "unvalidated"
+        },
+        {
+          "evidence_id": "f0183c58dafc923e787d83d1b55253b8d6ed431c3f6165a0f48bc94529898c35",
+          "evidence_kind": "source_audit",
+          "evidence_status": "reported"
+        }
+      ],
+      "failure_reasons": [
+        "five_positive_folds",
+        "fold_net_p25",
+        "multiple_testing_p",
+        "net30",
+        "net50",
+        "outside_rate_all_years",
+        "rank_ic",
+        "size_net30",
+        "size_net50",
+        "size_rank_ic"
+      ],
+      "family": "raw_daily_orderflow_ratios_and_clv_repairs",
+      "fields": [],
+      "formula": "",
+      "historical_evidence_count": 41,
+      "hypothesis_id": "C05",
+      "mechanism": "Obtain the already-fixed four-session five-field native C05 inputs to identify keyed wrapper/field/geometry differences from local inputs; no repeated run or new workflow creation."
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence",
+        "needs_direction_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": null,
+      "direction_evidence": [],
+      "direction_status": "needs_direction_evidence",
+      "evidence_refs": [
+        {
+          "evidence_id": "04e23d607f23355713ba875752747969cfa19c95eeb4d8133137b3cd74c91b60",
+          "evidence_kind": "narrative_reference",
+          "evidence_status": "unverified_narrative"
+        }
+      ],
+      "failure_reasons": [],
+      "family": "static_financial_levels_and_isolated_intraday_primitives",
+      "fields": [],
+      "formula": "",
+      "historical_evidence_count": 1,
+      "hypothesis_id": "C06",
+      "mechanism": ""
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 1,
+      "direction_evidence": [
+        {
+          "direction": 1,
+          "source_path": "stockdb_factor_eval/results/batch15_formal/frozen_classification.csv",
+          "source_pointer": "/",
+          "source_sha256": "28550cbe2412f69ac22a2cff71dbab6694c0fa5181f210bb7ab73e618ba929a8"
+        },
+        {
+          "direction": 1,
+          "source_path": "stockdb_factor_eval/results/batch15_formal/summary.csv",
+          "source_pointer": "/",
+          "source_sha256": "1efd6df37edf4975f7dc98efabc140d7f3c13404550aae383867d3e2c03f450b"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "ed04386d93f122a66cf92c045ec29a392328ff091320b12efe59c660f83c457a",
+          "evidence_kind": "legacy_gate_failure",
+          "evidence_status": "legacy_policy_result"
+        },
+        {
+          "evidence_id": "05732c350c4c8cb8a0b0dd7fdee461b1adc3e3311bf13c9c2da9feb2933ea4fa",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        }
+      ],
+      "failure_reasons": [
+        "candidate_specific_duplicate",
+        "direction_rank_ic<0.02",
+        "net30<2%",
+        "net50<0.25%",
+        "p25_fold_net<=0",
+        "positive_folds!=5/5",
+        "size_direction_rank_ic<0.02",
+        "size_net30<2%",
+        "size_net50<=0",
+        "turnover>15%"
+      ],
+      "family": "raw_path_volatility_and_discrete_event_age",
+      "fields": [],
+      "formula": "RANK(MA((LLVBARS(LOW,120)-HHVBARS(HIGH,120))/120,20))",
+      "historical_evidence_count": 2,
+      "hypothesis_id": "F119",
+      "mechanism": "近期低点相对高点出现得更早，刻画极值时序由压力转向修复"
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 0,
+      "direction_evidence": [
+        {
+          "direction": 0,
+          "source_path": "stockdb_factor_eval/results/batch16_formal/summary.csv",
+          "source_pointer": "/",
+          "source_sha256": "e9274df55d16ea0e13ac8bfd1f83648da5671fd632ed531db45300972a06ef2c"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "cc32209cf7ca8b3a07032af07d24d6e1a084f1bff3e3b3c55107faf9d3e255f9",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        }
+      ],
+      "failure_reasons": [],
+      "family": "raw_residual_volatility_and_price_delay_neighbors",
+      "fields": [],
+      "formula": "RANK(MA(BETA_DOWN(RETURNS(CLOSE,1),LOO_EQ_MKT,120,30)-BETA_UP(RETURNS(CLOSE,1),LOO_EQ_MKT,120,30),20))",
+      "historical_evidence_count": 1,
+      "hypothesis_id": "F129",
+      "mechanism": "下行市场暴露相对上行暴露更高的非对称系统脆弱性"
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 1,
+      "direction_evidence": [
+        {
+          "direction": 1,
+          "source_path": "archive/batch18_pre_completion_stamp_20260922/decision_packet.json",
+          "source_pointer": "/candidates/5",
+          "source_sha256": "c605378b090ef8b4a8fbf1652b37d5668655fc2f1a0a14e4c031dbd388c15706"
+        },
+        {
+          "direction": 1,
+          "source_path": "archive/batch18_pre_completion_stamp_20260922/frozen_classification.csv",
+          "source_pointer": "/",
+          "source_sha256": "4f87b79d4ecf0776818cb40e11e9cb98d36fc3063191bbbbb6d94ce445943d0b"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "539ed22934edd1b1a9b91d05582785df72ed8a720c88ebfb49540b07cce19482",
+          "evidence_kind": "legacy_gate_failure",
+          "evidence_status": "legacy_policy_result"
+        },
+        {
+          "evidence_id": "2b2a2b456afc3ae5c2a9af4c937ba1906a1dcd7e23ed1b2c8929331345d38843",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        }
+      ],
+      "failure_reasons": [
+        "batch_rho_cluster_loser",
+        "direction_rank_ic<0.02",
+        "net30<2%",
+        "net50<0.25%",
+        "p25_fold_net<=0",
+        "positive_folds!=5/5",
+        "size_direction_rank_ic<0.02",
+        "size_net30<2%",
+        "size_net50<=0",
+        "turnover>15%"
+      ],
+      "family": "raw_or_short_smoothed_segmented_fund_flow",
+      "fields": [],
+      "formula": "N_t(MA10(qM/(ABS(r)+STD20(r)+eps))|size,log(amount_lag1))",
+      "historical_evidence_count": 12,
+      "hypothesis_id": "F145",
+      "mechanism": "main-flow absorption under weak price impact"
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 0,
+      "direction_evidence": [
+        {
+          "direction": 0,
+          "source_path": "stockdb_factor_eval/results/batch20_formal/frozen_classification.csv",
+          "source_pointer": "/",
+          "source_sha256": "26cf0e676126ed2dde226c5bee5b92f2e4b47444a094c969cdab534d30537c39"
+        },
+        {
+          "direction": 0,
+          "source_path": "stockdb_factor_eval/results/batch20_formal/summary.csv",
+          "source_pointer": "/",
+          "source_sha256": "4b11a6d54ee37e9ba8eb0bcc596649e320060e0e8156a73020135f398216b7ab"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "d97a82a169f25486506a66b844218d46893759b6857c3f49f82f7a52be13fd4c",
+          "evidence_kind": "legacy_gate_failure",
+          "evidence_status": "legacy_policy_result"
+        },
+        {
+          "evidence_id": "047bbf219d31008bea4f097e4f44635390793186b200a6cac781da9407b41a30",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        }
+      ],
+      "failure_reasons": [
+        "drawdown_gate"
+      ],
+      "family": "local_tail_overlays_and_fixed_low_amplitude_blends",
+      "fields": [],
+      "formula": "0.85*RANK(F66)+0.15*CLIP((RANK(LOSS_TURNOVER_STRESS_MA20)-0.8)/0.2,0,1)",
+      "historical_evidence_count": 4,
+      "hypothesis_id": "F157",
+      "mechanism": "F66 的尾部成交压力覆盖；只惩罚亏损日异常换手最高的20%截面"
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 0,
+      "direction_evidence": [
+        {
+          "direction": 0,
+          "source_path": "archive/batch22_release_erratum_20260922_2106/batch22_formal/frozen_classification.csv",
+          "source_pointer": "/",
+          "source_sha256": "670ac59e0a7b56be902a2577db2b828b2f6193709a7cb44a2c5bf8ac9596d0ce"
+        },
+        {
+          "direction": 0,
+          "source_path": "archive/batch22_release_erratum_20260922_2106/batch22_formal/summary.csv",
+          "source_pointer": "/",
+          "source_sha256": "133c7c7fdf4bc4afaac7e12cf9aa4fb91b97517af1576e3ff574fec7ac881635"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "9285e20d205763dc8353e786fca2ee8c60ff97b2af35cfb690e58d0e0b6db77b",
+          "evidence_kind": "legacy_gate_failure",
+          "evidence_status": "legacy_policy_result"
+        },
+        {
+          "evidence_id": "90fe4b357a4a2937eeca590434f7950599dd7da635cf1815675b31cc19a955b0",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        }
+      ],
+      "failure_reasons": [
+        "cagr_damage",
+        "drawdown_gate",
+        "ic_noninferiority",
+        "redundancy",
+        "remaining_pool_correlation",
+        "tail_preservation",
+        "tail_risk",
+        "time_instability"
+      ],
+      "family": "F63_tail_reordering_with_structured_recovery_guards",
+      "fields": [],
+      "formula": "RANK(F63)+0.20*I(RANK(F63)<=0.20)*RANK(F129)",
+      "historical_evidence_count": 9,
+      "hypothesis_id": "F168",
+      "mechanism": "在 F63 候选尾部内惩罚下行 beta 高于上行 beta 的系统性非对称脆弱性"
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 0,
+      "direction_evidence": [
+        {
+          "direction": 0,
+          "source_path": "stockdb_factor_eval/results/batch23_formal/decision_packet.json",
+          "source_pointer": "/candidates/1",
+          "source_sha256": "7458e5447fa4f4dc64a8b2909298024383799bfe4c775d55b68a9e4d2fbf5ce0"
+        },
+        {
+          "direction": 0,
+          "source_path": "stockdb_factor_eval/results/batch23_formal/frozen_classification.csv",
+          "source_pointer": "/",
+          "source_sha256": "f7e001c9e2bb416aaaea14da318b83b5b7b6582de0b60f915ff11dfbea8b86cb"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "e40d98be26bee8c410b49a607e86a192c4d3a42043df4b5eef6691673103ebc8",
+          "evidence_kind": "legacy_gate_failure",
+          "evidence_status": "legacy_policy_result"
+        },
+        {
+          "evidence_id": "6d758f370c9d59a2fd925b92bbddbcdbb39fe7d9b367316cd2bdbb90d74c82de",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        }
+      ],
+      "failure_reasons": [
+        "cost_or_turnover",
+        "ic_noninferiority",
+        "net30<2%",
+        "net50<0.25%",
+        "other:net30<2%",
+        "other:net50<0.25%",
+        "p25_fold_net<=0",
+        "size_net30<2%",
+        "size_net50<=0",
+        "small_cap_dependence",
+        "turnover>15%"
+      ],
+      "family": "high_turnover_public_state_switch_and_price_location",
+      "fields": [],
+      "formula": "MA20(MAX5(IF(RET<0,STD20(RET)^2,RET^2)))",
+      "historical_evidence_count": 4,
+      "hypothesis_id": "F173",
+      "mechanism": "Alpha191_010 状态切换原语的无量纲化版本：规避近期下跌状态中反复出现的波动突发"
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 0,
+      "direction_evidence": [
+        {
+          "direction": 0,
+          "source_path": "stockdb_factor_eval/results/batch23_formal/decision_packet.json",
+          "source_pointer": "/candidates/4",
+          "source_sha256": "7458e5447fa4f4dc64a8b2909298024383799bfe4c775d55b68a9e4d2fbf5ce0"
+        },
+        {
+          "direction": 0,
+          "source_path": "stockdb_factor_eval/results/batch23_formal/frozen_classification.csv",
+          "source_pointer": "/",
+          "source_sha256": "f7e001c9e2bb416aaaea14da318b83b5b7b6582de0b60f915ff11dfbea8b86cb"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "3a8735412cba79484764fa62862aeb777a55bac1c66e9f2f31e155bc6ccb8412",
+          "evidence_kind": "legacy_gate_failure",
+          "evidence_status": "legacy_policy_result"
+        },
+        {
+          "evidence_id": "4ceb1b3bf854a14132f42d4f2311e0857071551ebb89b14be18f7273250c7062",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        }
+      ],
+      "failure_reasons": [
+        "direction_rank_ic<0.02",
+        "ic_noninferiority",
+        "net30<2%",
+        "net50<0.25%",
+        "other:net30<2%",
+        "other:net50<0.25%",
+        "p25_fold_net<=0",
+        "positive_folds!=5/5",
+        "size_net30<2%",
+        "size_net50<=0",
+        "small_cap_dependence"
+      ],
+      "family": "turnover_concentration_and_completed_shock_recovery_memory",
+      "fields": [],
+      "formula": "MA20(SUM120(TURNOVER^2)/(SUM120(TURNOVER)^2+EPS))",
+      "historical_evidence_count": 4,
+      "hypothesis_id": "F177",
+      "mechanism": "换手参与度集中：规避成交只由少数注意力事件驱动、筹码交换缺乏时间广度的股票"
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 1,
+      "direction_evidence": [
+        {
+          "direction": 1,
+          "source_path": "stockdb_factor_eval/results/batch24_formal/decision_packet.json",
+          "source_pointer": "/candidates/4",
+          "source_sha256": "2127a84dd27f033db5d321957c4df911af222b3fdf5f55d2369ea8f970819fbc"
+        },
+        {
+          "direction": 1,
+          "source_path": "stockdb_factor_eval/results/batch24_formal/frozen_classification.csv",
+          "source_pointer": "/",
+          "source_sha256": "ec78844423476455c49a46da2ced6b51466023c362ccac6e6ca82b93f96ac6f0"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "4ff4b37d0513e5b34fd28a9dee4facd7985fb99076811039270b120582b14dc8",
+          "evidence_kind": "legacy_gate_failure",
+          "evidence_status": "legacy_policy_result"
+        },
+        {
+          "evidence_id": "d67c4a4b400f06038932ab3ca5a004e6365b1f57e03505c827b5a5a1401bedb4",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        }
+      ],
+      "failure_reasons": [
+        "direction_rank_ic<0.02",
+        "ic_noninferiority",
+        "net30<2%",
+        "net50<0.25%",
+        "other:net30<2%",
+        "other:net50<0.25%",
+        "p25_fold_net<=0",
+        "positive_folds!=5/5",
+        "size_direction_rank_ic<0.02",
+        "size_net30<2%",
+        "size_net50<=0",
+        "small_cap_dependence"
+      ],
+      "family": "opening_gap_absorption_and_rejection_traits",
+      "fields": [],
+      "formula": "MA20(SUM120(IF(GAP<0,INTRADAY_RET,NaN))/SUM120(IF(GAP<0,ABS(GAP),NaN)))",
+      "historical_evidence_count": 4,
+      "hypothesis_id": "F179",
+      "mechanism": "负向隔夜缺口的日内吸收：偏好过去半年反复在同日承接开盘卖压、且不继续下坠的股票"
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 0,
+      "direction_evidence": [
+        {
+          "direction": 0,
+          "source_path": "stockdb_factor_eval/results/batch24_formal/decision_packet.json",
+          "source_pointer": "/candidates/1",
+          "source_sha256": "2127a84dd27f033db5d321957c4df911af222b3fdf5f55d2369ea8f970819fbc"
+        },
+        {
+          "direction": 0,
+          "source_path": "stockdb_factor_eval/results/batch24_formal/frozen_classification.csv",
+          "source_pointer": "/",
+          "source_sha256": "ec78844423476455c49a46da2ced6b51466023c362ccac6e6ca82b93f96ac6f0"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "d250be92d81ed6c299b5cd96bcc79ff57da6ec2052d3cce129e258ff5c75820b",
+          "evidence_kind": "legacy_gate_failure",
+          "evidence_status": "legacy_policy_result"
+        },
+        {
+          "evidence_id": "6190cf6163cf05700388d7c3d989c9e136cc4fe32df8f59cea5635f18280b4b4",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        }
+      ],
+      "failure_reasons": [
+        "batch_BH_q>0.05",
+        "ic_noninferiority",
+        "net30<2%",
+        "net50<0.25%",
+        "other:batch_BH_q>0.05",
+        "other:net30<2%",
+        "other:net50<0.25%",
+        "p25_fold_net<=0",
+        "positive_folds!=5/5",
+        "size_net30<2%",
+        "size_net50<=0",
+        "small_cap_dependence"
+      ],
+      "family": "tail_downside_impact_and_completed_turnover_shock_cooling",
+      "fields": [],
+      "formula": "MA20(MEAN120(IF(RET<=-DELAY(STD20(RET),1),-RET/(TURNOVER/DELAY(MA60(TURNOVER),1)+EPS),NaN),MIN_EVENTS=8))",
+      "historical_evidence_count": 4,
+      "hypothesis_id": "F181",
+      "mechanism": "尾部下跌单位相对换手冲击：规避少量成交即可造成超常跌幅的下行流动性脆弱股票"
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 1,
+      "direction_evidence": [
+        {
+          "direction": 1,
+          "source_path": "stockdb_factor_eval/results/batch25_formal/decision_packet.json",
+          "source_pointer": "/candidates/2",
+          "source_sha256": "1afe8fbb5480893fc33cff2da78cdd7f7cc4ff5bb4bfa81f0eaa7d605913f947"
+        },
+        {
+          "direction": 1,
+          "source_path": "stockdb_factor_eval/results/batch25_formal/frozen_classification.csv",
+          "source_pointer": "/",
+          "source_sha256": "cbb2426c8f5d7a0eff3cb06ba512ef5e697dab4e1d0dccd83f694002614bc4de"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "5e2a1c6e84c24ca5f64f223bed0f7babee0e10f8834d3aa134e928216cae6d28",
+          "evidence_kind": "legacy_gate_failure",
+          "evidence_status": "legacy_policy_result"
+        },
+        {
+          "evidence_id": "fc3c9860af41f2fb01942cf288e29b74314c352bbf9b363ce8ee1c9fd504dff0",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        }
+      ],
+      "failure_reasons": [
+        "batch_BH_q>0.05",
+        "cost_or_turnover",
+        "direction_rank_ic<0.02",
+        "ic_noninferiority",
+        "net30<2%",
+        "net50<0.25%",
+        "other:batch_BH_q>0.05",
+        "other:net30<2%",
+        "other:net50<0.25%",
+        "p25_fold_net<=0",
+        "positive_folds!=5/5",
+        "size_direction_rank_ic<0.02"
+      ],
+      "family": "public_ohlcv_geometry_and_slow_state_neighbors",
+      "fields": [],
+      "formula": "MA60(CS_RANK((SQRT(HIGH*LOW)-VWAP)/(HIGH-LOW+EPS)))",
+      "historical_evidence_count": 4,
+      "hypothesis_id": "F185",
+      "mechanism": "Alpha191_013 的量纲稳健慢速版：成交均价低于日内几何价格锚，刻画低位成交被吸收"
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 1,
+      "direction_evidence": [
+        {
+          "direction": 1,
+          "source_path": "stockdb_factor_eval/results/batch26_formal/decision_packet.json",
+          "source_pointer": "/candidates/2",
+          "source_sha256": "133029b9e4e7bdf14521970d90fa24d6f839ebccffb13f59f22f590ad35b1888"
+        },
+        {
+          "direction": 1,
+          "source_path": "stockdb_factor_eval/results/batch26_formal/frozen_classification.csv",
+          "source_pointer": "/",
+          "source_sha256": "b67cc6894cde578c145074a740982f27bef013461e832138caaf520bd9a7722f"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "c7bd79c4bf48cef81de2ac2f6eeeb4fee9c4e000e3efabe4a4d61095a5f7041d",
+          "evidence_kind": "legacy_gate_failure",
+          "evidence_status": "legacy_policy_result"
+        },
+        {
+          "evidence_id": "58d345acef576192a5d77d6e13b3a69fb5fe6f4d0f8133a24d25b199820c92bd",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        }
+      ],
+      "failure_reasons": [
+        "batch_BH_q>0.05",
+        "direction_rank_ic<0.02",
+        "ic_noninferiority",
+        "net30<2%",
+        "net50<0.25%",
+        "other:batch_BH_q>0.05",
+        "other:net30<2%",
+        "other:net50<0.25%",
+        "p25_fold_net<=0",
+        "positive_folds!=5/5",
+        "size_direction_rank_ic<0.02",
+        "size_net30<2%"
+      ],
+      "family": "slow_conditional_market_beta_asymmetry",
+      "fields": [],
+      "formula": "-SUM100(IF(MKT_RET<0,RET*MKT_RET,0))/SUM100(IF(MKT_RET<0,MKT_RET^2,0))",
+      "historical_evidence_count": 4,
+      "hypothesis_id": "F191",
+      "mechanism": "百日下跌市场贝塔：优先配置在市场下跌日参与较少的股票"
+    },
+    {
+      "data_requirements": [
+        "quantaxis_field_mapping_pending",
+        "source_pit_validation_pending",
+        "official_runtime_parity_pending",
+        "needs_field_evidence"
+      ],
+      "decision": "research_prior_requires_revalidation",
+      "direction": 1,
+      "direction_evidence": [
+        {
+          "direction": 1,
+          "source_path": "stockdb_factor_eval/results/batch27_formal/decision_packet.json",
+          "source_pointer": "/candidates/0",
+          "source_sha256": "ed0f6b596eb9b9b8df42db427b813ec5880eae7f44702033834c26d48a4253a0"
+        },
+        {
+          "direction": 1,
+          "source_path": "stockdb_factor_eval/results/batch27_formal/frozen_classification.csv",
+          "source_pointer": "/",
+          "source_sha256": "4b00741b6ee58f1150b116a0ac8c7676a566e5aaa6c3d62684f9f6a2a9fe2a5e"
+        }
+      ],
+      "direction_status": "recorded_unambiguous",
+      "evidence_refs": [
+        {
+          "evidence_id": "ffdc093f9b3f461498300428bf80027995bf46844492903fad85217d5b322673",
+          "evidence_kind": "legacy_gate_failure",
+          "evidence_status": "legacy_policy_result"
+        },
+        {
+          "evidence_id": "db672aac35f149467019211ce7d9c3c747ad9f55f941b35ea5ec4a3b326daff8",
+          "evidence_kind": "legacy_proxy_backtest",
+          "evidence_status": "reported"
+        }
+      ],
+      "failure_reasons": [
+        "batch_BH_q>0.05",
+        "direction_rank_ic<0.02",
+        "ic_noninferiority",
+        "max_abs_corr_reference>=0.75",
+        "net30<2%",
+        "net50<0.25%",
+        "other:batch_BH_q>0.05",
+        "other:net30<2%",
+        "other:net50<0.25%",
+        "other:source_vintage_unverified",
+        "p25_fold_net<=0",
+        "pool_corr_missing"
+      ],
+      "family": "implied_book_per_share_growth_from_unverified_pb_vintage",
+      "fields": [],
+      "formula": "LOG(DELAY(CLOSE/PB,1)/DELAY(CLOSE/PB,121))",
+      "historical_evidence_count": 4,
+      "hypothesis_id": "F195",
+      "mechanism": "每股账面资本在过去120个已完成交易日的增长，试探低换手的财报更新轴"
+    }
+  ],
+  "hypothesis_count": 428,
+  "interpretation": {
+    "execution_failure": "runtime_issue_not_alpha_falsification",
+    "legacy_gate_failure": "prior_policy_rejection_not_permanent_mechanism_ban",
+    "legacy_proxy_backtest": "must_revalidate_quantaxis_data_and_official_runtime",
+    "official_validation": "only_explicitly_reported_checks; cost_and_pool_proxies_stay_proxies",
+    "source_coverage_failure": "data_availability_or_PIT_issue_not_alpha_falsification"
+  },
+  "multiple_testing_denominator": 415,
+  "no_repeat_rules": [
+    {
+      "examples": [
+        "F01",
+        "F02",
+        "F03",
+        "F04",
+        "F05",
+        "F06",
+        "F07",
+        "F08",
+        "F09",
+        "F10",
+        "F11",
+        "F12",
+        "F13"
+      ],
+      "family": "initial_attention_gap_and_raw_fundamental_compatibility",
+      "reason": "Attention and gap proxies failed sign/cost tests, while raw statement definitions were unavailable or failed execution; do not retry the same field path.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F14",
+        "F24",
+        "F26",
+        "F27",
+        "F28",
+        "F29",
+        "F30",
+        "F31",
+        "F32",
+        "F33",
+        "F34",
+        "F35",
+        "F36",
+        "F37",
+        "F38",
+        "F39",
+        "F40",
+        "F41",
+        "F42",
+        "F43",
+        "F44",
+        "F45"
+      ],
+      "family": "static_value_and_value_reversal_composites",
+      "reason": "Several looked strong in the formal window but were highly redundant and failed the exposed 2019-2021 OOS extreme-decile economics.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F53",
+        "F58",
+        "F59",
+        "F60",
+        "F61",
+        "F64",
+        "F65",
+        "F67",
+        "F68",
+        "F69",
+        "F70",
+        "F71",
+        "F72",
+        "F73",
+        "F74",
+        "F79"
+      ],
+      "family": "window_or_weight_retuning_of_existing_price_turnover_factors",
+      "reason": "Mostly changes turnover or correlation without creating a new mechanism.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F83",
+        "F84",
+        "F85",
+        "F86",
+        "F87",
+        "F88"
+      ],
+      "family": "static_pb_pe_quality_proxy",
+      "reason": "No tradable quality signal; do not reshuffle weights.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "C05",
+        "C10",
+        "F100",
+        "F101",
+        "F102",
+        "F103",
+        "F104",
+        "F105",
+        "F106",
+        "F107",
+        "F108",
+        "F89",
+        "F90",
+        "F91",
+        "F92",
+        "F93",
+        "F94",
+        "F95",
+        "F96",
+        "F97",
+        "F98",
+        "F99"
+      ],
+      "family": "raw_daily_orderflow_ratios_and_clv_repairs",
+      "reason": "High turnover, small-cap dependence, wrong sign, failed execution, or failed frozen gate; F101 was a full-sample near-pass that failed size transfer and C05/F105 was a frozen near-miss.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "C06",
+        "C07",
+        "C08",
+        "C09",
+        "C11",
+        "C12",
+        "C13",
+        "C14",
+        "C15"
+      ],
+      "family": "static_financial_levels_and_isolated_intraday_primitives",
+      "reason": "Static financial levels plus isolated intraday primitives or linear interactions did not transfer; use timestamped innovations or event-conditioned interactions instead.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F119",
+        "F120",
+        "F121",
+        "F122",
+        "F123",
+        "F124",
+        "F125",
+        "F126",
+        "F127",
+        "F128"
+      ],
+      "family": "raw_path_volatility_and_discrete_event_age",
+      "reason": "Either wrong direction, too much turnover, tied ranks, or no net economics.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F129",
+        "F130",
+        "F131",
+        "F132",
+        "F133",
+        "F134",
+        "F135",
+        "F136",
+        "F137",
+        "F138",
+        "F140",
+        "F142",
+        "F143"
+      ],
+      "family": "raw_residual_volatility_and_price_delay_neighbors",
+      "reason": "Raw residual volatility duplicated known risk; F141 is the sole surviving structural transformation.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F145",
+        "F146",
+        "F147",
+        "F148",
+        "F149",
+        "F150"
+      ],
+      "family": "raw_or_short_smoothed_segmented_fund_flow",
+      "reason": "All six preregistered directions failed, turnover was 45%-65%, and exact Panda segmented-flow fields were unavailable. Do not flip signs or retune 5/10/20/60-day windows; require a new event mechanism and a verified transfer path.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F157",
+        "F158",
+        "F159",
+        "F160",
+        "F161",
+        "F162",
+        "F163",
+        "F164",
+        "F165",
+        "F166",
+        "F167"
+      ],
+      "family": "local_tail_overlays_and_fixed_low_amplitude_blends",
+      "reason": "Batch20 and Batch21 showed that these overlays can preserve or improve IC, but none met the frozen pool-level drawdown gate. F167 reached 9.21% MDD improvement but lost 2.98 percentage points of CAGR and worsened the latest fold. Do not scan overlay thresholds or blend weights; attribute the active pool drawdown and change the economic mechanism.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F168",
+        "F169",
+        "F170",
+        "F171",
+        "F172"
+      ],
+      "family": "F63_tail_reordering_with_structured_recovery_guards",
+      "reason": "All five Batch22 guards improved F63 full-sample IC, led by F170 at 0.02835, but every candidate remained too correlated with the remaining active pool (maximum 0.804-0.809 versus the frozen 0.75 cap). Do not scan tail widths, penalty weights or neighboring guards; the family did not create a distinct axis.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F173",
+        "F175",
+        "F176"
+      ],
+      "family": "high_turnover_public_state_switch_and_price_location",
+      "reason": "The public Alpha191-inspired state-switch and price-location mechanisms showed high local IC, but 20.9%-52.4% turnover erased held-side economics at 30/50bp. Do not scan smoothing windows, decay lengths or recombine the same Alpha140 legs.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F177",
+        "F178"
+      ],
+      "family": "turnover_concentration_and_completed_shock_recovery_memory",
+      "reason": "Turnover HHI was too weak and cost-negative; completed negative-shock recovery had the wrong preregistered direction in all five folds. Do not flip F178 or retune event thresholds/windows.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F179",
+        "F180"
+      ],
+      "family": "opening_gap_absorption_and_rejection_traits",
+      "reason": "Both Batch24 opening-gap response traits had the opposite of their preregistered direction in 0/5 folds and -12.95%/-13.67% net30. Do not flip either signal or scan the response horizon.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F181",
+        "F182",
+        "F183",
+        "F184"
+      ],
+      "family": "tail_downside_impact_and_completed_turnover_shock_cooling",
+      "reason": "Batch24 tail-impact measures had unstable/weak IC and negative net economics. Completed turnover-shock cooling had only 82.1% coverage, negative net economics, and the two members correlated 0.823. Do not retune event thresholds or smoothing windows.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F185",
+        "F186",
+        "F187",
+        "F188",
+        "F189",
+        "F190"
+      ],
+      "family": "public_ohlcv_geometry_and_slow_state_neighbors",
+      "reason": "All six Batch25 candidates failed the frozen economic gate. F186 had adjusted RankIC 0.05820 in 5/5 folds but only 3.02% gross held-side excess against 5.98% annualized 30bp turnover cost, yielding -2.99% net30; the other five lacked direction or economics. Do not flip signs, scan smoothing windows or send the near-miss to PandaAI.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F191",
+        "F192"
+      ],
+      "family": "slow_conditional_market_beta_asymmetry",
+      "reason": "Batch26's preregistered low-downside-beta and up-minus-down-beta mechanisms had negative adjusted IC or negative net economics. Do not flip their directions or scan the 100-day window.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F193",
+        "F194"
+      ],
+      "family": "raw_long_intraday_drift_and_unit_turnover_impact",
+      "reason": "F193 had adjusted RankIC 0.06315 and 5/5 folds, but 24.39% turnover exceeded the fixed cap and net50 was -1.55%; F194 had weak IC and negative economics. Do not retune F193's 100-day average or promote it to PandaAI on statistical strength alone.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F195"
+      ],
+      "family": "implied_book_per_share_growth_from_unverified_pb_vintage",
+      "reason": "The report-season book proxy passed a label-blind arithmetic/seasonality audit but historical PB vintages remain unverified. Frozen one-session-lagged 120-session per-share growth had adjusted RankIC 0.003713, only 3/5 positive folds, net30 -6.59% and net50 -8.58%; reject numerically, do not reverse or retune. The frozen Batch27 classifier also had a correlation-reader diagnostic bug: raw max active-pool |rho| was 0.168024, not missing or redundant; see batch27_correlation_erratum.md.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F196",
+        "F197",
+        "F198",
+        "F199"
+      ],
+      "family": "leader_name_inspired_public_technical_constructions",
+      "reason": "The first-place factor names only inspired distinct local definitions; private formulas were not known or copied. Batch28 admitted 0/4. F197 lagged three-day reversal had adjusted RankIC 0.027779 and 5/5 positive folds, but its lowest decile had -4.05% annualized gross excess, 87.64% turnover and -26.41% net30. F196 normalized WMA250 distance and F198 PCNT downside/upside imbalance failed their preregistered directions in 0/5 folds; F199 ADXR had weak negative adjusted IC. Do not flip F196/F198 or retune these formulas. A future slow burst-memory mechanism must clear a label-blind turnover preflight before a new formal batch.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F200"
+      ],
+      "family": "historical_downside_shock_recovery_propensity_preflight",
+      "reason": "Batch29 froze a causal 120-stock-session history of nonoverlapping three-day downside shocks and completed five-day responses, with current-label exclusion. The label-blind preflight failed: finite signal coverage 56.80% versus 85% minimum, top-decile set-change 23.32% versus 15% maximum, and median accepted event count only 8. The evaluator stopped before reading future-return labels. Do not lower the eight-event requirement, widen the 120-session window, relax the shock threshold or turnover gate on the same sample; this mechanism is not a validated alpha.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F205"
+      ],
+      "family": "post_unlock_float_overhang_resolution",
+      "reason": "The distinct 2020-2026 StockDB float/total-share source matched all 6.045m formal-window bar keys, and the preregistered high 120-session free-float growth signal had 97.71% formal coverage and only 6.90% drift-adjusted turnover. But its adjusted RankIC was -0.00318, only 2/5 folds were positive, gross long-decile excess was just 0.53%, net30 -1.60%, and size-stress net30 -0.97%. It failed the unchanged numeric gate, so no PandaAI run was used. Do not reverse the sign or change the 120-session horizon. The same platform-data source might support a genuinely different future-unlock-calendar mechanism only if exact PandaAI factor-workflow transfer is established.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F206"
+      ],
+      "family": "statistical_large_peer_return_diffusion_preflight",
+      "reason": "A single frozen, label-blind 120-session residual-correlation map to three >=2x-cap leaders (500-stock leader universe; 0.40 correlation; 240-session refresh) with positive past-20-session peer residual-return score failed feasibility: only 30.46% eligible key coverage versus 85% required, although 214 dates had >=1,000 names; mean adjacent top-decile set-change was 44.70% versus 15% allowed. No future-return label, official PandaAI run or pool operation was used. Do not lower thresholds, change windows or direction on this sample. The source literature relied on economic peer links not established by this statistical proxy; any future peer idea needs a new, timestamped and transferable rela",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F207"
+      ],
+      "family": "continuous_information_252d_positive_momentum",
+      "reason": "A single frozen 252-session information-discreteness-adjusted positive momentum signal, skipping the newest 20 completed sessions, passed label-blind coverage (89.71%) and top-decile membership change (14.78% versus a 15% cap) but failed the fixed five-year five-day trading test. Adjusted RankIC -0.02082, 1/5 positive folds, gross selected-long excess -11.80%, net30/net50 -16.28%/-19.15%, drift-adjusted turnover 17.07%, size-excluded RankIC -0.01797 and net30 -13.59%. Max absolute EQ6 factor correlation 0.305 did not compensate for negative edge. No PandaAI run or pool change. Do not flip direction or retune the window/skip/ID multiplier. The result concerns this combined signal, not all inf",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F209"
+      ],
+      "family": "composite_equity_expansion_F209",
+      "reason": "Corrected source preflight passed, but fixed direction RankIC 0.01871 and net30/net50 -1.79%/-2.88%; no sign/window repair.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F210",
+        "F211"
+      ],
+      "family": "fixed_operating_cash_margin_and_63day_receivables_improvement",
+      "reason": "User-authorized native runtime exception completed; RankIC 0.0054/0.0029, estimated net30 -4.27%/-7.86%, positive folds 4/5 and 2/5. Reject fixed designs, no sign/smoothing/window repair or middle-decile rescue.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F213"
+      ],
+      "family": "persistent_market_relative_salience_21_63",
+      "reason": "One preregistered negative 21-state/63-mean adaptation failed label-blind selected-set churn at 15.0431% versus 15%. Coverage 96.95%, max EQ6 |rho| 0.459. No own forward labels read; no statement about predictive returns. Do not round into a pass or retune this failure.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F214"
+      ],
+      "family": "weekly_size_orthogonalized_market_delay_after_month_skip",
+      "reason": "User-authorized paper-based revision of failed daily F132: 52 weekly rows/four lags/one month gap/monthly update/formation size residual. Preflight passed; formal positive-direction RankIC -0.02008, 0/5 folds, net30/net50 -11.07%/-12.56%, size-stress net30 -11.58%, actual turnover 8.21%. Reject despite low churn and max |rho| 0.329; do not reverse or retune.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F215"
+      ],
+      "family": "six_month_market_adjusted_duvol_low_tail_risk",
+      "reason": "One paper-grounded frozen version rejected in one_fixed_formal_label_screen; metrics {\"direction_rank_ic\": -0.030906570620781733, \"rank_ic_p_value\": 8.390049303024821e-09, \"ic_p_value\": 0.0012890387828534597, \"folds_positive\": 0, \"net_excess_annual\": -0.0952315496053775, \"net_excess_annual_50bps\": -0.11764905495416589, \"mean_turnover\": 0.12262709520965732, \"size_direction_rank_ic\": -0.024346991540312432, \"size_net_excess_annual_30bps\": -0.0859149470128383, \"max_abs_corr_active_pool\": 0.3840621179699477}. No EQ6 addition test was eligible. Do not flip its direction or scan neighboring parameters.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F216"
+      ],
+      "family": "original_calendar_month_market_relative_salience",
+      "reason": "One paper-grounded frozen version rejected in label_blind_preflight_only; metrics {\"finite_fraction\": 0.977125153283697, \"valid_periods\": 238, \"mean_top_decile_set_change\": 0.2218629606931699, \"max_abs_corr_active_pool\": 0.3367426131223351}. No EQ6 addition test was eligible. Do not flip its direction or scan neighboring parameters.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F397"
+      ],
+      "family": "turnover_implied_cost_basis_capital_gains_overhang",
+      "reason": "F397 preflight churn38.15199% >15% despite independent selected set; no own return labels evaluated. Do not infer low Sharpe or repair with a smoothing grid. Source evidence is an adapted daily recursion, not an exact weekly five-year paper replication.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F265",
+        "F266",
+        "F267",
+        "F268",
+        "F269",
+        "F270",
+        "F271",
+        "F272",
+        "F273",
+        "F274",
+        "F275",
+        "F276",
+        "F277",
+        "F278",
+        "F279",
+        "F280",
+        "F281",
+        "F282",
+        "F283",
+        "F284",
+        "F285",
+        "F286",
+        "F287",
+        "F288",
+        "F289",
+        "F290",
+        "F291",
+        "F292",
+        "F293",
+        "F294",
+        "F295",
+        "F296",
+        "F297",
+        "F298",
+        "F299",
+        "F300",
+        "F301",
+        "F302",
+        "F303",
+        "F304",
+        "F305",
+        "F306",
+        "F307",
+        "F308",
+        "F309",
+        "F310",
+        "F311",
+        "F312",
+        "F313",
+        "F314",
+        "F315",
+        "F316",
+        "F317",
+        "F318",
+        "F319",
+        "F320",
+        "F321",
+        "F322",
+        "F323",
+        "F324",
+        "F325",
+        "F326",
+        "F327",
+        "F328",
+        "F329",
+        "F330",
+        "F331",
+        "F332",
+        "F333",
+        "F334",
+        "F335",
+        "F336",
+        "F337",
+        "F338",
+        "F339",
+        "F340",
+        "F341",
+        "F342",
+        "F343",
+        "F344",
+        "F345",
+        "F346",
+        "F347",
+        "F348",
+        "F349",
+        "F350",
+        "F351",
+        "F352",
+        "F353",
+        "F354",
+        "F355",
+        "F356",
+        "F357",
+        "F358",
+        "F359",
+        "F360",
+        "F361",
+        "F362",
+        "F363",
+        "F364",
+        "F365",
+        "F366",
+        "F367",
+        "F368",
+        "F369",
+        "F370",
+        "F371",
+        "F372"
+      ],
+      "family": "F253_same_parent_weight_window_smoothing_regime_grid",
+      "reason": "Batch42-50 formal screens and F287 ledger attribution: near-identical executable returns, small net pool increment and no Sharpe2/points5% survivor. Latest user requires reflection before more variants. Reopen only with new economic information and ex ante rationale, not another local grid.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F373",
+        "F374",
+        "F375",
+        "F376",
+        "F377",
+        "F378",
+        "F379",
+        "F380",
+        "F381",
+        "F382",
+        "F383",
+        "F384",
+        "F385",
+        "F386",
+        "F387",
+        "F388",
+        "F389",
+        "F390",
+        "F391",
+        "F392",
+        "F393",
+        "F394",
+        "F395",
+        "F396"
+      ],
+      "family": "standalone_residual_momentum_and_reversal_batch51_52",
+      "reason": "Frozen momentum sign failed all candidate quality screens; separately registered reversal restored positive IC but failed top-decile net economics. Do not optimize IC alone or direction/window scan these failures.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F410",
+        "F411",
+        "F412",
+        "F413"
+      ],
+      "family": "F409_fixed_center_scale_and_current_discount_gap_path_validation",
+      "reason": "F410/F411 fixed diagnostic cross-cells fail common gates; F412/F413 conditional positive increment unsupported on identical frozen held support. Do not reverse signs, scan parameters or repeat these completed tests. Not a universal rejection of all state/path theories.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F414"
+      ],
+      "family": "F414_common_activity_partial_covariance_adjustment",
+      "reason": "Coverage98.6638%,242anchors,churn9.3272% pass; max old-F105 rho0.945089 exceeds unchanged0.85. No own labels; no sign/window/weight rescue. This is not a rejection of all common-market liquidity mechanisms.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    },
+    {
+      "examples": [
+        "F414",
+        "F415"
+      ],
+      "family": "cross_stock_common_activity_pressure_decomposition_F414_F415",
+      "reason": "F414 remained redundant with old C05/F105 (rho0.945) before returns. Distinct common component F415 passed preflight but net30/net50 proxy-2.725%/-5.255%, size net30-3.843%,4/5 IC folds. No sign/window/weight rescue, no native qualification or pool change.",
+      "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
+      "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
+    }
+  ],
+  "retained_evidence_count": 918,
+  "schema_version": 1,
+  "source_count": 967,
+  "source_findings": [
+    {
+      "coverage_passed": null,
+      "decision": "repair_or_verify_source_before_retest",
+      "error": "RuntimeError",
+      "interpretation": "missing_or_unverified_source_is_not_mechanism_falsification",
+      "records_accepted": 0,
+      "source_path": "factor_workflow/context/current.json",
+      "source_pointer": "/research_state/overnight_research/order_measurement_source",
+      "source_sha256": "91e07b4c9e7f3428eb009bcc83f29bf28292971009137a0acb60203c34638ed5",
+      "status": "FINITE_NATIVE_TICK_CALL_FAILED_NO_ACCEPTED_SOURCE",
+      "verification": {
+        "five_year_quotes_absence_proven": false
+      }
+    },
+    {
+      "coverage_passed": null,
+      "decision": "repair_or_verify_source_before_retest",
+      "error": "",
+      "interpretation": "missing_or_unverified_source_is_not_mechanism_falsification",
+      "records_accepted": 0,
+      "source_path": "factor_workflow/context/current.json",
+      "source_pointer": "/research_state/overnight_research/source_and_price_reads_this_continuation",
+      "source_sha256": "91e07b4c9e7f3428eb009bcc83f29bf28292971009137a0acb60203c34638ed5",
+      "status": "source_verification_incomplete",
+      "verification": {}
+    },
+    {
+      "coverage_passed": null,
+      "decision": "repair_or_verify_source_before_retest",
+      "error": "",
+      "interpretation": "missing_or_unverified_source_is_not_mechanism_falsification",
+      "records_accepted": null,
+      "source_path": "factor_workflow/context/current.json",
+      "source_pointer": "/research_state/c05_market_pressure_research",
+      "source_sha256": "91e07b4c9e7f3428eb009bcc83f29bf28292971009137a0acb60203c34638ed5",
+      "status": "COMMON_REJECTED",
+      "verification": {
+        "native_parity": false
+      }
+    },
+    {
+      "coverage_passed": null,
+      "decision": "repair_or_verify_source_before_retest",
+      "error": "",
+      "interpretation": "missing_or_unverified_source_is_not_mechanism_falsification",
+      "records_accepted": null,
+      "source_path": "factor_workflow/context/current.json",
+      "source_pointer": "/research_state/c05_market_pressure_research/preflight/source",
+      "source_sha256": "91e07b4c9e7f3428eb009bcc83f29bf28292971009137a0acb60203c34638ed5",
+      "status": "source_verification_incomplete",
+      "verification": {
+        "native_or_vintage_verified": false
+      }
+    },
+    {
+      "coverage_passed": null,
+      "decision": "repair_or_verify_source_before_retest",
+      "error": "",
+      "interpretation": "missing_or_unverified_source_is_not_mechanism_falsification",
+      "records_accepted": null,
+      "source_path": "factor_workflow/context/current.json",
+      "source_pointer": "/research_state/c05_market_pressure_history/0/preflight/source",
+      "source_sha256": "91e07b4c9e7f3428eb009bcc83f29bf28292971009137a0acb60203c34638ed5",
+      "status": "source_verification_incomplete",
+      "verification": {
+        "native_or_vintage_verified": false
+      }
+    },
+    {
+      "coverage_passed": null,
+      "decision": "repair_or_verify_source_before_retest",
+      "error": "RuntimeError",
+      "interpretation": "missing_or_unverified_source_is_not_mechanism_falsification",
+      "records_accepted": 0,
+      "source_path": "factor_workflow/context/current.json",
+      "source_pointer": "/research_state/c05_order_measurement_source",
+      "source_sha256": "91e07b4c9e7f3428eb009bcc83f29bf28292971009137a0acb60203c34638ed5",
+      "status": "FINITE_NATIVE_TICK_CALL_FAILED_NO_ACCEPTED_SOURCE",
+      "verification": {
+        "five_year_quotes_absence_proven": false
+      }
+    },
+    {
+      "coverage_passed": null,
+      "decision": "repair_or_verify_source_before_retest",
+      "error": "RuntimeError",
+      "interpretation": "missing_or_unverified_source_is_not_mechanism_falsification",
+      "records_accepted": 0,
+      "source_path": "factor_workflow/knowledge_base.json",
+      "source_pointer": "/overnight_research/order_measurement_source",
+      "source_sha256": "06afd094c56eaeb5c0238e05ce57f844f0e79cbb348a964a4ae0e5585a99c9c1",
+      "status": "FINITE_NATIVE_TICK_CALL_FAILED_NO_ACCEPTED_SOURCE",
+      "verification": {
+        "five_year_quotes_absence_proven": false
+      }
+    },
+    {
+      "coverage_passed": null,
+      "decision": "repair_or_verify_source_before_retest",
+      "error": "",
+      "interpretation": "missing_or_unverified_source_is_not_mechanism_falsification",
+      "records_accepted": 0,
+      "source_path": "factor_workflow/knowledge_base.json",
+      "source_pointer": "/overnight_research/source_and_price_reads_this_continuation",
+      "source_sha256": "06afd094c56eaeb5c0238e05ce57f844f0e79cbb348a964a4ae0e5585a99c9c1",
+      "status": "source_verification_incomplete",
+      "verification": {}
+    },
+    {
+      "coverage_passed": null,
+      "decision": "repair_or_verify_source_before_retest",
+      "error": "",
+      "interpretation": "missing_or_unverified_source_is_not_mechanism_falsification",
+      "records_accepted": null,
+      "source_path": "factor_workflow/knowledge_base.json",
+      "source_pointer": "/c05_market_pressure_research",
+      "source_sha256": "06afd094c56eaeb5c0238e05ce57f844f0e79cbb348a964a4ae0e5585a99c9c1",
+      "status": "COMMON_REJECTED",
+      "verification": {
+        "native_parity": false
+      }
+    },
+    {
+      "coverage_passed": null,
+      "decision": "repair_or_verify_source_before_retest",
+      "error": "",
+      "interpretation": "missing_or_unverified_source_is_not_mechanism_falsification",
+      "records_accepted": null,
+      "source_path": "factor_workflow/knowledge_base.json",
+      "source_pointer": "/c05_market_pressure_research/preflight/source",
+      "source_sha256": "06afd094c56eaeb5c0238e05ce57f844f0e79cbb348a964a4ae0e5585a99c9c1",
+      "status": "source_verification_incomplete",
+      "verification": {
+        "native_or_vintage_verified": false
+      }
+    },
+    {
+      "coverage_passed": null,
+      "decision": "repair_or_verify_source_before_retest",
+      "error": "",
+      "interpretation": "missing_or_unverified_source_is_not_mechanism_falsification",
+      "records_accepted": null,
+      "source_path": "factor_workflow/knowledge_base.json",
+      "source_pointer": "/c05_market_pressure_history/0/preflight/source",
+      "source_sha256": "06afd094c56eaeb5c0238e05ce57f844f0e79cbb348a964a4ae0e5585a99c9c1",
+      "status": "source_verification_incomplete",
+      "verification": {
+        "native_or_vintage_verified": false
+      }
+    },
+    {
+      "coverage_passed": null,
+      "decision": "repair_or_verify_source_before_retest",
+      "error": "RuntimeError",
+      "interpretation": "missing_or_unverified_source_is_not_mechanism_falsification",
+      "records_accepted": 0,
+      "source_path": "factor_workflow/knowledge_base.json",
+      "source_pointer": "/c05_order_measurement_source",
+      "source_sha256": "06afd094c56eaeb5c0238e05ce57f844f0e79cbb348a964a4ae0e5585a99c9c1",
+      "status": "FINITE_NATIVE_TICK_CALL_FAILED_NO_ACCEPTED_SOURCE",
+      "verification": {
+        "five_year_quotes_absence_proven": false
+      }
+    }
+  ],
+  "starting_directions": [
+    {
+      "decision": "research_prior_requires_quantaxis_and_official_revalidation",
+      "family": "drawdown_and_attention_cooling",
+      "lesson": "Long-horizon damaged price plus slow turnover cooling can survive costs, but Panda transfer is weaker than StockDB.",
+      "representatives": [
+        "F62",
+        "F63"
+      ]
+    },
+    {
+      "decision": "research_prior_requires_quantaxis_and_official_revalidation",
+      "family": "price_volume_crowding",
+      "lesson": "Slow relative turnover and return-turnover coupling transfers to Panda and remains a core axis.",
+      "representatives": [
+        "F66"
+      ]
+    },
+    {
+      "decision": "research_prior_requires_quantaxis_and_official_revalidation",
+      "family": "anti_lottery",
+      "lesson": "Maximum positive return is locally independent and low-turnover, but its Panda long-side economics are weak.",
+      "representatives": [
+        "F76"
+      ]
+    },
+    {
+      "decision": "research_prior_requires_quantaxis_and_official_revalidation",
+      "family": "idiosyncratic_variance_share",
+      "lesson": "The share of total variance explained by rolling endpoint residuals is materially stronger and more independent than raw residual volatility.",
+      "representatives": [
+        "F141"
+      ]
+    },
+    {
+      "decision": "research_prior_requires_quantaxis_and_official_revalidation",
+      "family": "slow_close_to_vwap_dislocation",
+      "lesson": "A 20-day average of the cross-sectional close-to-VWAP discount ratio survived every local gate with 4.43% turnover and only 0.203 maximum active-pool correlation. Adding it at equal rank to EQ5 raised RankIC from 0.06361 to 0.06806, reduced engine-v2 MDD from 30.99% to 28.36%, and raised CAGR from 21.61% to 23.61%. Panda C17 retained positive RankIC 0.0236, 0.98 monotonicity, 1.95% turnover and about 5.36% estimated 30bp net excess. The 2026-09-23 user screenshot shows it registered as the sixth factor but scheduled effective 2026-10-08; official post-effective B/C and six-factor pool impact remain unobserved.",
+      "representatives": [
+        "F174"
+      ]
+    }
+  ]
+}

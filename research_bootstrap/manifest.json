@@ -1,0 +1,53 @@
+{
+  "cold_evidence_count": 4843,
+  "evidence_counts": {
+    "execution_failure": 3,
+    "legacy_gate_failure": 905,
+    "legacy_proxy_backtest": 3660,
+    "narrative_reference": 46,
+    "official_runtime": 4,
+    "official_validation": 6,
+    "registered_hypothesis": 214,
+    "source_audit": 5
+  },
+  "excluded": [
+    "account_and_billing_artifacts",
+    "credentials_and_tokens",
+    "raw_panels",
+    "large_tables_over_2MB",
+    "raw_filing_corpus",
+    "broken_environments"
+  ],
+  "generated_files": {
+    "evidence.jsonl": {
+      "bytes": 4355233,
+      "sha256": "364c3103ffe2efbcfa4232f0a0b6cca1de665feeaec123fbee1e4c255fba22c4"
+    },
+    "memory.json": {
+      "bytes": 97847,
+      "sha256": "138d1d0e3c6b9d325ebe77b38364da316b5baeed73e89ccf6a5a84eebf962755"
+    },
+    "memory.md": {
+      "bytes": 18977,
+      "sha256": "18bef94cc0ed73206b95d58a6a436f9cbb2d10f5af922a77117e7f8db55bdb77"
+    },
+    "source_index.jsonl": {
+      "bytes": 395122,
+      "sha256": "8fa58b53081537dff6754427c886f2f2fa89003709bc5e8b78bc37e7103f3901"
+    }
+  },
+  "hot_hypothesis_count": 33,
+  "hypothesis_count": 428,
+  "input_bytes_indexed": 12499081,
+  "multiple_testing_denominator": 415,
+  "operation": "sanitized_research_context_compaction",
+  "parse_errors": [],
+  "provenance_root": "private_legacy_workspace_relative_paths",
+  "raw_evidence_deleted": false,
+  "raw_evidence_modified": false,
+  "retained_evidence_count": 918,
+  "schema_version": 1,
+  "semantic_duplicates_removed": 119,
+  "source_count": 967,
+  "source_finding_count": 34
+}

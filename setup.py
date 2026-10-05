@@ -78,6 +78,7 @@ NAME = "quantaxis"
 
 """
 PACKAGES = [
+    "panda_alpha",
     "QUANTAXIS",
     "QUANTAXIS.QAFetch",
     "QUANTAXIS.QACmd",
@@ -179,6 +180,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'panda-alpha=panda_alpha.cli:main',
             'quantaxis=QUANTAXIS.QACmd:QA_cmd',
             'quantaxisq=QUANTAXIS.QAFetch.QATdx_adv:bat',
             'qarun=QUANTAXIS.QACmd.runner:run',

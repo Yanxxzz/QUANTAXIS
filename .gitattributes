@@ -1,0 +1,6 @@
+# Compaction manifests use byte-level SHA256; preserve bytes across checkouts.
+research_bootstrap/** -text
+# These metadata files are not targets of the compact manifest's content hashes.
+research_bootstrap/manifest.json text eol=lf
+research_bootstrap/pool.json text eol=lf
+research_bootstrap/deployment_validation.json text eol=lf

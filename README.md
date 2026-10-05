@@ -1,5 +1,9 @@
 # QUANTAXIS 2.1.0-alpha2
 
+## PandaAI 因子研究体系
+
+本 Fork 的新研究入口为 [`panda_alpha`](RESEARCH.md)：QUANTAXIS 数据验收、历史 compact、数值去相关、轨迹反思进化及赠送优先的官网预算调度。配置与实际验证边界见 [RESEARCH.md](RESEARCH.md)。
+
 <div align="center">
 
 **⭐ 如果这个项目对您有帮助，请点击Star支持我们！**
