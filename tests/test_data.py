@@ -93,6 +93,13 @@ class AxisDataTests(unittest.TestCase):
         self.assertEqual(result.coverage["xdxr"]["status"], "pending")
         self.assertIsNone(result.coverage["daily"]["coverage"])
 
+    def test_candidate_stockdb_bars_cannot_enter_research_even_as_raw_prices(self):
+        db = self.database()
+        db["stock_day"].records[0].update(source="stockdb_live", research_eligibility="candidate_only")
+        with self.assertRaisesRegex(PendingDataError, "Candidate/archive prices"):
+            AxisProvider(db=db).daily(["000001"], "2024-01-02", "2024-01-03", "none",
+                                      expected_dates=["2024-01-02", "2024-01-03"])
+
     def test_split_rights_hfq_and_nontrading_event_alignment(self):
         frame = pd.DataFrame([bar("2024-01-02"), bar("2024-01-05", close=5)])
         frame["date"] = pd.to_datetime(frame["date"])

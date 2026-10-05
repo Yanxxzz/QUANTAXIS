@@ -1,0 +1,4 @@
+# Optional, version-locked Tencent daily/HFQ acquisition worker.
+# Keep the base research environment independent of AKShare's changing adapters.
+-r requirements-panda-alpha.txt
+akshare==1.19.1

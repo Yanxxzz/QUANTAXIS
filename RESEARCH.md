@@ -55,7 +55,7 @@ Copy-Item config\panda-alpha.example.json config\panda-alpha.local.json
 
 北交所官方当前目录 348 只、18 页已全量取得；结合旧新代码和 5 份官方退出公告，保存 353 个历史身份（目标窗口内 349）。5 只退市/转板的实际退出日期已经核对原文 SHA。行情仅保留此前取得的 920002 共 563 日原始记录，后复权面板缺失；当前目录的 2026-09-30 快照不反推目标窗口内的历史状态，也不认证历史全集。
 
-剩余行情目前受外部来源阻断：BaoStock 匿名登录返回 `10001011`，SDK 定义为 `BSERR_BLACKLIST_USER`；北交所行情接口连接失败。用户选择保留断点等待恢复。源级熔断停止新派发、保留成功数据与凭证；失败尝试另存，未访问证券不计作行情缺失。恢复后需显式 `--resume-after-source-unblock`，默认单 worker。完整历史股票池、全市场原始财务 PIT、分钟数据及实际成交验收仍为 pending，因此 `can_retire_legacy=false`。
+原 BaoStock / 北交所 EastMoney 同步分支仍受外部来源阻断：BaoStock 匿名登录返回 `10001011`，SDK 定义为 `BSERR_BLACKLIST_USER`；北交所 EastMoney 行情接口连接失败。该分支保留断点等待恢复。源级熔断停止新派发、保留成功数据与凭证；失败尝试另存，未访问证券不计作行情缺失。恢复后需显式 `--resume-after-source-unblock`，默认单 worker。下文的 AKShare 腾讯与本机 StockDB 是独立、显式调用的新采集候选，不会解除原分支的熔断。完整历史股票池、全市场原始财务 PIT、分钟数据及实际成交验收仍为 pending，因此 `can_retire_legacy=false`。
 
 首次迁移的冻结库存、归档和验收哈希见 [`migration_checkpoint_20261005.json`](research_bootstrap/migration_checkpoint_20261005.json)；本轮最新库存、财务增量、恢复探测和当前断点哈希见 [`data_completion_20261005.json`](research_bootstrap/data_completion_20261005.json)。BaoStock 单次恢复探测仍返回黑名单错误，北交所单次连接失败，两个既有 TDX 节点仅返回不可解析的日 K 载荷，本轮新增行情为 0。当前断点在 `research_runs/market_sync/checkpoint.json`；该次探测更新了断点元数据，首次发布的旧断点字节未留存，此限制已记入新报告，成功结果及原迁移报告仍保留。剩余沪深 4,207 只、6 只 IPO 复权基准、北交所历史与 HFQ、完整财务 PIT 和分钟数据仍待补齐。财务另缺 20 个前置公告的已验证金额、2019 年目标披露窗口及其他字段；不能把本轮局部股票数或旧缓存副本标为全市场覆盖。
 
@@ -65,7 +65,26 @@ python scripts\axis_sync.py --source baostock --codes 000001 600000 600519 --sta
 .\scripts\Invoke-PandaResearch.ps1 coverage --codes 000001 600000 600519 --start 2021-09-20 --end 2026-09-18
 ```
 
-`coverage` 输出逐能力阻塞项和 `can_retire_legacy`。新包没有 StockDB/AKShare fallback。只有对应覆盖、复权、历史股票池及需要的财务/分钟能力通过后，才可归档并删除原渠道；未验收时保留旧原始证据，不能把渠道换名当作缺失问题已解决。
+`coverage` 输出逐能力阻塞项和 `can_retire_legacy`。研究 provider 没有自动 StockDB/AKShare fallback；新入口须显式选择来源和独立数据库。只有对应覆盖、复权、历史股票池及需要的财务/分钟能力通过后，才可归档并删除原渠道；未验收时保留旧原始证据，不能把渠道换名当作缺失问题已解决。
+
+### 显式补充行情入口
+
+AKShare 1.19.1 的腾讯 `stock_zh_a_hist_tx` 无需单独账号。2026-10-05 的 `600519` 单码 2024 年只读探测曾得到原始和同接口后复权日线各 242 行、同一日期集合；242 个原始收盘价与本地 BaoStock 重合记录完全一致。随后正式采集冒烟及一次独立有界诊断均遇到腾讯 `ConnectionError`，采集器已熔断、保存断点，AKShare 隔离库本次新增 0 行。腾讯北交所 `920002` 的有界探测也连接失败，所以当前脚本只接纳沪深代码。采集器把成功取得的原始价、同源 HFQ 和逐窗口凭证写到独立 `quantaxis_akshare_tencent` 库；版本固定、逐请求限时、外层子进程限时，默认一次只调一只股票。逐窗成功只证明该请求的行情响应与原始字段/成交单位检查；独立日历、历史身份、停牌/涨跌停、IPO 复权锚点和研究适用性仍需验收。要复现版本可安装 `requirements-panda-alpha-akshare.txt`，并在来源恢复后显式运行：
+
+```powershell
+python -m venv .runtime\akshare
+.\.runtime\akshare\Scripts\python.exe -m pip install -r requirements-panda-alpha-akshare.txt
+.\.runtime\akshare\Scripts\python.exe scripts\axis_akshare_sync.py --source akshare_tencent --codes 600519 --start 2024-01-02 --end 2024-12-31 --resume-after-source-unblock
+```
+
+本机 StockDB 服务 `127.0.0.1:7899` 现已可读。`600000` 在 2019-09-20 至 2019-10-10 的有界查询返回 10 行；直接查询北交所 `920002` 在 2025-01-02 至 2025-01-10 返回 7 行。这两窗共 17 行已进入隔离候选库，并有逐行回执与原始快照哈希；原 `quantaxis.stock_day` 数量仍是 1,948,246。旧正式缓存只含沪深前缀，覆盖 2021-09-22 起的部分窗口；封存 warmup 与 2026-09-18 后的行不进入本轮研究。`axis_stockdb_candidates.py` 只读原始归档并输出缺口；`axis_stockdb_live_sync.py` 每次至多 31 个自然日和一个明确证券，将来源快照与候选日线仅写入独立 `quantaxis_stockdb_live` 库。StockDB 的原生复权接口存在，但与本地 BaoStock 后复权数值未完全吻合，当前 live 采集不把它标为已认证复权，也不与其他来源拼接同码行情。小窗状态及哈希汇总见 [`market_channel_pilot_20261005.json`](research_bootstrap/market_channel_pilot_20261005.json)。
+
+```powershell
+python scripts\axis_stockdb_candidates.py --codes 000001 600000 --start 2026-09-14 --end 2026-09-18 --sample-limit 10
+python scripts\axis_stockdb_live_sync.py --code 920002 --start 2025-01-02 --end 2025-01-10 --apply
+```
+
+两个新库都是候选取数和证据隔离区；原 `quantaxis.stock_day`、BaoStock 断点与完整市场迁移验收不因这些小窗口成功而改变。逐股逐日的差异、历史完整性及同源复权核验通过后，才能明确选择正式研究来源。
 
 ```powershell
 # 离线核实实际库存、来源凭证和剩余身份，不创建收益标签。

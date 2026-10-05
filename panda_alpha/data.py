@@ -240,6 +240,8 @@ class AxisProvider:
         if adjustment not in {"none", "qfq", "hfq"}:
             raise ValueError("adjustment must be none, qfq, or hfq")
         rows = self._records("stock_day", {"code": {"$in": codes}, "date": {"$gte": start, "$lte": end}})
+        if any(row.get("research_eligibility") in {"candidate_only", "archive_only"} for row in rows):
+            raise PendingDataError("Candidate/archive prices require independent source acceptance before research")
         lifecycles = self._records("stock_lifecycle", {"code": {"$in": codes}})
         life_by_code = {}
         for row in lifecycles:
