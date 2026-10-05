@@ -1,0 +1,22 @@
+# Only source code and public bootstrap data belong in this image's context.
+**
+!setup.py
+!pyproject.toml
+!MANIFEST.in
+!requirements.txt
+!requirements-panda-alpha.txt
+!LICENSE
+!QUANTAXIS/
+!QUANTAXIS/**
+!panda_alpha/
+!panda_alpha/**
+!config/
+!config/panda-alpha.example.json
+!research_bootstrap/
+!research_bootstrap/**
+**/__pycache__/
+**/*.pyc
+**/*.pyd
+**/.env
+**/*.sqlite3
+**/*.log

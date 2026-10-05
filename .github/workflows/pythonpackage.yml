@@ -1,25 +1,67 @@
 name: Python package
 
-on: [push]
+on: [push, pull_request]
+
+permissions:
+  contents: read
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
     strategy:
-      max-parallel: 4
+      fail-fast: false
       matrix:
-        python-version: [ 3.7, 3.8]
+        python-version: ['3.11', '3.12']
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
+    - name: Build sdist and rebuild its wheel
       run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install quantaxis
+        python -m pip install --upgrade pip build
+        # Default build creates an sdist and then a wheel from that sdist.
+        python -m build
+    - name: Install the built Fork research package
+      run: |
+        python -m pip install -r requirements-panda-alpha.txt
+        python -m pip install --no-deps --force-reinstall dist/*.whl
+    - name: Verify installed package metadata and imports
+      working-directory: ${{ runner.temp }}
+      run: |
+        python - <<'PY'
+        import importlib.util
+        import os
+        import re
+        from pathlib import Path
+        from importlib.metadata import distribution
+        from packaging.requirements import Requirement
+        from packaging.version import Version
+        import panda_alpha
+        from panda_alpha.data import AxisProvider
+        from panda_alpha.execution import ExecutionPolicy
+        checkout = Path(os.environ['GITHUB_WORKSPACE']).resolve()
+        package = distribution('quantaxis')
+        assert not Path(panda_alpha.__file__).resolve().is_relative_to(checkout)
+        assert not Path(importlib.util.find_spec('QUANTAXIS').origin).resolve().is_relative_to(checkout)
+        source_version = re.search(r"__version__ = '([^']+)'", (checkout / 'QUANTAXIS/__init__.py').read_text(encoding='utf-8')).group(1)
+        assert package.version == str(Version(source_version))
+        assert (Path(panda_alpha.__file__).parent / 'data.py').read_bytes() == (checkout / 'panda_alpha/data.py').read_bytes()
+        for requirement in package.requires or []:
+            Requirement(requirement)
+        assert callable(AxisProvider) and callable(ExecutionPolicy)
+        assert any(e.name == 'panda-alpha' for e in package.entry_points)
+        print('Built Fork package metadata/imports verified:', package.version)
+        PY
+        panda-alpha --help
+    - name: Run research tests on the supported Python matrix
+      run: python -m pytest tests -q
+    - name: Retain the artifacts verified by this job
+      uses: actions/upload-artifact@v4
+      with:
+        name: quantaxis-python-${{ matrix.python-version }}
+        path: dist/*
 

@@ -2,7 +2,7 @@
 """
 QUANTAXIS 2.1.0 兼容性验证脚本 (源代码级别)
 
-通过直接检查源代码文件来验证向后兼容性
+通过直接检查源代码文件检查选定API定义、导出和维护文件
 不依赖于安装环境,避免环境问题
 
 作者: @yutiansut @quantaxis
@@ -48,9 +48,9 @@ def test_result(test_name, passed, details=""):
 
 
 def check_file_exists(file_path):
-    """检查文件是否存在"""
+    """检查维护文件是否存在且非空"""
     full_path = PROJECT_ROOT / file_path
-    return full_path.exists()
+    return full_path.is_file() and full_path.stat().st_size > 0
 
 
 def check_function_exists(file_path, function_name):
@@ -144,7 +144,7 @@ else:
 # 测试2: 旧API存在性检查 (c1e609d兼容性)
 # ============================================================================
 print("\n" + "=" * 80)
-print("第二部分: 旧API兼容性验证 (c1e609d)")
+print("第二部分: 旧API定义存在性检查")
 print("=" * 80)
 
 # 2.1 MongoDB旧API
@@ -199,7 +199,7 @@ test_result("数据获取旧API - QA_fetch_get_stock_list", passed, details)
 # 测试3: 新增功能检查 (向后兼容的增强)
 # ============================================================================
 print("\n" + "=" * 80)
-print("第三部分: 新增功能验证 (不破坏兼容性)")
+print("第三部分: 新增接口与导出检查")
 print("=" * 80)
 
 # 3.1 base_ps context manager支持
@@ -265,9 +265,7 @@ print("第四部分: 文档完整性验证")
 print("=" * 80)
 
 docs_to_check = [
-    ("BACKWARD_COMPATIBILITY_REPORT.md", "详细兼容性分析报告"),
-    ("COMPATIBILITY_SUMMARY.md", "兼容性总结"),
-    ("FINAL_SUMMARY.md", "最终工作总结"),
+    ("doc/migration/COMPATIBILITY_STATUS.md", "兼容性范围与验证说明"),
     ("scripts/test_backward_compatibility.py", "自动化测试脚本"),
     ("examples/resource_manager_example.py", "资源管理器示例"),
     ("QUANTAXIS/QAUtil/RESOURCE_MANAGER_README.md", "资源管理器文档"),
@@ -276,7 +274,7 @@ docs_to_check = [
 for doc_path, doc_name in docs_to_check:
     exists = check_file_exists(doc_path)
     test_result(f"文档 - {doc_name}", exists,
-                f"文件: {doc_path}" if exists else f"文件不存在: {doc_path}")
+                f"文件: {doc_path}" if exists else f"文件不存在或为空: {doc_path}")
 
 
 # ============================================================================
@@ -322,30 +320,12 @@ print(f"失败: {tests_failed} ❌")
 
 if tests_failed == 0:
     success_rate = 100.0
-    print(f"\n🎉 所有测试通过! 向后兼容性验证成功!")
+    print(f"\n所有源代码级检查通过!")
     print(f"成功率: {success_rate:.1f}%")
 else:
     success_rate = (tests_passed / total_tests) * 100
     print(f"\n⚠️ 部分测试失败")
     print(f"成功率: {success_rate:.1f}%")
-
-# 兼容性评级
-if success_rate == 100:
-    grade = "A+ (完美)"
-elif success_rate >= 95:
-    grade = "A (优秀)"
-elif success_rate >= 90:
-    grade = "B+ (良好)"
-elif success_rate >= 85:
-    grade = "B (合格)"
-elif success_rate >= 80:
-    grade = "C+ (基本合格)"
-elif success_rate >= 70:
-    grade = "C (需改进)"
-else:
-    grade = "D (不合格)"
-
-print(f"兼容性评级: {grade}")
 
 # 关键结论
 print("\n" + "=" * 80)
@@ -353,10 +333,9 @@ print("关键结论")
 print("=" * 80)
 
 if tests_failed == 0:
-    print("✅ QUANTAXIS 2.1.0-alpha2 与 c1e609d 版本**完全向后兼容**")
-    print("✅ 所有旧API保持不变,可直接升级")
-    print("✅ 新功能为可选增强,不影响现有代码")
-    print("⚠️ 需要Python 3.9+环境")
+    print("✅ 本脚本列出的旧API定义、新功能、文档及依赖约束检查通过")
+    print("⚠️ 本脚本不导入QUANTAXIS,不验证参数签名、运行时行为或服务连通性")
+    print("运行时兼容性需在安装依赖并配置服务后另行验证")
 else:
     print(f"⚠️ 发现 {tests_failed} 个问题,需要修复")
 
