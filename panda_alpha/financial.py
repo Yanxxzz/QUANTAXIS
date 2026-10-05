@@ -133,6 +133,50 @@ def normalize_financial(row: dict, provenance: dict, *, source_index_verified: b
     return out
 
 
+def normalize_correction_extractions(row: dict, provenance: dict, *,
+                                     source_index_verified: bool = False) -> list[dict]:
+    """Recover successful local body extracts without reviewing their revision chain.
+
+    The mapping's parent identifies the notice and source index. Every nested
+    extraction must identify those same original bytes, disclosure and period.
+    Numeric extraction success does not resolve an unknown correction scope.
+    """
+    records = []
+    for link in row.get("period_links", []):
+        extracted = link.get("extraction")
+        if not isinstance(extracted, dict) or extracted.get("status") != "ok":
+            continue
+        identity = ("symbol", "announcement_id", "published_at", "pdf_url", "pdf_sha256")
+        if (any(extracted.get(key) is None or str(extracted[key]) != str(row.get(key)) for key in identity)
+                or not link.get("report_date") or extracted.get("report_date") != link["report_date"]):
+            raise ValueError("Nested correction extraction identity/period mismatch")
+        combined = {**row, **extracted, "report_date": link["report_date"],
+                    "chain_status": "unreviewed",
+                    "document_kind": "revised_report" if row.get("version_label") == "revised_full_report" else "correction",
+                    "same_day_revised_report_ids": link.get("same_day_revised_report_ids", [])}
+        document = normalize_financial(combined, provenance, source_index_verified=source_index_verified)
+        document["correction_mapping_evidence"] = {
+            "unknown_scope_barrier": row.get("unknown_scope_barrier", True),
+            "scope_evidence": row.get("scope_evidence"), "body_status": row.get("body_status"),
+            "value_linkage": link.get("value_linkage"), "evidence_source": link.get("evidence_source"),
+            "original_ids_before_notice": link.get("original_ids_before_notice", []),
+            "revision_chain_verified": False}
+        records.append(document)
+    return records
+
+
+def _same_financial_document_value(candidate: dict, existing: dict) -> bool:
+    """Keep a richer reviewed chain instead of adding its unreviewed duplicate."""
+    if (candidate.get("value_status") != "verified_within_supplied_documents"
+            or existing.get("value_status") != "verified_within_supplied_documents"):
+        return False
+    keys = ("code", "report_date", "announcement_id", "published_at", "available_date", "pdf_sha256", "field", "values")
+    if any(candidate.get(key) != existing.get(key) for key in keys):
+        return False
+    return all(candidate.get(key) is None or candidate.get(key) == existing.get(key)
+               for key in ("previous_amount_yuan", "revision_delta_yuan"))
+
+
 def select_financial_asof(records: Iterable[dict], *, code: str, report_date: str,
                          decision_date: str, corrections: Iterable[dict] = ()) -> dict:
     """Select only supplied vintages; an unparsed/latest report invalidates carry-forward."""
@@ -342,7 +386,6 @@ def migrate_legacy_financial(workspace: str | Path, db: Any, *, batch_size: int 
         provenance,raw=source(path);payload=json.loads(raw);ledger=payload.get("ledger",payload)
         for row in ledger.get("events",[]):
             statements.append(normalize_financial(row,provenance,source_index_verified=verified_index(row)))
-    for offset in range(0,len(statements),batch_size):_write_batch(db,"stock_financial_pit",statements[offset:offset+batch_size])
     correction_path=base/"correction_period_mapping_body_20260929_v4.json"
     if correction_path.exists():
         provenance,raw=source(correction_path);mapping=json.loads(raw);pending=[]
@@ -358,7 +401,21 @@ def migrate_legacy_financial(workspace: str | Path, db: Any, *, batch_size: int 
                       "full_pit_certified":False}
             pending.append(document)
             if len(pending)>=batch_size:counts["correction_rows_upserted"]+=_write_batch(db,"stock_financial_revision",pending);pending=[]
+            try:
+                extracted = normalize_correction_extractions(row, provenance, source_index_verified=verified_index(row))
+            except ValueError as exc:
+                failures.append({"source_path": provenance["source_path"],
+                                 "announcement_id": str(row["announcement_id"]), "reason": str(exc)})
+                continue
+            counts["mapping_successful_extractions"] += len(extracted)
+            for candidate in extracted:
+                if any(_same_financial_document_value(candidate, prior) for prior in statements):
+                    counts["mapping_duplicate_document_values"] += 1
+                else:
+                    statements.append(candidate)
+                    counts["mapping_extraction_rows_upserted"] += 1
         counts["correction_rows_upserted"]+=_write_batch(db,"stock_financial_revision",pending)
+    for offset in range(0,len(statements),batch_size):_write_batch(db,"stock_financial_pit",statements[offset:offset+batch_size])
     for offset in range(0,len(provenance_rows),batch_size):_write_batch(db,"panda_financial_provenance",provenance_rows[offset:offset+batch_size])
     codes=sorted({row["code"] for row in statements});accepted=[row for row in statements if row["value_status"]=="verified_within_supplied_documents"]
     distinct={row["_id"] for row in statements}

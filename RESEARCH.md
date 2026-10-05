@@ -49,7 +49,7 @@ Copy-Item config\panda-alpha.example.json config\panda-alpha.local.json
 
 同步任务区分 `stock_day`、`stock_xdxr`、`stock_list` 和 `calendar`。股票样本同步、当前沪深列表、完整历史 A 股、退市股票、分钟数据与财务公告 PIT 是不同的证据层级。复权需要成功来源凭证，不能因为数据库有几行数据就标完整。
 
-首次部署的 60 股验收与 3 股复权对照保留在 [`deployment_validation.json`](research_bootstrap/deployment_validation.json)。2026-10-05 继续迁移后，已完成公告索引 235,188 条、修订映射 20,825 条、财务提取版本 541 条和三张财务简表 469,736 条。其中 503 条原文金额在已提供文档范围内通过验证，财务简表为本次取得的最新重述快照，全部 `pit_usable=false`；不能根据旧 `NOTICE_DATE` 把今天的数值回填到历史。
+首次部署的 60 股验收与 3 股复权对照保留在 [`deployment_validation.json`](research_bootstrap/deployment_validation.json)。2026-10-05 已迁入公告索引 235,188 条、修订映射 20,825 条和三张财务简表 469,736 条。本轮修复 ETL 遗漏的更正映射嵌套提取：25 条可用提取中新增 23 条，2 条重复保留原人工链；财务提取版本从 541 增至 564，在已提供文档范围内核对的金额记录从 503 增至 526。来源索引、公告日期及报告期已核对，原 541 个 ID 均保留。原始 PDF 字节尚未全部本地重验，新增记录的修订链仍为 unreviewed，23 条首次可用日及窗口终点查询均受更正范围屏障阻断，不能称为完整 PIT。财务简表为本次取得的最新重述快照，全部 `pit_usable=false`；不能根据旧 `NOTICE_DATE` 把今天的数值回填到历史。
 
 沪深来源元数据包含 5,561 个身份，目标窗口内 5,452 个，包括 231 个退市身份。全量同步合并断点完成 1,245 只（含 90 只退市）的行情与因子查询，取得 1,944,246 条对应原始行情；来源明确标记的 9,518 个停牌日已保留，未出现无法解释的缺失交易日。实际库存另含较早样本及中断前成功的部分查询，不能把库存行数等同于完整证券数。6 只已下载证券的 IPO 复权基准仍未认证。
 
@@ -57,7 +57,7 @@ Copy-Item config\panda-alpha.example.json config\panda-alpha.local.json
 
 剩余行情目前受外部来源阻断：BaoStock 匿名登录返回 `10001011`，SDK 定义为 `BSERR_BLACKLIST_USER`；北交所行情接口连接失败。用户选择保留断点等待恢复。源级熔断停止新派发、保留成功数据与凭证；失败尝试另存，未访问证券不计作行情缺失。恢复后需显式 `--resume-after-source-unblock`，默认单 worker。完整历史股票池、全市场原始财务 PIT、分钟数据及实际成交验收仍为 pending，因此 `can_retire_legacy=false`。
 
-最新脱敏库存、已完成归档、来源阻断、原始验收报告哈希与测试结果见 [`migration_checkpoint_20261005.json`](research_bootstrap/migration_checkpoint_20261005.json)。本地完整断点在 `research_runs/market_sync/checkpoint.json`；剩余沪深 4,207 只等待来源恢复，不能把本轮局部股票数或旧缓存副本标为全市场覆盖。
+首次迁移的冻结库存、归档和验收哈希见 [`migration_checkpoint_20261005.json`](research_bootstrap/migration_checkpoint_20261005.json)；本轮最新库存、财务增量、恢复探测和当前断点哈希见 [`data_completion_20261005.json`](research_bootstrap/data_completion_20261005.json)。BaoStock 单次恢复探测仍返回黑名单错误，北交所单次连接失败，两个既有 TDX 节点仅返回不可解析的日 K 载荷，本轮新增行情为 0。当前断点在 `research_runs/market_sync/checkpoint.json`；该次探测更新了断点元数据，首次发布的旧断点字节未留存，此限制已记入新报告，成功结果及原迁移报告仍保留。剩余沪深 4,207 只、6 只 IPO 复权基准、北交所历史与 HFQ、完整财务 PIT 和分钟数据仍待补齐。财务另缺 20 个前置公告的已验证金额、2019 年目标披露窗口及其他字段；不能把本轮局部股票数或旧缓存副本标为全市场覆盖。
 
 ```powershell
 $env:PYTHONPATH = "$PWD\.runtime\python"
@@ -91,6 +91,10 @@ python scripts\migrate_legacy_prices.py --files ..\stockdb_factor_eval\cache\exe
 BaoStock 通过 QUANTAXIS 已支持的来源接口进入同一 schema。日行情保存原始价格，成交量从 shares 转换为 QA 的手数并保留 shares，成交额为人民币元。累计复权因子与交易日历独立保存。当前列表同步不能替代历史包含退市股票的股票池。
 
 ## 本地研究与反思
+
+同族的来源缺失现在累计到 `source_failures`，调查计数 `attempts` 只统计非来源调查。连续来源失败保持 `new_source`，不会因第三次缺失触发调查上限或放弃；真实证伪、未来信息及非来源失败仍按原规则处理。候选自己的 `attempts` 保留全部反思事件数，用于追溯。保存状态升级为 schema 2，并记录计数范围及迁移事件。
+
+加载旧 schema 1 时，只对完整轨迹证明全部为来源失败、经济判断仍 pending、且无历史机制封锁或证据重开记录的族修正旧计数和误封锁。真实否决、混合失败、轨迹不全或历史黑名单会保留原状态；已有旧状态文件不被直接覆盖，需新证据才能重开这类机制。
 
 ```powershell
 .\scripts\Invoke-PandaResearch.ps1 evaluate --candidates research_runs\generation01.json --codes 000001 600000 600519 --start 2026-06-18 --end 2026-09-18 --output research_runs\local_review

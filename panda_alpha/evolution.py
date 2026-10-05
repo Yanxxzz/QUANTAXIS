@@ -112,6 +112,7 @@ class EvolutionDecision:
     economic_status: str = "pending"
     evidence_artifacts: tuple[str, ...] = ()
     reflection_source: str = "deterministic"
+    family_source_failures: int = 0
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -238,6 +239,8 @@ class ResearchEngine:
             if not isinstance(self.memory, dict):
                 raise ValueError("Research memory must be a JSON object")
         self.attempts: Counter[str] = Counter()
+        self.source_failures: Counter[str] = Counter()
+        self.state_migrations: list[dict[str, Any]] = []
         self.abandoned_families: set[str] = set()
         self.decisions: list[EvolutionDecision] = []
         self.candidates: dict[str, Candidate] = {}
@@ -253,6 +256,9 @@ class ResearchEngine:
         return {"count": count, "parents": [p.to_dict() for p in parents],
                 "research_memory": self.memory,
                 "family_attempts": dict(self.attempts),
+                "family_attempts_scope": "non_source_investigations",
+                "family_source_failures": dict(self.source_failures),
+                "state_migrations": self.state_migrations,
                 "abandoned_families": sorted(self.abandoned_families),
                 "reopening_events": self.reopening_events,
                 "max_family_attempts": self.max_family_attempts,
@@ -385,8 +391,10 @@ class ResearchEngine:
                  "changed_information": evidence.get("changed_information"),
                  "artifacts": verified, "falsifier": falsifier.strip(),
                  "previous_family_attempts": self.attempts[family_id], "economic_status": "pending"}
+        event["previous_source_failures"] = self.source_failures[family_id]
         self.abandoned_families.discard(family_id)
         self.attempts[family_id] = 0
+        self.source_failures[family_id] = 0
         self.reopening_events.append(event)
         self.reopened_families[family_id] = event
         candidate.trajectory.append(dict(event))
@@ -439,20 +447,32 @@ class ResearchEngine:
         selected = select_diverse(options, count, prior_candidates=prior)
         return self._register(selected, parents, "llm_plan" if self.backend else "deterministic_plan")
 
+    @staticmethod
+    def _is_source_failure(evidence: FailureEvidence) -> bool:
+        failure = evidence.failure_type.lower()
+        hard_falsification = evidence.falsified or failure in {"lookahead", "leakage", "economic_falsification"}
+        return not hard_falsification and (evidence.data_complete is False or
+                                          failure in {"missing_data", "source_gap", "pit_unavailable"})
+
     def reflect(self, candidate: Candidate, evidence: FailureEvidence | Mapping[str, Any]) -> EvolutionDecision:
         if isinstance(evidence, Mapping):
             evidence = FailureEvidence.from_dict(evidence)
         self.candidates[candidate.candidate_id] = candidate
-        self.attempts[candidate.family_id] += 1
+        source_failure = self._is_source_failure(evidence)
+        if source_failure:
+            self.source_failures[candidate.family_id] += 1
+        else:
+            self.attempts[candidate.family_id] += 1
+        # Candidate attempts retain the total reflection-event count for provenance.
         candidate.attempts += 1
         attempts = self.attempts[candidate.family_id]
         failure = evidence.failure_type.lower()
         if evidence.falsified or failure in {"lookahead", "leakage", "economic_falsification"}:
             action, why = "abandon", "The causal hypothesis was falsified or uses future information"
+        elif source_failure:
+            action, why = "new_source", "Required point-in-time observations are missing; repair the evidence source"
         elif attempts >= self.max_family_attempts and not evidence.reproducible_signal:
             action, why = "abandon", "The family exhausted its investigation limit; stop numeric-grid retries"
-        elif evidence.data_complete is False or failure in {"missing_data", "source_gap", "pit_unavailable"}:
-            action, why = "new_source", "Required point-in-time observations are missing; repair the evidence source"
         elif failure == "economic_failure":
             action, why = "abandon", "Measured after-cost held-side economics failed; retire the unchanged definition until new evidence"
         elif evidence.correlated_with or failure in {"redundancy", "high_correlation", "duplicate"}:
@@ -497,7 +517,8 @@ class ResearchEngine:
         if economics not in {"pending", "accepted", "rejected"}:
             economics = "pending"
         decision = EvolutionDecision(candidate.candidate_id, action, failure, why, tests,
-                                     attempts, economics, evidence.artifacts, reflection_source)
+                                     attempts, economics, evidence.artifacts, reflection_source,
+                                     self.source_failures[candidate.family_id])
         candidate.trajectory.append({"event": "reflection", "decision": decision.to_dict(),
                                      "evidence": evidence.to_dict()})
         if action == "abandon":
@@ -545,7 +566,10 @@ class ResearchEngine:
         return result
 
     def save_state(self, path: str | Path) -> None:
-        state = {"schema_version": 1, "attempts": dict(self.attempts),
+        state = {"schema_version": 2, "attempts": dict(self.attempts),
+                 "attempts_scope": "non_source_investigations",
+                 "source_failures": dict(self.source_failures),
+                 "state_migrations": self.state_migrations,
                  "abandoned_families": sorted(self.abandoned_families),
                  "candidates": [c.to_dict() for c in self.candidates.values()],
                  "reopening_events": self.reopening_events,
@@ -554,9 +578,12 @@ class ResearchEngine:
 
     def load_state(self, path: str | Path) -> None:
         state = json.loads(Path(path).read_text(encoding="utf-8-sig"))
-        if state.get("schema_version") != 1:
+        version = state.get("schema_version")
+        if version not in {1, 2}:
             raise ValueError("Unsupported evolution state version")
         self.attempts = Counter(state.get("attempts", {}))
+        self.source_failures = Counter(state.get("source_failures", {})) if version == 2 else Counter()
+        self.state_migrations = list(state.get("state_migrations", []))
         self.reopening_events = list(state.get("reopening_events", []))
         self.reopened_families = {}
         for event in self.reopening_events:
@@ -567,3 +594,63 @@ class ResearchEngine:
         candidates = [Candidate.from_dict(item) for item in state.get("candidates", [])]
         self.candidates = {candidate.candidate_id: candidate for candidate in candidates}
         self.decisions = [EvolutionDecision(**item) for item in state.get("decisions", [])]
+        if version == 1:
+            self._migrate_legacy_source_budget(state)
+
+    def _migrate_legacy_source_budget(self, state: Mapping[str, Any]) -> None:
+        """Repair only old source-only counters with complete attributable history.
+
+        Older states can have more global decisions than retained trajectories.
+        Mixed, incomplete, historical or reopened histories keep their blocks;
+        verified evidence reopening remains available for those families.
+        """
+        records = list(state.get("decisions", []))
+        ownership_complete = all(row.get("candidate_id") in self.candidates for row in records)
+        cap_reason = "The family exhausted its investigation limit; stop numeric-grid retries"
+        key = lambda row: json.dumps(row, sort_keys=True, ensure_ascii=False)
+        for family, previous in list(self.attempts.items()):
+            members = [c for c in self.candidates.values() if c.family_id == family]
+            blocked_mechanisms = set(self.memory.get("abandoned_mechanisms", [])) | self.memory_blocked_mechanisms
+            protected = (family in self.historical_blocks or family in self.reopened_families or
+                         any(c.mechanism in blocked_mechanisms for c in members))
+            ids = {c.candidate_id for c in members}
+            decisions = [row for row in records if row.get("candidate_id") in ids]
+            proof: dict[str, Mapping[str, Any]] = {}
+            conflicting = False
+            for candidate in self.candidates.values():
+                for event in candidate.trajectory:
+                    if event.get("event") != "reflection" or not isinstance(event.get("decision"), Mapping):
+                        continue
+                    identity = key(event["decision"])
+                    evidence = event.get("evidence")
+                    if not isinstance(evidence, Mapping):
+                        continue
+                    if identity in proof and proof[identity] != evidence:
+                        conflicting = True
+                    proof[identity] = evidence
+            complete = (ownership_complete and not protected and previous > 0 and
+                        len(decisions) == previous and not conflicting and
+                        [d.get("family_attempts") for d in decisions] == list(range(1, previous + 1)) and
+                        len({key(d) for d in decisions}) == previous and
+                        all(key(d) in proof for d in decisions))
+            pure_source = complete and all(
+                self._is_source_failure(FailureEvidence.from_dict(proof[key(d)])) and
+                d.get("economic_status", "pending") == "pending" and
+                proof[key(d)].get("economic_validation", {}).get("status", "pending") == "pending" and
+                d.get("failure_type") == proof[key(d)].get("failure_type", "unknown").lower() and
+                d.get("failure_type") not in {"economic_failure", "syntax", "runtime", "alignment", "constant"} and
+                (d.get("action") == "new_source" or
+                 d.get("action") == "abandon" and d.get("explanation") == cap_reason)
+                for d in decisions)
+            if pure_source:
+                was_blocked = family in self.abandoned_families
+                self.attempts[family] = 0
+                self.source_failures[family] = previous
+                self.abandoned_families.discard(family)
+                self.state_migrations.append({"event": "legacy_source_budget_repair", "family_id": family,
+                    "previous_attempts": previous, "source_failures": previous,
+                    "incorrect_family_block_removed": was_blocked, "economic_status": "pending"})
+            elif previous > 0:
+                self.state_migrations.append({"event": "legacy_budget_preserved", "family_id": family,
+                    "reason": "history incomplete, mixed, historically blocked or in a reopened evidence epoch",
+                    "automatic_unblocking": False})
