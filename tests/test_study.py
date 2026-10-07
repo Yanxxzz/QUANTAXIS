@@ -255,5 +255,29 @@ class ContinuousAccountingTests(unittest.TestCase):
         frame["sector_asof"]="2030-01-01";frame["beta_asof"]="2030-01-01"
         self.assertIsNone(self.replay(frame)["exposures"]["summary"]["mean_beta_exposure"])
 
+    def test_new_public_unknown_sector_supersedes_older_classification(self):
+        frame=self.frame.copy();frame["sector"]="MANUFACTURING"
+        frame["sector_asof"]="2023-12-29";frame["sector_pit_usable"]=True
+        mask=frame.date.ge(self.days[1])
+        frame.loc[mask,"sector"]="UNKNOWN"
+        frame.loc[mask,"sector_asof"]=self.days[1]
+        frame.loc[mask,"sector_pit_usable"]=False
+        exposure=self.replay(frame)["exposures"]["daily"]
+        self.assertEqual(0.,exposure[0]["unknown_sector_wealth_fraction"])
+        self.assertAlmostEqual(1.,exposure[1]["unknown_sector_wealth_fraction"])
+        self.assertEqual({},exposure[1]["known_sector_wealth"])
+
+    def test_new_declared_missing_beta_does_not_carry_stale_estimate(self):
+        frame=self.frame.copy();frame["beta"]=1.5
+        frame["beta_asof"]="2023-12-29";frame["beta_pit_usable"]=True
+        mask=frame.date.ge(self.days[1])
+        frame.loc[mask,"beta"]=np.nan
+        frame.loc[mask,"beta_asof"]=self.days[1]
+        frame.loc[mask,"beta_pit_usable"]=False
+        exposure=self.replay(frame)["exposures"]["daily"]
+        self.assertAlmostEqual(1.5,exposure[0]["beta_exposure"])
+        self.assertIsNone(exposure[1]["beta_exposure"])
+        self.assertAlmostEqual(1.,exposure[1]["unknown_beta_wealth_fraction"])
+
 
 if __name__=="__main__":unittest.main()

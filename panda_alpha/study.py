@@ -265,19 +265,20 @@ class PotentialQuoteBook:
         candidates=[]
         for observed,row in self.risk_rows.get(code,[]):
             if observed>day:continue
-            value=row.get(field)
-            if field=="beta":
-                value=_number(row,"beta")
-                if value is None:continue
-            elif not isinstance(value,str) or not value.strip() or value.strip().upper()=="UNKNOWN":continue
             pit=row.get(field+"_pit_usable",row.get("risk_metadata_pit_usable"))
-            if not isinstance(pit,(bool,np.bool_)) or not pit:continue
+            if not isinstance(pit,(bool,np.bool_)):continue
             asof=row.get(field+"_asof",row.get(field+"_asof_date"))
             if asof is None:continue
             try:asof=pd.Timestamp(asof).strftime("%Y-%m-%d")
             except (ValueError,TypeError):continue
             if asof>day:continue
-            candidates.append((asof,observed,value.strip() if field=="sector" else value))
+            value=row.get(field)
+            if field=="beta":value=_number(row,"beta")
+            elif not isinstance(value,str) or not value.strip() or value.strip().upper()=="UNKNOWN":value=None
+            else:value=value.strip()
+            # An explicitly unknown newer snapshot supersedes an older value.
+            # Ignoring it would certify stale sector/beta metadata as current.
+            candidates.append((asof,observed,value if pit else None))
         if not candidates:result=(None,None)
         else:
             asof,_,value=max(candidates,key=lambda x:(x[0],x[1]));result=(value,asof)
