@@ -112,8 +112,8 @@ def _field(text, section, label, metadata, provenance):
         monetary_rest = re.sub(r"^[（(]?[一二三四五六七八九十]+[）)]?[、.．]?\s*\d+(?:[（(]\d+[）)])?", "", rest.strip())
         valid_rest = re.fullmatch(r"[\d,，.\s+\-−－—–/()（）]*", monetary_rest) is not None
         cells, snippet = column_pair(rest, body[hit.end():].splitlines()) if valid_rest else ([], rest)
-        if len(cells) == 3 and re.fullmatch(r"\d{1,3}", cells[0]) and "附注" in section["header"]:
-            cells = cells[1:]
+        # A small integer and a note heading do not prove the first numeric
+        # cell is a note. Three bare cells need separate column evidence.
         row = {"status": "missing_or_ambiguous_stock_columns", "source_label": hit.group().strip(),
                "source_page": source_page(text, section["body_start"] + hit.start()),
                "cells": cells, "column_source": snippet, "statement_scope": "consolidated",

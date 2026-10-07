@@ -65,6 +65,35 @@ def test_missing_dash_or_ambiguous_column_not_zero(row):
     assert r["values"]["accounts_receivable"]["current"] is None
 
 
+@pytest.mark.parametrize("extra", ["调整前 调整后", "重述前 重述后"])
+def test_three_money_columns_cannot_become_note_and_two_stock_amounts(extra):
+    parsed = report(header=f"2024年12月31日\n单位：百万元\n项目 附注 期末余额 期初余额 {extra}",
+                    rows="应收账款 100 90 80\n存货 20 10\n应付账款 15 10\n资产总计 200 100")
+    assert parsed["status"] == "source_values_pending"
+    assert parsed["values"]["accounts_receivable"]["current"] is None
+
+
+def test_trailing_note_column_cannot_discard_first_stock_amount():
+    parsed = report(header="2024年12月31日\n单位：百万元\n项目 期末余额 期初余额 附注",
+                    rows="应收账款 100 90 8\n存货 20 10\n应付账款 15 10\n资产总计 200 100")
+    assert parsed["status"] == "source_values_pending"
+    assert parsed["values"]["accounts_receivable"]["current"] is None
+
+
+def test_three_bare_numeric_cells_need_independent_note_column_evidence():
+    parsed = report(header="2024年12月31日\n单位：百万元\n项目 附注 期末余额 期初余额",
+                    rows="应收账款 8 100 90\n存货 20 10\n应付账款 15 10\n资产总计 200 100")
+    assert parsed["status"] == "source_values_pending"
+    assert parsed["values"]["accounts_receivable"]["current"] is None
+
+
+def test_explicit_chinese_note_marker_preserves_integer_currency_amounts():
+    parsed = report(header="2024年12月31日\n单位：百万元\n项目 附注 期末余额 期初余额",
+                    rows="应收账款 八8 100 90\n存货 20 10\n应付账款 15 10\n资产总计 200 100")
+    assert parsed["status"] == "source_values_verified"
+    assert parsed["values"]["accounts_receivable"] == {"current": "100000000", "opening": "90000000"}
+
+
 def test_numeric_zero_is_valid_and_trade_labels_are_exact():
     r = report(rows="应收票据 900 800\n应收账款 0.00 20.00\n存货 20 10\n其他应付款 999 888\n应付账款 15 10\n资产总计 200 100")
     assert r["status"] == "source_values_verified"

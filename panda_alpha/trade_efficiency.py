@@ -80,10 +80,8 @@ def attach_annual_revenue(stock_record, text, metadata, provenance):
             valid_rest = re.fullmatch(r"[\d,，.\s+\-−－—–/()（）]*", rest) is not None
             cells, snippet = column_pair(rest, body[hit.end():].splitlines()) if valid_rest else ([], rest)
             spans = section["spans"]
-            if (len(cells) == 3 and "附注" in section["header"] and re.fullmatch(r"\d{1,3}", cells[0])
-                    and spans["comparative_status"] == "explicit_prior_same_span"
-                    and not re.search(r"调整前|调整后|重述", section["header"])):
-                cells = cells[1:]
+            # Keep three bare numeric cells ambiguous; source-column evidence
+            # must distinguish an integer note from a third monetary amount.
             row = {"status": "annual_revenue_columns_or_spans_pending", "source_cells": cells,
                    "column_source": snippet, "source_label": hit.group().strip(),
                    "source_page": source_page(text, section["body_start"]+hit.start()),

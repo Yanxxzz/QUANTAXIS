@@ -43,6 +43,18 @@ def test_strict_original_annual_revenue_attached_to_stock_document():
     assert result["value"] == pytest.approx(5/150)
 
 
+@pytest.mark.parametrize("columns", ["项目 附注 2024年度 2023年度", "项目 2024年度 2023年度 附注"])
+def test_three_integer_flow_cells_need_source_column_evidence(columns):
+    stock, income = pair(income_header="单位：百万元\n"+columns,
+                         income_row="营业收入 100 90 8")
+    assert stock["status"] == "source_values_verified"
+    assert income["status"] == "annual_revenue_source_pending"
+    assert income["values"] == {"current": None, "prior": None}
+    result = select_trade_efficiency_asof([stock], [income], code="000008", decision_date="2025-04-20")
+    assert not result["pit_usable"]
+    assert result["value"] is None
+
+
 def test_constant_opening_sales_intensity_gives_zero_and_no_growth_matches_wc01():
     stock, income = pair(stock_rows="应收账款 35 20\n存货 20 10\n应付账款 15 10\n资产总计 200 100")
     assert trade_efficiency_score(stock["values"], income["values"]) == 0
