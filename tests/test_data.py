@@ -55,6 +55,23 @@ class AxisDataTests(unittest.TestCase):
             "stock_list": FakeCollection([{"code": "000001"}]),
         })
 
+    def test_industry_adapter_normalizes_code_and_date_without_financial_or_price_queries(self):
+        db = self.database()
+        db["stock_industry_editions"] = FakeCollection([{
+            "vintage_id": "2025H1", "publication_date": "2025-09-30", "status": "verified_scoped",
+            "source_sha256": "a"*64, "source_scope_codes": ["000001", "000002"],
+            "scope_sha256": "b"*64, "parse_receipt_sha256": "c"*64}])
+        db["stock_industry_pit"] = FakeCollection([{
+            "code": "000001", "symbol": "000001", "vintage_id": "2025H1", "publication_date": "2025-09-30",
+            "source_sha256": "a"*64, "parse_receipt_sha256": "c"*64, "category_code": "J", "major_code": "66"}])
+        before_prices = list(db["stock_day"].records)
+        provider = AxisProvider(db=db)
+        self.assertEqual(provider.industry_asof("000001.SZ", "20251010")["sector"], "J66")
+        self.assertEqual(provider.industry_asof("000001.SZ", "20250930")["status"], "UNKNOWN_NO_PUBLIC_EDITION")
+        self.assertEqual(provider.industry_asof("000002.SZ", "20251010")["status"], "UNKNOWN_ABSENT_IN_LATEST_PUBLIC_EDITION")
+        self.assertEqual(provider.industry_asof("600519.SH", "20251010")["status"], "UNKNOWN_OUTSIDE_VERIFIED_SOURCE_SCOPE")
+        self.assertEqual(db["stock_day"].records, before_prices)
+
     def test_cash_dividend_qfq_preserves_raw_volume_and_dates(self):
         result = AxisProvider(db=self.database()).daily(["000001.SZ"], "2024-01-02", "2024-01-03",
                                                        expected_dates=["2024-01-02", "2024-01-03"])

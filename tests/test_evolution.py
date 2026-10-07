@@ -330,6 +330,178 @@ class EvolutionTests(unittest.TestCase):
         decision = engine.reflect(deterministic_candidates()[1], FailureEvidence(failure_type="economic_failure", data_complete=False))
         self.assertEqual(decision.action, "new_source")
 
+    def test_fixed_economic_rejection_does_not_ban_numeric_family_or_opposite_direction(self):
+        engine = ResearchEngine()
+        candidate = Candidate("hypothesis", "mechanism", formula="MA(CLOSE,10)")
+        engine.reflect(candidate, FailureEvidence(failure_type="economic_failure", data_complete=True))
+        self.assertFalse(engine._admissible(Candidate("renamed", "new label", formula="MA(CLOSE,10)")))
+        self.assertTrue(engine._admissible(Candidate("different definition", "mechanism", formula="MA(CLOSE,40)")))
+        self.assertTrue(engine._admissible(Candidate("different direction", "mechanism", formula="MA(CLOSE,10)", direction=0)))
+        self.assertNotIn(candidate.family_id, engine.abandoned_families)
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "state.json"
+            engine.save_state(path)
+            restored = ResearchEngine(state_path=path)
+            self.assertFalse(restored._admissible(candidate))
+            self.assertTrue(restored._admissible(Candidate("other", "mechanism", formula="MA(CLOSE,40)")))
+
+    def test_registry_rejected_definition_respects_frozen_research_window(self):
+        from panda_alpha.registry import strategy_definition
+        candidate = Candidate("hypothesis", "mechanism", formula="MA(CLOSE,10)")
+        window = {"start": "20250101", "end": "20260101"}
+        definition = strategy_definition(candidate.to_dict(), window, 5, 10)
+        memory = {"registry_constraints": {"fixed_rejected": [{"candidate_id": candidate.candidate_id,
+                   "definition": definition}], "human_retired": [], "derived_from_registry_head": "hash"}}
+        current = ResearchEngine(memory=memory, research_context={"window": window, "cycle": 5, "groups": 10})
+        self.assertFalse(current._admissible(candidate))
+        changed = ResearchEngine(memory=memory, research_context={"window": {**window, "end": "20260201"}, "cycle": 5, "groups": 10})
+        self.assertTrue(changed._admissible(candidate))
+        # An unbound planner conservatively excludes the exact prior expression,
+        # never all numerical siblings in its parameter family.
+        unbound = ResearchEngine(memory=memory)
+        self.assertFalse(unbound._admissible(candidate))
+        self.assertTrue(unbound._admissible(Candidate("other", "mechanism", formula="MA(CLOSE,40)")))
+
+    def test_recent_economic_records_import_but_source_pending_does_not_ban(self):
+        failed = Candidate("failed", "mechanism", formula="MA(CLOSE,10)")
+        pending = Candidate("pending", "other", formula="MA(AMOUNT,10)")
+        failed.trajectory.append({"event": "reflection", "decision": {"action": "abandon", "failure_type": "economic_failure"},
+                                  "evidence": {"data_complete": True}})
+        pending.trajectory.append({"event": "reflection", "decision": {"action": "new_source", "failure_type": "source_gap"},
+                                   "evidence": {"data_complete": False}})
+        engine = ResearchEngine(memory={"recent_research": [{"definitions": [failed.to_dict(), pending.to_dict()]}]})
+        self.assertFalse(engine._admissible(failed))
+        self.assertTrue(engine._admissible(pending))
+        for _ in range(4):
+            engine.reflect(pending, FailureEvidence(failure_type="source_gap", data_complete=False))
+        self.assertEqual(engine.attempts[pending.family_id], 0)
+        self.assertTrue(engine._admissible(pending))
+
+    def test_human_retirement_blocks_renames_sources_and_llm_without_consuming_attempts(self):
+        class Backend:
+            calls = 0
+            def complete_json(self, stage, context):
+                self.calls += 1
+                return {"action": "escalate", "required_tests": []}
+        retired = Candidate("disclosure", "earnings_guidance", formula="GUIDANCE_SCORE", candidate_id="EP05")
+        backend = Backend()
+        memory = {"human_retired_directions": [{"direction": "earnings_line", "scope": "EP01..EP08",
+                   "mechanisms": ["earnings_guidance"], "instruction": "淘汰该方向"}],
+                  "recent_research": [{"definitions": [retired.to_dict()]}]}
+        engine = ResearchEngine(memory=memory, backend=backend)
+        for candidate in (retired, Candidate("renamed", "new label", formula="GUIDANCE_SCORE"),
+                          Candidate("child", "new label", formula="OTHER_SCORE", parents=("EP05",)),
+                          Candidate("new source", "new label", formula="NEW_SCORE", parameters={"research_direction": "earnings_line"})):
+            self.assertFalse(engine._admissible(candidate))
+            decision = engine.reflect(candidate, FailureEvidence(data_complete=False))
+            self.assertEqual(decision.failure_type, "human_retired")
+            self.assertEqual(decision.family_attempts, 0)
+        self.assertEqual(backend.calls, 0)
+        with self.assertRaisesRegex(ValueError, "human_reopened"):
+            engine.reopen_family(retired, {}, "source recovered")
+        self.assertTrue(engine._admissible(Candidate("unrelated", "other", formula="UNRELATED_SCORE")))
+
+    def test_explicit_human_reopen_persists_and_new_registry_retirement_still_wins(self):
+        candidate = Candidate("retired", "earnings", formula="GUIDANCE_SCORE", candidate_id="EP05")
+        memory = {"human_retired_directions": [{"direction": "earnings_line", "candidate_ids": ["EP05"]}]}
+        engine = ResearchEngine(memory=memory)
+        with self.assertRaisesRegex(ValueError, "explicit"):
+            engine.reopen_human_direction("earnings_line", {"kind": "human_reopened", "actor": "llm", "instruction": "reopen", "event_id": "fake"})
+        engine.reopen_human_direction("earnings_line", {"kind": "human_reopened", "actor": "human", "instruction": "重新研究", "event_id": "trusted-user-1"})
+        self.assertTrue(engine._admissible(candidate))
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "state.json"
+            engine.save_state(path)
+            restored = ResearchEngine(memory=memory, state_path=path)
+            self.assertTrue(restored._admissible(candidate))
+            new_retirement = {"registry_constraints": {"human_retired": [{"direction": "earnings_line", "candidate_ids": ["EP05"], "event_id": "new-human-stop"}],
+                              "fixed_rejected": [], "derived_from_registry_head": "latest"}}
+            stopped = ResearchEngine(memory=new_retirement, state_path=path)
+            self.assertFalse(stopped._admissible(candidate))
+
+    def test_current_registry_reopen_does_not_reload_stale_human_retirement_from_state(self):
+        candidate = Candidate("retired", "earnings", formula="GUIDANCE_SCORE", candidate_id="EP05")
+        engine = ResearchEngine(memory={"human_retired_directions": [{"direction": "earnings_line", "candidate_ids": ["EP05"]}]})
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "state.json"
+            engine.save_state(path)
+            reopened = {"registry_constraints": {"human_retired": [], "fixed_rejected": [], "derived_from_registry_head": "human-reopened"}}
+            restored = ResearchEngine(memory=reopened, state_path=path)
+            self.assertTrue(restored._admissible(candidate))
+
+    def test_evidence_reopen_of_recent_fixed_rejection_survives_restart(self):
+        candidate = Candidate("fixed", "mechanism", formula="MA(CLOSE,10)", economic_status="rejected")
+        memory = {"recent_research": [{"definitions": [candidate.to_dict()]}]}
+        with tempfile.TemporaryDirectory() as directory:
+            proof = Path(directory) / "proof.json"
+            proof.write_text("verified source repair", encoding="utf-8")
+            evidence = {"change_type": "verified_source_repair", "description": "Repaired reporting date",
+                        "verification_summary": "Original publication timestamp verified",
+                        "artifacts": [{"path": str(proof), "sha256": hashlib.sha256(proof.read_bytes()).hexdigest()}]}
+            engine = ResearchEngine(memory=memory)
+            engine.reopen_family(candidate, evidence, "Disprove on repaired observations")
+            path = Path(directory) / "state.json"
+            engine.save_state(path)
+            restored = ResearchEngine(memory=memory, state_path=path)
+            self.assertTrue(restored._admissible(candidate))
+            restored.reflect(candidate, FailureEvidence(failure_type="economic_failure", data_complete=True))
+            restored.save_state(path)
+            still_rejected = ResearchEngine(memory=memory, state_path=path)
+            self.assertFalse(still_rejected._admissible(candidate))
+
+    def test_registry_reopen_is_recorded_and_recent_memory_cannot_restore_old_rejection(self):
+        from panda_alpha.registry import ResearchRegistry
+        candidate = Candidate("fixed", "mechanism", formula="MA(CLOSE,10)", economic_status="rejected")
+        memory = {"recent_research": [{"definitions": [candidate.to_dict()]}]}
+        context = {"window": {"start": "20250101", "end": "20260101"}, "cycle": 5, "groups": 10}
+        with tempfile.TemporaryDirectory() as directory:
+            registry = ResearchRegistry(Path(directory) / "registry.sqlite3", 415)
+            registry.record(candidate.to_dict(), context["window"], 5, 10)
+            key = next(iter(registry.registrations()))
+            registry.append_event("economic_rejected", key, {"data_complete": True})
+            proof = Path(directory) / "proof.json"
+            proof.write_text("new source evidence", encoding="utf-8")
+            evidence = {"change_type": "verified_source_repair", "description": "Original timestamp repaired",
+                        "verification_summary": "Source SHA verified", "artifacts": [{"path": str(proof), "sha256": hashlib.sha256(proof.read_bytes()).hexdigest()}]}
+            engine = ResearchEngine(memory=memory, registry=registry, research_context=context)
+            engine.reopen_family(candidate, evidence, "Disprove on the repaired timestamps")
+            self.assertEqual(registry.total, 416)
+            self.assertEqual(registry.export_hot_memory()["registry_constraints"]["fixed_rejected"], [])
+            path = Path(directory) / "state.json"
+            engine.save_state(path)
+            restored = ResearchEngine(memory=memory, registry=registry, research_context=context, state_path=path)
+            self.assertTrue(restored._admissible(candidate))
+            # A later fresh rejection re-blocks the same fixed strategy.
+            registry.append_event("economic_rejected", key, {"data_complete": True, "epoch": "after_repair"})
+            rejected = ResearchEngine(memory=memory, registry=registry, research_context=context, state_path=path)
+            self.assertFalse(rejected._admissible(candidate))
+            registry.close()
+
+    def test_equivalent_iso_and_basic_windows_keep_same_rejected_scope(self):
+        from panda_alpha.registry import strategy_definition
+        candidate = Candidate("hypothesis", "mechanism", formula="MA(CLOSE,10)")
+        definition = strategy_definition(candidate.to_dict(), {"start": "20250101", "end": "20260101"}, 5, 10)
+        memory = {"registry_constraints": {"fixed_rejected": [{"definition": definition}], "human_retired": [],
+                                         "derived_from_registry_head": "hash"}}
+        engine = ResearchEngine(memory=memory, research_context={"window": {"start": "2025-01-01", "end": "2026-01-01"}, "cycle": 5, "groups": 10})
+        self.assertFalse(engine._admissible(candidate))
+
+    def test_implicit_parent_binding_cannot_return_human_retired_descendant(self):
+        parent = Candidate("retired", "earnings", formula="GUIDANCE_SCORE", candidate_id="EP05")
+        class Backend:
+            def complete_json(self, stage, context):
+                return {"candidates": [{"hypothesis": "renamed descendant", "mechanism": "new label", "formula": "NEW_SCORE"}]}
+        engine = ResearchEngine(memory={"human_retired_directions": [{"direction": "earnings", "candidate_ids": ["EP05"]}]}, backend=Backend())
+        self.assertEqual(engine.propose(1, parents=[parent]), [])
+
+    def test_human_retirement_traces_known_renamed_ancestor_chain(self):
+        parent = Candidate("retired", "earnings", formula="GUIDANCE_SCORE", candidate_id="EP05")
+        renamed = Candidate("descendant", "renamed", formula="DIFFERENT_SCORE", candidate_id="CHILD", parents=("EP05",))
+        current = Candidate("grandchild", "third name", formula="THIRD_SCORE", parents=("CHILD",))
+        engine = ResearchEngine(memory={"human_retired_directions": [{"direction": "earnings", "candidate_ids": ["EP05"]}]})
+        engine.candidates.update({parent.candidate_id: parent, renamed.candidate_id: renamed})
+        self.assertFalse(engine._admissible(current))
+
 
 if __name__ == "__main__":
     unittest.main()

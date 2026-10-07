@@ -1,6 +1,7 @@
 
 # Self-defined ignore
 .runtime/
+.venv/
 research_runs/
 config/panda-alpha.local.json
 *.sqlite3
@@ -33,7 +34,6 @@ node_modules/
 QA_*.html
 test/
 *lock.json
-docs
 record.txt
 build/
 */cache/

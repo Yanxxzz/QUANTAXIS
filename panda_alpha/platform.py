@@ -85,6 +85,9 @@ class PandaClient:
     def status(self, run_id: str) -> Any:
         return self._bridge("status", run_id)["status"]
 
+    def logs(self, run_id: str) -> dict:
+        return self._bridge("logs", run_id)
+
     def result(self, run_id: str) -> dict:
         return self.cli("factor_result", run_id, timeout=480)
 
@@ -220,7 +223,7 @@ def budget_plan(candidates: list[dict], compute: dict, balance: dict) -> dict:
 
 
 def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedger, client: PandaClient,
-             category: str = "exploration") -> dict:
+             category: str = "exploration", *, before_dispatch=None) -> dict:
     research, compute = config["research"], config["compute"]
     cycle, groups = research["cycle"], research["groups"]
     if candidate.get("direction") not in (0, 1):
@@ -234,6 +237,10 @@ def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedg
     key = fingerprint(candidate, window, cycle, groups)
     if ledger.get(key):
         return ledger.get(key)  # Zero duplicate dispatches on resume.
+    native_preflight = None
+    if candidate.get("code") and not candidate.get("formula"):
+        from .native_preflight import verify_native_preflight
+        native_preflight = verify_native_preflight(candidate, window, cycle, groups)
     recharge_authorization = None
     if compute.get("recharge_credit_limit", 0) > 0:
         recharge_authorization = _batch_authorization(
@@ -253,6 +260,12 @@ def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedg
     if compute["billing_mode"] == "gift_only" and balance["gift"] < ceiling:
         raise ValueError("Gift balance cannot fund the next reservation")
     definition = {"candidate": candidate, "window": window, "cycle": cycle, "groups": groups}
+    if native_preflight is not None:
+        definition["native_preflight"] = native_preflight
+    if before_dispatch is not None:
+        # Definition registration precedes any account mutation or service run.
+        # A failed registration must not reserve funds or create a service job.
+        before_dispatch()
     ledger.reserve(key, candidate, definition, category, ceiling, plan["budget"], balance)
     # Unknown responses remain ambiguous; do not silently retry account mutations.
     ledger.transition(key, "RESERVED", "CREATING")
@@ -302,16 +315,32 @@ def resume(key: str, ledger: ExperimentLedger, client: PandaClient, output_dir: 
     result_path = output_dir / (job["run_id"] + ".json")
     if status == 2 and not result_path.exists():
         result_path.write_text(json.dumps(client.result(job["run_id"]), ensure_ascii=False), encoding="utf-8")
+    failure = {}
+    if status == 3:
+        log_path = output_dir / (job["run_id"] + ".logs.json")
+        try:
+            if not log_path.exists():
+                log_path.write_text(json.dumps(client.logs(job["run_id"]), ensure_ascii=False), encoding="utf-8")
+            logs = json.loads(log_path.read_text(encoding="utf-8"))
+            failure = {"failure_log_path": str(log_path),
+                       "failure_log_sha256": hashlib.sha256(log_path.read_bytes()).hexdigest(),
+                       "failure_logs_complete": logs.get("complete", False),
+                       "node_errors": logs.get("errors", [])}
+        except (RuntimeError, ValueError, OSError, subprocess.TimeoutExpired):
+            # A read-only diagnostic failure must not obscure billing settlement.
+            failure = {"failure_logs_pending": True,
+                       "failure_log_action": "Read the same owned Run ID's logs; do not redispatch"}
     before, after = json.loads(job["balance_before"]), client.balance()
     actual = before["total"] - after["total"]
     if not math.isfinite(actual) or actual <= 0:
         return {"state": "BILLING_PENDING", "run_id": job["run_id"], "platform_status": status,
-                "action": "Re-query balance after settlement; no re-dispatch or new reservation"}
+                "action": "Re-query balance after settlement; no re-dispatch or new reservation", **failure}
     receipt = {"run_id": job["run_id"], "status": status, "actual": actual,
                "gift_delta": before["gift"] - after["gift"],
                "recharge_delta": before["recharge"] - after["recharge"],
                "attribution": "serial balance delta, provisional; external spend/grants may confound",
-               "reservation_overrun": actual > job["reserved"], "day_before": job["day"], "day_after": beijing_day()}
+               "reservation_overrun": actual > job["reserved"], "day_before": job["day"], "day_after": beijing_day(),
+               **failure}
     if receipt["day_before"] != receipt["day_after"]:
         return {"state": "BILLING_REVIEW", "receipt": receipt, "action": "Daily expiry/grant prevents automatic balance-delta settlement"}
     if actual > job["reserved"] or receipt["recharge_delta"] > 0:

@@ -436,6 +436,11 @@ class AxisProvider:
                 "capabilities": self._records("panda_axis_validation"),
                 "interpretation": "Stored records and scoped receipts; independent completeness/PIT gates still apply"}
 
+    def industry_asof(self, code: str, decision_date: str) -> dict:
+        """Return a published scoped edition; latest omissions remain unknown."""
+        from .industry import query_industry_asof
+        return query_industry_asof(self.db, code=normalize_code(code), decision_date=_date(decision_date))
+
 
 def migration_gate(coverage: dict[str, Any], *, require_all_a: bool = True,
                    require_minutes: bool = False, require_delisted: bool = True,

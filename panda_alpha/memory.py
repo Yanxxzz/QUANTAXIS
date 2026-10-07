@@ -13,6 +13,7 @@ import csv
 import hashlib
 import json
 import math
+import os
 from pathlib import Path
 import re
 from typing import Any, Iterable
@@ -53,6 +54,25 @@ _VERIFICATION_KEYS = {"native_parity_verified", "native_or_vintage_verified",
                       "native_market_universe_and_asof_parity_verified",
                       "original_historical_vintage_verified", "pit_verified",
                       "full_A_coverage_verified", "five_year_quotes_absence_proven"}
+
+
+def export_registry_memory(registry, base: dict[str, Any] | None = None,
+                           output: str | Path | None = None) -> dict[str, Any]:
+    """Materialize a derived hot snapshot while preserving original source evidence.
+
+    The historical denominator stays distinct from the cumulative registry total;
+    it must never become the next CLI ledger's historical increment. All registry
+    facts are retained in its append-only store. This function does not mutate the
+    supplied base memory or delete/compact any original experiment artifacts.
+    """
+    memory = registry.export_hot_memory(base)
+    if output is not None:
+        path = Path(output)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        temporary = path.with_suffix(path.suffix + ".tmp")
+        temporary.write_text(json.dumps(memory, ensure_ascii=False, indent=2, allow_nan=False), encoding="utf-8")
+        os.replace(temporary, path)
+    return memory
 
 
 def _sha256(raw: bytes) -> str:

@@ -1,10 +1,80 @@
 {
   "schema_version": 1,
-  "data": {"provider": "quantaxis", "mongo_uri": "mongodb://127.0.0.1:27018", "database": "quantaxis", "adjustment": "qfq", "require_all_a": true, "require_delisted": true, "require_pit_financial": true},
-  "research": {"cycle": 5, "groups": 10, "direction_frozen": true, "probe_start": "2026-06-18", "probe_end": "2026-09-18", "formal_start": "2021-09-20", "formal_end": "2026-09-18", "sealed_windows": [{"start": "2019-09-20", "end": "2021-09-17"}], "history_denominator": 415, "memory": "research_bootstrap/memory.json", "pool_snapshot": "research_bootstrap/pool.json", "max_candidates_per_generation": 12, "max_candidates_per_mechanism": 2, "max_family_attempts_without_new_evidence": 3},
-  "diversity": {"max_abs_rank_correlation": 0.7, "minimum_assets": 30, "minimum_dates": 20},
-  "compute": {"daily_gift_target": 10, "daily_credit_limit": 10, "recharge_credit_limit": 0, "planning_credit_estimate": 4, "source_probe_fraction": 0.3, "exploration_fraction": 0.4, "validation_fraction": 0.3, "max_inflight": 1, "cost_ceiling": null, "cost_ceiling_verified_at": null, "cost_ceiling_source": null, "server_enforced_cap": false, "billing_mode": "gift_only", "allow_estimated_billing": false},
-  "platform": {"cli_command": ["pandaai-cli"], "python": null, "site_packages": null},
-  "llm": {"enabled": false, "base_url": "https://api.openai.com/v1", "model": null, "api_key_env": "PANDA_ALPHA_LLM_KEY"},
-  "admission": {"minimum_net_sharpe": 2, "one_way_costs": [0.003, 0.005], "require_size_stress": true, "require_fixed_pool_increment": true, "require_official_transfer": true, "monthly_points_evidence": "official_complete_month_ledger", "legacy_policy_path": "factor_workflow/gates/joint_sharpe_points_v2_real_return.json"}
+  "data": {
+    "provider": "quantaxis",
+    "mongo_uri": "mongodb://127.0.0.1:27018",
+    "database": "quantaxis",
+    "adjustment": "qfq",
+    "require_all_a": true,
+    "require_delisted": true,
+    "require_pit_financial": true
+  },
+  "research": {
+    "cycle": 5,
+    "groups": 10,
+    "direction_frozen": true,
+    "probe_start": "2026-06-18",
+    "probe_end": "2026-09-18",
+    "formal_start": "2021-09-20",
+    "formal_end": "2026-09-18",
+    "sealed_windows": [
+      {
+        "start": "2017-09-20",
+        "end": "2019-09-19"
+      }
+    ],
+    "history_denominator": 415,
+    "memory": "research_bootstrap/memory.json",
+    "pool_snapshot": "research_bootstrap/pool.json",
+    "max_candidates_per_generation": 12,
+    "max_candidates_per_mechanism": 2,
+    "max_family_attempts_without_new_evidence": 3,
+    "live_memory": "research_runs/live_memory.json"
+  },
+  "diversity": {
+    "max_abs_rank_correlation": 0.7,
+    "minimum_assets": 30,
+    "minimum_dates": 20
+  },
+  "compute": {
+    "daily_gift_target": 10,
+    "daily_credit_limit": 10,
+    "recharge_credit_limit": 0,
+    "planning_credit_estimate": 4,
+    "source_probe_fraction": 0.3,
+    "exploration_fraction": 0.4,
+    "validation_fraction": 0.3,
+    "max_inflight": 1,
+    "cost_ceiling": null,
+    "cost_ceiling_verified_at": null,
+    "cost_ceiling_source": null,
+    "server_enforced_cap": false,
+    "billing_mode": "gift_only",
+    "allow_estimated_billing": false
+  },
+  "platform": {
+    "cli_command": [
+      "pandaai-cli"
+    ],
+    "python": null,
+    "site_packages": null
+  },
+  "llm": {
+    "enabled": false,
+    "base_url": "https://api.openai.com/v1",
+    "model": null,
+    "api_key_env": "PANDA_ALPHA_LLM_KEY"
+  },
+  "admission": {
+    "minimum_net_sharpe": 2,
+    "one_way_costs": [
+      0.003,
+      0.005
+    ],
+    "require_size_stress": true,
+    "require_fixed_pool_increment": true,
+    "require_official_transfer": true,
+    "monthly_points_evidence": "official_complete_month_ledger",
+    "legacy_policy_path": "factor_workflow/gates/joint_sharpe_points_v2_real_return.json"
+  }
 }

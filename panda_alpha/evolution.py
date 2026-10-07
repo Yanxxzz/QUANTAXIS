@@ -11,6 +11,7 @@ from dataclasses import asdict, dataclass, field
 import hashlib
 import json
 from pathlib import Path
+import re
 from typing import Any, Callable, Iterable, Mapping, Protocol, Sequence
 
 from .diversity import canonical_signature, expression_features, select_diverse
@@ -228,16 +229,26 @@ def deterministic_candidates() -> list[Candidate]:
 class ResearchEngine:
     def __init__(self, memory_path: str | Path | None = None,
                  backend: PlanningBackend | None = None,
-                 max_family_attempts: int = 3, state_path: str | Path | None = None) -> None:
+                 max_family_attempts: int = 3, state_path: str | Path | None = None,
+                 research_context: Mapping[str, Any] | None = None,
+                 memory: Mapping[str, Any] | None = None, registry: Any = None) -> None:
         if max_family_attempts < 1:
             raise ValueError("max_family_attempts must be positive")
         self.backend = backend
+        self.registry = registry
+        self.research_context = dict(research_context or {})
         self.max_family_attempts = max_family_attempts
         self.memory: dict[str, Any] = {}
         if memory_path is not None:
             self.memory = json.loads(Path(memory_path).read_text(encoding="utf-8-sig"))
             if not isinstance(self.memory, dict):
                 raise ValueError("Research memory must be a JSON object")
+        if memory is not None:
+            if not isinstance(memory, Mapping):
+                raise ValueError("Research memory must be a JSON object")
+            self.memory.update(memory)
+        if registry is not None:
+            self.memory = registry.export_hot_memory(self.memory)
         self.attempts: Counter[str] = Counter()
         self.source_failures: Counter[str] = Counter()
         self.state_migrations: list[dict[str, Any]] = []
@@ -248,6 +259,9 @@ class ResearchEngine:
         self.historical_blocks: dict[str, set[str]] = {}
         self.reopening_events: list[dict[str, Any]] = []
         self.reopened_families: dict[str, dict[str, Any]] = {}
+        self.fixed_rejected: list[dict[str, Any]] = []
+        self.human_retired: dict[str, dict[str, Any]] = {}
+        self.human_reopening_events: list[dict[str, Any]] = []
         self._import_memory_constraints()
         if state_path is not None and Path(state_path).exists():
             self.load_state(state_path)
@@ -261,10 +275,64 @@ class ResearchEngine:
                 "state_migrations": self.state_migrations,
                 "abandoned_families": sorted(self.abandoned_families),
                 "reopening_events": self.reopening_events,
+                "fixed_rejected_definitions": self.fixed_rejected,
+                "human_retired_directions": list(self.human_retired.values()),
+                "research_context": self.research_context,
                 "max_family_attempts": self.max_family_attempts,
                 "economic_status": "pending"}
 
     def _import_memory_constraints(self) -> None:
+        # Recent conclusions are structured facts, not prose suggestions to an LLM.
+        derived = self.memory.get("registry_constraints", {})
+        if isinstance(derived, Mapping):
+            self.fixed_rejected.extend(dict(row) for row in derived.get("fixed_rejected", [])
+                                       if isinstance(row, Mapping))
+        retired = (derived.get("human_retired", []) if isinstance(derived, Mapping) and
+                   "derived_from_registry_head" in derived else self.memory.get("human_retired_directions", []))
+        for item in retired:
+            if isinstance(item, Mapping) and item.get("direction"):
+                record = dict(item)
+                ids = list(record.get("candidate_ids", []))
+                for prefix, start, end in re.findall(r"\b(EP)(\d{1,4})\.\.(?:EP)?(\d{1,4})\b", str(record.get("scope", ""))):
+                    if 0 <= int(end) - int(start) <= 100:
+                        ids.extend(f"{prefix}{n:02d}" for n in range(int(start), int(end) + 1))
+                record["candidate_ids"] = list(dict.fromkeys(ids))
+                self.human_retired[str(item["direction"])] = record
+        recent = self.memory.get("recent_research", [])
+        if isinstance(recent, list):
+            for batch in recent:
+                if not isinstance(batch, Mapping) or batch.get("source_only"):
+                    continue
+                for definition in batch.get("definitions", []):
+                    if not isinstance(definition, Mapping):
+                        continue
+                    is_rejected = definition.get("economic_status") == "rejected"
+                    for event in definition.get("trajectory", []):
+                        if not isinstance(event, Mapping):
+                            continue
+                        decision, evidence = event.get("decision", {}), event.get("evidence", {})
+                        if (isinstance(decision, Mapping) and isinstance(evidence, Mapping) and
+                            decision.get("action") == "abandon" and
+                            decision.get("failure_type") == "economic_failure" and
+                            evidence.get("data_complete") is not False):
+                            is_rejected = True
+                    if is_rejected:
+                        record = self._fixed_record(definition)
+                        reopened = derived.get("evidence_reopened", []) if isinstance(derived, Mapping) else []
+                        if not any(self._same_fixed_record(record, row) for row in reopened):
+                            self.fixed_rejected.append(record)
+                    identifier = str(definition.get("candidate_id", definition.get("id", "")))
+                    for item in self.human_retired.values():
+                        # Legacy scopes are linked only through explicit candidate ID lists
+                        # or ranges; no fuzzy mechanism-text inference is performed.
+                        ids = item.get("candidate_ids", [])
+                        if identifier and identifier in ids:
+                            item["mechanisms"] = list(set(item.get("mechanisms", [])) |
+                                                      ({str(definition["mechanism"])} if definition.get("mechanism") else set()))
+                            expression = definition.get("formula") or definition.get("code")
+                            if expression:
+                                item["signatures"] = list(set(item.get("signatures", [])) |
+                                                         {canonical_signature(str(expression))})
         rules = self.memory.get("no_repeat_rules", [])
         if not isinstance(rules, list):
             return
@@ -329,12 +397,99 @@ class ResearchEngine:
         return result
 
     def _admissible(self, candidate: Candidate) -> bool:
+        if self._human_block(candidate) or any(self._fixed_matches(row, candidate) for row in self.fixed_rejected):
+            return False
         if candidate.family_id in self.abandoned_families:
             return False
         if self.attempts[candidate.family_id] >= self.max_family_attempts:
             return False
         blocked = set(self.memory.get("abandoned_mechanisms", [])) | self.memory_blocked_mechanisms
         return candidate.mechanism not in blocked or candidate.family_id in self.reopened_families
+
+    @staticmethod
+    def _fixed_record(candidate: Mapping[str, Any]) -> dict[str, Any]:
+        expression = candidate.get("formula") or candidate.get("code")
+        result = {"candidate_id": candidate.get("candidate_id", candidate.get("id")),
+                  "direction": candidate.get("direction"), "parameters": dict(candidate.get("parameters", {}))}
+        if expression:
+            result["signature"] = canonical_signature(str(expression))
+        return result
+
+    def _fixed_matches(self, record: Mapping[str, Any], candidate: Candidate) -> bool:
+        definition = record.get("definition", record)
+        if not isinstance(definition, Mapping):
+            return False
+        signature = definition.get("signature")
+        if signature:
+            if canonical_signature(candidate.formula or candidate.code) != signature:
+                return False
+        elif record.get("candidate_id") != candidate.candidate_id:
+            return False
+        if definition.get("direction") is not None and definition["direction"] != candidate.direction:
+            return False
+        for name in ("window", "cycle", "groups"):
+            value = candidate.parameters.get(name, self.research_context.get(name))
+            if name == "window":
+                value = candidate.parameters.get("evaluation_window", value)
+            if value is not None and name in definition and not self._same_context_value(name, value, definition[name]):
+                return False
+        return True
+
+    def _same_fixed_record(self, left: Mapping[str, Any], right: Mapping[str, Any]) -> bool:
+        original = left
+        left = left.get("definition", left)
+        definition = right.get("definition", right)
+        if left.get("signature") != definition.get("signature") or left.get("direction") != definition.get("direction"):
+            return False
+        for name in ("window", "cycle", "groups"):
+            value = left.get(name, original.get("parameters", {}).get(name, self.research_context.get(name)))
+            if value is not None and name in definition and not self._same_context_value(name, value, definition[name]):
+                return False
+        return True
+
+    @staticmethod
+    def _same_context_value(name: str, left: Any, right: Any) -> bool:
+        if name != "window" or not isinstance(left, Mapping) or not isinstance(right, Mapping):
+            return left == right
+        # Legacy ledger identities retain their original serialized bytes. Only
+        # scope comparison normalizes equivalent ISO/basic date spellings.
+        normalize = lambda window: {key: str(value).replace("-", "") if key in {"start", "end", "warmup_start"} else value
+                                     for key, value in window.items()}
+        return normalize(left) == normalize(right)
+
+    def _human_block(self, candidate: Candidate) -> str | None:
+        pending = [candidate]
+        seen: set[str] = set()
+        while pending:
+            member = pending.pop()
+            if member.candidate_id in seen:
+                continue
+            seen.add(member.candidate_id)
+            signature = canonical_signature(member.formula or member.code)
+            direction = member.parameters.get("research_direction")
+            for name, record in self.human_retired.items():
+                if (direction == name or member.candidate_id in record.get("candidate_ids", []) or
+                    any(parent in record.get("candidate_ids", []) for parent in member.parents) or
+                    member.mechanism in record.get("mechanisms", []) or
+                    signature in record.get("signatures", []) or member.family_id in record.get("family_ids", [])):
+                    return name
+            pending.extend(self.candidates[parent] for parent in member.parents if parent in self.candidates)
+        return None
+
+    def reopen_human_direction(self, direction: str, event: Mapping[str, Any]) -> dict[str, Any]:
+        """Apply an explicit trusted human event; source repair and planners cannot call it implicitly."""
+        if direction not in self.human_retired:
+            raise ValueError("The direction is not currently retired by a human")
+        if (event.get("kind", event.get("event")) != "human_reopened" or event.get("actor") != "human" or
+            not str(event.get("instruction", "")).strip() or not str(event.get("event_id", "")).strip()):
+            raise ValueError("Only an explicit human_reopened event can reopen a human-retired direction")
+        if self.registry is not None:
+            self.registry.append_event("human_reopened", direction, dict(event), event_id=str(event["event_id"]))
+            self.memory = self.registry.export_hot_memory(self.memory)
+        recorded = {**dict(event), "direction": direction,
+                    "previous_retirement": self.human_retired.pop(direction), "economic_status": "pending"}
+        self.human_reopening_events.append(recorded)
+        return recorded
 
     @staticmethod
     def _verify_reopening_evidence(evidence: Mapping[str, Any], falsifier: str) -> list[dict[str, str]]:
@@ -375,6 +530,8 @@ class ResearchEngine:
         producer. This is exploratory authorization, not economic acceptance.
         Mechanism-name changes alone never invoke or satisfy this operation.
         """
+        if self._human_block(candidate):
+            raise ValueError("Human-retired directions require an explicit human_reopened event; source repair cannot override them")
         verified = self._verify_reopening_evidence(evidence, falsifier)
         if self._admissible(candidate):
             raise ValueError("The candidate family is not currently blocked")
@@ -392,7 +549,15 @@ class ResearchEngine:
                  "artifacts": verified, "falsifier": falsifier.strip(),
                  "previous_family_attempts": self.attempts[family_id], "economic_status": "pending"}
         event["previous_source_failures"] = self.source_failures[family_id]
+        if self.registry is not None:
+            matching = [key for key, row in self.registry.registrations().items() if self._fixed_matches(row, candidate)]
+            if len(matching) > 1:
+                raise ValueError("Registry reopening requires the explicit original window, cycle and groups")
+            for key in matching:
+                self.registry.append_event("evidence_reopened", key, event)
+            self.memory = self.registry.export_hot_memory(self.memory)
         self.abandoned_families.discard(family_id)
+        self.fixed_rejected = [row for row in self.fixed_rejected if not self._fixed_matches(row, candidate)]
         self.attempts[family_id] = 0
         self.source_failures[family_id] = 0
         self.reopening_events.append(event)
@@ -415,6 +580,8 @@ class ResearchEngine:
                     raise ValueError("Planner references a parent outside the supplied trajectories")
                 candidate.parents = candidate.parents or tuple(p.candidate_id for p in parents)
                 candidate.generation = max(p.generation for p in parents) + 1
+            if not self._admissible(candidate):
+                continue
             candidate.trajectory = list(candidate.trajectory) + [{
                 "event": event, "parents": list(candidate.parents),
                 "family_attempts": self.attempts[candidate.family_id],
@@ -459,6 +626,16 @@ class ResearchEngine:
             evidence = FailureEvidence.from_dict(evidence)
         self.candidates[candidate.candidate_id] = candidate
         source_failure = self._is_source_failure(evidence)
+        human_block = self._human_block(candidate)
+        if human_block:
+            decision = EvolutionDecision(candidate.candidate_id, "abandon", "human_retired",
+                f"Direction {human_block} was retired by explicit human instruction; only a human reopening event can authorize it",
+                ["Preserve source data and request an explicit human reopening before research"],
+                self.attempts[candidate.family_id], "pending", evidence.artifacts,
+                "human_instruction_guard", self.source_failures[candidate.family_id])
+            self.decisions.append(decision)
+            candidate.trajectory.append({"event": "reflection", "decision": decision.to_dict(), "evidence": evidence.to_dict()})
+            return decision
         if source_failure:
             self.source_failures[candidate.family_id] += 1
         else:
@@ -471,10 +648,10 @@ class ResearchEngine:
             action, why = "abandon", "The causal hypothesis was falsified or uses future information"
         elif source_failure:
             action, why = "new_source", "Required point-in-time observations are missing; repair the evidence source"
-        elif attempts >= self.max_family_attempts and not evidence.reproducible_signal:
-            action, why = "abandon", "The family exhausted its investigation limit; stop numeric-grid retries"
         elif failure == "economic_failure":
             action, why = "abandon", "Measured after-cost held-side economics failed; retire the unchanged definition until new evidence"
+        elif attempts >= self.max_family_attempts and not evidence.reproducible_signal:
+            action, why = "abandon", "The family exhausted its investigation limit; stop numeric-grid retries"
         elif evidence.correlated_with or failure in {"redundancy", "high_correlation", "duplicate"}:
             action, why = "orthogonalize", "Observed factor-value ranks duplicate an existing research axis"
         elif failure in {"syntax", "runtime", "alignment", "coverage", "constant", "operator_semantics"}:
@@ -522,7 +699,10 @@ class ResearchEngine:
         candidate.trajectory.append({"event": "reflection", "decision": decision.to_dict(),
                                      "evidence": evidence.to_dict()})
         if action == "abandon":
-            self.abandoned_families.add(candidate.family_id)
+            if failure == "economic_failure" and not evidence.falsified:
+                self.fixed_rejected.append(self._fixed_record(candidate.to_dict()))
+            else:
+                self.abandoned_families.add(candidate.family_id)
         self.decisions.append(decision)
         return decision
 
@@ -566,23 +746,42 @@ class ResearchEngine:
         return result
 
     def save_state(self, path: str | Path) -> None:
-        state = {"schema_version": 2, "attempts": dict(self.attempts),
+        state = {"schema_version": 3, "attempts": dict(self.attempts),
                  "attempts_scope": "non_source_investigations",
                  "source_failures": dict(self.source_failures),
                  "state_migrations": self.state_migrations,
                  "abandoned_families": sorted(self.abandoned_families),
                  "candidates": [c.to_dict() for c in self.candidates.values()],
                  "reopening_events": self.reopening_events,
+                 "fixed_rejected": self.fixed_rejected,
+                 "human_retired": self.human_retired,
+                 "human_reopening_events": self.human_reopening_events,
                  "decisions": [d.to_dict() for d in self.decisions]}
         Path(path).write_text(json.dumps(state, ensure_ascii=False, indent=2), encoding="utf-8")
 
     def load_state(self, path: str | Path) -> None:
         state = json.loads(Path(path).read_text(encoding="utf-8-sig"))
         version = state.get("schema_version")
-        if version not in {1, 2}:
+        if version not in {1, 2, 3}:
             raise ValueError("Unsupported evolution state version")
         self.attempts = Counter(state.get("attempts", {}))
-        self.source_failures = Counter(state.get("source_failures", {})) if version == 2 else Counter()
+        self.source_failures = Counter(state.get("source_failures", {})) if version in {2, 3} else Counter()
+        imported_fixed = list(self.fixed_rejected)
+        stored_fixed = list(state.get("fixed_rejected", []))
+        derived = self.memory.get("registry_constraints", {})
+        if isinstance(derived, Mapping):
+            reopened = derived.get("evidence_reopened", [])
+            stored_fixed = [row for row in stored_fixed if not any(self._same_fixed_record(row, event) for event in reopened)]
+        self.human_reopening_events = list(state.get("human_reopening_events", []))
+        if "registry_constraints" not in self.memory:
+            for name, record in state.get("human_retired", {}).items():
+                self.human_retired.setdefault(name, record)
+        for event in self.human_reopening_events:
+            if (event.get("actor") != "human" or event.get("kind", event.get("event")) != "human_reopened" or
+                    not event.get("instruction") or not event.get("event_id")):
+                raise ValueError("Stored human reopening lacks explicit human authority")
+            if "registry_constraints" not in self.memory:
+                self.human_retired.pop(event["direction"], None)
         self.state_migrations = list(state.get("state_migrations", []))
         self.reopening_events = list(state.get("reopening_events", []))
         self.reopened_families = {}
@@ -593,6 +792,10 @@ class ResearchEngine:
         self.abandoned_families.update(state.get("abandoned_families", []))
         candidates = [Candidate.from_dict(item) for item in state.get("candidates", [])]
         self.candidates = {candidate.candidate_id: candidate for candidate in candidates}
+        if "registry_constraints" not in self.memory:
+            reopened = [candidate for candidate in candidates if candidate.family_id in self.reopened_families]
+            imported_fixed = [row for row in imported_fixed if not any(self._fixed_matches(row, candidate) for candidate in reopened)]
+        self.fixed_rejected = imported_fixed + stored_fixed
         self.decisions = [EvolutionDecision(**item) for item in state.get("decisions", [])]
         if version == 1:
             self._migrate_legacy_source_budget(state)

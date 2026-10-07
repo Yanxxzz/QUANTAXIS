@@ -21,6 +21,7 @@ class CLITests(unittest.TestCase):
     def config(self, directory):
         cfg = json.loads((REPO / "config/panda-alpha.example.json").read_text(encoding="utf-8"))
         cfg["research"]["memory"] = str(REPO / "research_bootstrap/memory.json")
+        cfg["research"]["live_memory"] = str(directory / "live_memory.json")
         cfg["research"]["pool_snapshot"] = str(directory / "pool.json")
         cfg["research"]["history_denominator"] = 1  # Memory's study total must win.
         cfg["research"]["probe_start"] = "2023-01-02"
@@ -92,6 +93,89 @@ class CLITests(unittest.TestCase):
             self.assertTrue(ledger.record(c2, window, 5, 10))
             self.assertEqual(ledger.total, 417)
             ledger.close()
+
+    def test_human_retirement_blocks_evaluation_before_formula_or_new_labels(self):
+        with tempfile.TemporaryDirectory() as temp:
+            directory = Path(temp)
+            config, cfg = self.config(directory)
+            Path(cfg["research"]["live_memory"]).write_text(json.dumps({"human_retired_directions": [{
+                "direction": "earnings", "status": "RETIRED_BY_EXPLICIT_USER_DIRECTION",
+                "candidate_ids": ["EP05"], "instruction": "retire this direction"}]}), encoding="utf-8")
+            candidate = Candidate("retired", "earnings", formula="RANK(CLOSE)", candidate_id="EP05")
+            plan = directory / "candidates.json"
+            plan.write_text(json.dumps({"candidates": [candidate.to_dict()]}), encoding="utf-8")
+            frame = pd.DataFrame({"date": pd.bdate_range("2023-01-02", periods=12), "symbol": "000001",
+                                  "open": 10., "close": 10., "high": 11., "low": 9., "volume": 1000.,
+                                  "amount": 10000., "adjustment": "hfq"})
+            class Provider:
+                def __init__(self, *args): pass
+                def daily(self, *args):
+                    return SimpleNamespace(frame=frame, coverage={"calendar": {"status": "verified", "sessions": 12}})
+            with patch("panda_alpha.data.AxisProvider", Provider), patch("panda_alpha.data.migration_gate", return_value={}), \
+                    patch("panda_alpha.evaluation.FormulaEvaluator.evaluate", side_effect=AssertionError("Retired formula ran")):
+                self.run_cli(config, directory / "trials.sqlite3", ["evaluate", "--candidates", str(plan), "--codes", "000001",
+                    "--start", "2023-01-02", "--end", "2023-01-17", "--output", str(directory / "review")])
+            review = json.loads((directory / "review/review.json").read_text(encoding="utf-8"))
+            self.assertEqual("BLOCKED", review["reports"][0]["status"])
+            self.assertEqual(0, review["tested_this_batch"])
+            self.assertEqual(415, review["total_tested_denominator"])
+
+    def test_retired_dispatch_rejects_before_account_balance(self):
+        with tempfile.TemporaryDirectory() as temp:
+            directory = Path(temp)
+            config, cfg = self.config(directory)
+            Path(cfg["research"]["live_memory"]).write_text(json.dumps({"human_retired_directions": [{
+                "direction": "earnings", "candidate_ids": ["EP05"], "status": "RETIRED_BY_EXPLICIT_USER_DIRECTION",
+                "instruction": "retire this direction"}]}), encoding="utf-8")
+            candidate = Candidate("retired", "earnings", formula="RANK(CLOSE)", candidate_id="EP05")
+            plan = directory / "plan.json"
+            plan.write_text(json.dumps({"candidates": [candidate.to_dict()]}), encoding="utf-8")
+            with patch("panda_alpha.platform.PandaClient.balance", side_effect=AssertionError("Account read")), \
+                    patch("panda_alpha.platform.dispatch", side_effect=AssertionError("Dispatch called")):
+                with self.assertRaisesRegex(ValueError, "constraint"):
+                    self.run_cli(config, directory / "trials.sqlite3", ["dispatch", "--candidates", str(plan),
+                        "--candidate-id", "EP05", "--start", "2023-01-02", "--end", "2023-01-17", "--execute"])
+
+    def test_formula_cli_runs_shared_two_cost_study_and_explicit_fixed_comparator(self):
+        from study_fixture import synthetic_study
+        protocol, source, frame, _ = synthetic_study()
+        # Different initial prices make cross-sectional ranks informative from
+        # the first decision, without adding any future data to the signal.
+        scale = frame.symbol.map({f"S{i:02d}": 1+i/36 for i in range(36)})
+        for field in ("open", "high", "low", "close", "raw_open", "raw_high", "raw_low", "raw_close"):
+            frame[field] *= scale
+        class Provider:
+            def __init__(self, *args): pass
+            def daily(self, *args):
+                return SimpleNamespace(frame=frame, coverage={"calendar": {"status": "verified", "sessions": 72},
+                                                              "daily": {"off_calendar_rows": 0}})
+        with tempfile.TemporaryDirectory() as temp:
+            directory = Path(temp)
+            config, cfg = self.config(directory)
+            cfg["research"]["groups"] = 10
+            cfg["diversity"]["minimum_assets"] = 30
+            config.write_text(json.dumps(cfg), encoding="utf-8")
+            (directory / "pool.json").write_text(json.dumps({"factors": [{"candidate_id": "REFERENCE11", "direction": 0,
+                                                                        "formula": "SYNTHETIC_REFERENCE_PERMUTATION"}]}), encoding="utf-8")
+            values_dir = directory / "pool_values"
+            values_dir.mkdir()
+            reference = source.copy()
+            reference["value"] = reference.symbol.map({f"S{i:02d}": (17*i)%36 for i in range(36)})
+            reference.pivot(index="date", columns="symbol", values="value").to_csv(values_dir / "REFERENCE11.csv.gz", compression="gzip")
+            candidate = Candidate("rank level", "synthetic momentum", formula="RANK(CLOSE)", candidate_id="ORBIT07")
+            plan = directory / "plan.json"
+            plan.write_text(json.dumps({"candidates": [candidate.to_dict()]}), encoding="utf-8")
+            with patch("panda_alpha.data.AxisProvider", Provider), patch("panda_alpha.data.migration_gate", return_value={}):
+                self.run_cli(config, directory / "trials.sqlite3", ["evaluate", "--candidates", str(plan), "--codes", "S00",
+                    "--start", protocol["calendar"][0], "--end", protocol["calendar"][-1],
+                    "--pool-values", str(values_dir), "--benchmark-id", "REFERENCE11", "--output", str(directory / "review")])
+            review = json.loads((directory / "review/review.json").read_text(encoding="utf-8"))["reports"][0]
+            result = json.loads(Path(review["study_path"]).read_text(encoding="utf-8"))
+            self.assertEqual(42, len(result["runs"]))
+            self.assertEqual([.003, .005], [r["cost"] for r in review["cost_reviews"]])
+            self.assertTrue(all(r["pool_increment_status"] == "paired_potential_wealth_evaluated" for r in review["cost_reviews"]))
+            self.assertEqual("potential_fixed_pair_reviewed", review["quality"]["layers"]["pool_increment"]["status"])
+            self.assertFalse(result["quality"]["formal_admission"]["eligible"])
 
     def test_evaluate_known_pool_missing_values_stays_pending_and_repeated_batch_does_not_reset(self):
         dates = pd.bdate_range("2023-01-02", periods=12)

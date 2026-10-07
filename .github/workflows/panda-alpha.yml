@@ -1,9 +1,9 @@
 name: Panda Alpha harness
 on:
   push:
-    paths: ['panda_alpha/**', 'tests/**', 'scripts/**', 'requirements-panda-alpha.txt', 'config/panda-alpha.example.json', 'research_bootstrap/**', 'RESEARCH.md', '.github/workflows/panda-alpha.yml']
+    paths: ['panda_alpha/**', 'tests/**', 'scripts/**', 'requirements-panda-alpha.txt', 'config/**', 'docs/**', 'examples/**', 'research_bootstrap/**', 'README*.md', 'RESEARCH.md', '.gitignore', '.github/workflows/panda-alpha.yml']
   pull_request:
-    paths: ['panda_alpha/**', 'tests/**', 'scripts/**', 'requirements-panda-alpha.txt', 'config/panda-alpha.example.json', 'research_bootstrap/**', 'RESEARCH.md', '.github/workflows/panda-alpha.yml']
+    paths: ['panda_alpha/**', 'tests/**', 'scripts/**', 'requirements-panda-alpha.txt', 'config/**', 'docs/**', 'examples/**', 'research_bootstrap/**', 'README*.md', 'RESEARCH.md', '.gitignore', '.github/workflows/panda-alpha.yml']
 jobs:
   tests:
     runs-on: ubuntu-latest
@@ -12,5 +12,6 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: python -m pip install 'numpy<2' 'pandas>=2,<3' 'pyarrow>=15,<20' 'scipy>=1.11,<2' 'pymongo>=4.10,<5' requests 'pypdf>=4.3,<7' 'pytest>=8,<9'
+      - run: python -m pip install -r requirements-panda-alpha.txt
+      - run: python -B scripts/verify_public_research.py
       - run: python -m pytest tests -q
