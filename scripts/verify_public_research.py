@@ -29,6 +29,7 @@ PUBLIC_PATTERNS = (
     "panda_alpha/**/*.py", "tests/**/*.py", "scripts/*.py", "scripts/*.ps1",
     "docs/*.md", ".github/workflows/panda-alpha.yml", "requirements-panda-alpha.txt",
     "config/panda-alpha.example.json", "README*.md", "RESEARCH.md", "pyproject.toml",
+    "tests/fixtures/statement_layout_original.json", "tests/fixtures/statement_layout_continuation.json",
 )
 PRIVATE_PARTS = {"research_runs", ".runtime", ".venv", "data", "_data_", ".git", "__pycache__"}
 

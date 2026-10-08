@@ -21,7 +21,7 @@ from panda_alpha.financial_statements import (
     amount_text as _number_text, source_page as _page,
     header_period as _header_period, amount_unit as _units,
     column_pair as _column_pair, public_availability,
-    flow_spans, normalize_statement_field, printed_quantum_yuan,
+    flow_spans, normalize_statement_field, printed_quantum_yuan, resolve_statement_columns,
 )
 
 FIELDS = {
@@ -154,7 +154,7 @@ def _validated_column_proof(proof: dict, original: dict, field: str, pdf_hash: s
 
 
 def _source_field(text: str, section: dict, field: str, label: str, period: str,
-                  zero_evidence: dict | None, pdf_hash: str) -> dict:
+                  zero_evidence: dict | None, pdf_hash: str, provenance: dict | None = None) -> dict:
     body = section["body"]
     aliases = [label]
     if field == "current_noncurrent_liabilities":
@@ -167,14 +167,16 @@ def _source_field(text: str, section: dict, field: str, label: str, period: str,
     matches = list(pattern.finditer(body))
     rows = []
     for hit in matches:
-        cells, snippet = _column_pair(hit["rest"], body[hit.end():].splitlines())
-        if (len(cells) == 3 and re.fullmatch(r"\d{1,3}", cells[0])
-                and "附注" in section["header_evidence"]):
-            cells = cells[1:]
         pages = re.findall(r"===SOURCE_PAGE:(\d+)===", body[:hit.start()])
+        row_page = int(pages[-1]) if pages else section["source_page"]
+        matched_label = next(alias for alias in aliases if re.sub(r"\s+", "", alias) in re.sub(r"\s+", "", hit.group()))
+        cells, snippet, column_proof = resolve_statement_columns(
+            hit["rest"], body[hit.end():].splitlines(), text=text, provenance=provenance or {},
+            label=matched_label, table_kind=FIELDS[field][0], period=period, source_page_hint=row_page)
         item = {"source_page": int(pages[-1]) if pages else section["source_page"],
                 "source_label": hit.group().strip(), "column_source": snippet,
                 "cells": cells, "statement_scope": "consolidated"}
+        item["column_parse_evidence"] = column_proof
         if len(cells) != 2:
             item.update(status="missing_or_ambiguous_current_column", amount_yuan=None)
         else:
@@ -301,7 +303,7 @@ def parse_cash_buffer_report(text: str, metadata: dict, provenance: dict | None 
             evidence[field] = {"status": "statement_scope_missing_or_ambiguous", "amount_yuan": None}
         else:
             evidence[field] = _source_field(normalized, options[0], field, label, period,
-                                            (zero_evidence or {}).get(field), str(pdf_hash))
+                                            (zero_evidence or {}).get(field), str(pdf_hash), provenance)
     balance_sections = sections["balance"]
     coordinate_rows = {}
     if len(balance_sections) == 1 and balance_sections[0]["status"] == "bounded_consolidated_statement":

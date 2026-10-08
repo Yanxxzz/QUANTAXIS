@@ -12,8 +12,9 @@ import json
 import re
 
 from panda_alpha.financial_statements import (
-    TABLE, TABLE_NAMES, PREFIX, amount_unit, column_pair, money, amount_text,
+    TABLE, TABLE_NAMES, PREFIX, amount_unit, money, amount_text,
     flow_spans, source_page, normalize_statement_field, public_availability,
+    resolve_statement_columns, strip_note_reference,
 )
 from panda_alpha.trade_accrual import TRADE_FIELDS, select_trade_accrual_asof
 
@@ -26,10 +27,7 @@ def _hash(value):
 
 
 def _note_free_rest(rest):
-    rest = re.sub(r"^\s*[:：]\s*", "", rest).strip()
-    # A leading Chinese note identifier is distinct from currency columns.
-    rest = re.sub(r"^[（(]?[一二三四五六七八九十]+[）)]?[、.．]?\s*(?:\d+|[（(][一二三四五六七八九十\d]+[）)])(?:[（(]\d+[）)])?", "", rest)
-    return rest
+    return strip_note_reference(rest)
 
 
 def attach_annual_revenue(stock_record, text, metadata, provenance):
@@ -78,7 +76,11 @@ def attach_annual_revenue(stock_record, text, metadata, provenance):
         for hit in pattern.finditer(body):
             rest = _note_free_rest(hit["rest"])
             valid_rest = re.fullmatch(r"[\d,，.\s+\-−－—–/()（）]*", rest) is not None
-            cells, snippet = column_pair(rest, body[hit.end():].splitlines()) if valid_rest else ([], rest)
+            row_page = source_page(text, section["body_start"]+hit.start())
+            cells, snippet, column_proof = resolve_statement_columns(
+                rest, body[hit.end():].splitlines(), text=text, provenance=provenance,
+                label="营业收入", table_kind="income", period=period,
+                source_page_hint=row_page) if valid_rest else ([], rest, {"status": "nonmonetary_row_pending"})
             spans = section["spans"]
             # Keep three bare numeric cells ambiguous; source-column evidence
             # must distinguish an integer note from a third monetary amount.
@@ -87,6 +89,7 @@ def attach_annual_revenue(stock_record, text, metadata, provenance):
                    "source_page": source_page(text, section["body_start"]+hit.start()),
                    "statement_scope": "consolidated", "current_yuan": None, "comparative_yuan": None,
                    "spans": spans}
+            row["column_parse_evidence"] = column_proof
             if (len(cells) == 2 and all(money(c) is not None and money(c) > 0 for c in cells)
                     and section["unit"]["status"] == "unit_verified"
                     and spans["current_status"] == "current_period_verified"

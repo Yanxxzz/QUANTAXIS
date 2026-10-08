@@ -11,6 +11,7 @@ from decimal import Decimal, InvalidOperation
 import re
 
 FIELD_CONTRACT_VERSION = 1
+AMOUNT_PARSER_VERSION = 2
 
 UNIT_MULTIPLIERS = {"元": Decimal(1), "千元": Decimal(1000), "万元": Decimal(10000),
                     "百万元": Decimal(1000000), "亿元": Decimal(100000000)}
@@ -20,7 +21,7 @@ PREFIX = r"(?:[（(]?[一二三四五六七八九十\d]+[）)]?\s*[、.．]?\s*)
 TABLE = re.compile(r"(?m)^\s*" + PREFIX + r"(?P<scope>合并|母公司|本公司|公司|银行)\s*"
                    r"(?P<name>资产负债表|现金流量表|利润表|所有者权益变动表)"
                    r"(?P<continued>[（(]续[）)])?\s*$")
-NUMBER = r"[+\-−－]?\d[\d,，]*(?:\.\d+)?"
+NUMBER = r"[+\-−－]?(?:\d{1,3}(?:[,，]\d{3})+|\d+)(?:\.\d+)?"
 CELL = re.compile(r"[（(]" + NUMBER + r"[）)]|" + NUMBER + r"|[—–－-]{1,2}|/")
 HEX = re.compile(r"[0-9a-f]{64}")
 
@@ -182,7 +183,7 @@ def normalize_statement_field(evidence: dict, *, measure: str, publication: dict
         "amount_yuan": amount, **period, "printed_amount": printed,
         "printed_quantum_yuan": printed_quantum_yuan(printed, unit),
     }
-    return {"field_contract_version": FIELD_CONTRACT_VERSION, "measure": measure,
+    return {"field_contract_version": FIELD_CONTRACT_VERSION, "amount_parser_version": AMOUNT_PARSER_VERSION, "measure": measure,
             "currency": evidence.get("currency"), "printed_unit": unit,
             "source_unit_multiplier": amount_text(UNIT_MULTIPLIERS[unit]) if unit in UNIT_MULTIPLIERS else None,
             "zero_method": evidence.get("zero_method"),
@@ -215,11 +216,35 @@ def amount_unit(header: str) -> dict:
             "currency_basis": "explicit_yuan_monetary_header"}
 
 
+def wrapped_money_requires_geometry(text: str) -> bool:
+    """A decimal split across lines is one cell, not two fiscal columns.
+
+    Plain text has lost the column geometry, so it cannot safely join the
+    fragments or certify the other year. Complete small amounts stay valid.
+    """
+    return bool(re.search(r"\d[.,，](?:\s*\n|\s*$)|\d\s*\n\s*\.\d", text))
+
+
+def strip_note_reference(rest: str) -> str:
+    """Remove a complete explicit Chinese note marker, including its brackets.
+
+    Mixed full-width opening and ASCII closing brackets occur in originals.
+    Numeric currency cells, including parenthesized negatives, stay intact.
+    """
+    rest = re.sub(r"^\s*[:：]\s*", "", rest).strip()
+    outer = r"^[（(]\s*[一二三四五六七八九十]+[、.．]\s*\d+(?:[（(]\d+[）)])?\s*[）)]"
+    if re.match(outer, rest):
+        return re.sub(outer, "", rest).strip()
+    return re.sub(r"^[（(]?[一二三四五六七八九十]+[）)]?[、.．]?\s*"
+                  r"(?:\d+|[（(][一二三四五六七八九十\d]+[）)])(?:[（(]\d+[）)])?", "", rest).strip()
+
+
 def column_pair(rest: str, following: list[str]) -> tuple[list[str], str]:
-    # Remove an integer note reference, not any numeric monetary column.
-    rest = re.sub(r"^[（(]?[一二三四五六七八九十]+[）)]?[、.．]?\s*\d+(?:[（(]\d+[）)])?", "", rest.strip())
+    rest = strip_note_reference(rest)
     snippet = rest
     for line in following[:3]:
+        if wrapped_money_requires_geometry(snippet):
+            return [], snippet
         cells = CELL.findall(snippet)
         if len(cells) >= 2 or (snippet.strip() and re.search(r"[^\d,，.\s+\-−－—–/()（）]", snippet)):
             break
@@ -234,4 +259,44 @@ def column_pair(rest: str, following: list[str]) -> tuple[list[str], str]:
             snippet += "\n" + line
             break
         snippet += "\n" + line
-    return CELL.findall(snippet), snippet
+    if wrapped_money_requires_geometry(snippet):
+        return [], snippet
+    # Partial punctuation, malformed grouping, and residual prose cannot be
+    # discarded by findall() and certified as a monetary column pair.
+    if CELL.sub("", snippet).strip():
+        return [], snippet
+    matches = list(CELL.finditer(snippet))
+    if any(a.end() == b.start() for a, b in zip(matches, matches[1:])):
+        return [], snippet
+    return [m.group() for m in matches], snippet
+
+
+def resolve_statement_columns(rest, following, *, text, provenance, label,
+                              table_kind, period, source_page_hint=None):
+    """Try strict text columns, then a hash-bound original PDF grid.
+
+    The third return item records the recovery method/pending reason. It does
+    not change the caller's publication, period, sign or revision requirements.
+    """
+    cells, snippet = column_pair(rest, following)
+    # Native extraction may put the major part above the label and the decimal
+    # tail below it. The row's own snippet then looks like two complete amounts.
+    pattern = re.compile(r"(?m)^[^\S\n]*" + PREFIX + r"(?:(?:其中|减)\s*[:：]\s*)?" +
+                         r"\s*".join(map(re.escape, label)) + r"(?=[\s:：+\-−－—–/()（）\d]|$)")
+    adjacent_fragment = False
+    for hit in pattern.finditer(text):
+        if source_page_hint is not None and source_page(text, hit.start()) != source_page_hint:
+            continue
+        previous = text[:hit.start()].rstrip().splitlines()
+        line = previous[-1].strip() if previous else ""
+        if line and re.fullmatch(r"[\d,，.\s+\-−－—–/()（）]+", line):
+            adjacent_fragment = True
+    if len(cells) == 2 and not adjacent_fragment:
+        return cells, snippet, {"status": "complete_text_column_pair", "amount_parser_version": AMOUNT_PARSER_VERSION}
+    from panda_alpha.statement_layout import original_pdf_pair
+    proof = original_pdf_pair(text, provenance, label=label, table_kind=table_kind,
+                              period=period, source_page_hint=source_page_hint)
+    proof["amount_parser_version"] = AMOUNT_PARSER_VERSION
+    if proof["status"] == "physical_grid_columns_bound":
+        return [proof["current_printed"], proof["comparative_printed"]], snippet, proof
+    return [] if adjacent_fragment else cells, snippet, proof

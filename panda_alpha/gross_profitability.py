@@ -7,11 +7,11 @@ import json
 import re
 
 from panda_alpha.financial_statements import (
-    TABLE, TABLE_NAMES, PREFIX, column_pair as _column_pair,
+    TABLE, TABLE_NAMES, PREFIX,
     amount_unit as _units, header_period as _header_period,
     money as _money, amount_text as _number_text, source_page as _page,
     public_availability, flow_spans as _flow_spans, normalize_statement_field,
-    display_precision_comparison,
+    display_precision_comparison, resolve_statement_columns,
 )
 
 
@@ -80,13 +80,14 @@ def parse_gross_profit_report(text: str, metadata: dict, provenance: dict, *, as
             section=sections[0]
             pattern=re.compile(r"(?m)^\s*"+PREFIX+r"(?:其中\s*[:：]\s*)?"+r"\s*".join(map(re.escape,label))+r"(?P<rest>[^\n]*)$")
             for hit in pattern.finditer(section["body"]):
-                cells,snippet=_column_pair(hit["rest"],section["body"][hit.end():].splitlines())
-                if (len(cells)==3 and "附注" in section["header"] and re.fullmatch(r"\d{1,3}",cells[0])
-                        and section["spans"]["comparative_status"]=="explicit_prior_same_span"
-                        and not re.search(r"调整前|调整后|重述",section["header"])):
-                    cells=cells[1:]
                 pages=re.findall(r"===SOURCE_PAGE:(\d+)===",section["body"][:hit.start()])
+                row_page=int(pages[-1]) if pages else section["source_page"]
+                cells,snippet,column_proof=resolve_statement_columns(
+                    hit["rest"],section["body"][hit.end():].splitlines(), text=original,
+                    provenance=provenance,label=label,table_kind="income",period=period,
+                    source_page_hint=row_page)
                 row={"source_page":int(pages[-1]) if pages else section["source_page"],"source_label":hit.group().strip(),"source_cells":cells,"column_source":snippet,"statement_scope":"consolidated","status":"column_unit_period_pending","current_yuan":None,"comparative_yuan":None}
+                row["column_parse_evidence"]=column_proof
                 if len(cells)==2 and section["unit"]["status"]=="unit_verified" and section["spans"]["current_status"]=="current_period_verified":
                     a,b=_money(cells[0]),_money(cells[1]);mult=Decimal(section["unit"]["multiplier"])
                     if a is not None:

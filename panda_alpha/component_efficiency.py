@@ -11,6 +11,7 @@ import re
 from panda_alpha.financial_statements import (
     PREFIX, amount_unit, flow_spans, money, amount_text,
     normalize_statement_field, public_availability,
+    wrapped_money_requires_geometry, column_pair,
 )
 from panda_alpha.trade_accrual import TRADE_FIELDS
 from panda_alpha.trade_efficiency import select_trade_efficiency_asof, _note_free_rest
@@ -65,7 +66,32 @@ def attach_component_cost(stock, revenue, source_row):
         exact_label = bool(label_match and re.fullmatch(r"[\d,，.\s+\-−－—–/()（）]*", _note_free_rest(label_match["rest"])))
         evidence.update({k:candidate[k] for k in ["source_label","source_cells","column_source","source_page"] if k in candidate})
         evidence["bounded_consolidated_income_proof"] = proof
-        if (same and scope_verified and exact_label and len(cells) == 2 and all(money(c) is not None and money(c)>0 for c in cells)
+        # Cached source rows must not bypass the same lexical ambiguity barrier
+        # as live parsing. A new original-grid proof is required for recovery.
+        parsed_cells, _ = column_pair(candidate.get("column_source", ""), [])
+        wrapped = (wrapped_money_requires_geometry(candidate.get("column_source", ""))
+                   or parsed_cells != cells)
+        if wrapped and same and scope_verified and exact_label:
+            from pathlib import Path
+            import gzip
+            from panda_alpha.statement_layout import original_pdf_pair
+            provenance = stock.get("provenance", {})
+            native = ""
+            try:
+                raw = Path(provenance["text_path"]).read_bytes()
+                native = (gzip.decompress(raw) if raw[:2] == b"\x1f\x8b" else raw).decode("utf-8")
+            except (KeyError, OSError, ValueError, UnicodeError, EOFError):
+                pass
+            layout = original_pdf_pair(native, provenance, label="营业成本", table_kind="income",
+                                       period=period, source_page_hint=candidate.get("source_page"))
+            evidence["column_parse_evidence"] = layout
+            if (layout["status"] == "physical_grid_columns_bound"
+                    and layout["printed_unit"] == unit.get("printed_unit")):
+                cells = [layout["current_printed"], layout["comparative_printed"]]
+                evidence.update(source_cells=cells, original_column_source=candidate["column_source"],
+                                column_source=" ".join(cells))
+                wrapped = False
+        if (same and scope_verified and exact_label and not wrapped and len(cells) == 2 and all(money(c) is not None and money(c)>0 for c in cells)
                 and unit["status"] == "unit_verified" and spans["current_status"] == "current_period_verified"
                 and spans["comparative_status"] == "explicit_prior_same_span" and period.endswith("12-31")):
             multiplier = Decimal(unit["multiplier"])

@@ -30,6 +30,20 @@ def fixture(year=2024, published="2025-04-19", header=None, cells=None):
     return stock, revenue, source
 
 
+@pytest.mark.parametrize('cells,snippet',[
+    (['4,335,202,621','92'],'4,335,202,621.\n92'),
+    (['3,737,105,999.404','931,976,689.68'],'3,737,105,999.404,931,976,689.68'),
+])
+def test_legacy_cost_cache_cannot_certify_fragments_without_original_layout(cells,snippet):
+    stock,revenue,source=fixture(cells=cells)
+    candidate=source['cost_candidates'][0]
+    candidate['column_source']=snippet
+    source['bounded_consolidated_income_proof']['column_source']=snippet
+    result=attach_component_cost(stock,revenue,source)
+    assert result['status']=='annual_cost_source_pending'
+    assert result['values']=={'current':None,'prior':None}
+
+
 def test_cost_attachment_rederives_amounts_and_explicit_dates_from_original_evidence():
     s, r, source = fixture()
     c = attach_component_cost(s, r, source)

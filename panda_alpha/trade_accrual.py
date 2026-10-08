@@ -15,9 +15,10 @@ from pathlib import Path
 import re
 
 from panda_alpha.financial_statements import (
-    TABLE, TABLE_NAMES, PREFIX, amount_unit, amount_text, column_pair,
+    TABLE, TABLE_NAMES, PREFIX, amount_unit, amount_text,
     money, source_page, public_availability, normalize_statement_field,
     printed_quantum_yuan, display_precision_comparison,
+    resolve_statement_columns,
 )
 
 TRADE_FIELDS = {"accounts_receivable": "应收账款", "inventory": "存货",
@@ -111,13 +112,17 @@ def _field(text, section, label, metadata, provenance):
         rest = re.sub(r"^\s*[:：]\s*", "", hit["rest"])
         monetary_rest = re.sub(r"^[（(]?[一二三四五六七八九十]+[）)]?[、.．]?\s*\d+(?:[（(]\d+[）)])?", "", rest.strip())
         valid_rest = re.fullmatch(r"[\d,，.\s+\-−－—–/()（）]*", monetary_rest) is not None
-        cells, snippet = column_pair(rest, body[hit.end():].splitlines()) if valid_rest else ([], rest)
+        cells, snippet, column_proof = resolve_statement_columns(
+            rest, body[hit.end():].splitlines(), text=text, provenance=provenance,
+            label=label, table_kind="balance", period=metadata["report_date"],
+            source_page_hint=source_page(text, section["body_start"]+hit.start())) if valid_rest else ([], rest, {"status": "nonmonetary_row_pending"})
         # A small integer and a note heading do not prove the first numeric
         # cell is a note. Three bare cells need separate column evidence.
         row = {"status": "missing_or_ambiguous_stock_columns", "source_label": hit.group().strip(),
                "source_page": source_page(text, section["body_start"] + hit.start()),
                "cells": cells, "column_source": snippet, "statement_scope": "consolidated",
                "amount_yuan": None, "comparative_amount_yuan": None}
+        row["column_parse_evidence"] = column_proof
         if (len(cells) == 2 and all(money(c) is not None for c in cells)
                 and section["unit"]["status"] == "unit_verified"
                 and section["period"]["status"] == "same_report_stock_columns_bound"):
