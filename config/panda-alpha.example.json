@@ -7,7 +7,14 @@
     "adjustment": "qfq",
     "require_all_a": true,
     "require_delisted": true,
-    "require_pit_financial": true
+    "require_pit_financial": true,
+    "active_market_source": null,
+    "source_profiles": {
+      "stockdb": {"database": "quantaxis_stockdb_research", "price_source": "stockdb", "reference_database": "quantaxis", "calendar_source": "baostock_trade_dates", "role": "primary_daily_local_proxy", "collector_state": "requires_scoped_source_contract"},
+      "baostock": {"database": "quantaxis", "price_source": "baostock", "reference_database": "quantaxis", "calendar_source": "baostock_trade_dates", "role": "cached_reference_and_comparison", "collector_state": "manual_explicit_resume"},
+      "akshare_tencent": {"database": "quantaxis_akshare_tencent", "price_source": "akshare_tencent", "reference_database": "quantaxis", "calendar_source": "baostock_trade_dates", "role": "manual_gap_candidate", "collector_state": "manual_explicit_resume"},
+      "tdx": {"database": "quantaxis_tdx", "price_source": "tdx", "reference_database": "quantaxis", "calendar_source": "baostock_trade_dates", "role": "manual_independent_comparison", "collector_state": "manual"}
+    }
   },
   "research": {
     "cycle": 5,

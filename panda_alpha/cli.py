@@ -33,6 +33,8 @@ def get_config(path):
             cfg["research"][name] = str(repo / item)
     if cfg["data"]["provider"] != "quantaxis":
         raise ValueError("New research has only the QUANTAXIS provider")
+    from .sources import resolve_source
+    resolve_source(cfg["data"])
     return cfg
 
 
@@ -206,12 +208,14 @@ def main(argv=None):
     evolve.add_argument("--output", default="research_runs/generation02.json")
     evolve.add_argument("--state", default="research_runs/evolution_state.json")
     coverage = sub.add_parser("coverage", help="Check actual AXIS data and source-retirement blockers")
+    coverage.add_argument("--source", help="Explicit configured market source; never falls back")
     coverage.add_argument("--codes", nargs="+", required=True)
     coverage.add_argument("--start", required=True)
     coverage.add_argument("--end", required=True)
     coverage.add_argument("--raw", action="store_true", help="Coverage diagnosis only, no return labels")
     coverage.add_argument("--output", default="research_runs/axis_acceptance.json")
     evaluate = sub.add_parser("evaluate", help="Local next-open proxy and actual factor-value diversity")
+    evaluate.add_argument("--source", help="Explicit configured market source for the complete window")
     evaluate.add_argument("--candidates", required=True)
     evaluate.add_argument("--codes", nargs="+", required=True)
     evaluate.add_argument("--start", required=True)
@@ -250,6 +254,23 @@ def main(argv=None):
     registry_parser.add_argument("--base-memory")
     registry_parser.add_argument("--output", default="research_runs/registry_review.json")
     registry_parser.add_argument("--execute", action="store_true", help="Apply a reviewed import plan, never start backtests")
+    sources_parser = sub.add_parser("data-status", help="Inspect configured source roles and actual local inventories")
+    sources_parser.add_argument("--output", default="research_runs/data_source_status.json")
+    sync_parser = sub.add_parser("data-sync", help="Materialize a configured source; no factor or official runs")
+    sync_parser.add_argument("--source", choices=["stockdb"], required=True)
+    sync_parser.add_argument("--codes-file", help="CSV with string code column or JSON code list")
+    sync_parser.add_argument("--start")
+    sync_parser.add_argument("--end")
+    sync_parser.add_argument("--sdk-dir")
+    sync_parser.add_argument("--acceptance", help="Reviewed scoped source-contract receipt")
+    sync_parser.add_argument("--resume-after-source-unblock", action="store_true")
+    sync_parser.add_argument("--output")
+    export_parser = sub.add_parser("data-export", help="Prepare source-bound research inputs; no factor evaluation")
+    export_parser.add_argument("--source")
+    export_parser.add_argument("--codes-file", required=True)
+    export_parser.add_argument("--start", required=True)
+    export_parser.add_argument("--end", required=True)
+    export_parser.add_argument("--output", required=True)
     args = parser.parse_args(argv)
     if args.command == "compact":
         from .memory import compact_workspace
@@ -258,6 +279,33 @@ def main(argv=None):
                        "status": "compacted; raw evidence preserved"})
         return
     cfg = get_config(args.config)
+    if args.command == "data-export":
+        from .sources import export_research_input
+        path = Path(args.codes_file)
+        codes = read(path) if path.suffix == ".json" else pd.read_csv(path, dtype={"code": str})["code"].tolist()
+        result = export_research_input(cfg, codes, args.start, args.end, args.output, args.source)
+        print_compact({"output": args.output, "status": result["status"], "rows": result["rows"], "new_economic_trials": 0})
+        return
+    if args.command == "data-sync":
+        from .stockdb_sync import run_sync
+        from .sources import resolve_sync_plan
+        plan = resolve_sync_plan(cfg, args.source, {key: getattr(args, key) for key in
+                                  ("codes_file", "start", "end", "sdk_dir", "acceptance", "output")})
+        codes_path = Path(plan["codes_file"])
+        codes = read(codes_path) if codes_path.suffix == ".json" else pd.read_csv(codes_path, dtype={"code": str})["code"].tolist()
+        result = run_sync(cfg, codes, plan["start"], plan["end"], plan["output"], plan["sdk_dir"],
+                          plan["acceptance"], resume=args.resume_after_source_unblock)
+        from .sources import finalize_stockdb
+        finalize_stockdb(cfg, plan["output"], additional_epochs=plan.get("additional_epochs", ()))
+        print_compact({"output": str(Path(plan["output"]).resolve()), "status": result["status"],
+                       "research_rows": result.get("research_rows"), "official_compute_spent": 0})
+        return
+    if args.command == "data-status":
+        from .sources import source_status
+        result = source_status(cfg)
+        write(args.output, result)
+        print_compact(result)
+        return
     if args.command == "registry":
         ledger = TrialLedger(args.trial_ledger, historical_denominator(cfg))
         try:
@@ -326,12 +374,15 @@ def main(argv=None):
         finally:
             ledger.close()
     if args.command in {"coverage", "evaluate"}:
-        from .data import AxisProvider, migration_gate
+        from .data import migration_gate
+        from .sources import provider_from_config
         from .evaluation import check_window
         check_window(args.start, args.end, cfg["research"]["sealed_windows"], getattr(args, "warmup_start", None))
-        provider = AxisProvider(cfg["data"]["mongo_uri"], cfg["data"]["database"])
+        provider = provider_from_config(cfg, getattr(args, "source", None))
         data = provider.daily(args.codes, getattr(args, "warmup_start", None) or args.start, args.end,
                               "none" if getattr(args, "raw", False) else cfg["data"]["adjustment"])
+        if hasattr(provider, "source_selection"):
+            data.coverage["source_selection"] = provider.source_selection
         acceptance = migration_gate(data.coverage, require_all_a=cfg["data"]["require_all_a"],
                                     require_delisted=cfg["data"]["require_delisted"],
                                     require_pit_financial=cfg["data"]["require_pit_financial"])

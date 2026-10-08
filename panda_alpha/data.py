@@ -178,11 +178,17 @@ def adjust_with_price_panel(frame: pd.DataFrame, panel: pd.DataFrame, adjustment
 
 
 class AxisProvider:
-    def __init__(self, uri: str = "mongodb://127.0.0.1:27017", database: str = "quantaxis", db: Any = None):
+    def __init__(self, uri: str = "mongodb://127.0.0.1:27017", database: str = "quantaxis", db: Any = None,
+                 *, price_source: str | None = None, reference_database: str | None = None,
+                 reference_db: Any = None, calendar_source: str | None = None):
         self.uri = uri
         self.database = database
         self._db = db
         self._client = None
+        self.price_source = price_source
+        self.reference_database = reference_database or database
+        self._reference_db = reference_db
+        self.calendar_source = calendar_source
 
     @property
     def db(self):
@@ -193,12 +199,53 @@ class AxisProvider:
             self._db = self._client[self.database]
         return self._db
 
-    def _records(self, name: str, query: dict | None = None) -> list[dict]:
-        return list(self.db[name].find(query or {}, {"_id": 0}))
+    @property
+    def reference_db(self):
+        if self._reference_db is not None:
+            return self._reference_db
+        if self.reference_database == self.database:
+            return self.db
+        _ = self.db
+        return self._client[self.reference_database]
 
-    def _receipts(self, name: str, codes: list[str], end: str) -> dict[str, dict]:
+    def _database_for(self, name, query=None):
+        market = {"stock_day", "stock_adj", "stock_adjusted_day", "stock_xdxr", "data_source_snapshots", "data_source_contracts"}
+        if name in market or (name == "panda_axis_sync" and
+                              (query or {}).get("dataset") != "trade_calendar"):
+            return self.db
+        return self.reference_db
+
+    def _records(self, name: str, query: dict | None = None) -> list[dict]:
+        query = dict(query or {})
+        if self.price_source and name in {"stock_day", "stock_adj", "stock_adjusted_day", "stock_xdxr"}:
+            query["source"] = self.price_source
+        return list(self._database_for(name, query)[name].find(query, {"_id": 0}))
+
+    def _receipts(self, name: str, codes: list[str], end: str, start: str | None = None,
+                  sources: dict[str, str] | None = None) -> dict[str, dict]:
         records = self._records("panda_axis_sync", {"dataset": name, "code": {"$in": codes}})
-        return {r["code"]: r for r in records if r.get("status") == "complete" and r.get("through", "") >= end}
+        grouped = defaultdict(list)
+        for row in records:
+            source = self.price_source or (sources or {}).get(row["code"])
+            if (row.get("status") != "complete" or row.get("through", "") < end
+                    or (start and row.get("start", "0000") > start)
+                    or (source and row.get("source") != source)):
+                continue
+            grouped[row["code"]].append(row)
+        result = {}
+        for code, rows in grouped.items():
+            # Receipt insertion order cannot decide the source or covered window.
+            same_scope = defaultdict(set)
+            for row in rows:
+                key = (row.get("source"), row.get("start"), row.get("through"))
+                same_scope[key].add((row.get("rows"), row.get("history_complete")))
+            if any(len(values) > 1 for values in same_scope.values()):
+                raise PendingDataError(f"{code}: contradictory {name} receipts require reconciliation")
+            rows.sort(key=lambda r: bool(r.get("factor_records_sha256")), reverse=True)
+            rows.sort(key=lambda r: r.get("through", ""), reverse=True)
+            rows.sort(key=lambda r: r.get("start", "0000"))
+            result[code] = rows[0]
+        return result
 
     def _capability(self, name: str, start: str, end: str) -> dict:
         evidence = self._records("panda_axis_validation", {"capability": name})
@@ -248,6 +295,7 @@ class AxisProvider:
             if row.get("ipo_date") and not row.get("lifecycle_issues"):
                 life_by_code.setdefault(row["code"], row)
         columns = ["date", "symbol", "open", "high", "low", "close", "volume", "amount", "adj", "factor_date", "adjustment", "source",
+                   "source_snapshot_sha256", "source_row_sha256",
                    "raw_open", "raw_high", "raw_low", "raw_close", "preclose", "trade_status", "is_st", "volume_shares", "exchange"]
         frame = pd.DataFrame(rows)
         duplicates = invalid_rows = 0
@@ -258,6 +306,8 @@ class AxisProvider:
             frame["date"] = pd.to_datetime(frame["date"], errors="raise").dt.normalize()
             frame["symbol"] = frame["code"].map(normalize_code)
             frame["source"] = frame["source"] if "source" in frame else "tdx"
+            if frame.groupby("symbol")["source"].nunique(dropna=False).gt(1).any():
+                raise PendingDataError("Mixed raw data providers require an explicit source before deduplication")
             if "vol" not in frame and "volume" not in frame:
                 raise PendingDataError("stock_day is missing vol/volume")
             frame["volume"] = frame["vol"] if "vol" in frame else frame["volume"]
@@ -296,9 +346,10 @@ class AxisProvider:
                                       "missing_numeric_fields": missing_fields if isinstance(missing_fields, list) else []})
             invalid_rows = int((~valid).sum())
             frame = frame.loc[valid].copy()
-        xdxr_receipts = self._receipts("stock_xdxr", codes, end)
-        factor_receipts = self._receipts("stock_adj", codes, end)
-        price_receipts = self._receipts("stock_adjusted_day", codes, end)
+        raw_sources = {str(code): str(group["source"].iloc[0]) for code, group in frame.groupby("symbol")}
+        xdxr_receipts = self._receipts("stock_xdxr", codes, end, start, raw_sources)
+        factor_receipts = self._receipts("stock_adj", codes, end, start, raw_sources)
+        price_receipts = self._receipts("stock_adjusted_day", codes, end, start, raw_sources)
         missing_xdxr = sorted(set(codes) - set(xdxr_receipts))
         missing_adjustment = sorted(set(codes) - set(xdxr_receipts) - set(factor_receipts) - set(price_receipts))
         if adjustment != "none" and missing_adjustment:
@@ -307,7 +358,8 @@ class AxisProvider:
         # include actions after this research window. Verify presence first;
         # filter to the requested end before any adjustment calculation.
         events = self._records("stock_xdxr", {"code": {"$in": codes}})
-        factors = self._records("stock_adj", {"code": {"$in": codes}, "date": {"$lte": end}})
+        factor_horizon = max([end] + [r["through"] for r in factor_receipts.values()])
+        factors = self._records("stock_adj", {"code": {"$in": codes}, "date": {"$lte": factor_horizon}})
         price_panels = self._records("stock_adjusted_day", {"code": {"$in": codes}, "date": {"$gte": start, "$lte": end}})
         by_events, by_factors, by_prices = defaultdict(list), defaultdict(list), defaultdict(list)
         for records, destination in ((events, by_events), (factors, by_factors), (price_panels, by_prices)):
@@ -322,6 +374,20 @@ class AxisProvider:
             receipt = factor_receipts.get(code)
             if receipt and sources == {receipt.get("source")}:
                 code_factors = pd.DataFrame([f for f in by_factors[code] if f.get("source") == receipt["source"]])
+                # Verify the receipt's entire horizon before slicing to this
+                # research end. A missing predecessor is not an IPO baseline.
+                complete_factors = code_factors
+                if not code_factors.empty:
+                    complete_factors = code_factors[
+                        code_factors["date"].map(_date) <= receipt["through"]]
+                    if complete_factors["date"].map(_date).duplicated().any():
+                        raise PendingDataError(f"{code}: duplicate factors in receipted history")
+                if isinstance(receipt.get("rows"), int) and len(complete_factors) != receipt["rows"]:
+                    raise PendingDataError(f"{code}: complete factor history disagrees with receipt row count")
+                if receipt.get("factor_records_sha256"):
+                    from .sources import factor_records_sha256
+                    if factor_records_sha256(complete_factors.to_dict("records")) != receipt["factor_records_sha256"]:
+                        raise PendingDataError(f"{code}: factor history payload binding changed")
                 if adjustment != "none" and code_factors.empty and receipt.get("rows", 0) > 0:
                     raise PendingDataError(f"{code}: receipted adjustment factors are absent")
                 adjusted.append(adjust_with_factors(group, code_factors, adjustment,
@@ -348,17 +414,20 @@ class AxisProvider:
         if "source" not in frame:
             frame["source"] = "quantaxis_mongo"
         frame = frame.reindex(columns=columns).sort_values(["date", "symbol"]).reset_index(drop=True)
-        calendar_source = "caller_supplied" if expected_dates is not None else "tdx_index_calendar"
+        calendar_source = "caller_supplied" if expected_dates is not None else (self.calendar_source or "tdx_index_calendar")
         calendar_receipts = self._records("panda_axis_sync", {"dataset": "trade_calendar", "code": "SSE"})
-        if expected_dates is None and any(r.get("source") == "baostock" for r in calendar_receipts):
+        if expected_dates is None and not self.calendar_source and any(r.get("source") == "baostock" for r in calendar_receipts):
             calendar_source = "baostock_trade_dates"
+        if self.calendar_source:
+            calendar_receipts = [r for r in calendar_receipts if
+                r.get("source") == {"baostock_trade_dates": "baostock", "tdx_index_calendar": "tdx"}.get(self.calendar_source, self.calendar_source)]
         calendar_verified = expected_dates is not None or any(
             r.get("status") == "complete" and r.get("start", "9999") <= start and r.get("through", "") >= end
             for r in calendar_receipts)
         if expected_dates is None:
             query = {"date": {"$gte": start, "$lte": end}, "exchange": "SSE"}
-            if calendar_source == "baostock_trade_dates":
-                query["source"] = "baostock_trade_dates"
+            if self.calendar_source or calendar_source == "baostock_trade_dates":
+                query["source"] = calendar_source
             expected_dates = [r["date"] for r in self._records("trade_calendar", query)]
         expected = sorted({_date(d) for d in expected_dates if start <= _date(d) <= end})
         observed = {(r.symbol, _date(r.date)) for r in frame.itertuples()}
@@ -395,10 +464,18 @@ class AxisProvider:
             "adjustment_evidence": {"status": "verified" if not missing_adjustment and adjustment != "none" else "pending",
                                     "missing_codes": missing_adjustment, "methods": adjustment_methods},
             "units": {"volume": "QA stock_day/TDX lots (100 shares); BaoStock raw shares stored separately", "amount": "CNY"},
+            "provenance": {"raw_snapshot_sha256": sorted({str(r.get("source_snapshot_sha256")) for r in rows if r.get("source_snapshot_sha256")}),
+                           "source_snapshots": self._records("data_source_snapshots", {"source": self.price_source}) if self.price_source else [],
+                           "source_contracts": self._records("data_source_contracts", {"source": self.price_source}) if self.price_source else [],
+                           "adjustment_receipts": {c: {k: r.get(k) for k in
+                             ("source", "start", "through", "rows", "history_complete", "evidence_sha256", "factor_records_sha256")}
+                             for c, r in factor_receipts.items()}},
             "universe": {"current_list_count": len(listed), "requested_count": len(codes),
                          "current_list_requested_fraction": len(set(codes) & listed) / len(listed) if listed else None},
             **{name: self._capability(name, start, end) for name in ["all_a", "minute", "delisted", "pit_financial"]},
         }
+        if hasattr(self, "source_selection"):
+            coverage["source_selection"] = self.source_selection
         return DailyData(frame, coverage)
 
     def financial(self, codes: Iterable[str], start: str, end: str) -> DailyData:
@@ -424,7 +501,7 @@ class AxisProvider:
     def financial_asof(self, code: str, report_date: str, decision_date: str) -> dict:
         """Resolve actual disclosed revisions; provider snapshots are excluded."""
         from .financial import query_financial_asof
-        return query_financial_asof(self.db, code=normalize_code(code),
+        return query_financial_asof(self.reference_db, code=normalize_code(code),
                                    report_date=_date(report_date), decision_date=_date(decision_date))
 
     def catalog(self) -> dict:
@@ -432,14 +509,14 @@ class AxisProvider:
         names = ["stock_lifecycle", "stock_day", "stock_adj", "stock_adjusted_day",
                  "trade_calendar", "stock_filing_index", "stock_financial_pit",
                  "stock_financial_revision", "stock_financial_provider_snapshot"]
-        return {"collections": {name: self.db[name].count_documents({}) for name in names},
+        return {"collections": {name: self._database_for(name)[name].count_documents({}) for name in names},
                 "capabilities": self._records("panda_axis_validation"),
                 "interpretation": "Stored records and scoped receipts; independent completeness/PIT gates still apply"}
 
     def industry_asof(self, code: str, decision_date: str) -> dict:
         """Return a published scoped edition; latest omissions remain unknown."""
         from .industry import query_industry_asof
-        return query_industry_asof(self.db, code=normalize_code(code), decision_date=_date(decision_date))
+        return query_industry_asof(self.reference_db, code=normalize_code(code), decision_date=_date(decision_date))
 
 
 def migration_gate(coverage: dict[str, Any], *, require_all_a: bool = True,

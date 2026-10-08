@@ -92,7 +92,9 @@ def source_pool(provider, start=START, end=END):
     seen = set()
     for row in sorted(lifecycles, key=lambda r: (str(r.get("source")), str(r.get("code")))):
         code = normalize_code(row["code"])
-        if code in seen or code not in raw or raw[code].get("source") != row.get("source") or row.get("sse") not in {"sh", "sz"}:
+        selected_source = getattr(provider, "price_source", None)
+        price_matches = raw.get(code, {}).get("source") == (selected_source or row.get("source"))
+        if code in seen or code not in raw or not price_matches or row.get("sse") not in {"sh", "sz"}:
             continue
         seen.add(code)
         item = {**row, "code": code, "raw_receipt": raw[code]}
@@ -395,7 +397,8 @@ def main(argv=None):
     if not 200 <= args.sample_size <= 400:
         parser.error("CLI engineering sample must contain 200..400 codes")
     cfg = get_config(args.config)
-    provider = AxisProvider(cfg["data"]["mongo_uri"], cfg["data"]["database"])
+    from panda_alpha.sources import provider_from_config
+    provider = provider_from_config(cfg)
     result = run_initial(provider, args.output, sample_size=args.sample_size, seed=args.seed,
                          ledger_path=args.trial_ledger, historical=historical_denominator(cfg),
                          sealed=cfg["research"]["sealed_windows"])
