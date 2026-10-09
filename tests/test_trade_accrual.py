@@ -268,3 +268,41 @@ def test_nonpositive_assets_and_negative_carrying_stock_invalid():
     r = report()
     r["values"]["total_assets"]["opening"] = "0"
     with pytest.raises(ValueError): trade_accrual_score(r["values"])
+
+
+def with_opening_transition_table(text, year=2020):
+    return text + (f"\n===SOURCE_PAGE:30===\n合并资产负债表\n单位：元\n"
+                   f"项目 {year-1}年12月31日 {year}年1月1日 调整数\n流动资产：\n"
+                   "应收账款 999 888 -111\n存货 999 888 -111\n"
+                   "应付账款 999 888 -111\n资产总计 999 888 -111\n母公司资产负债表\n")
+
+
+def test_target_balance_is_not_confused_with_prior_opening_transition_table():
+    text, metadata, provenance = source(period="2020-12-31",
+        header="单位：元\n项目 2020年12月31日 2019年12月31日")
+    parsed = parse_trade_accrual_report(with_opening_transition_table(text), metadata, provenance)
+    assert parsed["status"] == "source_values_verified"
+    assert parsed["values"]["accounts_receivable"] == {"current": "30.00", "opening": "20.00"}
+    assert parsed["field_evidence"]["accounts_receivable"]["source_page"] == 20
+    assert parsed["statement_evidence"][0]["selection_evidence"]["method"] == "unique_explicit_target_stock_period"
+
+
+def test_two_target_balances_remain_ambiguous_even_with_transition_note():
+    text, metadata, provenance = source(period="2020-12-31",
+        header="单位：元\n项目 2020年12月31日 2019年12月31日")
+    parsed = parse_trade_accrual_report(with_opening_transition_table(text+"\n"+text), metadata, provenance)
+    assert parsed["status"] == "source_values_pending"
+
+
+def test_transition_note_cannot_supply_missing_target_balance():
+    text, metadata, provenance = source(period="2020-12-31",
+        header="单位：元\n项目 2019年12月31日 2020年1月1日 调整数")
+    parsed = parse_trade_accrual_report(with_opening_transition_table(text), metadata, provenance)
+    assert parsed["status"] == "source_values_pending"
+
+
+def test_explicit_RMB_unit_alongside_printed_stock_date():
+    parsed = report(period="2020-12-31",
+        header="2020年12月31日 人民币元\n项目 2020年12月31日 2019年12月31日")
+    assert parsed["status"] == "source_values_verified"
+    assert parsed["values"]["accounts_receivable"]["current"] == "30.00"

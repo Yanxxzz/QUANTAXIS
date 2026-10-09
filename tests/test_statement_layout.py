@@ -230,3 +230,17 @@ def test_original_pdf_binding_cannot_accept_changed_bytes_or_text(tmp_path, muta
                                period='2025-12-31',source_page_hint=page)
     assert result['status'] != 'physical_grid_columns_bound'
     assert 'current_yuan' not in result
+
+
+def test_layout_boundary_uses_actual_target_stock_period_not_transition_note():
+    from panda_alpha.statement_layout import _bounded_section
+    text = ("2020年年度报告\n合并资产负债表\n单位：元\n"
+            "项目 2020年12月31日 2019年12月31日\n货币资金 100 90\n"
+            "应收账款 30 20\n母公司资产负债表\n货币资金 1 1\n"
+            "合并资产负债表\n单位：元\n项目 2019年12月31日 2020年1月1日 调整数\n"
+            "货币资金 90 80 -10\n母公司资产负债表\n")
+    section = _bounded_section(text, "balance", period="2020-12-31")
+    assert section is not None
+    heading, end = section
+    assert "2020年12月31日 2019年12月31日" in text[heading.end():end.start()]
+    assert _bounded_section(text+text, "balance", period="2020-12-31") is None

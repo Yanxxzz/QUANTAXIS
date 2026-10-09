@@ -19,7 +19,7 @@ from panda_alpha.financial_statements import (
     flow_spans, money, source_page,
 )
 
-LAYOUT_PARSER_VERSION = 1
+LAYOUT_PARSER_VERSION = 2
 _INTEGER = r"(?:\d+|\d{1,3}(?:[,，]\d{3})+)"
 _AMOUNT = re.compile(r"(?:[+\-−－]?" + _INTEGER + r"(?:\.\d+)?|[（(]" +
                      _INTEGER + r"(?:\.\d+)?[）)])")
@@ -166,7 +166,7 @@ def monetary_grid_pair(rows, boxes, *, label, table_kind, period,
             "period_evidence": periods}
 
 
-def _bounded_section(text, kind):
+def _bounded_section(text, kind, *, period=None):
     headings = list(TABLE.finditer(text))
     duplicates = set()
     for i in range(1, len(headings)):
@@ -183,6 +183,17 @@ def _bounded_section(text, kind):
                     and not (h["scope"] == "合并" and h["name"] == heading["name"] and h["continued"])), None)
         if end:
             sections.append((heading, end))
+    if len(sections) > 1 and kind == "balance" and period is not None:
+        from panda_alpha.trade_accrual import trade_stock_periods
+        matching = []
+        for heading, end in sections:
+            body = text[heading.end():end.start()]
+            first = re.search(r"(?m)^\s*(?:流动资产|非流动资产|货币资金|现金及存放中央银行)", body)
+            header = body[:first.start()] if first else body[:500]
+            if trade_stock_periods(header, period, text[:2500])["status"] == "same_report_stock_columns_bound":
+                matching.append((heading, end))
+        if len(matching) == 1:
+            return matching[0]
     return sections[0] if len(sections) == 1 else None
 
 
@@ -261,7 +272,7 @@ def original_pdf_pair(text, provenance, *, label, table_kind, period, source_pag
             return pending("original_layout_native_text_mismatch")
     except (OSError, ValueError, UnicodeError, EOFError):
         return pending("original_layout_source_unreadable")
-    section = _bounded_section(native, table_kind)
+    section = _bounded_section(native, table_kind, period=period)
     if not section:
         return pending("original_layout_consolidated_boundary_pending")
     heading, end = section

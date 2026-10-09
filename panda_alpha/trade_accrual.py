@@ -100,6 +100,15 @@ def _balance_sections(text, period, source_title):
                          "body_start": h.end(), "header": header, "unit": unit,
                          "period": trade_stock_periods(header, period, source_title),
                          "source_page": source_page(text, h.start())})
+    if len(sections) > 1:
+        matching = [s for s in sections if s.get("period", {}).get("status") == "same_report_stock_columns_bound"]
+        if len(matching) == 1:
+            matching[0]["selection_evidence"] = {
+                "method": "unique_explicit_target_stock_period", "target_period": period,
+                "other_sections": [{"source_page": s.get("source_page"), "period": s.get("period")}
+                                   for s in sections if s is not matching[0]],
+            }
+            return matching
     return sections
 
 

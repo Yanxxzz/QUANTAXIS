@@ -207,7 +207,8 @@ def amount_unit(header: str) -> dict:
     header = re.sub(r"\s+", "", header)
     units = re.findall(r"(?<!编制)单位(?::|：|均为|为)(?:人民币)?(百万元|千元|万元|亿元|元)", header)
     if not units:
-        units = re.findall(r"(?m)^\s*人民币\s*(百万元|千元|万元|亿元|元)\s*$", raw_header)
+        units = re.findall(r"(?m)^\s*(?:20\d{2}\s*年\s*\d{1,2}\s*月\s*\d{1,2}\s*日\s*)?"
+                           r"人民币\s*(百万元|千元|万元|亿元|元)\s*$", raw_header)
     foreign = re.findall(r"(?:币种|单位)[:：]?(?:港币|美元|欧元|日元|HKD|USD|EUR|JPY)", header, re.I)
     if foreign or len(set(units)) != 1:
         return {"status": "currency_or_unit_unverified", "printed_units": units, "foreign_currency": foreign}
