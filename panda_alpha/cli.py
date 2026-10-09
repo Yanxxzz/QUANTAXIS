@@ -224,6 +224,7 @@ def main(argv=None):
     evaluate.add_argument("--benchmark-id", help="Explicit fixed-pool comparator with known direction and actual values")
     evaluate.add_argument("--warmup-start", help="Earlier allowed source start for indicator warmup, checked against sealed windows")
     evaluate.add_argument("--output", default="research_runs/local_review")
+    evaluate.add_argument("--detailed-output", action="store_true", help="Retain per-security execution ledgers for a requested attribution study")
     account = sub.add_parser("account", help="Free account preflight, no factor runs")
     schedule = sub.add_parser("schedule", help="Preview experimental budget and quotas, no factor runs")
     schedule.add_argument("--candidates", required=True)
@@ -499,7 +500,8 @@ def main(argv=None):
                     study_path = output / (candidate.candidate_id + ".study.json")
                     preparation_path = output / (candidate.candidate_id + ".preparation.json")
                     write(preparation_path, preparation)
-                    write(study_path, study)
+                    from .artifacts import compact_study_result
+                    write(study_path, study if args.detailed_output else compact_study_result(study))
                     facts = FailureEvidence(failure_type=joint["failure_type"], data_complete=joint["data_complete"],
                                             observations=tuple(joint["observations"] + joint["pending"]),
                                             metrics={"joint_quality": joint, "research_window": {"start": args.start, "end": args.end}},
