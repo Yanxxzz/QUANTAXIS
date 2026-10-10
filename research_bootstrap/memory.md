@@ -1,6 +1,6 @@
 # PandaAI research bootstrap
 
-Current policy override (2026-10-10): standalone absolute Sharpe cutoffs and preferred targets are withdrawn for research, official tests and pool admission. Older criteria below describe historical decisions only; use config/pool-admission.v2.json for prospective reviews. Retain measured results and human retirements.
+Current policy override (2026-10-10 latest clarification): formal added/changed candidates require net30 held-decile daily Sharpe >= 0.5, recomputed from bound daily ledgers. Official exploration has no Sharpe floor; legacy 2/2.5 targets remain retired. Use config/pool-admission.v2.json for prospective reviews; retain historical results and human retirements.
 
 Historical multiple-testing denominator: **415**.
 Recovered 428 distinct hypothesis IDs from 967 sanitized source summaries.

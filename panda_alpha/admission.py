@@ -11,6 +11,8 @@ def assess_admission(evidence: dict, policy: dict, *, evidence_directory=".", wi
                 "size_stress", "fixed_pool_increment", "temporal_stability",
                 "actual_factor_diversity", "official_transfer", "direction_parity")
     pending, failed = [], []
+    if policy.get("single_factor_sharpe_policy", {}).get("enabled") is True:
+        pending.append("single_factor_sharpe_requires_v2_bound_daily_ledger")
     for name in required:
         item = evidence.get(name, {})
         if item.get("status") == "failed":
@@ -22,8 +24,8 @@ def assess_admission(evidence: dict, policy: dict, *, evidence_directory=".", wi
         numbers = (entry.get("sharpe"), entry.get("compounded_return"), entry.get("relative_wealth_excess"))
         if entry.get("status") != "verified" or not entry.get("artifact_sha256") or any(type(x) not in (int, float) or not math.isfinite(x) for x in numbers):
             pending.append(f"net_returns@{cost}")
-        # Standalone absolute Sharpe cutoffs were withdrawn. Legacy callers may
-        # still supply minimum_net_sharpe; it no longer overrides net economics.
+        # Retired legacy cutoffs do not override net economics. The modest v2
+        # standalone floor requires actual daily rows, unavailable in this API.
         elif numbers[0] <= 0 or numbers[1] <= 0 or numbers[2] <= 0:
             failed.append(f"net_returns@{cost}")
     points = evidence.get("monthly_points", {})

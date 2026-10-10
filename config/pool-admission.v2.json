@@ -72,11 +72,18 @@
     "monthly_cap": 40000
   },
   "single_factor_sharpe_policy": {
-    "minimum": null,
+    "enabled": true,
+    "minimum": 0.5,
+    "cost": 0.003,
+    "scope": "formal_add_replace",
+    "metric": "held_decile_net_absolute_daily_return",
+    "annualization": 252,
+    "risk_free": 0,
+    "ddof": 1,
     "preferred_target": null,
-    "role": "Diagnostic only; no standalone Sharpe cutoff for research, official testing or pool admission",
-    "supersedes": "All prior standalone absolute Sharpe qualification thresholds and preferred targets, per user instruction on 2026-10-10",
-    "portfolio_review": "Retain cost-adjusted pool economics, graded increments and the official C formula; do not replace the withdrawn cutoff with another standalone target"
+    "role": "Minimum standalone quality floor for each added or changed candidate, recomputed from the bound held-decile daily net ledger; research and official exploration remain separate",
+    "supersedes": "Latest user clarification on 2026-10-10 replaces the no-cutoff instruction with a modest formal admission floor; legacy 2 and 2.5 thresholds remain retired",
+    "portfolio_review": "Passing the standalone floor does not replace pool increments, costs, stability or evidence checks; pure removal and unchanged existing members are exempt"
   },
   "evidence_policy": {
     "artifact_binding": "Existing file SHA256, candidate definition, pool member versions, window, cycle, groups, costs and source scope",

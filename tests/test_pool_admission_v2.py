@@ -1,12 +1,14 @@
 """Balanced review grades supplied increments without relaxing provenance."""
 from copy import deepcopy
 import json
+import math
 from pathlib import Path
+import statistics
 
 import pytest
 
 from panda_alpha.admission import assess_admission
-from test_pool_admission import EvidenceCase
+from test_pool_admission import EvidenceCase, member
 
 
 REPO = Path(__file__).resolve().parents[1]
@@ -38,15 +40,179 @@ def test_full_original_targets_receive_strong_increment_grade(case):
     assert not result["official_total_points_gain_verified"]
 
 
-def test_active_policy_has_no_standalone_absolute_sharpe_target(case):
+def test_active_policy_has_modest_formal_sharpe_floor_without_legacy_target(case):
     assert "legacy_paid_confirmation" not in case.policy
     assert "minimum_net_sharpe" not in case.policy
     sharpe_policy = case.policy["single_factor_sharpe_policy"]
-    assert sharpe_policy["minimum"] is None
+    assert sharpe_policy["enabled"] is True
+    assert sharpe_policy["minimum"] == .5
+    assert sharpe_policy["cost"] == .003
+    assert sharpe_policy["scope"] == "formal_add_replace"
     assert sharpe_policy["preferred_target"] is None
     example = json.loads((REPO / "config/panda-alpha.example.json").read_text(encoding="utf-8"))
     assert "minimum_net_sharpe" not in example["admission"]
     assert "legacy_policy_path" not in example["admission"]
+
+
+def standalone_sharpe(case, identifier, value):
+    # Even-length symmetric daily residuals give a controllable sample Sharpe.
+    residuals = [(.003 if i % 2 else -.003) for i in range(len(case.dates))]
+    mean = value * statistics.stdev(residuals) / math.sqrt(252)
+    case.bodies["ledger"]["standalone"][identifier] = case.standalone(identifier, mean)
+    case.save("ledger")
+
+
+@pytest.mark.parametrize("sharpe,expected", [(.49, "rejected"), (.5, "ready_for_shadow_validation"),
+                                          (.8, "ready_for_shadow_validation")])
+def test_standalone_modest_floor_is_recomputed_with_inclusive_boundary(case, sharpe, expected):
+    standalone_sharpe(case, "NEW", sharpe)
+    result = case.assess()
+    assert result["status"] == expected, result
+    measured = result["metrics"]["single_factor_sharpe_by_candidate"]["NEW"]
+    assert measured["SR_ann"] == pytest.approx(sharpe)
+    assert measured["cost"] == .003
+    assert measured["passed"] == (sharpe >= .5)
+    assert result["research_exploration_allowed"]
+    if sharpe < .5:
+        assert "single_factor_sharpe:NEW@0.003" in result["failed"]
+        assert result["economic_rejected"]
+    assert result["pool_operations"] == result["paid_runs"] == 0
+
+
+@pytest.mark.parametrize("missing", ["source_coverage", "point_in_time_universe", "execution_audit",
+                                   "direction_parity", "independent_calendar"])
+def test_low_standalone_sharpe_with_unverified_contract_is_pending(case, missing):
+    standalone_sharpe(case, "NEW", .49)
+    case.bodies["contracts"]["checks"][missing]["status"] = "pending"
+    case.save("contracts")
+    result = case.assess()
+    assert result["status"] == "pending", result
+    assert not result["economic_rejected"]
+    assert "single_factor_sharpe:NEW@0.003" not in result["failed"]
+    assert "single_factor_sharpe:NEW@0.003" in result["metrics"]["economic_observations_pending_certification"]
+
+
+@pytest.mark.parametrize("invalid", ["missing", "scalar_headline", "wrong_version", "wrong_definition",
+                                   "wrong_direction", "wrong_held_group", "bool_direction",
+                                   "wrong_cycle", "wrong_groups", "wrong_metric", "wrong_dates",
+                                   "nan", "bool_return", "missing_fee", "wrong_cost", "costs_not_object",
+                                   "row_not_object"])
+def test_missing_or_invalid_standalone_ledger_does_not_create_economic_failure(case, invalid):
+    body = case.bodies["ledger"]["standalone"]["NEW"]
+    rows = body["costs"]["0.003"]
+    if invalid == "missing":
+        del case.bodies["ledger"]["standalone"]
+    elif invalid == "scalar_headline":
+        body["sharpe"] = 10
+        del body["costs"]
+    elif invalid == "wrong_version":
+        body["version"] = "different"
+    elif invalid == "wrong_definition":
+        body["definition_sha256"] = "0" * 64
+    elif invalid == "wrong_direction":
+        body["direction"] = 0
+    elif invalid == "wrong_held_group":
+        body["held_group"] = 1
+    elif invalid == "bool_direction":
+        body["direction"] = True
+    elif invalid == "wrong_cycle":
+        body["cycle"] = 10
+    elif invalid == "wrong_groups":
+        body["groups"] = 5
+    elif invalid == "wrong_metric":
+        body["metric"] = "gross_excess_period_statistics"
+    elif invalid == "wrong_dates":
+        rows.pop()
+    elif invalid == "nan":
+        rows[0]["net_return"] = float("nan")
+    elif invalid == "bool_return":
+        rows[0]["net_return"] = True
+    elif invalid == "missing_fee":
+        del rows[0]["fee"]
+    elif invalid == "wrong_cost":
+        body["costs"] = {"0.0": rows}
+    elif invalid == "costs_not_object":
+        body["costs"] = rows
+    else:
+        rows[0] = 100
+    case.save("ledger")
+    result = case.assess()
+    assert result["status"] == "pending", result
+    assert not result["economic_rejected"]
+    assert any(item.startswith("single_factor_sharpe:") for item in result["pending"])
+    assert result["research_exploration_allowed"]
+
+
+def test_every_added_candidate_has_to_meet_its_own_standalone_floor(case):
+    proposed = deepcopy(case.plan["proposed"]) + [member("OTHER")]
+    case.plan.update(proposed=proposed, candidate_ids=["NEW", "OTHER"],
+                     transitions=[deepcopy(case.plan["baseline"]), deepcopy(proposed)])
+    q = case.bodies["quality"]["metrics"]
+    case.bodies["quality"]["metrics_by_candidate"] = {"NEW": deepcopy(q), "OTHER": deepcopy(q)}
+    for row in case.bodies["points"]["months"]:
+        row["proposed"]["a_scores"] = [.005] * 5 + [.08] * 2
+    standalone_sharpe(case, "NEW", .8)
+    standalone_sharpe(case, "OTHER", .49)
+    case.rebind()
+    result = case.assess()
+    assert result["status"] == "rejected", result
+    assert "single_factor_sharpe:OTHER@0.003" in result["failed"]
+    assert "single_factor_sharpe:NEW@0.003" not in result["failed"]
+    assert set(result["metrics"]["single_factor_sharpe_by_candidate"]) == {"NEW", "OTHER"}
+
+
+def test_changed_existing_definition_needs_its_own_standalone_floor(case):
+    proposed = deepcopy(case.plan["baseline"])
+    proposed[0].update(version="v2", definition_sha256="a" * 64)
+    case.plan.update(operation="replace", proposed=proposed, candidate_ids=["B0"],
+                     planned_change_date="2026-11-02",
+                     transitions=[deepcopy(case.plan["baseline"]), deepcopy(proposed)])
+    for row in case.bodies["points"]["months"]:
+        row["proposed"]["a_scores"] = [.08] + [.005] * 4
+    case.bodies["ledger"]["standalone"] = {}
+    standalone_sharpe(case, "B0", .49)
+    case.rebind()
+    result = case.assess()
+    assert result["status"] == "rejected", result
+    assert "single_factor_sharpe:B0@0.003" in result["failed"]
+
+
+def test_negative_direction_checks_the_bottom_held_decile(case):
+    case.plan["proposed"][-1]["direction"] = 0
+    case.plan["transitions"][-1] = deepcopy(case.plan["proposed"])
+    standalone_sharpe(case, "NEW", .8)
+    case.rebind()
+    result = case.assess()
+    assert result["status"] == "ready_for_shadow_validation", result
+    assert result["metrics"]["single_factor_sharpe_by_candidate"]["NEW"]["held_group"] == 1
+    case.bodies["ledger"]["standalone"]["NEW"]["held_group"] = 10
+    case.save("ledger")
+    assert case.assess()["status"] == "pending"
+
+
+def test_pure_removal_and_unchanged_old_members_do_not_requalify_standalone_sharpe(case):
+    baseline = deepcopy(case.plan["baseline"]) + [member("BAD")]
+    proposed = deepcopy(case.plan["baseline"])
+    case.plan.update(operation="remove", baseline=baseline, proposed=proposed, candidate_ids=["BAD"],
+                     planned_change_date="2026-11-02", transitions=[deepcopy(baseline), deepcopy(proposed)])
+    for row in case.bodies["points"]["months"]:
+        row["baseline"]["a_scores"] = [.005] * 5 + [0.0]
+        row["proposed"]["a_scores"] = [.005] * 5
+    del case.bodies["ledger"]["standalone"]
+    del case.evidence["artifacts"]["quality"]
+    case.rebind()
+    del case.evidence["artifacts"]["quality"]
+    result = case.assess()
+    assert result["status"] == "ready_for_shadow_validation", result
+    assert "single_factor_sharpe_by_candidate" not in result["metrics"]
+
+
+def test_v1_is_frozen_without_the_new_standalone_floor(case):
+    standalone_sharpe(case, "NEW", -.1)
+    legacy = json.loads((REPO / "config/pool-admission.v1.json").read_text(encoding="utf-8"))
+    result = assess_admission(case.evidence, legacy, evidence_directory=case.directory)
+    assert result["status"] == "ready_for_shadow_validation", result
+    assert "single_factor_sharpe_by_candidate" not in result["metrics"]
 
 
 def test_small_real_increment_below_old_targets_can_enter_shadow(case):
@@ -104,6 +270,9 @@ def test_shorter_certified_history_is_reviewed_without_inventing_missing_months(
     for paths in ledger["costs"].values():
         for side in paths:
             paths[side] = [row for row in paths[side] if row["date"] in allowed]
+    for body in ledger["standalone"].values():
+        for cost, rows in body["costs"].items():
+            body["costs"][cost] = [row for row in rows if row["date"] in allowed]
     case.bodies["points"]["months"] = [row for row in case.bodies["points"]["months"] if row["month"] in months]
     case.plan["window"]["end"] = max(allowed)
     case.rebind()

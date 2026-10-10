@@ -52,7 +52,8 @@ class EvidenceCase:
                        "benchmark": [{"date": day, "return": .0001 + (1 if i % 2 else -1) * .002}
                                      for i, day in enumerate(self.dates)],
                        "costs": {"0.003": {"baseline": self.returns(.0004), "proposed": self.returns(.0008)},
-                                 "0.005": {"baseline": self.returns(.0003), "proposed": self.returns(.0007)}}},
+                                 "0.005": {"baseline": self.returns(.0003), "proposed": self.returns(.0007)}},
+                       "standalone": {"NEW": self.standalone("NEW", .0008)}},
             "points": {"months": [{"month": month,
                                    "baseline": {"a_scores": [.005] * 5, "decay": 1, "a_cap": .7},
                                    "proposed": {"a_scores": [.005] * 5 + [.08], "decay": 1, "a_cap": .7}}
@@ -63,6 +64,13 @@ class EvidenceCase:
     def returns(self, mean):
         return [{"date": day, "net_return": mean + (1 if i % 2 else -1) * .003,
                  "turnover": .01, "fee": .00001} for i, day in enumerate(self.dates)]
+
+    def standalone(self, identifier, mean):
+        candidate = next(row for row in self.plan["proposed"] if row["id"] == identifier)
+        return {**{key: candidate[key] for key in ("id", "version", "definition_sha256", "direction")},
+                "cycle": 5, "groups": 10, "held_group": 1 if candidate["direction"] == 0 else 10,
+                "metric": "held_decile_net_absolute_daily_return",
+                "costs": {"0.003": self.returns(mean)}}
 
     def save(self, name):
         body = self.bodies[name]

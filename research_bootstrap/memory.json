@@ -2451,17 +2451,15 @@
   ],
   "active_policy_overrides": {
     "instruction_date": "2026-10-10",
-    "single_factor_sharpe_minimum": null,
+    "single_factor_sharpe_minimum": 0.5,
+    "cost": 0.003,
+    "metric": "Direction-selected held-decile after-cost absolute daily returns, mean/sample_sd*sqrt(252), rf=0",
+    "scope": "Formal admission of each added or changed candidate; pure deletion and unchanged existing members exempt",
+    "research_and_official_exploration_minimum": null,
     "single_factor_sharpe_preferred_target": null,
-    "applies_to": [
-      "research_selection",
-      "official_exploration",
-      "paid_confirmation",
-      "pool_admission"
-    ],
-    "precedence": "Latest user instruction overrides all older standalone absolute Sharpe gates and targets, including legacy preregistrations and quoted historical instructions.",
-    "review_basis": "Mechanism, verified information, costs, stability, actual pool net economics and graded increments. Sharpe is diagnostic and an official C input; no replacement standalone target.",
-    "history": "Retain original numbers and human retirements. A failure solely against the withdrawn Sharpe cutoff is not evidence of economic failure; no automatic resurrection or rerun.",
+    "precedence": "Latest user clarification replaces the previous no-cutoff instruction with a modest formal admission floor. Legacy 2/2.5 targets remain retired.",
+    "review_basis": "Recompute from bound daily net ledgers; missing source or ledger is pending. Passing the floor still requires quality, costs, stability and actual pool increment review.",
+    "history": "Retain original results and human retirements; do not automatically rerun or promote old candidates.",
     "pool_policy": "config/pool-admission.v2.json",
     "new_paid_runs": 0,
     "pool_operations": 0

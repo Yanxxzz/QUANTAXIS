@@ -24,12 +24,12 @@
       "sha256": "364c3103ffe2efbcfa4232f0a0b6cca1de665feeaec123fbee1e4c255fba22c4"
     },
     "memory.json": {
-      "bytes": 98895,
-      "sha256": "18810e07e2cd751dd5a8adffd48c12c2ca808bc5547bb00063f17d1f9597dded"
+      "bytes": 98971,
+      "sha256": "d4a5afdda4752accce2042ff8f9214f83fdfaf74ff121521d4a105cf03f9c22c"
     },
     "memory.md": {
-      "bytes": 19369,
-      "sha256": "59c770f7801206ed13e35908eec5b03a286e66146fcec10b95fa019ad8cdab16"
+      "bytes": 19410,
+      "sha256": "741173d97484794517e8f5b13dae7a0f4a4a810e03206bb70fe0b509eddda80a"
     },
     "source_index.jsonl": {
       "bytes": 395122,
@@ -50,5 +50,5 @@
   "semantic_duplicates_removed": 119,
   "source_count": 967,
   "source_finding_count": 34,
-  "policy_annotation": "2026-10-10 standalone absolute Sharpe thresholds withdrawn; cold evidence and historical source hashes retained"
+  "policy_annotation": "2026-10-10 latest clarification: net30 daily standalone Sharpe >=0.5 for formal add/replace only; old2/2.5 retired; cold evidence and historical source hashes retained"
 }

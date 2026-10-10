@@ -109,7 +109,8 @@ def _plan(plan, gate):
 
 
 def _performance(rows, dates, benchmark):
-    if not isinstance(rows, list) or [row.get("date") for row in rows] != dates:
+    if (not isinstance(rows, list) or any(not isinstance(row, dict) for row in rows) or
+            [row.get("date") for row in rows] != dates):
         raise ValueError("Baseline, proposed and benchmark must use exactly the same ordered dates")
     returns, turnover = [], []
     for row in rows:
@@ -142,6 +143,50 @@ def _performance(rows, dates, benchmark):
     if any(not math.isfinite(value) for value in whole.values()):
         raise ValueError("Nonfinite portfolio metrics")
     return whole, returns, turnover
+
+
+def _single_factor_sharpe(ledger, proposed, candidates, policy, dates, benchmark):
+    """Recompute each changed candidate's modest floor from the existing ledger.
+
+    This is a formal add/replace check, never an official research qualification.
+    Direction zero holds the bottom decile; direction one holds the top decile.
+    No headline Sharpe or averaged pool sleeve can stand in for daily net rows.
+    """
+    gate = policy["single_factor_sharpe_policy"]
+    minimum = _number(gate.get("minimum"), "single_factor_sharpe minimum")
+    if (minimum < 0 or gate.get("cost") != .003 or
+            gate.get("scope") != "formal_add_replace" or
+            gate.get("metric") != "held_decile_net_absolute_daily_return" or
+            gate.get("annualization") != 252 or gate.get("risk_free") != 0 or
+            gate.get("ddof") != 1):
+        raise ValueError("Standalone Sharpe requires the frozen 30bp net-daily, 252-day, rf=0, ddof=1 convention")
+    standalone = ledger.get("standalone")
+    if not isinstance(standalone, dict) or set(standalone) != set(candidates):
+        raise ValueError("Every added or changed candidate requires its own bound standalone daily ledger")
+    cost = str(gate["cost"])
+    assessments = {}
+    for identifier in candidates:
+        body, member = standalone[identifier], proposed[identifier]
+        if not isinstance(body, dict) or any(body.get(key) != member[key]
+                                             for key in ("id", "version", "definition_sha256", "direction")):
+            raise ValueError(f"{identifier}: standalone identity differs from the frozen candidate")
+        if (type(body.get("direction")) is not int or
+                type(body.get("cycle")) is not int or body["cycle"] != 5 or
+                type(body.get("groups")) is not int or body["groups"] != 10 or
+                type(body.get("held_group")) is not int or
+                body["held_group"] != (1 if member["direction"] == 0 else 10) or
+                body.get("metric") != gate["metric"]):
+            raise ValueError(f"{identifier}: standalone held decile/direction/protocol differs from the frozen plan")
+        costs = body.get("costs")
+        if not isinstance(costs, dict):
+            raise ValueError(f"{identifier}: standalone cost-specific daily rows required")
+        summary, _, _ = _performance(costs.get(cost), dates, benchmark)
+        sharpe = summary["SR_ann"]
+        # Avoid failing an exactly-on-boundary recomputation due to float noise.
+        passes = sharpe >= minimum or math.isclose(sharpe, minimum, rel_tol=0, abs_tol=1e-12)
+        assessments[identifier] = {"minimum": minimum, "cost": gate["cost"], "passed": passes,
+                                   "metric": gate["metric"], "held_group": body["held_group"], **summary}
+    return assessments
 
 
 def _grade_increment(comparisons, policy, complete_months):
@@ -348,6 +393,16 @@ def assess_pool_admission(evidence: dict, policy: dict, *, evidence_directory=".
         if [row.get("date") for row in benchmark_rows] != dates:
             raise ValueError("Benchmark dates differ from independent calendar")
         benchmark = [_number(row.get("return"), "benchmark return") for row in benchmark_rows]
+        if (balanced and plan["operation"] != "remove" and
+                policy.get("single_factor_sharpe_policy", {}).get("enabled") is True):
+            try:
+                standalone = _single_factor_sharpe(ledger, proposed, plan["candidate_ids"],
+                                                   policy, dates, benchmark)
+                metrics["single_factor_sharpe_by_candidate"] = standalone
+                economic.extend(f"single_factor_sharpe:{key}@0.003" for key, row in standalone.items()
+                                if not row["passed"])
+            except (KeyError, TypeError, ValueError, OverflowError) as exc:
+                pending.append(f"single_factor_sharpe: {exc}")
         complete = {month: days for month, days in sorted(calendar.items())
                     if days[0] >= start and days[-1] <= end}
         recent_count = policy["portfolio_gate"]["recent_months"]
