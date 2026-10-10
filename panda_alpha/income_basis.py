@@ -256,14 +256,28 @@ def resolve_income_basis_change(current: dict, prior: dict, *, text: str,
     must equal the source-bound decoded current text. No PDF recheck is claimed.
     Unrecognized extra policy items, uncertain amounts/periods, and merely
     'no material impact' statements remain pending.
+
+    Current and prior non-income barriers are returned separately for callers
+    to reconcile by field. Prior barriers are unknown (``None``) until its
+    capture bytes bind; preserved metadata does not certify complete prior PIT
+    or change an otherwise resolved income-field bridge.
     """
     output = {"status": "pending", "resolved_fields": [], "evidence": [],
               "remaining_non_income_barriers": deepcopy(current.get("stock", {}).get("comparison_change_barriers", [])),
+              "remaining_prior_non_income_barriers": None,
               "full_pit_certified": False, "pdf_original_freshly_checked": False,
               "scope": "named_revenue_cost_fields_only"}
     try:
         stock, original = _bound_capture(current, provenance.get("current", {}))
         older, old_text = _bound_capture(prior, provenance.get("prior", {}))
+        prior_barriers = deepcopy([barrier for barrier in older.get("comparison_change_barriers", [])
+                                   if barrier.get("kind") != "accounting_policy"])
+        if older.get("edition") == "REVISED_FULL_REPORT" and not any(
+                barrier.get("kind") == "selected_prior_revised_report_gate_preserved"
+                and barrier.get("announcement_id") == older["announcement_id"] for barrier in prior_barriers):
+            prior_barriers.append({"kind": "selected_prior_revised_report_gate_preserved",
+                                   "announcement_id": older["announcement_id"]})
+        output["remaining_prior_non_income_barriers"] = prior_barriers
         if original != text:
             raise ValueError("decoded_current_text_mismatch")
         period = date.fromisoformat(stock["report_date"])

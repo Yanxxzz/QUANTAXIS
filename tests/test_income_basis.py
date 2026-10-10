@@ -398,6 +398,49 @@ def test_legacy_page_json_does_not_turn_no_material_impact_into_no_impact():
     assert resolve(args)["pending_reason"] == "unbridged_policy_item"
 
 
+def test_bound_prior_restatement_and_scope_are_preserved_separately_from_current():
+    args = list(pair(NO_EFFECT, barriers=[{"kind": "actual_balance_comparative_adjusted_header"}]))
+    prior_barriers = [{"kind": "accounting_policy"},
+                      {"kind": "affirmative_prior_year_restatement_scope_pending", "source_page": 4},
+                      {"kind": "consolidation_scope", "source_page": 7}]
+    args[1]["stock"]["comparison_change_barriers"] = deepcopy(prior_barriers)
+    rebound(args, side="prior")
+    original_prior = deepcopy(args[1])
+    result = resolve(args)
+    assert result["status"] == "income_fields_resolved"
+    assert result["remaining_prior_non_income_barriers"] == prior_barriers[1:]
+    assert result["remaining_non_income_barriers"] == [{"kind": "actual_balance_comparative_adjusted_header"}]
+    result["remaining_prior_non_income_barriers"][0]["source_page"] = 99
+    assert args[1] == original_prior and not result["full_pit_certified"]
+
+
+@pytest.mark.parametrize("already_preserved", [False, True])
+def test_bound_prior_revised_edition_returns_explicit_gate_without_changing_income_resolution(already_preserved):
+    args = list(pair(NO_EFFECT))
+    prior = args[1]["stock"]
+    prior["edition"] = "REVISED_FULL_REPORT"
+    gate = {"kind": "selected_prior_revised_report_gate_preserved", "announcement_id": "old"}
+    if already_preserved:
+        prior["comparison_change_barriers"] = [deepcopy(gate)]
+    rebound(args, side="prior")
+    result = resolve(args)
+    assert result["status"] == "income_fields_resolved"
+    assert result["remaining_prior_non_income_barriers"] == [gate]
+    assert result["remaining_non_income_barriers"] == []
+    assert not result["full_pit_certified"]
+
+
+def test_tampered_prior_capture_cannot_present_unknown_prior_gates_as_cleared():
+    args = list(pair(NO_EFFECT))
+    args[1]["stock"]["comparison_change_barriers"] = [{"kind": "consolidation_scope"}]
+    rebound(args, side="prior")
+    args[1]["stock"]["comparison_change_barriers"] = []  # Supplied doc diverges from archived capture bytes.
+    result = resolve(args)
+    assert result["status"] == "pending" and result["pending_reason"] == "capture_document_mismatch"
+    assert result["remaining_prior_non_income_barriers"] is None
+    assert result["resolved_fields"] == [] and not result["full_pit_certified"]
+
+
 def test_quantified_warranty_source_rows_reconcile_old_and_new_comparison():
     out = resolve(warranty_args())
     assert out["status"] == "income_fields_resolved"
