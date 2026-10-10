@@ -235,6 +235,7 @@ def test_cli_resolves_artifacts_at_evidence_directory_without_network_or_trials(
     evidence_path.write_text(json.dumps(evidence), encoding="utf-8")
     config = json.loads((REPO / "config/panda-alpha.example.json").read_text(encoding="utf-8"))
     config["research"]["memory"] = str(tmp_path / "absent_memory.json")
+    config["research"]["live_memory"] = str(tmp_path / "absent_live_memory.json")
     config["research"]["history_denominator"] = 466
     config["research"]["sealed_windows"] = []
     config["admission"]["policy_file"] = str(tmp_path / "absent_configured_policy.json")

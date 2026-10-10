@@ -96,7 +96,8 @@ def add_candidate_forward_records(case):
     candidate = case.bodies["shadow"]["B_review"]["proposed"][-1]
     candidate.update(source="shadow_post_freeze", records=[
         {"version": "v1", "signal_date": "2026-11-02", "realized_date": "2026-11-09", "ic": .03, "rank_ic": .04},
-        {"version": "v1", "signal_date": "2026-11-09", "realized_date": "2026-11-16", "ic": .05, "rank_ic": .06}])
+        {"version": "v1", "signal_date": "2026-11-09", "realized_date": "2026-11-16", "ic": .05, "rank_ic": .06},
+        {"version": "v1", "signal_date": "2026-11-16", "realized_date": "2026-11-23", "ic": .04, "rank_ic": .05}])
     case.save("shadow")
 
 

@@ -20,6 +20,7 @@ from panda_alpha.financial_statements import (
 
 
 FIELDS = ("operating_revenue", "operating_cost")
+PAGE_TEXT_JSON_PROJECTION = "join normalized page strings with ===SOURCE_PAGE:N=== markers; no stored duplicate"
 _SPACE = r"[^\S\n]*"
 _PREFIX = r"(?:[（(]?[一二三四五六七八九十\d]+[）)]?[、.．]?[^\S\n]*)?"
 POLICY_HEADING = re.compile(
@@ -73,6 +74,58 @@ def _canonical(value: dict) -> str:
                            separators=(",", ":")).encode())
 
 
+def _unique_page_container_keys(pairs):
+    result = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError("page_text_json_duplicate_key")
+        result[key] = value
+    return result
+
+
+def _bound_text(prov: dict, binding: dict) -> str:
+    text_keys = [key for key in ("text_gzip", "text_json") if key in binding]
+    if len(text_keys) != 1:
+        raise ValueError("exactly_one_retained_text_binding_required")
+    key = text_keys[0]
+    raw = binding[key]
+    if not isinstance(raw, bytes) or _sha(raw) != prov.get("text_sha256"):
+        raise ValueError("retained_text_hash_mismatch")
+    if key == "text_gzip":
+        if prov.get("text_storage_format") not in {None, "native_text_gzip"}:
+            raise ValueError("retained_text_binding_format_mismatch")
+        decoded = gzip.decompress(raw).decode("utf-8")
+    else:
+        storage = prov.get("text_storage_binding", {})
+        if (prov.get("text_storage_format") != "page_text_json"
+                or not isinstance(storage, dict)
+                or storage.get("format") != "page_text_json"
+                or storage.get("projection") != PAGE_TEXT_JSON_PROJECTION):
+            raise ValueError("page_text_json_format_or_projection_pending")
+        if (storage.get("sha256") != prov.get("text_sha256")
+                or not isinstance(prov.get("text_path"), str)
+                or not prov["text_path"] or storage.get("path") != prov["text_path"]):
+            raise ValueError("page_text_json_storage_binding_mismatch")
+        packet = json.loads(raw.decode("utf-8"), object_pairs_hook=_unique_page_container_keys)
+        if not isinstance(packet, dict) or set(packet) != {"source_sha256", "pages"}:
+            raise ValueError("page_text_json_schema_pending")
+        if packet["source_sha256"] != prov["pdf_sha256"]:
+            raise ValueError("page_text_json_pdf_identity_mismatch")
+        pages = packet["pages"]
+        if not isinstance(pages, list) or not pages or any(not isinstance(page, str) for page in pages):
+            raise ValueError("page_text_json_page_schema_pending")
+        pages = [page.replace("\r\n", "\n") for page in pages]
+        if (any(not page.strip() or re.search(r"===SOURCE_PAGE:\d+===", page) for page in pages)
+                or len(set(pages)) != len(pages)):
+            raise ValueError("page_text_json_empty_duplicate_or_embedded_page_marker")
+        # This legacy schema identifies physical pages by array position. Raw
+        # bytes bind their order; the declared projection emits contiguous1..N.
+        decoded = "\n".join(f"===SOURCE_PAGE:{index + 1}===\n{page}" for index, page in enumerate(pages))
+    if "text_content_sha256" in prov and _sha(decoded.encode("utf-8")) != prov["text_content_sha256"]:
+        raise ValueError("retained_text_content_hash_mismatch")
+    return decoded
+
+
 def _bound_capture(document: dict, binding: dict) -> tuple[dict, str]:
     """Bind the fields outside stock.record_sha256 to the actual capture bytes."""
     raw, digest = binding.get("capture_gzip"), binding.get("capture_sha256", "")
@@ -88,11 +141,30 @@ def _bound_capture(document: dict, binding: dict) -> tuple[dict, str]:
     if (stock.get("pdf_sha256") != prov.get("pdf_sha256")
             or not _HEX.fullmatch(str(prov.get("pdf_sha256", "")))):
         raise ValueError("archived_pdf_identity_mismatch")
-    raw_text = binding.get("text_gzip")
-    if not isinstance(raw_text, bytes) or _sha(raw_text) != prov.get("text_sha256"):
-        raise ValueError("retained_text_hash_mismatch")
-    decoded = gzip.decompress(raw_text).decode("utf-8")
-    return stock, decoded
+    return stock, _bound_text(prov, binding)
+
+
+def _income_column_header(header: str, period: str) -> str:
+    """Keep fiscal columns distinct from one matching FY period caption."""
+    lines = [line for line in header.splitlines()
+             if not (re.fullmatch(r"[^\n]{0,100}20\d{2}\s*年?\s*年度报告(?:全文)?", line.strip())
+                     and len(re.findall(r"20\d{2}", line)) == 1
+                     and "项目" not in line)]
+    captions = []
+    for index, line in enumerate(lines):
+        hit = re.fullmatch(r"(20\d{2})\s*年?\s*(\d{1,2})\s*[-－—~至]\s*(\d{1,2})\s*月", line.strip())
+        if hit:
+            if (hit[1], int(hit[2]), int(hit[3])) != (period[:4], 1, 12):
+                raise ValueError("income_period_caption_conflicts_with_columns")
+            captions.append(index)
+    column_lines = [(index, line) for index, line in enumerate(lines) if "项目" in line]
+    # A reporting-period caption is removable only before one complete pair of
+    # explicit FY columns. Split/extra/contradictory columns stay pending.
+    if (len(captions) == 1 and len(column_lines) == 1
+            and captions[0] < column_lines[0][0]
+            and flow_spans(column_lines[0][1], period)["comparative_status"] == "explicit_prior_same_span"):
+        lines.pop(captions[0])
+    return "\n".join(lines)
 
 
 def _income_fields(document: dict, text: str, period: str) -> dict:
@@ -104,12 +176,7 @@ def _income_fields(document: dict, text: str, period: str) -> dict:
         unit = e.get("printed_unit")
         header = e.get("actual_table_header", "")
         cells = e.get("source_cells", [])
-        # Running report captions can repeat the year after the actual fiscal
-        # columns. Remove only a complete full-report caption line.
-        column_header = "\n".join(line for line in header.splitlines()
-                                  if not (re.fullmatch(r"[^\n]{0,100}20\d{2}\s*年?\s*年度报告(?:全文)?", line.strip())
-                                          and len(re.findall(r"20\d{2}", line)) == 1
-                                          and "项目" not in line))
+        column_header = _income_column_header(header, period)
         spans = flow_spans(column_header, period)
         if (unit not in UNIT_MULTIPLIERS or len(cells) != 2
                 or spans["comparative_status"] != "explicit_prior_same_span"):
@@ -184,8 +251,9 @@ def resolve_income_basis_change(current: dict, prior: dict, *, text: str,
     """Resolve only Rev/Cost events using two source-bound annual captures.
 
     ``provenance`` has ``current``/``prior`` mappings, each containing archived
-    ``capture_gzip`` bytes, their bound ``capture_sha256``, and ``text_gzip``
-    bytes. ``text`` must equal decoded current text. No PDF recheck is claimed.
+    ``capture_gzip`` bytes, their bound ``capture_sha256``, and exactly one of
+    ``text_gzip`` or explicitly declared legacy ``text_json`` bytes. ``text``
+    must equal the source-bound decoded current text. No PDF recheck is claimed.
     Unrecognized extra policy items, uncertain amounts/periods, and merely
     'no material impact' statements remain pending.
     """

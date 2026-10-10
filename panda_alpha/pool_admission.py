@@ -638,5 +638,5 @@ def _forward_review(shadow, plan, baseline, proposed, policy, contracts):
     if balanced:
         result.update(review_items=sorted(set(review_items)), manual_review_required=True,
                       statistical_validation_verified=False,
-                      IC_interpretation="Two completed IC records only make ICIR computable; they do not establish statistical reliability")
+                      IC_interpretation="Three completed IC records meet the currently observed ICIR sample minimum; they do not establish statistical reliability or official B certification")
     return result

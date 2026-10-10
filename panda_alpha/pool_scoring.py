@@ -103,8 +103,11 @@ def new_b_score(records: list[dict], version: str, effective_date: str,
 
     Every supplied record must be a completed post-effective cycle of this
     exact version, known by as_of. Mixed old or future records are rejected.
-    The official minimum sample size is not assumed: fewer than two or zero
-    IC dispersion remains pending; a numeric result is not admission proof.
+    At least three completed observations are required, matching the owned
+    v8.0.0 backend's explicit threshold observed on 2026-10-11; see
+    docs/pool_admission.md. Zero IC dispersion remains pending. This observed
+    maturity threshold does not certify the complete backend contract, and a
+    numeric result is not admission proof.
     """
     if not isinstance(version, str) or not version.strip():
         raise ValueError("version must be a nonempty string")
@@ -135,9 +138,9 @@ def new_b_score(records: list[dict], version: str, effective_date: str,
         rank_values.append(rank_ic)
         previous_signal, previous_realized = signal, realized
     n = len(records)
-    if n < 2:
+    if n < 3:
         return {"status": "pending", "rawB": None, "n": n,
-                "reason": "At least two completed records are needed to estimate ICIR"}
+                "reason": "At least three completed records are required for B sample maturity"}
     sd = statistics.stdev(ic_values)
     if sd <= 0:
         return {"status": "pending", "rawB": None, "n": n,

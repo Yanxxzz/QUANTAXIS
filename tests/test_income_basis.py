@@ -8,7 +8,9 @@ import pytest
 
 from panda_alpha.financial_statements import flow_spans
 from panda_alpha.gross_profitability import _actual_change_evidence
-from panda_alpha.income_basis import resolve_income_basis_change
+from panda_alpha.income_basis import (
+    PAGE_TEXT_JSON_PROJECTION, _bound_capture, _income_fields, resolve_income_basis_change,
+)
 
 
 def digest(value):
@@ -67,6 +69,62 @@ def rebound(args, *, side="current"):
     raw = gzip.compress(json.dumps(doc, ensure_ascii=False, sort_keys=True).encode(), mtime=0)
     prov[side]["capture_gzip"] = raw
     prov[side]["capture_sha256"] = digest(raw)
+
+
+def replace_source_header(args, header, *, side="current"):
+    """Rebind a minimal original-print header; fiscal proof stays unchanged."""
+    doc = args[0] if side == "current" else args[1]
+    binding = args[3][side]
+    original = gzip.decompress(binding["text_gzip"]).decode()
+    old_header = doc["fields"]["operating_revenue"]["actual_table_header"]
+    printed = original.replace(old_header, header)
+    raw_text = gzip.compress(printed.encode(), mtime=0)
+    doc["stock"]["provenance"]["text_sha256"] = digest(raw_text)
+    binding["text_gzip"] = raw_text
+    for evidence in doc["fields"].values():
+        evidence["actual_table_header"] = header
+        evidence["source_row_offset"] = printed.index(evidence["source_label"])
+    if side == "current":
+        args[2] = printed
+    rebound(args, side=side)
+
+
+def use_legacy_page_json(args, *, side="current", content_hash=True):
+    """Minimal list-of-page-strings container, matching the retained schema."""
+    doc = args[0] if side == "current" else args[1]
+    binding = args[3][side]
+    original = gzip.decompress(binding.pop("text_gzip")).decode()
+    intro, later = original.split("===SOURCE_PAGE:56===\n")
+    income_page, policy_page = later.split("===SOURCE_PAGE:114===\n")
+    pages = [f"报告正文第{index + 1}页" for index in range(114)]
+    pages[0], pages[55], pages[113] = intro.rstrip("\n"), income_page.rstrip("\n"), policy_page.rstrip("\n")
+    packet = {"source_sha256": doc["stock"]["pdf_sha256"],
+              "pages": [page.replace("\n", "\r\n") for page in pages]}
+    decoded = "\n".join(f"===SOURCE_PAGE:{index + 1}===\n{page}" for index, page in enumerate(pages))
+    raw = json.dumps(packet, ensure_ascii=False).encode()
+    binding["text_json"] = raw
+    prov = doc["stock"]["provenance"]
+    prov.update(text_sha256=digest(raw), text_path="retained-page-text.json", text_storage_format="page_text_json",
+                text_storage_binding={"format": "page_text_json", "path": "retained-page-text.json",
+                                      "sha256": digest(raw), "projection": PAGE_TEXT_JSON_PROJECTION})
+    if content_hash:
+        prov["text_content_sha256"] = digest(decoded.encode())
+    for evidence in doc["fields"].values():
+        evidence["source_row_offset"] = decoded.index(evidence["source_label"])
+    if side == "current":
+        args[2] = decoded
+    rebound(args, side=side)
+    return decoded
+
+
+def rebind_page_packet(args, packet, *, side="current"):
+    doc = args[0] if side == "current" else args[1]
+    raw = json.dumps(packet, ensure_ascii=False).encode()
+    args[3][side]["text_json"] = raw
+    prov = doc["stock"]["provenance"]
+    prov["text_sha256"] = digest(raw)
+    prov["text_storage_binding"]["sha256"] = digest(raw)
+    rebound(args, side=side)
 
 
 NO_POLICY = ("重要会计政策变更\n适用 □不适用\n单位：元\n"
@@ -187,6 +245,157 @@ def test_real_000419_style_running_caption_does_not_create_third_fiscal_column()
         e["source_row_offset"] = updated.index(e["source_label"])
     rebound(args, side="prior")
     assert resolve(args)["status"] == "income_fields_resolved"
+
+
+@pytest.mark.parametrize("header", [
+    "\n2025 年 1—12 月\n单位：元币种：人民币\n项目 附注 2025 年度 2024 年度\n",
+    "\n2025 年 1—12 月\n单位：元 币种：人民币\n项目 附注 2025 年度 2024 年度\n",
+])
+def test_600010_600018_matching_period_caption_is_not_a_third_fiscal_column(header):
+    # These two small header forms come from retained600010/600018FY2025
+    # sources; their income rows remain bound to the original full header.
+    args = list(pair(NO_EFFECT))
+    replace_source_header(args, header)
+    prior_header = "\n2024 年 1—12 月\n单位：元 币种：人民币\n项目 附注 2024 年度 2023 年度\n"
+    replace_source_header(args, prior_header, side="prior")
+    assert resolve(args)["status"] == "income_fields_resolved"
+    assert _income_fields(args[0], args[2], "2025-12-31")["operating_revenue"]["comparative"].is_finite()
+
+
+@pytest.mark.parametrize("header", [
+    "\n2024 年 1—12 月\n单位：元\n项目 2025 年度 2024 年度\n",
+    "\n2025 年 1—6 月\n单位：元\n项目 2025 年度 2024 年度\n",
+    "\n2025 年 2—12 月\n单位：元\n项目 2025 年度 2024 年度\n",
+    "\n2025 年 1—12 月\n单位：元\n项目 本期金额 上期金额\n",
+    "\n2025 年 1—12 月\n单位：元\n项目 2025 年度 2024 年度 2023 年度\n",
+    "\n2025 年 1—12 月\n单位：元\n项目 2025 年度 2024 年度\n项目 2024 年度 2023 年度\n",
+    "\n2025 年 1—12 月\n2025 年 1—12 月\n单位：元\n项目 2025 年度 2024 年度\n",
+])
+def test_period_caption_cannot_supply_or_override_ambiguous_fiscal_columns(header):
+    args = list(pair(NO_EFFECT))
+    replace_source_header(args, header)
+    assert resolve(args)["status"] == "pending"
+
+
+@pytest.mark.parametrize("bad", ["capture", "header", "offset", "material"])
+def test_matching_caption_keeps_capture_header_offset_and_no_material_effect_gates(bad):
+    args = list(pair(NO_EFFECT))
+    header = "\n2025 年 1—12 月\n单位：元\n项目 2025 年度 2024 年度\n"
+    replace_source_header(args, header)
+    if bad == "capture":
+        args[3]["current"]["capture_sha256"] = "0" * 64
+    elif bad == "header":
+        args[0]["fields"]["operating_cost"]["actual_table_header"] = header.replace("单位：元", "单位：元 币种：人民币")
+        rebound(args)
+    elif bad == "offset":
+        args[0]["fields"]["operating_cost"]["source_row_offset"] = 0
+        rebound(args)
+    else:
+        text = args[2].replace("无影响", "无重大影响")
+        raw_text = gzip.compress(text.encode(), mtime=0)
+        args[0]["stock"]["provenance"]["text_sha256"] = digest(raw_text)
+        args[3]["current"]["text_gzip"] = raw_text
+        args[2] = text
+        rebound(args)
+    assert resolve(args)["status"] == "pending"
+
+
+@pytest.mark.parametrize("side,content_hash", [("current", True), ("prior", True), ("prior", False)])
+def test_source_bound_declared_legacy_page_json_has_exact_contiguous_projection(side, content_hash):
+    args = list(pair(NO_EFFECT, barriers=[{"kind": "consolidation_scope"}]))
+    decoded = use_legacy_page_json(args, side=side, content_hash=content_hash)
+    doc = args[0] if side == "current" else args[1]
+    assert _bound_capture(doc, args[3][side])[1] == decoded
+    assert decoded.count("===SOURCE_PAGE:") == 114
+    assert "===SOURCE_PAGE:56===\n3、合并利润表" in decoded
+    result = resolve(args)
+    assert result["status"] == "income_fields_resolved"
+    assert result["remaining_non_income_barriers"] == [{"kind": "consolidation_scope"}]
+    assert not result["full_pit_certified"] and not result["pdf_original_freshly_checked"]
+
+
+@pytest.mark.parametrize("bad", ["pdf", "missing_key", "extra_key", "pages_object", "empty_pages",
+                                 "empty_page", "duplicate_page", "embedded_marker", "non_string"])
+def test_legacy_page_json_source_identity_and_page_schema_failures_stay_pending(bad):
+    args = list(pair(NO_EFFECT))
+    use_legacy_page_json(args, content_hash=False)
+    packet = json.loads(args[3]["current"]["text_json"])
+    if bad == "pdf":
+        packet["source_sha256"] = "b" * 64
+    elif bad == "missing_key":
+        del packet["source_sha256"]
+    elif bad == "extra_key":
+        packet["unknown_projection"] = True
+    elif bad == "pages_object":
+        packet["pages"] = {"1": "正文"}
+    elif bad == "empty_pages":
+        packet["pages"] = []
+    elif bad == "empty_page":
+        packet["pages"][1] = " \r\n"
+    elif bad == "duplicate_page":
+        packet["pages"][2] = packet["pages"][1]
+    elif bad == "embedded_marker":
+        packet["pages"][1] += "\n===SOURCE_PAGE:200==="
+    else:
+        packet["pages"][1] = {"page": 2, "text": "正文"}
+    rebind_page_packet(args, packet)
+    assert resolve(args)["status"] == "pending"
+
+
+@pytest.mark.parametrize("bad", ["raw_sha", "format", "projection", "storage_sha", "path", "content_sha",
+                                 "two_bindings", "missing_binding", "decoded_argument", "header", "offset"])
+def test_legacy_page_json_binding_declaration_and_original_field_gates_stay_pending(bad):
+    args = list(pair(NO_EFFECT))
+    use_legacy_page_json(args)
+    prov = args[0]["stock"]["provenance"]
+    if bad == "raw_sha":
+        prov["text_sha256"] = "0" * 64
+    elif bad == "format":
+        prov["text_storage_format"] = "unknown"
+    elif bad == "projection":
+        prov["text_storage_binding"]["projection"] = "guess page order"
+    elif bad == "storage_sha":
+        prov["text_storage_binding"]["sha256"] = "0" * 64
+    elif bad == "path":
+        prov["text_storage_binding"]["path"] = "a different file"
+    elif bad == "content_sha":
+        prov["text_content_sha256"] = "0" * 64
+    elif bad == "two_bindings":
+        args[3]["current"]["text_gzip"] = None
+    elif bad == "missing_binding":
+        del args[3]["current"]["text_json"]
+    elif bad == "decoded_argument":
+        args[2] += "changed"
+    elif bad == "header":
+        args[0]["fields"]["operating_cost"]["actual_table_header"] += "absent header"
+    else:
+        args[0]["fields"]["operating_cost"]["source_row_offset"] = 0
+    rebound(args)
+    assert resolve(args)["status"] == "pending"
+
+
+def test_json_bytes_cannot_masquerade_as_gzip_or_hide_duplicate_keys():
+    args = list(pair(NO_EFFECT))
+    use_legacy_page_json(args)
+    binding = args[3]["current"]
+    binding["text_gzip"] = binding.pop("text_json")
+    assert resolve(args)["pending_reason"] == "retained_text_binding_format_mismatch"
+    args = list(pair(NO_EFFECT))
+    use_legacy_page_json(args)
+    raw = args[3]["current"]["text_json"]
+    raw = raw.replace(b'{"source_sha256":', b'{"pages": [], "source_sha256":', 1)
+    args[3]["current"]["text_json"] = raw
+    prov = args[0]["stock"]["provenance"]
+    prov["text_sha256"] = prov["text_storage_binding"]["sha256"] = digest(raw)
+    rebound(args)
+    assert resolve(args)["pending_reason"] == "page_text_json_duplicate_key"
+
+
+def test_legacy_page_json_does_not_turn_no_material_impact_into_no_impact():
+    args = list(pair(NO_EFFECT.replace("无影响", "无重大影响")))
+    use_legacy_page_json(args)
+    use_legacy_page_json(args, side="prior")
+    assert resolve(args)["pending_reason"] == "unbridged_policy_item"
 
 
 def test_quantified_warranty_source_rows_reconcile_old_and_new_comparison():

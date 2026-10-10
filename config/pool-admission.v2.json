@@ -109,7 +109,7 @@
     "common_quality_gates_retained": true,
     "standard_cost": 0.003,
     "review_items_require_human_decision": true,
-    "shadow_validation": "Small improvements and tradeoffs may enter frozen shadow validation; completed shadow data and two IC observations do not prove statistical or official score validity",
+    "shadow_validation": "Small improvements and tradeoffs may enter frozen shadow validation; completed shadow data and three IC observations meet the currently observed ICIR sample minimum but do not prove statistical or official score validity",
     "official_research_separate": "Source probes and official exploratory retests do not need prior pool admission, 200 research periods or 24 paired months; executable-source/replay and independently authorized budgets still apply"
   }
 }

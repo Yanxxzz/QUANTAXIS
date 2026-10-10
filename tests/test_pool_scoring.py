@@ -116,15 +116,30 @@ def test_new_b_uses_absolute_mean_rank_ic_and_pearson_icir_with_strict_direction
     assert b_score(negative, direction=0)["rawB"] == pytest.approx(result["rawB"])
 
 
-def test_b_cold_start_insufficient_samples_and_zero_sd_remain_pending():
+def test_b_cold_start_and_fewer_than_three_completed_samples_remain_pending():
     assert b_score([]) == {"status": "cold_start", "rawB": None, "n": 0,
                           "reason": "No completed post-effective IC records"}
     one = [record("2026-09-23", "2026-09-30", 0.04, 0.1)]
     assert b_score(one)["status"] == "pending"
     assert b_score(one)["rawB"] is None
-    two = one + [record("2026-09-30", "2026-10-08", 0.04, 0.2)]
+    # A nonzero two-observation variance is mathematically computable, but
+    # does not reach the current backend's three-observation B maturity rule.
+    two = one + [record("2026-09-30", "2026-10-08", 0.06, 0.2)]
     assert b_score(two)["status"] == "pending"
     assert b_score(two)["rawB"] is None
+    assert b_score(two)["n"] == 2
+    assert "three completed records" in b_score(two)["reason"]
+
+
+def test_b_three_completed_observations_with_zero_ic_dispersion_remain_pending():
+    records = [record("2026-09-23", "2026-09-30", 0.04, 0.1),
+               record("2026-09-30", "2026-10-08", 0.04, 0.2),
+               record("2026-10-08", "2026-10-09", 0.04, -0.1)]
+    result = b_score(records)
+    assert result["status"] == "pending"
+    assert result["rawB"] is None
+    assert result["n"] == 3
+    assert "zero IC sample dispersion" in result["reason"]
 
 
 @pytest.mark.parametrize("records", [

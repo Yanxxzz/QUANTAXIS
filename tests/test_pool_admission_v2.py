@@ -398,7 +398,8 @@ def attach_shadow(case, *, candidate_cold=False):
                 row["source"] = "shadow_post_freeze"
                 row["records"] = [
                     {"version": "v1", "signal_date": "2026-11-01", "realized_date": "2026-11-06", "ic": .03, "rank_ic": .03},
-                    {"version": "v1", "signal_date": "2026-11-06", "realized_date": "2026-11-11", "ic": .05, "rank_ic": .05}]
+                    {"version": "v1", "signal_date": "2026-11-06", "realized_date": "2026-11-11", "ic": .05, "rank_ic": .05},
+                    {"version": "v1", "signal_date": "2026-11-11", "realized_date": "2026-11-16", "ic": .04, "rank_ic": .04}]
             rows.append(row)
         return rows
     case.bodies["shadow"] = {
@@ -413,7 +414,7 @@ def attach_shadow(case, *, candidate_cold=False):
     case.save("shadow")
 
 
-def test_two_shadow_IC_records_allow_manual_review_not_statistical_certification(case):
+def test_three_shadow_IC_records_allow_manual_review_not_statistical_certification(case):
     small_increment(case)
     attach_shadow(case)
     result = case.assess()
@@ -421,6 +422,19 @@ def test_two_shadow_IC_records_allow_manual_review_not_statistical_certification
     assert not result["statistical_validation_verified"]
     assert not result["official_total_points_gain_verified"]
     assert result["forward_validation"]["manual_review_required"]
+
+
+def test_two_shadow_IC_records_keep_B_sample_maturity_pending(case):
+    small_increment(case)
+    attach_shadow(case)
+    candidate = next(row for row in case.bodies["shadow"]["B_review"]["proposed"] if row["id"] == "NEW")
+    candidate["records"] = candidate["records"][:2]
+    case.save("shadow")
+    result = case.assess()
+    assert result["status"] == "pending", result
+    assert not result["economic_rejected"]
+    assert not result.get("forward_validation_verified")
+    assert not result["official_total_points_gain_verified"]
 
 
 def test_all_cold_shadow_does_not_fabricate_forward_evidence(case):
