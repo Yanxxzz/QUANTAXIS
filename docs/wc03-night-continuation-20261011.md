@@ -21,3 +21,5 @@ F141仍按原生价格全体同日可用同行计算，120日模型、120日残�
 6份实际报告抽检：000020、000419、000868字段解释成立；000007收入成本可解释但原文合并范围变化继续阻断，追加纠正旧摘要而不改历史记录；000068和002331缺完整旧版依据继续pending。原PDF缓存已清理，核验的是既有捕获与提取文本，不能称新核原PDF。本夜没有重刷4532条收入依据或修改旧source mask。相关测试143项通过；评审后增加同一行及换行真变更反例，104项针对来源测试通过。
 
 本轮尚未达到正式入池证据要求，不自动新增、删除或替换竞赛因子。官网尚未派发，赠送授权GF_NIGHT_GIFT60_20261011累计使用0/60，充值0。继续优先收入依据覆盖、Native输入适配和实际有效池证据，按完整研究结果决定下一实验。
+
+官网适配审查区分了本地门槛与真实服务合同：`source_qualified_transfer_research`的每日2000只要求来自本项目离线预检，公开分组代码未见该最低数，不能称官网拒绝小样本。[公开MacroFactor](https://raw.githubusercontent.com/PandaAI-Tech/panda_factor/a783e69732da1f9ffc93844dc522375a1f67c507/panda_factor/panda_factor/generate/macro_factor.py)先前推3个月，[数据加载器](https://raw.githubusercontent.com/PandaAI-Tech/panda_factor/a783e69732da1f9ffc93844dc522375a1f67c507/panda_factor/panda_factor/generate/factor_data_handler.py)再前推30日；这一公开调用链仍不足以形成当前F141最少259个连续价格行。官网正在运行的版本及`close`底表复权口径尚未核实。现有2025-03开始的动量快照可复现2026晚段，不能证明2025-08首日具备完整预热；旧RETURNS迁移版跨缺口与首行行为也不等于当前实现。下一步先免费验证完整预热和逐值适配，如确有研究价值，再定义明确的有限来源探索口径，正式入池标准继续保留。
