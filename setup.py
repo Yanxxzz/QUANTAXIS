@@ -22,18 +22,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import codecs
-import io
-import os
 import re
 import sys
-import webbrowser
-import platform
-import configparser
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup  # deprecated in 3.12, fallback for older
+from pathlib import Path
+
+from setuptools import find_packages, setup
 """
 """
 
@@ -53,51 +46,23 @@ if sys.version_info < (3, 9) or sys.version_info >= (4, 0):
     print('=' * 60)
     sys.exit(1)
 
-with io.open('QUANTAXIS/__init__.py', 'rt', encoding='utf8') as f:
+ROOT = Path(__file__).resolve().parent
+
+with (ROOT / 'QUANTAXIS/__init__.py').open('rt', encoding='utf8') as f:
     context = f.read()
     VERSION = re.search(r'__version__ = \'(.*?)\'', context).group(1)
     AUTHOR = re.search(r'__author__ = \'(.*?)\'', context).group(1)
 
 
-try:
-    if sys.platform in ['win32', 'darwin']:
-        print(webbrowser.open(
-            'https://github.com/QUANTAXIS/QUANTAXIS/releases'))
-        print('finish install')
-except:
-    pass
-
-
 def read(fname):
-
-    return codecs.open(os.path.join(os.path.dirname(__file__), fname)).read()
+    return (ROOT / fname).read_text(encoding='utf8')
 
 
 NAME = "quantaxis"
 """
 
 """
-PACKAGES = [
-    "QUANTAXIS",
-    "QUANTAXIS.QAFetch",
-    "QUANTAXIS.QACmd",
-    "QUANTAXIS.QASetting",
-    "QUANTAXIS.QAFactor",
-    "QUANTAXIS.QAEngine",
-    "QUANTAXIS.QAData",
-    "QUANTAXIS.QAAnalysis",
-    "QUANTAXIS.QAPubSub",
-    "QUANTAXIS.QASU",
-    "QUANTAXIS.QAUtil",
-    "QUANTAXIS.QAIndicator",
-    "QUANTAXIS.QAStrategy",
-    "QUANTAXIS.QAMarket",
-    "QUANTAXIS.QIFI",
-    "QUANTAXIS.QAWebServer",
-    "QUANTAXIS.QASchedule",      # v2.1.0新增: 任务调度框架
-    "QUANTAXIS.QARSBridge",      # v2.1.0新增: Rust桥接层 (100x加速)
-    "QUANTAXIS.QADataBridge",    # v2.1.0新增: 跨语言零拷贝通信 (5-10x加速)
-]
+PACKAGES = find_packages(where=str(ROOT), include=["QUANTAXIS", "QUANTAXIS.*", "panda_alpha", "panda_alpha.*"])
 """
 
 """
@@ -129,11 +94,18 @@ URL = "https://github.com/quantaxis/quantaxis"
 
 LICENSE = "MIT"
 
-with open('requirements.txt') as reqs_file:
-    INSTALL_REQUIRES = [
-        line.strip() for line in reqs_file
-        if line.strip() and not line.strip().startswith('#')
-    ]
+def read_requirements(path):
+    # pip accepts inline comments; setuptools Requires-Dist accepts only PEP 508.
+    # A URL's #fragment is preserved because only a whitespace-prefixed # is a comment.
+    requirements = []
+    for line in (ROOT / path).read_text(encoding='utf8').splitlines():
+        line = line.strip()
+        if line and not line.startswith('#'):
+            requirements.append(re.split(r'\s+#', line, maxsplit=1)[0].strip())
+    return list(dict.fromkeys(requirements))
+
+
+INSTALL_REQUIRES = read_requirements('requirements.txt')
 
 setup(
     name=NAME,
@@ -179,6 +151,7 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'panda-alpha=panda_alpha.cli:main',
             'quantaxis=QUANTAXIS.QACmd:QA_cmd',
             'quantaxisq=QUANTAXIS.QAFetch.QATdx_adv:bat',
             'qarun=QUANTAXIS.QACmd.runner:run',

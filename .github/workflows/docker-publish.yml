@@ -1,75 +1,83 @@
-# QUANTAXIS 2.1.0 Docker镜像构建和发布
-#
-# 触发条件:
-# - 推送到master分支
-# - 创建tag (v*.*.*)
-# - 手动触发
-#
-# 作者: @yutiansut @quantaxis
-
 name: Build and Publish Docker Images
 
 on:
   push:
-    branches:
-      - master
-      - develop
-    tags:
-      - 'v*.*.*'
+    branches: [master, develop]
+    tags: ['v*.*.*']
   pull_request:
-    branches:
-      - master
+    branches: [master]
   workflow_dispatch:
+    inputs:
+      publish:
+        description: 'Publish the tested research image to Docker Hub'
+        type: boolean
+        default: false
 
-env:
-  REGISTRY: docker.io
-  IMAGE_NAME: quantaxis/quantaxis
+permissions:
+  contents: read
 
 jobs:
-  # 测试任务
   test:
     name: Run Tests
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout代码
-        uses: actions/checkout@v4
-
-      - name: 设置Python环境
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          cache: 'pip'
-
-      - name: 运行兼容性验证
+      - name: Verify source compatibility and documentation
         run: python scripts/verify_compatibility.py
 
-  # 构建Docker镜像
   build:
     name: Build Docker Image
     needs: test
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
+    outputs:
+      image: ${{ steps.image.outputs.name }}
     steps:
-      - name: Checkout代码
-        uses: actions/checkout@v4
-
-      - name: 设置Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: 登录到Docker Hub
-        if: github.event_name != 'pull_request'
-        uses: docker/login-action@v3
-        with:
-          username: \${{ secrets.DOCKER_USERNAME }}
-          password: \${{ secrets.DOCKER_PASSWORD }}
-
-      - name: 构建并推送Docker镜像
-        uses: docker/build-push-action@v5
+      - uses: actions/checkout@v4
+      - name: Select this fork's image name
+        id: image
+        env:
+          IMAGE_NAME: ${{ vars.DOCKER_IMAGE || format('{0}/panda-alpha', github.repository_owner) }}
+        run: echo "name=${IMAGE_NAME,,}" >> "$GITHUB_OUTPUT"
+      - uses: docker/setup-buildx-action@v3
+      - name: Build the current fork's research image
+        uses: docker/build-push-action@v6
         with:
           context: .
+          file: docker/panda-alpha/Dockerfile
+          platforms: linux/amd64
+          load: true
+          push: false
+          tags: panda-alpha:ci
+          cache-from: type=gha,scope=panda-alpha
+          cache-to: type=gha,mode=max,scope=panda-alpha
+      - name: Run the installed CLI without network access
+        run: |
+          docker run --rm --network none panda-alpha:ci --help
+          docker run --rm --network none --entrypoint python panda-alpha:ci -c "from pathlib import Path; from panda_alpha.cli import get_config; cfg = get_config('/app/config/panda-alpha.example.json'); assert cfg['data']['provider'] == 'quantaxis'; assert Path(cfg['research']['memory']).is_file(); assert Path(cfg['research']['pool_snapshot']).is_file(); print('Offline configuration and bootstrap files are available')"
+
+  publish:
+    name: Publish Docker Image (manual)
+    needs: [test, build]
+    if: github.event_name == 'workflow_dispatch' && inputs.publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Publish the tested revision
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/panda-alpha/Dockerfile
           platforms: linux/amd64,linux/arm64
-          push: \${{ github.event_name != 'pull_request' }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          push: true
+          tags: ${{ needs.build.outputs.image }}:${{ github.sha }}
+          cache-from: type=gha,scope=panda-alpha

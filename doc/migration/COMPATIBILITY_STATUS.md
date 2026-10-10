@@ -1,294 +1,84 @@
-# QUANTAXIS 2.1.0-alpha2 兼容性状态
+# QUANTAXIS 2.1.0-alpha2 兼容性检查范围
 
-> **最后更新**: 2025-10-25
-> **验证状态**: ✅ **100%通过** (A+级)
+更新日期：2026-10-05。
 
----
+`scripts/verify_compatibility.py` 对当前仓库进行源码检查，不需要安装
+QUANTAXIS 或连接数据库。检查通过表示下面列出的定义、导出文本、维护文件和
+依赖约束存在。参数签名、返回值、运行时导入、服务连通性及业务行为仍需分别验证。
 
-## 🎉 快速摘要
+## 本地复现与修复
 
-**QUANTAXIS 2.1.0-alpha2 与基准版本 c1e609d 完全向后兼容!**
+原检查共 26 项，其中 22 项通过，4 项失败。失败项都是仓库缺失的文档：
+`BACKWARD_COMPATIBILITY_REPORT.md`、`COMPATIBILITY_SUMMARY.md`、
+`FINAL_SUMMARY.md` 和 `QUANTAXIS/QAUtil/RESOURCE_MANAGER_README.md`。
+三个历史报告的检查现合并到本文档；资源管理器使用说明已补齐。
+文档检查仍要求维护文件存在且非空。
 
-- ✅ **所有旧API保持不变**
-- ✅ **现有代码无需修改**
-- ✅ **所有功能正常工作**
-- ⚠️ **仅需Python 3.9+环境**
-
----
-
-## 📊 验证结果
-
-### 自动化测试
+在仓库根目录运行：
 
 ```bash
-# 运行验证
-$ python3 scripts/verify_compatibility.py
-
-# 结果
-✅ 总测试数: 26
-✅ 通过数: 26
-✅ 失败数: 0
-✅ 成功率: 100.0%
-✅ 评级: A+ (完美)
+python scripts/verify_compatibility.py
 ```
 
-### 测试覆盖
+修复后的结果为 **24 项通过，0 项失败**：
 
-| 类别 | 测试数 | 通过 | 结果 |
-|------|--------|------|------|
-| 版本验证 | 1 | 1 | ✅ |
-| 旧API兼容性 | 7 | 7 | ✅ |
-| 新功能验证 | 8 | 8 | ✅ |
-| 文档完整性 | 6 | 6 | ✅ |
-| 依赖版本 | 4 | 4 | ✅ |
-| **总计** | **26** | **26** | **✅** |
+| 类别 | 检查数 | 检查内容 |
+| --- | ---: | --- |
+| 版本 | 1 | `QUANTAXIS/__init__.py` 中的版本为 `2.1.0.alpha2` |
+| 旧 API 定义 | 7 | 下表列出的函数或类定义存在 |
+| 新功能及导出 | 8 | `base_ps` 关闭/上下文方法，资源管理器类及主模块导出文本 |
+| 维护文件 | 4 | 本文档、资源管理器说明、运行时测试脚本、使用示例 |
+| 依赖约束 | 4 | `requirements.txt` 中 pymongo、pika、pandas、pytdx 的指定下界 |
 
----
+脚本通过正则表达式和文本读取完成检查；它不会执行这些 API，也不会安装依赖。
+例如“主模块导出通过”仅表示导出名称出现在源码中，不能保证实际导入成功。
+它不自动比较历史提交 `c1e609d` 的参数签名或语义，因此不能据此声明任意旧代码
+均可直接升级。
 
-## ✅ 兼容性保证
+## 被检查的旧 API
 
-### 代码级兼容 (100%)
+| API | 源码位置 |
+| --- | --- |
+| `QA_util_sql_mongo_setting` | `QUANTAXIS/QAUtil/QASql.py` |
+| `base_ps` | `QUANTAXIS/QAPubSub/base.py` |
+| `QA_Order` | `QUANTAXIS/QAMarket/QAOrder.py` |
+| `QA_Position` | `QUANTAXIS/QAMarket/QAPosition.py` |
+| `MARKET_PRESET` | `QUANTAXIS/QAMarket/market_preset.py` |
+| `QIFI_Account` | `QUANTAXIS/QIFI/QifiAccount.py` |
+| `QA_fetch_get_stock_list` | `QUANTAXIS/QAFetch/__init__.py` |
 
-```python
-# c1e609d版本代码 (旧)
-from QUANTAXIS.QAUtil.QASql import QA_util_sql_mongo_setting
-from QUANTAXIS.QAPubSub.base import base_ps
-from QUANTAXIS.QAMarket.QAOrder import QA_Order
+`base_ps` 构造时连接 RabbitMQ，`close()` 依次关闭通道和连接，
+`__exit__()` 调用 `close()` 并保留业务异常。
+资源管理器的接口、连接时机和限制见
+[QAResourceManager 使用说明](../../QUANTAXIS/QAUtil/RESOURCE_MANAGER_README.md)。
 
-client = QA_util_sql_mongo_setting()
-ps = base_ps()
-order = QA_Order(...)
+## 运行时验证
 
-# ✅ 2.1.0-alpha2版本: 完全相同,无需修改!
-```
+源码检查可直接在 Python 3.11 运行。完整运行时验证需要按照当前仓库的安装配置
+安装依赖，并配置对应的 MongoDB、RabbitMQ 等服务。仅用源码检查成功不能证明
+依赖解析、安装或包导入成功；应针对实际业务调用继续验证。
 
-### API兼容列表
-
-| API | 位置 | 状态 |
-|-----|------|------|
-| `QA_util_sql_mongo_setting` | QAUtil/QASql.py:31 | ✅ 兼容 |
-| `base_ps` | QAPubSub/base.py:14 | ✅ 兼容+增强 |
-| `QA_Order` | QAMarket/QAOrder.py | ✅ 兼容 |
-| `QA_Position` | QAMarket/QAPosition.py | ✅ 兼容 |
-| `MARKET_PRESET` | QAMarket/market_preset.py | ✅ 兼容 |
-| `QIFI_Account` | QIFI/QifiAccount.py | ✅ 兼容 |
-| `QA_fetch_get_stock_list` | QAFetch/__init__.py | ✅ 兼容 |
-
----
-
-## 🆕 新增功能 (可选使用)
-
-### 1. 资源管理器
-
-```python
-# 新功能: 统一资源管理
-from QUANTAXIS import QAMongoResourceManager
-
-with QAMongoResourceManager() as mongo:
-    db = mongo.get_database('quantaxis')
-    # 自动关闭,无资源泄漏
-```
-
-### 2. Context Manager支持
-
-```python
-# 新功能: with语句支持
-from QUANTAXIS.QAPubSub.base import base_ps
-
-with base_ps() as ps:
-    # 使用ps...
-    pass
-# 自动优雅关闭
-```
-
-### 3. 便捷导入
-
-```python
-# 新功能: 主模块便捷导入
-from QUANTAXIS import QA_Order, QA_Position, MARKET_PRESET
-# 无需指定完整路径
-```
-
----
-
-## ⚠️ 环境要求
-
-虽然代码100%兼容,但环境需要升级:
-
-| 组件 | 旧版本 | 新版本 | 说明 |
-|------|--------|--------|------|
-| **Python** | 3.5-3.10 | **3.9-3.12** | ⚠️ 必须升级 |
-| **pymongo** | 3.11.2 | 4.10.0+ | ⚠️ 需升级 |
-| **pandas** | 1.1.5+ | 2.0.0+ | ⚠️ 需升级 |
-| **pika** | 1.3.0 | 1.3.2+ | ⚠️ 需升级 |
-| **pytdx** | 1.67 | 1.72 | ✅ 已修复 |
-
----
-
-## 🚀 迁移步骤
-
-### 3步完成升级
+旧运行时测试入口为：
 
 ```bash
-# Step 1: 检查Python版本
-python --version
-# 需要 >= 3.9,如不满足则先升级Python
-
-# Step 2: 升级QUANTAXIS
-pip uninstall quantaxis -y
-pip install quantaxis==2.1.0a2
-
-# Step 3: 运行现有代码(无需修改!)
-python your_existing_script.py
-# ✅ 应该正常工作
+python scripts/test_backward_compatibility.py
 ```
 
-### 可选: 安装高性能组件
+该脚本会导入 QUANTAXIS 并尝试数据库、消息队列和数据获取操作。其中部分测试
+捕获服务不可用、数据库未配置或可选导入失败后仍返回，因此退出码 0 也不足以
+证明全部服务正常。应检查实际日志，并在业务测试中明确断言连接成功、预期数据
+和返回结果。本次文档修复只执行源码检查，没有执行这个服务测试或使用示例。
 
-```bash
-# 安装Rust高性能组件 (可选)
-pip install quantaxis[rust]
+Panda Alpha 的独立研究测试通过 `python -m pytest tests -q` 运行，
+其结果与上述历史 API/外部服务验证分别记录。
 
-# 获得100x性能提升
-from QUANTAXIS import QARSAccount
-account = QARSAccount("id", init_cash=100000.0)
-```
+## 维护入口
 
----
+- [源码检查脚本](../../scripts/verify_compatibility.py)
+- [运行时测试脚本](../../scripts/test_backward_compatibility.py)
+- [资源管理器示例](../../examples/resource_manager_example.py)
+- [资源管理器使用说明](../../QUANTAXIS/QAUtil/RESOURCE_MANAGER_README.md)
+- [2.0 到 2.1 迁移说明](v2.0-to-v2.1.md)
 
-## 📚 详细文档
-
-| 文档 | 说明 | 路径 |
-|------|------|------|
-| **快速总结** | 本文档 | COMPATIBILITY_STATUS.md |
-| **兼容性总结** | 执行摘要 | COMPATIBILITY_SUMMARY.md |
-| **详细分析** | 完整分析 | BACKWARD_COMPATIBILITY_REPORT.md |
-| **验证报告** | 测试结果 | COMPATIBILITY_VERIFICATION_COMPLETE.md |
-| **工作总结** | 完整工作 | FINAL_SUMMARY.md |
-| **资源管理器** | 新功能文档 | QUANTAXIS/QAUtil/RESOURCE_MANAGER_README.md |
-| **示例代码** | 9个示例 | examples/resource_manager_example.py |
-
----
-
-## 🔧 验证工具
-
-### 源码级验证 (推荐)
-
-```bash
-# 无需安装环境,直接验证源代码
-python3 scripts/verify_compatibility.py
-```
-
-**输出**:
-```
-🎉 所有测试通过! 向后兼容性验证成功!
-成功率: 100.0%
-兼容性评级: A+ (完美)
-
-✅ QUANTAXIS 2.1.0-alpha2 与 c1e609d 版本**完全向后兼容**
-✅ 所有旧API保持不变,可直接升级
-✅ 新功能为可选增强,不影响现有代码
-⚠️ 需要Python 3.9+环境
-```
-
-### 环境依赖测试 (需要安装)
-
-```bash
-# 需要先安装QUANTAXIS
-python3 scripts/test_backward_compatibility.py
-```
-
----
-
-## 🎯 推荐行动
-
-### 🟢 强烈推荐: 立即升级
-
-**理由**:
-1. ✅ 100%向后兼容,零风险
-2. ✅ 资源管理优化,避免内存泄漏
-3. ✅ 可选Rust加速,性能提升100x
-4. ✅ 现代依赖,更好的生态
-5. ✅ 完整文档和验证工具
-
-**风险评估**: 🟢 极低 (仅环境升级)
-
----
-
-## 📈 性能提升 (可选)
-
-安装Rust组件后可获得:
-
-| 功能 | 纯Python | Rust加速 | 提升 |
-|------|---------|----------|------|
-| 账户操作 | QIFI_Account | QARSAccount | **100x** |
-| DataFrame转换 | pl.from_pandas() | convert_pandas_to_polars() | **2.5x** |
-| 跨进程通信 | pickle | SharedMemoryWriter | **7x** |
-
----
-
-## ❓ 常见问题
-
-### Q1: 我的代码需要修改吗?
-**A**: ❌ **不需要**。所有c1e609d的代码可直接运行。
-
-### Q2: 环境要求有变化吗?
-**A**: ⚠️ **是的**。需要Python 3.9+和部分依赖升级。
-
-### Q3: 新功能必须使用吗?
-**A**: ❌ **不必须**。新功能都是可选的。
-
-### Q4: 如何验证兼容性?
-**A**: ✅ 运行 `python3 scripts/verify_compatibility.py`
-
-### Q5: 升级有风险吗?
-**A**: 🟢 **极低**。100%代码兼容,仅环境升级。
-
----
-
-## 📊 统计数据
-
-### 代码变更
-- 新增代码: 15,298+ 行
-- 新增模块: 4个
-- 修改文件: 6个
-- 破坏性变更: **0个**
-
-### 文档覆盖
-- 文档总数: 9个
-- 文档总行数: 5,861+
-- 示例代码: 927行
-
-### 验证覆盖
-- 测试总数: 27
-- 通过数: 27
-- 成功率: **100%**
-- 评级: **A+**
-
----
-
-## ✅ 最终结论
-
-**QUANTAXIS 2.1.0-alpha2 已通过完整验证,可安全升级!**
-
-**兼容性评级**: A+ (完美)
-
-**核心承诺**: 任何在c1e609d上运行的代码,在2.1.0-alpha2上无需修改即可运行。
-
-**唯一要求**: Python 3.9+ 环境
-
----
-
-**更新日期**: 2025-10-25
-**验证工具**: scripts/verify_compatibility.py
-**验证状态**: ✅ 100%通过
-**作者**: @yutiansut @quantaxis
-
----
-
-**下一步**:
-1. ✅ 阅读本文档
-2. ✅ 运行验证脚本
-3. ✅ 升级到2.1.0-alpha2
-4. ✅ 测试现有代码
-5. ⭐ 可选: 尝试新功能
+更新 API 或依赖时，应同时更新相应检查和实际运行测试；版本号、文件存在性或
+源码检查成功不构成业务兼容性或性能保证。

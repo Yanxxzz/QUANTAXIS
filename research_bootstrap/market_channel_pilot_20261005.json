@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-10-05T08:46:28.544182+00:00",
+  "status": "PARTIAL_MARKET_SOURCE_PILOT; FULL_MIGRATION_PENDING",
+  "main_quantaxis_stock_day_rows_before": 1948246,
+  "main_quantaxis_stock_day_rows_after": 1948246,
+  "stockdb_live": {
+    "database": "quantaxis_stockdb_live",
+    "candidate_rows": 17,
+    "row_receipts": 17,
+    "window_receipts": 2,
+    "windows": [
+      {
+        "code": "920002",
+        "start": "2025-01-02",
+        "end": "2025-01-10",
+        "rows": 7,
+        "inserted": 7,
+        "receipt_sha256": "6200da243f25abf4b9bd8026fdf27989b7195d96e6ee26cbc5254ce338caaf2b",
+        "snapshot_sha256": "474ace254196517af0941abd72580cd65057b86309cd27cda507255b6e1045c1",
+        "receipt_path": "research_runs/data_completion_20261005/stockdb_live/920002_2025-01-02_2025-01-10_20261005T083908773666Z/receipt.json"
+      },
+      {
+        "code": "600000",
+        "start": "2019-09-20",
+        "end": "2019-10-10",
+        "rows": 10,
+        "inserted": 10,
+        "receipt_sha256": "ae8e09b074104328f20caeef5b168678f590a681f5d11de9637751b3ef91c8ba",
+        "snapshot_sha256": "cafefbb50a20dbe515ff5472dd1055751ed341ae4493f14e126004d2d7d9bda6",
+        "receipt_path": "research_runs/data_completion_20261005/stockdb_live/600000_2019-09-20_2019-10-10_20261005T084146133562Z/receipt.json"
+      }
+    ],
+    "research_accepted": false,
+    "same_source_hfq": "pending_independent_validation"
+  },
+  "stockdb_archive": {
+    "source": "formal_cache_only",
+    "read_only_sample_rows": 10,
+    "reference_grid_missing_cells": 0,
+    "sample_path": "research_runs/data_completion_20261005/axis_stockdb_candidates_initial.json",
+    "sample_sha256": "3b7cc9e5745c9f762a40d1c523b815835c1fc1fc5491a95805ffdddfbd55bba4",
+    "research_accepted": false
+  },
+  "akshare_tencent": {
+    "database": "quantaxis_akshare_tencent",
+    "candidate_raw_rows": 0,
+    "candidate_hfq_rows": 0,
+    "last_sync_status": "source_blocked_waiting",
+    "last_sync_error": "Tencent transport failed: ConnectionError",
+    "source_circuit": "blocked_waiting",
+    "progress_path": "research_runs/data_completion_20261005/akshare_sync/04b076ebcd613d788b364aaf/progress.json",
+    "progress_sha256": "690f9271cc3b4008a7af7bbf3c88e75b407c302d367e4a7912ddc5bdb45b91f5",
+    "earlier_read_only_probe": "single-code SH/SZ raw and HFQ responses observed before this later connection failure"
+  },
+  "acceptance": {
+    "can_retire_legacy": false,
+    "full_market": false,
+    "historical_universe": false,
+    "complete_minutes": false,
+    "financial_pit": false,
+    "official_factor_runs": 0,
+    "recharge_spend": 0
+  }
+}

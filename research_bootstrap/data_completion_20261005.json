@@ -1,0 +1,247 @@
+{
+  "schema_version": 1,
+  "observed_at": "2026-10-05T07:23:29.398443+00:00",
+  "status": "SOURCE_BUDGET_BUG_FIXED; LOCAL_FINANCIAL_INCREMENT_COMPLETE; FULL_MIGRATION_BLOCKED",
+  "previous_frozen_summary": {
+    "path": "research_bootstrap/migration_checkpoint_20261005.json",
+    "sha256": "a22d1bc038d454114742b0fe762855cdef4b51b7098b5ea616737b4a30ab51da"
+  },
+  "window": {
+    "start": "2019-09-20",
+    "end": "2026-09-18"
+  },
+  "evolution_fix": {
+    "state_schema_version": 2,
+    "family_attempts_scope": "non_source_investigations",
+    "family_source_failures_separate": true,
+    "repeated_source_action": "new_source",
+    "hard_falsification_preserved": true,
+    "legacy_migration": "Repair only completely attributable pure-source histories with pending economics; preserve incomplete, mixed, historical and reopened-epoch blocks",
+    "old_state_files_overwritten": false
+  },
+  "stored_collections": {
+    "stock_lifecycle": 5914,
+    "stock_day": 1948246,
+    "stock_adj": 20228,
+    "stock_adjusted_day": 0,
+    "trade_calendar": 1697,
+    "stock_filing_index": 235188,
+    "stock_financial_pit": 564,
+    "stock_financial_revision": 20825,
+    "stock_financial_provider_snapshot": 469736,
+    "stock_day_legacy_archive": 7214771,
+    "panda_financial_provenance": 1837
+  },
+  "raw_price_rows_by_source_in_window": [
+    {
+      "_id": "baostock",
+      "rows": 1947683
+    },
+    {
+      "_id": "eastmoney",
+      "rows": 563
+    }
+  ],
+  "raw_query_inventory": {
+    "completed_count": 1249,
+    "incomplete_count": 4552,
+    "receipt_set_sha256": "5d8907e4839e3a264af0b384dbb4eb59e7cc52e4834f939e10c460f99c1edf4c",
+    "quality_counts": {
+      "source_missing_dates": 0,
+      "suspended_dates": 9518,
+      "unknown_missing_dates": 0,
+      "off_lifecycle_dates": 0,
+      "duplicate_dates": 0
+    }
+  },
+  "adjustment_ready_count": 1239,
+  "financial_increment": {
+    "before_records": 541,
+    "after_records": 564,
+    "new_records": 23,
+    "duplicate_document_values_preserved": 2,
+    "verified_values_within_supplied_documents_before": 503,
+    "verified_values_within_supplied_documents_after": 526,
+    "source_index_and_nested_identity_validated": true,
+    "all_original_pdf_bytes_reverified_locally": false,
+    "old_ids_retained": true,
+    "expected_new_ids_exactly_match": true,
+    "same_day_disclosure_leaks": 0,
+    "first_available_day_asof_status_counts": {
+      "blocked_by_unresolved_correction_scope": 23
+    },
+    "window_end_asof_status_counts": {
+      "blocked_by_unresolved_correction_scope": 23
+    },
+    "all_new_revision_chains_unreviewed": true,
+    "unknown_scope_barriers_preserved": true,
+    "full_pit_certified": false,
+    "original_fields_present": [
+      "contract_liability"
+    ],
+    "distinct_missing_original_amount_ids": 20,
+    "remaining_scope": [
+      "The supplied announcement index begins 2020-01-01; the requested 2019-09-20..2019-12-31 disclosure window is not present.",
+      "Announcement metadata and revision links are not numeric full-market fields.",
+      "Only contract_liability is imported from original extractions; other original financial fields and whole revision histories remain pending.",
+      "Original PDF hashes are retained; local original PDF byte retention/revalidation remains incomplete."
+    ],
+    "original_source_manifest_hash_unchanged": true,
+    "source_file_count_unchanged": true
+  },
+  "market_recovery": {
+    "new_market_rows": 0,
+    "baostock": {
+      "login_attempts": 1,
+      "error_code": "10001011",
+      "official_name": "BSERR_BLACKLIST_USER",
+      "workers_started": 0,
+      "completed_raw_and_factor_codes": 1245,
+      "remaining_codes": 4207,
+      "unverified_adjustment_codes": [
+        "001239",
+        "001326",
+        "001376",
+        "001872",
+        "001914",
+        "600018"
+      ],
+      "hfq_network_attempts": 0
+    },
+    "beijing": {
+      "network_attempts": 1,
+      "error_type": "ConnectionError",
+      "official_pages_verified": 18,
+      "lifecycle_identities": 353,
+      "target_codes": 349,
+      "verified_original_exit_notices": 5,
+      "raw_rows": 563,
+      "hfq_rows": 0,
+      "historical_universe_complete": false
+    },
+    "tdx": {
+      "existing_nodes_probed": 2,
+      "stock_day_calls_per_node": 1,
+      "stock_xdxr_calls_per_node": 1,
+      "accepted_daily_rows": 0,
+      "status": "daily_source_unavailable_stop",
+      "daily_error": "unpack requires a buffer of 4 bytes; 2-byte payload declared 800 rows",
+      "corporate_action_response_does_not_certify_daily_history": true
+    },
+    "further_source_requests": 0,
+    "resume": "Retain checkpoint; explicitly use --resume-after-source-unblock only after source recovery"
+  },
+  "minute": {
+    "mongo_counts": {
+      "stock_min": 0,
+      "stock_minute": 0
+    },
+    "same_source_raw_files_found_in_workspace": 0,
+    "status": "unavailable_no_local_same_source_minute_inventory",
+    "full_minute_certified": false
+  },
+  "capabilities": {
+    "all_a": "pending",
+    "delisted": "pending",
+    "pit_financial": "pending",
+    "minute": "pending"
+  },
+  "migration": {
+    "can_retire_legacy": false,
+    "blockers": [
+      "all_a independent acceptance pending",
+      "delisted independent acceptance pending",
+      "pit_financial independent acceptance pending",
+      "source-supported lifecycle raw histories incomplete",
+      "same-source adjustment evidence incomplete",
+      "inventory does not perform full-panel price/calendar/PIT acceptance"
+    ],
+    "acceptance_scope": "receipt and database inventory only; independent full-panel validation required",
+    "missing_values_imputed": false,
+    "archival_legacy_is_active_fallback": false
+  },
+  "checkpoint_custody": {
+    "current_checkpoint": {
+      "path": "research_runs/market_sync/checkpoint.json",
+      "sha256": "68be29f273089b9fcbaedc7374cd40c3b1e981c41f99c17194dea2f8597e4329"
+    },
+    "previous_published_checkpoint_sha256": "42aea9e6ac096ee1fbb23b499cfffb29d7047865ceb0950045a2810fe2e913af",
+    "old_original_checkpoint_bytes_available": false,
+    "reason": "The existing resume CLI atomically updated checkpoint metadata during the bounded probe before backup; reconstruction did not match the old SHA and was not retained",
+    "previous_migration_report": {
+      "path": "research_runs\\market_sync\\frozen_before_resume_20261005\\migration_acceptance.json",
+      "sha256": "0b8b0f9d622cd4ab9246868d91e04bdd67bce249e7ee78a9b1d952e97e459ded",
+      "published_sha_matches": true
+    },
+    "successful_results_and_manifest_retained": true,
+    "old_financial_and_beijing_reports_unchanged": {
+      "financial_migration.json": true,
+      "beijing_market_sync.json": true
+    }
+  },
+  "validation": {
+    "local_python": "3.11",
+    "command": "python -m pytest tests -q",
+    "passed": 181,
+    "elapsed_seconds": 18.38,
+    "evolution_tests": 19,
+    "financial_tests": 16,
+    "source_and_financial_diff_review": "passed",
+    "source_compatibility_checks_passed": 24,
+    "source_compatibility_is_runtime_certification": false,
+    "network_needed_by_tests": false
+  },
+  "research_permissions": {
+    "new_factor_evaluations": 0,
+    "sealed_oos_evaluations": 0,
+    "platform_calls": 0,
+    "paid_llm_calls": 0,
+    "recharge_spend": 0,
+    "historical_trial_denominator": 415,
+    "cross_batch_unique_trial_count": 428,
+    "raw_history_deleted": false,
+    "legacy_channel_retired": false
+  },
+  "private_artifacts": [
+    {
+      "path": "research_runs/data_completion_20261005/migration_inventory.json",
+      "sha256": "a1079d143500968fc01d63886de9870d3891e2b4b6736c362e8476ce764b562e"
+    },
+    {
+      "path": "research_runs/data_completion_20261005/financial_migration.json",
+      "sha256": "6310cb90bee3bf5c900fd773c008546f1a3dab6174fa33db690db085ea4e6a63"
+    },
+    {
+      "path": "research_runs/data_completion_20261005/financial_completion_verification.json",
+      "sha256": "51d3c9d174588d35f0551e8fa41a9018b326ba54b3f3b7e47d983cbdc9834161"
+    },
+    {
+      "path": "research_runs/data_completion_20261005/financial_original_gaps.json",
+      "sha256": "a83dbef50ccd2068484666b27ea3dbe8865cb764f503fda7f8113d980a8f9fcd"
+    },
+    {
+      "path": "research_runs/data_completion_20261005/financial_remaining_inventory.json",
+      "sha256": "4688d9c67393da12060219b5a09a60a153cf68ba99de76f22626c1127ac50c6a"
+    },
+    {
+      "path": "research_runs/data_completion_20261005/beijing_resume.json",
+      "sha256": "89d4cdf9ec6a8eb24f83abb0b7b2dcfbdf35d639270806de1f84714d170a7e4a"
+    },
+    {
+      "path": "research_runs/data_completion_20261005/beijing_recovery_probe.json",
+      "sha256": "d3e5fd7900b4b83da7d1eca6fd697afcfe0f43702c68035981083c3ddbe2d581"
+    },
+    {
+      "path": "research_runs/data_completion_20261005/minute_inventory.json",
+      "sha256": "901b1b8028c36a607f3576bc4bcbd24f307917b168c2749e6bde10c3a423e701"
+    },
+    {
+      "path": "research_runs/market_sync/resume_attempt_20261005.json",
+      "sha256": "9bb442e74a9e6d8152dbd0127b05bf3fc428ad319912bc78aec1a492e5db7511"
+    },
+    {
+      "path": "research_runs/tdx_recovery_probe_20261005.json",
+      "sha256": "7c77bd644e0fd4e5ab0349065a23aba7fd8e308d57d9929caeeab713d257ddf5"
+    }
+  ]
+}

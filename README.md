@@ -1,645 +1,262 @@
-# QUANTAXIS 2.1.0-alpha2
+# QUANTAXIS 2.1.0-alpha2 · Panda Alpha 研究 Fork
 
-<div align="center">
+基于 [QUANTAXIS](https://github.com/yutiansut/QUANTAXIS) 的数据与回测基础，为 PandaAI 因子研究增加来源验收、历史记忆、去相关、轨迹反思、收益归因和官网实验管理。
 
-**⭐ 如果这个项目对您有帮助，请点击Star支持我们！**
+本 Fork 的目标是提高**可解释、可复现、扣除交易损耗后仍有效的因子质量**。研究同时考察净收益、阶段稳定性、回撤、行业与市场暴露、交易约束及组合增量；积分用于官网验收。
 
-**🔄 Fork本项目开始您的量化交易之旅！**
+本说明对应包含 `panda_alpha/` 的研究版本。上游框架版本与新增研究层版本分别管理；研究层目前为 `0.1.0`，推荐使用 Python 3.11。原版说明保存在 [README_UPSTREAM.md](README_UPSTREAM.md)，详细配置和研究记录见 [RESEARCH.md](RESEARCH.md)。
 
-Made with ❤️ by [@yutiansut](https://github.com/yutiansut) and [contributors](https://github.com/QUANTAXIS/QUANTAXIS/graphs/contributors)
+研究文件采用[精简保留流程](docs/research_storage.md)：共享一份数据，每轮保存定义、净值与指标、继续或淘汰原因。`evaluate` 默认精简输出，逐证券执行明细按需启用。完整公开财报 PDF 可在保留文本、字段证据、来源网址和哈希后释放缓存，重新解析时按需恢复。
 
-© 2016-2025 QUANTAXIS. Released under the MIT License.
+## 在原项目基础上做了什么
 
-</div>
+### 1. 用 AXIS 兼容数据层组织研究来源
 
+新增 [`AxisProvider`](panda_alpha/data.py)，统一读取 QUANTAXIS 兼容 MongoDB 中的行情、复权、日历、身份和已认证财务版本，输出覆盖证据。
 
-[![Powered by OrcaRouter](https://img.shields.io/badge/Powered_by-OrcaRouter-2563eb)](https://www.orcarouter.ai/ref/ref_ce94b4f99fa4cde037ea)
+- 原始价、复权价、成交量单位、交易日历和历史证券身份分别验收。
+- 沪深、北交所、退市身份及来源中断采用独立状态和断点。
+- StockDB 经来源契约、独立价格/成交单位对照和逐行验收后，作为本机日线研究主渠道；BaoStock 保留已取得行情和日历/身份资料作对照，AKShare 与 TDX 用于明确补缺或独立对照。各价格渠道隔离存储，研究不自动混源。
+- 旧数据可归档到独立历史库，保留文件哈希、原值和迁移游标。
+- `can_retire_legacy` 由数据能力验收决定。完整市场、复权或需要的财务/分钟能力未通过时，继续保留旧原始证据。
 
-> 🚀 **全新升级**: Python 3.9+、QARS2 Rust核心集成、100x性能提升
->
-> **最新版本**: v2.1.0-alpha2 | **Python**: 3.9-3.12 | **更新日期**: 2025-10-25
+“切换到 AXIS”是统一存储、查询和验收，数据供应商的可用性仍需单独解决。
 
----
+2026-10-08 新增 [`sources.py`](panda_alpha/sources.py) 和 [统一渠道操作说明](docs/data_sources.md)：一个配置登记各渠道职责及默认行情，`data-status` 查看真实库存，`data-sync` 按月采集并保存断点，`data-export` 准备来源和哈希绑定的研究输入。行情库与日历、身份、行业、财报所在的资料库可以分开。`coverage`、`evaluate` 和工程研究入口共用来源解析。
 
-## 🌟 新特性 (v2.1.0)
+同码多来源价格在去重前检查，复权凭证按所选来源和完整窗口匹配；缺少所选来源时保持缺失。StockDB 使用终点以前的同源累计因子，前复权在研究终点重定基准。来源契约与局部可用数据不等同于完整全市场或财报 PIT 验收。
 
-### ⚡ QARS2 Rust核心集成 - 性能飞跃
+### 2. 增加原文披露与当时可见数据检查
 
-- **100x账户操作加速**: 创建账户从50ms降至0.5ms
-- **10x回测速度提升**: 10年日线回测从30秒降至3秒
-- **90%内存优化**: 大规模持仓内存占用降低90%
-- **无缝集成**: 完全兼容QIFI协议，自动回退Python实现
+[`financial.py`](panda_alpha/financial.py)、[`industry.py`](panda_alpha/industry.py) 及专用财报模块支持在决策时点选择已公开的来源版本。
 
-### 🔧 Python 3.9-3.12 现代化
+财报金额解析现共用严格文本检查及原始 PDF 表格恢复：拆行小数、金额粘连、附注括号、空白列与续页合并单元格均有回归验证。恢复先核对原件哈希、合并报表边界、期间和单位；证据不足保留待核。详见[财报解析说明](docs/statement_parsing.md)。
 
-- **依赖升级**: 60+核心依赖现代化 (pymongo 4.10+, pandas 2.0+, pyarrow 15.0+)
-- **性能优化**: 利用Python 3.11+的性能提升
-- **类型安全**: 更好的类型提示支持
+- 区分报告期、公告日、首次可用日和修订版本；只有日期的公告保守地从次日可用。
+- 合并报表、母公司报表、当前金额、比较金额、人民币单位和原文页分别记录证据。
+- 最新已公开报告尚未解析、修订范围不明或比较口径无法闭合时，返回未知状态。
+- 空白、横杠和没有找到字段不直接填零；零值需要明确打印值或经过证明的会计关系。
+- 财务最新重述快照与原始公开版本隔离，防止把今天的数值回填到过去。
+- 行业分类按公开版本和实际发布日期查询，当前分类不自动回填历史。
 
-### 📦 QARSBridge - Rust桥接层
+目前已实现现金短债缓冲、毛盈利、年度贸易营运资本投资、经营规模调整的营运资本效率、业绩公告和回购等专用来源模块。[`trade_accrual.py`](panda_alpha/trade_accrual.py) 从同一年度合并报表读取应收、存货、应付及资产的期末与期初余额；[`trade_efficiency.py`](panda_alpha/trade_efficiency.py) 增加同年报两年度营业收入流量；[`component_efficiency.py`](panda_alpha/component_efficiency.py) 进一步以收入参照应收、以营业成本参照存货和应付，核验合并利润表的原文边界及成本更正依赖。它们验证的是**所提供原件和版本范围**，全市场完整修订历史仍需补齐。
 
-```python
-from QUANTAXIS.QARSBridge import QARSAccount, has_qars_support
+### 3. 从重复公式搜索改为有轨迹的假设研究
 
-# 自动检测并使用Rust高性能版本
-if has_qars_support():
-    print("✨ 使用QARS2 Rust版本 (100x性能)")
-account = QARSAccount("my_account", init_cash=1000000)
+[`evolution.py`](panda_alpha/evolution.py) 记录信息机制、字段需求、方向、父候选、证伪方案和反思轨迹；支持变异、跨机制交叉和显式 LLM 后端。
 
-# API完全兼容，无需修改代码
-account.buy("000001", 10.5, "2025-01-15", 1000)
+[`diversity.py`](panda_alpha/diversity.py) 同时检查 AST/参数族重复、机制与字段多样性，并使用同股票、同日期的实际因子值计算每日 Spearman 相关。
+
+来源缺失、执行失败、相关性过高、成本问题与经济证伪分别处理。**同族连续来源缺失不会耗尽经济调查次数，也不会因此自动放弃该族。** 旧状态的修复保留迁移证据。
+
+默认关闭 LLM 请求。离线候选生成使用有限模板和历史种子；启用 LLM 需要显式配置模型、调用后端与环境变量，生成结果仍是待验证假设。
+
+### 4. 加入持仓账本、收益归因和组合验证
+
+- [`evaluation.py`](panda_alpha/evaluation.py)：受限公式解释器、下一交易日开盘的本地代理评估、成本与收益统计。
+- [`execution.py`](panda_alpha/execution.py)：执行证据与订单状态。
+- [`attribution.py`](panda_alpha/attribution.py)：现金、持仓数量、价格损益、费用和净值勾稽。
+- [`portfolio.py`](panda_alpha/portfolio.py)：固定组合政策、对照与增量研究。
+- [`admission.py`](panda_alpha/admission.py)：来源、历史股票池、执行、稳定性、实际去相关、组合增量及官网证据的正式准入检查。
+
+新入池审查使用 [pool-admission.v2.json](config/pool-admission.v2.json)，沿用 `admission` 命令。从哈希绑定的完整池日账本重算30/50bp净收益、Sharpe及逐月A+C代理，分为强增量、小增量和收益风险取舍；每个生效过渡状态至少5个因子。小增量可继续影子验证，来源不足仍待核，历史代理不表示官网积分已提高。证据接口见 [入池门槛](docs/pool_admission.md)。
+
+正式新增或替换入池采用单边30bp成本后、方向多头净日收益年化Sharpe≥0.5的单因子底线，由哈希绑定日账本重算；旧2/2.5要求已撤销。官网探索按信息价值决定，纯删除和未改动旧成员不重过新门槛。通过底线后仍审查完整池的净经济表现与增量；本地门槛不应误称官网规则。
+
+实际研究已使用单边 30/50bp、同支持范围的基准、分阶段表现、行业/Beta 暴露、贡献集中度及固定初始资本组合对照。低 IC、低换手或低因子相关性均不能单独替代质量判断。
+
+通用 CLI 的价量公式评估已接入公共 [`study.py`](panda_alpha/study.py) 的 `prepare → validate → evaluate`，产出两档成本、所有组、共同市场、阶段、贡献与持仓账本。提供明确的 `--benchmark-id` 和实际池面板时，还会核算同支持固定半初始资本组合。原文财报及事件模块可将自己的 PIT 日值接到同一公共接口，详见 [公共工作流](docs/panda_alpha_workflow.md)。复杂 Python 的官网执行仍须原生预检。
+
+[`quality.py`](panda_alpha/quality.py) 将来源、潜在执行、经济与组合证据分别形成反馈。未知原始价、交易状态、风险元数据或部分形成日不足会保持相应待核状态；正式准入仍是独立审核。
+
+### 5. 官网运行前先在本地排除已知失败
+
+[`native_preflight.py`](panda_alpha/native_preflight.py) 重放已知的 PandaAI 日期/证券索引、字段包装、输出顺序、有效覆盖及分组条件，绑定源码、方向、窗口、来源和接口证据。新的原生 Python 候选必须通过对应预检。
+
+[`platform.py`](panda_alpha/platform.py) 和工作进程保存预算预留、Factor ID、Run ID、日志与结算：
+
+- 来源诊断、探索和验证使用不同预算类别，当前串行派发。
+- 赠送优先；充值及估算计费需满足对应批次授权。
+- 模糊派发不自动重试；恢复时查询原 Run ID，避免重复收费。
+- 官网探索与入池资格分开；已授权的估算批次无需伪造服务端硬上限。预算类别可借用空闲槽位，实扣在批次内累计；充值仍按批确认，详见 [官网研究预算](docs/official_compute.md)。
+- CLI 的轮询超时不等于取消服务端任务。
+- 平台未提供单次硬扣费上限时，预留金额是估算；实际收费按账单结算，缺批次授权时不派发。
+
+账号凭据由用户自己的官方 CLI 配置管理，不写入本仓库。
+
+### 6. 历史 compact 保留证据与失败线索
+
+[`memory.py`](panda_alpha/memory.py) 将历史研究整理为热记忆、冷证据索引、来源哈希和池快照，原始结果继续保留。
+
+[`registry.py`](panda_alpha/registry.py) 统一旧 CLI 试验和专项协议，使用不可变事件及哈希链记录唯一策略、来源/执行修复、经济结论与人工淘汰。同一定义、方向、窗口、调仓及分组只计一次，费用档和适配修复不新增策略。历史基数保留415；首次迁移累计449，WC01、WC02各新增一次后为451，固定WC02的新发行人验证上下文为452，再登记按科目参照经营规模的WC03，累计 **453**。WC03的600家公司由两个已暴露样本合并，不能冒称新盲样本。同支持的旧策略对照不额外计数。实时累计由登记库导出，不会将累计数当作新基数再加一遍。
+
+登记迁移先生成可审核计划，哈希或累计身份未对齐时拒绝应用。热记忆由事实导出，人工淘汰不能被改名、后代候选、LLM或来源扩展绕过；只有明确人工重开能解除。固定经济失败仅约束相应定义和窗口，来源待补单独保存。
+
+## 研究流程
+
+```mermaid
+flowchart LR
+    S[行情与公告原件] --> D[来源 时间 单位 版本验收]
+    D -->|不足| P[来源待补与断点]
+    D -->|可用| F[冻结假设 方向 样本 窗口]
+    M[历史记忆与失败线索] --> F
+    F --> L[本地因子值 执行账本 联合质量审阅]
+    L --> R[反思与下一假设]
+    R --> F
+    L --> N[原生离线预检]
+    N --> B[预算与批次检查]
+    B --> O[官网运行 查询原Run 结算]
+    O --> A[组合与正式准入审阅]
 ```
 
----
+公共运行器已统一准备、校验和记账；因子接入保留各自来源逻辑。**来源待补、执行修复、经济不通过和正式入池是不同状态。**
 
-## 🔗 相关项目生态
+## 快速开始：研究层
 
-### 核心项目
+取得包含 `panda_alpha/` 的研究分支或发布版本后，在仓库根目录执行。行情库、账号、大型原始报告及私有研究结果需要自行配置，克隆仓库不会下载这些数据。
 
-- 🦀 [**QARS**](https://github.com/yutiansut/qa-rs) - QUANTAXIS Rust核心 (高性能账户、回测引擎)
-- ⚡ [**QADataSwap**](https://github.com/QUANTAXIS/qadataswap) - 跨语言零拷贝通信 (Python/Rust/C++)
-- 🏛️ [**QAEXCHANGE-RS**](https://github.com/yutiansut/qaexchange-rs) - Rust交易所 + HTAP混合数据库
+### 1. 创建独立环境
 
-
-
-### 扩展实现
-
-- 📊 [**QAUltra-cpp**](https://github.com/QUANTAXIS/qaultra-cpp) - QUANTAXIS C++实现
-- 🔥 [**QAUltra-rs**](https://github.com/QUANTAXIS/qautlra-rs) - QUANTAXIS Rust实现 (部分开源)
-
-
-[![Github workers](https://img.shields.io/github/watchers/quantaxis/quantaxis.svg?style=social&label=Watchers&)](https://github.com/quantaxis/quantaxis/watchers)
-[![GitHub stars](https://img.shields.io/github/stars/quantaxis/quantaxis.svg?style=social&label=Star&)](https://github.com/quantaxis/quantaxis/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/quantaxis/quantaxis.svg?style=social&label=Fork&)](https://github.com/quantaxis/quantaxis/fork)
-
-[点击右上角Star和Watch来跟踪项目进展! 点击Fork来创建属于你的QUANTAXIS!]
-
-![QUANTAXIS_LOGO_LAST_small.jpg](./qalogo.png)
-
----
-
-## 📞 联系方式
-
-- **项目主页**: https://github.com/yutiansut/QUANTAXIS
-- **作者**: yutiansut
-- **Email**: yutiansut@qq.com
-- **微信公众号**: QAPRO
-- **微信**: quantitativeanalysis
-
----
-
-
-
-
-更多文档在[QABook Release](https://github.com/QUANTAXIS/QUANTAXIS/releases/download/latest/quantaxis.pdf)
-
-Quantitative Financial FrameWork
-
-## 📚 核心模块
-
-### 1. 🦀 QARSBridge - Rust桥接层 (v2.1新增)
-
-**QARS2 Rust核心的Python包装器，提供100x性能提升**
-
-- **QARSAccount**: 高性能QIFI账户系统
-  - 股票交易: `buy()`, `sell()`
-  - 期货交易: `buy_open()`, `sell_open()`, `buy_close()`, `sell_close()`
-  - 账户查询: `get_qifi()`, `get_positions()`, `get_account_info()`
-  - 完全兼容QIFI协议，跨语言一致性 (Python/Rust/C++)
-
-- **QARSBacktest**: Rust回测引擎
-  - 10x回测速度提升
-  - 支持自定义策略 (`QARSStrategy`基类)
-  - 内存占用降低90%
-
-- **自动回退机制**: QARS2未安装时自动使用纯Python实现
-
-```python
-# 完整示例
-from QUANTAXIS.QARSBridge import QARSAccount
-
-account = QARSAccount("test", init_cash=1000000)
-account.buy("000001", 10.5, "2025-01-15", 1000)      # 股票买入
-account.buy_open("IF2512", 4500.0, "2025-01-15", 2)  # 期货开仓
-positions = account.get_positions()                   # 查询持仓
+```powershell
+py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements-panda-alpha.txt
+.\.venv\Scripts\python.exe -m panda_alpha --help
 ```
 
-📖 **详细文档**: [QARSBridge README](./QUANTAXIS/QARSBridge/README.md)
+研究入口可直接从源码目录运行，不要求安装上游完整交易、Web 和 Rust 依赖。Linux/macOS 使用 Python 3.11 创建环境后，将下文解释器替换为 `.venv/bin/python`。
 
----
+### 2. 首次创建私有配置
 
-### 2. 🔄 QADataBridge - 零拷贝数据交换 (v2.1新增)
-
-**基于QADataSwap的跨语言零拷贝数据传输，5-10x性能提升**
-
-- **零拷贝转换**:
-  - Pandas ↔ Polars (2.5x加速)
-  - Pandas ↔ Arrow (零拷贝)
-  - Polars ↔ Arrow (零拷贝)
-  - 批量转换支持
-
-- **共享内存通信**:
-  - 跨进程数据传输 (7x加速)
-  - 实时行情分发
-  - 策略间数据共享
-
-- **自动回退机制**: QADataSwap未安装时自动使用标准转换
-
-```python
-# 零拷贝转换示例
-from QUANTAXIS.QADataBridge import convert_pandas_to_polars
-import pandas as pd
-
-df_pandas = pd.DataFrame({'price': [10.5, 20.3], 'volume': [1000, 2000]})
-df_polars = convert_pandas_to_polars(df_pandas)  # 零拷贝，2.5x加速
-
-# 共享内存示例
-from QUANTAXIS.QADataBridge import SharedMemoryWriter, SharedMemoryReader
-
-# 进程A：写入数据
-writer = SharedMemoryWriter("market_data", size_mb=50)
-writer.write(df_polars)
-
-# 进程B：读取数据
-reader = SharedMemoryReader("market_data")
-df = reader.read(timeout_ms=5000)  # 零拷贝，7x加速
+```powershell
+# 已有配置时保留原文件
+Copy-Item config/panda-alpha.example.json config/panda-alpha.local.json
+$Python = ".\.venv\Scripts\python.exe"
+$Config = "config/panda-alpha.local.json"
 ```
 
-📖 **详细文档**: [QADataBridge README](./QUANTAXIS/QADataBridge/README.md)
+按实际环境设置 MongoDB、数据语义、研究日期、封存窗口、历史记忆、候选池及官网预算。示例配置是起始模板；已有研究必须与当前封存窗口和累计登记核对，不能覆盖个人状态。全局 `--config` 和 `--trial-ledger` 参数放在子命令之前。
 
----
+### 3. 离线生成待验证候选
 
-### 3. 💾 QASU / QAFetch - 多市场数据
-
-- 支持MongoDB / ClickHouse存储
-- 自动运维和数据更新
-- Tick / L2 Order / Transaction数据格式
-- 因子化数据结构
-
-### 4. 🕐 QAUtil - 工具函数
-
-- 交易时间、交易日历
-- 时间向前向后推算
-- 市场识别、DataFrame转换
-
-### 5. 💼 QIFI / QAMarket - 统一账户体系
-
-**多市场、多语言统一账户协议**
-
-- **qifiaccount**: 标准QIFI账户，与Rust/C++版本保持100%一致
-- **qifimanager**: 多账户管理系统
-- **qaposition**: 单标的精准仓位管理 (套利/CTA/股票)
-- **marketpreset**: 市场预制基类 (tick大小/保证金/手续费)
-
-**QIFI协议特点**:
-- 跨语言兼容 (Python/Rust/C++)
-- 完整账户状态 (账户/持仓/订单/成交)
-- 增量更新支持 (Diff机制)
-- MongoDB友好
-
-### 6. 📊 QAFactor - 因子研究
-
-- 单因子研究入库
-- 因子管理、测试
-- 因子合并
-- 优化器 [开发中]
-
-### 7. 📈 QAData - 内存数据库
-
-多标的多市场数据结构，支持：
-- 实时计算
-- 回测引擎
-- 高性能数据访问
-
-### 8. 📉 QAIndicator - 自定义指标
-
-- 支持自定义指标编写
-- 批量全市场apply
-- 因子表达式构建
-
-### 9. ⚙️ QAEngine - 异步计算
-
-- 自定义线程/进程基类
-- 异步计算支持
-- 局域网分布式计算agent
-
-### 10. 📮 QAPubSub - 消息队列
-
-基于RabbitMQ的消息系统：
-- 1-1 / 1-n / n-n 消息分发
-- 计算任务分发收集
-- 实时订单流
-
-### 11. 🎯 QAStrategy - 回测套件
-
-- CTA策略回测
-- 套利策略回测
-- 完整QIFI模式支持
-
-### 12. 🌐 QAWebServer - 微服务
-
-- Tornado Web服务器
-- 中台微服务构建
-- RESTful API
-
-### 13. 📅 QASchedule - 任务调度
-
-- 后台任务调度
-- 自动运维
-- 远程任务调度
-
-
-
----
-
-## 🆕 版本更新说明
-
-### v2.1.0 (2025-10-25) - 重大性能升级
-
-#### 🚀 核心升级
-
-**1. QARS2 Rust核心集成**
-- ✅ QARSBridge桥接层 - 100x性能提升
-- ✅ 完全兼容QIFI协议
-- ✅ 自动fallback到Python实现
-- ✅ 账户操作: 50ms → 0.5ms
-- ✅ 回测速度: 30s → 3s (10年日线)
-- ✅ 内存优化: -90%
-
-**2. Python现代化**
-- ✅ Python版本: 3.5-3.10 → **3.9-3.12**
-- ✅ 依赖升级: 60+核心依赖现代化
-  - pymongo: 3.11.2 → 4.10.0+
-  - pandas: 1.1.5 → 2.0.0+
-  - pyarrow: 6.0.1 → 15.0.0+
-  - tornado: 6.3.2 → 6.4.0+
-- ✅ 移除过时依赖: delegator.py, six, pyconvert
-
-**3. 新增模块**
-- ✅ `QARSBridge/`: QARS2桥接层
-  - `qars_account.py`: 高性能账户包装器
-  - `qars_backtest.py`: Rust回测引擎
-  - `QIFI_PROTOCOL.md`: 完整协议规范
-- ✅ `examples/qarsbridge_example.py`: 完整使用示例
-
-**4. 安装方式优化**
-```bash
-# 基础安装
-pip install -e .
-
-# 包含Rust组件 (推荐)
-pip install -e .[rust]
-
-# 包含性能优化包
-pip install -e .[performance]
-
-# 完整安装
-pip install -e .[full]
+```powershell
+& $Python -m panda_alpha --config $Config plan `
+  --count 4 `
+  --state research_runs/evolution_state.json `
+  --output research_runs/generation01.json
 ```
 
-#### 📝 升级文档
-- ✅ [UPGRADE_PLAN.md](./UPGRADE_PLAN.md) - 完整升级计划
-- ✅ [PHASE1_COMPLETE.md](./PHASE1_COMPLETE.md) - Phase 1完成报告
-- ✅ [PHASE2_COMPLETE.md](./PHASE2_COMPLETE.md) - Phase 2完成报告
-- ✅ [QIFI_PROTOCOL.md](./QUANTAXIS/QARSBridge/QIFI_PROTOCOL.md) - QIFI协议规范
+默认 `llm.enabled=false` 时此命令不访问官网或 LLM。它生成计划，不证明字段、方向、独立性或收益已经合格。
 
----
+### 4. 配置数据并检查覆盖
 
-### v2.0.0 - 架构重构
+已有 MongoDB 可直接设置 `data.mongo_uri`。Windows 本地部署入口为：
 
-本版本为不兼容升级，涉及重大架构改变：
-
-#### 数据层改进
-
-- ✅ ClickHouse客户端集成
-- ✅ Tabular数据支持
-- ✅ 因子化数据结构
-- ✅ Tick / L2 Order / Transaction格式
-
-#### 微服务架构
-
-- ✅ QAWebServer - Tornado Web服务
-- ✅ QASchedule - 动态任务调度
-- ✅ DAG Pipeline模型
-- ✅ QAPubSub - RabbitMQ消息队列
-
-#### 账户系统升级
-
-- ⚠️ 移除QAARP (不再维护老版本)
-- ✅ 完整QIFI模块
-  - 保证金模型
-  - 股票/期货支持
-  - 期权 [开发中]
-
-#### 实盘/模拟盘
-
-- ✅ QIFI结构对接
-- ✅ CTP接口 (期货/期权)
-- ✅ QMT对接 (股票)
-- ✅ 母子账户OMS
-- ✅ OrderGateway风控
-
-#### 多语言集成
-
-- ✅ QUANTAXIS Rust版本通信
-- ✅ Apache Arrow跨语言数据交换
-  - pyarrow (Python)
-  - arrow-rs (Rust)
-  - libarrow (C++)
-- ✅ Rust/C++账户支持
-- ✅ Rust Job Worker
-
----
-
-## 🚀 快速开始
-
-### 系统要求
-
-- **Python**: 3.9 - 3.12 (推荐3.11+)
-- **操作系统**: Linux / macOS / Windows
-- **内存**: 最低4GB，推荐8GB+
-- **数据库**: MongoDB 4.0+ / ClickHouse 20.0+ (可选)
-
-### 安装
-
-#### 1. 基础安装
-
-```bash
-# 克隆仓库
-git clone https://github.com/QUANTAXIS/QUANTAXIS.git
-cd QUANTAXIS
-
-# 安装依赖
-pip install -e .
+```powershell
+.\scripts\setup_axis.ps1 -Python $Python -Start
 ```
 
-#### 2. 包含Rust组件 (推荐 - 100x性能)
+来源同步、独立补充渠道、断点恢复和迁移验收命令见 [RESEARCH.md](RESEARCH.md)。AKShare 补充入口需要单独的 [依赖文件](requirements-panda-alpha-akshare.txt)。
 
-```bash
-# 安装QUANTAXIS + QARS2
-pip install -e .[rust]
+以下用两个证券检查取数入口；这不代表全市场验收或有效因子样本：
 
-# 或手动安装QARS2
-cd /home/quantaxis/qars2
-pip install -e .
+```powershell
+& $Python -m panda_alpha --config $Config coverage `
+  --codes 000001 600000 --start 2025-01-02 --end 2025-12-31 `
+  --raw --output research_runs/axis_raw_acceptance.json
 ```
 
-#### 3. 完整安装
+`--raw` 只诊断原始来源；去掉它才按配置检查复权资料。空库、来源中断或未认证信息可能返回待补状态。
 
-```bash
-# 安装所有组件
-pip install -e .[full]
+### 5. 本地公式评估与反思
 
-# 包含:
-# - QARS2 Rust核心
-# - QADataSwap跨语言通信
-# - Polars高性能DataFrame
-# - 所有可选依赖
+先把已验收的六位证券代码逐行写入 `research_runs/validated_codes.txt`。默认至少需要 30 只股票；完整研究还应按实际覆盖和暖机需要确定样本与窗口。`pool_values` 应保存已有池成员的实际 `.csv.gz` 日期×证券因子面板。
+
+```powershell
+$Codes = Get-Content research_runs/validated_codes.txt
+& $Python -m panda_alpha --config $Config evaluate `
+  --candidates research_runs/generation01.json --codes $Codes `
+  --start 2025-01-02 --end 2025-12-31 `
+  --pool-values research_runs/pool_values --benchmark-id F141 `
+  --output research_runs/local_review
+
+& $Python -m panda_alpha --config $Config evolve `
+  --parents research_runs/generation01.json `
+  --evidence research_runs/local_review/feedback.json `
+  --count 4 --state research_runs/local_review/evolution_state.json `
+  --output research_runs/generation02.json
 ```
 
-#### 4. 验证安装
+`F141` 是示例基准 ID，须替换为实际池中具有方向证据和面板的 ID；没有基准时可省略 `--benchmark-id`，组合增量保持待核。需要更早行情暖机时使用 `--warmup-start`，该范围也接受封存窗口检查。专用财报或事件因子使用公共 `study` 接口传入明确的 PIT 日值，不在价量解释器中伪装成最新财务快照。
 
-```python
-import QUANTAXIS as QA
-from QUANTAXIS.QARSBridge import has_qars_support
+### 6. 官网计划、预览和恢复
 
-print(f"QUANTAXIS版本: {QA.__version__}")
-print(f"QARS2支持: {has_qars_support()}")
+```powershell
+& $Python -m panda_alpha --config $Config schedule `
+  --candidates research_runs/generation01.json
 
-# 预期输出:
-# QUANTAXIS版本: 2.1.0.alpha2
-# QARS2支持: True
+# 先从 generation01.json 选择真实候选ID
+$CandidateId = "填写已验证的候选ID"
+& $Python -m panda_alpha --config $Config dispatch `
+  --candidates research_runs/generation01.json --candidate-id $CandidateId `
+  --category exploration --start 2025-01-02 --end 2025-12-31
 ```
 
-### 快速示例
+`schedule` 和不带 `--execute` 的 `dispatch` 会联网读取账号余额，但不启动回测。实际派发需另外满足预检、来源和预算授权条件；批次授权与指纹格式见 [RESEARCH.md](RESEARCH.md)。
 
-```python
-from QUANTAXIS.QARSBridge import QARSAccount
+已派发任务使用保存的真实指纹恢复查询：
 
-# 创建高性能账户 (自动使用Rust核心)
-account = QARSAccount(
-    account_cookie="my_strategy",
-    init_cash=1000000.0
-)
-
-# 股票交易
-account.buy("000001", 10.5, "2025-01-15", 1000)
-account.sell("000001", 10.8, "2025-01-16", 500)
-
-# 期货交易
-account.buy_open("IF2512", 4500.0, "2025-01-15", 2)
-account.sell_close("IF2512", 4520.0, "2025-01-16", 1)
-
-# 查询持仓
-positions = account.get_positions()
-print(positions)
-
-# 获取QIFI格式账户数据
-qifi = account.get_qifi()
-print(f"账户权益: {qifi['accounts']['balance']}")
-print(f"可用资金: {qifi['accounts']['available']}")
+```powershell
+$Fingerprint = "填写已保存的真实指纹"
+& $Python -m panda_alpha --config $Config resume `
+  --fingerprint $Fingerprint --ledger research_runs/experiments.sqlite3 `
+  --output research_runs/official_results
 ```
 
-### 数据库配置
+## 当前验收状态
 
-```python
-# MongoDB配置
-import QUANTAXIS as QA
+截至 2026-10-08，本机研究版本具备上述来源、反思、账本与官网管理能力。后续补数将原件获取清单扩展至 5252 个代码的并集；固定 18096 个追加任务已全部遍历，18095 份 PDF 与全文就绪，1 个旧公告 ID 原件缺口保留断点。该代码并集是采集清单，完整历史可交易股票池仍待认证；大体积原件及私有研究记录不随仓库分发。
 
-# 设置MongoDB连接
-QA.DATABASE = QA.QAUtil.QALogs.QA_Setting.MONGO_URI
-# 默认: mongodb://localhost:27017/quantaxis
+整合三批来源后，8922 个年报版本具备应收、存货、应付、总资产、营业收入及营业成本的本期和比较期金额证据。在 2025-08-14 至 2026-09-03 的 257 个交易日中，798583 条代码日记录通过所列版本内的来源门槛，单日中位数3066家。这里尚未检查行情支持、交易可用性或因子收益，不能作为完整 PIT 或官网全 A 认证。
 
-# ClickHouse配置
-QA.CLICKHOUSE_HOST = 'localhost'
-QA.CLICKHOUSE_PORT = 9000
+现金短债缓冲和年度毛盈利两个固定定义经联合审阅未获入池，半年报 TTM 版本保持来源待补。WC03在同支持600股研究中，单边50bp费用后净收益12.67%，略低于WC02的12.94%，最大回撤从24.10%降至22.17%；它保留为风险与组合改善线索，尚未入池。市场关联、集中贡献及阶段不稳定仍需验证。原F141保留，近期这一轮官网消费为零。数据验收、运行成功与发现有效Alpha分别记录，研究过程和限制见 [RESEARCH.md](RESEARCH.md)。
+
+后续补数发现旧600家还有1062条已知修订公告未进入原正文审阅子集，这批原件已全部补齐。整合5902条已知更正候选后，3309条仍存在更正范围或受影响字段屏障；另有1633个年报版本的字段证据、365个原版报告元数据单元待核，元数据未定位不能直接认定报告不存在。上述收益仍是旧子集下的探索记录，未按当前来源重算；所有旧结果与来源字节保留。官网CLI固定沪深全A，当前采集并集及局部样本均不能替代官网实际输入池和字段契约验收。
+
+仍待完善：完整历史全 A 身份与行情、北交所历史复权、分钟资料、财务全部字段及季度修订链、真实竞价/容量和新的独立样本验证。当前 `can_retire_legacy=false`，尚不适合删除唯一旧数据来源。
+
+## 本轮工作流优化（2026-10-07）
+
+已完成：
+
+1. **统一试验登记与约束。** 旧记录、专项协议、人工淘汰和固定失败接入同一事件事实来源；真实历史已对齐 449。新标签计算和官网派发前执行约束检查；官网策略在实际派发前登记。
+2. **统一实验运行模块。** 不同因子共用独立日历、真实值分位分组、持续数量/现金/费用账本、市场与显式组合对照。公共小样本使用不同候选名称贯穿全流程，覆盖原移植变量遗漏。
+3. **标准化财报字段。** 共享金额、单位、存量/流量期间、披露日及精度接口；schema2直接携带比较期，保留schema1和历史sidecar兼容。季度与九个月流量不能误作H1。
+4. **接入联合质量反馈。** CLI保留两费档、阶段、集中度、潜在执行和组合增量，源不足不作经济否决，实际竞价与正式入池证据独立验收。
+5. **完善公共复现。** 包装脚本优先选repo虚拟环境或PATH Python，CI采用同一依赖入口，公共契约可纳入Git；干净源码复制和合成数据检查不依赖个人数据库。
+
+后续数据完整性、真实成交、独立样本和新的因子研究，仍按各自证据状态推进；工作流优化不等于已发现新Alpha。
+
+## 目录与验证
+
+- [`panda_alpha/`](panda_alpha/)：研究层、来源接口、状态、去相关、账本与官网管理。
+- [`scripts/`](scripts/)：部署、采集、迁移和验收入口。
+- [`config/panda-alpha.example.json`](config/panda-alpha.example.json)：可公开的配置模板。
+- [`research_bootstrap/`](research_bootstrap/)：可公开的初始 compact 与验收摘要。
+- `research_runs/`：本地协议、原件、状态和结果，Git 忽略。
+- [`tests/`](tests/)：离线回归测试及公开合成数据。
+- [`docs/panda_alpha_workflow.md`](docs/panda_alpha_workflow.md)：登记、字段契约、公共运行器和复现接口。
+- [`docker/panda-alpha/README.md`](docker/panda-alpha/README.md)：独立研究镜像的构建与验证说明。
+
+```powershell
+& $Python -m pytest tests -q
 ```
 
----
+本机当前代码的离线测试与公共复现结果见 [优化验收记录](docs/panda_alpha_workflow.md#验证)。测试不调用真实官网回测，不证明实时外部数据源可用，也不替代股票池、修订历史和真实成交验收。
 
-## 📖 文档
+## 上游与方法来源
 
-### 📚 文档中心
+- [QUANTAXIS](https://github.com/yutiansut/QUANTAXIS)：基础 schemas、来源接口、复权及量化框架；原版权与功能说明保留。
+- [QuantaAlpha](https://github.com/QuantaAlpha/QuantaAlpha)：多样化规划、轨迹进化与反思方法参考。
+- PandaAI：通过用户安装的官方 CLI 进行原生验证、运行查询和结算。
 
-完整文档请访问 **[文档中心 (Documentation Hub)](./doc/README.md)**
-
-### 快速导航
-
-**🚀 入门指南**
-- [快速开始](./doc/getting-started/quickstart.md) - 10分钟上手教程
-- [安装指南](./doc/getting-started/installation.md) - 详细安装步骤
-
-**📘 API参考**
-- [API概览](./doc/api-reference/overview.md) - 完整API文档
-- [QAFetch](./doc/api-reference/qafetch.md) - 数据获取
-- [QAData](./doc/api-reference/qadata.md) - 数据结构
-- [QAMarket/QIFI](./doc/api-reference/qamarket.md) - 账户体系
-
-**🔧 高级功能**
-- [资源管理器](./doc/advanced/resource-manager.md) - 统一资源管理
-- [Rust集成](./doc/advanced/rust-integration.md) - 高性能组件
-- [数据桥接](./doc/advanced/data-bridge.md) - 零拷贝数据交换
-
-**🐳 部署指南**
-- [Docker部署](./doc/deployment/docker.md) - 容器化部署
-- [Kubernetes部署](./doc/deployment/kubernetes.md) - K8s集群部署
-- [部署概览](./doc/deployment/overview.md) - 完整部署指南
-
-**📦 迁移指南**
-- [2.0 → 2.1 迁移](./doc/migration/v2.0-to-v2.1.md) - 升级步骤和注意事项
-- [兼容性状态](./doc/migration/COMPATIBILITY_STATUS.md) - 100%向后兼容
-
-**👨‍💻 开发者**
-- [贡献指南](./doc/development/contributing.md) - 如何参与开发
-- [最佳实践](./doc/development/best-practices.md) - 生产环境建议
-- [开发指南 (CLAUDE.md)](./CLAUDE.md) - AI辅助开发
-
-**📘 其他资源**
-- [完整手册 (QABook PDF)](https://github.com/QUANTAXIS/QUANTAXIS/releases/download/latest/quantaxis.pdf)
-- [示例代码](./examples/) - 完整示例集合
-
----
-
-## 🤝 社区与支持
-
-### GitHub
-
-QUANTAXIS 是一个开放的项目, 在开源的3年中有大量的小伙伴加入了我, 并提交了相关的代码, 感谢以下的同学们
-
-<a href="https://github.com/QUANTAXIS/QUANTAXIS/graphs/contributors"><img src="https://opencollective.com/QUANTAXIS/contributors.svg?width=890&button=false" /></a>
-
-
-
-**问题反馈**:
-- 💬 [GitHub Issues](https://github.com/QUANTAXIS/QUANTAXIS/issues) - 提交Bug和功能请求
-- 🌟 [GitHub Discussions](https://github.com/QUANTAXIS/QUANTAXIS/discussions) - 技术讨论
-
-### 社群
-
-#### QQ群
-
-- 💬 **QUANTAXIS交流群**: 563280067 [群链接](https://jq.qq.com/?_wv=1027&k=4CEKGzn)
-- 👨‍💻 **QUANTAXIS开发群**: 773602202 (贡献代码请加此群，需备注GitHub ID)
-- 🔥 **期货实盘部署群**: 945822690 (仅限本地多账户部署用户)
-
-#### Discord
-
-- 🌍 [QUANTAXIS Discord社区](https://discord.gg/mkk5RgN)
-
-#### 论坛
-
-- 📝 [QUANTAXIS CLUB论坛](http://www.yutiansut.com:3000)
-  - 论坛提问享有最高回复优先级
-
-#### 公众号
-
-- 📱 关注公众号获取最新动态和免费下单推送接口
-  - 回复 `trade` 获取下单接口
-
-![公众号](http://picx.gulizhu.com/Fr0pHbwB7-zrq_HAKsvB8g2zaP_A)
-
----
-
-## 📊 性能对比
-
-### QARS2 Rust vs Python
-
-| 操作 | Python版本 | QARS2 Rust | 加速比 |
-|------|-----------|-----------|-------|
-| 创建1000个账户 | ~50秒 | ~0.5秒 | **100x** ⚡ |
-| 发送10000个订单 | ~50秒 | ~0.5秒 | **100x** ⚡ |
-| 账户结算 | ~200ms | ~2ms | **100x** ⚡ |
-| 10年日线回测 | ~30秒 | ~3秒 | **10x** 🚀 |
-| 内存占用(单账户) | ~2MB | ~200KB | **-90%** 💾 |
-| 内存占用(1000持仓) | ~50MB | ~5MB | **-90%** 💾 |
-
-### Python版本性能
-
-| Python版本 | 性能提升 | 推荐度 |
-|-----------|---------|-------|
-| Python 3.9 | 基准 | ⭐⭐⭐ |
-| Python 3.10 | +10% | ⭐⭐⭐⭐ |
-| Python 3.11 | +25% | ⭐⭐⭐⭐⭐ 最佳 |
-| Python 3.12 | +20% | ⭐⭐⭐⭐⭐ 最新 |
-
----
-
-## 💰 项目支持
-
-### 捐赠
-
-写代码不易...请作者喝杯咖啡呗? ☕
-
-![支付宝捐赠](config/ali.jpg)
-
-**注**: 支付时请备注您的名字/昵称，我们会维护一个赞助列表感谢您的支持！
-
-### 企业赞助
-
-如需企业级支持、定制开发或技术咨询，请联系:
-- 📧 Email: yutiansut@qq.com
-- 💼 企业服务: 提供定制化量化交易解决方案
-
----
-
-## 📜 许可证
-
-本项目采用 **MIT License** 开源许可证。
-
-```
-Copyright (c) 2016-2025 yutiansut/QUANTAXIS
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction...
-```
-
-完整许可证请查看 [LICENSE](./LICENSE) 文件。
-
----
-
-## 👏 致谢
-
-### 核心贡献者
-
-特别感谢所有为QUANTAXIS做出贡献的开发者！
-
-### 技术栈
-
-QUANTAXIS得以实现离不开以下优秀的开源项目:
-
-- **Python生态**: pandas, numpy, scipy, matplotlib
-- **数据库**: MongoDB, ClickHouse, Redis
-- **Web框架**: Tornado, Flask
-- **消息队列**: RabbitMQ (pika)
-- **Rust生态**: PyO3, Polars, Arrow
-- **金融数据**: tushare, pytdx
-
-### 特别鸣谢
-
-- **QARS2项目组**: 提供高性能Rust核心
-- **社区贡献者**: 所有提交PR和Issue的朋友们
-- **早期用户**: 在项目初期就给予支持和反馈的用户
-
----
-
-## 🗺️ 路线图
-
-### v2.1.x (当前)
-- ✅ QARS Rust核心集成
-- ✅ Python 3.9-3.12支持
-- ✅ QARSBridge桥接层
-- 📋 完善文档和示例
-- 📊 完整的QADataSwap集成
-- 🔥 Polars全面替代pandas (可选)
-- ⚡ 更多Rust加速模块
-- 🧪 增强的回测引擎
-
-### v3.0.0 (未来)
-- 🤖 AI驱动的策略优化
-- 🌐 分布式回测系统
-- 📱 移动端支持
-- ☁️ 云原生部署
-
-
-
+上游研究结果与性能基准归属于对应项目。本 Fork 的能力与结果以自己的代码、测试和来源证据为准。许可证见 [LICENSE](LICENSE)。

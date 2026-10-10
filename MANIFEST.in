@@ -1,0 +1,3 @@
+include requirements.txt
+include requirements-panda-alpha.txt
+include pyproject.toml

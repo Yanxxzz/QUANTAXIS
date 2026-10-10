@@ -1,0 +1,54 @@
+{
+  "cold_evidence_count": 4843,
+  "evidence_counts": {
+    "execution_failure": 3,
+    "legacy_gate_failure": 905,
+    "legacy_proxy_backtest": 3660,
+    "narrative_reference": 46,
+    "official_runtime": 4,
+    "official_validation": 6,
+    "registered_hypothesis": 214,
+    "source_audit": 5
+  },
+  "excluded": [
+    "account_and_billing_artifacts",
+    "credentials_and_tokens",
+    "raw_panels",
+    "large_tables_over_2MB",
+    "raw_filing_corpus",
+    "broken_environments"
+  ],
+  "generated_files": {
+    "evidence.jsonl": {
+      "bytes": 4355233,
+      "sha256": "364c3103ffe2efbcfa4232f0a0b6cca1de665feeaec123fbee1e4c255fba22c4"
+    },
+    "memory.json": {
+      "bytes": 98971,
+      "sha256": "d4a5afdda4752accce2042ff8f9214f83fdfaf74ff121521d4a105cf03f9c22c"
+    },
+    "memory.md": {
+      "bytes": 19410,
+      "sha256": "741173d97484794517e8f5b13dae7a0f4a4a810e03206bb70fe0b509eddda80a"
+    },
+    "source_index.jsonl": {
+      "bytes": 395122,
+      "sha256": "8fa58b53081537dff6754427c886f2f2fa89003709bc5e8b78bc37e7103f3901"
+    }
+  },
+  "hot_hypothesis_count": 33,
+  "hypothesis_count": 428,
+  "input_bytes_indexed": 12499081,
+  "multiple_testing_denominator": 415,
+  "operation": "sanitized_research_context_compaction",
+  "parse_errors": [],
+  "provenance_root": "private_legacy_workspace_relative_paths",
+  "raw_evidence_deleted": false,
+  "raw_evidence_modified": false,
+  "retained_evidence_count": 918,
+  "schema_version": 1,
+  "semantic_duplicates_removed": 119,
+  "source_count": 967,
+  "source_finding_count": 34,
+  "policy_annotation": "2026-10-10 latest clarification: net30 daily standalone Sharpe >=0.5 for formal add/replace only; old2/2.5 retired; cold evidence and historical source hashes retained"
+}

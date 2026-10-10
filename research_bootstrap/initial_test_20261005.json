@@ -1,0 +1,317 @@
+{
+  "scope": "FIXED_HASH_SHSZ_ENGINEERING_SAMPLE_NOT_ALL_A_EVIDENCE",
+  "status": "engineering_test_complete_admission_pending",
+  "window": [
+    "2026-06-18",
+    "2026-09-18"
+  ],
+  "generated_at_asia_shanghai": "2026-10-05T13:30:35.427377+08:00",
+  "settings": {
+    "adjustment": "hfq",
+    "cycle": 5,
+    "groups": 10,
+    "one_way_costs": [
+      0.003,
+      0.005
+    ]
+  },
+  "sample_count": 300,
+  "exchange_counts": {
+    "sh": 62,
+    "sz": 238
+  },
+  "sample_sha256": "c5f7f34190fb5e05ffc79947440170af9caa902c12bb71b7c790d6243de32471",
+  "data_artifacts": {
+    "hfq": {
+      "path": "research_runs/initial_axis_300/daily_hfq.csv.gz",
+      "sha256": "c2e78c6d9725e1728effbb02adad344d81427e1a059d0a015a08155366abb9e4",
+      "rows": 19800
+    },
+    "raw_execution": {
+      "path": "research_runs/initial_axis_300/raw_execution.csv.gz",
+      "sha256": "91c2921ea77cd88faf3a94e09cbf546b9828f462ed479c11051f849156f13974",
+      "rows": 19800
+    },
+    "raw_record_semantic_sha256": "38ff6d20ab823925aec96fe7a9e721c2f1c205af25b9dbabb16c6505a5608eb7",
+    "sample_definition_sha256": "c5f7f34190fb5e05ffc79947440170af9caa902c12bb71b7c790d6243de32471"
+  },
+  "calendar_gate": {
+    "status": "verified",
+    "expected_sessions": 66,
+    "observed_sessions": 66,
+    "missing_whole_sessions": [],
+    "off_calendar_dates": [],
+    "reason": "Complete independent sessions required; observed unions cannot compress a trading-day gap"
+  },
+  "trial_ledger": {
+    "path": "research_runs/research_trials.sqlite3",
+    "historical": 415,
+    "new_tested": 13,
+    "total": 428,
+    "cost_variants_not_separate_hypotheses": true,
+    "batch_unique_trials": 6,
+    "batch_newly_registered": 6
+  },
+  "results": [
+    {
+      "candidate_id": "F-a92ee6f2da555e",
+      "mechanism": "short_reversal",
+      "direction": 1,
+      "status": "engineering_proxy_complete_economic_pending",
+      "rank_ic": -0.007442509777569268,
+      "rank_ic_dates": 55,
+      "net_return_30bp": -0.04648214027847852,
+      "net_return_50bp": -0.08642327109417791,
+      "proxy_sharpe_30bp": -0.35407641386000843,
+      "proxy_sharpe_50bp": -0.8128244304935696,
+      "execution": {
+        "path": "research_runs/initial_axis_300/F-a92ee6f2da555e.execution.json",
+        "status": "pending",
+        "order_counts": {
+          "pending": 600
+        },
+        "admission_status": "pending_reconciled_positions_cashflows_and_actual_fees"
+      },
+      "reflection": "repair"
+    },
+    {
+      "candidate_id": "F-33d367747f66f7",
+      "mechanism": "trend_efficiency",
+      "direction": 1,
+      "status": "engineering_proxy_complete_economic_pending",
+      "rank_ic": -0.19527904845492955,
+      "rank_ic_dates": 40,
+      "net_return_30bp": -0.10855115602818555,
+      "net_return_50bp": -0.12728918468049788,
+      "proxy_sharpe_30bp": -2.8290243095826684,
+      "proxy_sharpe_50bp": -3.404387680967271,
+      "execution": {
+        "path": "research_runs/initial_axis_300/F-33d367747f66f7.execution.json",
+        "status": "pending",
+        "order_counts": {
+          "pending": 286
+        },
+        "admission_status": "pending_reconciled_positions_cashflows_and_actual_fees"
+      },
+      "reflection": "repair"
+    },
+    {
+      "candidate_id": "F-a69de7773d923c",
+      "mechanism": "gap_recovery",
+      "direction": 1,
+      "status": "engineering_proxy_complete_economic_pending",
+      "rank_ic": -0.03554487270305184,
+      "rank_ic_dates": 50,
+      "net_return_30bp": -0.0739321465840933,
+      "net_return_50bp": -0.10229464675649869,
+      "proxy_sharpe_30bp": -1.4493578051764984,
+      "proxy_sharpe_50bp": -2.0484261836096236,
+      "execution": {
+        "path": "research_runs/initial_axis_300/F-a69de7773d923c.execution.json",
+        "status": "pending",
+        "order_counts": {
+          "pending": 432
+        },
+        "admission_status": "pending_reconciled_positions_cashflows_and_actual_fees"
+      },
+      "reflection": "repair"
+    },
+    {
+      "candidate_id": "F-aeb2333db4e0df",
+      "mechanism": "liquidity_impact",
+      "direction": 1,
+      "status": "engineering_proxy_complete_economic_pending",
+      "rank_ic": 0.15817074060925612,
+      "rank_ic_dates": 40,
+      "net_return_30bp": 0.12579224131882394,
+      "net_return_50bp": 0.11710257439693672,
+      "proxy_sharpe_30bp": 2.6631525838689574,
+      "proxy_sharpe_50bp": 2.4933350588612018,
+      "execution": {
+        "path": "research_runs/initial_axis_300/F-aeb2333db4e0df.execution.json",
+        "status": "pending",
+        "order_counts": {
+          "pending": 80
+        },
+        "admission_status": "pending_reconciled_positions_cashflows_and_actual_fees"
+      },
+      "reflection": "repair"
+    },
+    {
+      "candidate_id": "F-9248de01fee5f1",
+      "mechanism": "range_compression",
+      "direction": 1,
+      "status": "engineering_proxy_complete_economic_pending",
+      "rank_ic": 0.07098590896181205,
+      "rank_ic_dates": 41,
+      "net_return_30bp": 0.03611650772960018,
+      "net_return_50bp": 0.003460474354053389,
+      "proxy_sharpe_30bp": 1.137219720293679,
+      "proxy_sharpe_50bp": 0.16900881914766866,
+      "execution": {
+        "path": "research_runs/initial_axis_300/F-9248de01fee5f1.execution.json",
+        "status": "pending",
+        "order_counts": {
+          "pending": 446
+        },
+        "admission_status": "pending_reconciled_positions_cashflows_and_actual_fees"
+      },
+      "reflection": "repair"
+    },
+    {
+      "candidate_id": "F-de63a91cc044e8",
+      "mechanism": "participation_divergence",
+      "direction": 1,
+      "status": "engineering_proxy_complete_economic_pending",
+      "rank_ic": 0.09032921993794013,
+      "rank_ic_dates": 22,
+      "net_return_30bp": -0.020728244486641678,
+      "net_return_50bp": -0.03192247702312501,
+      "proxy_sharpe_30bp": -0.9757114540517842,
+      "proxy_sharpe_50bp": -1.4940977019555435,
+      "execution": {
+        "path": "research_runs/initial_axis_300/F-de63a91cc044e8.execution.json",
+        "status": "pending",
+        "order_counts": {
+          "pending": 140
+        },
+        "admission_status": "pending_reconciled_positions_cashflows_and_actual_fees"
+      },
+      "reflection": "repair"
+    }
+  ],
+  "correlations": {
+    "path": "research_runs/initial_axis_300/factor_rank_correlations.json",
+    "signed_observed_matrix": {
+      "F-a92ee6f2da555e": {
+        "F-a92ee6f2da555e": null,
+        "F-33d367747f66f7": -0.30919286119089445,
+        "F-a69de7773d923c": -0.4934003000312256,
+        "F-aeb2333db4e0df": -0.12911868829041215,
+        "F-9248de01fee5f1": 0.2007639198335134,
+        "F-de63a91cc044e8": 0.16488297087068055
+      },
+      "F-33d367747f66f7": {
+        "F-a92ee6f2da555e": -0.30919286119089445,
+        "F-33d367747f66f7": null,
+        "F-a69de7773d923c": 0.479035755603978,
+        "F-aeb2333db4e0df": 0.2143318442936116,
+        "F-9248de01fee5f1": -0.16561346253351988,
+        "F-de63a91cc044e8": -0.41721153364647384
+      },
+      "F-a69de7773d923c": {
+        "F-a92ee6f2da555e": -0.4934003000312256,
+        "F-33d367747f66f7": 0.479035755603978,
+        "F-a69de7773d923c": null,
+        "F-aeb2333db4e0df": 0.12415533119450119,
+        "F-9248de01fee5f1": -0.17242890405638073,
+        "F-de63a91cc044e8": -0.05265244216999236
+      },
+      "F-aeb2333db4e0df": {
+        "F-a92ee6f2da555e": -0.12911868829041215,
+        "F-33d367747f66f7": 0.2143318442936116,
+        "F-a69de7773d923c": 0.12415533119450119,
+        "F-aeb2333db4e0df": null,
+        "F-9248de01fee5f1": -0.06278707444575471,
+        "F-de63a91cc044e8": -0.037745149549280696
+      },
+      "F-9248de01fee5f1": {
+        "F-a92ee6f2da555e": 0.2007639198335134,
+        "F-33d367747f66f7": -0.16561346253351988,
+        "F-a69de7773d923c": -0.17242890405638073,
+        "F-aeb2333db4e0df": -0.06278707444575471,
+        "F-9248de01fee5f1": null,
+        "F-de63a91cc044e8": 0.07587550972788586
+      },
+      "F-de63a91cc044e8": {
+        "F-a92ee6f2da555e": 0.16488297087068055,
+        "F-33d367747f66f7": -0.41721153364647384,
+        "F-a69de7773d923c": -0.05265244216999236,
+        "F-aeb2333db4e0df": -0.037745149549280696,
+        "F-9248de01fee5f1": 0.07587550972788586,
+        "F-de63a91cc044e8": null
+      }
+    },
+    "absolute_observed_matrix": {
+      "F-a92ee6f2da555e": {
+        "F-a92ee6f2da555e": null,
+        "F-33d367747f66f7": 0.38131368793156994,
+        "F-a69de7773d923c": 0.49714922303274794,
+        "F-aeb2333db4e0df": 0.21696481706563747,
+        "F-9248de01fee5f1": 0.24026430452658218,
+        "F-de63a91cc044e8": 0.19468518870495183
+      },
+      "F-33d367747f66f7": {
+        "F-a92ee6f2da555e": 0.38131368793156994,
+        "F-33d367747f66f7": null,
+        "F-a69de7773d923c": 0.4795186788978466,
+        "F-aeb2333db4e0df": 0.25503165141268314,
+        "F-9248de01fee5f1": 0.1937214671503144,
+        "F-de63a91cc044e8": 0.41721153364647384
+      },
+      "F-a69de7773d923c": {
+        "F-a92ee6f2da555e": 0.49714922303274794,
+        "F-33d367747f66f7": 0.4795186788978466,
+        "F-a69de7773d923c": null,
+        "F-aeb2333db4e0df": 0.17334594538973136,
+        "F-9248de01fee5f1": 0.2137733256137835,
+        "F-de63a91cc044e8": 0.10933770692690238
+      },
+      "F-aeb2333db4e0df": {
+        "F-a92ee6f2da555e": 0.21696481706563747,
+        "F-33d367747f66f7": 0.25503165141268314,
+        "F-a69de7773d923c": 0.17334594538973136,
+        "F-aeb2333db4e0df": null,
+        "F-9248de01fee5f1": 0.14066741804377536,
+        "F-de63a91cc044e8": 0.11236080400893342
+      },
+      "F-9248de01fee5f1": {
+        "F-a92ee6f2da555e": 0.24026430452658218,
+        "F-33d367747f66f7": 0.1937214671503144,
+        "F-a69de7773d923c": 0.2137733256137835,
+        "F-aeb2333db4e0df": 0.14066741804377536,
+        "F-9248de01fee5f1": null,
+        "F-de63a91cc044e8": 0.10362064340397432
+      },
+      "F-de63a91cc044e8": {
+        "F-a92ee6f2da555e": 0.19468518870495183,
+        "F-33d367747f66f7": 0.41721153364647384,
+        "F-a69de7773d923c": 0.10933770692690238,
+        "F-aeb2333db4e0df": 0.11236080400893342,
+        "F-9248de01fee5f1": 0.10362064340397432,
+        "F-de63a91cc044e8": null
+      }
+    },
+    "pair_gate_counts": {
+      "complete": 10,
+      "pending": 5
+    },
+    "existing_pool_status": "pending: no measured factor-value panels for the official existing pool"
+  },
+  "retirement_audit": {
+    "codes": [
+      "002477",
+      "002018"
+    ],
+    "scope": "coverage_and_suspension_only; no return selection from future lifecycle status",
+    "raw_rows_by_code": {
+      "002477": 0,
+      "002018": 0
+    },
+    "known_suspension_marks": [],
+    "terminal_cashflows": "pending; no zero-return imputation"
+  },
+  "permissions": {
+    "platform_calls": 0,
+    "recharge_spend": 0,
+    "llm_calls": 0,
+    "pool_admissions": 0,
+    "permanent_blacklist_updates": 0,
+    "sealed_oos_evaluations": 0
+  },
+  "local_source": {
+    "path": "research_runs/initial_axis_300/summary.json",
+    "sha256": "719d930c5bc8e04cfc471df994d3347147765addc71f2b19e44e85c6adc7d940",
+    "raw_artifacts": "Private ignored research_runs directory; retain original frozen sample"
+  }
+}
