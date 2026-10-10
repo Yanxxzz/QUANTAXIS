@@ -26,6 +26,30 @@ def beijing_day() -> str:
     return datetime.now(timezone(timedelta(hours=8))).date().isoformat()
 
 
+def _wallet_funding_models(balance: dict) -> set[str]:
+    """Identify only models supported by the observed wallet arithmetic.
+
+    Some official wallets expose freeBalance as a duplicate of giftBalance.
+    Keep that observation, but never add it to funding twice. A zero free
+    balance can support more than one model; both ends of settlement decide.
+    """
+    values = [balance.get(name, 0.) for name in ("total", "gift", "recharge", "free")]
+    if any(type(value) not in (int, float) or not math.isfinite(value) or value < -1e-9
+           for value in values):
+        return set()
+    total, gift, recharge, free = values
+    close = lambda left, right: math.isclose(left, right, rel_tol=1e-9, abs_tol=1e-7)
+    models = set()
+    if close(total, gift + recharge + free):
+        models.add("independent_gift_recharge_free")
+    if close(total, gift + recharge):
+        if "free" in balance and close(free, gift):
+            models.add("gift_recharge_free_alias")
+        if "free" not in balance or close(free, 0.):
+            models.add("gift_recharge")
+    return models
+
+
 def fingerprint(candidate: dict, window: dict, cycle: int, groups: int) -> str:
     definition = {k: candidate.get(k) for k in ("code", "formula", "direction")}
     definition.update(window=window, cycle=cycle, groups=groups)
@@ -71,9 +95,15 @@ class PandaClient:
 
     def balance(self) -> dict:
         raw = self.cli("balance")["balance"]
-        return {"total": float(raw["computingPower"]), "gift": float(raw.get("giftBalance", 0)),
-                "free": float(raw.get("freeBalance", 0)), "recharge": float(raw.get("rechargeBalance", 0)),
-                "gift_expires": raw.get("nextExpireAt"), "observed_at": datetime.now(timezone.utc).isoformat()}
+        balance = {"total": float(raw["computingPower"]), "gift": float(raw.get("giftBalance", 0)),
+                   "free": float(raw.get("freeBalance", 0)), "recharge": float(raw.get("rechargeBalance", 0)),
+                   "gift_expires": raw.get("nextExpireAt"),
+                   "observed_at": datetime.now(timezone.utc).isoformat()}
+        # Retain only the original balance fields, never account identifiers.
+        balance["raw_wallet_balances"] = {name: raw[name] for name in
+            ("computingPower", "giftBalance", "freeBalance", "rechargeBalance") if name in raw}
+        balance["funding_models"] = sorted(_wallet_funding_models(balance))
+        return balance
 
     def create(self, candidate: dict, window: dict, cycle: int, groups: int, name: str) -> str:
         # Validate the actual CLI loading dates even when create is called
@@ -551,10 +581,30 @@ def resume(key: str, ledger: ExperimentLedger, client: PandaClient, output_dir: 
                "free_delta": before.get("free", 0.) - after.get("free", 0.),
                "attribution": "serial balance delta, provisional; external spend/grants may confound",
                "reservation_overrun": actual > job["reserved"], "day_before": job["day"], "day_after": beijing_day(),
+               "wallet_balances": {"before": {name: before.get(name, 0.) for name in
+                                               ("total", "gift", "recharge", "free")},
+                                   "after": {name: after.get(name, 0.) for name in
+                                              ("total", "gift", "recharge", "free")}},
+               "raw_wallet_balances": {"before": before.get("raw_wallet_balances"),
+                                       "after": after.get("raw_wallet_balances")},
                **failure}
     if receipt["day_before"] != receipt["day_after"]:
         return {"state": "BILLING_REVIEW", "receipt": receipt, "action": "Daily expiry/grant prevents automatic balance-delta settlement"}
-    buckets = (receipt["gift_delta"], receipt["recharge_delta"], receipt["free_delta"])
+    models = _wallet_funding_models(before) & _wallet_funding_models(after)
+    if not models:
+        return {"state": "BILLING_REVIEW", "receipt": receipt,
+                "action": "Wallet funding model is unknown or changed; future dispatch remains locked"}
+    if "gift_recharge_free_alias" in models:
+        model, names = "gift_recharge_free_alias", ("gift", "recharge")
+        aliases = {"free": "gift"}
+    elif "independent_gift_recharge_free" in models:
+        model, names = "independent_gift_recharge_free", ("gift", "recharge", "free")
+        aliases = {}
+    else:
+        model, names, aliases = "gift_recharge", ("gift", "recharge"), {}
+    receipt.update(funding_model=model, funding_aliases=aliases,
+                   funding_bucket_deltas={name: receipt[name + "_delta"] for name in names})
+    buckets = tuple(receipt[name + "_delta"] for name in names)
     if (any(type(value) not in (int, float) or not math.isfinite(value) or value < -1e-9 for value in buckets)
             or any(after.get(name, 0.) < -1e-9 for name in ("gift", "recharge", "free"))
             or not math.isclose(sum(buckets), actual, rel_tol=1e-9, abs_tol=1e-7)):

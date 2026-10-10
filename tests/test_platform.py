@@ -421,6 +421,73 @@ def estimated_config(candidates=None, total=10, estimate=2, recharge=0, max_runs
     return cfg
 
 
+def test_wallet_balance_preserves_raw_alias_observations_without_account_identifiers():
+    client = PandaClient({})
+    raw = {"computingPower": "436", "giftBalance": "60", "freeBalance": "60",
+           "rechargeBalance": "376", "userId": "must-not-retain"}
+    client.cli = lambda *args: {"balance": raw}
+    balance = client.balance()
+    assert balance["total"] == 436 and balance["free"] == balance["gift"] == 60
+    assert balance["funding_models"] == ["gift_recharge_free_alias"]
+    assert balance["raw_wallet_balances"] == {key: value for key, value in raw.items() if key != "userId"}
+    assert "userId" not in balance
+
+
+@pytest.mark.parametrize("gift_before,gift_after,status", [(60, 56, 2), (4, 0, 2), (60, 56, 3)])
+def test_positive_wallet_alias_charge_is_counted_once_and_remains_provisional(tmp_path, gift_before, gift_after, status):
+    import json
+    class Client(FakeClient):
+        def status(self, run_id): return status
+        def logs(self, run_id): return {"complete": True, "errors": []}
+    ledger, client = ExperimentLedger(tmp_path / "alias.sqlite3"), Client()
+    client.remaining = {"total": 376 + gift_before, "gift": gift_before,
+                        "free": gift_before, "recharge": 376}
+    job = dispatch(C, W, estimated_config(total=60), ledger, client)
+    client.remaining = {"total": 376 + gift_after, "gift": gift_after,
+                        "free": gift_after, "recharge": 376}
+    settled = resume(job["fingerprint"], ledger, client, tmp_path / "outputs")
+    assert settled["state"] == "SETTLED" and settled["actual"] == 4
+    receipt = json.loads(settled["receipt"])
+    assert receipt["gift_delta"] == receipt["free_delta"] == 4
+    assert receipt["funding_model"] == "gift_recharge_free_alias"
+    assert receipt["funding_aliases"] == {"free": "gift"}
+    assert receipt["funding_bucket_deltas"] == {"gift": 4, "recharge": 0}
+    assert "provisional" in receipt["attribution"] and "verified_by" not in receipt
+    assert receipt["wallet_balances"]["after"]["free"] == gift_after
+    assert client.calls == client.started == 1
+
+
+def test_independent_free_bucket_still_settles_using_three_buckets(tmp_path):
+    import json
+    ledger, client = ExperimentLedger(tmp_path / "independent-free.sqlite3"), FakeClient()
+    client.remaining = {"total": 436, "gift": 20, "free": 40, "recharge": 376}
+    job = dispatch(C, W, estimated_config(total=60), ledger, client)
+    client.remaining = {"total": 434, "gift": 20, "free": 38, "recharge": 376}
+    settled = resume(job["fingerprint"], ledger, client, tmp_path / "outputs")
+    receipt = json.loads(settled["receipt"])
+    assert settled["state"] == "SETTLED" and settled["actual"] == 2
+    assert receipt["funding_model"] == "independent_gift_recharge_free"
+    assert receipt["funding_aliases"] == {}
+    assert receipt["funding_bucket_deltas"] == {"gift": 0, "recharge": 0, "free": 2}
+
+
+@pytest.mark.parametrize("after", [
+    {"total": 432, "gift": 56, "free": 55, "recharge": 376},
+    {"total": 432, "gift": 56, "free": 0, "recharge": 376},
+    {"total": 432, "gift": 61, "free": 61, "recharge": 371},
+    {"total": 432, "gift": 58, "free": 58, "recharge": 374},
+])
+def test_unknown_changed_or_unapproved_wallet_funding_remains_review(tmp_path, after):
+    ledger, client = ExperimentLedger(tmp_path / "uncertain-wallet.sqlite3"), FakeClient()
+    client.remaining = {"total": 436, "gift": 60, "free": 60, "recharge": 376}
+    job = dispatch(C, W, estimated_config(total=60), ledger, client)
+    client.remaining = after
+    result = resume(job["fingerprint"], ledger, client, tmp_path / "outputs")
+    assert result["state"] == "BILLING_REVIEW"
+    assert ledger.get(job["fingerprint"])["state"] == "RUNNING"
+    assert client.calls == client.started == 1
+
+
 def test_authorized_estimate_with_null_cap_can_use_a_small_batch_below_daily_limit(tmp_path):
     import json
     cfg = estimated_config(total=4)
