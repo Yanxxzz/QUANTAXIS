@@ -6,7 +6,7 @@ import pandas as pd
 import pytest
 
 from panda_alpha.native_preflight import (NativePreflightError, build_native_preflight,
-                                          verify_native_preflight)
+                                          verify_native_preflight, PROJECTION_RESEARCH_PURPOSE)
 
 
 CODE = '''class Ready(Factor):
@@ -283,3 +283,246 @@ def test_source_transfer_preserves_numeric_and_group_guards(tmp_path, conversion
     candidate['code'] = CODE.replace("result.name = 'value'", conversion + "\n        result.name = 'value'")
     receipt = build_native_preflight(candidate, WINDOW, 5, 10, fixture, source, [contract], path)
     assert not receipt['passed'] and message in receipt['failure']['message']
+
+
+PROJECTION_CODE = '''import pandas as pd
+class Projected(Factor):
+    def calculate(self, factors):
+        close = factors['close'].series
+        panel = close.unstack('symbol').sort_index()
+        result = panel.rolling(259, min_periods=259).mean().stack(dropna=False)
+        result = result.reindex(close.index) * factors['source_gate'].series
+        result = result[result.index.get_level_values('date') >= pd.Timestamp('2024-12-27')]
+        result.name = 'value'
+        return result
+'''
+
+
+@pytest.fixture
+def projection(tmp_path):
+    # A causal arithmetic proxy tests the interface, not real F141 economics.
+    # Forty price peers, twenty source-qualified names, and a truthful NaN tail.
+    dates = pd.bdate_range('2024-01-02', periods=288)
+    assert dates[258] == pd.Timestamp('2024-12-27')
+    symbols = [f'P{i:02d}' for i in range(40)]
+    index = pd.MultiIndex.from_product([dates, symbols], names=['date', 'symbol'])
+    gate = np.where(np.tile(np.arange(40), len(dates)) < 20, 1.0, np.nan)
+    gate[np.repeat(np.arange(len(dates)), 40) > 281] = np.nan
+    frame = pd.DataFrame({'close': 10 + np.tile(np.arange(40), len(dates)) + np.repeat(np.arange(len(dates)), 40) / 1000,
+                          'source_gate': gate}, index=index)
+    # Keep the unsorted supplied order; projected output cannot silently sort it.
+    frame = frame.iloc[::-1].reset_index()
+    fixture = tmp_path / 'source.parquet'
+    frame.to_parquet(fixture, index=False)
+    calendar = tmp_path / 'independent-calendar.json'
+    calendar.write_text(json.dumps({'dates': dates.strftime('%Y-%m-%d').tolist()}))
+    mask_frame = frame[frame.date.ge(dates[258])][['date', 'symbol', 'source_gate']].copy()
+    mask_frame['source_qualified'] = mask_frame.source_gate.notna()
+    mask_frame['expected_finite'] = mask_frame.source_gate.notna()
+    mask = tmp_path / 'source-mask.parquet'
+    mask_frame.drop(columns='source_gate').to_parquet(mask, index=False)
+    source = tmp_path / 'source-lineage.json'
+    source.write_text(json.dumps({'test_proxy_only': True, 'mask_basis': 'source gate plus259-input computability; no outcomes'}))
+    observed = tmp_path / 'observed-contract.txt'
+    observed.write_text('Projection test of source-bound local inputs; no native server data or warmup claim.')
+    digest = lambda p: hashlib.sha256(p.read_bytes()).hexdigest()
+    window = {'start': dates[0].date().isoformat(), 'end': dates[-1].date().isoformat()}
+    evaluation = {'start': dates[258].date().isoformat(), 'end': dates[-1].date().isoformat()}
+    contract = {'input_window': window, 'evaluation_window': evaluation,
+                'formation_dates': dates[258:282:5].strftime('%Y-%m-%d').tolist(),
+                'holding_end': evaluation['end'], 'warmup': {'minimum_prior_price_rows': 258},
+                'input_calendar': {'path': str(calendar), 'sha256': digest(calendar)},
+                'source_qualification': {'path': str(mask), 'sha256': digest(mask)}}
+    receipt = tmp_path / 'projection-preflight.json'
+    candidate = {'candidate_id': 'projection-proxy', 'code': PROJECTION_CODE, 'direction': 1,
+                 'native_preflight_path': str(receipt),
+                 'native_preflight_purpose': PROJECTION_RESEARCH_PURPOSE,
+                 'native_evaluation_contract': contract}
+    return {'candidate': candidate, 'fixture': fixture, 'frame': frame, 'calendar': calendar,
+            'mask': mask, 'source': [source, calendar, mask], 'observed': observed,
+            'receipt': receipt, 'window': window, 'dates': dates}
+
+
+def _build_projection(case, *, reader=None, fixture=None):
+    return build_native_preflight(case['candidate'], case['window'], 5, 10,
+                                  fixture or case['fixture'], case['source'], [case['observed']],
+                                  case['receipt'], fields=['close', 'source_gate'], fixture_reader=reader)
+
+
+def test_projection_keeps_whole_evaluation_index_and_truthful_nan_tail(projection):
+    receipt = _build_projection(projection)
+    assert receipt['passed'] is False and receipt['research_replay_passed'] is True
+    verified = verify_native_preflight(projection['candidate'], projection['window'], 5, 10)
+    proof = verified['proof']
+    assert proof == receipt['proof']
+    assert proof['input_rows'] == 288 * 40 and proof['evaluation_output_rows'] == 30 * 40
+    assert proof['prior_input_calendar_rows'] == 258
+    assert proof['usable_group_dates'] == len(proof['decision_dates']) == 24
+    assert len(proof['formation_dates']) == 5
+    assert proof['holding_end_rows'] == 40 and proof['holding_end_finite_rows'] == 0
+    assert proof['holding_tail_NaN_rows'] == 6 * 40
+    assert proof['minimum_distinct_values_on_decision_dates'] == 20
+    assert proof['genuine_missing_rows'] == 720
+    assert proof['peer_price_support']['positive_prior_price_rows_histogram'] == {'258': 40}
+    assert proof['peer_price_support']['full_support_retained_only_in_memory']
+    assert proof['peer_full_F141_computability_certified'] is False
+    assert verified['scope']['source_limited_exploration'] and not verified['scope']['full_PIT_certified']
+    assert not verified['scope']['remote_input_and_formation_grid_certified']
+
+
+@pytest.mark.parametrize('change', ['full_input', 'sort', 'drop_nans', 'fill_nans', 'early_date_empty', 'nonformation_gap'])
+def test_projection_rejects_index_crops_fills_and_decision_grid_drift(projection, change):
+    candidate = projection['candidate']
+    if change == 'full_input':
+        candidate['code'] = candidate['code'].replace("        result = result[result.index.get_level_values('date') >= pd.Timestamp('2024-12-27')]\n", '')
+    elif change == 'sort':
+        candidate['code'] = candidate['code'].replace("        result.name = 'value'", "        result = result.sort_index()\n        result.name = 'value'")
+    elif change == 'drop_nans':
+        candidate['code'] = candidate['code'].replace("        result.name = 'value'", "        result = result.dropna()\n        result.name = 'value'")
+    elif change == 'fill_nans':
+        candidate['code'] = candidate['code'].replace("        result.name = 'value'", "        result = result.fillna(0.0)\n        result.name = 'value'")
+    else:
+        # Change both true source gate and expected mask. This is an honest
+        # missing day, but it still invalidates the frozen rebalance lattice.
+        day = projection['dates'][258 if change == 'early_date_empty' else 259]
+        frame = pd.read_parquet(projection['fixture'])
+        frame.loc[frame.date.eq(day), 'source_gate'] = np.nan
+        frame.to_parquet(projection['fixture'], index=False)
+        mask = pd.read_parquet(projection['mask'])
+        mask.loc[mask.date.eq(day), ['source_qualified', 'expected_finite']] = False
+        mask.to_parquet(projection['mask'], index=False)
+        candidate['native_evaluation_contract']['source_qualification']['sha256'] = hashlib.sha256(projection['mask'].read_bytes()).hexdigest()
+    receipt = _build_projection(projection)
+    assert not receipt['research_replay_passed'] and not receipt['passed']
+    expected = 'projection' if change in ['full_input', 'sort', 'drop_nans'] else 'mask' if change == 'fill_nans' else 'every decision date'
+    assert expected in receipt['failure']['message']
+
+
+@pytest.mark.parametrize('change', ['missing_global_day', '257_prior_rows', 'drop_eval_end', 'mask_cropped', 'wrong_lattice'])
+def test_projection_independent_calendar_mask_and_endpoints_cannot_be_self_certified(projection, change):
+    contract = projection['candidate']['native_evaluation_contract']
+    if change in ['missing_global_day', 'drop_eval_end']:
+        frame = pd.read_parquet(projection['fixture'])
+        day = projection['dates'][50] if change == 'missing_global_day' else projection['dates'][-1]
+        frame.loc[~frame.date.eq(day)].to_parquet(projection['fixture'], index=False)
+    elif change == '257_prior_rows':
+        data = json.loads(projection['calendar'].read_text())
+        data['dates'] = data['dates'][1:]
+        projection['calendar'].write_text(json.dumps(data))
+        contract['input_calendar']['sha256'] = hashlib.sha256(projection['calendar'].read_bytes()).hexdigest()
+        contract['input_window']['start'] = data['dates'][0]
+    elif change == 'mask_cropped':
+        mask = pd.read_parquet(projection['mask']).iloc[1:]
+        mask.to_parquet(projection['mask'], index=False)
+        contract['source_qualification']['sha256'] = hashlib.sha256(projection['mask'].read_bytes()).hexdigest()
+    else:
+        contract['formation_dates'][1] = projection['dates'][264].date().isoformat()
+    receipt = _build_projection(projection)
+    assert not receipt['research_replay_passed']
+    assert any(word in receipt['failure']['message'] for word in ['calendar', '258', 'every evaluation input row', 'frozen cycle'])
+
+
+def test_projection_extra_public_preload_is_explicit_and_peer_gaps_remain_visible(projection):
+    frame = projection['frame']
+    extra = frame[frame.date.eq(projection['dates'][0])].copy()
+    extra['date'] = pd.Timestamp('2023-12-29')
+    frame = pd.concat([frame, extra], ignore_index=True)
+    # One unavailable early peer observation does not disqualify other peers,
+    # but its reduced support cannot be described as259 continuous prices.
+    frame.loc[frame.symbol.eq('P39') & frame.date.eq(projection['dates'][10]), 'close'] = np.nan
+    frame.to_parquet(projection['fixture'], index=False)
+    receipt = _build_projection(projection)
+    assert receipt['research_replay_passed']
+    proof = receipt['proof']
+    assert proof['additional_prebuild_input_dates'] == 1
+    support = proof['peer_price_support']
+    assert support['positive_prior_price_rows_histogram'] == {'258': 39, '257': 1}
+    assert support['missing_prior_price_rows_histogram'] == {'0': 39, '1': 1}
+    assert support['consecutive_prices_through_first_evaluation_histogram']['248'] == 1
+
+
+def test_projection_contract_and_source_mask_are_fingerprinted_not_borrowed_from_default(projection):
+    receipt = _build_projection(projection)
+    candidate = projection['candidate']
+    original = candidate['native_evaluation_contract']['formation_dates']
+    candidate['native_evaluation_contract']['formation_dates'] = original[:-1]
+    with pytest.raises(NativePreflightError, match='parameters changed'):
+        verify_native_preflight(candidate, projection['window'], 5, 10)
+    candidate['native_evaluation_contract']['formation_dates'] = original
+    receipt['passed'] = True  # Research success cannot masquerade as old passed.
+    projection['receipt'].write_text(json.dumps(receipt))
+    with pytest.raises(NativePreflightError, match='no successful replay proof'):
+        verify_native_preflight(candidate, projection['window'], 5, 10)
+
+
+def test_projection_trusted_descriptor_replay_requires_same_explicit_reader_and_real_frame(projection):
+    descriptor = projection['fixture'].with_suffix('.descriptor.json')
+    descriptor.write_text(json.dumps({'source': 'test memory', 'no_market_copy': True}))
+    frame = projection['frame'].copy()
+    def trusted_reader(path):
+        assert path == descriptor
+        return frame.copy()
+    receipt = _build_projection(projection, reader=trusted_reader, fixture=descriptor)
+    assert receipt['research_replay_passed'] and receipt['fixture_format'] == 'trusted_reader_descriptor'
+    assert receipt['fixture_reader']['qualname'].endswith('trusted_reader')
+    verified = verify_native_preflight(projection['candidate'], projection['window'], 5, 10, fixture_reader=trusted_reader)
+    assert verified['proof'] == receipt['proof']
+    with pytest.raises(NativePreflightError, match='explicit trusted fixture reader'):
+        verify_native_preflight(projection['candidate'], projection['window'], 5, 10)
+    def other_reader(path):
+        return frame.copy()
+    with pytest.raises(NativePreflightError, match='reader code or identity changed'):
+        verify_native_preflight(projection['candidate'], projection['window'], 5, 10, fixture_reader=other_reader)
+    # Output ranks can be unchanged despite changed raw history: input frame
+    # hash independently binds the actual trusted reader result.
+    frame.loc[frame.symbol.eq('P39'), 'close'] *= 2
+    with pytest.raises(NativePreflightError, match='no longer matches'):
+        verify_native_preflight(projection['candidate'], projection['window'], 5, 10, fixture_reader=trusted_reader)
+
+
+@pytest.mark.parametrize('change', ['mask_artifact', 'mask_qualification', 'holding_end', 'receipt_policy'])
+def test_projection_changed_artifacts_or_endpoint_policy_rejected(projection, change):
+    receipt = _build_projection(projection)
+    contract = projection['candidate']['native_evaluation_contract']
+    if change == 'mask_artifact':
+        projection['mask'].write_bytes(projection['mask'].read_bytes() + b'changed')
+    elif change == 'mask_qualification':
+        mask = pd.read_parquet(projection['mask'])
+        mask.loc[mask.expected_finite, 'source_qualified'] = False
+        mask.to_parquet(projection['mask'], index=False)
+    elif change == 'holding_end':
+        contract['holding_end'] = projection['dates'][-2].date().isoformat()
+    else:
+        receipt['policy']['minimum_decision_date_coverage'] = .8
+        projection['receipt'].write_text(json.dumps(receipt))
+    with pytest.raises(NativePreflightError):
+        verify_native_preflight(projection['candidate'], projection['window'], 5, 10)
+
+
+def test_projection_cannot_relabel_missing_decision_dates_as_holding_tail(projection):
+    projection['candidate']['native_evaluation_contract']['formation_dates'].pop()
+    receipt = _build_projection(projection)
+    assert not receipt['research_replay_passed']
+    assert 'every frozen cycle' in receipt['failure']['message']
+
+
+def test_projection_definition_fingerprint_matches_actual_platform_contract(projection):
+    from panda_alpha.native_preflight import _definition, _digest
+    from panda_alpha.platform import fingerprint
+    candidate, window = projection['candidate'], projection['window']
+    assert _digest(_definition(candidate, window, 5, 10)) == fingerprint(candidate, window, 5, 10)
+    # A legacy default candidate retains its prior definition shape even if
+    # unrelated new contract metadata is present.
+    legacy = {k: v for k, v in candidate.items() if k != 'native_preflight_purpose'}
+    old = {key: legacy.get(key) for key in ('code', 'formula', 'direction')}
+    old.update(window=window, cycle=5, groups=10)
+    assert _digest(_definition(legacy, window, 5, 10)) == _digest(old)
+    assert fingerprint(legacy, window, 5, 10) == _digest(old)
+
+
+def test_projection_does_not_execute_a_reader_declared_in_untrusted_candidate(projection):
+    projection['candidate']['fixture_reader'] = "__import__('os').remove('anything')"
+    receipt = _build_projection(projection)
+    assert not receipt['research_replay_passed'] and receipt['fixture_format'] == 'parquet'
+    assert 'explicit keyword' in receipt['failure']['message']
+    assert 'fixture_reader' not in receipt

@@ -29,6 +29,17 @@ def beijing_day() -> str:
 def fingerprint(candidate: dict, window: dict, cycle: int, groups: int) -> str:
     definition = {k: candidate.get(k) for k in ("code", "formula", "direction")}
     definition.update(window=window, cycle=cycle, groups=groups)
+    # This prospective contract separates the worker's price-loading window
+    # from the fixed economic output. Keep existing experiment identities
+    # stable; the new purpose binds both windows and its exact source masks.
+    if candidate.get("native_preflight_purpose") == "source_qualified_projection_research":
+        if candidate.get("formula") or not isinstance(candidate.get("code"), str) or not candidate["code"].strip():
+            raise ValueError("Native projection requires an exact Python code definition")
+        contract = candidate.get("native_evaluation_contract")
+        if not isinstance(contract, dict) or contract.get("input_window") != window:
+            raise ValueError("Native projection must bind the actual creation window")
+        definition["native_preflight_purpose"] = candidate["native_preflight_purpose"]
+        definition["native_evaluation_contract"] = contract
     return hashlib.sha256(json.dumps(definition, sort_keys=True).encode()).hexdigest()
 
 
@@ -65,6 +76,10 @@ class PandaClient:
                 "gift_expires": raw.get("nextExpireAt"), "observed_at": datetime.now(timezone.utc).isoformat()}
 
     def create(self, candidate: dict, window: dict, cycle: int, groups: int, name: str) -> str:
+        # Validate the actual CLI loading dates even when create is called
+        # directly. The separate evaluation contract must never silently
+        # replace these dates after authorization or preflight.
+        fingerprint(candidate, window, cycle, groups)
         mode = "--formula" if candidate.get("formula") else "--code"
         source = candidate.get("formula") or candidate.get("code")
         if not source:
@@ -395,7 +410,7 @@ def budget_plan(candidates: list[dict], compute: dict, balance: dict, *, jobs: l
 
 
 def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedger, client: PandaClient,
-             category: str = "exploration", *, before_dispatch=None) -> dict:
+             category: str = "exploration", *, before_dispatch=None, native_fixture_reader=None) -> dict:
     research, compute = config["research"], config["compute"]
     cycle, groups = research["cycle"], research["groups"]
     if type(candidate.get("direction")) is not int or candidate.get("direction") not in (0, 1):
@@ -416,7 +431,13 @@ def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedg
     native_preflight = None
     if candidate.get("code") and not candidate.get("formula"):
         from .native_preflight import verify_native_preflight
-        native_preflight = verify_native_preflight(candidate, window, cycle, groups)
+        if native_fixture_reader is None:
+            native_preflight = verify_native_preflight(candidate, window, cycle, groups)
+        else:
+            # The caller supplies trusted local source code explicitly. No
+            # candidate string or receipt can import a reader on its own.
+            native_preflight = verify_native_preflight(candidate, window, cycle, groups,
+                                                        fixture_reader=native_fixture_reader)
     recharge_authorization, risk_authorization = None, None
     if compute.get("recharge_credit_limit", 0) > 0:
         recharge_authorization = _batch_authorization(

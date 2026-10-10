@@ -20,6 +20,55 @@ W = {"start": "2024-01-01", "end": "2024-06-30"}
 B = {"total": 388, "gift": 10, "recharge": 378}
 
 
+def test_projection_fingerprint_binds_economic_window_and_source_mask():
+    from copy import deepcopy
+    candidate = {"code": "frozen source", "direction": 1,
+                 "native_preflight_purpose": "source_qualified_projection_research",
+                 "native_evaluation_contract": {
+                     "input_window": W,
+                     "evaluation_window": {"start": "2024-05-01", "end": W["end"]},
+                     "formation_dates": ["2024-05-01", "2024-05-08"],
+                     "holding_end": W["end"],
+                     "source_qualification": {"path": "mask.parquet", "sha256": "a" * 64}}}
+    original = fingerprint(candidate, W, 5, 10)
+    for field in ("evaluation_window", "formation_dates", "holding_end", "source_qualification"):
+        changed = deepcopy(candidate)
+        changed["native_evaluation_contract"][field] = "changed"
+        assert fingerprint(changed, W, 5, 10) != original
+    with pytest.raises(ValueError, match="actual creation window"):
+        fingerprint(candidate, dict(W, start="2023-01-01"), 5, 10)
+    with pytest.raises(ValueError, match="exact Python"):
+        fingerprint(dict(candidate, formula="RANK(close)"), W, 5, 10)
+
+
+def test_old_fingerprints_stay_byte_identical():
+    import hashlib
+    import json
+    expected = hashlib.sha256(json.dumps({"code": None, "formula": C["formula"],
+                                         "direction": 1, "window": W,
+                                         "cycle": 5, "groups": 10}, sort_keys=True).encode()).hexdigest()
+    assert fingerprint(C, W, 5, 10) == expected
+    assert fingerprint(dict(C, native_preflight_purpose="source_qualified_transfer_research"), W, 5, 10) == expected
+
+
+def test_projection_create_sends_input_dates_and_rejects_changed_loading_window():
+    candidate = {"code": "frozen code", "direction": 1,
+                 "native_preflight_purpose": "source_qualified_projection_research",
+                 "native_evaluation_contract": {
+                     "input_window": W,
+                     "evaluation_window": {"start": "2024-05-01", "end": W["end"]}}}
+    client, calls = PandaClient({}), []
+    client.cli = lambda *args: calls.append(args) or {"factor_id": "f1"}
+    assert client.create(candidate, W, 5, 10, "F") == "f1"
+    args = calls[0]
+    assert args[args.index("--start-date") + 1] == "20240101"
+    assert args[args.index("--end-date") + 1] == "20240630"
+    assert "20240501" not in args
+    with pytest.raises(ValueError, match="actual creation window"):
+        client.create(candidate, dict(W, start="2024-05-01"), 5, 10, "F")
+    assert len(calls) == 1
+
+
 def test_large_frozen_python_source_uses_documented_file_mode(tmp_path):
     code = "# frozen public data\n" + "SOURCE = '" + "a" * 400000 + "'\n"
     path = tmp_path / "factor source.py"
@@ -282,6 +331,25 @@ def test_new_python_job_without_replay_proof_never_accesses_account(tmp_path):
     ledger = ExperimentLedger(tmp_path / "native-blocked.sqlite3")
     with pytest.raises(ValueError, match="native preflight receipt"):
         dispatch(candidate, W, config(), ledger, NoAccountClient())
+    assert ledger.jobs() == []
+
+
+def test_explicit_native_source_reader_replay_failure_precedes_account_access(tmp_path, monkeypatch):
+    from panda_alpha.native_preflight import NativePreflightError
+    candidate = {"candidate_id": "projected", "code": "class Candidate(Factor): pass", "direction": 1,
+                 "native_preflight_purpose": "source_qualified_projection_research",
+                 "native_evaluation_contract": {"input_window": W}}
+    def reader(path):
+        raise AssertionError("The verifier owns source replay")
+    seen = []
+    def verify(candidate_arg, window_arg, cycle, groups, *, fixture_reader=None):
+        seen.append((candidate_arg, window_arg, cycle, groups, fixture_reader))
+        raise NativePreflightError("Source input changed")
+    monkeypatch.setattr("panda_alpha.native_preflight.verify_native_preflight", verify)
+    ledger = ExperimentLedger(tmp_path / "reader-changed.sqlite3")
+    with pytest.raises(NativePreflightError, match="Source input changed"):
+        dispatch(candidate, W, config(), ledger, NoAccountClient(), native_fixture_reader=reader)
+    assert seen == [(candidate, W, 5, 10, reader)]
     assert ledger.jobs() == []
 
 
