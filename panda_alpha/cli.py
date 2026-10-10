@@ -229,6 +229,7 @@ def main(argv=None):
     account = sub.add_parser("account", help="Free account preflight, no factor runs")
     schedule = sub.add_parser("schedule", help="Preview experimental budget and quotas, no factor runs")
     schedule.add_argument("--candidates", required=True)
+    schedule.add_argument("--ledger", default="research_runs/experiments.sqlite3", help="Existing budget ledger; read-only preview")
     schedule.add_argument("--output", default="research_runs/compute_plan.json")
     launch = sub.add_parser("dispatch", help="Reserve once, persist factor/Run ID, never retry ambiguous dispatch")
     launch.add_argument("--candidates", required=True)
@@ -556,14 +557,15 @@ def main(argv=None):
             return
         finally:
             trial_ledger.close()
-    from .platform import PandaClient, ExperimentLedger, budget_plan, dispatch, fingerprint, resume
+    from .platform import PandaClient, ExperimentLedger, budget_plan, dispatch, fingerprint, resume, read_experiment_jobs
     client = PandaClient(cfg["platform"])
     if args.command == "account":
         balance = client.balance()
         count = client.cli("factor_list", "--limit", "1", "--no-detail")["total"]
         print_compact({"balance": balance, "factor_count": count, "runs_started": 0})
     elif args.command == "schedule":
-        plan = budget_plan(read(args.candidates)["candidates"], cfg["compute"], client.balance())
+        plan = budget_plan(read(args.candidates)["candidates"], cfg["compute"], client.balance(),
+                           jobs=read_experiment_jobs(args.ledger))
         write(args.output, plan)
         print_compact(plan)
     elif args.command == "dispatch":
@@ -583,7 +585,8 @@ def main(argv=None):
                 print_compact({"candidate": candidate, "fingerprint": fingerprint(candidate, window,
                                 cfg["research"]["cycle"], cfg["research"]["groups"]),
                                "window": window, "category": args.category,
-                               "budget": budget_plan([candidate], cfg["compute"], client.balance()), "runs_started": 0})
+                               "budget": budget_plan([candidate], cfg["compute"], client.balance(),
+                                                     jobs=read_experiment_jobs(args.ledger)), "runs_started": 0})
             else:
                 job = dispatch(candidate, window, cfg, ExperimentLedger(args.ledger), client, args.category,
                                before_dispatch=lambda: registry.record(candidate, window, cfg["research"]["cycle"], cfg["research"]["groups"]))

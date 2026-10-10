@@ -1,4 +1,4 @@
-"""Quota-aware official experimentation, distinct from portfolio admission.
+"""Budget-aware official experimentation, distinct from portfolio admission.
 
 SQLite reservations are atomic. An ambiguous dispatch is never automatically
 retried. Local reservations are not a server-side billing cap; gift-only dispatch
@@ -7,7 +7,7 @@ the risk of an estimated charge. This distinction is visible in every plan.
 """
 from __future__ import annotations
 
-from datetime import datetime, timezone, timedelta
+from datetime import date, datetime, timezone, timedelta
 import hashlib
 import json
 import math
@@ -16,6 +16,10 @@ from pathlib import Path
 import sqlite3
 import subprocess
 from typing import Any
+
+
+SOFT_RESEARCH_PENDING = frozenset({"full_a_coverage_pending", "official_pool_increment_pending",
+                                  "formal_admission_pending", "post_effective_B_pending"})
 
 
 def beijing_day() -> str:
@@ -123,7 +127,7 @@ class ExperimentLedger:
         if category not in ("source_probe", "exploration", "validation"):
             raise ValueError("Unknown research category")
         if not math.isfinite(ceiling) or ceiling <= 0:
-            raise ValueError("A positive current cost ceiling is required")
+            raise ValueError("A positive current cost reservation is required")
         day = day or beijing_day()
         self.db.execute("BEGIN IMMEDIATE")
         try:
@@ -137,6 +141,14 @@ class ExperimentLedger:
                 raise ValueError("Daily experiment budget exhausted")
             if ceiling > balance["total"]:
                 raise ValueError("Account balance below reservation")
+            billing = definition.get("billing_authorization", {})
+            recharge_reserved = max(0., ceiling - float(balance["gift"]))
+            if billing:
+                problem = _batch_limit_problem(self.jobs(), billing, ceiling, recharge_reserved,
+                                               additional_runs=1)
+                if problem:
+                    raise ValueError(problem)
+                definition = dict(definition, recharge_reservation=recharge_reserved)
             self.db.execute("INSERT INTO jobs (fingerprint,candidate_id,category,day,state,reserved,definition,balance_before) VALUES (?,?,?,?,?,?,?,?)",
                             (key, candidate["candidate_id"], category, day, "RESERVED", ceiling,
                              json.dumps(definition, sort_keys=True), json.dumps(balance)))
@@ -156,10 +168,32 @@ class ExperimentLedger:
             raise ValueError("Job changed concurrently or has an unexpected state")
 
 
+def read_experiment_jobs(path: str | Path) -> list[dict]:
+    """Inspect a budget ledger without creating or migrating it."""
+    path = Path(path).resolve()
+    if not path.is_file():
+        return []
+    with sqlite3.connect(path.as_uri() + "?mode=ro", uri=True) as connection:
+        connection.row_factory = sqlite3.Row
+        return [dict(row) for row in connection.execute("SELECT * FROM jobs ORDER BY rowid")]
+
+
 def _batch_authorization(authorization: Any, amount_field: str, minimum: float,
                          key: str | None = None, estimated_risk: bool = False) -> dict:
-    if (not isinstance(authorization, dict) or authorization.get("day") != beijing_day()
-            or not isinstance(authorization.get("batch_id"), str) or not authorization["batch_id"].strip()):
+    if (not isinstance(authorization, dict) or not isinstance(authorization.get("batch_id"), str)
+            or not authorization["batch_id"].strip()):
+        raise ValueError("Today's explicit scoped batch authorization is required")
+    first, last = authorization.get("valid_from"), authorization.get("valid_until")
+    if first is not None or last is not None:
+        try:
+            start, end = date.fromisoformat(first), date.fromisoformat(last)
+            today = date.fromisoformat(beijing_day())
+            valid = (start.isoformat() == first and end.isoformat() == last and start <= today <= end)
+        except (ValueError, TypeError):
+            valid = False
+        if not valid:
+            raise ValueError("Scoped batch authorization is outside its explicit finite validity period")
+    elif authorization.get("day") != beijing_day():
         raise ValueError("Today's explicit scoped batch authorization is required")
     fingerprints = authorization.get("fingerprints")
     if (not isinstance(fingerprints, list) or not fingerprints or
@@ -173,10 +207,86 @@ def _batch_authorization(authorization: Any, amount_field: str, minimum: float,
         raise ValueError("This definition/window is outside the authorized batch fingerprints")
     if estimated_risk and authorization.get("accept_estimated_charge_risk") is not True:
         raise ValueError("The concrete batch must explicitly accept estimated-charge risk")
+    if "max_runs" in authorization and (type(authorization["max_runs"]) is not int or authorization["max_runs"] <= 0):
+        raise ValueError("Batch max_runs must be a positive integer")
+    for field in ("max_total_credits", "max_recharge_credits"):
+        if field in authorization and (type(authorization[field]) not in (int, float)
+                or not math.isfinite(authorization[field]) or authorization[field] < 0):
+            raise ValueError(f"Batch {field} must be finite and nonnegative")
     return authorization
 
 
-def budget_plan(candidates: list[dict], compute: dict, balance: dict) -> dict:
+def _job_definition(job: dict) -> dict:
+    return json.loads(job["definition"]) if job.get("definition") else {}
+
+
+def _batch_usage(jobs: list[dict], batch_id: str, *, exclude_key: str | None = None) -> dict:
+    """Use actual settled charges, reserved unresolved amounts, and all attempts."""
+    total, recharge, runs = 0., 0., 0
+    for job in jobs:
+        if job["state"] == "CANCELLED" or job["fingerprint"] == exclude_key:
+            continue
+        definition = _job_definition(job)
+        permissions = definition.get("billing_authorization", {})
+        if not any(isinstance(value, dict) and value.get("batch_id") == batch_id
+                   for value in permissions.values()):
+            continue
+        runs += 1
+        charged = float(job["actual"] if job["actual"] is not None else job["reserved"])
+        total += charged
+        receipt = json.loads(job["receipt"]) if job.get("receipt") else {}
+        if "recharge_delta" in receipt:
+            debit = receipt["recharge_delta"]
+            if type(debit) not in (int, float) or not math.isfinite(debit) or debit < 0:
+                raise ValueError("Batch recharge settlement is not reconciled")
+            recharge += debit
+        elif job["actual"] is not None:
+            # An explicit receipt without funding buckets does not prove zero
+            # recharge. Conservatively consume the amount until reconciled.
+            recharge += charged if permissions.get("recharge") else 0.
+        else:
+            recharge += float(definition.get("recharge_reservation", 0.))
+    return {"total": total, "recharge": recharge, "runs": runs}
+
+
+def _batch_limit_problem(jobs: list[dict], permissions: dict, total: float,
+                         recharge: float, *, additional_runs: int = 0,
+                         exclude_key: str | None = None) -> str | None:
+    for authorization in permissions.values():
+        if not isinstance(authorization, dict):
+            continue
+        used = _batch_usage(jobs, authorization["batch_id"], exclude_key=exclude_key)
+        if "max_total_credits" in authorization and used["total"] + total > authorization["max_total_credits"] + 1e-9:
+            return "Confirmed batch total budget exhausted"
+        if "max_recharge_credits" in authorization and used["recharge"] + recharge > authorization["max_recharge_credits"] + 1e-9:
+            return "Confirmed batch recharge budget exhausted"
+        if "max_runs" in authorization and used["runs"] + additional_runs > authorization["max_runs"]:
+            return "Confirmed batch run count exhausted"
+    if recharge > 1e-9 and not permissions.get("recharge"):
+        return "Recharge debit has no explicit batch permission"
+    return None
+
+
+def _adaptive_estimate(compute: dict, jobs: list[dict]) -> float | None:
+    estimate = compute.get("planning_credit_estimate", compute.get("cost_ceiling"))
+    if estimate is not None and (type(estimate) not in (int, float) or not math.isfinite(estimate) or estimate <= 0):
+        raise ValueError("planning_credit_estimate must be a positive finite number")
+    if compute.get("cost_ceiling") is None and estimate is not None:
+        settled = [float(job["actual"]) for job in jobs if job["state"] == "SETTLED"
+                   and job.get("actual") is not None and job["actual"] > 0
+                   and _job_definition(job).get("cost_basis") == "authorized_estimate"]
+        if settled:
+            estimate = max(float(estimate), max(settled[-5:]))
+    return estimate
+
+
+def budget_plan(candidates: list[dict], compute: dict, balance: dict, *, jobs: list[dict] | None = None) -> dict:
+    """Preview caps or authorized estimates; shared-priority quotas are targets.
+
+    Supplying current ledger jobs accounts for already consumed daily/batch
+    budgets. Dispatch always supplies them and rechecks atomically at reserve.
+    """
+    jobs = jobs or []
     ceiling = compute.get("cost_ceiling")
     if ceiling is not None and (type(ceiling) not in (int, float) or not math.isfinite(ceiling) or ceiling <= 0):
         raise ValueError("cost_ceiling must be a positive finite number or null")
@@ -186,60 +296,119 @@ def budget_plan(candidates: list[dict], compute: dict, balance: dict) -> dict:
             raise ValueError(f"{name} must be finite and nonnegative")
     verified = bool(compute.get("cost_ceiling_verified_at") and compute.get("cost_ceiling_source"))
     enforceable = compute.get("server_enforced_cap", False)
-    estimated_risk_requested = compute.get("allow_estimated_billing", False)
+    capped = bool(ceiling and verified and enforceable is True)
+    estimated_risk_requested = compute.get("allow_estimated_billing", False) and not capped
     estimated_risk_authorized = False
+    estimate = _adaptive_estimate(compute, jobs)
+    new_estimate = ceiling is None and estimated_risk_requested
+    risk_authorization, recharge_authorization = None, None
     authorization_problem = None
     if estimated_risk_requested:
         try:
-            _batch_authorization(compute.get("estimated_billing_batch_authorization"), "max_total_credits",
-                                 float(compute["daily_credit_limit"]), estimated_risk=True)
+            risk_authorization = _batch_authorization(
+                compute.get("estimated_billing_batch_authorization"), "max_total_credits",
+                float(estimate or 0) if new_estimate else float(compute["daily_credit_limit"]), estimated_risk=True)
             estimated_risk_authorized = True
         except ValueError as exc:
             authorization_problem = str(exc)
     if compute.get("recharge_credit_limit", 0) > 0:
         try:
-            _batch_authorization(compute.get("recharge_batch_authorization"), "max_recharge_credits",
-                                 float(compute["recharge_credit_limit"]))
+            recharge_authorization = _batch_authorization(compute.get("recharge_batch_authorization"), "max_recharge_credits",
+                                                        float(compute["recharge_credit_limit"]))
         except ValueError as exc:
             authorization_problem = str(exc)
     limit = min(float(compute["daily_credit_limit"]), balance["gift"] + float(compute.get("recharge_credit_limit", 0)))
-    ready = bool(ceiling and verified and not authorization_problem and (enforceable or estimated_risk_authorized))
-    estimate = compute.get("planning_credit_estimate", ceiling)
-    if estimate is not None and (type(estimate) not in (int, float) or not math.isfinite(estimate) or estimate <= 0):
-        raise ValueError("planning_credit_estimate must be a positive finite number")
-    slots = int(limit // (ceiling if ready else estimate)) if (ready or estimate) else 0
+    run_slots = None
+    if new_estimate and risk_authorization and not authorization_problem:
+        used = _batch_usage(jobs, risk_authorization["batch_id"])
+        daily_spent = sum(float(job["actual"] if job["actual"] is not None else job["reserved"])
+                          for job in jobs if job["day"] == beijing_day() and job["state"] != "CANCELLED")
+        recharge_left = 0.
+        if recharge_authorization:
+            if recharge_authorization["batch_id"] != risk_authorization["batch_id"]:
+                authorization_problem = "Recharge and estimated-billing permissions must refer to the same confirmed batch"
+            else:
+                recharge_left = max(0., recharge_authorization["max_recharge_credits"] - used["recharge"])
+        limit = max(0., min(float(compute["daily_credit_limit"]) - daily_spent,
+                           risk_authorization["max_total_credits"] - used["total"],
+                           balance["gift"] + recharge_left))
+        maxima = [authorization["max_runs"] for authorization in (risk_authorization, recharge_authorization)
+                  if authorization and "max_runs" in authorization]
+        if maxima:
+            run_slots = max(0, min(maxima) - used["runs"])
+    cost_basis, reservation = None, None
+    if not authorization_problem:
+        if ceiling and verified and enforceable is True:
+            cost_basis, reservation = "enforced_cap", float(ceiling)
+        elif estimated_risk_authorized:
+            # Existing concretely authorized estimate batches may retain their
+            # old reservation field. A new estimate has its own evidence and
+            # never becomes a fictional service-side cost ceiling.
+            if ceiling and verified:
+                reservation = float(ceiling)
+            elif (estimate and isinstance(compute.get("planning_cost_source"), str)
+                  and compute["planning_cost_source"].strip()
+                  and isinstance(compute.get("estimate_verified_at"), str)
+                  and compute["estimate_verified_at"].strip()):
+                reservation = float(estimate)
+            if reservation:
+                cost_basis = "authorized_estimate"
+    ready = bool(cost_basis and reservation and not authorization_problem)
+    slots = int(limit // (reservation if ready else estimate)) if (ready or estimate) else 0
+    if run_slots is not None:
+        slots = min(slots, run_slots)
     fractions = {k: compute[f"{k}_fraction"] for k in ("source_probe", "exploration", "validation")}
     if any(type(f) not in (int, float) or not math.isfinite(f) or f < 0 for f in fractions.values()) or not math.isclose(sum(fractions.values()), 1):
         raise ValueError("Research category fractions must be nonnegative and sum to one")
-    quota = {k: max(1, round(slots * v)) if slots else 0 for k, v in fractions.items()}
+    allocation = compute.get("allocation_mode", "category_quota")
+    if allocation not in ("category_quota", "shared_priority"):
+        raise ValueError("Unknown research allocation mode")
+    quota = {k: (max(0 if allocation == "shared_priority" else 1, round(slots * v)) if slots else 0)
+             for k, v in fractions.items()}
     ordered, counters = [], dict.fromkeys(quota, 0)
-    for c in candidates:
+    ranked = list(candidates)
+    if allocation == "shared_priority":
+        for candidate in ranked:
+            priority = candidate.get("research_priority", 0)
+            if type(priority) not in (int, float) or not math.isfinite(priority):
+                raise ValueError("research_priority must be a finite number")
+        ranked.sort(key=lambda item: item.get("research_priority", 0), reverse=True)
+    for c in ranked:
         category = c.get("experiment_category", "exploration")
         if category not in quota:
             raise ValueError("Unknown experiment category")
-        if len(ordered) < slots and counters[category] < quota[category]:
+        if len(ordered) < slots and (allocation == "shared_priority" or counters[category] < quota[category]):
             ordered.append({"candidate_id": c["candidate_id"], "category": category})
             counters[category] += 1
     return {"date_beijing": beijing_day(), "budget": limit, "cost_ceiling": ceiling,
             "dispatch_ready": ready, "server_enforced_cap": enforceable,
+            "cost_basis": cost_basis, "reservation_credit_estimate": reservation,
             "planning_only_estimate": None if ready else estimate,
             "blocker": None if ready else authorization_problem or "Current pricing/cap evidence or estimated-billing authorization required",
             "authorization_scope": "Exact fingerprints are checked again at dispatch",
+            "allocation_mode": allocation,
+            "allocation_note": ("Category fractions are targets; spare slots, including zero-fraction categories, may be borrowed"
+                                if allocation == "shared_priority" else "Category quotas limit selection"),
             "quota": quota, "selected": ordered, "unspent_slots": max(0, slots - len(ordered)),
-            "admission_gates_apply_at": "validation/admission, never source probes or exploration selection"}
+            "official_test_not_pool_admission": True,
+            "admission_gates_apply_at": "Formal pool admission only; official research categories require executable research evidence"}
 
 
 def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedger, client: PandaClient,
              category: str = "exploration", *, before_dispatch=None) -> dict:
     research, compute = config["research"], config["compute"]
     cycle, groups = research["cycle"], research["groups"]
-    if candidate.get("direction") not in (0, 1):
+    if type(candidate.get("direction")) is not int or candidate.get("direction") not in (0, 1):
         raise ValueError("Direction must have frozen evidence before execution")
     requirements = candidate.get("data_requirements", [])
+    informative_research = (category in ("source_probe", "exploration", "validation") and
+                            all(isinstance(candidate.get(field), str) and candidate[field].strip()
+                                for field in ("research_question", "decision_if_pass", "decision_if_fail")))
+    unresolved = [r for r in requirements if not (informative_research and isinstance(r, str) and r in SOFT_RESEARCH_PENDING)]
     if (candidate.get("source", "").startswith("historical") or
         candidate.get("provenance") == "historical_memory_requires_revalidation" or
         any("requires_source:" in str(r) or "revalidate_legacy" in str(r) or "_pending" in str(r)
-            or "direction_evidence" in str(r) or "direction_requires_evidence" in str(r) for r in requirements)):
+            or "direction_evidence" in str(r) or "direction_requires_evidence" in str(r) for r in unresolved)):
         raise ValueError("Resolve legacy operator/source/direction evidence before official execution")
     key = fingerprint(candidate, window, cycle, groups)
     if ledger.get(key):
@@ -248,32 +417,45 @@ def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedg
     if candidate.get("code") and not candidate.get("formula"):
         from .native_preflight import verify_native_preflight
         native_preflight = verify_native_preflight(candidate, window, cycle, groups)
-    recharge_authorization = None
+    recharge_authorization, risk_authorization = None, None
     if compute.get("recharge_credit_limit", 0) > 0:
         recharge_authorization = _batch_authorization(
             compute.get("recharge_batch_authorization"), "max_recharge_credits",
             float(compute["recharge_credit_limit"]), key)
-    if compute.get("allow_estimated_billing", False):
+    verified_cap = (compute.get("cost_ceiling") and compute.get("cost_ceiling_verified_at")
+                    and compute.get("cost_ceiling_source") and compute.get("server_enforced_cap") is True)
+    if compute.get("allow_estimated_billing", False) and not verified_cap:
+        minimum_risk = (_adaptive_estimate(compute, ledger.jobs()) or 0) if compute.get("cost_ceiling") is None else float(compute["daily_credit_limit"])
         risk_authorization = _batch_authorization(
             compute.get("estimated_billing_batch_authorization"), "max_total_credits",
-            float(compute["daily_credit_limit"]), key, estimated_risk=True)
+            minimum_risk, key, estimated_risk=True)
         if recharge_authorization and recharge_authorization["batch_id"] != risk_authorization["batch_id"]:
             raise ValueError("Recharge and estimated-billing permissions must refer to the same confirmed batch")
     balance = client.balance()
-    plan = budget_plan([dict(candidate, experiment_category=category)], compute, balance)
+    plan = budget_plan([dict(candidate, experiment_category=category)], compute, balance, jobs=ledger.jobs())
     if not plan["dispatch_ready"] or not plan["selected"]:
         raise ValueError(plan["blocker"] or "No authorized budget slot")
-    ceiling = float(compute["cost_ceiling"])
+    ceiling = float(plan["reservation_credit_estimate"])
     if compute["billing_mode"] == "gift_only" and balance["gift"] < ceiling:
         raise ValueError("Gift balance cannot fund the next reservation")
     definition = {"candidate": candidate, "window": window, "cycle": cycle, "groups": groups}
+    permissions = {name: authorization for name, authorization in
+                   (("estimated_billing", risk_authorization), ("recharge", recharge_authorization))
+                   if authorization is not None}
+    if permissions:
+        definition["billing_authorization"] = permissions
+    definition["cost_basis"] = plan["cost_basis"]
+    definition["cost_ceiling"] = compute.get("cost_ceiling")
+    definition["reservation_credit_estimate"] = ceiling
+    definition["daily_credit_limit"] = compute["daily_credit_limit"]
+    definition["official_test_not_pool_admission"] = True
     if native_preflight is not None:
         definition["native_preflight"] = native_preflight
     if before_dispatch is not None:
         # Definition registration precedes any account mutation or service run.
         # A failed registration must not reserve funds or create a service job.
         before_dispatch()
-    ledger.reserve(key, candidate, definition, category, ceiling, plan["budget"], balance)
+    ledger.reserve(key, candidate, definition, category, ceiling, float(compute["daily_credit_limit"]), balance)
     # Unknown responses remain ambiguous; do not silently retry account mutations.
     ledger.transition(key, "RESERVED", "CREATING")
     factor_id = client.create(candidate, window, cycle, groups, "PA-" + key[:16])
@@ -345,12 +527,35 @@ def resume(key: str, ledger: ExperimentLedger, client: PandaClient, output_dir: 
     receipt = {"run_id": job["run_id"], "status": status, "actual": actual,
                "gift_delta": before["gift"] - after["gift"],
                "recharge_delta": before["recharge"] - after["recharge"],
+               "free_delta": before.get("free", 0.) - after.get("free", 0.),
                "attribution": "serial balance delta, provisional; external spend/grants may confound",
                "reservation_overrun": actual > job["reserved"], "day_before": job["day"], "day_after": beijing_day(),
                **failure}
     if receipt["day_before"] != receipt["day_after"]:
         return {"state": "BILLING_REVIEW", "receipt": receipt, "action": "Daily expiry/grant prevents automatic balance-delta settlement"}
-    if actual > job["reserved"] or receipt["recharge_delta"] > 0:
-        return {"state": "BILLING_REVIEW", "receipt": receipt, "action": "Review budget overrun/recharge debit; future dispatch remains locked"}
+    buckets = (receipt["gift_delta"], receipt["recharge_delta"], receipt["free_delta"])
+    if (any(type(value) not in (int, float) or not math.isfinite(value) or value < -1e-9 for value in buckets)
+            or any(after.get(name, 0.) < -1e-9 for name in ("gift", "recharge", "free"))
+            or not math.isclose(sum(buckets), actual, rel_tol=1e-9, abs_tol=1e-7)):
+        return {"state": "BILLING_REVIEW", "receipt": receipt,
+                "action": "Funding bucket deltas do not reconcile; future dispatch remains locked"}
+    definition = _job_definition(job)
+    permissions = definition.get("billing_authorization", {})
+    problem = _batch_limit_problem(ledger.jobs(), permissions, actual, max(0., receipt["recharge_delta"]),
+                                   exclude_key=key)
+    flexible_estimate = (definition.get("cost_basis") == "authorized_estimate"
+                         and definition.get("cost_ceiling") is None and permissions.get("estimated_billing"))
+    if flexible_estimate:
+        daily_used = sum(float(row["actual"] if row["actual"] is not None else row["reserved"])
+                         for row in ledger.jobs() if row["day"] == job["day"]
+                         and row["fingerprint"] != key and row["state"] != "CANCELLED")
+        if daily_used + actual > definition["daily_credit_limit"] + 1e-9:
+            problem = "Daily experiment budget exceeded by actual settlement"
+        receipt["estimate_overrun"] = actual > job["reserved"] + 1e-9
+    elif actual > job["reserved"] + 1e-9:
+        problem = "Enforced or legacy reservation ceiling exceeded"
+    if problem:
+        return {"state": "BILLING_REVIEW", "receipt": receipt,
+                "action": problem + "; future dispatch remains locked"}
     ledger.transition(key, job["state"], "SETTLED", actual=actual, receipt=json.dumps(receipt))
     return ledger.get(key)

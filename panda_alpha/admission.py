@@ -3,7 +3,7 @@ import math
 
 
 def assess_admission(evidence: dict, policy: dict, *, evidence_directory=".", window_check=None) -> dict:
-    if policy.get("identity") == "pool_admission_v1_20261010":
+    if policy.get("identity") in ("pool_admission_v1_20261010", "pool_admission_v2_20261010_balanced"):
         from .pool_admission import assess_pool_admission
         return assess_pool_admission(evidence, policy, evidence_directory=evidence_directory,
                                      window_check=window_check)

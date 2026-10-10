@@ -48,6 +48,9 @@
     "daily_credit_limit": 10,
     "recharge_credit_limit": 0,
     "planning_credit_estimate": 4,
+    "planning_cost_source": "Refresh from owned settled receipts before approving an estimated batch; not a service price or cap",
+    "estimate_verified_at": null,
+    "allocation_mode": "shared_priority",
     "source_probe_fraction": 0.3,
     "exploration_fraction": 0.4,
     "validation_fraction": 0.3,
@@ -56,8 +59,10 @@
     "cost_ceiling_verified_at": null,
     "cost_ceiling_source": null,
     "server_enforced_cap": false,
-    "billing_mode": "gift_only",
-    "allow_estimated_billing": false
+    "billing_mode": "gift_priority",
+    "allow_estimated_billing": true,
+    "estimated_billing_batch_authorization": null,
+    "recharge_batch_authorization": null
   },
   "platform": {
     "cli_command": [
@@ -73,7 +78,7 @@
     "api_key_env": "PANDA_ALPHA_LLM_KEY"
   },
   "admission": {
-    "policy_file": "config/pool-admission.v1.json",
+    "policy_file": "config/pool-admission.v2.json",
     "minimum_net_sharpe": 2,
     "one_way_costs": [
       0.003,

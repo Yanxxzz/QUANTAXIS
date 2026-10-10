@@ -17,6 +17,7 @@ from .registry import verify_artifact
 
 
 IDENTITY = "pool_admission_v1_20261010"
+BALANCED_IDENTITY = "pool_admission_v2_20261010_balanced"
 CONTRACTS = ("source_coverage", "point_in_time_universe", "execution_audit",
              "size_stress", "temporal_stability", "actual_factor_diversity",
              "official_transfer", "direction_parity", "current_pool_snapshot",
@@ -143,14 +144,73 @@ def _performance(rows, dates, benchmark):
     return whole, returns, turnover
 
 
+def _grade_increment(comparisons, policy, complete_months):
+    """Grade complete supplied pool evidence without weakening its provenance.
+
+    Targets identify a strong improvement. A small positive improvement or a
+    documented return/risk/cost tradeoff can justify further validation; neither
+    is automatic admission or an official points claim.
+    """
+    gate = policy["portfolio_gate"]
+    review, tradeoffs = [], []
+    primary = comparisons["0.003"]
+    old, new = primary["baseline"], primary["proposed"]
+    rejected = []
+    if new["Rp"] <= 0 or new["relative_wealth_excess"] <= 0 or new["SR_ann"] <= 0:
+        rejected.append("portfolio@0.003")
+    if complete_months < gate["recent_months"]:
+        tradeoffs.append("recent_window_shorter_than_target")
+    if primary["CAGR_delta"] <= 0:
+        tradeoffs.append("net_CAGR_increment_not_positive@0.003")
+    if primary["Sharpe_delta"] < 0:
+        tradeoffs.append("net_Sharpe_declined@0.003")
+    elif primary["Sharpe_delta"] < gate["sharpe_delta_min"]:
+        review.append("Sharpe_increment_below_strong_target@0.003")
+    any_improvement = False
+    for cost, comparison in comparisons.items():
+        before, after = comparison["baseline"], comparison["proposed"]
+        risk = comparison["risk_review"]
+        risk_improvement = any(risk["proposed"][key] < risk["baseline"][key] for key in risk["baseline"])
+        fee_improvement = after["fee_total"] < before["fee_total"]
+        any_improvement |= (comparison["CAGR_delta"] > 0 or comparison["Sharpe_delta"] > 0 or
+                            comparison["AC_delta"] > 0 or risk_improvement or fee_improvement)
+        if cost == "0.005" and comparison["CAGR_delta"] < gate["cagr_delta50_min"]:
+            tradeoffs.append("cost_stress_return_declined@0.005")
+        if cost == "0.005" and (after["Rp"] <= 0 or after["relative_wealth_excess"] <= 0 or after["SR_ann"] <= 0):
+            tradeoffs.append("cost_stress_economics_not_positive@0.005")
+        if comparison["recent_returns"]["proposed"] < comparison["recent_returns"]["baseline"]:
+            tradeoffs.append(f"recent_net_return_declined@{cost}")
+        if comparison["recent_AC_delta"] <= 0:
+            tradeoffs.append(f"recent_AC_increment_not_positive@{cost}")
+        if comparison["AC_delta"] <= 0:
+            tradeoffs.append(f"AC_increment_not_positive_or_saturated@{cost}")
+        elif comparison["AC_gain"] is None:
+            tradeoffs.append(f"AC_relative_target_undefined@{cost}")
+        elif comparison["AC_gain"] < gate["ac_gain_min"]:
+            review.append(f"AC_increment_below_strong_target@{cost}")
+        if any(risk["proposed"][key] > risk["baseline"][key] for key in risk["baseline"]):
+            tradeoffs.append(f"risk_deterioration@{cost}")
+        if after["fee_total"] > before["fee_total"]:
+            tradeoffs.append(f"paid_fees_increased@{cost}")
+    if not any_improvement:
+        rejected.append("no_explanatory_pool_increment")
+    review.extend(tradeoffs)
+    tier = ("rejected" if rejected else "tradeoff_review" if tradeoffs else
+            "small_increment_review" if review else "strong_increment")
+    return {"tier": tier, "review_items": sorted(set(review)), "rejected": rejected}
+
+
 def assess_pool_admission(evidence: dict, policy: dict, *, evidence_directory=".",
                           window_check=None) -> dict:
     pending, failed, economic = [], [], []
     metrics, receipts = {}, {}
-    result = {"policy": IDENTITY, "effective_policy_sha256": plan_digest(policy),
+    balanced = policy.get("identity") == BALANCED_IDENTITY
+    result = {"policy": policy.get("identity"), "effective_policy_sha256": plan_digest(policy),
               "candidate_ids": evidence.get("plan", {}).get("candidate_ids", []),
               "official_total_points_gain_verified": False, "pool_operations": 0,
               "paid_runs": 0, "research_exploration_allowed": True}
+    if balanced:
+        result.update(tier="pending", review_items=[], official_experiment_qualification="separate_research_and_budget_review")
 
     def finish():
         result.update(failed=sorted(set(failed)), pending=sorted(set(pending)),
@@ -158,9 +218,11 @@ def assess_pool_admission(evidence: dict, policy: dict, *, evidence_directory=".
         result["status"] = ("rejected" if failed else "pending" if pending else
                             "eligible_for_review" if result.get("forward_validation_verified") else
                             "ready_for_shadow_validation")
+        if balanced and (failed or pending):
+            result["tier"] = "rejected" if failed else "pending"
         return result
 
-    if evidence.get("schema_version") != 1 or policy.get("identity") != IDENTITY:
+    if evidence.get("schema_version") != 1 or policy.get("identity") not in (IDENTITY, BALANCED_IDENTITY):
         pending.append("prospective_evidence_schema")
         return finish()
     plan = evidence.get("plan", {})
@@ -290,7 +352,10 @@ def assess_pool_admission(evidence: dict, policy: dict, *, evidence_directory=".
                     if days[0] >= start and days[-1] <= end}
         recent_count = policy["portfolio_gate"]["recent_months"]
         if len(complete) < recent_count:
-            pending.append(f"complete_months: need at least {recent_count} for the frozen recent window")
+            if not balanced:
+                pending.append(f"complete_months: need at least {recent_count} for the frozen recent window")
+        if not complete:
+            raise ValueError("At least one independently certified complete month is required")
         point_rows = points.get("months", [])
         if [row.get("month") for row in point_rows] != list(complete):
             raise ValueError("A evidence must match every paired complete calendar month")
@@ -327,41 +392,48 @@ def assess_pool_admission(evidence: dict, policy: dict, *, evidence_directory=".
                     monthly[side][month] = c
             old, new = summaries["baseline"], summaries["proposed"]
             delta_cagr, delta_sharpe = new["CAGR"] - old["CAGR"], new["SR_ann"] - old["SR_ann"]
-            if new["Rp"] <= 0 or new["relative_wealth_excess"] <= 0 or new["SR_ann"] <= 0:
+            if not balanced and (new["Rp"] <= 0 or new["relative_wealth_excess"] <= 0 or new["SR_ann"] <= 0):
                 economic.append(f"portfolio@{cost}")
-            if cost == .003 and (delta_cagr <= policy["portfolio_gate"]["cagr_delta30_min"] or
+            if not balanced and cost == .003 and (delta_cagr <= policy["portfolio_gate"]["cagr_delta30_min"] or
                                   delta_sharpe < policy["portfolio_gate"]["sharpe_delta_min"]):
                 economic.append("portfolio_increment@0.003")
-            if cost == .005 and delta_cagr < policy["portfolio_gate"]["cagr_delta50_min"]:
+            if not balanced and cost == .005 and delta_cagr < policy["portfolio_gate"]["cagr_delta50_min"]:
                 economic.append("cost_stress@0.005")
             recent_months = list(complete)[-recent_count:]
             recent_dates = [day for month in recent_months for day in complete[month]]
             recent_return = {side: math.prod(1 + daily[side][indexes[day]] for day in recent_dates) - 1
                              for side in ("baseline", "proposed")}
-            if recent_return["proposed"] < recent_return["baseline"]:
+            if not balanced and recent_return["proposed"] < recent_return["baseline"]:
                 economic.append(f"recent_return@{cost}")
             old_ac = sum(row["AC_points_proxy"] for row in monthly["baseline"].values())
             new_ac = sum(row["AC_points_proxy"] for row in monthly["proposed"].values())
             recent_delta = sum(monthly["proposed"][m]["AC_points_proxy"] - monthly["baseline"][m]["AC_points_proxy"]
                                for m in recent_months)
             if old_ac <= 0:
-                pending.append(f"AC baseline denominator@{cost}")
-            elif new_ac / old_ac - 1 < policy["portfolio_gate"]["ac_gain_min"] or recent_delta <= 0:
+                if not balanced:
+                    pending.append(f"AC baseline denominator@{cost}")
+            elif not balanced and (new_ac / old_ac - 1 < policy["portfolio_gate"]["ac_gain_min"] or recent_delta <= 0):
                 economic.append(f"monthly_AC_increment@{cost}")
             risk = {side: {"full_drawdown": summaries[side]["MaxDD"],
                            "negative_months": sum(row["Rp"] < 0 for row in monthly[side].values()),
                            "NC_zero_months": sum(row["NC"] == 0 for row in monthly[side].values()),
                            "worst_month_drawdown": max(row["MaxDD_month"] for row in monthly[side].values())}
                     for side in ("baseline", "proposed")}
-            if any(risk["proposed"][key] > risk["baseline"][key] for key in risk["baseline"]):
+            if not balanced and any(risk["proposed"][key] > risk["baseline"][key] for key in risk["baseline"]):
                 pending.append(f"risk_tradeoff_review@{cost}: drawdown or negative/NC-zero months increased")
             comparisons[str(cost)] = {"baseline": old, "proposed": new, "CAGR_delta": delta_cagr,
                                       "Sharpe_delta": delta_sharpe, "recent_returns": recent_return,
                                       "AC_gain": new_ac / old_ac - 1 if old_ac > 0 else None,
                                       "recent_AC_delta": recent_delta, "risk_review": risk, "months": monthly}
+            if balanced:
+                comparisons[str(cost)]["AC_delta"] = new_ac - old_ac
         metrics["comparisons"] = comparisons
         metrics["complete_months"] = list(complete)
         metrics["B"] = {"status": "pending", "reason": "Post-effective B and its backend denominator require separate evidence; historical A cannot fill B"}
+        if balanced:
+            grade = _grade_increment(comparisons, policy, len(complete))
+            result.update(tier=grade["tier"], review_items=grade["review_items"])
+            economic.extend(grade["rejected"])
         if any(not item.startswith("risk_tradeoff_review@") for item in pending):
             metrics["economic_observations_pending_certification"] = list(economic)
             economic.clear()
@@ -379,6 +451,9 @@ def assess_pool_admission(evidence: dict, policy: dict, *, evidence_directory=".
             try:
                 result["forward_validation"] = _forward_review(shadow, plan, baseline, proposed, policy, contracts)
                 result["forward_validation_verified"] = True
+                if balanced:
+                    result["review_items"] = sorted(set(result["review_items"] + result["forward_validation"].get("review_items", [])))
+                    result["statistical_validation_verified"] = False
             except EconomicRejection as exc:
                 failed.append(f"forward_shadow: {exc}")
                 economic.append("forward_shadow")
@@ -449,7 +524,9 @@ def _forward_review(shadow, plan, baseline, proposed, policy, contracts):
         if (all(baseline[key][field] == proposed[key][field] for field in ("version", "definition_sha256", "direction")) and
                 b_by_member["baseline"][key] != b_by_member["proposed"][key]):
             raise ValueError("Unchanged members must use identical original B records")
-    comparisons = {}
+    comparisons, review_items = {}, []
+    balanced = policy.get("identity") == BALANCED_IDENTITY
+    forward_increment = False
     for cost in policy["one_way_costs"]:
         statistics_by_side, c_by_side = {}, {}
         for side, members in (("baseline", baseline), ("proposed", proposed)):
@@ -469,8 +546,19 @@ def _forward_review(shadow, plan, baseline, proposed, policy, contracts):
                     a_identity["baseline"][key] != a_identity["proposed"][key]):
                 raise ValueError("Unchanged forward members must preserve original A scores")
         old, new = statistics_by_side["baseline"], statistics_by_side["proposed"]
-        if new["Rp"] <= 0 or new["relative_wealth_excess"] <= 0 or new["SR_ann"] <= 0 or new["Rp"] < old["Rp"]:
+        if (not balanced and (new["Rp"] <= 0 or new["relative_wealth_excess"] <= 0 or new["SR_ann"] <= 0 or new["Rp"] < old["Rp"])):
             raise EconomicRejection("Forward cost-adjusted pool economics did not confirm")
+        if balanced:
+            if cost == .003 and (new["Rp"] <= 0 or new["relative_wealth_excess"] <= 0 or new["SR_ann"] <= 0):
+                raise EconomicRejection("Forward standard-cost pool has no positive net economics")
+            if new["Rp"] < old["Rp"]:
+                review_items.append(f"forward_net_return_declined@{cost}")
+            if new["SR_ann"] < old["SR_ann"] or new["MaxDD"] > old["MaxDD"]:
+                review_items.append(f"forward_risk_tradeoff@{cost}")
+            if new["fee_total"] > old["fee_total"]:
+                review_items.append(f"forward_paid_fees_increased@{cost}")
+            if cost == .005 and (new["Rp"] <= 0 or new["relative_wealth_excess"] <= 0 or new["SR_ann"] <= 0):
+                review_items.append("forward_cost_stress_economics_not_positive@0.005")
         deltas = {}
         for denominator in ("all_effective", "eligible_only"):
             normalized = {}
@@ -480,7 +568,20 @@ def _forward_review(shadow, plan, baseline, proposed, policy, contracts):
                 nb = min(max(sum(valid) / count / .06, 0), 1) if count else 0
                 normalized[side] = .2 * c_by_side[side]["NA"] + .35 * nb + .45 * c_by_side[side]["NC"]
             deltas[denominator] = normalized["proposed"] - normalized["baseline"]
-        if min(deltas.values()) <= 0:
+        if not balanced and min(deltas.values()) <= 0:
             raise EconomicRejection("Forward score improvement does not survive conservative B denominator/dilution scenarios")
+        if balanced:
+            if min(deltas.values()) <= 0:
+                review_items.append(f"forward_score_or_B_dilution_tradeoff@{cost}")
+            forward_increment |= (new["Rp"] > old["Rp"] or new["SR_ann"] > old["SR_ann"] or
+                                  new["MaxDD"] < old["MaxDD"] or new["fee_total"] < old["fee_total"] or
+                                  max(deltas.values()) > 0)
         comparisons[str(cost)] = {"metrics": statistics_by_side, "score_delta_scenarios": deltas}
-    return {"scope": "shadow_proxy_not_official_B_or_total_points", "month": shadow["month"], "comparisons": comparisons}
+    if balanced and not forward_increment:
+        raise EconomicRejection("Forward pool has no explanatory net-return, score, risk or cost increment")
+    result = {"scope": "shadow_proxy_not_official_B_or_total_points", "month": shadow["month"], "comparisons": comparisons}
+    if balanced:
+        result.update(review_items=sorted(set(review_items)), manual_review_required=True,
+                      statistical_validation_verified=False,
+                      IC_interpretation="Two completed IC records only make ICIR computable; they do not establish statistical reliability")
+    return result

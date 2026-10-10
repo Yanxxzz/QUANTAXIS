@@ -1,6 +1,18 @@
 import pytest
 
-from panda_alpha.platform import PandaClient, ExperimentLedger, beijing_day, budget_plan, dispatch, fingerprint, resume, settle_receipt
+from panda_alpha.platform import PandaClient, ExperimentLedger, beijing_day, budget_plan, dispatch, fingerprint, resume, settle_receipt, read_experiment_jobs
+
+
+def test_budget_preview_reads_existing_jobs_and_does_not_create_a_missing_ledger(tmp_path):
+    absent = tmp_path / 'absent.sqlite3'
+    assert read_experiment_jobs(absent) == []
+    assert not absent.exists()
+    path = tmp_path / 'budget ledger.sqlite3'
+    ledger = ExperimentLedger(path)
+    ledger.reserve('fixture', {'candidate_id': 'BUDGET_PREVIEW'}, {}, 'exploration', 2, 10,
+                   {'gift': 10, 'total': 10})
+    ledger.db.close()
+    assert read_experiment_jobs(path)[0]['reserved'] == 2
 
 
 C = {"candidate_id": "P1", "formula": "RANK(close)", "direction": 1}
@@ -57,6 +69,15 @@ def test_gift_only_without_server_cap_is_pending():
     compute = config()["compute"]
     compute["server_enforced_cap"] = False
     assert not budget_plan([C], compute, B)["dispatch_ready"]
+
+
+def test_estimate_support_does_not_demand_risk_permission_when_a_real_cap_is_available(tmp_path):
+    cfg = config()
+    cfg['compute']['allow_estimated_billing'] = True
+    plan = budget_plan([C], cfg['compute'], B)
+    assert plan['dispatch_ready'] and plan['cost_basis'] == 'enforced_cap'
+    client = FakeClient()
+    assert dispatch(C, W, cfg, ExperimentLedger(tmp_path / 'capped.sqlite3'), client)['run_id'] == 'r1'
 
 
 def test_resume_does_not_dispatch_twice(tmp_path):
@@ -307,4 +328,197 @@ def test_failed_python_receipt_flag_cannot_reach_account(tmp_path):
     ledger = ExperimentLedger(tmp_path / "failed-proof.sqlite3")
     with pytest.raises(ValueError, match="no successful replay proof"):
         dispatch(candidate, W, config(), ledger, NoAccountClient())
+    assert ledger.jobs() == []
+
+
+def estimated_config(candidates=None, total=10, estimate=2, recharge=0, max_runs=None):
+    candidates = candidates or [C]
+    cfg = config()
+    cfg["compute"].update(cost_ceiling=None, server_enforced_cap=False,
+                          allow_estimated_billing=True, planning_credit_estimate=estimate,
+                          planning_cost_source="Synthetic matched settled billing fixture",
+                          estimate_verified_at="2026-10-10T00:00:00+08:00",
+                          allocation_mode="shared_priority", recharge_credit_limit=recharge,
+                          billing_mode="gift_first" if recharge else "gift_only")
+    risk = dict(authorization(fingerprint(C, W, 5, 10), "max_total_credits", total),
+                fingerprints=[fingerprint(candidate, W, 5, 10) for candidate in candidates],
+                accept_estimated_charge_risk=True)
+    if max_runs is not None:
+        risk["max_runs"] = max_runs
+    cfg["compute"]["estimated_billing_batch_authorization"] = risk
+    if recharge:
+        cfg["compute"]["recharge_batch_authorization"] = dict(
+            authorization(fingerprint(C, W, 5, 10), "max_recharge_credits", recharge),
+            fingerprints=list(risk["fingerprints"]))
+    return cfg
+
+
+def test_authorized_estimate_with_null_cap_can_use_a_small_batch_below_daily_limit(tmp_path):
+    import json
+    cfg = estimated_config(total=4)
+    plan = budget_plan([C], cfg["compute"], B)
+    assert plan["dispatch_ready"]
+    assert plan["cost_ceiling"] is None and not plan["server_enforced_cap"]
+    assert plan["cost_basis"] == "authorized_estimate"
+    assert plan["reservation_credit_estimate"] == 2
+    assert plan["budget"] == 4
+    assert plan["official_test_not_pool_admission"]
+    ledger, client = ExperimentLedger(tmp_path / "estimate.sqlite3"), FakeClient()
+    job = dispatch(C, W, cfg, ledger, client)
+    definition = json.loads(job["definition"])
+    assert job["reserved"] == 2
+    assert definition["billing_authorization"]["estimated_billing"]["max_total_credits"] == 4
+    assert definition["cost_ceiling"] is None
+    assert client.calls == client.started == 1
+
+
+@pytest.mark.parametrize("field", ["planning_cost_source", "estimate_verified_at"])
+def test_null_cap_estimate_without_its_cost_evidence_stays_planning_only(field):
+    cfg = estimated_config()
+    cfg["compute"][field] = None
+    plan = budget_plan([C], cfg["compute"], B)
+    assert not plan["dispatch_ready"]
+    assert plan["reservation_credit_estimate"] is None
+
+
+def test_shared_priority_borrows_unused_slots_and_zero_fraction_does_not_disable_research():
+    candidates = [dict(C, candidate_id=f"P{i}") for i in range(5)]
+    compute = config()["compute"]
+    assert len(budget_plan(candidates, compute, B)["selected"]) == 2
+    compute["allocation_mode"] = "shared_priority"
+    assert len(budget_plan(candidates, compute, B)["selected"]) == 5
+    compute.update(source_probe_fraction=0, exploration_fraction=1, validation_fraction=0)
+    candidates[3].update(experiment_category="source_probe", research_priority=10)
+    plan = budget_plan(candidates, compute, B)
+    assert plan["quota"]["source_probe"] == 0
+    assert plan["selected"][0] == {"candidate_id": "P3", "category": "source_probe"}
+    assert len(plan["selected"]) == 5
+
+
+def test_explicit_finite_batch_period_works_but_old_day_permission_expires(tmp_path, monkeypatch):
+    import panda_alpha.platform as platform
+    monkeypatch.setattr(platform, "beijing_day", lambda: "2026-10-11")
+    cfg = estimated_config(total=4)
+    risk = cfg["compute"]["estimated_billing_batch_authorization"]
+    risk["day"] = "2026-10-10"
+    assert not budget_plan([C], cfg["compute"], B)["dispatch_ready"]
+    with pytest.raises(ValueError, match="scoped batch"):
+        dispatch(C, W, cfg, ExperimentLedger(tmp_path / "expired.sqlite3"), NoAccountClient())
+    risk.update(valid_from="2026-10-10", valid_until="2026-10-12")
+    assert budget_plan([C], cfg["compute"], B)["dispatch_ready"]
+    risk["valid_until"] = "2026-10-10"
+    assert not budget_plan([C], cfg["compute"], B)["dispatch_ready"]
+
+
+def test_approved_recharge_settles_and_two_credit_batch_limit_is_cumulative(tmp_path):
+    import json
+    candidates = [dict(C, candidate_id=f"R{i}", formula=f"RANK(close)+{i}") for i in range(3)]
+    cfg = estimated_config(candidates, total=3, estimate=1, recharge=2)
+    ledger, client = ExperimentLedger(tmp_path / "recharge.sqlite3"), FakeClient()
+    client.remaining = {"total": 10, "gift": 0, "recharge": 10}
+    for i in range(2):
+        job = dispatch(candidates[i], W, cfg, ledger, client)
+        client.remaining = {"total": 9 - i, "gift": 0, "recharge": 9 - i}
+        result = resume(job["fingerprint"], ledger, client, tmp_path / "outputs")
+        assert result["state"] == "SETTLED"
+        assert json.loads(result["receipt"])["recharge_delta"] == 1
+    plan = budget_plan([candidates[2]], cfg["compute"], client.remaining, jobs=ledger.jobs())
+    assert plan["budget"] == 0 and plan["selected"] == []
+    with pytest.raises(ValueError, match="budget slot"):
+        dispatch(candidates[2], W, cfg, ledger, client)
+    assert client.calls == client.started == 2
+    assert sum(json.loads(job["receipt"])["recharge_delta"] for job in ledger.jobs()) == 2
+
+
+def test_estimate_overrun_within_authorized_batch_settles_and_adapts_next_reservation(tmp_path):
+    import json
+    second = dict(C, candidate_id="P2", formula="RANK(volume)")
+    cfg = estimated_config([C, second], total=8, estimate=2)
+    ledger, client = ExperimentLedger(tmp_path / "adaptive.sqlite3"), FakeClient()
+    job = dispatch(C, W, cfg, ledger, client)
+    client.remaining = {"total": 385, "gift": 7, "recharge": 378}
+    result = resume(job["fingerprint"], ledger, client, tmp_path / "outputs")
+    assert result["state"] == "SETTLED" and result["actual"] == 3
+    assert json.loads(result["receipt"])["estimate_overrun"]
+    plan = budget_plan([second], cfg["compute"], client.remaining, jobs=ledger.jobs())
+    assert plan["reservation_credit_estimate"] == 3
+    assert plan["budget"] == 5
+    second_job = dispatch(second, W, cfg, ledger, client)
+    assert second_job["reserved"] == 3
+
+
+@pytest.mark.parametrize("mode", ["enforced_cap", "estimate_batch_exceeded", "unapproved_recharge", "unreconciled_buckets"])
+def test_real_billing_excess_or_unverified_attribution_remains_locked(tmp_path, mode):
+    cfg = config() if mode == "enforced_cap" else estimated_config(total=2)
+    ledger, client = ExperimentLedger(tmp_path / f"{mode}.sqlite3"), FakeClient()
+    job = dispatch(C, W, cfg, ledger, client)
+    if mode in ("enforced_cap", "estimate_batch_exceeded"):
+        client.remaining = {"total": 385, "gift": 7, "recharge": 378}
+    elif mode == "unapproved_recharge":
+        client.remaining = {"total": 386, "gift": 9, "recharge": 377}
+    else:
+        client.remaining = {"total": 386, "gift": 10, "recharge": 378}
+    result = resume(job["fingerprint"], ledger, client, tmp_path / "outputs")
+    assert result["state"] == "BILLING_REVIEW"
+    assert ledger.get(job["fingerprint"])["state"] == "RUNNING"
+    assert client.started == 1
+
+
+def test_batch_run_count_cannot_be_reused_for_another_fingerprint(tmp_path):
+    second = dict(C, candidate_id="P2", formula="RANK(volume)")
+    cfg = estimated_config([C, second], total=8, max_runs=1)
+    ledger, client = ExperimentLedger(tmp_path / "run-limit.sqlite3"), FakeClient()
+    job = dispatch(C, W, cfg, ledger, client)
+    client.remaining = {"total": 386, "gift": 8, "recharge": 378}
+    assert resume(job["fingerprint"], ledger, client, tmp_path / "outputs")["state"] == "SETTLED"
+    with pytest.raises(ValueError, match="budget slot"):
+        dispatch(second, W, cfg, ledger, client)
+    assert client.started == 1
+
+
+def test_batch_total_does_not_reset_when_authorized_period_crosses_a_day(tmp_path, monkeypatch):
+    import panda_alpha.platform as platform
+    monkeypatch.setattr(platform, "beijing_day", lambda: "2026-10-10")
+    second = dict(C, candidate_id="P2", formula="RANK(volume)")
+    cfg = estimated_config([C, second], total=4)
+    cfg["compute"]["estimated_billing_batch_authorization"].update(valid_from="2026-10-10", valid_until="2026-10-12")
+    ledger, client = ExperimentLedger(tmp_path / "period-limit.sqlite3"), FakeClient()
+    job = dispatch(C, W, cfg, ledger, client)
+    client.remaining = {"total": 385, "gift": 7, "recharge": 378}
+    assert resume(job["fingerprint"], ledger, client, tmp_path / "outputs")["state"] == "SETTLED"
+    monkeypatch.setattr(platform, "beijing_day", lambda: "2026-10-11")
+    plan = budget_plan([second], cfg["compute"], client.remaining, jobs=ledger.jobs())
+    assert plan["budget"] == 1 and plan["selected"] == []
+    with pytest.raises(ValueError, match="budget slot"):
+        dispatch(second, W, cfg, ledger, client)
+    assert client.started == 1
+
+
+@pytest.mark.parametrize("category", ["source_probe", "exploration", "validation"])
+def test_informative_official_research_can_have_soft_admission_pending(tmp_path, category):
+    candidate = dict(C, data_requirements=["full_a_coverage_pending", "official_pool_increment_pending",
+                                          "formal_admission_pending", "post_effective_B_pending"],
+                     research_question="Does the frozen transferable definition retain directional evidence?",
+                     decision_if_pass="Keep for prospective pool review", decision_if_fail="Retire this fixed test")
+    ledger, client = ExperimentLedger(tmp_path / f"{category}.sqlite3"), FakeClient()
+    result = dispatch(candidate, W, config(), ledger, client, category)
+    assert result["run_id"] == "r1" and client.started == 1
+
+
+@pytest.mark.parametrize("requirement", ["runtime_input_pending", "quantaxis_field_mapping_pending",
+                                         "operator_semantics_pending", "freeze_direction_requires_evidence"])
+def test_real_execution_unknown_is_not_softened_by_an_information_question(tmp_path, requirement):
+    candidate = dict(C, data_requirements=[requirement], research_question="Resolve field uncertainty",
+                     decision_if_pass="Continue", decision_if_fail="Stop")
+    with pytest.raises(ValueError, match="Resolve legacy"):
+        dispatch(candidate, W, config(), ExperimentLedger(tmp_path / "source-block.sqlite3"), NoAccountClient(), "source_probe")
+
+
+def test_soft_pending_without_concrete_decisions_and_bool_direction_never_access_account(tmp_path):
+    ledger = ExperimentLedger(tmp_path / "input-block.sqlite3")
+    with pytest.raises(ValueError, match="Resolve legacy"):
+        dispatch(dict(C, data_requirements=["formal_admission_pending"], research_question="Question only"),
+                 W, config(), ledger, NoAccountClient())
+    with pytest.raises(ValueError, match="Direction"):
+        dispatch(dict(C, direction=True), W, config(), ledger, NoAccountClient())
     assert ledger.jobs() == []
