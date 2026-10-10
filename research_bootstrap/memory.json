@@ -2169,7 +2169,7 @@
         "F372"
       ],
       "family": "F253_same_parent_weight_window_smoothing_regime_grid",
-      "reason": "Batch42-50 formal screens and F287 ledger attribution: near-identical executable returns, small net pool increment and no Sharpe2/points5% survivor. Latest user requires reflection before more variants. Reopen only with new economic information and ex ante rationale, not another local grid.",
+      "reason": "Batch42-50 formal screens and F287 ledger attribution: near-identical executable returns, small net pool increment and failure under the then-frozen review criteria (historical criteria, superseded for future reviews). Latest user requires reflection before more variants. Reopen only with new economic information and ex ante rationale, not another local grid.",
       "reopen_condition": "material_new_information_or_verified_source_repair; record_change_and_falsifier",
       "rule": "do_not_repeat_unchanged_mechanism_fields_or_parameter_tuning"
     },
@@ -2448,5 +2448,22 @@
         "F174"
       ]
     }
-  ]
+  ],
+  "active_policy_overrides": {
+    "instruction_date": "2026-10-10",
+    "single_factor_sharpe_minimum": null,
+    "single_factor_sharpe_preferred_target": null,
+    "applies_to": [
+      "research_selection",
+      "official_exploration",
+      "paid_confirmation",
+      "pool_admission"
+    ],
+    "precedence": "Latest user instruction overrides all older standalone absolute Sharpe gates and targets, including legacy preregistrations and quoted historical instructions.",
+    "review_basis": "Mechanism, verified information, costs, stability, actual pool net economics and graded increments. Sharpe is diagnostic and an official C input; no replacement standalone target.",
+    "history": "Retain original numbers and human retirements. A failure solely against the withdrawn Sharpe cutoff is not evidence of economic failure; no automatic resurrection or rerun.",
+    "pool_policy": "config/pool-admission.v2.json",
+    "new_paid_runs": 0,
+    "pool_operations": 0
+  }
 }

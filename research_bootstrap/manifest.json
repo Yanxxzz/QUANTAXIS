@@ -24,12 +24,12 @@
       "sha256": "364c3103ffe2efbcfa4232f0a0b6cca1de665feeaec123fbee1e4c255fba22c4"
     },
     "memory.json": {
-      "bytes": 97847,
-      "sha256": "138d1d0e3c6b9d325ebe77b38364da316b5baeed73e89ccf6a5a84eebf962755"
+      "bytes": 98895,
+      "sha256": "18810e07e2cd751dd5a8adffd48c12c2ca808bc5547bb00063f17d1f9597dded"
     },
     "memory.md": {
-      "bytes": 18977,
-      "sha256": "18bef94cc0ed73206b95d58a6a436f9cbb2d10f5af922a77117e7f8db55bdb77"
+      "bytes": 19369,
+      "sha256": "59c770f7801206ed13e35908eec5b03a286e66146fcec10b95fa019ad8cdab16"
     },
     "source_index.jsonl": {
       "bytes": 395122,
@@ -49,5 +49,6 @@
   "schema_version": 1,
   "semantic_duplicates_removed": 119,
   "source_count": 967,
-  "source_finding_count": 34
+  "source_finding_count": 34,
+  "policy_annotation": "2026-10-10 standalone absolute Sharpe thresholds withdrawn; cold evidence and historical source hashes retained"
 }

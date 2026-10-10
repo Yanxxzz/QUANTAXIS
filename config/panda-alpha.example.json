@@ -79,7 +79,6 @@
   },
   "admission": {
     "policy_file": "config/pool-admission.v2.json",
-    "minimum_net_sharpe": 2,
     "one_way_costs": [
       0.003,
       0.005
@@ -87,7 +86,6 @@
     "require_size_stress": true,
     "require_fixed_pool_increment": true,
     "require_official_transfer": true,
-    "monthly_points_evidence": "official_complete_month_ledger",
-    "legacy_policy_path": "factor_workflow/gates/joint_sharpe_points_v2_real_return.json"
+    "monthly_points_evidence": "official_complete_month_ledger"
   }
 }

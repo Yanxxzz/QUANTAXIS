@@ -71,11 +71,12 @@
     "missing_B_or_official_ledger": "Research A+C proxy only; official total-points gain remains unverified",
     "monthly_cap": 40000
   },
-  "legacy_paid_confirmation": {
-    "minimum_single_factor_net_sharpe": 2,
-    "preferred_single_factor_net_sharpe": 2.5,
-    "scope": "Historical conditional paid-research policy only; not a universal prospective standalone admission threshold",
-    "authorizes_paid_runs": false
+  "single_factor_sharpe_policy": {
+    "minimum": null,
+    "preferred_target": null,
+    "role": "Diagnostic only; no standalone Sharpe cutoff for research, official testing or pool admission",
+    "supersedes": "All prior standalone absolute Sharpe qualification thresholds and preferred targets, per user instruction on 2026-10-10",
+    "portfolio_review": "Retain cost-adjusted pool economics, graded increments and the official C formula; do not replace the withdrawn cutoff with another standalone target"
   },
   "evidence_policy": {
     "artifact_binding": "Existing file SHA256, candidate definition, pool member versions, window, cycle, groups, costs and source scope",

@@ -22,7 +22,9 @@ def assess_admission(evidence: dict, policy: dict, *, evidence_directory=".", wi
         numbers = (entry.get("sharpe"), entry.get("compounded_return"), entry.get("relative_wealth_excess"))
         if entry.get("status") != "verified" or not entry.get("artifact_sha256") or any(type(x) not in (int, float) or not math.isfinite(x) for x in numbers):
             pending.append(f"net_returns@{cost}")
-        elif numbers[0] < policy["minimum_net_sharpe"] or numbers[1] <= 0 or numbers[2] <= 0:
+        # Standalone absolute Sharpe cutoffs were withdrawn. Legacy callers may
+        # still supply minimum_net_sharpe; it no longer overrides net economics.
+        elif numbers[0] <= 0 or numbers[1] <= 0 or numbers[2] <= 0:
             failed.append(f"net_returns@{cost}")
     points = evidence.get("monthly_points", {})
     if points.get("status") != "verified" or points.get("type") != "official_complete_month_ledger":

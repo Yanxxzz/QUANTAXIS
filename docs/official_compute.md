@@ -1,12 +1,14 @@
 # 官网研究与预算
 
-官网探索、确认性复测与正式入池是不同决策。研究问题明确、定义和方向冻结、字段算子能执行、Python免费原生预检通过后，可以用官网结果减少不确定性。先写`research_question`、`decision_if_pass`、`decision_if_fail`，按决策价值排序；不要求先满足Sharpe2、200周期、24月或池积分增益5%。运行成功本身不授予入池资格。
+官网探索、确认性复测与正式入池是不同决策。研究问题明确、定义和方向冻结、字段算子能执行、Python免费原生预检通过后，可以用官网结果减少不确定性。先写`research_question`、`decision_if_pass`、`decision_if_fail`，按决策价值排序；不要求先满足200周期、24月或池积分增益5%。用户已撤销单因子Sharpe数值门槛及优选目标，官网测试不以单因子Sharpe高低作为资格条件。运行成功本身不授予入池资格。
 
 ## 共享预算
 
 `compute.allocation_mode=shared_priority`把原30%/40%/30%类别比例作为分配目标。当前有价值的候选可以借用其他类别空闲额度，包括比例为零类别；比例不再导致算力闲置。`research_priority`为可选排序值，相同优先级保持计划顺序。预算总额与已消费金额仍是约束，不以用完赠送为研究目标。
 
 `source_probe`、`exploration`、`validation`都是官网研究类别。声明了研究问题和两种后续决定时，`full_a_coverage_pending`、`official_pool_increment_pending`、`formal_admission_pending`、`post_effective_B_pending`不阻止核查这些未知事项。真实字段映射、输入索引、方向、历史来源重验证等可执行性缺口仍先解决；研究覆盖待核不认证全A/PIT。
+
+三项决策字段是研究记录规范；派发代码在放行上述待核事项时强制检查它们，其他候选尚未强制这三项。Python源码候选有原生免费预检；公式的字段与算子检查属于准备步骤，`dispatch`本身不额外发起公式试跑。
 
 ## 两种计费模型
 

@@ -38,6 +38,17 @@ def test_full_original_targets_receive_strong_increment_grade(case):
     assert not result["official_total_points_gain_verified"]
 
 
+def test_active_policy_has_no_standalone_absolute_sharpe_target(case):
+    assert "legacy_paid_confirmation" not in case.policy
+    assert "minimum_net_sharpe" not in case.policy
+    sharpe_policy = case.policy["single_factor_sharpe_policy"]
+    assert sharpe_policy["minimum"] is None
+    assert sharpe_policy["preferred_target"] is None
+    example = json.loads((REPO / "config/panda-alpha.example.json").read_text(encoding="utf-8"))
+    assert "minimum_net_sharpe" not in example["admission"]
+    assert "legacy_policy_path" not in example["admission"]
+
+
 def test_small_real_increment_below_old_targets_can_enter_shadow(case):
     small_increment(case)
     result = case.assess()
