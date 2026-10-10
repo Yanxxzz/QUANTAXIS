@@ -43,6 +43,119 @@ def assess_g_revision_scope(event: dict, contract: dict, evidence: dict, *,
     comparative-column pairs, not all policy changes or current values.
     Missing source/roles stay pending. No old six-field default is changed.
     """
+    def validate_source(event, source):
+        pdf_sha = source["pdf_sha256"]
+        if (not isinstance(original_pdf, bytes) or not re.fullmatch(r"[0-9a-f]{64}", str(pdf_sha))
+                or pdf_sha != event.get("pdf_sha256") or _sha(original_pdf) != pdf_sha):
+            raise ValueError("original_PDF_bytes_or_SHA_mismatch")
+    def load_source(event, source, pages):
+        return extract_pages(original_pdf, pages)
+
+    return _assess_g_revision_scope(event, contract, evidence, load_source=load_source,
+                                    validate_source=validate_source,
+                                    source_identity_capture=source_identity_capture)
+
+
+def assess_g_revision_scope_from_retained_text(event: dict, contract: dict, evidence: dict, *,
+                                               source_index_bytes: bytes,
+                                               source_index_sha256: str,
+                                               text_binding: dict,
+                                               source_identity_capture: bytes | None = None) -> dict:
+    """Use one completely retained collector source, never claim a fresh PDF.
+
+    The archived source-index bytes bind the unique event, original PDF hash,
+    completed transfer and complete native page extraction. ``text_binding``
+    contains only ``text_gzip`` bytes in the collector's streamed page format.
+    Existing capture bytes, when supplied, must also bind stock/provenance and
+    text through the shared capture validator. Other archive projections remain
+    pending. Caller annotations and their page offsets/hashes are never repaired.
+    The source evidence level changes; economic scope rules stay identical.
+    """
+    binding_receipt = {}
+
+    def load_source(event, source, pages):
+        from panda_alpha.income_basis import _bound_capture, _bound_text, _unique_page_container_keys
+
+        if (not isinstance(source_index_bytes, bytes)
+                or not re.fullmatch(r"[0-9a-f]{64}", str(source_index_sha256))
+                or _sha(source_index_bytes) != source_index_sha256):
+            raise ValueError("retained_source_index_bytes_or_SHA_mismatch")
+        index = json.loads(source_index_bytes.decode("utf-8"), object_pairs_hook=_unique_page_container_keys)
+        documents = index.get("documents") if isinstance(index, dict) else None
+        if not isinstance(documents, list) or any(not isinstance(row, dict) for row in documents):
+            raise ValueError("retained_source_index_format_unsupported_pending")
+        matches = [row for row in documents if str(row.get("announcement_id")) == event["announcement_id"]]
+        if len(matches) != 1:
+            raise ValueError("retained_source_index_unique_vintage_pending")
+        row = matches[0]
+        if any(row.get(k) != event.get(k) for k in IDENTITY_KEYS if k != "available_date"):
+            raise ValueError("retained_source_index_event_identity_mismatch")
+        if row.get("symbol", event["code"]) != event["code"]:
+            raise ValueError("retained_source_index_issuer_alias_mismatch")
+        # Legacy collectors retain exact publication but no available-date.
+        # Their only supported availability projection is publication + 1 day;
+        # this binds the legacy calendar-day rule, not verified trading-day
+        # availability or independent calendar certification.
+        available = row.get("available_date", (date.fromisoformat(str(row["published_at"])[:10]) + timedelta(days=1)).isoformat())
+        if available != event["available_date"]:
+            raise ValueError("retained_source_index_availability_mismatch")
+        if (row.get("status") != "SOURCE_BYTES_AND_NATIVE_TEXT_READY_NOT_FIELDS_OR_PIT_CERTIFIED"
+                or row.get("http_status") != 200 or row.get("EOF_tail_verified") is not True
+                or not str(row.get("content_type", "")).lower().startswith("application/pdf")
+                or type(row.get("bytes")) is not int or row["bytes"] <= 0
+                or row.get("transport_actual_bytes") != row["bytes"]):
+            raise ValueError("retained_original_collection_completeness_pending")
+        if (not re.fullmatch(r"[0-9a-f]{64}", str(source.get("pdf_sha256")))
+                or source["pdf_sha256"] != row["pdf_sha256"]):
+            raise ValueError("retained_original_PDF_identity_mismatch")
+        if not isinstance(text_binding, dict) or set(text_binding) != {"text_gzip"}:
+            raise ValueError("retained_text_projection_unsupported_pending")
+        prov = {"pdf_sha256": row["pdf_sha256"], "text_sha256": row.get("text_sha256"),
+                "text_storage_format": "native_text_gzip"}
+        if source_identity_capture is not None:
+            capture_sha = event.get("source_capture_sha256")
+            document = json.loads(gzip.decompress(source_identity_capture))
+            stock, decoded = _bound_capture(document, {**text_binding, "capture_gzip": source_identity_capture,
+                                                       "capture_sha256": capture_sha})
+            if (any(stock.get(k) != event.get(k) for k in IDENTITY_KEYS)
+                    or stock["provenance"].get("text_sha256") != row.get("text_sha256")
+                    or stock["provenance"].get("text_path") != row.get("text_path")):
+                raise ValueError("retained_capture_index_identity_mismatch")
+        else:
+            decoded = _bound_text(prov, text_binding)
+        # Collector recipe: '\n===SOURCE_PAGE:N===\n' + native page bytes.
+        # Removing only the exact delimiters preserves every page-body offset.
+        parts = re.split(r"\n===SOURCE_PAGE:([1-9][0-9]*)===\n", decoded)
+        count = row.get("pages")
+        if (type(count) is not int or count < 1 or not parts or parts[0] != ""
+                or len(parts) != 1 + 2 * count
+                or [int(parts[i]) for i in range(1, len(parts), 2)] != list(range(1, count + 1))):
+            raise ValueError("retained_physical_page_projection_pending")
+        full_pages = {i + 1: parts[2 + 2 * i] for i in range(count)}
+        if (row.get("pages_without_native_text") != 0
+                or any(not page.strip() or "===SOURCE_PAGE:" in page for page in full_pages.values())
+                or type(row.get("native_text_characters")) is not int
+                or sum(map(len, full_pages.values())) != row["native_text_characters"]):
+            raise ValueError("retained_native_page_completeness_pending")
+        if count != source["physical_page_count"] or not set(pages).issubset(full_pages):
+            raise ValueError("source_physical_pages_mismatch")
+        binding_receipt.update(retained_source_bound=True, source_index_sha256=source_index_sha256,
+                               source_text_sha256=row["text_sha256"], archived_physical_page_count=count,
+                               availability_binding="index_available_date" if "available_date" in row else "published_date_plus_one_day")
+        if source_identity_capture is not None:
+            binding_receipt["source_capture_sha256"] = event["source_capture_sha256"]
+        return {"page_count": count, "pages": {p: full_pages[p] for p in pages}}
+
+    result = _assess_g_revision_scope(event, contract, evidence, load_source=load_source,
+                                      source_identity_capture=source_identity_capture)
+    result.update(verification_mode="retained_verified_text", fresh_original_PDF=False,
+                  scoped_only=True, retained_source_bound=False,
+                  verification_level="retained_verified_text" if binding_receipt else "unverified_retained_text_pending")
+    result.update(binding_receipt)
+    return result
+
+
+def _assess_g_revision_scope(event, contract, evidence, *, load_source, source_identity_capture, validate_source=None):
     result = {"status": "pending", "affected_G_inputs": [],
               "scope_object": evidence.get("scope_object"),
               "source_mask_auto_unlock": False, "full_pit_certified": False}
@@ -63,15 +176,14 @@ def assess_g_revision_scope(event: dict, contract: dict, evidence: dict, *,
             raise ValueError("event_availability_pending_or_after_asof")
         source = evidence["source"]
         pdf_sha = source["pdf_sha256"]
-        if (not isinstance(original_pdf, bytes) or not re.fullmatch(r"[0-9a-f]{64}", str(pdf_sha))
-                or pdf_sha != event.get("pdf_sha256") or _sha(original_pdf) != pdf_sha):
-            raise ValueError("original_PDF_bytes_or_SHA_mismatch")
+        if validate_source is not None:
+            validate_source(event, source)
         scope = evidence["scope_object"]
         pages = source["read_pages"]
         if (not isinstance(pages, list) or not pages or any(type(p) is not int or p < 1 for p in pages)
                 or len(set(pages)) != len(pages)):
             raise ValueError("source_page_selection_pending")
-        native = extract_pages(original_pdf, pages)
+        native = load_source(event, source, pages)
         if native["page_count"] != source["physical_page_count"] or set(native["pages"]) != set(pages):
             raise ValueError("source_physical_pages_mismatch")
         texts = {p: t.replace("\r\n", "\n") for p, t in native["pages"].items() if isinstance(t, str)}
@@ -162,7 +274,7 @@ def assess_g_revision_scope(event: dict, contract: dict, evidence: dict, *,
                       source_pdf_sha256=pdf_sha, affected_fields=sorted(affected),
                       affected_report_periods=sorted(periods), G_required_report_periods=sorted(required_periods),
                       event_available_date=event["available_date"], source_spans_bound=True,
-                      scope_limit="Human-reviewed field annotations, not automatic understanding of all PDF semantics. Only this event/object and this G contract; no whole-report certification. Other revision, policy, stock and source gates remain separate.")
-    except (KeyError, ValueError, TypeError, OSError) as exc:
+                      scope_limit="Explicitly reviewed field annotations, not automatic understanding of all PDF semantics. Only this event/object and this G contract; no whole-report certification. Other revision, policy, stock and source gates remain separate.")
+    except (KeyError, ValueError, TypeError, OSError, UnicodeError, EOFError) as exc:
         result["pending_reason"] = str(exc)
     return result
