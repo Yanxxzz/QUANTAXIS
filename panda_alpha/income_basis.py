@@ -211,14 +211,36 @@ def _dense(text: str) -> str:
 
 def _item_kind(text: str) -> str:
     dense = _dense(text)
-    if "无重大影响" in dense:
+    # Materiality is not a zero-effect statement, including "未对...产生".
+    # Nor can a bare impact-table "不适用 0" establish the named field scope.
+    if "重大影响" in dense or re.search(r"不适用[+\-]?0(?:\.0+)?(?!\d)", dense):
+        return "unknown"
+    # Unsplit multi-regulation tables cannot borrow one neighbouring row's
+    # supplier disclosure or final no-effect sentence. Numbered items are
+    # classified separately before reaching this function.
+    if len(set(re.findall(r"解释(?:第)?(\d+)号", dense))) > 1:
+        return "unknown"
+    # The same standard number, or no number, may still introduce separate
+    # substantive actions. Do not lend a later action's no-effect sentence to
+    # an earlier one. Several descriptive sentences for one action remain
+    # valid when their whole bounded item has an explicit no-effect ending.
+    actions = re.findall(r"(?:本公司|本集团|公司)[^。；]{0,40}?"
+                         r"(?:执行|采用|改用|新增|首次实施|开始实施)", dense)
+    # Adoption paragraphs can omit the issuer subject. A following reference
+    # such as "执行该项政策...无影响" describes the same action, not a new one.
+    body = _policy_body(text)
+    implicit_actions = re.findall(
+        r"(?:^|[。；])(?:(?:本公司|本集团|公司)[^。；]{0,40}?)?"
+        r"(?:执行(?!该|上述|前述|本项|本次)|采用|改用|新增|首次实施|开始实施)", body)
+    if len(actions) > 1 or len(implicit_actions) > 1:
         return "unknown"
     if re.search(r"对(?:公司|本公司|本集团)?(?:可比期间)?财务报表(?:数据)?无影响[。.]?$", dense):
         return "explicit_no_effect"
     if re.search(r"对本公司报表项目和金额无影响[。.]?$", dense):
         return "explicit_no_effect"
     if ("供应商融资安排的披露" in dense
-            and not re.search(r"追溯|调整|重述|营业收入|营业成本", dense)):
+            and not re.search(r"追溯|调整|重述|营业收入|营业成本|保证类质量保证|售后租回"
+                              r"|流动负债与非流动负债|递延所得税|确认|计量|会计处理", dense)):
         return "disclosure_only"
     if ("保证类质量保证" in dense and "18号" in dense
             and "可比期间" in dense and "追溯调整" in dense):
@@ -228,22 +250,29 @@ def _item_kind(text: str) -> str:
 
 def _policy_items(section: str) -> tuple[str, list[str]]:
     # Explicit numbered/bulleted items are required for a multi-policy section.
-    hits = list(re.finditer(r"(?m)^\s*(?:\d+[.．、]|[①②③④⑤⑥⑦⑧⑨⑩])", section))
+    number = r"(?:\d+|[一二三四五六七八九十]+)"
+    marker = r"(?:[（(]\s*" + number + r"\s*[）)][.．、]?|" + number + r"[.．、]|[①②③④⑤⑥⑦⑧⑨⑩])"
+    hits = [hit for hit in re.finditer(r"(?m)^" + _SPACE + marker, section)
+            if not POLICY_HEADING.match(section, hit.start())]
     if not hits:
         return section, []
     return section[:hits[0].start()], [section[h.start():hits[i + 1].start() if i + 1 < len(hits) else len(section)]
                                      for i, h in enumerate(hits)]
 
 
-def _boilerplate_only(text: str) -> bool:
+def _policy_body(text: str) -> str:
     dense = _dense(text)
     for value in ["会计政策变更的内容和原因", "受重要影响的报表项目名称", "影响金额",
                   "重要会计政策变更", "会计政策变更", "适用□不适用", "☑适用□不适用",
                   "√适用□不适用", "✓适用□不适用", "单位：元", "单位:元", "币种：人民币"]:
         dense = dense.replace(value, "")
-    dense = re.sub(r"^[（(]?\d+[）)]?[、.．]?", "", dense)
+    dense = re.sub(r"^[（(]?(?:\d+|[一二三四五六七八九十]+)[）)]?[、.．]?", "", dense)
     dense = dense.strip("：:")
-    return not dense
+    return dense
+
+
+def _boilerplate_only(text: str) -> bool:
+    return not _policy_body(text)
 
 
 def resolve_income_basis_change(current: dict, prior: dict, *, text: str,
@@ -316,6 +345,7 @@ def resolve_income_basis_change(current: dict, prior: dict, *, text: str,
         dense = _dense(section["source_evidence"])
         no_change = re.search(r"报告期内本公司无重要会计政策变更[。.]?", dense)
         mode = None
+        item_proofs = []
         if no_change and _boilerplate_only(section["source_evidence"].replace(no_change.group(), "")):
             if any(deltas.values()):
                 raise ValueError("no_policy_but_comparison_amount_changed")
@@ -326,6 +356,16 @@ def resolve_income_basis_change(current: dict, prior: dict, *, text: str,
             preamble, items = _policy_items(section["source_evidence"])
             meaningful = ([] if _boilerplate_only(preamble) else [preamble]) + items
             kinds = [_item_kind(item) for item in meaningful]
+            cursor = 0
+            for item, kind in zip(meaningful, kinds):
+                offset = section["source_evidence"].index(item, cursor)
+                cursor = offset + len(item)
+                start, end = section["start"] + offset, section["start"] + cursor
+                item_proofs.append({"kind": kind, "start": start, "end": end,
+                                    "source_page": source_page(original, start),
+                                    "sha256": _sha(item.encode("utf-8")),
+                                    "scope": "this independently bounded policy item only"})
+            output["policy_item_diagnostics"] = item_proofs
             if not meaningful or "unknown" in kinds:
                 raise ValueError("unbridged_policy_item")
             if "warranty_reclassification" not in kinds:
@@ -359,6 +399,7 @@ def resolve_income_basis_change(current: dict, prior: dict, *, text: str,
                                  "prior_text_sha256": older["provenance"]["text_sha256"],
                                  "comparison_period": older["report_date"],
                                  "policy_source_page": section["source_page"],
+                                 "policy_items": item_proofs,
                                  "policy_excerpt": section["source_evidence"],
                                  "comparative_deltas_yuan": {f: format(d, "f") for f, d in deltas.items()},
                                  "field_source_pages": {f: new_fields[f]["evidence"]["source_page"] for f in FIELDS}}])

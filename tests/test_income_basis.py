@@ -474,6 +474,88 @@ def test_no_material_impact_or_extra_unbridged_item_not_treated_zero():
     assert resolve(pair(NO_EFFECT + "另按净额法调整营业收入。"))["status"] == "pending"
 
 
+@pytest.mark.parametrize("policy", [
+    "重要会计政策变更\n√适用 □不适用\n单位：元\n"
+    "会计政策变更的内容和原因 受重要影响的报表项目名称 影响金额\n"
+    "财政部发布解释第17号，涉及供应商融资安排的披露及售后租回会计处理。\n"
+    "前述规定未对本公司财务报告产生重大影响。\n"
+    "财政部发布解释第18号，涉及保证类质量保证的会计处理。\n"
+    "前述规定未对本公司财务报告产生重大影响。\n-\n",
+    "重要会计政策变更\n√适用 □不适用\n单位：元\n"
+    "会计政策变更的内容和原因 受重要影响的报表项目名称 影响金额\n"
+    "公司执行解释第17号供应商融资安排的披露，执行该会计政策对本公司财务报表无影响。\n"
+    "不适用 0\n公司执行解释第18号保证类质量保证的会计处理。\n不适用 0\n",
+    "重要会计政策变更\n√适用 □不适用\n"
+    "公司执行解释第17号供应商融资安排的披露。\n"
+    "公司执行解释第18号保证类质量保证的会计处理，对本公司财务报表无影响。\n",
+])
+def test_unseparated_policy_table_cannot_borrow_supplier_or_last_no_effect(policy):
+    out = resolve(pair(policy))
+    assert out["status"] == "pending" and out["resolved_fields"] == []
+    assert out["pending_reason"] == "unbridged_policy_item"
+
+
+@pytest.mark.parametrize("prefix", ["（1）", "(1)", "（一）"])
+def test_parenthesized_policy_items_do_not_share_last_no_effect(prefix):
+    second = {"（1）": "（2）", "(1)": "(2)", "（一）": "（二）"}[prefix]
+    policy = ("重要会计政策变更\n√适用 □不适用\n"
+              + prefix + "公司执行解释第16号递延所得税规定，未对财务报告产生重大影响。\n"
+              + second + "公司执行解释第18号规定，对本公司报表项目和金额无影响。\n")
+    assert resolve(pair(policy))["pending_reason"] == "unbridged_policy_item"
+
+
+@pytest.mark.parametrize("prefix", ["（1）", "(1)", "（一）"])
+def test_independent_parenthesized_clear_policy_items_preserve_legal_resolution(prefix):
+    second = {"（1）": "（2）", "(1)": "(2)", "（一）": "（二）"}[prefix]
+    policy = ("重要会计政策变更\n√适用 □不适用\n"
+              + prefix + "公司执行解释第17号供应商融资安排的披露规定。\n"
+              + second + "公司执行解释第18号保证类质量保证的会计处理，对本公司财务报表无影响。\n")
+    out = resolve(pair(policy))
+    assert out["status"] == "income_fields_resolved"
+    assert [item["kind"] for item in out["evidence"][0]["policy_items"]] == ["disclosure_only", "explicit_no_effect"]
+    assert all(item["start"] < item["end"] and len(item["sha256"]) == 64 for item in out["evidence"][0]["policy_items"])
+
+
+def test_singular_supplier_disclosure_remains_allowed_without_other_policy_topics():
+    policy = "重要会计政策变更\n√适用 □不适用\n公司执行解释第17号关于供应商融资安排的披露规定。\n"
+    assert resolve(pair(policy))["status"] == "income_fields_resolved"
+
+
+@pytest.mark.parametrize("body", [
+    "公司执行解释第17号，改变营业收入确认时点。\n"
+    "公司执行解释第17号供应商融资安排的披露，对本公司财务报表无影响。\n",
+    "公司改用净额法确认营业收入。\n"
+    "公司新增供应商融资安排的披露，对本公司财务报表无影响。\n",
+])
+def test_same_or_unnamed_standard_cannot_share_neighbouring_final_effect(body):
+    out = resolve(pair("重要会计政策变更\n√适用 □不适用\n" + body))
+    assert out["status"] == "pending" and out["pending_reason"] == "unbridged_policy_item"
+
+
+def test_single_policy_multisentence_description_with_explicit_whole_item_no_effect():
+    policy = ("重要会计政策变更\n√适用 □不适用\n"
+              "财政部发布解释第17号供应商融资安排披露要求。\n"
+              "公司执行该项披露规定。\n该规定说明披露的信息范围。\n"
+              "该项会计政策变更对本公司财务报表无影响。\n")
+    assert resolve(pair(policy))["status"] == "income_fields_resolved"
+
+
+@pytest.mark.parametrize("body", [
+    "采用净额法确认营业收入。\n新增供应商融资安排的披露，对本公司财务报表无影响。\n",
+    "执行解释第17号改变营业收入确认时点。\n执行解释第17号供应商融资安排的披露，对本公司财务报表无影响。\n",
+])
+def test_subjectless_independent_policy_actions_do_not_borrow_effect(body):
+    out = resolve(pair("重要会计政策变更\n√适用 □不适用\n" + body))
+    assert out["status"] == "pending" and out["pending_reason"] == "unbridged_policy_item"
+
+
+def test_single_policy_followup_execution_reference_is_not_another_adoption():
+    policy = ("重要会计政策变更\n√适用 □不适用\n"
+              "公司执行解释第17号供应商融资安排的披露规定。\n"
+              "执行该项会计政策对本公司财务报表无影响。\n")
+    assert resolve(pair(policy))["status"] == "income_fields_resolved"
+
+
 @pytest.mark.parametrize("field", ["operating_revenue", "operating_cost"])
 def test_no_policy_does_not_resolve_changed_comparative(field):
     args = pair(NO_POLICY)
