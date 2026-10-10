@@ -2,7 +2,11 @@
 import math
 
 
-def assess_admission(evidence: dict, policy: dict) -> dict:
+def assess_admission(evidence: dict, policy: dict, *, evidence_directory=".", window_check=None) -> dict:
+    if policy.get("identity") == "pool_admission_v1_20261010":
+        from .pool_admission import assess_pool_admission
+        return assess_pool_admission(evidence, policy, evidence_directory=evidence_directory,
+                                     window_check=window_check)
     required = ("source_coverage", "point_in_time_universe", "execution_audit",
                 "size_stress", "fixed_pool_increment", "temporal_stability",
                 "actual_factor_diversity", "official_transfer", "direction_parity")

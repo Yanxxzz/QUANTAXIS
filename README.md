@@ -59,6 +59,8 @@
 - [`portfolio.py`](panda_alpha/portfolio.py)：固定组合政策、对照与增量研究。
 - [`admission.py`](panda_alpha/admission.py)：来源、历史股票池、执行、稳定性、实际去相关、组合增量及官网证据的正式准入检查。
 
+新入池审查使用 [pool-admission.v1.json](config/pool-admission.v1.json)，沿用 `admission` 命令。从哈希绑定的完整池日账本重算30/50bp净收益、Sharpe及逐月A+C代理，检查每个生效过渡状态至少5个因子。缺源、版本不符、B冷启动及未完成影子验证保持待核；历史代理通过不表示官网积分已提高。证据接口和使用方式见 [入池门槛](docs/pool_admission.md)。
+
 实际研究已使用单边 30/50bp、同支持范围的基准、分阶段表现、行业/Beta 暴露、贡献集中度及固定初始资本组合对照。低 IC、低换手或低因子相关性均不能单独替代质量判断。
 
 通用 CLI 的价量公式评估已接入公共 [`study.py`](panda_alpha/study.py) 的 `prepare → validate → evaluate`，产出两档成本、所有组、共同市场、阶段、贡献与持仓账本。提供明确的 `--benchmark-id` 和实际池面板时，还会核算同支持固定半初始资本组合。原文财报及事件模块可将自己的 PIT 日值接到同一公共接口，详见 [公共工作流](docs/panda_alpha_workflow.md)。复杂 Python 的官网执行仍须原生预检。

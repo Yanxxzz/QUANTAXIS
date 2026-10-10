@@ -73,6 +73,7 @@
     "api_key_env": "PANDA_ALPHA_LLM_KEY"
   },
   "admission": {
+    "policy_file": "config/pool-admission.v1.json",
     "minimum_net_sharpe": 2,
     "one_way_costs": [
       0.003,

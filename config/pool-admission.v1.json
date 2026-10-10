@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "identity": "pool_admission_v1_20261010",
+  "effective_for": "Prospective pool reviews from 2026-10-10; do not reclassify frozen historical failures",
+  "one_way_costs": [0.003, 0.005],
+  "common_gate": {
+    "coverage_min": 0.85,
+    "periods_min": 200,
+    "direction_rank_ic_min": 0.02,
+    "folds_positive_required": 5,
+    "batch_bh_q_max": 0.05,
+    "net30_min": 0.02,
+    "net50_min": 0.0025,
+    "p25_fold_net_strictly_positive": true,
+    "turnover_max": 0.15,
+    "size_direction_rank_ic_min": 0.02,
+    "size_net30_min": 0.02,
+    "size_net50_strictly_positive": true,
+    "max_abs_corr_existing_pool": 0.75
+  },
+  "portfolio_gate": {
+    "sharpe_delta_min": 0.05,
+    "cagr_delta30_min": 0,
+    "cagr_delta50_min": 0,
+    "recent_months": 24,
+    "ac_gain_min": 0.05,
+    "risk_deterioration": "pending_explicit_tradeoff_review",
+    "minimum_effective_factors": 5,
+    "maximum_factors": 50
+  },
+  "comparison": {
+    "baseline": "Latest verified actual effective pool and its frozen member versions",
+    "construction": "Direction-aligned 1%-99% winsorization, cross-sectional Z-score, equal factor signals, top-decile equal-weight long holdings",
+    "same_dates_and_formation_support": true,
+    "cagr_delta30_strictly_positive": true,
+    "cagr_delta50_not_negative": true,
+    "recent_compounded_net_return_not_worse": true,
+    "no_future_quote_availability_selection": true,
+    "review_full_proposed_pool_change": true,
+    "minimum_effective_factors_at_every_transition": true
+  },
+  "score_rules": {
+    "weights": {"A": 0.2, "B": 0.35, "C": 0.45},
+    "anchors": {"A": 0.08, "B": 0.06, "C": 0.6},
+    "A_B_pool_aggregation": "Arithmetic mean of eligible per-factor scores using the explicitly verified denominator",
+    "ICIR": "Mean Pearson IC divided by sample standard deviation (ddof=1), not annualized",
+    "positive_direction_IC_win_threshold": 0.02,
+    "negative_direction_IC_win_threshold": -0.02,
+    "B": "Only completed post-effective observations for the unchanged factor version; historical research is not official B",
+    "B_denominator_unverified": "pending; do not silently assume all pool members or only mature members",
+    "C_Rex_ann": "((1+monthly_portfolio_return)/(1+monthly_benchmark_return))**(252/N)-1",
+    "C_Sharpe": "Mean cost-adjusted absolute daily portfolio return divided by sample standard deviation, times sqrt(252); risk-free return is zero",
+    "C_raw": "max(Rex_ann,0)/max(Turnover_month,0.3)*SR_ann*(1-1.2*MaxDD_month)",
+    "C_turnover_floor": 0.3,
+    "C_drawdown_penalty": 1.2,
+    "C_normalization": "min(max(rawC/0.6,0),1)",
+    "monthly_points": "min((0.20*NA+0.35*NB+0.45*NC)*40000*verified_bonus,40000)",
+    "aggregation": "Compute and clip each complete calendar month first, then aggregate the paired months",
+    "monthly_nav_reset": "Reset the scoring NAV baseline, preserve actual carried positions and cash",
+    "missing_B_or_official_ledger": "Research A+C proxy only; official total-points gain remains unverified",
+    "monthly_cap": 40000
+  },
+  "legacy_paid_confirmation": {
+    "minimum_single_factor_net_sharpe": 2,
+    "preferred_single_factor_net_sharpe": 2.5,
+    "scope": "Historical conditional paid-research policy only; not a universal prospective standalone admission threshold",
+    "authorizes_paid_runs": false
+  },
+  "evidence_policy": {
+    "artifact_binding": "Existing file SHA256, candidate definition, pool member versions, window, cycle, groups, costs and source scope",
+    "missing_source_or_execution": "pending, never economic rejection",
+    "local_pass": "ready_for_shadow_validation",
+    "final_review": "eligible_for_review",
+    "requires_unadmitted_candidate_post_effective_official_history": false,
+    "official_total_points_claim_from_local_proxy": false
+  },
+  "permissions": {
+    "paid_runs": false,
+    "pool_operations": false,
+    "automatic_promotion": false,
+    "restart_cancelled_research": false
+  }
+}

@@ -63,9 +63,10 @@ TrialLedger = ResearchRegistry
 
 def historical_denominator(cfg):
     denominator = int(cfg["research"]["history_denominator"])
-    memory_path = Path(cfg["research"]["memory"])
-    if memory_path.exists():
-        denominator = max(denominator, int(read(memory_path).get("multiple_testing_denominator", 0)))
+    for field in ("memory", "live_memory"):
+        value = cfg["research"].get(field)
+        if value and Path(value).exists():
+            denominator = max(denominator, int(read(value).get("multiple_testing_denominator", 0)))
     return denominator
 
 
@@ -247,6 +248,7 @@ def main(argv=None):
     settlement.add_argument("--ledger", default="research_runs/experiments.sqlite3")
     admission = sub.add_parser("admission", help="Review final economic evidence independently of exploration")
     admission.add_argument("--evidence", required=True)
+    admission.add_argument("--policy", help="Prospective pool policy; overrides configured admission.policy_file")
     admission.add_argument("--output", default="research_runs/admission_review.json")
     registry_parser = sub.add_parser("registry", help="Inspect, reconcile, import and export unique research facts; offline")
     registry_parser.add_argument("action", choices=["status", "plan-import", "import", "export-memory"])
@@ -335,7 +337,18 @@ def main(argv=None):
         return
     if args.command == "admission":
         from .admission import assess_admission
-        result = assess_admission(read(args.evidence), cfg["admission"])
+        evidence = read(args.evidence)
+        check_evidence_windows(evidence, cfg["research"]["sealed_windows"])
+        policy_path = args.policy or cfg["admission"].get("policy_file")
+        policy = cfg["admission"]
+        if policy_path:
+            path = Path(policy_path)
+            if not args.policy and not path.is_absolute():
+                path = Path(__file__).resolve().parents[1] / path
+            policy = read(path)
+            policy["minimum_hypotheses"] = historical_denominator(cfg)
+        result = assess_admission(evidence, policy, evidence_directory=Path(args.evidence).resolve().parent,
+                                  window_check=lambda body: check_evidence_windows(body, cfg["research"]["sealed_windows"]))
         write(args.output, result)
         print_compact(result)
         return
