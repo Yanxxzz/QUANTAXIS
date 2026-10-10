@@ -24,17 +24,24 @@ def _hash_record(row):
 
 def _actual_change_evidence(text: str, income_header: str) -> list[dict]:
     """Only affirmative period-specific disclosures; boilerplate is not a change."""
+    from panda_alpha.income_basis import checked_section_choice, policy_change_sections
+
     results = []
-    checks = [("restatement", r"是否需追溯调整或重述以前年度会计数据", "是"),
-              ("accounting_policy", r"(?:重要)?会计政策变更", "适用"),
-              ("consolidation_scope", r"与上年度财务报告相比.{0,35}合并(?:报表|财务报表)范围.{0,30}情况说明", "适用")]
-    for kind, pattern, word in checks:
+    # A body sentence containing '无重要会计政策变更' is not a
+    # section heading; a following estimate section's checkbox is unrelated.
+    for section in policy_change_sections(text):
+        if section["checked_applicable"]:
+            results.append({"kind": "accounting_policy", "source_page": section["source_page"],
+                            "source_evidence": section["source_evidence"][:200],
+                            "status": "explicit_change_bridge_not_supplied"})
+    # Preserve these existing event classes independently of policy-heading
+    # narrowing. Their questions may wrap or carry the checkbox on the same
+    # line; the choice still must immediately follow this specific question.
+    checks = [("restatement", r"是否需追溯调整或重述\s*以前年度会计数据", "是", "否"),
+              ("consolidation_scope", r"与上年度财务报告相比[\s\S]{0,35}合并\s*(?:财务\s*)?报表\s*范围[\s\S]{0,30}情况说明", "适用", "不适用")]
+    for kind, pattern, word, negative in checks:
         for hit in re.finditer(pattern, text):
-            after = re.sub(r"\s+", "", text[hit.end():hit.end()+100])
-            if re.match(r"(?:[：:]|[（(]\d+[）)])*(?:[☑√✓■])" + word, after) or re.search(r"^[^\n]{0,15}[☑√✓■]" + word, after):
-                # Checked no/not-applicable cannot be mistaken for affirmative.
-                if re.search(r"^[^\n]{0,15}[☑√✓■](?:否|不适用)", after):
-                    continue
+            if checked_section_choice(text, hit.end(), word, negative):
                 results.append({"kind": kind, "source_page": _page(text, hit.start()),
                                 "source_evidence": text[hit.start():hit.end()+160], "status": "explicit_change_bridge_not_supplied"})
     if "调整后" in income_header or "重述后" in income_header:
