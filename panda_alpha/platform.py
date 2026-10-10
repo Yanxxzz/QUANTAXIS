@@ -65,6 +65,13 @@ class PandaClient:
         source = candidate.get("formula") or candidate.get("code")
         if not source:
             raise ValueError("Candidate has no executable definition")
+        if mode == "--code" and candidate.get("code_path"):
+            path = Path(candidate["code_path"]).resolve()
+            if not path.is_file() or path.read_bytes().decode("utf-8") != source:
+                raise ValueError("Candidate file differs from the frozen code definition")
+            # Documented file mode keeps large financial-source literals out
+            # of the Windows command line without changing the definition.
+            mode, source = "--file", str(path)
         data = self.cli("factor_create", mode, source, "--name", name,
                         "--start-date", window["start"].replace("-", ""),
                         "--end-date", window["end"].replace("-", ""),

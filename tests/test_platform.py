@@ -1,11 +1,36 @@
 import pytest
 
-from panda_alpha.platform import ExperimentLedger, beijing_day, budget_plan, dispatch, fingerprint, resume, settle_receipt
+from panda_alpha.platform import PandaClient, ExperimentLedger, beijing_day, budget_plan, dispatch, fingerprint, resume, settle_receipt
 
 
 C = {"candidate_id": "P1", "formula": "RANK(close)", "direction": 1}
 W = {"start": "2024-01-01", "end": "2024-06-30"}
 B = {"total": 388, "gift": 10, "recharge": 378}
+
+
+def test_large_frozen_python_source_uses_documented_file_mode(tmp_path):
+    code = "# frozen public data\n" + "SOURCE = '" + "a" * 400000 + "'\n"
+    path = tmp_path / "factor source.py"
+    path.write_bytes(code.encode("utf-8"))
+    client, calls = PandaClient({}), []
+    def capture(*args):
+        calls.append(args)
+        return {"factor_id": "f-file"}
+    client.cli = capture
+    assert client.create({"code": code, "code_path": str(path), "direction": 1}, W, 5, 10, "F-X") == "f-file"
+    assert calls[0][1:3] == ("--file", str(path.resolve()))
+    assert code not in calls[0]
+
+
+def test_changed_python_file_is_rejected_before_account_mutation(tmp_path):
+    path = tmp_path / "factor.py"
+    path.write_bytes(b"changed code\n")
+    client = PandaClient({})
+    def forbidden(*args):
+        raise AssertionError("A changed file must not reach the account")
+    client.cli = forbidden
+    with pytest.raises(ValueError, match="frozen code"):
+        client.create({"code": "frozen code\n", "code_path": str(path), "direction": 1}, W, 5, 10, "F-X")
 
 
 def config():

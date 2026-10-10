@@ -180,3 +180,106 @@ def test_changed_proofs_block_in_dispatch_before_balance_or_create(prepared, tmp
     with pytest.raises(NativePreflightError):
         dispatch(candidate, window, cfg, ledger, NoAccount())
     assert ledger.jobs() == []
+
+
+def _source_subset_fixture(tmp_path, valid_assets=2400, empty_prefix_dates=0):
+    dates = pd.bdate_range('2024-01-02', periods=30)
+    symbols = [f'S{n:04d}' for n in range(4000)]
+    index = pd.MultiIndex.from_product([dates, symbols], names=['date', 'symbol'])
+    close = np.tile(10. + np.arange(4000), len(dates))
+    close.reshape(len(dates), 4000)[:, valid_assets:] = np.nan
+    close[:empty_prefix_dates * 4000] = np.nan
+    frame = pd.DataFrame({'close': close}, index=index)
+    fixture = tmp_path / 'whole-named-roster.parquet'
+    frame.iloc[::-1].reset_index().to_parquet(fixture, index=False)
+    # Keep every source-universe row, including the unqualified symbols.
+    source_mask = tmp_path / 'source-qualification-mask.parquet'
+    frame.assign(source_qualified=frame.close.notna())[['source_qualified']].reset_index().to_parquet(source_mask, index=False)
+    source = tmp_path / 'source.json'
+    source.write_text(json.dumps({'local_test_fixture': True, 'named_roster_size': 4000,
+                                 'qualification_mask_is_source_evidence': True}))
+    contract = tmp_path / 'contract.txt'
+    contract.write_text('Observed date-first FactorSeries attribute-delegation contract.')
+    path = tmp_path / 'preflight.json'
+    candidate = {'candidate_id': 'source-transfer', 'code': CODE, 'direction': 1,
+                 'native_preflight_path': str(path)}
+    return candidate, fixture, [source, source_mask], contract, path
+
+
+def test_default_strict_policy_still_rejects_real_partial_source_coverage(tmp_path):
+    candidate, fixture, source, contract, path = _source_subset_fixture(tmp_path)
+    receipt = build_native_preflight(candidate, WINDOW, 5, 10, fixture, source, [contract], path)
+    assert not receipt['passed'] and 'cross-sectional source coverage' in receipt['failure']['message']
+    assert receipt['policy'] == {'minimum_post_warmup_date_coverage': .8,
+                                 'minimum_median_symbol_coverage': .8}
+
+
+def test_explicit_source_transfer_replays_partial_coverage_with_honest_scope(tmp_path):
+    candidate, fixture, source, contract, path = _source_subset_fixture(tmp_path)
+    candidate['native_preflight_purpose'] = 'source_qualified_transfer_research'
+    receipt = build_native_preflight(candidate, WINDOW, 5, 10, fixture, source, [contract], path)
+    assert receipt['passed']
+    verified = verify_native_preflight(candidate, WINDOW, 5, 10)
+    proof = verified['proof']
+    assert proof['input_rows'] == 120000 and proof['input_symbols'] == 4000
+    assert proof['median_symbol_coverage'] == pytest.approx(.6)
+    assert proof['coverage_evaluation_basis'] == 'all_requested_fixture_dates'
+    assert proof['coverage_evaluation_dates'] == proof['usable_group_dates'] == 30
+    assert proof['minimum_valid_symbols_on_usable_dates'] == 2400
+    assert verified['scope'] == {'purpose': 'source_qualified_transfer_research',
+                                'research_only': True, 'full_A_certified': False,
+                                'admission_qualified': False,
+                                'coverage_denominator': 'all_fixture_symbol_rows'}
+    assert receipt['source_evidence'][1]['path'] == str(source[1].resolve())
+
+
+@pytest.mark.parametrize('valid_assets, expected_pass', [(1999, False), (2000, True)])
+def test_source_transfer_asset_floor_is_checked_on_every_requested_date(tmp_path, valid_assets, expected_pass):
+    candidate, fixture, source, contract, path = _source_subset_fixture(tmp_path, valid_assets)
+    candidate['native_preflight_purpose'] = 'source_qualified_transfer_research'
+    receipt = build_native_preflight(candidate, WINDOW, 5, 10, fixture, source, [contract], path)
+    assert receipt['passed'] is expected_pass
+    if not expected_pass:
+        assert '2000 valid assets' in receipt['failure']['message']
+
+
+def test_source_transfer_cannot_crop_empty_early_dates_as_warmup(tmp_path):
+    candidate, fixture, source, contract, path = _source_subset_fixture(tmp_path, empty_prefix_dates=1)
+    candidate['native_preflight_purpose'] = 'source_qualified_transfer_research'
+    receipt = build_native_preflight(candidate, WINDOW, 5, 10, fixture, source, [contract], path)
+    assert not receipt['passed']
+    assert 'every requested date' in receipt['failure']['message']
+
+
+@pytest.mark.parametrize('change', ['purpose', 'date_policy', 'asset_policy', 'scope', 'source_mask'])
+def test_source_transfer_proof_mutations_block_before_account_access(tmp_path, change):
+    from panda_alpha.platform import ExperimentLedger, dispatch
+    candidate, fixture, source, contract, path = _source_subset_fixture(tmp_path)
+    candidate['native_preflight_purpose'] = 'source_qualified_transfer_research'
+    receipt = build_native_preflight(candidate, WINDOW, 5, 10, fixture, source, [contract], path)
+    assert receipt['passed']
+    if change == 'purpose': candidate.pop('native_preflight_purpose')
+    elif change == 'date_policy': receipt['policy']['minimum_requested_date_coverage'] = .8
+    elif change == 'asset_policy': receipt['policy']['minimum_valid_assets_per_requested_date'] = 1999
+    elif change == 'scope': receipt['scope']['full_A_certified'] = True
+    else: source[1].write_bytes(source[1].read_bytes() + b'changed')
+    path.write_text(json.dumps(receipt))
+    class NoAccount:
+        def balance(self): raise AssertionError('Changed transfer evidence accessed account')
+        def create(self, *args): raise AssertionError('Changed transfer evidence created factor')
+    ledger = ExperimentLedger(tmp_path / 'no-transfer-dispatch.sqlite3')
+    with pytest.raises(NativePreflightError):
+        dispatch(candidate, WINDOW, {'research': {'cycle': 5, 'groups': 10}, 'compute': {}}, ledger, NoAccount())
+    assert ledger.jobs() == []
+
+
+@pytest.mark.parametrize('conversion, message', [
+    ("result = result.ge(.5).astype(float).where(result.notna())", 'fewer distinct'),
+    ("result = factors['close'].series / 0", 'infinite'),
+])
+def test_source_transfer_preserves_numeric_and_group_guards(tmp_path, conversion, message):
+    candidate, fixture, source, contract, path = _source_subset_fixture(tmp_path)
+    candidate['native_preflight_purpose'] = 'source_qualified_transfer_research'
+    candidate['code'] = CODE.replace("result.name = 'value'", conversion + "\n        result.name = 'value'")
+    receipt = build_native_preflight(candidate, WINDOW, 5, 10, fixture, source, [contract], path)
+    assert not receipt['passed'] and message in receipt['failure']['message']

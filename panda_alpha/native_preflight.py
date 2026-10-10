@@ -20,6 +20,8 @@ import pandas as pd
 
 
 SCHEMA = "panda-native-preflight-v1"
+STRICT_PURPOSE = "full_universe_strict"
+SOURCE_TRANSFER_PURPOSE = "source_qualified_transfer_research"
 LIMITATION = ("Known local FactorSeries attribute-delegation/date-first contract only; "
               "not remote all-A input equivalence, server-success or billing assurance. "
               "Grouping uses conservative deterministic no-jitter qcut; remote tradeability "
@@ -54,7 +56,34 @@ def _sha(path: str | Path) -> str:
 def _definition(candidate: dict, window: dict, cycle: int, groups: int) -> dict:
     result = {key: candidate.get(key) for key in ("code", "formula", "direction")}
     result.update(window=window, cycle=cycle, groups=groups)
+    purpose = _purpose(candidate)
+    if purpose != STRICT_PURPOSE:
+        result["native_preflight_purpose"] = purpose
     return result
+
+
+def _purpose(candidate: dict) -> str:
+    purpose = candidate.get("native_preflight_purpose", STRICT_PURPOSE)
+    if purpose not in (STRICT_PURPOSE, SOURCE_TRANSFER_PURPOSE):
+        raise NativePreflightError("Native preflight requires a known explicit coverage purpose")
+    return purpose
+
+
+def _coverage_policy(purpose: str) -> dict:
+    if purpose == STRICT_PURPOSE:
+        return {"minimum_post_warmup_date_coverage": .8,
+                "minimum_median_symbol_coverage": .8}
+    if purpose == SOURCE_TRANSFER_PURPOSE:
+        return {"minimum_requested_date_coverage": 1.0,
+                "minimum_valid_assets_per_requested_date": 2000}
+    raise NativePreflightError("Native preflight coverage purpose is unknown")
+
+
+def _scope(purpose: str) -> dict:
+    return {"purpose": purpose,
+            "research_only": purpose == SOURCE_TRANSFER_PURPOSE,
+            "full_A_certified": False, "admission_qualified": False,
+            "coverage_denominator": "all_fixture_symbol_rows"}
 
 
 def _digest(value: Any) -> str:
@@ -94,7 +123,7 @@ def _parameters(window: dict, cycle: int, groups: int):
 
 
 def _replay(code: str, fixture: str, fields: list[str], window: dict,
-            cycle: int, groups: int, policy: dict) -> dict:
+            cycle: int, groups: int, policy: dict, purpose: str = STRICT_PURPOSE) -> dict:
     start, end = _parameters(window, cycle, groups)
     if (not isinstance(fields, list) or not fields or len(set(fields)) != len(fields)
             or any(not isinstance(field, str) or not field or field in ("date", "symbol") for field in fields)):
@@ -169,7 +198,8 @@ def _replay(code: str, fixture: str, fields: list[str], window: dict,
     if unique.max() < groups:
         raise NativePreflightError("Native output has fewer distinct values than requested groups")
     first = count[count.gt(0)].index.min()
-    eligible_dates = fixture_dates[fixture_dates >= first]
+    eligible_dates = (fixture_dates if purpose == SOURCE_TRANSFER_PURPOSE else
+                      fixture_dates[fixture_dates >= first])
     # The pinned public workflow first rejects nunique < group_cnt, then adds
     # random N(0,1e-10) jitter before qcut and skips ValueError dates. We cannot
     # reproduce unknown remote filters/cleaning or guarantee random edges. A
@@ -188,11 +218,20 @@ def _replay(code: str, fixture: str, fields: list[str], window: dict,
                   & unique.reindex(eligible_dates).ge(groups) & quantile_ready)
     minimum = max(2, cycle)
     coverage = float(good_dates.mean())
-    if good_dates.sum() < minimum or coverage < policy["minimum_post_warmup_date_coverage"]:
-        raise NativePreflightError("Native output lacks post-warmup date/group coverage")
+    required_date_coverage = (policy["minimum_requested_date_coverage"]
+                             if purpose == SOURCE_TRANSFER_PURPOSE else
+                             policy["minimum_post_warmup_date_coverage"])
+    if good_dates.sum() < minimum or coverage < required_date_coverage:
+        message = ("Native source transfer lacks date/group coverage on every requested date"
+                   if purpose == SOURCE_TRANSFER_PURPOSE else
+                   "Native output lacks post-warmup date/group coverage")
+        raise NativePreflightError(message)
+    if (purpose == SOURCE_TRANSFER_PURPOSE and
+            count.reindex(fixture_dates).min() < policy["minimum_valid_assets_per_requested_date"]):
+        raise NativePreflightError("Native source transfer lacks 2000 valid assets on every requested date")
     by_date_total = filtered.groupby(level="date").size().reindex(eligible_dates)
     cross_coverage = float((count.reindex(eligible_dates) / by_date_total).median())
-    if cross_coverage < policy["minimum_median_symbol_coverage"]:
+    if purpose == STRICT_PURPOSE and cross_coverage < policy["minimum_median_symbol_coverage"]:
         raise NativePreflightError("Native output lacks cross-sectional source coverage")
     return {"contract": "attribute-delegation/date-first/Series-value/date-filter",
             "factor_class": classes[0].__name__, "input_rows": len(frame), "input_fields": fields,
@@ -200,6 +239,10 @@ def _replay(code: str, fixture: str, fields: list[str], window: dict,
             "window_fixture_dates": len(fixture_dates), "first_finite_date": first.isoformat(),
             "finite_window_rows": len(finite), "usable_group_dates": int(good_dates.sum()),
             "post_warmup_date_coverage": coverage, "median_symbol_coverage": cross_coverage,
+            "coverage_policy_purpose": purpose,
+            "coverage_evaluation_basis": ("all_requested_fixture_dates" if purpose == SOURCE_TRANSFER_PURPOSE
+                                          else "post_first_finite_fixture_dates"),
+            "coverage_evaluation_dates": len(eligible_dates),
             "minimum_valid_symbols_on_usable_dates": int(count.reindex(eligible_dates)[good_dates].min()),
             "minimum_distinct_values_on_usable_dates": int(unique.reindex(eligible_dates)[good_dates].min()),
             "grouping_smoke_test": {"method": "deterministic_no_jitter_qcut_all_requested_groups_nonempty",
@@ -229,6 +272,7 @@ def build_native_preflight(candidate: dict, window: dict, cycle: int, groups: in
     if not source_evidence or not contract_evidence:
         raise NativePreflightError("Source and observed-contract evidence are required")
     fields = fields or ["close"]
+    purpose = _purpose(candidate)
     receipt = {"schema": SCHEMA, "created_at": datetime.now(timezone.utc).isoformat(),
                "definition_fingerprint": _digest(_definition(candidate, window, cycle, groups)),
                "code_sha256": hashlib.sha256(code.encode()).hexdigest(),
@@ -236,12 +280,13 @@ def build_native_preflight(candidate: dict, window: dict, cycle: int, groups: in
                "harness": _artifact(__file__), "fixture": _artifact(fixture_path),
                "source_evidence": [_artifact(path) for path in source_evidence],
                "contract_evidence": [_artifact(path) for path in contract_evidence],
-               "fields": fields, "policy": {"minimum_post_warmup_date_coverage": .8,
-                                             "minimum_median_symbol_coverage": .8},
+               "fields": fields, "purpose": purpose, "scope": _scope(purpose),
+               "policy": _coverage_policy(purpose),
                "environment": {"python": platform.python_version(), "numpy": np.__version__, "pandas": pd.__version__},
                "limitation": LIMITATION}
     try:
-        receipt["proof"] = _replay(code, receipt["fixture"]["path"], fields, window, cycle, groups, receipt["policy"])
+        receipt["proof"] = _replay(code, receipt["fixture"]["path"], fields, window, cycle, groups,
+                                   receipt["policy"], purpose)
         receipt["passed"] = True
     except Exception as exc:
         receipt.update(passed=False, failure={"type": type(exc).__name__, "message": str(exc)})
@@ -253,6 +298,7 @@ def build_native_preflight(candidate: dict, window: dict, cycle: int, groups: in
 
 def verify_native_preflight(candidate: dict, window: dict, cycle: int, groups: int) -> dict:
     """Recompute the proof; a hand-written passed=true is never sufficient."""
+    purpose = _purpose(candidate)
     path = candidate.get("native_preflight_path")
     if not isinstance(path, str) or not path:
         raise NativePreflightError("A current native preflight receipt is required before account access")
@@ -271,6 +317,9 @@ def verify_native_preflight(candidate: dict, window: dict, cycle: int, groups: i
         raise NativePreflightError("Native preflight source or dispatch parameters changed")
     if receipt.get("harness") != _artifact(__file__):
         raise NativePreflightError("Native preflight harness changed; regenerate the receipt")
+    if (receipt.get("purpose", STRICT_PURPOSE) != purpose or
+            receipt.get("scope", _scope(STRICT_PURPOSE)) != _scope(purpose)):
+        raise NativePreflightError("Native preflight coverage purpose or research scope changed")
     for label in ("source_evidence", "contract_evidence"):
         artifacts = receipt.get(label)
         if not isinstance(artifacts, list) or not artifacts:
@@ -278,15 +327,16 @@ def verify_native_preflight(candidate: dict, window: dict, cycle: int, groups: i
         for artifact in artifacts:
             _check_artifact(artifact, label)
     _check_artifact(receipt.get("fixture"), "fixture")
-    fixed_policy = {"minimum_post_warmup_date_coverage": .8, "minimum_median_symbol_coverage": .8}
+    fixed_policy = _coverage_policy(purpose)
     if receipt.get("policy") != fixed_policy:
         raise NativePreflightError("Native preflight coverage policy changed")
     try:
         proof = _replay(candidate["code"], receipt["fixture"]["path"], receipt.get("fields"),
-                        window, cycle, groups, fixed_policy)
+                        window, cycle, groups, fixed_policy, purpose)
     except Exception as exc:
         raise NativePreflightError("Native preflight replay failed; no official job was dispatched") from exc
     if proof != receipt["proof"]:
         raise NativePreflightError("Native preflight replay evidence no longer matches the receipt")
     return {"receipt_path": str(Path(path).resolve()), "receipt_sha256": _sha(path),
-            "definition_fingerprint": definition, "proof": proof, "limitation": LIMITATION}
+            "definition_fingerprint": definition, "proof": proof, "purpose": purpose,
+            "scope": _scope(purpose), "limitation": LIMITATION}
