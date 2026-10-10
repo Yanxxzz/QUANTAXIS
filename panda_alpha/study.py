@@ -288,7 +288,7 @@ class PotentialQuoteBook:
 
 
 def _exposure_day(holdings,closes,cash,nav,quotes,day):
-    positions=[];sectors=defaultdict(float);known_beta=0.;unknown_beta=0.;unknown_sector=0.
+    positions=[];sectors=defaultdict(float);known_beta=0.;known_beta_wealth=0.;unknown_beta=0.;unknown_sector=0.
     for code,quantity in sorted(holdings.items()):
         weight=quantity*closes[code]/nav
         sector,sector_asof=quotes.risk_fact(code,day,"sector")
@@ -296,15 +296,76 @@ def _exposure_day(holdings,closes,cash,nav,quotes,day):
         if sector is None:unknown_sector+=weight
         else:sectors[sector]+=weight
         if beta is None:unknown_beta+=weight
-        else:known_beta+=weight*beta
+        else:
+            known_beta+=weight*beta
+            known_beta_wealth+=weight
         positions.append({"symbol":code,"quantity":quantity,"close_mark":closes[code],"wealth_fraction":weight,
                           "preknown_sector":sector,"sector_asof":sector_asof,"preknown_beta":beta,"beta_asof":beta_asof})
     status="cash_only" if not holdings else ("risk_metadata_pending" if unknown_beta>1e-12 or unknown_sector>1e-12 else "supplied_risk_metadata_available")
     return {"date":day,"status":status,"positions":positions,"cash_fraction":cash/nav,
             "known_beta_component":known_beta,"beta_exposure":known_beta if unknown_beta<=1e-12 else None,
+            "known_beta_wealth_fraction":known_beta_wealth,
             "unknown_beta_wealth_fraction":unknown_beta,"unknown_sector_wealth_fraction":unknown_sector,
             "known_sector_wealth":dict(sectors),"maximum_industry_wealth_fraction":max(sectors.values(),default=0.) if unknown_sector<=1e-12 else None,
             "source_scope":"explicit asof and declared PIT metadata for close-wealth diagnostics; not selection, exchange fills or full-market certification"}
+
+
+def _exposure_summary(days, accounting, turnover):
+    """Keep complete beta pending while reporting its observed component.
+
+    Wealth coverage excludes cash. The known component is never renormalized
+    into total beta. Only bounded gap examples survive compact consumers.
+    """
+    known_wealth=sum(d["known_beta_wealth_fraction"] for d in days)
+    unknown_wealth=sum(d["unknown_beta_wealth_fraction"] for d in days)
+    invested=known_wealth+unknown_wealth
+    gaps={}
+    for day in days:
+        for row in day["positions"]:
+            if row["preknown_beta"] is None and row["wealth_fraction"]>0:
+                gap=gaps.setdefault(row["symbol"],{"count":0,"first":day["date"],"last":day["date"]})
+                gap["count"]+=1
+                gap["first"]=min(gap["first"],day["date"])
+                gap["last"]=max(gap["last"],day["date"])
+    examples=sorted(gaps, key=lambda code:(-gaps[code]["count"],code))[:10]
+    return {"mean_cash_fraction":float(np.mean([d["cash_fraction"] for d in days])),
+            "mean_unknown_beta_wealth_fraction":float(np.mean([d["unknown_beta_wealth_fraction"] for d in days])),
+            "mean_unknown_sector_wealth_fraction":float(np.mean([d["unknown_sector_wealth_fraction"] for d in days])),
+            "mean_beta_exposure":None if any(d["beta_exposure"] is None for d in days) else float(np.mean([d["beta_exposure"] for d in days])),
+            "mean_known_beta_component":float(np.mean([d["known_beta_component"] for d in days])),
+            "known_beta_component_scope":"Partial wealth-weighted contribution, not total beta or a renormalized known-only portfolio",
+            "mean_known_beta_wealth_fraction":known_wealth/len(days),
+            "known_beta_coverage_of_invested_wealth":known_wealth/invested if invested>0 else None,
+            "beta_coverage_denominator":"Sum of daily invested wealth fractions; cash excluded; cash-only coverage is None",
+            "unknown_beta_days":sum(d["beta_exposure"] is None for d in days),
+            "fully_known_beta_days":sum(d["beta_exposure"] is not None for d in days),
+            "cash_only_days":sum(d["status"]=="cash_only" for d in days),
+            "unknown_beta_stock_day_count":sum(gap["count"] for gap in gaps.values()),
+            "unknown_beta_stock_count":len(gaps),
+            "unknown_beta_stock_examples":[{"symbol":code,"unknown_days":gaps[code]["count"],
+                                            "first":gaps[code]["first"],"last":gaps[code]["last"]} for code in examples],
+            "unknown_beta_stocks_outside_examples":len(gaps)-len(examples),
+            "maximum_industry_wealth_fraction":None if any(d["maximum_industry_wealth_fraction"] is None for d in days) else max(d["maximum_industry_wealth_fraction"] for d in days),
+            "total_fees_initial_equity_units":accounting["fees"],
+            "mean_one_side_turnover_proxy":float(np.mean([d["one_side_turnover_proxy"] for d in turnover])) if turnover else 0.}
+
+
+def _market_projection_report(days, *, inputs_provided):
+    """Distinguish missing projection inputs from an explicitly measured zero.
+
+    Internal accounting components stay untouched. A zero PnL is never used
+    as evidence that a beta or same-leg market input was supplied.
+    """
+    internal=sum(day["market_projection"] for day in days)
+    complete=all(row[leg+"_projection_known"] for day in days for row in day["security_rows"]
+                 for leg in ("overnight","intraday"))
+    status=("not_provided" if not inputs_provided else
+            "provided_complete" if complete else "provided_partial_or_unknown")
+    return {"status":status,"beta_and_same_leg_market_inputs_provided":inputs_provided,
+            "market_projection_reported":internal if inputs_provided and complete else None,
+            "internal_accounting_market_projection":internal,
+            "internal_value_is_complete_projection":inputs_provided and complete,
+            "zero_projection_implies_risk_neutrality":False}
 
 
 def replay_portfolio(name,schedule,days,quotes,cost):
@@ -364,12 +425,10 @@ def replay_portfolio(name,schedule,days,quotes,cost):
     summary=summarize(daily,folds=min(5,len(daily)))
     metrics=performance(pd.Series([d["net_return"] for d in daily]))
     risk_pending=any(d["status"]=="risk_metadata_pending" for d in exposure_days)
-    exposure_summary={"mean_cash_fraction":float(np.mean([d["cash_fraction"] for d in exposure_days])),
-                      "mean_unknown_beta_wealth_fraction":float(np.mean([d["unknown_beta_wealth_fraction"] for d in exposure_days])),
-                      "mean_unknown_sector_wealth_fraction":float(np.mean([d["unknown_sector_wealth_fraction"] for d in exposure_days])),
-                      "mean_beta_exposure":None if any(d["beta_exposure"] is None for d in exposure_days) else float(np.mean([d["beta_exposure"] for d in exposure_days])),
-                      "maximum_industry_wealth_fraction":None if any(d["maximum_industry_wealth_fraction"] is None for d in exposure_days) else max(d["maximum_industry_wealth_fraction"] for d in exposure_days),
-                      "total_fees_initial_equity_units":summary["fees"],"mean_one_side_turnover_proxy":float(np.mean([d["one_side_turnover_proxy"] for d in turnover])) if turnover else 0.}
+    exposure_summary=_exposure_summary(exposure_days,summary,turnover)
+    # This replay intentionally supplies no projection mappings to account_day.
+    # Compact consumers retain the explicit report alongside risk coverage.
+    exposure_summary["market_projection_report"]=_market_projection_report(daily,inputs_provided=False)
     return _clean({"status":"potential_wealth_evaluated","name":name,"cost":cost,"metrics":metrics,"accounting":summary,
                    "daily":[{k:v for k,v in d.items() if k not in {"security_rows"}} for d in daily],
                    "orders":orders,"trades":executions,"turnover":turnover,"blocked_orders":dict(blocked),"final_open_positions":holdings,
