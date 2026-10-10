@@ -160,7 +160,8 @@ def prepare_study(protocol,candidate_panel,quotes,comparator_panel=None,*,source
     anchors=requested[::p["cycle"]]
     anchors=[d for d in anchors if positions[d]+p["cycle"]+1<len(calendar) and calendar[positions[d]+p["cycle"]+1]<=terminal]
     if not anchors:raise StudyInputError("No full formation/entry/holding anchor")
-    missing_sessions=[d for d in calendar if start<=d<=terminal and d not in set(q.date)]
+    quote_dates=set(q.date)
+    missing_sessions=[d for d in calendar if start<=d<=terminal and d not in quote_dates]
     targets=[];coverage=[];factor_dependence=[]
     for day in anchors:
         rows=candidate[candidate.date.eq(day)].copy()
