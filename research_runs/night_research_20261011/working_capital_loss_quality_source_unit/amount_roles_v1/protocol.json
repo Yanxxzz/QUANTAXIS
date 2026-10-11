@@ -1,0 +1,1663 @@
+{
+  "id": "WORKING_CAPITAL_LOSS_QUALITY_FIXED6_CONFIRMED_PARTIAL_AMOUNT_FACTS_20261011",
+  "status": "FROZEN_FIXED6_NOTE_AMOUNT_SOURCE_FACTS_AWAIT_ROOT_EXECUTION",
+  "prepared_at_utc": "2026-10-11T12:36:44.890315+00:00",
+  "deadline_utc": "2026-10-11T16:00:00+00:00",
+  "runner_sha256": "94bbda223917473330bb48358fe7295396817c40c588ec7fd2b2fb47f36395e3",
+  "registry_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\research_trials.sqlite3",
+  "event_prefix": "working-capital-loss-quality-amount3-freeze:",
+  "registration_subject": "32de6edd562368a60fbb3f957462facd262387bebf6d5e483b187068c424b4bb",
+  "selected_codes": [
+    "000157",
+    "000403",
+    "000409"
+  ],
+  "annotations": {
+    "000157": {
+      "announcement_id": "1225055609",
+      "fiscal_source_spans": [
+        {
+          "start": 63,
+          "end": 74,
+          "sha256": "698479196f1efba985630fd84bc09710dabb99ccb26594105ac45d78b91e0304"
+        },
+        {
+          "start": 141079,
+          "end": 141166,
+          "sha256": "dfcf128dc8a84a02d3487010ab6f2eba018b5a8f650cb9663b198d9413ba6b48"
+        }
+      ],
+      "tables": [
+        {
+          "table_id": "000157_AR_stock_closing",
+          "status": "EXACT_NATIVE_ROLES_ANNOTATED",
+          "asset": "AR",
+          "kind": "stock",
+          "period_role": "closing",
+          "printed_period_label": "期末余额",
+          "literal_date_printed": null,
+          "period_context": {
+            "report_fiscal_year": 2025,
+            "annual_accounting_period": "Jan1..Dec31 sourceprinted policy",
+            "derived_fiscal_role_date": "2025-12-31",
+            "calendar_date_not_printed_in_note": true
+          },
+          "header_span": {
+            "start": 178096,
+            "end": 178171,
+            "sha256": "461beca059794afe6aa9acc1ef0fe46341aa777b8bfad00468e56f7f431c4c68"
+          },
+          "required_header_literals": [
+            "期末余额",
+            "账面余额",
+            "账面价值",
+            "坏账准备"
+          ],
+          "row_span": {
+            "start": 178495,
+            "end": 178646,
+            "sha256": "f39e5d24d01b92066e4fc8ef79263600e165b8f3f8ac9995dd56dd3e2a6f1cc4"
+          },
+          "cell_spans": [
+            {
+              "start": 178498,
+              "end": 178517,
+              "printed": "39,543,138,974.05"
+            },
+            {
+              "start": 178518,
+              "end": 178525,
+              "printed": "100.00%"
+            },
+            {
+              "start": 178526,
+              "end": 178544,
+              "printed": "4,968,755,487.12"
+            },
+            {
+              "start": 178545,
+              "end": 178551,
+              "printed": "12.57%"
+            },
+            {
+              "start": 178552,
+              "end": 178571,
+              "printed": "34,574,383,486.93"
+            },
+            {
+              "start": 178572,
+              "end": 178591,
+              "printed": "28,874,158,021.12"
+            },
+            {
+              "start": 178592,
+              "end": 178599,
+              "printed": "100.00%"
+            },
+            {
+              "start": 178600,
+              "end": 178618,
+              "printed": "4,366,474,192.66"
+            },
+            {
+              "start": 178619,
+              "end": 178625,
+              "printed": "15.12%"
+            },
+            {
+              "start": 178626,
+              "end": 178645,
+              "printed": "24,507,683,828.46"
+            }
+          ],
+          "expected_tokens": [
+            "39,543,138,974.05",
+            "100.00%",
+            "4,968,755,487.12",
+            "12.57%",
+            "34,574,383,486.93",
+            "28,874,158,021.12",
+            "100.00%",
+            "4,366,474,192.66",
+            "15.12%",
+            "24,507,683,828.46"
+          ],
+          "role_indices": {
+            "gross": 0,
+            "allowance_disclosed": 2,
+            "net": 4
+          },
+          "percentage_indices": [
+            1,
+            3,
+            6,
+            8
+          ],
+          "original_role_labels": {
+            "gross": "账面余额",
+            "allowance_disclosed": "坏账准备",
+            "net": "账面价值"
+          },
+          "population_span": {
+            "start": 178074,
+            "end": 178646,
+            "sha256": "178853f391e22d1055b80c2d62c74e9b4ec9180052494afb0ac113862ecf4377"
+          },
+          "population_kind": "whole_AR_classification_total",
+          "disclosed_population_scope": "overallreceivableclassification total beforeindividual/subgroup detail",
+          "unit_contract": {
+            "status": "SOURCE_CNY_UNIT_BOUND",
+            "currency": "CNY",
+            "unit": "元",
+            "span": {
+              "start": 141403,
+              "end": 141424,
+              "sha256": "273bb67268addfa862c664d545481eaa92edcfa7b0da0faa8698ec75cf72245e"
+            },
+            "required_literal": "人民币",
+            "local_unit_span": {
+              "start": 178091,
+              "end": 178095,
+              "sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0"
+            },
+            "table_specific_currency_override_absent_reviewed": true
+          }
+        },
+        {
+          "table_id": "000157_AR_stock_opening",
+          "status": "EXACT_NATIVE_ROLES_ANNOTATED",
+          "asset": "AR",
+          "kind": "stock",
+          "period_role": "opening",
+          "printed_period_label": "期初余额",
+          "literal_date_printed": null,
+          "period_context": {
+            "report_fiscal_year": 2025,
+            "annual_accounting_period": "Jan1..Dec31 sourceprinted policy",
+            "derived_fiscal_role_date": "2025-01-01",
+            "calendar_date_not_printed_in_note": true
+          },
+          "header_span": {
+            "start": 178096,
+            "end": 178171,
+            "sha256": "461beca059794afe6aa9acc1ef0fe46341aa777b8bfad00468e56f7f431c4c68"
+          },
+          "required_header_literals": [
+            "期初余额",
+            "账面余额",
+            "账面价值",
+            "坏账准备"
+          ],
+          "row_span": {
+            "start": 178495,
+            "end": 178646,
+            "sha256": "f39e5d24d01b92066e4fc8ef79263600e165b8f3f8ac9995dd56dd3e2a6f1cc4"
+          },
+          "cell_spans": [
+            {
+              "start": 178498,
+              "end": 178517,
+              "printed": "39,543,138,974.05"
+            },
+            {
+              "start": 178518,
+              "end": 178525,
+              "printed": "100.00%"
+            },
+            {
+              "start": 178526,
+              "end": 178544,
+              "printed": "4,968,755,487.12"
+            },
+            {
+              "start": 178545,
+              "end": 178551,
+              "printed": "12.57%"
+            },
+            {
+              "start": 178552,
+              "end": 178571,
+              "printed": "34,574,383,486.93"
+            },
+            {
+              "start": 178572,
+              "end": 178591,
+              "printed": "28,874,158,021.12"
+            },
+            {
+              "start": 178592,
+              "end": 178599,
+              "printed": "100.00%"
+            },
+            {
+              "start": 178600,
+              "end": 178618,
+              "printed": "4,366,474,192.66"
+            },
+            {
+              "start": 178619,
+              "end": 178625,
+              "printed": "15.12%"
+            },
+            {
+              "start": 178626,
+              "end": 178645,
+              "printed": "24,507,683,828.46"
+            }
+          ],
+          "expected_tokens": [
+            "39,543,138,974.05",
+            "100.00%",
+            "4,968,755,487.12",
+            "12.57%",
+            "34,574,383,486.93",
+            "28,874,158,021.12",
+            "100.00%",
+            "4,366,474,192.66",
+            "15.12%",
+            "24,507,683,828.46"
+          ],
+          "role_indices": {
+            "gross": 5,
+            "allowance_disclosed": 7,
+            "net": 9
+          },
+          "percentage_indices": [
+            1,
+            3,
+            6,
+            8
+          ],
+          "original_role_labels": {
+            "gross": "账面余额",
+            "allowance_disclosed": "坏账准备",
+            "net": "账面价值"
+          },
+          "population_span": {
+            "start": 178074,
+            "end": 178646,
+            "sha256": "178853f391e22d1055b80c2d62c74e9b4ec9180052494afb0ac113862ecf4377"
+          },
+          "population_kind": "whole_AR_classification_total",
+          "disclosed_population_scope": "overallreceivableclassification total beforeindividual/subgroup detail",
+          "unit_contract": {
+            "status": "SOURCE_CNY_UNIT_BOUND",
+            "currency": "CNY",
+            "unit": "元",
+            "span": {
+              "start": 141403,
+              "end": 141424,
+              "sha256": "273bb67268addfa862c664d545481eaa92edcfa7b0da0faa8698ec75cf72245e"
+            },
+            "required_literal": "人民币",
+            "local_unit_span": {
+              "start": 178091,
+              "end": 178095,
+              "sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0"
+            },
+            "table_specific_currency_override_absent_reviewed": true
+          }
+        },
+        {
+          "table_id": "000157_INV_stock_closing",
+          "status": "EXACT_NATIVE_ROLES_ANNOTATED",
+          "asset": "INV",
+          "kind": "stock",
+          "period_role": "closing",
+          "printed_period_label": "期末余额",
+          "literal_date_printed": null,
+          "period_context": {
+            "report_fiscal_year": 2025,
+            "annual_accounting_period": "Jan1..Dec31 sourceprinted policy",
+            "derived_fiscal_role_date": "2025-12-31",
+            "calendar_date_not_printed_in_note": true
+          },
+          "header_span": {
+            "start": 183659,
+            "end": 183732,
+            "sha256": "daed1f8d33f4c4cdf3af620ddcf63e69f839fd52b080816ab56c91ddfcee2567"
+          },
+          "required_header_literals": [
+            "期末余额",
+            "账面余额",
+            "账面价值",
+            "存货跌价准备或合同履约成本减值准备"
+          ],
+          "row_span": {
+            "start": 184158,
+            "end": 184274,
+            "sha256": "73011aba0ab80307772b5fc23c52e925804b5447a861a9b265b2805a86e4909d"
+          },
+          "cell_spans": [
+            {
+              "start": 184161,
+              "end": 184179,
+              "printed": "20,754,195,773.47"
+            },
+            {
+              "start": 184181,
+              "end": 184196,
+              "printed": "237,698,451.15"
+            },
+            {
+              "start": 184198,
+              "end": 184216,
+              "printed": "20,516,497,322.32"
+            },
+            {
+              "start": 184218,
+              "end": 184236,
+              "printed": "22,788,808,622.66"
+            },
+            {
+              "start": 184238,
+              "end": 184253,
+              "printed": "225,254,009.55"
+            },
+            {
+              "start": 184255,
+              "end": 184273,
+              "printed": "22,563,554,613.11"
+            }
+          ],
+          "expected_tokens": [
+            "20,754,195,773.47",
+            "237,698,451.15",
+            "20,516,497,322.32",
+            "22,788,808,622.66",
+            "225,254,009.55",
+            "22,563,554,613.11"
+          ],
+          "role_indices": {
+            "gross": 0,
+            "allowance_disclosed": 1,
+            "net": 2
+          },
+          "percentage_indices": [],
+          "original_role_labels": {
+            "gross": "账面余额",
+            "allowance_disclosed": "存货跌价准备或合同履约成本减值准备",
+            "net": "账面价值"
+          },
+          "population_span": {
+            "start": 183644,
+            "end": 184325,
+            "sha256": "18ae901343433ecd7b3490fb309d8443c6928cd21a6c8a1f860006d679dba584"
+          },
+          "population_kind": "whole_inventory_disclosed_classification_total",
+          "disclosed_population_scope": "pureinventorycontractcost separationunverified",
+          "unit_contract": {
+            "status": "SOURCE_CNY_UNIT_BOUND",
+            "currency": "CNY",
+            "unit": "元",
+            "span": {
+              "start": 141403,
+              "end": 141424,
+              "sha256": "273bb67268addfa862c664d545481eaa92edcfa7b0da0faa8698ec75cf72245e"
+            },
+            "required_literal": "人民币",
+            "local_unit_span": {
+              "start": 183654,
+              "end": 183658,
+              "sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0"
+            },
+            "table_specific_currency_override_absent_reviewed": true
+          }
+        },
+        {
+          "table_id": "000157_INV_stock_opening",
+          "status": "EXACT_NATIVE_ROLES_ANNOTATED",
+          "asset": "INV",
+          "kind": "stock",
+          "period_role": "opening",
+          "printed_period_label": "期初余额",
+          "literal_date_printed": null,
+          "period_context": {
+            "report_fiscal_year": 2025,
+            "annual_accounting_period": "Jan1..Dec31 sourceprinted policy",
+            "derived_fiscal_role_date": "2025-01-01",
+            "calendar_date_not_printed_in_note": true
+          },
+          "header_span": {
+            "start": 183659,
+            "end": 183732,
+            "sha256": "daed1f8d33f4c4cdf3af620ddcf63e69f839fd52b080816ab56c91ddfcee2567"
+          },
+          "required_header_literals": [
+            "期初余额",
+            "账面余额",
+            "账面价值",
+            "存货跌价准备或合同履约成本减值准备"
+          ],
+          "row_span": {
+            "start": 184158,
+            "end": 184274,
+            "sha256": "73011aba0ab80307772b5fc23c52e925804b5447a861a9b265b2805a86e4909d"
+          },
+          "cell_spans": [
+            {
+              "start": 184161,
+              "end": 184179,
+              "printed": "20,754,195,773.47"
+            },
+            {
+              "start": 184181,
+              "end": 184196,
+              "printed": "237,698,451.15"
+            },
+            {
+              "start": 184198,
+              "end": 184216,
+              "printed": "20,516,497,322.32"
+            },
+            {
+              "start": 184218,
+              "end": 184236,
+              "printed": "22,788,808,622.66"
+            },
+            {
+              "start": 184238,
+              "end": 184253,
+              "printed": "225,254,009.55"
+            },
+            {
+              "start": 184255,
+              "end": 184273,
+              "printed": "22,563,554,613.11"
+            }
+          ],
+          "expected_tokens": [
+            "20,754,195,773.47",
+            "237,698,451.15",
+            "20,516,497,322.32",
+            "22,788,808,622.66",
+            "225,254,009.55",
+            "22,563,554,613.11"
+          ],
+          "role_indices": {
+            "gross": 3,
+            "allowance_disclosed": 4,
+            "net": 5
+          },
+          "percentage_indices": [],
+          "original_role_labels": {
+            "gross": "账面余额",
+            "allowance_disclosed": "存货跌价准备或合同履约成本减值准备",
+            "net": "账面价值"
+          },
+          "population_span": {
+            "start": 183644,
+            "end": 184325,
+            "sha256": "18ae901343433ecd7b3490fb309d8443c6928cd21a6c8a1f860006d679dba584"
+          },
+          "population_kind": "whole_inventory_disclosed_classification_total",
+          "disclosed_population_scope": "pureinventorycontractcost separationunverified",
+          "unit_contract": {
+            "status": "SOURCE_CNY_UNIT_BOUND",
+            "currency": "CNY",
+            "unit": "元",
+            "span": {
+              "start": 141403,
+              "end": 141424,
+              "sha256": "273bb67268addfa862c664d545481eaa92edcfa7b0da0faa8698ec75cf72245e"
+            },
+            "required_literal": "人民币",
+            "local_unit_span": {
+              "start": 183654,
+              "end": 183658,
+              "sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0"
+            },
+            "table_specific_currency_override_absent_reviewed": true
+          }
+        },
+        {
+          "table_id": "000157_AR_movement",
+          "status": "EXACT_NATIVE_ROLES_ANNOTATED",
+          "asset": "AR",
+          "kind": "movement",
+          "header_span": {
+            "start": 179491,
+            "end": 179528,
+            "sha256": "68d155ac6d424a4d4b56de9f47b878a9adfec569bcc8ee870f34bb7e1471d713"
+          },
+          "required_header_literals": [
+            "期初余额",
+            "计提",
+            "收回或转回",
+            "转销或核销",
+            "其他",
+            "期末余额"
+          ],
+          "row_span": {
+            "start": 179638,
+            "end": 179739,
+            "sha256": "55bc3539e0b766c25f4a894f919ba9c2f82a87184ddf7340979b28e42f8b3aeb"
+          },
+          "cell_spans": [
+            {
+              "start": 179641,
+              "end": 179658,
+              "printed": "4,366,474,192.66"
+            },
+            {
+              "start": 179659,
+              "end": 179674,
+              "printed": "766,782,639.74"
+            },
+            {
+              "start": 179675,
+              "end": 179690,
+              "printed": "122,085,184.78"
+            },
+            {
+              "start": 179691,
+              "end": 179706,
+              "printed": "105,907,447.02"
+            },
+            {
+              "start": 179707,
+              "end": 179721,
+              "printed": "63,491,286.52"
+            },
+            {
+              "start": 179722,
+              "end": 179739,
+              "printed": "4,968,755,487.12"
+            }
+          ],
+          "expected_tokens": [
+            "4,366,474,192.66",
+            "766,782,639.74",
+            "122,085,184.78",
+            "105,907,447.02",
+            "63,491,286.52",
+            "4,968,755,487.12"
+          ],
+          "role_indices": {
+            "opening": 0,
+            "charge": 1,
+            "recovery_or_reversal": 2,
+            "transfer_or_writeoff": 3,
+            "other": 4,
+            "closing": 5
+          },
+          "original_role_labels": {
+            "opening": "期初余额",
+            "charge": "计提",
+            "recovery_or_reversal": "收回或转回",
+            "transfer_or_writeoff": "转销或核销",
+            "other": "其他",
+            "closing": "期末余额"
+          },
+          "population_span": {
+            "start": 179451,
+            "end": 179740,
+            "sha256": "4c96d13b2d9eb9a43d9cb4a93fa67640f74541372b2cd8d0a2e9e0fcc67b6b8a"
+          },
+          "population_kind": "whole_AR_provision_total",
+          "combined_role_semantics": {
+            "recovery_or_reversal": "cash recovery versus reversalunseparated",
+            "transfer_or_writeoff": "originalprint combined notseparated",
+            "other": "effectsignandcauseunknown;no closure inferred"
+          },
+          "unit_contract": {
+            "status": "SOURCE_CNY_UNIT_BOUND",
+            "currency": "CNY",
+            "unit": "元",
+            "span": {
+              "start": 141403,
+              "end": 141424,
+              "sha256": "273bb67268addfa862c664d545481eaa92edcfa7b0da0faa8698ec75cf72245e"
+            },
+            "required_literal": "人民币",
+            "local_unit_span": {
+              "start": 179486,
+              "end": 179490,
+              "sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0"
+            },
+            "table_specific_currency_override_absent_reviewed": true
+          }
+        },
+        {
+          "table_id": "000157_INV_movement_partial",
+          "status": "pending",
+          "asset": "INV",
+          "kind": "movement",
+          "pending_reason": "fewer_than_header6columns_actual_blankslot_geometry_unknown_noindicesguessed",
+          "header_span": {
+            "start": 184353,
+            "end": 184391,
+            "sha256": "8c9343bc6cfe6adc48e1063cc4e0651d462dcf00fa4b0bf63344e13c2c380c1b"
+          },
+          "row_span": {
+            "start": 184578,
+            "end": 184642,
+            "sha256": "8ad1de208063d66cba9fcf163068600eb1909ea03ef7ebbf752917cd16180458"
+          },
+          "cell_spans": [
+            {
+              "start": 184581,
+              "end": 184596,
+              "printed": "225,254,009.55"
+            },
+            {
+              "start": 184597,
+              "end": 184611,
+              "printed": "62,821,971.29"
+            },
+            {
+              "start": 184612,
+              "end": 184626,
+              "printed": "50,377,529.69"
+            },
+            {
+              "start": 184627,
+              "end": 184642,
+              "printed": "237,698,451.15"
+            }
+          ],
+          "expected_tokens": [
+            "225,254,009.55",
+            "62,821,971.29",
+            "50,377,529.69",
+            "237,698,451.15"
+          ],
+          "combined_role_semantics": {
+            "original_header": "combinedrecovery/reversal ortransfer/writeoff/reversaltransfer preserved; unidentifiedamountslotsnotattributed"
+          }
+        }
+      ]
+    },
+    "000403": {
+      "announcement_id": "1225245931",
+      "fiscal_source_spans": [
+        {
+          "start": 66,
+          "end": 76,
+          "sha256": "c9b273b8c0fd3cee83b6b7b928ee4829e2f8132c5726b84c000b87fb385705cc"
+        },
+        {
+          "start": 90298,
+          "end": 90390,
+          "sha256": "4e634f0ef6727b11ecb3888240f99d99a9b354f10aeb536d98879dc6190b6619"
+        }
+      ],
+      "tables": [
+        {
+          "table_id": "000403_AR_stock_closing",
+          "status": "EXACT_NATIVE_ROLES_ANNOTATED",
+          "asset": "AR",
+          "kind": "stock",
+          "period_role": "closing",
+          "printed_period_label": "期末余额",
+          "literal_date_printed": null,
+          "period_context": {
+            "report_fiscal_year": 2025,
+            "annual_accounting_period": "Jan1..Dec31 sourceprinted policy",
+            "derived_fiscal_role_date": "2025-12-31",
+            "calendar_date_not_printed_in_note": true
+          },
+          "header_span": {
+            "start": 113745,
+            "end": 113782,
+            "sha256": "801a59d8fa9d40db9b248b6ee02d80f0934d0df2862a8ccc37242f53cd269898"
+          },
+          "required_header_literals": [
+            "期末余额",
+            "账面余额",
+            "账面价值",
+            "坏账准备"
+          ],
+          "row_span": {
+            "start": 113973,
+            "end": 114033,
+            "sha256": "0e979d72dde00a338a2a670a2a2c736ff6eacbf589020d0e2349698620220dc6"
+          },
+          "cell_spans": [
+            {
+              "start": 113976,
+              "end": 113990,
+              "printed": "962,062,199.27"
+            },
+            {
+              "start": 113991,
+              "end": 113998,
+              "printed": "100.00%"
+            },
+            {
+              "start": 113999,
+              "end": 114012,
+              "printed": "32,478,365.85"
+            },
+            {
+              "start": 114013,
+              "end": 114018,
+              "printed": "3.38%"
+            },
+            {
+              "start": 114019,
+              "end": 114033,
+              "printed": "929,583,833.42"
+            }
+          ],
+          "expected_tokens": [
+            "962,062,199.27",
+            "100.00%",
+            "32,478,365.85",
+            "3.38%",
+            "929,583,833.42"
+          ],
+          "role_indices": {
+            "gross": 0,
+            "allowance_disclosed": 2,
+            "net": 4
+          },
+          "percentage_indices": [
+            1,
+            3
+          ],
+          "original_role_labels": {
+            "gross": "账面余额",
+            "allowance_disclosed": "坏账准备",
+            "net": "账面价值"
+          },
+          "population_span": {
+            "start": 113724,
+            "end": 114380,
+            "sha256": "897ccd2fbbb4108999ffd959f266d5ea828408d223592b152509a70f08b0e399"
+          },
+          "population_kind": "whole_AR_classification_total",
+          "disclosed_population_scope": "overallreceivableclassification total beforeindividual/subgroup detail",
+          "unit_contract": {
+            "status": "SOURCE_CNY_UNIT_BOUND",
+            "currency": "CNY",
+            "unit": "元",
+            "span": {
+              "start": 89315,
+              "end": 89333,
+              "sha256": "38972a2bc7395f4256e76595370d2883b686d0a377e61f582fd392b29e21c34a"
+            },
+            "required_literal": "人民币",
+            "local_unit_span": {
+              "start": 113740,
+              "end": 113744,
+              "sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0"
+            },
+            "table_specific_currency_override_absent_reviewed": true
+          }
+        },
+        {
+          "table_id": "000403_AR_stock_opening",
+          "status": "EXACT_NATIVE_ROLES_ANNOTATED",
+          "asset": "AR",
+          "kind": "stock",
+          "period_role": "opening",
+          "printed_period_label": "期初余额",
+          "literal_date_printed": null,
+          "period_context": {
+            "report_fiscal_year": 2025,
+            "annual_accounting_period": "Jan1..Dec31 sourceprinted policy",
+            "derived_fiscal_role_date": "2025-01-01",
+            "calendar_date_not_printed_in_note": true
+          },
+          "header_span": {
+            "start": 114091,
+            "end": 114128,
+            "sha256": "61a8b2e93aa7f1216a53ad26a9dc072394f618a12c51409cb396191210224b84"
+          },
+          "required_header_literals": [
+            "期初余额",
+            "账面余额",
+            "账面价值",
+            "坏账准备"
+          ],
+          "row_span": {
+            "start": 114319,
+            "end": 114379,
+            "sha256": "5ab2babc1f656face8b9b627adddee373a8d0b8e5c9bc974c64b5cf32f5df1fa"
+          },
+          "cell_spans": [
+            {
+              "start": 114322,
+              "end": 114336,
+              "printed": "654,922,654.51"
+            },
+            {
+              "start": 114337,
+              "end": 114344,
+              "printed": "100.00%"
+            },
+            {
+              "start": 114345,
+              "end": 114358,
+              "printed": "23,700,823.46"
+            },
+            {
+              "start": 114359,
+              "end": 114364,
+              "printed": "3.62%"
+            },
+            {
+              "start": 114365,
+              "end": 114379,
+              "printed": "631,221,831.05"
+            }
+          ],
+          "expected_tokens": [
+            "654,922,654.51",
+            "100.00%",
+            "23,700,823.46",
+            "3.62%",
+            "631,221,831.05"
+          ],
+          "role_indices": {
+            "gross": 0,
+            "allowance_disclosed": 2,
+            "net": 4
+          },
+          "percentage_indices": [
+            1,
+            3
+          ],
+          "original_role_labels": {
+            "gross": "账面余额",
+            "allowance_disclosed": "坏账准备",
+            "net": "账面价值"
+          },
+          "population_span": {
+            "start": 113724,
+            "end": 114380,
+            "sha256": "897ccd2fbbb4108999ffd959f266d5ea828408d223592b152509a70f08b0e399"
+          },
+          "population_kind": "whole_AR_classification_total",
+          "disclosed_population_scope": "overallreceivableclassification total beforeindividual/subgroup detail",
+          "unit_contract": {
+            "status": "SOURCE_CNY_UNIT_BOUND",
+            "currency": "CNY",
+            "unit": "元",
+            "span": {
+              "start": 89315,
+              "end": 89333,
+              "sha256": "38972a2bc7395f4256e76595370d2883b686d0a377e61f582fd392b29e21c34a"
+            },
+            "required_literal": "人民币",
+            "local_unit_span": {
+              "start": 113740,
+              "end": 113744,
+              "sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0"
+            },
+            "table_specific_currency_override_absent_reviewed": true,
+            "same_classification_crosspage_declaration_inherited_not_reprinted": true
+          }
+        },
+        {
+          "table_id": "000403_INV_stock_closing",
+          "status": "EXACT_NATIVE_ROLES_ANNOTATED",
+          "asset": "INV",
+          "kind": "stock",
+          "period_role": "closing",
+          "printed_period_label": "期末余额",
+          "literal_date_printed": null,
+          "period_context": {
+            "report_fiscal_year": 2025,
+            "annual_accounting_period": "Jan1..Dec31 sourceprinted policy",
+            "derived_fiscal_role_date": "2025-12-31",
+            "calendar_date_not_printed_in_note": true
+          },
+          "header_span": {
+            "start": 119510,
+            "end": 119582,
+            "sha256": "f84bf8e3c1e93f763cdb1271f6aa6c2769f4a346711e7c87cc8223260389e43a"
+          },
+          "required_header_literals": [
+            "期末余额",
+            "账面余额",
+            "账面价值",
+            "存货跌价准备或合同履约成本减值准备"
+          ],
+          "row_span": {
+            "start": 119950,
+            "end": 120046,
+            "sha256": "4e1ceb11a66921492544616d24e197394854f6cc524bc0fe09763927e59b5fe9"
+          },
+          "cell_spans": [
+            {
+              "start": 119953,
+              "end": 119969,
+              "printed": "1,566,909,138.96"
+            },
+            {
+              "start": 119970,
+              "end": 119982,
+              "printed": "3,435,300.50"
+            },
+            {
+              "start": 119983,
+              "end": 119999,
+              "printed": "1,563,473,838.46"
+            },
+            {
+              "start": 120000,
+              "end": 120016,
+              "printed": "1,234,502,205.45"
+            },
+            {
+              "start": 120017,
+              "end": 120029,
+              "printed": "1,253,652.18"
+            },
+            {
+              "start": 120030,
+              "end": 120046,
+              "printed": "1,233,248,553.27"
+            }
+          ],
+          "expected_tokens": [
+            "1,566,909,138.96",
+            "3,435,300.50",
+            "1,563,473,838.46",
+            "1,234,502,205.45",
+            "1,253,652.18",
+            "1,233,248,553.27"
+          ],
+          "role_indices": {
+            "gross": 0,
+            "allowance_disclosed": 1,
+            "net": 2
+          },
+          "percentage_indices": [],
+          "original_role_labels": {
+            "gross": "账面余额",
+            "allowance_disclosed": "存货跌价准备或合同履约成本减值准备",
+            "net": "账面价值"
+          },
+          "population_span": {
+            "start": 119496,
+            "end": 120047,
+            "sha256": "ae8918f1742090d7a74e2dbf2d13bd5b39c9fd3775738af3274e31a562e96b56"
+          },
+          "population_kind": "whole_inventory_disclosed_classification_total",
+          "disclosed_population_scope": "pureinventorycontractcost separationunverified",
+          "unit_contract": {
+            "status": "SOURCE_CNY_UNIT_BOUND",
+            "currency": "CNY",
+            "unit": "元",
+            "span": {
+              "start": 89315,
+              "end": 89333,
+              "sha256": "38972a2bc7395f4256e76595370d2883b686d0a377e61f582fd392b29e21c34a"
+            },
+            "required_literal": "人民币",
+            "local_unit_span": {
+              "start": 119505,
+              "end": 119509,
+              "sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0"
+            },
+            "table_specific_currency_override_absent_reviewed": true
+          }
+        },
+        {
+          "table_id": "000403_INV_stock_opening",
+          "status": "EXACT_NATIVE_ROLES_ANNOTATED",
+          "asset": "INV",
+          "kind": "stock",
+          "period_role": "opening",
+          "printed_period_label": "期初余额",
+          "literal_date_printed": null,
+          "period_context": {
+            "report_fiscal_year": 2025,
+            "annual_accounting_period": "Jan1..Dec31 sourceprinted policy",
+            "derived_fiscal_role_date": "2025-01-01",
+            "calendar_date_not_printed_in_note": true
+          },
+          "header_span": {
+            "start": 119510,
+            "end": 119582,
+            "sha256": "f84bf8e3c1e93f763cdb1271f6aa6c2769f4a346711e7c87cc8223260389e43a"
+          },
+          "required_header_literals": [
+            "期初余额",
+            "账面余额",
+            "账面价值",
+            "存货跌价准备或合同履约成本减值准备"
+          ],
+          "row_span": {
+            "start": 119950,
+            "end": 120046,
+            "sha256": "4e1ceb11a66921492544616d24e197394854f6cc524bc0fe09763927e59b5fe9"
+          },
+          "cell_spans": [
+            {
+              "start": 119953,
+              "end": 119969,
+              "printed": "1,566,909,138.96"
+            },
+            {
+              "start": 119970,
+              "end": 119982,
+              "printed": "3,435,300.50"
+            },
+            {
+              "start": 119983,
+              "end": 119999,
+              "printed": "1,563,473,838.46"
+            },
+            {
+              "start": 120000,
+              "end": 120016,
+              "printed": "1,234,502,205.45"
+            },
+            {
+              "start": 120017,
+              "end": 120029,
+              "printed": "1,253,652.18"
+            },
+            {
+              "start": 120030,
+              "end": 120046,
+              "printed": "1,233,248,553.27"
+            }
+          ],
+          "expected_tokens": [
+            "1,566,909,138.96",
+            "3,435,300.50",
+            "1,563,473,838.46",
+            "1,234,502,205.45",
+            "1,253,652.18",
+            "1,233,248,553.27"
+          ],
+          "role_indices": {
+            "gross": 3,
+            "allowance_disclosed": 4,
+            "net": 5
+          },
+          "percentage_indices": [],
+          "original_role_labels": {
+            "gross": "账面余额",
+            "allowance_disclosed": "存货跌价准备或合同履约成本减值准备",
+            "net": "账面价值"
+          },
+          "population_span": {
+            "start": 119496,
+            "end": 120047,
+            "sha256": "ae8918f1742090d7a74e2dbf2d13bd5b39c9fd3775738af3274e31a562e96b56"
+          },
+          "population_kind": "whole_inventory_disclosed_classification_total",
+          "disclosed_population_scope": "pureinventorycontractcost separationunverified",
+          "unit_contract": {
+            "status": "SOURCE_CNY_UNIT_BOUND",
+            "currency": "CNY",
+            "unit": "元",
+            "span": {
+              "start": 89315,
+              "end": 89333,
+              "sha256": "38972a2bc7395f4256e76595370d2883b686d0a377e61f582fd392b29e21c34a"
+            },
+            "required_literal": "人民币",
+            "local_unit_span": {
+              "start": 119505,
+              "end": 119509,
+              "sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0"
+            },
+            "table_specific_currency_override_absent_reviewed": true
+          }
+        },
+        {
+          "table_id": "000403_AR_movement_partial",
+          "status": "pending",
+          "asset": "AR",
+          "kind": "movement",
+          "pending_reason": "fewer_than_header6columns_actual_blankslot_geometry_unknown_noindicesguessed",
+          "header_span": {
+            "start": 115686,
+            "end": 115721,
+            "sha256": "7495793afa8d4870eae1e9556919e2a177e3e6840706a8519b0acb305d3c26de"
+          },
+          "row_span": {
+            "start": 115767,
+            "end": 115810,
+            "sha256": "eed142a5d49dbd9c026a18fc2ded9eafd2421d49f2086c753ed497fcffb705b2"
+          },
+          "cell_spans": [
+            {
+              "start": 115770,
+              "end": 115783,
+              "printed": "23,700,823.46"
+            },
+            {
+              "start": 115784,
+              "end": 115796,
+              "printed": "8,777,542.39"
+            },
+            {
+              "start": 115797,
+              "end": 115810,
+              "printed": "32,478,365.85"
+            }
+          ],
+          "expected_tokens": [
+            "23,700,823.46",
+            "8,777,542.39",
+            "32,478,365.85"
+          ],
+          "combined_role_semantics": {
+            "original_header": "combinedrecovery/reversal ortransfer/writeoff/reversaltransfer preserved; unidentifiedamountslotsnotattributed"
+          }
+        },
+        {
+          "table_id": "000403_INV_movement_partial",
+          "status": "pending",
+          "asset": "INV",
+          "kind": "movement",
+          "pending_reason": "fewer_than_header6columns_actual_blankslot_geometry_unknown_noindicesguessed",
+          "header_span": {
+            "start": 120074,
+            "end": 120116,
+            "sha256": "68edd833cdf8bf7540d92f68555de8280ad41a69a1e03f08d0e0c078913fa2e6"
+          },
+          "row_span": {
+            "start": 120243,
+            "end": 120297,
+            "sha256": "2f5fec770ddcd7202ee7a676f93afd8ef4b0b603d06ee353b33b1695fa80dec4"
+          },
+          "cell_spans": [
+            {
+              "start": 120246,
+              "end": 120258,
+              "printed": "1,253,652.18"
+            },
+            {
+              "start": 120259,
+              "end": 120271,
+              "printed": "4,344,497.12"
+            },
+            {
+              "start": 120272,
+              "end": 120284,
+              "printed": "2,162,848.80"
+            },
+            {
+              "start": 120285,
+              "end": 120297,
+              "printed": "3,435,300.50"
+            }
+          ],
+          "expected_tokens": [
+            "1,253,652.18",
+            "4,344,497.12",
+            "2,162,848.80",
+            "3,435,300.50"
+          ],
+          "combined_role_semantics": {
+            "original_header": "combinedrecovery/reversal ortransfer/writeoff/reversaltransfer preserved; unidentifiedamountslotsnotattributed"
+          }
+        }
+      ]
+    },
+    "000409": {
+      "announcement_id": "1225084580",
+      "fiscal_source_spans": [
+        {
+          "start": 32,
+          "end": 42,
+          "sha256": "c9b273b8c0fd3cee83b6b7b928ee4829e2f8132c5726b84c000b87fb385705cc"
+        },
+        {
+          "start": 115290,
+          "end": 115377,
+          "sha256": "18f1996e227489261c26130cd54b040fce53500198813105ecac3d2cba56eb66"
+        }
+      ],
+      "tables": [
+        {
+          "table_id": "000409_AR_stock_closing",
+          "status": "EXACT_NATIVE_ROLES_ANNOTATED",
+          "asset": "AR",
+          "kind": "stock",
+          "period_role": "closing",
+          "printed_period_label": "期末余额",
+          "literal_date_printed": null,
+          "period_context": {
+            "report_fiscal_year": 2025,
+            "annual_accounting_period": "Jan1..Dec31 sourceprinted policy",
+            "derived_fiscal_role_date": "2025-12-31",
+            "calendar_date_not_printed_in_note": true
+          },
+          "header_span": {
+            "start": 152267,
+            "end": 152342,
+            "sha256": "5fe44643dbe1f1f10cdc640716349ab23d2715edc1fc29f452c6205b513ff26d"
+          },
+          "required_header_literals": [
+            "期末余额",
+            "账面余额",
+            "账面价值",
+            "坏账准备"
+          ],
+          "row_span": {
+            "start": 152747,
+            "end": 152878,
+            "sha256": "a9df6d4867319d54d44ce44c0342563daf5ff92ba3628f26ef8334418e43cba0"
+          },
+          "cell_spans": [
+            {
+              "start": 152750,
+              "end": 152768,
+              "printed": "1,108,160,538.79"
+            },
+            {
+              "start": 152769,
+              "end": 152776,
+              "printed": "100.00%"
+            },
+            {
+              "start": 152777,
+              "end": 152792,
+              "printed": "130,950,337.79"
+            },
+            {
+              "start": 152793,
+              "end": 152799,
+              "printed": "11.82%"
+            },
+            {
+              "start": 152800,
+              "end": 152815,
+              "printed": "977,210,201.00"
+            },
+            {
+              "start": 152816,
+              "end": 152831,
+              "printed": "765,515,266.39"
+            },
+            {
+              "start": 152832,
+              "end": 152839,
+              "printed": "100.00%"
+            },
+            {
+              "start": 152840,
+              "end": 152854,
+              "printed": "97,338,611.93"
+            },
+            {
+              "start": 152855,
+              "end": 152861,
+              "printed": "12.72%"
+            },
+            {
+              "start": 152862,
+              "end": 152877,
+              "printed": "668,176,654.46"
+            }
+          ],
+          "expected_tokens": [
+            "1,108,160,538.79",
+            "100.00%",
+            "130,950,337.79",
+            "11.82%",
+            "977,210,201.00",
+            "765,515,266.39",
+            "100.00%",
+            "97,338,611.93",
+            "12.72%",
+            "668,176,654.46"
+          ],
+          "role_indices": {
+            "gross": 0,
+            "allowance_disclosed": 2,
+            "net": 4
+          },
+          "percentage_indices": [
+            1,
+            3,
+            6,
+            8
+          ],
+          "original_role_labels": {
+            "gross": "账面余额",
+            "allowance_disclosed": "坏账准备",
+            "net": "账面价值"
+          },
+          "population_span": {
+            "start": 152246,
+            "end": 152878,
+            "sha256": "6368cd6bc00d45d6fecb8abbdb20faacfad86cb6b1ee2b28075215360afdf70c"
+          },
+          "population_kind": "whole_AR_classification_total",
+          "disclosed_population_scope": "overallreceivableclassification total beforeindividual/subgroup detail",
+          "unit_contract": {
+            "status": "SOURCE_CNY_UNIT_BOUND",
+            "currency": "CNY",
+            "unit": "元",
+            "span": {
+              "start": 115518,
+              "end": 115540,
+              "sha256": "2aa1d72f11b0cd96d7b207b0bc622e75bf26937a0c2a9c87be8d7ef1bc37ed1a"
+            },
+            "required_literal": "人民币",
+            "local_unit_span": {
+              "start": 152262,
+              "end": 152266,
+              "sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0"
+            },
+            "table_specific_currency_override_absent_reviewed": true
+          }
+        },
+        {
+          "table_id": "000409_AR_stock_opening",
+          "status": "EXACT_NATIVE_ROLES_ANNOTATED",
+          "asset": "AR",
+          "kind": "stock",
+          "period_role": "opening",
+          "printed_period_label": "期初余额",
+          "literal_date_printed": null,
+          "period_context": {
+            "report_fiscal_year": 2025,
+            "annual_accounting_period": "Jan1..Dec31 sourceprinted policy",
+            "derived_fiscal_role_date": "2025-01-01",
+            "calendar_date_not_printed_in_note": true
+          },
+          "header_span": {
+            "start": 152267,
+            "end": 152342,
+            "sha256": "5fe44643dbe1f1f10cdc640716349ab23d2715edc1fc29f452c6205b513ff26d"
+          },
+          "required_header_literals": [
+            "期初余额",
+            "账面余额",
+            "账面价值",
+            "坏账准备"
+          ],
+          "row_span": {
+            "start": 152747,
+            "end": 152878,
+            "sha256": "a9df6d4867319d54d44ce44c0342563daf5ff92ba3628f26ef8334418e43cba0"
+          },
+          "cell_spans": [
+            {
+              "start": 152750,
+              "end": 152768,
+              "printed": "1,108,160,538.79"
+            },
+            {
+              "start": 152769,
+              "end": 152776,
+              "printed": "100.00%"
+            },
+            {
+              "start": 152777,
+              "end": 152792,
+              "printed": "130,950,337.79"
+            },
+            {
+              "start": 152793,
+              "end": 152799,
+              "printed": "11.82%"
+            },
+            {
+              "start": 152800,
+              "end": 152815,
+              "printed": "977,210,201.00"
+            },
+            {
+              "start": 152816,
+              "end": 152831,
+              "printed": "765,515,266.39"
+            },
+            {
+              "start": 152832,
+              "end": 152839,
+              "printed": "100.00%"
+            },
+            {
+              "start": 152840,
+              "end": 152854,
+              "printed": "97,338,611.93"
+            },
+            {
+              "start": 152855,
+              "end": 152861,
+              "printed": "12.72%"
+            },
+            {
+              "start": 152862,
+              "end": 152877,
+              "printed": "668,176,654.46"
+            }
+          ],
+          "expected_tokens": [
+            "1,108,160,538.79",
+            "100.00%",
+            "130,950,337.79",
+            "11.82%",
+            "977,210,201.00",
+            "765,515,266.39",
+            "100.00%",
+            "97,338,611.93",
+            "12.72%",
+            "668,176,654.46"
+          ],
+          "role_indices": {
+            "gross": 5,
+            "allowance_disclosed": 7,
+            "net": 9
+          },
+          "percentage_indices": [
+            1,
+            3,
+            6,
+            8
+          ],
+          "original_role_labels": {
+            "gross": "账面余额",
+            "allowance_disclosed": "坏账准备",
+            "net": "账面价值"
+          },
+          "population_span": {
+            "start": 152246,
+            "end": 152878,
+            "sha256": "6368cd6bc00d45d6fecb8abbdb20faacfad86cb6b1ee2b28075215360afdf70c"
+          },
+          "population_kind": "whole_AR_classification_total",
+          "disclosed_population_scope": "overallreceivableclassification total beforeindividual/subgroup detail",
+          "unit_contract": {
+            "status": "SOURCE_CNY_UNIT_BOUND",
+            "currency": "CNY",
+            "unit": "元",
+            "span": {
+              "start": 115518,
+              "end": 115540,
+              "sha256": "2aa1d72f11b0cd96d7b207b0bc622e75bf26937a0c2a9c87be8d7ef1bc37ed1a"
+            },
+            "required_literal": "人民币",
+            "local_unit_span": {
+              "start": 152262,
+              "end": 152266,
+              "sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0"
+            },
+            "table_specific_currency_override_absent_reviewed": true
+          }
+        },
+        {
+          "table_id": "000409_INV_stock_sparse",
+          "status": "pending",
+          "asset": "INV",
+          "kind": "stock",
+          "pending_reason": "5printed_tokens_for6roles_missingopeningallowance_position_unknown_nozero",
+          "header_span": {
+            "start": 159435,
+            "end": 159509,
+            "sha256": "1889e5765a3aeb54e7ea303c4cf9d88ca6dfbd8e83feb2ca3ad0228fae7b9068"
+          },
+          "row_span": {
+            "start": 159709,
+            "end": 159782,
+            "sha256": "2ac740656128bb86be80ac0edf35f23fbcb81aaa2d6d709b94e1706b5f03ee04"
+          },
+          "expected_tokens": [
+            "260,768,892.01",
+            "210,831.25",
+            "260,558,060.76",
+            "301,348,791.57",
+            "301,348,791.57"
+          ],
+          "combined_role_semantics": {
+            "allowance": "Originalinventory-orcontractfulfilmentcost allowance, no pureinventoryclaim"
+          }
+        },
+        {
+          "table_id": "000409_AR_movement_partial",
+          "status": "pending",
+          "asset": "AR",
+          "kind": "movement",
+          "pending_reason": "fewer_than_header6columns_actual_blankslot_geometry_unknown_noindicesguessed",
+          "header_span": {
+            "start": 153398,
+            "end": 153433,
+            "sha256": "7495793afa8d4870eae1e9556919e2a177e3e6840706a8519b0acb305d3c26de"
+          },
+          "row_span": {
+            "start": 153531,
+            "end": 153589,
+            "sha256": "93a20a94b46b900640dc65c73a57c90b3c8bbcc0ae89f5234838169850311d70"
+          },
+          "cell_spans": [
+            {
+              "start": 153534,
+              "end": 153547,
+              "printed": "97,338,611.93"
+            },
+            {
+              "start": 153548,
+              "end": 153561,
+              "printed": "30,406,868.57"
+            },
+            {
+              "start": 153562,
+              "end": 153574,
+              "printed": "3,204,857.29"
+            },
+            {
+              "start": 153575,
+              "end": 153589,
+              "printed": "130,950,337.79"
+            }
+          ],
+          "expected_tokens": [
+            "97,338,611.93",
+            "30,406,868.57",
+            "3,204,857.29",
+            "130,950,337.79"
+          ],
+          "combined_role_semantics": {
+            "original_header": "combinedrecovery/reversal ortransfer/writeoff/reversaltransfer preserved; unidentifiedamountslotsnotattributed"
+          }
+        },
+        {
+          "table_id": "000409_INV_movement_partial",
+          "status": "pending",
+          "asset": "INV",
+          "kind": "movement",
+          "pending_reason": "fewer_than_header6columns_actual_blankslot_geometry_unknown_noindicesguessed",
+          "header_span": {
+            "start": 159834,
+            "end": 159876,
+            "sha256": "68edd833cdf8bf7540d92f68555de8280ad41a69a1e03f08d0e0c078913fa2e6"
+          },
+          "row_span": {
+            "start": 159910,
+            "end": 159939,
+            "sha256": "2c94357a2fc108c7c068490f2305d346783384b475c338403ccd8ebdbe4c4667"
+          },
+          "cell_spans": [
+            {
+              "start": 159913,
+              "end": 159917,
+              "printed": "0.00"
+            },
+            {
+              "start": 159918,
+              "end": 159928,
+              "printed": "210,831.25"
+            },
+            {
+              "start": 159929,
+              "end": 159939,
+              "printed": "210,831.25"
+            }
+          ],
+          "expected_tokens": [
+            "0.00",
+            "210,831.25",
+            "210,831.25"
+          ],
+          "combined_role_semantics": {
+            "original_header": "combinedrecovery/reversal ortransfer/writeoff/reversaltransfer preserved; unidentifiedamountslotsnotattributed"
+          }
+        }
+      ]
+    }
+  },
+  "bindings": {
+    "source_plan": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\source_plan.json",
+      "sha256": "32de6edd562368a60fbb3f957462facd262387bebf6d5e483b187068c424b4bb"
+    },
+    "capture_db": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\compact_archive\\captured_financial.sqlite3",
+      "sha256": "491c2ef55412d2bd251972c440db5f314cac85c278db0112beb4d7eaa048caa7"
+    },
+    "source_reader": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\g_field_contract_next100_unit\\consume_retained_sources.py",
+      "sha256": "b384abd8fd61cdd3c485c28c403ccb54bf8edc7abb1b18f6afe3406f4cc3967a"
+    },
+    "capture_binding_api": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\income_basis.py",
+      "sha256": "028f3fc54fa47c0c505fa78c6188278f8e9069de44e3f4e596bce35913e25034"
+    },
+    "geometry_protocol": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\geometry_repair_v1\\protocol.json",
+      "sha256": "3cc9c1e8e81f5d751001c429a81e9cd859d23df8e45b4adea70c93212d2fca29"
+    },
+    "geometry_receipt": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\geometry_repair_v1\\geometry_facts.json",
+      "sha256": "7c52bd1e38c41bae3b9909ed1d5cbecdff3bd6ebab1bb264b865cf9cb1f119bc"
+    },
+    "amount_adapter": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\amount_roles_v1\\amount_adapter.py",
+      "sha256": "2d20c1cfd396235eb919abbd779d5600b898c47e37e08621c6924e8531039797"
+    },
+    "money_api": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\financial_statements.py",
+      "sha256": "4ce12f040f3719e196801563fc524da1f52c49b45bdf948d2a7fdd2349f92f01"
+    },
+    "synthetic_tests": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\amount_roles_v1\\test_amount_adapter.py",
+      "sha256": "39e63bf872b60e3efc2d88a0fa638247df776fc1a2a5e5b0162ab2779bc10b60"
+    }
+  },
+  "output_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\amount_roles_v1\\amount_facts.json",
+  "annotation_authority": "Income-agent authorized originalsame6note inspection exactstockcell/header/population/unit/currency/annualperiod andrawmovement locators. Whitespace mayjoin inside oneexplicitlylocatedcell only; no columns joined or amount sum used to infer missingpositions.",
+  "source_fact_scope": "Five complete classifiedstock statements/ten closing-opening logicalblocks;000409INV5printedcells/6roles sparseunmapped.000157AR6printedmovementroles bound;Other direction andcombinedcause unknown. Otherfive movements retainunmapped exactprintedtokens, no zero imputation/slotshift/forcedroll. No neweconomicfactor/window/eligibility/mask.",
+  "limitations": [
+    "Stockgross−disclosedallowance=net closure is sourcearithmetic only, notcashrelease/population/policy proof.",
+    "ARwriteoff canreducegross andallowance together; do notmechanicallyreadjust netchange byallwriteoffs.",
+    "INVdisclosed allowanceincludesinventory-orcontractfulfilmentcost; do notrenamepureinventoryprovision. Normaltransferout isnotblanketbad.",
+    "Originalprintedcombined收回或转回/转销或核销/转回或转销 notsplit. MissingOther/blank/signs remainunknown; incompleteflowdoesnoterasevalidstock.",
+    "Notesprintclosing/opening labels only; datesFY2025Dec31/Jan1 areexplicitannualpolicy+cover rolederivations, notliteraldatesprintedinnote. Originalscope/policy/version/revisionremainpending."
+  ],
+  "validation": {
+    "synthetic_tests_passed": 6,
+    "compiled": true,
+    "default_inert": true,
+    "actual_source_body_or_amount_adapter_execution": false
+  },
+  "new_contexts": 0,
+  "new_factor": false,
+  "economic_window": null,
+  "direction": null,
+  "official_calls": 0,
+  "network_calls": 0,
+  "old_receipts_or_source_library_changed": false
+}
