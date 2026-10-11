@@ -1,0 +1,100 @@
+{
+  "id": "PREANNOUNCED_LOCKUP_LISTING_NOTICE_SOURCE_PILOT_20261011",
+  "status": "FROZEN_METADATA_SOURCE_PILOT_AWAIT_ROOT_ZERO_CONTEXT_REGISTRATION",
+  "prepared_at_utc": "2026-10-11T15:31:10.136414+00:00",
+  "deadline_utc": "2026-10-11T16:00:00+00:00",
+  "registry_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\research_trials.sqlite3",
+  "registration_subject": "PREANNOUNCED_LOCKUP_LISTING_NOTICE_SOURCE_PILOT_20261011",
+  "event_prefix": "preannounced-unlock-keyword-source-freeze:",
+  "external_workspace": "D:\\PandaAI-Alpha",
+  "external_code": {
+    "market_index": {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\filings_market_index.py",
+      "sha256": "77e0c28f9c9529efc5377abc5d5e3fa77f72222fb3bb7ba668a23331ff620c5c"
+    },
+    "record_schema_and_verified_download": {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\filings_akshare_index.py",
+      "sha256": "4bda02f66146437b829c362339d8ada4add156c26c7d5cbdc116dcf9080bbad1"
+    },
+    "existing_financial_PDF_text_module_static_reference_only": {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\filings_pdf_extract.py",
+      "sha256": "9fad6d1e8b9ce8a64bd64e25fa14e993b471c5810f03d42ee187832163540302"
+    }
+  },
+  "runtime_bindings": {
+    "metadata_consumer": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\announced_unlock_source_unit\\collect_metadata.py",
+      "sha256": "a0d6b795632f619d0977265b3c6dcc4fc4c046041266380b06f8c84d4b828aeb"
+    },
+    "synthetic_tests": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\announced_unlock_source_unit\\test_metadata.py",
+      "sha256": "b1b9e4e8aa27686dc9c266570469c9906d0ffb639e2681856dab6c443a11a006"
+    }
+  },
+  "query": {
+    "start": "20260921",
+    "end": "20260927",
+    "category": "",
+    "stock": "",
+    "plate": "",
+    "searchkey": "限售股上市流通",
+    "page_size": 30,
+    "max_pages": 3,
+    "max_total": 90
+  },
+  "endpoint": "https://www.cninfo.com.cn/new/hisAnnouncement/query",
+  "limits": {
+    "maximum_actual_POSTs": 3,
+    "maximum_distinct_pages": 3,
+    "request_timeout_seconds": 10,
+    "automatic_HTTP_retries": 0,
+    "allow_redirects": false,
+    "3xx_is_sourcepending": true,
+    "first_total_above90": "sourcepending_coveragepartial_keep_validated_firstpage_max30_stop_no_secondpage_no_datesplit_no_keywordvariant",
+    "maximum_metadata_records": 90,
+    "PDF_calls_in_this_unit": 0,
+    "maximum_source_start_utc": "2026-10-11T16:00:00+00:00"
+  },
+  "output_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\announced_unlock_source_unit\\metadata_receipt.json",
+  "contract": {
+    "public_read_only": "Public disclosure metadata only, no credentials/headers/environment dump. Root dispatches once require_escalated based on established sandbox10013 diagnosis; no intentional firstsandboxfailure/retry.",
+    "reused_source_module": "Market_index.discover_window/_record and AnnouncementRecord retain sixdigitcode/numericID/publication precision/officialPDF URLdate+ID/totalstable/pagecount/duplicateID/rejectiondenominator checks. Only in-memory blankcategory support and frozenkeywordSession request adaptation added; externalfiles not modified.",
+    "no_retry_or_expansion": "Callbackcounts every actualPOST before dispatch. It changes requests/HTTP failures into dedicated SourceTransportPending so old_page cannot retry; response3xx rejected with allow_redirects=False. No recursivewindow/daily/plate/keyword variants. Existingreceipt blocks implicitrestart.",
+    "raw_metadata_retained": "Accepted/rejected metadata retained without amount/performance filtering and with originaltitles untouched. Above90 preserve validated returnedfirstpage scope; duplicate firstpage IDs all rejected instead of arbitrarypick. Separate provisional titletyping not actual supply/field/tradability proof.",
+    "title_classification": "HTML stripped solely for typing. Supporting核查/法律/见证/专项意见/律师/保荐机构 classified separately; employee/incentive and revision/cancel/reschedule separate; only literalkeyword plus公告 and no these exclusions is companyprimarynotice TITLEcandidate, stillbodypending. Unknown remainspending. No sourceamount/sourceperformance filters.",
+    "sampling": "Full<=90 query: provisional primarytitle candidates stable(pubday,code,ID) first3 from completequery. Above90: keep only independently_record-validated firstpage≤30 unique metadata/rejected; coverage_partial=true/querycomplete=false and stablefirst3 only in this fixed returnedpage, NEVER wholewindowfirst3. No requestexpansion. Every PDF body still requires metadatareceiptSHA/exact3 freeze/rootstart.",
+    "scope_limit": "Oneprovider/onekeyword/sevendays boundedsearch, not allchannels/allA/tradableuniverse or fullPIT completeness. Rejected/unknown/othernotice types are not silently treatedcompanysupply or cleaned.",
+    "no_economics": "Not an economiccandidate/definition/window/direction/alpha value/label/test. Distinct sourcepurpose from ex-post F205 floatshare growth; no poolaction, price/returns/F/AR/Q calculations or officialcompute."
+  },
+  "deferred_first3_body_review_draft": {
+    "status": "DEFAULT_INERT_REQUIRE_FIXED_RETURNED_METADATA_SCOPE_EXACT_SELECTED3_SOURCE_FREEZE_AND_ROOT_START",
+    "consumer_entry": "factor_workflow.filings_akshare_index.download(record,temporary_owned_cache,timeout=20,max_bytes=16MiB) retains originalofficialURL/hash/size validation; no retries. Plain native page text can be read with pdfplumber as in existingPDF module, but NEVER call specialized extract_contract_liability financiallogic for unlocknotices.",
+    "source_selection": "Bind exact metadatareceiptSHA plus selected3 AnnouncementRecord identities and source_scope COMPLETE_KEYWORD_WINDOW or PARTIAL_RETURNED_FIRST_PAGE beforePDFGET. Above90 samples are fixedpage feasibilityexamples only, not allwindowfirst3/coverage. Same stabledate/code/ID rule aftertitle filter; no amount/price selection.",
+    "bounded_future_plan": "Atmost3exactpublicPDFs; each16MiB/max80pages/20second/noautoretry/tempPDFonce/deleteonlyownedverifiedtempafterextraction. Keep one useful small native-text input+PDF/textSHA/URLs, no duplicatepageJSON/fulltextcopies. PDFphase not dispatchedorauthorizedbythismetadataexecution alone.",
+    "manual_expected_fields": [
+      "notice primary vs supporting/employee subtype fromwholebody",
+      "original publication dateprecision and conservative nextsessionavailability mapping",
+      "explicit future上市流通日期 distinct from announcement date",
+      "解除限售 vs 实际上市流通数量/printed单位股或万股, rawspans not assumedactualsale",
+      "rescheduled/cancelled/revised or overlappingtranche references",
+      "restrictions preventing immediatecirculation/denominatorunknown keptpending"
+    ],
+    "causal_and_timing_limits": "Scheduled listing is ex-ante potential supply, not realizedsellpressure. No ticker/title-alone quantities, no sourceblankzero, no futuredateuse beforeavailability, no automaticknownlatest/poolqualification. Missingexactfield/body evidence is sourcepending, not economicfailure."
+  },
+  "validation": {
+    "synthetic_tests_passed": 7,
+    "default_inert_verified": true,
+    "actual_HTTP_PDF_new_native_or_price_label_reads": false
+  },
+  "new_contexts": 0,
+  "official_spent": 0,
+  "new_candidate_or_factor_values_or_labels": false,
+  "old_data_sources_masks_registry_state_or_Git_changed": false,
+  "full_channel_or_supply_tradability_claim": false,
+  "supersedes_unregistered_protocol": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\announced_unlock_source_unit\\protocol.json",
+    "sha256": "bfedda89ea4566e0910ee17ecdcc4a2e125242e1f0521673ccbb6967299e1a13",
+    "executed_or_registered": false,
+    "change": "Retain validated firstpage≤30 when total>90 as partialproviderreturnedpage sourcepilot only; no extraPOST/window/keyword, no completewindow prefix claim."
+  }
+}

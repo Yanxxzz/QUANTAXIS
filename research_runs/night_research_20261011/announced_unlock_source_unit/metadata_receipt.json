@@ -1,0 +1,816 @@
+{
+  "status": "KEYWORD_METADATA_WINDOW_COMPLETE_SOURCE_LIMITED",
+  "query_complete": true,
+  "total_announcements": 44,
+  "pages": 2,
+  "metadata": [
+    {
+      "symbol": "001306",
+      "announcement_id": "1225574025",
+      "title": "关于2025年<em>限</em>制性<em>股</em>票激励计划首次授予第一个解除<em>限</em><em>售</em>期解除<em>限</em><em>售</em><em>股</em>份<em>上市</em><em>流通</em>的提示性公告",
+      "published_at": "2026-09-22",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=001306&announcementId=1225574025&orgId=9900047779&announcementTime=2026-09-22",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225574025.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "301520",
+      "announcement_id": "1225574381",
+      "title": "国联民生证券承销保荐有<em>限</em>公司关于安徽万邦医药科技<em>股</em>份有<em>限</em>公司部分首次公开发行前<em>限</em><em>售</em><em>股</em>份<em>上市</em><em>流通</em>的核查意见",
+      "published_at": "2026-09-22",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=301520&announcementId=1225574381&orgId=9900053910&announcementTime=2026-09-22",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225574381.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "301584",
+      "announcement_id": "1225577047",
+      "title": "中信证券<em>股</em>份有<em>限</em>公司关于上海建发致新医疗科技集团<em>股</em>份有<em>限</em>公司部分首次公开发行前已发行<em>股</em>份及首次公开发行战略配<em>售</em><em>股</em>份<em>上市</em><em>流通</em>的核查意见",
+      "published_at": "2026-09-22T17:58:28+08:00",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=301584&announcementId=1225577047&orgId=9900056249&announcementTime=2026-09-22",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225577047.PDF",
+      "category": "",
+      "time_precision": "second"
+    },
+    {
+      "symbol": "301682",
+      "announcement_id": "1225574266",
+      "title": "关于首次公开发行网下配<em>售</em><em>限</em><em>售</em><em>股</em>份<em>上市</em><em>流通</em>的提示性公告",
+      "published_at": "2026-09-22",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=301682&announcementId=1225574266&orgId=nssc1000429&announcementTime=2026-09-22",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225574266.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "301682",
+      "announcement_id": "1225574267",
+      "title": "申万宏源关于宏明电子首次公开发行网下配<em>售</em><em>限</em><em>售</em><em>股</em>份<em>上市</em><em>流通</em>的核查意见",
+      "published_at": "2026-09-22",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=301682&announcementId=1225574267&orgId=nssc1000429&announcementTime=2026-09-22",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225574267.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "600548",
+      "announcement_id": "1225575298",
+      "title": "中信证券<em>股</em>份有<em>限</em>公司关于深圳高速公路集团<em>股</em>份有<em>限</em>公司向特定对象发行<em>股</em>票部分<em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>的核查意见(3)",
+      "published_at": "2026-09-22",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600548&announcementId=1225575298&orgId=gssh0600548&announcementTime=2026-09-22",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225575298.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "600548",
+      "announcement_id": "1225575337",
+      "title": "关于向特定对象发行<em>股</em>票部分<em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>的公告",
+      "published_at": "2026-09-22",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600548&announcementId=1225575337&orgId=gssh0600548&announcementTime=2026-09-22",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225575337.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "603459",
+      "announcement_id": "1225575285",
+      "title": "国联民生证券承销保荐有<em>限</em>公司关于江西红板科技<em>股</em>份有<em>限</em>公司首次公开发行网下配<em>售</em><em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>的核查意见",
+      "published_at": "2026-09-22",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=603459&announcementId=1225575285&orgId=9900063205&announcementTime=2026-09-22",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225575285.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "603459",
+      "announcement_id": "1225575321",
+      "title": "关于首次公开发行网下配<em>售</em><em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em><em>股</em>的公告",
+      "published_at": "2026-09-22",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=603459&announcementId=1225575321&orgId=9900063205&announcementTime=2026-09-22",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225575321.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "688531",
+      "announcement_id": "1225574632",
+      "title": "首次公开发行部分<em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>公告",
+      "published_at": "2026-09-22",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688531&announcementId=1225574632&orgId=gfbj0834204&announcementTime=2026-09-22",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225574632.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "688531",
+      "announcement_id": "1225574636",
+      "title": "国泰海通证券<em>股</em>份有<em>限</em>公司关于日联科技集团<em>股</em>份有<em>限</em>公司首次公开发行部分<em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>的核查意见",
+      "published_at": "2026-09-22",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688531&announcementId=1225574636&orgId=gfbj0834204&announcementTime=2026-09-22",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225574636.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "688811",
+      "announcement_id": "1225575442",
+      "title": "首次公开发行网下配<em>售</em><em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>公告",
+      "published_at": "2026-09-22",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688811&announcementId=1225575442&orgId=9900063220&announcementTime=2026-09-22",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225575442.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "688811",
+      "announcement_id": "1225575444",
+      "title": "中信证券<em>股</em>份有<em>限</em>公司关于有研金属复合材料（北京）<em>股</em>份公司 首次公开发行网下配<em>售</em><em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>的核查意见",
+      "published_at": "2026-09-22",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688811&announcementId=1225575444&orgId=9900063220&announcementTime=2026-09-22",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225575444.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "688813",
+      "announcement_id": "1225574397",
+      "title": "西安泰金新能科技<em>股</em>份有<em>限</em>公司首次公开发行网下配<em>售</em><em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>公告",
+      "published_at": "2026-09-22",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688813&announcementId=1225574397&orgId=9900061070&announcementTime=2026-09-22",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225574397.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "688813",
+      "announcement_id": "1225574405",
+      "title": "中信建投证券<em>股</em>份有<em>限</em>公司关于西安泰金新能科技<em>股</em>份有<em>限</em>公司首次公开发行网下配<em>售</em><em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>的核查意见",
+      "published_at": "2026-09-22",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688813&announcementId=1225574405&orgId=9900061070&announcementTime=2026-09-22",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225574405.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "000568",
+      "announcement_id": "1225576512",
+      "title": "关于2021年<em>限</em>制性<em>股</em>票激励计划预留部分第三个解除<em>限</em><em>售</em>期解除<em>限</em><em>售</em><em>股</em>份<em>上市</em><em>流通</em>的提示性公告",
+      "published_at": "2026-09-23",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000568&announcementId=1225576512&orgId=gssz0000568&announcementTime=2026-09-23",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-23/1225576512.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "000962",
+      "announcement_id": "1225577765",
+      "title": "宁夏东方钽业<em>股</em>份有<em>限</em>公司关于向特定对象发行<em>股</em>票的部分<em>限</em><em>售</em><em>股</em>份解除<em>限</em><em>售</em><em>上市</em><em>流通</em>的提示性公告",
+      "published_at": "2026-09-23",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000962&announcementId=1225577765&orgId=gssz0000962&announcementTime=2026-09-23",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-23/1225577765.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "000962",
+      "announcement_id": "1225577766",
+      "title": "招商证券<em>股</em>份有<em>限</em>公司关于宁夏东方钽业<em>股</em>份有<em>限</em>公司向特定对象发行<em>股</em>票的部分<em>限</em><em>售</em><em>股</em>份解除<em>限</em><em>售</em><em>上市</em><em>流通</em>的核查意见",
+      "published_at": "2026-09-23",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000962&announcementId=1225577766&orgId=gssz0000962&announcementTime=2026-09-23",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-23/1225577766.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "002256",
+      "announcement_id": "1225577180",
+      "title": "关于2025年<em>限</em>制性<em>股</em>票与<em>股</em>票期权激励计划预留授予<em>限</em>制性<em>股</em>票第一个解除<em>限</em><em>售</em>期解除<em>限</em><em>售</em><em>股</em>份<em>上市</em><em>流通</em>的提示性公告",
+      "published_at": "2026-09-23",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=002256&announcementId=1225577180&orgId=9900004931&announcementTime=2026-09-23",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-23/1225577180.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "002355",
+      "announcement_id": "1225576511",
+      "title": "兴民智通（集团）<em>股</em>份有<em>限</em>公司关于2025年<em>限</em>制性<em>股</em>票激励计划首次授予部分第一个解除<em>限</em><em>售</em>期解除<em>限</em><em>售</em><em>股</em>份<em>上市</em><em>流通</em>的提示性公告",
+      "published_at": "2026-09-23",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=002355&announcementId=1225576511&orgId=9900010490&announcementTime=2026-09-23",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-23/1225576511.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "002911",
+      "announcement_id": "1225577183",
+      "title": "关于2023年<em>限</em>制性<em>股</em>票激励计划首次授予部分第二个解除<em>限</em><em>售</em>期及预留授予部分第一个解除<em>限</em><em>售</em>期解除<em>限</em><em>售</em><em>股</em>份<em>上市</em><em>流通</em>的提示性公告",
+      "published_at": "2026-09-23",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=002911&announcementId=1225577183&orgId=9900023979&announcementTime=2026-09-23",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-23/1225577183.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "300124",
+      "announcement_id": "1225578305",
+      "title": "关于第七期<em>股</em>权激励计划预留授予第一类<em>限</em>制性<em>股</em>票第一个<em>限</em><em>售</em>期<em>股</em>份解除<em>限</em><em>售</em>暨<em>上市</em><em>流通</em>的公告",
+      "published_at": "2026-09-23T16:38:08+08:00",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=300124&announcementId=1225578305&orgId=9900012527&announcementTime=2026-09-23",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-23/1225578305.PDF",
+      "category": "",
+      "time_precision": "second"
+    },
+    {
+      "symbol": "301668",
+      "announcement_id": "1225576602",
+      "title": "长江证券承销保荐有<em>限</em>公司关于北京昊创瑞通电气设备<em>股</em>份有<em>限</em>公司首次公开发行战略配<em>售</em><em>股</em>份<em>上市</em><em>流通</em>的核查意见",
+      "published_at": "2026-09-23",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=301668&announcementId=1225576602&orgId=9900059160&announcementTime=2026-09-23",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-23/1225576602.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "600925",
+      "announcement_id": "1225576859",
+      "title": "江苏徐矿能源<em>股</em>份有<em>限</em>公司首次公开发行<em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>公告",
+      "published_at": "2026-09-23",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600925&announcementId=1225576859&orgId=9900051620&announcementTime=2026-09-23",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-23/1225576859.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "600925",
+      "announcement_id": "1225576862",
+      "title": "华泰联合证券有<em>限</em>责任公司关于江苏徐矿能源<em>股</em>份有<em>限</em>公司首次公开发行部分<em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>的核查意见",
+      "published_at": "2026-09-23",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600925&announcementId=1225576862&orgId=9900051620&announcementTime=2026-09-23",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-23/1225576862.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "601868",
+      "announcement_id": "1225577438",
+      "title": "中国能源建设<em>股</em>份有<em>限</em>公司关于向特定对象发行A<em>股</em><em>股</em>票<em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>的公告",
+      "published_at": "2026-09-23",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=601868&announcementId=1225577438&orgId=9900031628&announcementTime=2026-09-23",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-23/1225577438.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "601868",
+      "announcement_id": "1225577443",
+      "title": "中信证券<em>股</em>份有<em>限</em>公司关于中国能源建设<em>股</em>份有<em>限</em>公司向特定对象发行A<em>股</em><em>股</em>票<em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>的核查意见",
+      "published_at": "2026-09-23",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=601868&announcementId=1225577443&orgId=9900031628&announcementTime=2026-09-23",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-23/1225577443.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "001309",
+      "announcement_id": "1225578718",
+      "title": "关于2023年<em>限</em>制性<em>股</em>票激励计划首次授予<em>限</em>制性<em>股</em>票第三个解除<em>限</em><em>售</em>期解除<em>限</em><em>售</em><em>股</em>份<em>上市</em><em>流通</em>的提示性公告",
+      "published_at": "2026-09-24",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=001309&announcementId=1225578718&orgId=nssc1000644&announcementTime=2026-09-24",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-24/1225578718.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "002046",
+      "announcement_id": "1225578502",
+      "title": "关于向特定对象发行<em>股</em>份解除<em>限</em><em>售</em>并<em>上市</em><em>流通</em>的提示性公告",
+      "published_at": "2026-09-24",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=002046&announcementId=1225578502&orgId=gssz0002046&announcementTime=2026-09-24",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-24/1225578502.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "002046",
+      "announcement_id": "1225578503",
+      "title": "光大证券<em>股</em>份有<em>限</em>公司关于国机精工集团<em>股</em>份有<em>限</em>公司向特定对象发行<em>股</em>票部分<em>限</em><em>售</em><em>股</em>解除<em>限</em><em>售</em><em>上市</em><em>流通</em>的核查意见",
+      "published_at": "2026-09-24",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=002046&announcementId=1225578503&orgId=gssz0002046&announcementTime=2026-09-24",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-24/1225578503.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "002276",
+      "announcement_id": "1225578241",
+      "title": "关于2023年<em>限</em>制性<em>股</em>票激励计划预留授予部分<em>限</em>制性<em>股</em>票第一个解除<em>限</em><em>售</em>期解除<em>限</em><em>售</em><em>股</em>份<em>上市</em><em>流通</em>的提示性公告",
+      "published_at": "2026-09-24",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=002276&announcementId=1225578241&orgId=9900007107&announcementTime=2026-09-24",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-24/1225578241.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "300254",
+      "announcement_id": "1225581140",
+      "title": "关于2025年<em>限</em>制性<em>股</em>票激励计划第一个解除<em>限</em><em>售</em>期解除<em>限</em><em>售</em><em>股</em>份<em>上市</em><em>流通</em>提示性公告",
+      "published_at": "2026-09-24T16:25:52+08:00",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=300254&announcementId=1225581140&orgId=9900020672&announcementTime=2026-09-24",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-24/1225581140.PDF",
+      "category": "",
+      "time_precision": "second"
+    },
+    {
+      "symbol": "300711",
+      "announcement_id": "1225581812",
+      "title": "中信证券<em>股</em>份有<em>限</em>公司关于广州广哈通信<em>股</em>份有<em>限</em>公司向特定对象发行<em>股</em>票<em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>的核查意见",
+      "published_at": "2026-09-24T17:30:26+08:00",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=300711&announcementId=1225581812&orgId=9900034451&announcementTime=2026-09-24",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-24/1225581812.PDF",
+      "category": "",
+      "time_precision": "second"
+    },
+    {
+      "symbol": "301563",
+      "announcement_id": "1225581028",
+      "title": "国金证券<em>股</em>份有<em>限</em>公司关于云汉芯城（上海）互联网科技<em>股</em>份有<em>限</em>公司部分首次公开发行前已发行<em>股</em>份及首次公开发行战略配<em>售</em><em>股</em>份<em>上市</em><em>流通</em>的核查意见",
+      "published_at": "2026-09-24T16:14:27+08:00",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=301563&announcementId=1225581028&orgId=9900048908&announcementTime=2026-09-24",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-24/1225581028.PDF",
+      "category": "",
+      "time_precision": "second"
+    },
+    {
+      "symbol": "601088",
+      "announcement_id": "1225579956",
+      "title": "中国神华关于发行<em>股</em>份及支付现金购买资产并募集配套资金暨关联交易之部分<em>限</em><em>售</em><em>股</em>解除<em>限</em><em>售</em><em>上市</em><em>流通</em>的公告",
+      "published_at": "2026-09-24",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=601088&announcementId=1225579956&orgId=9900003701&announcementTime=2026-09-24",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-24/1225579956.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "601088",
+      "announcement_id": "1225579959",
+      "title": "中信证券<em>股</em>份有<em>限</em>公司关于中国神华能源<em>股</em>份有<em>限</em>公司发行<em>股</em>份及支付现金购买资产并募集配套资金暨关联交易之部分<em>限</em><em>售</em><em>股</em>份解除<em>限</em><em>售</em><em>上市</em><em>流通</em>的核查意见",
+      "published_at": "2026-09-24",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=601088&announcementId=1225579959&orgId=9900003701&announcementTime=2026-09-24",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-24/1225579959.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "603363",
+      "announcement_id": "1225579198",
+      "title": "福建傲农生物科技集团<em>股</em>份有<em>限</em>公司关于部分<em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>的公告",
+      "published_at": "2026-09-24",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=603363&announcementId=1225579198&orgId=9900033003&announcementTime=2026-09-24",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-24/1225579198.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "603363",
+      "announcement_id": "1225579200",
+      "title": "国泰海通证券<em>股</em>份有<em>限</em>公司关于福建傲农生物科技集团<em>股</em>份有<em>限</em>公司部分<em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>的核查意见",
+      "published_at": "2026-09-24",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=603363&announcementId=1225579200&orgId=9900033003&announcementTime=2026-09-24",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-24/1225579200.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "688143",
+      "announcement_id": "1225579033",
+      "title": "广发证券<em>股</em>份有<em>限</em>公司关于武汉长盈通光电技术<em>股</em>份有<em>限</em>公司发行<em>股</em>份及支付现金购买资产之部分<em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>的核查意见",
+      "published_at": "2026-09-24",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688143&announcementId=1225579033&orgId=9900052407&announcementTime=2026-09-24",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-24/1225579033.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "688143",
+      "announcement_id": "1225579041",
+      "title": "关于发行<em>股</em>份及支付现金购买资产之部分<em>限</em><em>售</em><em>股</em>份<em>上市</em><em>流通</em>的公告",
+      "published_at": "2026-09-24",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688143&announcementId=1225579041&orgId=9900052407&announcementTime=2026-09-24",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-24/1225579041.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "688197",
+      "announcement_id": "1225579352",
+      "title": "中信建投证券<em>股</em>份有<em>限</em>公司关于首药控<em>股</em>（北京）<em>股</em>份有<em>限</em>公司首次公开发行<em>限</em><em>售</em><em>股</em>份<em>上市</em><em>流通</em>的核查意见",
+      "published_at": "2026-09-24",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688197&announcementId=1225579352&orgId=9900047638&announcementTime=2026-09-24",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-24/1225579352.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "688197",
+      "announcement_id": "1225579355",
+      "title": "首药控<em>股</em>（北京）<em>股</em>份有<em>限</em>公司关于首次公开发行<em>限</em><em>售</em><em>股</em>份<em>上市</em><em>流通</em>的提示性公告",
+      "published_at": "2026-09-24",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688197&announcementId=1225579355&orgId=9900047638&announcementTime=2026-09-24",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-24/1225579355.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "688657",
+      "announcement_id": "1225578608",
+      "title": "首次公开发行部分<em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>公告",
+      "published_at": "2026-09-24",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688657&announcementId=1225578608&orgId=gfbj0832097&announcementTime=2026-09-24",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-24/1225578608.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "688657",
+      "announcement_id": "1225578618",
+      "title": "中信建投证券<em>股</em>份有<em>限</em>公司关于苏州浩辰软件<em>股</em>份有<em>限</em>公司首次公开发行部分<em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>的核查意见",
+      "published_at": "2026-09-24",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688657&announcementId=1225578618&orgId=gfbj0832097&announcementTime=2026-09-24",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-24/1225578618.PDF",
+      "category": "",
+      "time_precision": "date"
+    }
+  ],
+  "title_classification_inventory": [
+    {
+      "announcement_id": "1225574025",
+      "symbol": "001306",
+      "kind": "employee_or_incentive_unlock_title_separate_scope",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225574381",
+      "symbol": "301520",
+      "kind": "supporting_intermediary_opinion_title",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225577047",
+      "symbol": "301584",
+      "kind": "supporting_intermediary_opinion_title",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225574266",
+      "symbol": "301682",
+      "kind": "unknown_title_scope_pending",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225574267",
+      "symbol": "301682",
+      "kind": "supporting_intermediary_opinion_title",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225575298",
+      "symbol": "600548",
+      "kind": "supporting_intermediary_opinion_title",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225575337",
+      "symbol": "600548",
+      "kind": "company_primary_notice_title_candidate_body_pending",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225575285",
+      "symbol": "603459",
+      "kind": "supporting_intermediary_opinion_title",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225575321",
+      "symbol": "603459",
+      "kind": "company_primary_notice_title_candidate_body_pending",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225574632",
+      "symbol": "688531",
+      "kind": "company_primary_notice_title_candidate_body_pending",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225574636",
+      "symbol": "688531",
+      "kind": "supporting_intermediary_opinion_title",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225575442",
+      "symbol": "688811",
+      "kind": "company_primary_notice_title_candidate_body_pending",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225575444",
+      "symbol": "688811",
+      "kind": "supporting_intermediary_opinion_title",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225574397",
+      "symbol": "688813",
+      "kind": "company_primary_notice_title_candidate_body_pending",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225574405",
+      "symbol": "688813",
+      "kind": "supporting_intermediary_opinion_title",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225576512",
+      "symbol": "000568",
+      "kind": "employee_or_incentive_unlock_title_separate_scope",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225577765",
+      "symbol": "000962",
+      "kind": "unknown_title_scope_pending",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225577766",
+      "symbol": "000962",
+      "kind": "supporting_intermediary_opinion_title",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225577180",
+      "symbol": "002256",
+      "kind": "employee_or_incentive_unlock_title_separate_scope",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225576511",
+      "symbol": "002355",
+      "kind": "employee_or_incentive_unlock_title_separate_scope",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225577183",
+      "symbol": "002911",
+      "kind": "employee_or_incentive_unlock_title_separate_scope",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225578305",
+      "symbol": "300124",
+      "kind": "employee_or_incentive_unlock_title_separate_scope",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225576602",
+      "symbol": "301668",
+      "kind": "supporting_intermediary_opinion_title",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225576859",
+      "symbol": "600925",
+      "kind": "company_primary_notice_title_candidate_body_pending",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225576862",
+      "symbol": "600925",
+      "kind": "supporting_intermediary_opinion_title",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225577438",
+      "symbol": "601868",
+      "kind": "company_primary_notice_title_candidate_body_pending",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225577443",
+      "symbol": "601868",
+      "kind": "supporting_intermediary_opinion_title",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225578718",
+      "symbol": "001309",
+      "kind": "employee_or_incentive_unlock_title_separate_scope",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225578502",
+      "symbol": "002046",
+      "kind": "unknown_title_scope_pending",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225578503",
+      "symbol": "002046",
+      "kind": "supporting_intermediary_opinion_title",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225578241",
+      "symbol": "002276",
+      "kind": "employee_or_incentive_unlock_title_separate_scope",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225581140",
+      "symbol": "300254",
+      "kind": "employee_or_incentive_unlock_title_separate_scope",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225581812",
+      "symbol": "300711",
+      "kind": "supporting_intermediary_opinion_title",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225581028",
+      "symbol": "301563",
+      "kind": "supporting_intermediary_opinion_title",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225579956",
+      "symbol": "601088",
+      "kind": "unknown_title_scope_pending",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225579959",
+      "symbol": "601088",
+      "kind": "supporting_intermediary_opinion_title",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225579198",
+      "symbol": "603363",
+      "kind": "company_primary_notice_title_candidate_body_pending",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225579200",
+      "symbol": "603363",
+      "kind": "supporting_intermediary_opinion_title",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225579033",
+      "symbol": "688143",
+      "kind": "supporting_intermediary_opinion_title",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225579041",
+      "symbol": "688143",
+      "kind": "unknown_title_scope_pending",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225579352",
+      "symbol": "688197",
+      "kind": "supporting_intermediary_opinion_title",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225579355",
+      "symbol": "688197",
+      "kind": "unknown_title_scope_pending",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225578608",
+      "symbol": "688657",
+      "kind": "company_primary_notice_title_candidate_body_pending",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    },
+    {
+      "announcement_id": "1225578618",
+      "symbol": "688657",
+      "kind": "supporting_intermediary_opinion_title",
+      "body_type_verified": false,
+      "actual_circulating_supply_or_tradability_inferred": false
+    }
+  ],
+  "rejected": [],
+  "attempts": [
+    {
+      "page": 1,
+      "request_sha256": "132b048fdd305bff33995c728baab3106c40b4ca3a80886e59102b809324abaa",
+      "http_status": 200,
+      "response_sha256": "a305857761548f49153082b3615b87c0bd86f42a5d83f14e72a8c52855cfadeb"
+    },
+    {
+      "page": 2,
+      "request_sha256": "49709e22be59ff2b561b707633e6c61bcb0863802ea5b979250f2cc3c5e14850",
+      "http_status": 200,
+      "response_sha256": "bed1bd843f593df7ce13839a66611a1866800594991f51d87dcecf70d85e93eb"
+    }
+  ],
+  "planned_body_first3": [
+    {
+      "symbol": "600548",
+      "announcement_id": "1225575337",
+      "title": "关于向特定对象发行<em>股</em>票部分<em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>的公告",
+      "published_at": "2026-09-22",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600548&announcementId=1225575337&orgId=gssh0600548&announcementTime=2026-09-22",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225575337.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "603459",
+      "announcement_id": "1225575321",
+      "title": "关于首次公开发行网下配<em>售</em><em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em><em>股</em>的公告",
+      "published_at": "2026-09-22",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=603459&announcementId=1225575321&orgId=9900063205&announcementTime=2026-09-22",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225575321.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "688531",
+      "announcement_id": "1225574632",
+      "title": "首次公开发行部分<em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>公告",
+      "published_at": "2026-09-22",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688531&announcementId=1225574632&orgId=gfbj0834204&announcementTime=2026-09-22",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225574632.PDF",
+      "category": "",
+      "time_precision": "date"
+    }
+  ],
+  "body_consumed": false,
+  "body_sample_scope": "complete_keyword_window_after_provisional_title_filter",
+  "full_channel_or_tradable_universe_certified": false,
+  "protocol_sha256": "99a980bbbcebde193ccd06885addab12f32a134d4afe123e5530270a9aeef7bc",
+  "completed_at_utc": "2026-10-11T15:32:20.314419+00:00",
+  "new_contexts": 0,
+  "official_calls": 0,
+  "PDF_calls": 0,
+  "new_candidate_or_values_or_labels": false,
+  "old_data_or_masks_or_registry_or_state_changed": false,
+  "body_requires_exact_selected_metadata_binding_and_root_start": true
+}

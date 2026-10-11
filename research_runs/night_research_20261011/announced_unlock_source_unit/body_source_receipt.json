@@ -1,0 +1,417 @@
+{
+  "status": "THREE_NATIVE_SOURCES_COMPLETE_FIELDS_PENDING",
+  "records": [
+    {
+      "symbol": "600548",
+      "announcement_id": "1225575337",
+      "metadata_record_sha256": "46d01f434fa5a24fc745edb2d534c78104b784b3cb3f10d414b0eab17c2b0e67",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225575337.PDF",
+      "published_at": "2026-09-22",
+      "time_precision": "date",
+      "status": "FULL_NATIVE_SOURCE_READ_FIELD_REVIEW_PENDING",
+      "HTTP_attempts": 1,
+      "http_status": 200,
+      "PDF_bytes": 106372,
+      "PDF_sha256": "58474fcc529fda1ff2f28b9011de5bf28e7d3c3a066a166abefc6c19c60fa523",
+      "text_sha256": "975144c834043ddff040d3a021c91c6e4bf31a841bed18ba2a0705213a0614f1",
+      "text_recipe": "exact pdfplumber extract_text(layout=False) per physical page; join @@SOURCE_PAGE:n@@ markers, no trimming",
+      "physical_pages": 4,
+      "page_proof": [
+        {
+          "physical_page": 1,
+          "native_characters": 736,
+          "native_text_sha256": "9d77318f30addc6a3f0b3e81c17a38dafad999b86dacda72c127a03e0fb43fb7",
+          "short_first_native_line": "证券代码：600548 证券简称：深高速 公告编号：2026-070"
+        },
+        {
+          "physical_page": 2,
+          "native_characters": 849,
+          "native_text_sha256": "2e851d67b69da5674c573f27fdda08e1b8b0a5a15a99a98354531dd875e45b2f",
+          "short_first_native_line": "2025 年3月27日，本公司本次发行对应的357,085,801 股新增股份已在中国"
+        },
+        {
+          "physical_page": 3,
+          "native_characters": 688,
+          "native_text_sha256": "87bd23675850cc8bde866e66eccf6c0aa22a4d24100e231fe50186861c98ebbb",
+          "short_first_native_line": "（二）本次限售股份解除限售的数量和上市流通时间符合相关法律法规及限"
+        },
+        {
+          "physical_page": 4,
+          "native_characters": 30,
+          "native_text_sha256": "44eb1a659bd4123b3dbd918a00db7c092e05bc8dcfefbeaa6420282c419b4eb3",
+          "short_first_native_line": "深圳高速公路集团股份有限公司董事会"
+        }
+      ],
+      "short_locator_hints": [
+        {
+          "physical_page": 1,
+          "page_text_offset": 508,
+          "snippet": " 本次股票上市流通日期为2026 年9月28 日。",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 88,
+          "snippet": "本次发行新增股份为有限售条件流通股，将于限售期届满后的次一交易日起",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 456,
+          "snippet": "本次发行完成后，公司总股本由 2,180,770,326 股增加至2,537,856,127 股。本",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 556,
+          "snippet": "三、本次限售股上市流通的有关承诺",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 573,
+          "snippet": "新通产承诺其所认购的本次发行的股票自发行结束之日起 18 个月内不得转",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 609,
+          "snippet": "让，其余发行认购对象均承诺其所认购的本次发行的股票自发行结束之日起 6 个",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 708,
+          "snippet": "承诺，不存在相关承诺未履行影响本次限售股上市流通的情况。",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 3,
+          "page_text_offset": 0,
+          "snippet": "（二）本次限售股份解除限售的数量和上市流通时间符合相关法律法规及限",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 3,
+          "page_text_offset": 34,
+          "snippet": "售承诺；",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 3,
+          "page_text_offset": 67,
+          "snippet": "（四）保荐人对深高速本次部分限售股份解除限售上市流通事项无异议。",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 3,
+          "page_text_offset": 144,
+          "snippet": "（二）本次上市流通日期为2026 年9月28 日；",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 3,
+          "page_text_offset": 346,
+          "snippet": "序号 限售股类型 本次上市流通数量（股）",
+          "field_role_verified": false
+        }
+      ],
+      "fresh_original_PDF_received": true,
+      "complete_native_text_read": true,
+      "manual_fulltext_review_performed": false,
+      "unknown_fields": [
+        "actual_listing_date",
+        "released_shares",
+        "actual_circulating_shares",
+        "share_unit",
+        "holder_restrictions",
+        "latest_revision_chain",
+        "market_denominator"
+      ],
+      "qualification_or_tradability_claimed": false,
+      "PDF_or_fulltext_file_saved": false
+    },
+    {
+      "symbol": "603459",
+      "announcement_id": "1225575321",
+      "metadata_record_sha256": "5dc54e8b4e143a98b25d7388c392f559063f5904f22796cdba5f6cd1d73e50f9",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225575321.PDF",
+      "published_at": "2026-09-22",
+      "time_precision": "date",
+      "status": "FULL_NATIVE_SOURCE_READ_FIELD_REVIEW_PENDING",
+      "HTTP_attempts": 1,
+      "http_status": 200,
+      "PDF_bytes": 110001,
+      "PDF_sha256": "18349932193083dba900ec35f6cdd457736c4e202f05fdac175819bea3a284a6",
+      "text_sha256": "7d813dd352d92e320e719a37ea3d7f8c2734e027ba347a59e8eb00681410e9c5",
+      "text_recipe": "exact pdfplumber extract_text(layout=False) per physical page; join @@SOURCE_PAGE:n@@ markers, no trimming",
+      "physical_pages": 3,
+      "page_proof": [
+        {
+          "physical_page": 1,
+          "native_characters": 832,
+          "native_text_sha256": "de8ef41002083cc0cd06c564e5cb5829a52aa722b29d2bb2fcb9c09c1fbc38fb",
+          "short_first_native_line": "证券代码：603459 证券简称：红板科技 公告编号：2026-043"
+        },
+        {
+          "physical_page": 2,
+          "native_characters": 909,
+          "native_text_sha256": "0e877d16cb5cc33415d3a2719341aa3b217e8c9113a698fb29adc644378776fa",
+          "short_first_native_line": "增等导致股本数量发生变化的情形。"
+        },
+        {
+          "physical_page": 3,
+          "native_characters": 355,
+          "native_text_sha256": "4b939a5b65349107dbeafb545ac576ea5033d9bc606ff0c86850c05d806fe89a",
+          "short_first_native_line": "注：本次上市流通的网下配售限售股股东明细详见公司于2026年3月31日在上海证券"
+        }
+      ],
+      "short_locator_hints": [
+        {
+          "physical_page": 1,
+          "page_text_offset": 215,
+          "snippet": " 本次股票上市流通日期为2026 年10 月8日。",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 419,
+          "snippet": "公司首次公开发行股票完成后，总股本为753,753,588 股，其中有限售条件流通股",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 462,
+          "snippet": "674,701,730 股，占公司总股本的89.51%，无限售条件流通股79,051,858 股，占公",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 514,
+          "snippet": "司总股本的 10.49%。",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 561,
+          "snippet": "2,813,681 股，占公司总股本的比例为 0.37%。上述股份锁定期为自公司首次公开",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 17,
+          "snippet": "三、本次上市流通的限售股的有关承诺",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 107,
+          "snippet": "网下投资者承诺其获配股票数量的 10%（向上取整计算）限售期限为自发行人首",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 359,
+          "snippet": "除上述承诺外，本次申请上市流通的限售股股东无其他特别承诺。截至本公",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 393,
+          "snippet": "告披露日，持有公司网下配售限售股的股东在限售期内严格遵守了上述承诺，不",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 429,
+          "snippet": "存在未履行相关承诺而影响本次限售股上市流通的情况。",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 575,
+          "snippet": "司本次解除限售的首次公开发行网下配售限售股股东均已严格履行了相应的股份",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 611,
+          "snippet": "锁定承诺；公司对本次网下配售限售股份上市流通的信息披露真实、准确、完整。",
+          "field_role_verified": false
+        }
+      ],
+      "fresh_original_PDF_received": true,
+      "complete_native_text_read": true,
+      "manual_fulltext_review_performed": false,
+      "unknown_fields": [
+        "actual_listing_date",
+        "released_shares",
+        "actual_circulating_shares",
+        "share_unit",
+        "holder_restrictions",
+        "latest_revision_chain",
+        "market_denominator"
+      ],
+      "qualification_or_tradability_claimed": false,
+      "PDF_or_fulltext_file_saved": false
+    },
+    {
+      "symbol": "688531",
+      "announcement_id": "1225574632",
+      "metadata_record_sha256": "d75f1d7af0afa1176a31760ebaa18c2e57a236a7904f3ac9f8b076aaf1f52bd9",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225574632.PDF",
+      "published_at": "2026-09-22",
+      "time_precision": "date",
+      "status": "FULL_NATIVE_SOURCE_READ_FIELD_REVIEW_PENDING",
+      "HTTP_attempts": 1,
+      "http_status": 200,
+      "PDF_bytes": 150719,
+      "PDF_sha256": "004b6ed38a96c0f4f15be578f6f2a5c48348fad5d8c387bdda56dd5ca1b90d23",
+      "text_sha256": "e75ff0208974aa87e901e10216457a0e755f8b77713346778bebfdb6f696d393",
+      "text_recipe": "exact pdfplumber extract_text(layout=False) per physical page; join @@SOURCE_PAGE:n@@ markers, no trimming",
+      "physical_pages": 6,
+      "page_proof": [
+        {
+          "physical_page": 1,
+          "native_characters": 787,
+          "native_text_sha256": "c7d32d7c5d83dcfd5b7c47e5c58d5e5ef7df3bb14bf3e74bfd19863a9e93afa7",
+          "short_first_native_line": "证券代码：688531 证券简称：日联科技 公告编号：2026-052"
+        },
+        {
+          "physical_page": 2,
+          "native_characters": 995,
+          "native_text_sha256": "34af3dfa82c6e408fb712fcff45be7b01ac8b132c88b384442f0f80c385a2f60",
+          "short_first_native_line": "红利 8.00 元（含税），以资本公积向全体股东每 10 股转增 4.5 股。截至股权登记"
+        },
+        {
+          "physical_page": 3,
+          "native_characters": 811,
+          "native_text_sha256": "ffa5ef88dfc71f4296e7bbeb0f2f31dd3805764d93bb4583fb90a3502a04df0a",
+          "short_first_native_line": "规定的，则本企业将按相关要求执行。"
+        },
+        {
+          "physical_page": 4,
+          "native_characters": 899,
+          "native_text_sha256": "b1dd3013cd8d9b748b0cdb3defcb528f88d336159c12d6ec621819538c4f83bc",
+          "short_first_native_line": "内，在任职期间每年转让的首发前股份不超过公司上市时本人所持有的公司首发"
+        },
+        {
+          "physical_page": 5,
+          "native_characters": 838,
+          "native_text_sha256": "28585a82f0e189e7a4b21a400d97587a91b8700848116f5c7a18efb62f595ad6",
+          "short_first_native_line": "式等，其减持价格不低于公司首次公开发行股票时的发行价（如果因派发现金红"
+        },
+        {
+          "physical_page": 6,
+          "native_characters": 504,
+          "native_text_sha256": "fad3b6e9291b97f2f8dda73a3a05417f3abbf28930155f5845883c4e0a23c2fa",
+          "short_first_native_line": "（一）本次上市流通的限售股总数为5,081.5112万股，占公司目前股份总数的"
+        }
+      ],
+      "short_locator_hints": [
+        {
+          "physical_page": 1,
+          "page_text_offset": 217,
+          "snippet": " 本次股票上市流通日期为2026 年9月30 日。",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 428,
+          "snippet": "发行完成后公司总股本为 7,940.5467 万股，其中有限售条件流通股 6,202.2809 万",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 478,
+          "snippet": "股，无限售条件流通股 1,738.2658 万股。",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 750,
+          "snippet": "总股本扣减公司回购专用证券账户中的股份为基数，向全体股东每10 股派发现金",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 46,
+          "snippet": "日2024 年 6月6日，公司总股本为7,940.5467 万股，扣除回购专户数量140.7806",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 96,
+          "snippet": "万股，合计转增 3,509.8947 万股，转增后公司总股本增加至11,450.4414 万股。",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 189,
+          "snippet": "分配及资本公积转增股本方案的议案》，以实施权益分派股权登记日登记的总股本",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 310,
+          "snippet": "年7 月 9 日，公司总股本为 11,450.4414 万股，扣除回购专户数量 97.2136 万股，",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 362,
+          "snippet": "合计转增 5,108.9525 万股，转增后公司总股本增加至16,559.3939 万股。",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 457,
+          "snippet": "三、本次上市流通的限售股的有关承诺",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 509,
+          "snippet": "售安排、自愿锁定股份以及延长锁定期限等相关事宜承诺如下：",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 925,
+          "snippet": "4、如本企业作出上述承诺所依据的相关法律、法规、规范性文件及上海证券",
+          "field_role_verified": false
+        }
+      ],
+      "fresh_original_PDF_received": true,
+      "complete_native_text_read": true,
+      "manual_fulltext_review_performed": false,
+      "unknown_fields": [
+        "actual_listing_date",
+        "released_shares",
+        "actual_circulating_shares",
+        "share_unit",
+        "holder_restrictions",
+        "latest_revision_chain",
+        "market_denominator"
+      ],
+      "qualification_or_tradability_claimed": false,
+      "PDF_or_fulltext_file_saved": false
+    }
+  ],
+  "failed_source": null,
+  "HTTP_attempts": 3,
+  "unattempted_sources": 0,
+  "new_contexts": 0,
+  "official_calls": 0,
+  "price_factor_signal_or_label_reads": false,
+  "source_fields_qualified": 0,
+  "automatic_resume": false,
+  "PDF_or_fulltext_file_saved": false,
+  "manual_review_status": "NOT_YET_PERFORMED",
+  "protocol_sha256": "8fa9d38faca0f61f79d5d3ae331b56ff924f91bc4add0a13713edb8a1f5c03f0",
+  "metadata_sha256": "824f4917992f82298c905dfdd4f55ffccb8c3bef4503e75bb3c7d1ae5be08a04",
+  "calendar_reference_sha256": "d4e4260a2151eaf6fa9d0ebf9765dd9e7701d2d275e4a5eee282e4e71e9e51d3",
+  "availability_status": "publication_precision_preserved_next_verified_session_requires_explicit_review",
+  "original_files_registry_masks_state_unchanged": true,
+  "completed_at_utc": "2026-10-11T15:41:05.589084+00:00"
+}

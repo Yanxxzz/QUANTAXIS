@@ -1,0 +1,499 @@
+{
+  "id": "ANNOUNCED_UNLOCK_FIXED3_MANUAL_FIELD_REVIEW_20261011",
+  "status": "THREE_CURRENT_NOTICE_FACTS_REVIEWED_PRODUCTION_AND_FULL_VERSION_PENDING",
+  "reviewed_at_utc": "2026-10-11T15:47:47.625658+00:00",
+  "body_source_receipt": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\announced_unlock_source_unit\\body_source_receipt.json",
+    "sha256": "b558ded54e032db1c50fb429514bf07d548f042fd82f959d41c0b0265f23c41c"
+  },
+  "calendar_reference_sha256": "d4e4260a2151eaf6fa9d0ebf9765dd9e7701d2d275e4a5eee282e4e71e9e51d3",
+  "records": [
+    {
+      "symbol": "600548",
+      "announcement_id": "1225575337",
+      "PDF_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225575337.PDF",
+      "PDF_sha256": "58474fcc529fda1ff2f28b9011de5bf28e7d3c3a066a166abefc6c19c60fa523",
+      "native_text_sha256": "975144c834043ddff040d3a021c91c6e4bf31a841bed18ba2a0705213a0614f1",
+      "complete_native_pages_read": 4,
+      "published_at": "2026-09-22",
+      "publication_precision": "date",
+      "conservative_next_verified_reference_session": "2026-09-23",
+      "formation_convention": "earliest next verified reference session close; not known same-day/pre-open or certified release instant",
+      "source_fact_review_performed": true,
+      "actual_sale_quantity": null,
+      "economic_or_production_qualified": false,
+      "unknowns": [
+        "latest complete original/corrected notice chain",
+        "actual listing occurred on announced date",
+        "actual holder sales",
+        "full PIT publication time",
+        "official native updating event input path",
+        "same-asof market liquidity/absorption denominator"
+      ],
+      "source_facts": {
+        "event_type": {
+          "value": "targeted A-share issuance 18-month tranche",
+          "physical_pages": [
+            1,
+            2,
+            3
+          ],
+          "role": "body share class and current tranche",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "announced_listing_date": {
+          "value": "2026-09-28",
+          "physical_pages": [
+            1,
+            3
+          ],
+          "role": "planned listing; occurrence not verified",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "announced_listing_shares": {
+          "value": 75930144,
+          "physical_pages": [
+            1,
+            3
+          ],
+          "role": "notice current-tranche listing amount",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "printed_unit": {
+          "value": "shares",
+          "physical_pages": [
+            3
+          ],
+          "role": "current listing and capital structure table",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "printed_total_capital_shares": {
+          "value": 2537856127,
+          "physical_pages": [
+            2,
+            3
+          ],
+          "role": "A plus H denominator",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "printed_percent_total_capital": {
+          "value": "2.99",
+          "physical_pages": [
+            3
+          ],
+          "role": "percentage with A+H denominator",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "printed_A_total_shares": {
+          "value": 1790356127,
+          "physical_pages": [
+            3
+          ],
+          "role": "A class total",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "printed_H_total_shares": {
+          "value": 747500000,
+          "physical_pages": [
+            3
+          ],
+          "role": "H class total",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "printed_pre_listing_unrestricted_A_shares": {
+          "value": 1714425983,
+          "physical_pages": [
+            3
+          ],
+          "role": "notice share structure; not same-asof market freefloat measure",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "registered_issue_date": {
+          "value": "2025-03-27",
+          "physical_pages": [
+            2
+          ],
+          "role": "new issuance registration date",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "holder": {
+          "value": "新通产实业开发（深圳）有限公司",
+          "physical_pages": [
+            3
+          ],
+          "role": "one current-tranche holder; other issuance holders not current tranche",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "lock_months": {
+          "value": 18,
+          "physical_pages": [
+            2
+          ],
+          "role": "commitment; current tranche",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "current_tranche_remaining_locked_shares": {
+          "value": 0,
+          "physical_pages": [
+            3
+          ],
+          "role": "table remainder does not certify all other commitments or actual sales",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        }
+      },
+      "holder_restrictions": [
+        "The stated issuance lock expires for this tranche; no full chain/current legal saleability or sale plan certification in this unit."
+      ],
+      "arithmetic_checks": {
+        "A_plus_H_equals_printed_total": true,
+        "unrestricted_A_plus_listing_equals_post_A_total": true,
+        "printed_percent_rounding": true
+      },
+      "listing_after_conservative_reference_session": true
+    },
+    {
+      "symbol": "603459",
+      "announcement_id": "1225575321",
+      "PDF_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225575321.PDF",
+      "PDF_sha256": "18349932193083dba900ec35f6cdd457736c4e202f05fdac175819bea3a284a6",
+      "native_text_sha256": "7d813dd352d92e320e719a37ea3d7f8c2734e027ba347a59e8eb00681410e9c5",
+      "complete_native_pages_read": 3,
+      "published_at": "2026-09-22",
+      "publication_precision": "date",
+      "conservative_next_verified_reference_session": "2026-09-23",
+      "formation_convention": "earliest next verified reference session close; not known same-day/pre-open or certified release instant",
+      "source_fact_review_performed": true,
+      "actual_sale_quantity": null,
+      "economic_or_production_qualified": false,
+      "unknowns": [
+        "latest complete original/corrected notice chain",
+        "actual listing occurred on announced date",
+        "actual holder sales",
+        "full PIT publication time",
+        "official native updating event input path",
+        "same-asof market liquidity/absorption denominator",
+        "individual holder identities in separately referenced 2026-03-31 allocation notice"
+      ],
+      "source_facts": {
+        "event_type": {
+          "value": "IPO offline-placement six-month locked allocation",
+          "physical_pages": [
+            1,
+            2
+          ],
+          "role": "body share class",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "announced_listing_date": {
+          "value": "2026-10-08",
+          "physical_pages": [
+            1,
+            2
+          ],
+          "role": "planned listing; occurrence not verified",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "announced_listing_shares": {
+          "value": 2813681,
+          "physical_pages": [
+            1,
+            2
+          ],
+          "role": "notice current-tranche listing amount",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "alternative_printed_amount_wan_shares": {
+          "value": "281.3681",
+          "physical_pages": [
+            2
+          ],
+          "role": "wan shares; same current tranche",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "printed_total_capital_shares": {
+          "value": 753753588,
+          "physical_pages": [
+            1,
+            3
+          ],
+          "role": "company total at notice",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "printed_percent_total_capital": {
+          "value": "0.37",
+          "physical_pages": [
+            1
+          ],
+          "role": "company total denominator",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "IPO_listing_date": {
+          "value": "2026-04-08",
+          "physical_pages": [
+            1
+          ],
+          "role": "IPO start of stated lock",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "lock_months": {
+          "value": 6,
+          "physical_pages": [
+            1,
+            2
+          ],
+          "role": "IPO offline-placement allocation",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "locked_allocation_rule": {
+          "value": "10% of allocation rounded up; remaining 90% without this lock",
+          "physical_pages": [
+            2
+          ],
+          "role": "not percent total capitalization",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "printed_pre_listing_unrestricted_shares": {
+          "value": 79051858,
+          "physical_pages": [
+            1,
+            3
+          ],
+          "role": "notice share structure; not market freefloat measure",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "printed_post_listing_unrestricted_shares": {
+          "value": 81865539,
+          "physical_pages": [
+            3
+          ],
+          "role": "share structure after announced listing",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "holder_group": {
+          "value": "offline allocation investors; names refer to separate March31 allocation notice not read",
+          "physical_pages": [
+            2,
+            3
+          ],
+          "role": "aggregate holder class",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "current_tranche_remaining_locked_shares": {
+          "value": 0,
+          "physical_pages": [
+            2
+          ],
+          "role": "current tranche remainder",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        }
+      },
+      "holder_restrictions": [
+        "Notice states no other special commitments for this tranche; individual holder detail and external/current restrictions not independently checked."
+      ],
+      "arithmetic_checks": {
+        "wan_unit_to_integer": true,
+        "pre_unrestricted_plus_listing_equals_post": true,
+        "printed_percent_rounding": true
+      },
+      "listing_after_conservative_reference_session": true
+    },
+    {
+      "symbol": "688531",
+      "announcement_id": "1225574632",
+      "PDF_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225574632.PDF",
+      "PDF_sha256": "004b6ed38a96c0f4f15be578f6f2a5c48348fad5d8c387bdda56dd5ca1b90d23",
+      "native_text_sha256": "e75ff0208974aa87e901e10216457a0e755f8b77713346778bebfdb6f696d393",
+      "complete_native_pages_read": 6,
+      "published_at": "2026-09-22",
+      "publication_precision": "date",
+      "conservative_next_verified_reference_session": "2026-09-23",
+      "formation_convention": "earliest next verified reference session close; not known same-day/pre-open or certified release instant",
+      "source_fact_review_performed": true,
+      "actual_sale_quantity": null,
+      "economic_or_production_qualified": false,
+      "unknowns": [
+        "latest complete original/corrected notice chain",
+        "actual listing occurred on announced date",
+        "actual holder sales",
+        "full PIT publication time",
+        "official native updating event input path",
+        "same-asof market liquidity/absorption denominator",
+        "exact currently legally saleable quantity and remaining holder quota after other transfers"
+      ],
+      "source_facts": {
+        "event_type": {
+          "value": "IPO pre-IPO holder tranche",
+          "physical_pages": [
+            1,
+            2,
+            6
+          ],
+          "role": "classified by full body; top generic phrasing is not sufficient",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "announced_listing_date": {
+          "value": "2026-09-30",
+          "physical_pages": [
+            1,
+            6
+          ],
+          "role": "planned listing; occurrence not verified",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "announced_listing_shares": {
+          "value": 50815112,
+          "physical_pages": [
+            1,
+            6
+          ],
+          "role": "5,081.5112 wan shares, notice current-tranche listing amount",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "printed_amount_wan_shares": {
+          "value": "5081.5112",
+          "physical_pages": [
+            1,
+            6
+          ],
+          "role": "wan shares unit",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "printed_total_capital_wan_shares": {
+          "value": "16559.3939",
+          "physical_pages": [
+            2
+          ],
+          "role": "current total after stated capitalizations; original IPO total not denominator",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "printed_total_capital_shares": {
+          "value": 165593939,
+          "physical_pages": [
+            2
+          ],
+          "role": "exact wan conversion",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "printed_percent_total_capital": {
+          "value": "30.69",
+          "physical_pages": [
+            1,
+            6
+          ],
+          "role": "current company total denominator",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "IPO_listing_date": {
+          "value": "2023-03-31",
+          "physical_pages": [
+            1
+          ],
+          "role": "original IPO",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "lock_description": {
+          "value": "original36 months plus price-triggered6-month extension,42 months",
+          "physical_pages": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "role": "notice commitment and fulfilled as-of claim",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        },
+        "current_tranche_remaining_locked_shares": {
+          "value": 0,
+          "physical_pages": [
+            6
+          ],
+          "role": "table remainder; persistent holder sale restrictions still separate",
+          "evidence_mode": "root complete native original PDF review; short derived fact, not keyword certification"
+        }
+      },
+      "holders": [
+        {
+          "name": "无锡日联实业",
+          "announced_listing_wan_shares": "4550.7351",
+          "announced_listing_shares": 45507351,
+          "role": "controlling shareholder",
+          "quantity_page": 6,
+          "restrictions_pages": [
+            2,
+            3
+          ],
+          "remaining_constraints": "price commitment and prior notices/plans as printed; applicability and actual sale unknown"
+        },
+        {
+          "name": "刘骏",
+          "announced_listing_wan_shares": "325.4670",
+          "announced_listing_shares": 3254670,
+          "role": "director and core technical personnel",
+          "quantity_page": 6,
+          "restrictions_pages": [
+            3,
+            4
+          ],
+          "remaining_constraints": "director annual transfer <=25% holdings;6 months after exit; core technical pre-IPO annual<=25% original IPO holdings for4 years after expiry, unused quota carry per printed text"
+        },
+        {
+          "name": "秦晓兰",
+          "announced_listing_wan_shares": "205.3091",
+          "announced_listing_shares": 2053091,
+          "role": "director",
+          "quantity_page": 6,
+          "restrictions_pages": [
+            4,
+            5
+          ],
+          "remaining_constraints": "director annual transfer<=25% holdings;6 months after exit; printed price/other commitments"
+        }
+      ],
+      "holder_restrictions": [
+        "All three listed amounts are not automatically unrestricted immediate potential sale supply; director/core-technical/controlling-holder commitments remain separately relevant.",
+        "No certified legally immediately saleable aggregate is derived from announcement table."
+      ],
+      "arithmetic_checks": {
+        "wan_listing_unit_to_integer": true,
+        "wan_capital_unit_to_integer": true,
+        "holder_sum_equals_tranche": true,
+        "printed_percent_rounding": true
+      },
+      "listing_after_conservative_reference_session": true
+    }
+  ],
+  "fresh_originals_received_and_complete_native_read": true,
+  "manual_review_performed": true,
+  "manual_review_basis": "Root once-read all original native text returned from one frozen body-reader execution, not reread/keyword proxy",
+  "source_notice_facts_reviewed": 3,
+  "formal_source_or_economic_or_production_qualified": 0,
+  "new_economic_contexts": 0,
+  "new_HTTP_attempts_for_manual_review": 0,
+  "official_calls": 0,
+  "prices_factor_values_or_return_labels_read": false,
+  "original_receipt_modified": false,
+  "PDF_or_fulltext_file_saved": false,
+  "critical_field_rules": [
+    "Planned notice listing date is not retrospectively verified realized listing.",
+    "Notice listed quantity is not actual sale or immediately fully saleable quantity.",
+    "Current tranche remaining locked zero does not clear director/core technical/holder commitments.",
+    "Total capitalization percent is not float/liquidity/absorption percent; A/H class denominator preserved.",
+    "Unknown coverage/revision/sales must not become zero event supply."
+  ],
+  "next_boundary": "Require version-aware event coverage and documented official native updatable transfer before formal factor claims; then preregister one distinct economic definition/window/matched controls before full labels.",
+  "independent_semantic_review": {
+    "status": "PASS_WITH_EXPLICIT_UNKNOWNS",
+    "reviewer": "night_income_census",
+    "basis": "Root supplied facts of already once fully read3 originals; reviewer did not reread originals/receipt or download",
+    "points": [
+      "A+H percent not A/freefloat/absorption pressure",
+      "Previously unlocked90% IPO allocation not new supply",
+      "Director annual25% and core technical annual25% have different denominators; do not multiply whole tranche by25%",
+      "Current tranche remainder zero not company-wide lock-free certification",
+      "Notice date-only next verified session close; planned listing not realized sale",
+      "Three release types cannot be directly treated as homogeneous supply shocks"
+    ],
+    "source_or_economic_reads": 0
+  }
+}

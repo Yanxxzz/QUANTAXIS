@@ -1,0 +1,108 @@
+{
+  "id": "ANNOUNCED_UNLOCK_FIXED3_NATIVE_SOURCE_PREFLIGHT_20261011",
+  "status": "PREPARED_AWAIT_ROOT_ZERO_CONTEXT_FREEZE_AND_SINGLE_EXECUTION",
+  "prepared_at_utc": "2026-10-11T15:39:27.747698+00:00",
+  "deadline_utc": "2026-10-11T16:00:00+00:00",
+  "registry_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\research_trials.sqlite3",
+  "event_prefix": "announced-unlock-body-native-freeze:",
+  "registration_subject": "ANNOUNCED_UNLOCK_FIXED3_NATIVE_SOURCE_PREFLIGHT_20261011",
+  "bindings": {
+    "runtime": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\announced_unlock_source_unit\\read_native_sources.py",
+      "sha256": "c36fe544b3a5c3e4d9cc7658feb4dae692f88afd032daf18f5731ae423a484e1"
+    },
+    "synthetic_tests": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\announced_unlock_source_unit\\test_native_sources.py",
+      "sha256": "bca238bf503cfe4865d7513ca0d8c40541768dec7afc02c67880d0ddb4ade914"
+    },
+    "metadata": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\announced_unlock_source_unit\\metadata_receipt.json",
+      "sha256": "824f4917992f82298c905dfdd4f55ffccb8c3bef4503e75bb3c7d1ae5be08a04"
+    },
+    "calendar": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\recent_stockdb_tail_ingest\\calendar_escalated_diagnostic\\vendor_reference_calendar.json",
+      "sha256": "d4e4260a2151eaf6fa9d0ebf9765dd9e7701d2d275e4a5eee282e4e71e9e51d3"
+    },
+    "calendar_receipt": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\recent_stockdb_tail_ingest\\calendar_escalated_diagnostic\\vendor_reference_receipt.json",
+      "sha256": "6281fad68db90f93ed6cb24963abfe6a7d69806bccdbf9203a631fd81a00cbad"
+    },
+    "pdfplumber_init": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\.runtime\\pdf-research\\Lib\\site-packages\\pdfplumber\\__init__.py",
+      "sha256": "dfee537d1da4de9b6f5dabf5bee84d5278d74fec787ef6bdd6179cd2b349817c"
+    },
+    "pdfplumber_page": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\.runtime\\pdf-research\\Lib\\site-packages\\pdfplumber\\page.py",
+      "sha256": "ef423b47ed5a2a467275277f4a672ac2a1b8a1af103aa424248f85d5a0be4bba"
+    },
+    "pdfplumber_pdf": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\.runtime\\pdf-research\\Lib\\site-packages\\pdfplumber\\pdf.py",
+      "sha256": "c285a8226030d97dea1547a0334f0fe91a5a48e05f78f712f772e7e4fb2d337b"
+    }
+  },
+  "selected_cases": [
+    {
+      "symbol": "600548",
+      "announcement_id": "1225575337",
+      "title": "关于向特定对象发行<em>股</em>票部分<em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>的公告",
+      "published_at": "2026-09-22",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600548&announcementId=1225575337&orgId=gssh0600548&announcementTime=2026-09-22",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225575337.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "603459",
+      "announcement_id": "1225575321",
+      "title": "关于首次公开发行网下配<em>售</em><em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em><em>股</em>的公告",
+      "published_at": "2026-09-22",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=603459&announcementId=1225575321&orgId=9900063205&announcementTime=2026-09-22",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225575321.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "688531",
+      "announcement_id": "1225574632",
+      "title": "首次公开发行部分<em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>公告",
+      "published_at": "2026-09-22",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688531&announcementId=1225574632&orgId=gfbj0834204&announcementTime=2026-09-22",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-22/1225574632.PDF",
+      "category": "",
+      "time_precision": "date"
+    }
+  ],
+  "selected_metadata_sha256": "1306472c561e8d9543d75cd3f5dcc4d8c32d1c9516fb44bc72390b7f21f11b68",
+  "selection_contract": "Exact ordered first3 provisional company-main notices from COMPLETE44-row fixed keyword2026-09-21..27 source receipt824f; body identity/class/share type/quantity/date/restrictions/revision/denominator unknown until explicit fulltext review. No outcome-based selection. Title is not tradability or supply certification.",
+  "download_contract": {
+    "method": "GET",
+    "maximum_actual_requests": 3,
+    "attempts_per_identity": 1,
+    "allow_redirects": false,
+    "automatic_retry": false,
+    "timeout_seconds": 15,
+    "maximum_bytes_per_PDF": 16777216,
+    "physical_page_count_cap": null,
+    "deadline_before_each_request_and_stream_chunk_and_native_page": true,
+    "stop_on_first_problem": true
+  },
+  "native_text_contract": "Existing project pdfplumber runtime, exact all physical pages with native text, no OCR/fallback/partial native pass. One PDF SHA, exact page textSHA, SOURCE_PAGE marked fulltextSHA. Raw PDF/fulltext onlyinmemory; execute returns documents to trusted caller for once complete manualtool review without files. Receipt has perpage shortlocator and bounded keyword snippets; fields/manual review remain pending.",
+  "availability_contract": "Preserve9/22 date-only metadata and bind vendor historicalreference calendar+receipt. Next verified reference session9/23 is conservative metadataavailability, not actual intraday or preopen release confirmation. FutureplannedOct12 not actual. This sourceunit does not select tradable universe or price/economic window.",
+  "output_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\announced_unlock_source_unit\\body_source_receipt.json",
+  "retention": "Unique compactsource receipt only. No PDF, complete native text, duplicate database/source warehouse or marketlabels files. Onfailure retaincompletedreceipts and exactfailedID/unattemptedcount; no auto-resume or new request. Root may print returned3 memorydocuments fulltext once intool for manualreview.",
+  "manual_scope": "Future plannedlisting date vs unlockdate, releasedamount vs actualcirculating amount, printedshare units and denominator, holder/shareclass restrictions, reschedule/revision linkage. Fields remain pending until explicitly reviewed; no general financial amount parser, cash/actual selling/priceimpact claims.",
+  "validation": {
+    "synthetic_tests_passed": 7,
+    "includes_actual_pdfplumber_two_synthetic_pages": true,
+    "compile_checked": true,
+    "default_inert_checked": true,
+    "real_HTTP_PDF_or_body_execution": false
+  },
+  "new_contexts": 0,
+  "new_economic_definition": false,
+  "economic_window": null,
+  "price_factor_signal_or_label_reads": false,
+  "qualified_samples_created": 0,
+  "official_calls": 0,
+  "source_mask_or_DB_or_registry_or_shared_state_changed": false
+}
