@@ -1,0 +1,36 @@
+{
+  "id": "RD_SOURCE200_PERIOD_ALIGNMENT_METADATA_20261012",
+  "observed_at_utc": "2026-10-11T20:17:12.662206+00:00",
+  "capture_period_counts": {
+    "2024-12-31": {
+      "capture_records": 201,
+      "unique_companies": 200
+    },
+    "2025-06-30": {
+      "capture_records": 200,
+      "unique_companies": 200
+    },
+    "2025-12-31": {
+      "capture_records": 205,
+      "unique_companies": 200
+    },
+    "2026-03-31": {
+      "capture_records": 0,
+      "unique_companies": 0
+    },
+    "2026-06-30": {
+      "capture_records": 201,
+      "unique_companies": 200
+    }
+  },
+  "source_protocol": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\research_spending_source200\\protocol.json",
+    "sha256": "d5d9b7d2e1c93ce0403b7173b652199dfaa287befa46b7218e9381e50a28207e"
+  },
+  "actual_native_default_financial_period": "UNKNOWN_CATALOG_ALONE_NOT_CERTIFICATION",
+  "Q1_captured_coverage": 0,
+  "native_input_values_received": false,
+  "new_contexts": 0,
+  "new_monetary_amounts_or_price_labels_read": false,
+  "next": "Resolve documented native base alias period/availability semantics, and acquire exact required statement-quarter sources only after defining that missing period contract. RetainedH1 cannot replace absentQ1 or prove livePanda values. No registered new alpha/return window, no annual-frame rerun."
+}
