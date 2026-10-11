@@ -1,0 +1,1213 @@
+{
+  "status": "COMPLETED_FIRST3_AR_SOURCE_EVENT_INVENTORY_PENDING_IMPACT_REVIEW",
+  "protocol_sha256": "aa680509b061c7ffa6d026575a133a6dc13b64af5e398f2c297d3eaeb4e485a4",
+  "records": [
+    {
+      "status": "AR_SOURCE_EVENT_INVENTORY_ONLY_MEASUREMENT_REVIEW_PENDING",
+      "events": [
+        {
+          "kind": "accounting_policy",
+          "evidence_scope": "existing_bounded_policy_section",
+          "start": 172749,
+          "end": 172772,
+          "source_page": 178,
+          "span_sha256": "d50d67efb82df9c1c2707ad8082e4c517dd39d663bc51550cc550d65b2d5ea64",
+          "choice_inventory": "positive_or_unchecked_or_ambiguous_pending",
+          "impact_state": "field_effect_unresolved_pending",
+          "AR_fields_resolved": [],
+          "period_binding": "current_report_context_only_item_periods_unreviewed",
+          "brief_heading": "（1） 重要会计政策变更"
+        },
+        {
+          "kind": "重要会计估计变更",
+          "evidence_scope": "recognized_heading_to_next_recognized_heading",
+          "start": 172772,
+          "end": 225947,
+          "source_page": 178,
+          "span_sha256": "7d25a7f07d1ac4b90ef3101e624f40362ddb214b96fdd60aad0c4f50282de925",
+          "choice_inventory": "positive_or_unchecked_or_ambiguous_pending",
+          "impact_state": "AR_measurement_change_phrase_scope_pending",
+          "AR_fields_resolved": [],
+          "period_binding": "current_report_context_only_effect_period_unreviewed",
+          "brief_heading": "重要会计估计变更"
+        },
+        {
+          "kind": "合并范围的变更",
+          "evidence_scope": "recognized_heading_to_next_recognized_heading",
+          "start": 226133,
+          "end": 229121,
+          "source_page": 227,
+          "span_sha256": "c7a18d6ef13f0256796e9af62038a28ad52a72cde992595a41dce1439b0bfd85",
+          "choice_inventory": "positive_or_unchecked_or_ambiguous_pending",
+          "impact_state": "state_composition_event_not_automatic_measurement_block",
+          "AR_fields_resolved": [],
+          "period_binding": "current_report_context_only_effect_period_unreviewed",
+          "brief_heading": "合并范围的变更"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 115188,
+          "end": 115206,
+          "source_page": 117,
+          "span_sha256": "b0186d0819fe0c140b90ae7ec10bff2b231f2e57cbb880f0594afabfc6d84aa2",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "• 了解管理层在预期信用损失模型中采"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 115313,
+          "end": 115329,
+          "source_page": 117,
+          "span_sha256": "dc864ea7769ad87211e72bfe5bbb55c61ca0b1367697f5b5f1bdfe06d256c26e",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "性，评价管理层确定预期信用损失率"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 115364,
+          "end": 115380,
+          "source_page": 117,
+          "span_sha256": "d81fa9df8569546545653c995483e64e41eeafb0da7453aced6d3f8444cda685",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "评价管理层对于预期信用损失估计的"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 148302,
+          "end": 148342,
+          "source_page": 154,
+          "span_sha256": "5eac0250c8cc947aba7f6794149b1aa1aa01038464433b223fba2f33a74e0268",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "收益的债务工具投资、合同资产和财务担保合同等，以预期信用损失为基础确认损失准备。"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 148433,
+          "end": 148442,
+          "source_page": 154,
+          "span_sha256": "22edb8cd4ef807590415367f543f287a31e483ad2f97b1887a9bf3cd4eb65770",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "确认预期信用损失。"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 148443,
+          "end": 148486,
+          "source_page": 154,
+          "span_sha256": "c55b87c444a072ff2a6b344f69e82f4b3b0464bfb0cb27df9620d050adaac6de",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "于每个资产负债表日，本集团对于处于不同阶段的金融工具的预期信用损失分别进行计量。金融工"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 148487,
+          "end": 148534,
+          "source_page": 154,
+          "span_sha256": "ca34eaa10298449c65bba63ce1c4334f50afa9f32c3a3faca59687e0f586bdbc",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "具自初始确认后信用风险未显著增加的，处于第一阶段，本集团按照未来 12 个月内的预期信用损失计"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 148581,
+          "end": 148626,
+          "source_page": 154,
+          "span_sha256": "5e17056fa36b035be4cc815a93eb7899d1b654ff704f007449d2dc624d53b936",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "团按照该工具整个存续期的预期信用损失计量损失准备；金融工具自初始确认后已经发生信用减值的，"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 148627,
+          "end": 148661,
+          "source_page": 154,
+          "span_sha256": "d07981ae3dc6f4c664c9fb3e90310d1b030b9278cb5330e011a814860c78e4e0",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "处于第三阶段，本集团按照该工具整个存续期的预期信用损失计量损失准备。"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 148706,
+          "end": 148734,
+          "source_page": 154,
+          "span_sha256": "521a831e85a022c2605b8b26da4b12f5d8178d79dffc7a6a9c909e1313729735",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "增加，按照未来 12 个月内的预期信用损失计量损失准备。"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 148985,
+          "end": 149030,
+          "source_page": 155,
+          "span_sha256": "51d8d1717f9fb2a8de64aed08118cc6a40a45aff458dc84b6b59d3008657a5c8",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "依据的信息，包括前瞻性信息，以单项或组合的方式对上述应收款项预期信用损失进行估计，始终按照"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 149031,
+          "end": 149057,
+          "source_page": 155,
+          "span_sha256": "c69f4d0deb533a6ac6ea7bce515301f65a460acff55c859822a5a67c77d13827",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "整个存续期的预期信用损失计量损失准备。计提方法如下："
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 149196,
+          "end": 149241,
+          "source_page": 155,
+          "span_sha256": "dddeaa6c44e5d600de3d066e2f6f133aa47b2168199fd4c61cd610f4e4c5942c",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "应收该客户款项的预期信用损失率已显著高于其所处于账龄区间的预期信用损失率时，对其单项计提损"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 149247,
+          "end": 149291,
+          "source_page": 155,
+          "span_sha256": "21dcf3dfff4cd6483d5df7dfeab370ee67c6716e242941f31f28a22952a16b8a",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "- 当单项金融资产无法以合理成本评估预期信用损失的信息时，本集团依据信用风险特征划分应收"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 149292,
+          "end": 149312,
+          "source_page": 155,
+          "span_sha256": "f3b8a11ab1568d4bd2e3e8d5b42da8e85a81364e3931f78101c70d39b034d423",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "款项组合，在组合基础上计算预期信用损失。"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 149313,
+          "end": 149354,
+          "source_page": 155,
+          "span_sha256": "458e371bd2cb220f52395920b794a59858f6a2c7699abf57742bf3021325d727",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "有关本集团及本公司应收款项组合划分的依据及应收账款预期信用损失的评估参见相关附注。"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 149515,
+          "end": 149558,
+          "source_page": 155,
+          "span_sha256": "0350eac3b9ec79b0171e001ca6caca7c39127b72841e84fb6dc6dcbed0a8dd98",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "本集团在单项工具层面能以合理成本评估预期信用损失的充分证据的其他应收款单独确定其信用损"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 239679,
+          "end": 239722,
+          "source_page": 238,
+          "span_sha256": "6ac0669109a3d0f94ec05a3b4f65d6152be87c3b4ef658fa1cac6f3cb1bd63f8",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "本集团使用准备矩阵计算应收款项在整个存续期的预期信用损失金额，并以此计量其损失准备。根"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 239923,
+          "end": 239946,
+          "source_page": 238,
+          "span_sha256": "29060ba4fc9d7d3232689651608df23125f72f1ba2d41c51df97b8474fda5fc6",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "险敞口和应收款项预期信用损失信息详见相关附注。"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 261359,
+          "end": 261373,
+          "source_page": 256,
+          "span_sha256": "7369b211d2aaad2b00710ee44521a8b610d6cfa6ea8ef92cd2cb818e5c06f6e2",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "账面余额 坏账准备 计提比例"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 261444,
+          "end": 261458,
+          "source_page": 256,
+          "span_sha256": "7369b211d2aaad2b00710ee44521a8b610d6cfa6ea8ef92cd2cb818e5c06f6e2",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "账面余额 坏账准备 计提比例"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 261784,
+          "end": 261809,
+          "source_page": 256,
+          "span_sha256": "7aad458949b559bbb87b7861415b6954967e3938260b664406077368b5b9cde9",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "如是按照预期信用损失一般模型计提应收账款坏账准备："
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 263477,
+          "end": 263495,
+          "source_page": 258,
+          "span_sha256": "d8bd6fb1442fe66addd4e38a26e665e1d77df95ecc5d552bb0ef789163670036",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "按预期信用损失一般模型计提坏账准备："
+        }
+      ],
+      "specific_gaps": [
+        "AR_item_specific_measurement_effect_not_certified",
+        "opening_comparative_basis_and_whole_AR_match_require_separate_source_facts"
+      ],
+      "known_revision_or_later_report_metadata": [],
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "single_latest_matches_selected_but_body_scope_pending",
+        "latest_rows": [
+          {
+            "announcement_id": "1225055609",
+            "report_date": "2025-12-31",
+            "published_at": "2026-03-31",
+            "edition": "ORIGINAL_FULL_REPORT",
+            "title": "2025年年度报告",
+            "pdf_sha256": "7337024c99356cb2087c09578525461334a1a8dee48f0aee3a61262e5fbba6ce",
+            "text_sha256": "a4ad23ca829af1ce9d770ac0c8d888b12aaaea290daf7677dd35a2d8bc28dc91"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "source_flags_empty_is_AR_ready": false,
+      "existing_G_trade_or_income_ready_copied": false,
+      "AR_source_ready_certified": false,
+      "cash_unknown_used_as_gate": false,
+      "composition_events_automatically_blocked": false,
+      "future_daily_availability_and_versions_still_required": true,
+      "source_identity": {
+        "code": "000157",
+        "announcement_id": "1225055609",
+        "report_date": "2025-12-31",
+        "source_record_sha256": "55d0f043fca33f963b68cc1c50c7058baa4d85f5d01f96b6cb186a663612efe7"
+      },
+      "prior_amount_pair_selection_metadata": {
+        "whole_AR_printed_pair_complete_for_source_selection_only": true,
+        "periods": {
+          "closing": {
+            "table_id": "000157_AR_stock_closing",
+            "printed_period_label": "期末余额",
+            "literal_date_printed": null,
+            "period_context": {
+              "report_fiscal_year": 2025,
+              "annual_accounting_period": "Jan1..Dec31 sourceprinted policy",
+              "derived_fiscal_role_date": "2025-12-31",
+              "calendar_date_not_printed_in_note": true
+            },
+            "unit_status": "bound_CNY_unit"
+          },
+          "opening": {
+            "table_id": "000157_AR_stock_opening",
+            "printed_period_label": "期初余额",
+            "literal_date_printed": null,
+            "period_context": {
+              "report_fiscal_year": 2025,
+              "annual_accounting_period": "Jan1..Dec31 sourceprinted policy",
+              "derived_fiscal_role_date": "2025-01-01",
+              "calendar_date_not_printed_in_note": true
+            },
+            "unit_status": "bound_CNY_unit"
+          }
+        },
+        "amounts_or_movement_recomputed": false,
+        "AR_measurement_or_financial_eligibility_cleared": false,
+        "currency_calendar_policy_and_version_questions_resolved_here": false
+      }
+    },
+    {
+      "status": "AR_SOURCE_EVENT_INVENTORY_ONLY_MEASUREMENT_REVIEW_PENDING",
+      "events": [
+        {
+          "kind": "合并范围的变更",
+          "evidence_scope": "recognized_heading_to_next_recognized_heading",
+          "start": 143558,
+          "end": 143583,
+          "source_page": 148,
+          "span_sha256": "ae11eef10b0eaac2a14635a5d717e26f496c96ff3e6509f109d385d165dd9842",
+          "choice_inventory": "positive_or_unchecked_or_ambiguous_pending",
+          "impact_state": "state_composition_event_not_automatic_measurement_block",
+          "AR_fields_resolved": [],
+          "period_binding": "current_report_context_only_effect_period_unreviewed",
+          "brief_heading": "合并范围的变更"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 96068,
+          "end": 96103,
+          "source_page": 104,
+          "span_sha256": "20ddd0efbe967430419297765e8fbfd05127f22c1ec7ff3c1c284f38d682382e",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "本集团以预期信用损失为基础，对应收款项进行减值会计处理并确认损失准备："
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 96104,
+          "end": 96147,
+          "source_page": 104,
+          "span_sha256": "c686b0cb1f73ea8b9f9529a04a17dc5d044432d512a730efce22e1a99c6e7684",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "本集团持有的其他以公允价值计量的金融资产不适用预期信用损失模型，包括以公允价值计量且其"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 96165,
+          "end": 96174,
+          "source_page": 104,
+          "span_sha256": "d7f018d82256242d558aacf37ae5ed980a7696cebf0e3e97933402a239621bc3",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "预期信用损失的计量"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 96175,
+          "end": 96218,
+          "source_page": 104,
+          "span_sha256": "1d38fd63f78230a7796145c7aaa7da8b3d29a65872371ffef265486880015e67",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "预期信用损失，是指以发生违约的风险为权重的金融工具信用损失的加权平均值。信用损失，是指"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 96333,
+          "end": 96377,
+          "source_page": 105,
+          "span_sha256": "6334123c6d2a908f181799efeb598d50c7685e64d7f54ca578ef16dc76c30de8",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "在计量预期信用损失时，本集团需考虑的最长期限为企业面临信用风险的最长合同期限 （包括考虑"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 96386,
+          "end": 96429,
+          "source_page": 105,
+          "span_sha256": "4b5aab6cc8f1de6f059cb306ef7e6440c17037add8ace180c060b2f9a80b81db",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "整个存续期预期信用损失，是指因金融工具整个预计存续期内所有可能发生的违约事件而导致的预"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 96437,
+          "end": 96488,
+          "source_page": 105,
+          "span_sha256": "206daec8dd12806bd97a11318d6e24436dd014ada41d92f960a3e71e6075b2df",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "未来 12 个月内预期信用损失，是指因资产负债表日后 12 个月内 （若金融工具的预计存续期少于 12"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 96489,
+          "end": 96534,
+          "source_page": 105,
+          "span_sha256": "c482816d8818044400623f7d939919d578fe99378bd8e8f3a7678c8fde7e5d68",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "个月，则为预计存续期）可能发生的金融工具违约事件而导致的预期信用损失，是整个存续期预期信用"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 96587,
+          "end": 96632,
+          "source_page": 105,
+          "span_sha256": "0e32daac05866488b83d88c4b8303df006034e6f9937ea8736d4708ce60964f3",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "终按照相当于整个存续期内预期信用损失的金额计量其损失准备。本集团基于历史信用损失经验、使用"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 96633,
+          "end": 96678,
+          "source_page": 105,
+          "span_sha256": "e235e584b7e3e582127de0647c4445f2d1ea0da7bc085a6c4befc6d6bb671048",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "准备矩阵计算上述金融资产的预期信用损失，相关历史经验根据资产负债表日债务人的特定因素、以及"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 96749,
+          "end": 96794,
+          "source_page": 105,
+          "span_sha256": "44f428406dbab7a1882becef5cef1d2e8154bd68296fc32b70f747c0432bca29",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "月内预期信用损失的金额计量其损失准备，对其他金融工具按照相当于整个存续期内预期信用损失的金"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 97237,
+          "end": 97262,
+          "source_page": 105,
+          "span_sha256": "50f29f63b24e890197f5a083c41fa5c131c5258d2bf3cf58e407dfcdd93b76fd",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "合，以账龄组合为基础评估其他应收款的预期信用损失。"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 97423,
+          "end": 97468,
+          "source_page": 105,
+          "span_sha256": "36e431727161b7cdd76a65ca316ed7eaf754ed1ad8051e01d09bf828c4d49a69",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "难，应收该对手方款项的预期信用损失率已显著高于其所处于账龄区间的预期信用损失率时，对其单项"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 98337,
+          "end": 98348,
+          "source_page": 106,
+          "span_sha256": "00a77ff0474fb94cba2c502772c8f5383a6238ba9d816929d916eb9ea60f24c1",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "预期信用损失准备的列报"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 105727,
+          "end": 105774,
+          "source_page": 113,
+          "span_sha256": "faa5480971016f2fcd38fc02a0d2746016fee0c6b7631e7275d3fd43a21c5d4a",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "作为合同资产列示，合同资产以预期信用损失为基础计提减值 。本集团拥有的、无条件 （仅取决于时间"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 113247,
+          "end": 113269,
+          "source_page": 120,
+          "span_sha256": "e7cb7a36f1ccbe9c00e55072dd22c4f29d58cbd84107eaa286266d4c6341398e",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "均按照整个存续期的预期信用损失计量损失准备。"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 114423,
+          "end": 114452,
+          "source_page": 121,
+          "span_sha256": "8ce214263eefeb82346e69e8d32ada2edef81f218075419ac9a93cf214ef6657",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "账面余额 坏账准备 账面余额 坏账准备 计提比例 计提理由"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 114568,
+          "end": 114585,
+          "source_page": 121,
+          "span_sha256": "083c8ceef25a30818653c549ddd3b086d4bed10feb3399d3018dede52271aa31",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "（b）应收账款预期信用损失的评估："
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 114586,
+          "end": 114629,
+          "source_page": 121,
+          "span_sha256": "8d932dd4f0c1d09ff376d975e385790c198d2b4c32b4137e9e2e4af98f6f3ec8",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "本集团始终按照相当于整个存续期内预期信用损失的金额计量应收账款的减值准备，并以账龄与预"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 114630,
+          "end": 114675,
+          "source_page": 121,
+          "span_sha256": "1db74282b42b7b6f51c85bd95ca10619a617ebb65543b09ea842b358715ccce1",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "期信用损失率对照表为基础计算其预期信用损失。根据本集团的历史经验，不同细分客户群体发生损失"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 114723,
+          "end": 114776,
+          "source_page": 121,
+          "span_sha256": "3697e424febf7d7647f0504db703f9a6251795dfd58944e387a76bf7473913da",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "2025 年 12 月 31 日本集团除单项计提坏账准备之外的应收账款的信用风险敞口及预期信用损失的相关信"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 114804,
+          "end": 114818,
+          "source_page": 121,
+          "span_sha256": "7369b211d2aaad2b00710ee44521a8b610d6cfa6ea8ef92cd2cb818e5c06f6e2",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "账面余额 坏账准备 计提比例"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 115215,
+          "end": 115229,
+          "source_page": 122,
+          "span_sha256": "7369b211d2aaad2b00710ee44521a8b610d6cfa6ea8ef92cd2cb818e5c06f6e2",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "账面余额 坏账准备 计提比例"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 115565,
+          "end": 115608,
+          "source_page": 122,
+          "span_sha256": "8a29153aecf266f264a6764605441a1413ca2cd1618c8d218c90678d1f81d6ac",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "预期信用损失率基于过去年度的实际信用损失经验计算，并根据历史数据收集期间的经济状况、当"
+        }
+      ],
+      "specific_gaps": [
+        "AR_item_specific_measurement_effect_not_certified",
+        "opening_comparative_basis_and_whole_AR_match_require_separate_source_facts",
+        "bounded_accounting_policy_section_not_located",
+        "bounded_accounting_estimate_change_section_not_located"
+      ],
+      "known_revision_or_later_report_metadata": [],
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "single_latest_matches_selected_but_body_scope_pending",
+        "latest_rows": [
+          {
+            "announcement_id": "1225245931",
+            "report_date": "2025-12-31",
+            "published_at": "2026-04-29",
+            "edition": "ORIGINAL_FULL_REPORT",
+            "title": "2025年年度报告",
+            "pdf_sha256": "d02d7b2830701fb28a7878fd17faa76cf07b66808f8c995a74bffd3279843e05",
+            "text_sha256": "3debfec462777ec61bec944efecf43a01eaeea3b00e420969496ecf9deabac2c"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "source_flags_empty_is_AR_ready": false,
+      "existing_G_trade_or_income_ready_copied": false,
+      "AR_source_ready_certified": false,
+      "cash_unknown_used_as_gate": false,
+      "composition_events_automatically_blocked": false,
+      "future_daily_availability_and_versions_still_required": true,
+      "source_identity": {
+        "code": "000403",
+        "announcement_id": "1225245931",
+        "report_date": "2025-12-31",
+        "source_record_sha256": "297d04bc695709f0405c5a6a4e7e09297047e009171065625d674eb0e24e9bf8"
+      },
+      "prior_amount_pair_selection_metadata": {
+        "whole_AR_printed_pair_complete_for_source_selection_only": true,
+        "periods": {
+          "closing": {
+            "table_id": "000403_AR_stock_closing",
+            "printed_period_label": "期末余额",
+            "literal_date_printed": null,
+            "period_context": {
+              "report_fiscal_year": 2025,
+              "annual_accounting_period": "Jan1..Dec31 sourceprinted policy",
+              "derived_fiscal_role_date": "2025-12-31",
+              "calendar_date_not_printed_in_note": true
+            },
+            "unit_status": "bound_CNY_unit"
+          },
+          "opening": {
+            "table_id": "000403_AR_stock_opening",
+            "printed_period_label": "期初余额",
+            "literal_date_printed": null,
+            "period_context": {
+              "report_fiscal_year": 2025,
+              "annual_accounting_period": "Jan1..Dec31 sourceprinted policy",
+              "derived_fiscal_role_date": "2025-01-01",
+              "calendar_date_not_printed_in_note": true
+            },
+            "unit_status": "bound_CNY_unit"
+          }
+        },
+        "amounts_or_movement_recomputed": false,
+        "AR_measurement_or_financial_eligibility_cleared": false,
+        "currency_calendar_policy_and_version_questions_resolved_here": false
+      }
+    },
+    {
+      "status": "AR_SOURCE_EVENT_INVENTORY_ONLY_MEASUREMENT_REVIEW_PENDING",
+      "events": [
+        {
+          "kind": "accounting_policy",
+          "evidence_scope": "existing_bounded_policy_section",
+          "start": 148800,
+          "end": 148822,
+          "source_page": 128,
+          "span_sha256": "f430a03d6c70702b6f1e5896076e1c73e21cb73b5215c53c764224e46a89e8d8",
+          "choice_inventory": "explicit_negative_choice_inventory_only",
+          "impact_state": "field_effect_unresolved_pending",
+          "AR_fields_resolved": [],
+          "period_binding": "current_report_context_only_item_periods_unreviewed",
+          "brief_heading": "（1） 重要会计政策变更"
+        },
+        {
+          "kind": "重要会计估计变更",
+          "evidence_scope": "recognized_heading_to_next_recognized_heading",
+          "start": 148822,
+          "end": 184824,
+          "source_page": 128,
+          "span_sha256": "63b6044f2a4efd29c4dabda0d8ea63abe72588dbb5adb3c878a0af373b296b6b",
+          "choice_inventory": "explicit_negative_choice_inventory_only",
+          "impact_state": "AR_measurement_change_phrase_scope_pending",
+          "AR_fields_resolved": [],
+          "period_binding": "current_report_context_only_effect_period_unreviewed",
+          "brief_heading": "重要会计估计变更"
+        },
+        {
+          "kind": "合并范围的变更",
+          "evidence_scope": "recognized_heading_to_next_recognized_heading",
+          "start": 185250,
+          "end": 185851,
+          "source_page": 169,
+          "span_sha256": "2742aa7810daa49c742bee861dcaabce44cafc24fa4f0562bafb92314a4907eb",
+          "choice_inventory": "positive_or_unchecked_or_ambiguous_pending",
+          "impact_state": "state_composition_event_not_automatic_measurement_block",
+          "AR_fields_resolved": [],
+          "period_binding": "current_report_context_only_effect_period_unreviewed",
+          "brief_heading": "合并范围的变更"
+        },
+        {
+          "kind": "前期会计差错更正",
+          "evidence_scope": "recognized_heading_to_next_recognized_heading",
+          "start": 236749,
+          "end": 246291,
+          "source_page": 204,
+          "span_sha256": "07a1dfd28d75534fa485f62b3845fdc0fd25301cf365d49e3cfb8f24d7715126",
+          "choice_inventory": "positive_or_unchecked_or_ambiguous_pending",
+          "impact_state": "AR_measurement_change_phrase_scope_pending",
+          "AR_fields_resolved": [],
+          "period_binding": "current_report_context_only_effect_period_unreviewed",
+          "brief_heading": "前期会计差错更正"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 114988,
+          "end": 115033,
+          "source_page": 104,
+          "span_sha256": "89643c88cbf09043245cf261a69fc74dd5574bca0ae0bcec8f87a760c2aa2aef",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "及经营管理特点，本公司及子公司制定了收入确认等具体会计政策和会计估计，主要体现在金融工具减"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 121733,
+          "end": 121778,
+          "source_page": 109,
+          "span_sha256": "9986378485fa96e05b4b7ada0b3c377f1312a0c210641e92734efe2002a74ed1",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "金融工具（债务工具）、租赁应收款、合同资产、应收款项以及财务担保合同以预期信用损失为基础确"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 121786,
+          "end": 121829,
+          "source_page": 109,
+          "span_sha256": "4b09559442a1fa566ef1de9b0118157449e293638574db070162b0dcd887faa1",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "本公司按照下列方法确定相关金融工具的预期信用损失：①对于金融资产，信用损失应为本公司应"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 122139,
+          "end": 122182,
+          "source_page": 109,
+          "span_sha256": "f1976a701930d7876f1ae2a4720bb3b8544b5202f42c7ebb976a150c042da89e",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "本公司计量金融工具预期信用损失的方法反映的因素包括：通过评价一系列可能的结果而确定的无"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 122371,
+          "end": 122416,
+          "source_page": 109,
+          "span_sha256": "7de809985aa59b1e84fbb23f5097e0fa761b4307507fed3d1ea7a6239d95ad8d",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "租赁准则规范的交易形成的租赁应收款，具体预期信用损失的确定方法及会计处理方法，详见本章节之"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 122540,
+          "end": 122585,
+          "source_page": 109,
+          "span_sha256": "f20ea6993971c14505f1d831a5b8ecc3dc2095e2db271656b208bff8e8f0e20f",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "加，本公司按照相当于该金融工具整个存续期内预期信用损失的金额计量其损失准备；若该金融工具的"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 122586,
+          "end": 122633,
+          "source_page": 109,
+          "span_sha256": "a065d72a8673aa7b95d7990604de09d890eaedbb828de46f5646d467b7fa8c75",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "信用风险自初始确认后并未显著增加，本公司按照相当于该金融工具未来 12 个月内预期信用损失的金"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 122772,
+          "end": 122817,
+          "source_page": 109,
+          "span_sha256": "0c59665b8025ede522fbef5b5214e174f51bb3a2b09652a203fde31b20a3e666",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "益，且不减少该金融资产在资产负债表中列示的账面价值。具体预期信用损失的确定方法及会计处理方"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 122851,
+          "end": 122895,
+          "source_page": 109,
+          "span_sha256": "c27506f0bf920c194775a3139c3fb14b25449dbe0693930ab5688280367a92db",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "本公司在前一会计期间已经按照相当于金融工具整个存续期内预期信用损失的金额计量了损失准备，"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 122942,
+          "end": 122989,
+          "source_page": 109,
+          "span_sha256": "613905e305eb498f7a3fa854602b55d6bd08b439a16f7d7027ae07f6a407d78d",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "期资产负债表日按照相当于未来 12 个月内预期信用损失的金额计量该金融工具的损失准备，由此形成"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 123030,
+          "end": 123073,
+          "source_page": 109,
+          "span_sha256": "cf70410fc3e506dae3184c07055cbeaef6d1369ec7f2fdcfee2eeb3bc13eb3b1",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "本公司利用可获得的合理且有依据的前瞻性信息，通过比较金融工具在资产负债表日发生违约的风"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 125732,
+          "end": 125748,
+          "source_page": 111,
+          "span_sha256": "a4a44c3987dffee9d6e6d93a08a15322b50a4aa6960956d764a4822008ce4dc3",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "12.1 预期信用损失的确定方法"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 125793,
+          "end": 125813,
+          "source_page": 111,
+          "span_sha256": "8cb72ec666eaf5b6fe95fb56c1b6afcd81b3c3dcd0c59660e8202f05af2601c8",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "存续期内预期信用损失的金额计量损失准备。"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 125814,
+          "end": 125857,
+          "source_page": 111,
+          "span_sha256": "b11f6a9db94592b2caccb7094ececda5e2ac19a3016b0e39718090ba93d5feba",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "本公司基于单项和组合评估应收款项的预期信用损失。如果有客观证据表明某项应收款项已经发生"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 125858,
+          "end": 125903,
+          "source_page": 111,
+          "span_sha256": "9c48c4926900fe12487d771d9b90a0e631cedf017666af4a2ae95a289b39a0bc",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "信用减值，则本公司对该应收款项在单项资产的基础上确定预期信用损失，其他应收款项划分为组合。"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 125951,
+          "end": 125996,
+          "source_page": 111,
+          "span_sha256": "cbd11daa9766fd8f6cb67bf70086fcee1796f3f07409b291e08576282c85cab8",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "通过违约风险敞口和整个存续期预期信用损失率，计算预期信用损失。本公司以商业汇票承兑人类型作"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 126156,
+          "end": 126174,
+          "source_page": 112,
+          "span_sha256": "2a348d1d8d14e46ae170630264c6c24681c2e61d0092b3d7f7b93d9b20906c1e",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "12.2 预期信用损失的会计处理方法"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 126292,
+          "end": 126308,
+          "source_page": 112,
+          "span_sha256": "75600dfa0ebae5ec78f5326d1def7f26fec2b3763e181d61b57b24a846715786",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "13.1 预期信用损失的确定方法"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 126353,
+          "end": 126373,
+          "source_page": 112,
+          "span_sha256": "8cb72ec666eaf5b6fe95fb56c1b6afcd81b3c3dcd0c59660e8202f05af2601c8",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "存续期内预期信用损失的金额计量损失准备。"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 126374,
+          "end": 126417,
+          "source_page": 112,
+          "span_sha256": "b11f6a9db94592b2caccb7094ececda5e2ac19a3016b0e39718090ba93d5feba",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "本公司基于单项和组合评估应收款项的预期信用损失。如果有客观证据表明某项应收款项已经发生"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 126418,
+          "end": 126464,
+          "source_page": 112,
+          "span_sha256": "2a5a60841d31ccdf6526cc3a04f96dbca82b1aee88cff4ab275a0d1c03497789",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "信用减值，则本公司对该应收款项在单项资产的基础上确定预期信用损失。对于划分为组合的应收款项，"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 126511,
+          "end": 126541,
+          "source_page": 112,
+          "span_sha256": "90bbc1ac7b518eed56f37419406706bea81eca8748cd460f693e6b8ec43f69a5",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "续期预期信用损失率，计算预期信用损失。本公司按客户计算账龄。"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 126620,
+          "end": 126638,
+          "source_page": 112,
+          "span_sha256": "7bb0ecf023db6a7964a6a76690a292d464d9be2c6d4acc134d33ea2c29702d6c",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "13.2 预期信用损失的会计处理方法"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 126924,
+          "end": 126967,
+          "source_page": 112,
+          "span_sha256": "b11f6a9db94592b2caccb7094ececda5e2ac19a3016b0e39718090ba93d5feba",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "本公司基于单项和组合评估应收款项的预期信用损失。如果有客观证据表明某项应收款项已经发生"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 126968,
+          "end": 127013,
+          "source_page": 112,
+          "span_sha256": "9c48c4926900fe12487d771d9b90a0e631cedf017666af4a2ae95a289b39a0bc",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "信用减值，则本公司对该应收款项在单项资产的基础上确定预期信用损失，其他应收款项划分为组合。"
+        },
+        {
+          "kind": "AR_ECL_or_group_definition_local_locator",
+          "evidence_scope": "native_line_only_complete_item_scope_pending",
+          "start": 127061,
+          "end": 127106,
+          "source_page": 112,
+          "span_sha256": "5e65483de1b63ad8dd26dfbf7a88b0895040696ccf8c5ccaeb520ea3e99e6a10",
+          "impact_state": "AR_method_or_group_definition_inventory_unreviewed",
+          "AR_fields_resolved": [],
+          "period_binding": "unreviewed",
+          "brief_heading": "通过违约风险敞口和整个存续期预期信用损失率，计算预期信用损失。本公司将信用等级较高金融机构"
+        }
+      ],
+      "specific_gaps": [
+        "AR_item_specific_measurement_effect_not_certified",
+        "opening_comparative_basis_and_whole_AR_match_require_separate_source_facts"
+      ],
+      "known_revision_or_later_report_metadata": [],
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "single_latest_matches_selected_but_body_scope_pending",
+        "latest_rows": [
+          {
+            "announcement_id": "1225084580",
+            "report_date": "2025-12-31",
+            "published_at": "2026-04-09",
+            "edition": "ORIGINAL_FULL_REPORT",
+            "title": "2025年年度报告",
+            "pdf_sha256": "7873f0485c01bdfd29ed24343318bf7f868a8b7fc5147bbb8377d8f9db1aea17",
+            "text_sha256": "d64aac3ac03f9f2551eff2331e467ea3b87db6d247e751c608ee31682a0faa67"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "source_flags_empty_is_AR_ready": false,
+      "existing_G_trade_or_income_ready_copied": false,
+      "AR_source_ready_certified": false,
+      "cash_unknown_used_as_gate": false,
+      "composition_events_automatically_blocked": false,
+      "future_daily_availability_and_versions_still_required": true,
+      "source_identity": {
+        "code": "000409",
+        "announcement_id": "1225084580",
+        "report_date": "2025-12-31",
+        "source_record_sha256": "0b43932d7ff1bf364ec94a03c5c05c6b949b8792f9f0db274b1a09c2e8ea201d"
+      },
+      "prior_amount_pair_selection_metadata": {
+        "whole_AR_printed_pair_complete_for_source_selection_only": true,
+        "periods": {
+          "closing": {
+            "table_id": "000409_AR_stock_closing",
+            "printed_period_label": "期末余额",
+            "literal_date_printed": null,
+            "period_context": {
+              "report_fiscal_year": 2025,
+              "annual_accounting_period": "Jan1..Dec31 sourceprinted policy",
+              "derived_fiscal_role_date": "2025-12-31",
+              "calendar_date_not_printed_in_note": true
+            },
+            "unit_status": "bound_CNY_unit"
+          },
+          "opening": {
+            "table_id": "000409_AR_stock_opening",
+            "printed_period_label": "期初余额",
+            "literal_date_printed": null,
+            "period_context": {
+              "report_fiscal_year": 2025,
+              "annual_accounting_period": "Jan1..Dec31 sourceprinted policy",
+              "derived_fiscal_role_date": "2025-01-01",
+              "calendar_date_not_printed_in_note": true
+            },
+            "unit_status": "bound_CNY_unit"
+          }
+        },
+        "amounts_or_movement_recomputed": false,
+        "AR_measurement_or_financial_eligibility_cleared": false,
+        "currency_calendar_policy_and_version_questions_resolved_here": false
+      }
+    }
+  ],
+  "errors": [],
+  "resume_position": null,
+  "purpose": "AR_measurement_group_estimate_opening_restatement_and_version_short_locator_only",
+  "source_only_selection_not_economic_sample_or_OOS_qualification": true,
+  "new_contexts": 0,
+  "stock_amounts_or_movement_recomputed": false,
+  "Q_computed": false,
+  "price_or_label_read": false,
+  "new_factor_or_mask_defined": false,
+  "AR_measurement_or_financial_eligibility_cleared": false,
+  "official_calls": 0,
+  "new_report_copies": 0
+}

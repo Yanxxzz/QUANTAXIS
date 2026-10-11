@@ -1,0 +1,73 @@
+{
+  "id": "AR_SPECIFIC_SOURCE_EVENT_INVENTORY_DRAFT_20261011",
+  "status": "DRAFT_AWAIT_COMPLETE_AR_SCOPE_RECEIPT_AND_ROOT_FREEZE",
+  "prepared_at_utc": "2026-10-11T13:26:11.075371+00:00",
+  "deadline_utc": "2026-10-11T16:00:00+00:00",
+  "runtime_sha256": "d4a8352a6155f147f55677da018db276f4e8d89b41e1d18324e804dc848c4764",
+  "registry_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\research_trials.sqlite3",
+  "event_prefix": "working-capital-AR-measurement-inventory-freeze:",
+  "registration_subject": "32de6edd562368a60fbb3f957462facd262387bebf6d5e483b187068c424b4bb",
+  "selected_report_keys": [],
+  "required_scope_receipt_status": null,
+  "bindings": {
+    "source_plan": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\source_plan.json",
+      "sha256": "32de6edd562368a60fbb3f957462facd262387bebf6d5e483b187068c424b4bb"
+    },
+    "capture_db": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\compact_archive\\captured_financial.sqlite3",
+      "sha256": "491c2ef55412d2bd251972c440db5f314cac85c278db0112beb4d7eaa048caa7"
+    },
+    "source_reader": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\g_field_contract_next100_unit\\consume_retained_sources.py",
+      "sha256": "b384abd8fd61cdd3c485c28c403ccb54bf8edc7abb1b18f6afe3406f4cc3967a"
+    },
+    "capture_binding_api": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\income_basis.py",
+      "sha256": "028f3fc54fa47c0c505fa78c6188278f8e9069de44e3f4e596bce35913e25034"
+    },
+    "money_api": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\financial_statements.py",
+      "sha256": "4ce12f040f3719e196801563fc524da1f52c49b45bdf948d2a7fdd2349f92f01"
+    },
+    "imported_G_contract_module": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\g_annual_field_contract.py",
+      "sha256": "3c03fe566a96b193f4eb219e0f6f14083fbae80af13d7edd75672660bb8b21c9"
+    },
+    "selected_AR_scope_receipt": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\remaining17_template_v1\\SCOPE_RECEIPT_TBD.json",
+      "sha256": null
+    },
+    "synthetic_tests": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\ar_measurement_review_v1\\test_review_events.py",
+      "sha256": "1c964b36deb39dee556be51f08ae7f57356e3696cc560092697883f0df77da6f"
+    }
+  },
+  "output_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\ar_measurement_review_v1\\event_inventory.json",
+  "root_finalization_required": [
+    "Bind completed remaining17 template receipt exactSHA and status",
+    "Select only its wholeAR/current-opening amount/period-complete exactreportKEYs beforebody read; no price/result/signal selection",
+    "Root replacesdraft status by FROZEN_AR_SPECIFIC_EVENT_INVENTORY_AWAIT_ROOT_EXECUTION and records0context event at finalprotocolSHA"
+  ],
+  "API_scope": "Reuse income_basis.policy_change_sections and sourceconsumer.read_case byte/canon/index/continuousphysicalpage/EOF checks. Never call old G/trade ready or RevCost resolution to certify AR.",
+  "case_error_contract": "On current case reader or metadata/runtime exception, stop later cases and write the same unique output as a partial source-pending receipt, retaining completed records, exact failed KEY/error type, fixed case index and unattempted count. No automatic resume/replay; source errors are not economic failures.",
+  "inventory_semantics": [
+    "Accountingpolicy/estimate/restatement/consolidation recognizedsections andAR/ECL/group native-line locators only; positive/negative/unchecked choices are inventoryfacts, notaffectedfield or readyproof.",
+    "Composition/merger/customermix is a competing statechange explanation, notautomaticmeasurementbarrier. If ARmethod/estimate/regime changephrase is present, itsperiod/field/itemscope remainsunreviewedpending; wordsearch doesnotproveactualeffect.",
+    "No automaticfield-unaffected or AR-ready cert. Explicitnegative choice needs subsequentcompleteitem/field/periodreview to clearAR-specificbarrier; emptysourceflags/oldGready/incomeresolver/netmatching neverclear.",
+    "Cashunknown isnota Q-sourcegate. EachperiodwholeAR numerator/denominator correspondence andmeasurementbasis mustbe separatelychecked; futuredailyavailable/version chronology remainsrequired.",
+    "Knowncorrection/laterreport metadata retainedaspendingbodyeffectscope, never skippedbecauseonlytitlelooks unrelated. No Q,price,labels,economicdefinition/window or factor/mask changes."
+  ],
+  "validation": {
+    "synthetic_tests_passed": 6,
+    "compiled": true,
+    "default_inert": true,
+    "actual_remaining17_source_body_or_Q_read": false
+  },
+  "new_contexts": 0,
+  "new_economic_definition": null,
+  "Q_computed": false,
+  "official_calls": 0,
+  "network_calls": 0,
+  "old_state_mask_or_receipts_written": false
+}
