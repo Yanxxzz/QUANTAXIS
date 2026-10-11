@@ -1,0 +1,2477 @@
+{
+  "status": "FIXED20_CASH_INVESTMENT_SOURCE_COMPLETED",
+  "records": [
+    {
+      "symbol": "000007",
+      "announcement_id": "1225232778",
+      "report_date": "2025-12-31",
+      "status": "three_current_annual_cash_amounts_bound",
+      "fields": {
+        "operating_cash_net": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动产生的现金流量净额",
+          "row_count": 1,
+          "current_amount_yuan": "360419910.74",
+          "source_page": 69,
+          "source_label": "经营活动产生的现金流量净额 360,419,910.74 199,918,045.57",
+          "source_cells": [
+            "360,419,910.74",
+            "199,918,045.57"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "operating_cash_outflow": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动现金流出小计",
+          "row_count": 1,
+          "current_amount_yuan": "171305769.85",
+          "source_page": 69,
+          "source_label": "经营活动现金流出小计 171,305,769.85 202,868,833.63",
+          "source_cells": [
+            "171,305,769.85",
+            "202,868,833.63"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "capital_expenditure_cash": {
+          "status": "current_annual_amount_bound",
+          "label": "购建固定资产、无形资产和其他长期资产支付的现金",
+          "row_count": 1,
+          "current_amount_yuan": "760333.04",
+          "source_page": 69,
+          "source_label": "购建固定资产、无形资产和其他长\n期资产支付的现金",
+          "source_cells": [
+            "760,333.04",
+            "1,358,684.79"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        }
+      },
+      "table_columns": {
+        "status": "explicit_annual_column_pair",
+        "source": "项目 2025 年度 2024 年度\n",
+        "spans": {
+          "current_status": "current_period_verified",
+          "current_evidence": {
+            "status": "current_period_verified",
+            "method": "first_flow_period",
+            "years": [
+              "2025",
+              "2024"
+            ]
+          },
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_status": "explicit_prior_same_span",
+          "comparative_start": "2024-01-01",
+          "comparative_end": "2024-12-31",
+          "explicit_column_years": [
+            "2025",
+            "2024"
+          ],
+          "explicit_column_dates": []
+        },
+        "note_column_explicit": false
+      },
+      "table_unit": {
+        "status": "unit_verified",
+        "currency": "CNY",
+        "printed_unit": "元",
+        "multiplier": "1",
+        "currency_basis": "explicit_yuan_monetary_header"
+      },
+      "text_content_sha256": "023314b64504a7a40988f461684e78bc66f407d65ba137164958a66dcb4be89a",
+      "pdf_hash_freshly_reverified": false,
+      "full_PIT_or_production_qualified": false,
+      "signals_or_return_labels_calculated": false,
+      "capture_sha256": "6e7ae182938512d14a2f75f411f0f85a6f25090a878ecbebcfcda881dfed72f4",
+      "stock_record_sha256": "1f26f217c45b35541a31ef6560a86d19cb4f56a01678e69bb4b36330993af87e",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\000007_1225232778.txt.gz",
+      "text_sha256": "c20d64ec529513f96111c82e07b71a6c32075bd9a6e92dc3d3a536989bbe2db4",
+      "published_at": "2026-04-29",
+      "stored_available_date": "2026-04-30",
+      "comparison_change_barriers_preserved": [],
+      "monetary_source_facts_only": true,
+      "financial_or_production_qualified": false
+    },
+    {
+      "symbol": "000012",
+      "announcement_id": "1225204194",
+      "report_date": "2025-12-31",
+      "status": "three_current_annual_cash_amounts_bound",
+      "fields": {
+        "operating_cash_net": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动产生的现金流量净额",
+          "row_count": 1,
+          "current_amount_yuan": "1146547297",
+          "source_page": 79,
+          "source_label": "经营活动产生的现金流量净额 1,146,547,297 1,756,923,649",
+          "source_cells": [
+            "1,146,547,297",
+            "1,756,923,649"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "operating_cash_outflow": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动现金流出小计",
+          "row_count": 1,
+          "current_amount_yuan": "12955025986",
+          "source_page": 79,
+          "source_label": "经营活动现金流出小计 12,955,025,986 15,335,062,582",
+          "source_cells": [
+            "12,955,025,986",
+            "15,335,062,582"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "capital_expenditure_cash": {
+          "status": "current_annual_amount_bound",
+          "label": "购建固定资产、无形资产和其他长期资产支付的现金",
+          "row_count": 1,
+          "current_amount_yuan": "1023280563",
+          "source_page": 80,
+          "source_label": "购建固定资产、无形资产和其他长期资产支付\n的现金",
+          "source_cells": [
+            "1,023,280,563",
+            "2,338,449,565"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        }
+      },
+      "table_columns": {
+        "status": "explicit_annual_column_pair",
+        "source": "项目 2025 年度 2024 年度\n",
+        "spans": {
+          "current_status": "current_period_verified",
+          "current_evidence": {
+            "status": "current_period_verified",
+            "method": "first_flow_period",
+            "years": [
+              "2025",
+              "2024"
+            ]
+          },
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_status": "explicit_prior_same_span",
+          "comparative_start": "2024-01-01",
+          "comparative_end": "2024-12-31",
+          "explicit_column_years": [
+            "2025",
+            "2024"
+          ],
+          "explicit_column_dates": []
+        },
+        "note_column_explicit": false
+      },
+      "table_unit": {
+        "status": "unit_verified",
+        "currency": "CNY",
+        "printed_unit": "元",
+        "multiplier": "1",
+        "currency_basis": "explicit_yuan_monetary_header"
+      },
+      "text_content_sha256": "4590c76bab4faf501eba2f7590de3351d32557939e97948a9eb4243d8b581285",
+      "pdf_hash_freshly_reverified": false,
+      "full_PIT_or_production_qualified": false,
+      "signals_or_return_labels_calculated": false,
+      "capture_sha256": "82f46d8d1c91b4173dc648fc8bde3f9977f99170957677dc697febcc8fbdaf78",
+      "stock_record_sha256": "d88b07a297e1d00be249585691a4ed67575e7c366a473899501187103a0f6cd0",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_data_completion_20261006\\capital_chain_text\\000012_1225204194.txt.gz",
+      "text_sha256": "54a0086f01d49b23e958278e17871694d0fa7989ddbefb5543e8a4ac179f3f28",
+      "published_at": "2026-04-28",
+      "stored_available_date": "2026-04-29",
+      "comparison_change_barriers_preserved": [],
+      "monetary_source_facts_only": true,
+      "financial_or_production_qualified": false
+    },
+    {
+      "symbol": "000017",
+      "announcement_id": "1225132602",
+      "report_date": "2025-12-31",
+      "status": "three_current_annual_cash_amounts_bound",
+      "fields": {
+        "operating_cash_net": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动产生的现金流量净额",
+          "row_count": 1,
+          "current_amount_yuan": "-19515276.55",
+          "source_page": 64,
+          "source_label": "经营活动产生的现金流量净额 -19,515,276.55 -17,152,733.19",
+          "source_cells": [
+            "-19,515,276.55",
+            "-17,152,733.19"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "operating_cash_outflow": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动现金流出小计",
+          "row_count": 1,
+          "current_amount_yuan": "894525678.65",
+          "source_page": 64,
+          "source_label": "经营活动现金流出小计 894,525,678.65 652,520,844.71",
+          "source_cells": [
+            "894,525,678.65",
+            "652,520,844.71"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "capital_expenditure_cash": {
+          "status": "current_annual_amount_bound",
+          "label": "购建固定资产、无形资产和其他长期资产支付的现金",
+          "row_count": 1,
+          "current_amount_yuan": "229257.48",
+          "source_page": 64,
+          "source_label": "购建固定资产、无形资产和其他长\n期资产支付的现金 229,257.48 900,690.86",
+          "source_cells": [
+            "229,257.48",
+            "900,690.86"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        }
+      },
+      "table_columns": {
+        "status": "explicit_annual_column_pair",
+        "source": "项目 2025 年度 2024 年度\n",
+        "spans": {
+          "current_status": "current_period_verified",
+          "current_evidence": {
+            "status": "current_period_verified",
+            "method": "first_flow_period",
+            "years": [
+              "2025",
+              "2024"
+            ]
+          },
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_status": "explicit_prior_same_span",
+          "comparative_start": "2024-01-01",
+          "comparative_end": "2024-12-31",
+          "explicit_column_years": [
+            "2025",
+            "2024"
+          ],
+          "explicit_column_dates": []
+        },
+        "note_column_explicit": false
+      },
+      "table_unit": {
+        "status": "unit_verified",
+        "currency": "CNY",
+        "printed_unit": "元",
+        "multiplier": "1",
+        "currency_basis": "explicit_yuan_monetary_header"
+      },
+      "text_content_sha256": "a282d4e8b5449b4f232b8a6fb48313255aa318c3a4c80ec6362a96d2ab29c049",
+      "pdf_hash_freshly_reverified": false,
+      "full_PIT_or_production_qualified": false,
+      "signals_or_return_labels_calculated": false,
+      "capture_sha256": "e72e9d45ae335561ae8a0302d737a3d98734957e588ec18acfcda3df0f18fa7f",
+      "stock_record_sha256": "7c0c5ec51583acf7955db373a61160b206855e7764dcd13cc9b1c40b67c54f44",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000017_1225132602.txt.gz",
+      "text_sha256": "ec9c1d3d6586fe4d6e509282a83e6120e5bf761c1a209a72fdaf13dfb4a6db26",
+      "published_at": "2026-04-21",
+      "stored_available_date": "2026-04-22",
+      "comparison_change_barriers_preserved": [],
+      "monetary_source_facts_only": true,
+      "financial_or_production_qualified": false
+    },
+    {
+      "symbol": "000020",
+      "announcement_id": "1225131755",
+      "report_date": "2025-12-31",
+      "status": "three_current_annual_cash_amounts_bound",
+      "fields": {
+        "operating_cash_net": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动产生的现金流量净额",
+          "row_count": 1,
+          "current_amount_yuan": "7877188.66",
+          "source_page": 60,
+          "source_label": "经营活动产生的现金流量净额 7,877,188.66 109,141,743.81",
+          "source_cells": [
+            "7,877,188.66",
+            "109,141,743.81"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "operating_cash_outflow": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动现金流出小计",
+          "row_count": 1,
+          "current_amount_yuan": "886783742.96",
+          "source_page": 60,
+          "source_label": "经营活动现金流出小计 886,783,742.96 738,931,774.97",
+          "source_cells": [
+            "886,783,742.96",
+            "738,931,774.97"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "capital_expenditure_cash": {
+          "status": "current_annual_amount_bound",
+          "label": "购建固定资产、无形资产和其他长期资产支付的现金",
+          "row_count": 1,
+          "current_amount_yuan": "4108871.74",
+          "source_page": 60,
+          "source_label": "购建固定资产、无形资产和其他长\n期资产支付的现金",
+          "source_cells": [
+            "4,108,871.74",
+            "16,506,329.42"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        }
+      },
+      "table_columns": {
+        "status": "explicit_annual_column_pair",
+        "source": "项目 2025 年度 2024 年度\n",
+        "spans": {
+          "current_status": "current_period_verified",
+          "current_evidence": {
+            "status": "current_period_verified",
+            "method": "first_flow_period",
+            "years": [
+              "2025",
+              "2024"
+            ]
+          },
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_status": "explicit_prior_same_span",
+          "comparative_start": "2024-01-01",
+          "comparative_end": "2024-12-31",
+          "explicit_column_years": [
+            "2025",
+            "2024"
+          ],
+          "explicit_column_dates": []
+        },
+        "note_column_explicit": false
+      },
+      "table_unit": {
+        "status": "unit_verified",
+        "currency": "CNY",
+        "printed_unit": "元",
+        "multiplier": "1",
+        "currency_basis": "explicit_yuan_monetary_header"
+      },
+      "text_content_sha256": "962958bc939b7bd11c74164ef34f1ca893751658c60b432486a27a856ac562f1",
+      "pdf_hash_freshly_reverified": false,
+      "full_PIT_or_production_qualified": false,
+      "signals_or_return_labels_calculated": false,
+      "capture_sha256": "1c23f0a094f41a3c11cfc484c2be22f9f1467c6d1085cae37532b9134cac99c6",
+      "stock_record_sha256": "a9c22c829036069fc4ac6e0016bd8694f533be97fb60fc66e74259b9db38bdfe",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000020_1225131755.txt.gz",
+      "text_sha256": "78bd88c96e8dc0f4160bd7b9f9a56c262c809234dcc03cce5b0533a33a5d9565",
+      "published_at": "2026-04-21",
+      "stored_available_date": "2026-04-22",
+      "comparison_change_barriers_preserved": [],
+      "monetary_source_facts_only": true,
+      "financial_or_production_qualified": false
+    },
+    {
+      "symbol": "000025",
+      "announcement_id": "1225138352",
+      "report_date": "2025-12-31",
+      "status": "three_current_annual_cash_amounts_bound",
+      "fields": {
+        "operating_cash_net": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动产生的现金流量净额",
+          "row_count": 1,
+          "current_amount_yuan": "327753897.88",
+          "source_page": 65,
+          "source_label": "经营活动产生的现金流量净额 327,753,897.88 390,288,813.85",
+          "source_cells": [
+            "327,753,897.88",
+            "390,288,813.85"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "operating_cash_outflow": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动现金流出小计",
+          "row_count": 1,
+          "current_amount_yuan": "1726762466.91",
+          "source_page": 65,
+          "source_label": "经营活动现金流出小计 1,726,762,466.91 4,272,278,785.94",
+          "source_cells": [
+            "1,726,762,466.91",
+            "4,272,278,785.94"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "capital_expenditure_cash": {
+          "status": "current_annual_amount_bound",
+          "label": "购建固定资产、无形资产和其他长期资产支付的现金",
+          "row_count": 1,
+          "current_amount_yuan": "23923091.80",
+          "source_page": 65,
+          "source_label": "购建固定资产、无形资产和其他长\n期资产支付的现金",
+          "source_cells": [
+            "23,923,091.80",
+            "34,257,817.98"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        }
+      },
+      "table_columns": {
+        "status": "explicit_annual_column_pair",
+        "source": "项目 2025 年度 2024 年度\n",
+        "spans": {
+          "current_status": "current_period_verified",
+          "current_evidence": {
+            "status": "current_period_verified",
+            "method": "first_flow_period",
+            "years": [
+              "2025",
+              "2024"
+            ]
+          },
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_status": "explicit_prior_same_span",
+          "comparative_start": "2024-01-01",
+          "comparative_end": "2024-12-31",
+          "explicit_column_years": [
+            "2025",
+            "2024"
+          ],
+          "explicit_column_dates": []
+        },
+        "note_column_explicit": false
+      },
+      "table_unit": {
+        "status": "unit_verified",
+        "currency": "CNY",
+        "printed_unit": "元",
+        "multiplier": "1",
+        "currency_basis": "explicit_yuan_monetary_header"
+      },
+      "text_content_sha256": "f457d9aad47a2d6157441807ba136588fbe3c02e990d4feeb7b307e4efd26c54",
+      "pdf_hash_freshly_reverified": false,
+      "full_PIT_or_production_qualified": false,
+      "signals_or_return_labels_calculated": false,
+      "capture_sha256": "a4eeed2fc76eee4b986dd34df6fd35e5fa056b9248b34146fa160a6c66830ffd",
+      "stock_record_sha256": "e42005fc86e34d67d7682eb97c79182d8eee2c59a3b41277cceda5d37671f233",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000025_1225138352.txt.gz",
+      "text_sha256": "af21ea8840dfe70ec4722b334c310884b4b79fcd6c5c355579118fe9c3fdf585",
+      "published_at": "2026-04-22",
+      "stored_available_date": "2026-04-23",
+      "comparison_change_barriers_preserved": [],
+      "monetary_source_facts_only": true,
+      "financial_or_production_qualified": false
+    },
+    {
+      "symbol": "000026",
+      "announcement_id": "1225009595",
+      "report_date": "2025-12-31",
+      "status": "three_current_annual_cash_amounts_bound",
+      "fields": {
+        "operating_cash_net": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动产生的现金流量净额",
+          "row_count": 1,
+          "current_amount_yuan": "541872287.53",
+          "source_page": 62,
+          "source_label": "经营活动产生的现金流量净额 541,872,287.53 536,730,960.29",
+          "source_cells": [
+            "541,872,287.53",
+            "536,730,960.29"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "operating_cash_outflow": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动现金流出小计",
+          "row_count": 1,
+          "current_amount_yuan": "3369410602.54",
+          "source_page": 62,
+          "source_label": "经营活动现金流出小计 3,369,410,602.54 3,852,347,516.33",
+          "source_cells": [
+            "3,369,410,602.54",
+            "3,852,347,516.33"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "capital_expenditure_cash": {
+          "status": "current_annual_amount_bound",
+          "label": "购建固定资产、无形资产和其他长期资产支付的现金",
+          "row_count": 1,
+          "current_amount_yuan": "69824736.52",
+          "source_page": 62,
+          "source_label": "购建固定资产、无形资产和其他长\n期资产支付的现金",
+          "source_cells": [
+            "69,824,736.52",
+            "86,818,686.04"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        }
+      },
+      "table_columns": {
+        "status": "explicit_annual_column_pair",
+        "source": "项目 2025 年度 2024 年度\n",
+        "spans": {
+          "current_status": "current_period_verified",
+          "current_evidence": {
+            "status": "current_period_verified",
+            "method": "first_flow_period",
+            "years": [
+              "2025",
+              "2024"
+            ]
+          },
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_status": "explicit_prior_same_span",
+          "comparative_start": "2024-01-01",
+          "comparative_end": "2024-12-31",
+          "explicit_column_years": [
+            "2025",
+            "2024"
+          ],
+          "explicit_column_dates": []
+        },
+        "note_column_explicit": false
+      },
+      "table_unit": {
+        "status": "unit_verified",
+        "currency": "CNY",
+        "printed_unit": "元",
+        "multiplier": "1",
+        "currency_basis": "explicit_yuan_monetary_header"
+      },
+      "text_content_sha256": "3771e98b8075de1225144ec2e024047c2ce491b21ff0ce6adee91c0786c72797",
+      "pdf_hash_freshly_reverified": false,
+      "full_PIT_or_production_qualified": false,
+      "signals_or_return_labels_calculated": false,
+      "capture_sha256": "65845b9be7842600f6b766ecba739401bd3edb42777d3a7d6c3618cf93bd1f5f",
+      "stock_record_sha256": "9762f1e310b28d9854a77588256f18b2686c61bc5a7add53c24faad36fc3b372",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000026_1225009595.txt.gz",
+      "text_sha256": "e67d9d3722ec62ddf1ab6272ae5b3f877133787966c7df1b7f30bc13b028440b",
+      "published_at": "2026-03-14",
+      "stored_available_date": "2026-03-15",
+      "comparison_change_barriers_preserved": [],
+      "monetary_source_facts_only": true,
+      "financial_or_production_qualified": false
+    },
+    {
+      "symbol": "000031",
+      "announcement_id": "1225184895",
+      "report_date": "2025-12-31",
+      "status": "three_current_annual_cash_amounts_bound",
+      "fields": {
+        "operating_cash_net": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动产生的现金流量净额",
+          "row_count": 1,
+          "current_amount_yuan": "3022719556.75",
+          "source_page": 131,
+          "source_label": "经营活动产生的现金流量净额 3,022,719,556.75 6,617,322,861.11",
+          "source_cells": [
+            "3,022,719,556.75",
+            "6,617,322,861.11"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "operating_cash_outflow": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动现金流出小计",
+          "row_count": 1,
+          "current_amount_yuan": "24628947911.29",
+          "source_page": 131,
+          "source_label": "经营活动现金流出小计 24,628,947,911.29 32,508,001,979.07",
+          "source_cells": [
+            "24,628,947,911.29",
+            "32,508,001,979.07"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "capital_expenditure_cash": {
+          "status": "current_annual_amount_bound",
+          "label": "购建固定资产、无形资产和其他长期资产支付的现金",
+          "row_count": 1,
+          "current_amount_yuan": "693576354.26",
+          "source_page": 131,
+          "source_label": "购建固定资产、无形资产和其他长期资产支付的现金 693,576,354.26 1,516,056,947.24",
+          "source_cells": [
+            "693,576,354.26",
+            "1,516,056,947.24"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        }
+      },
+      "table_columns": {
+        "status": "explicit_annual_column_pair",
+        "source": "项目 附注 2025 年度 2024 年度\n",
+        "spans": {
+          "current_status": "current_period_verified",
+          "current_evidence": {
+            "status": "current_period_verified",
+            "method": "first_flow_period",
+            "years": [
+              "2025",
+              "2024"
+            ]
+          },
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_status": "explicit_prior_same_span",
+          "comparative_start": "2024-01-01",
+          "comparative_end": "2024-12-31",
+          "explicit_column_years": [
+            "2025",
+            "2024"
+          ],
+          "explicit_column_dates": []
+        },
+        "note_column_explicit": true
+      },
+      "table_unit": {
+        "status": "unit_verified",
+        "currency": "CNY",
+        "printed_unit": "元",
+        "multiplier": "1",
+        "currency_basis": "explicit_yuan_monetary_header"
+      },
+      "text_content_sha256": "133f2104782c2f5863bc51cfd98c988a795b3cefdceca0be42668502b701fc8b",
+      "pdf_hash_freshly_reverified": false,
+      "full_PIT_or_production_qualified": false,
+      "signals_or_return_labels_calculated": false,
+      "capture_sha256": "0523abe7ea8f9b91eb401b7270874b9ec8002e06a6abbdc345aa08d6f119a390",
+      "stock_record_sha256": "62f1c46bb29a2681a152ea241e65f8c0b1f65f24ace5727fe3ba82c90d628655",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000031_1225184895.txt.gz",
+      "text_sha256": "a0fecad803ad151db7fa4677b7a932c1daaf563e3bf4309e4d6f0145ae0fd375",
+      "published_at": "2026-04-25",
+      "stored_available_date": "2026-04-26",
+      "comparison_change_barriers_preserved": [],
+      "monetary_source_facts_only": true,
+      "financial_or_production_qualified": false
+    },
+    {
+      "symbol": "000035",
+      "announcement_id": "1225231252",
+      "report_date": "2025-12-31",
+      "status": "three_current_annual_cash_amounts_bound",
+      "fields": {
+        "operating_cash_net": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动产生的现金流量净额",
+          "row_count": 1,
+          "current_amount_yuan": "653089056.43",
+          "source_page": 108,
+          "source_label": "经营活动产生的现金流量净额 653,089,056.43 655,318,988.92",
+          "source_cells": [
+            "653,089,056.43",
+            "655,318,988.92"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "operating_cash_outflow": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动现金流出小计",
+          "row_count": 1,
+          "current_amount_yuan": "4462167427.30",
+          "source_page": 108,
+          "source_label": "经营活动现金流出小计 4,462,167,427.30 4,494,904,170.41",
+          "source_cells": [
+            "4,462,167,427.30",
+            "4,494,904,170.41"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "capital_expenditure_cash": {
+          "status": "current_annual_amount_bound",
+          "label": "购建固定资产、无形资产和其他长期资产支付的现金",
+          "row_count": 1,
+          "current_amount_yuan": "1570291924.55",
+          "source_page": 108,
+          "source_label": "购建固定资产、无形资产和其他长期资产支付的现金 1,570,291,924.55 1,968,686,569.69",
+          "source_cells": [
+            "1,570,291,924.55",
+            "1,968,686,569.69"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        }
+      },
+      "table_columns": {
+        "status": "explicit_annual_column_pair",
+        "source": "项目 2025 年度 2024 年度\n",
+        "spans": {
+          "current_status": "current_period_verified",
+          "current_evidence": {
+            "status": "current_period_verified",
+            "method": "first_flow_period",
+            "years": [
+              "2025",
+              "2024"
+            ]
+          },
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_status": "explicit_prior_same_span",
+          "comparative_start": "2024-01-01",
+          "comparative_end": "2024-12-31",
+          "explicit_column_years": [
+            "2025",
+            "2024"
+          ],
+          "explicit_column_dates": []
+        },
+        "note_column_explicit": false
+      },
+      "table_unit": {
+        "status": "unit_verified",
+        "currency": "CNY",
+        "printed_unit": "元",
+        "multiplier": "1",
+        "currency_basis": "explicit_yuan_monetary_header"
+      },
+      "text_content_sha256": "2aced42fa7884e9a88a24868cff1dedbf27fb361aa05dbc0c8b167747cdf6df7",
+      "pdf_hash_freshly_reverified": false,
+      "full_PIT_or_production_qualified": false,
+      "signals_or_return_labels_calculated": false,
+      "capture_sha256": "5bfe9fde715c2ad237c118db21d7930942a620330097a765c2e7f4d78ab9d27f",
+      "stock_record_sha256": "9fce66cd7f6b617128c4f1d2e211dd855c967899370d0433da6ca1a0b789ac89",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_data_completion_20261006\\capital_chain_text\\000035_1225231252.txt.gz",
+      "text_sha256": "981306d33c9880806320f9e64b0bfe678c503c9a1f6f17d5337e4b1d472e0335",
+      "published_at": "2026-04-29",
+      "stored_available_date": "2026-04-30",
+      "comparison_change_barriers_preserved": [],
+      "monetary_source_facts_only": true,
+      "financial_or_production_qualified": false
+    },
+    {
+      "symbol": "000048",
+      "announcement_id": "1225089773",
+      "report_date": "2025-12-31",
+      "status": "three_current_annual_cash_amounts_bound",
+      "fields": {
+        "operating_cash_net": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动产生的现金流量净额",
+          "row_count": 1,
+          "current_amount_yuan": "597311894.42",
+          "source_page": 68,
+          "source_label": "经营活动产生的现金流量净额 597,311,894.42 997,453,274.96",
+          "source_cells": [
+            "597,311,894.42",
+            "997,453,274.96"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "operating_cash_outflow": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动现金流出小计",
+          "row_count": 1,
+          "current_amount_yuan": "4791834680.72",
+          "source_page": 68,
+          "source_label": "经营活动现金流出小计 4,791,834,680.72 5,003,756,701.47",
+          "source_cells": [
+            "4,791,834,680.72",
+            "5,003,756,701.47"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "capital_expenditure_cash": {
+          "status": "current_annual_amount_bound",
+          "label": "购建固定资产、无形资产和其他长期资产支付的现金",
+          "row_count": 1,
+          "current_amount_yuan": "204192709.81",
+          "source_page": 68,
+          "source_label": "购建固定资产、无形资产和其他长期资\n产支付的现金",
+          "source_cells": [
+            "204,192,709.81",
+            "240,754,841.80"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        }
+      },
+      "table_columns": {
+        "status": "explicit_annual_column_pair",
+        "source": "项目 2025 年度 2024 年度\n",
+        "spans": {
+          "current_status": "current_period_verified",
+          "current_evidence": {
+            "status": "current_period_verified",
+            "method": "first_flow_period",
+            "years": [
+              "2025",
+              "2024"
+            ]
+          },
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_status": "explicit_prior_same_span",
+          "comparative_start": "2024-01-01",
+          "comparative_end": "2024-12-31",
+          "explicit_column_years": [
+            "2025",
+            "2024"
+          ],
+          "explicit_column_dates": []
+        },
+        "note_column_explicit": false
+      },
+      "table_unit": {
+        "status": "unit_verified",
+        "currency": "CNY",
+        "printed_unit": "元",
+        "multiplier": "1",
+        "currency_basis": "explicit_yuan_monetary_header"
+      },
+      "text_content_sha256": "c2f0a6e9a0f4777073a5075b7ff5c2dc7d4ea27363dbae47f2bbd4c151bbf960",
+      "pdf_hash_freshly_reverified": false,
+      "full_PIT_or_production_qualified": false,
+      "signals_or_return_labels_calculated": false,
+      "capture_sha256": "8d32f10699a34020137d0c1a029faa4d222c20e584f14aff4b89cc2580a8a42f",
+      "stock_record_sha256": "8d62debf4a717917ac1d38038dedfcff9578021a3cc4187c15fd9c8ce38e5d6a",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000048_1225089773.txt.gz",
+      "text_sha256": "998c7e3088f123ce28429316f4d00a6eb67953c0d8c538f991bd3d534a51a7ee",
+      "published_at": "2026-04-10",
+      "stored_available_date": "2026-04-11",
+      "comparison_change_barriers_preserved": [],
+      "monetary_source_facts_only": true,
+      "financial_or_production_qualified": false
+    },
+    {
+      "symbol": "000050",
+      "announcement_id": "1225009341",
+      "report_date": "2025-12-31",
+      "status": "three_current_annual_cash_amounts_bound",
+      "fields": {
+        "operating_cash_net": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动产生的现金流量净额",
+          "row_count": 1,
+          "current_amount_yuan": "6988145917.28",
+          "source_page": 93,
+          "source_label": "经营活动产生的现金流量净额 6,988,145,917.28 5,751,856,931.54",
+          "source_cells": [
+            "6,988,145,917.28",
+            "5,751,856,931.54"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "operating_cash_outflow": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动现金流出小计",
+          "row_count": 1,
+          "current_amount_yuan": "48553546437.69",
+          "source_page": 93,
+          "source_label": "经营活动现金流出小计 48,553,546,437.69 40,515,950,132.96",
+          "source_cells": [
+            "48,553,546,437.69",
+            "40,515,950,132.96"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "capital_expenditure_cash": {
+          "status": "current_annual_amount_bound",
+          "label": "购建固定资产、无形资产和其他长期资产支付的现金",
+          "row_count": 1,
+          "current_amount_yuan": "2254039714.73",
+          "source_page": 93,
+          "source_label": "购建固定资产、无形资产和其他长期资产支付的现金 2,254,039,714.73 3,013,965,588.33",
+          "source_cells": [
+            "2,254,039,714.73",
+            "3,013,965,588.33"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        }
+      },
+      "table_columns": {
+        "status": "explicit_annual_column_pair",
+        "source": "项目 2025 年度 2024 年度\n",
+        "spans": {
+          "current_status": "current_period_verified",
+          "current_evidence": {
+            "status": "current_period_verified",
+            "method": "first_flow_period",
+            "years": [
+              "2025",
+              "2024"
+            ]
+          },
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_status": "explicit_prior_same_span",
+          "comparative_start": "2024-01-01",
+          "comparative_end": "2024-12-31",
+          "explicit_column_years": [
+            "2025",
+            "2024"
+          ],
+          "explicit_column_dates": []
+        },
+        "note_column_explicit": false
+      },
+      "table_unit": {
+        "status": "unit_verified",
+        "currency": "CNY",
+        "printed_unit": "元",
+        "multiplier": "1",
+        "currency_basis": "explicit_yuan_monetary_header"
+      },
+      "text_content_sha256": "456e1a05f9d1bfe2d9a08e850fadc86427f6d47c82e8dd4ae8c49851edab3054",
+      "pdf_hash_freshly_reverified": false,
+      "full_PIT_or_production_qualified": false,
+      "signals_or_return_labels_calculated": false,
+      "capture_sha256": "da1a2708a2e3d7da0fbc688f28aec195d7dd0c03b8eeadf8e22eb72bdf019ae2",
+      "stock_record_sha256": "0c91134b6b4c916acffd0ec339fc9e929bf3386a8b08acb302ef91be9078ebbf",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_data_completion_20261006\\capital_chain_text\\000050_1225009341.txt.gz",
+      "text_sha256": "e4d0d4306560ed1966629537f19ca280de668a0b49c4e4974ad790e82f4c1e53",
+      "published_at": "2026-03-14",
+      "stored_available_date": "2026-03-15",
+      "comparison_change_barriers_preserved": [],
+      "monetary_source_facts_only": true,
+      "financial_or_production_qualified": false
+    },
+    {
+      "symbol": "000055",
+      "announcement_id": "1225081648",
+      "report_date": "2025-12-31",
+      "status": "three_current_annual_cash_amounts_bound",
+      "fields": {
+        "operating_cash_net": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动产生的现金流量净额",
+          "row_count": 1,
+          "current_amount_yuan": "187412899.87",
+          "source_page": 80,
+          "source_label": "经营活动产生的现金流量净额 187,412,899.87 270,894,093.43",
+          "source_cells": [
+            "187,412,899.87",
+            "270,894,093.43"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "operating_cash_outflow": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动现金流出小计",
+          "row_count": 1,
+          "current_amount_yuan": "3790904234.15",
+          "source_page": 80,
+          "source_label": "经营活动现金流出小计 3,790,904,234.15 4,344,661,070.99",
+          "source_cells": [
+            "3,790,904,234.15",
+            "4,344,661,070.99"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "capital_expenditure_cash": {
+          "status": "current_annual_amount_bound",
+          "label": "购建固定资产、无形资产和其他长期资产支付的现金",
+          "row_count": 1,
+          "current_amount_yuan": "98345774.80",
+          "source_page": 80,
+          "source_label": "购建固定资产、无形资产和其他长期资产支\n付的现金",
+          "source_cells": [
+            "98,345,774.80",
+            "229,651,090.29"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        }
+      },
+      "table_columns": {
+        "status": "explicit_annual_column_pair",
+        "source": "项目 2025 年度 2024 年度\n",
+        "spans": {
+          "current_status": "current_period_verified",
+          "current_evidence": {
+            "status": "current_period_verified",
+            "method": "first_flow_period",
+            "years": [
+              "2025",
+              "2024"
+            ]
+          },
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_status": "explicit_prior_same_span",
+          "comparative_start": "2024-01-01",
+          "comparative_end": "2024-12-31",
+          "explicit_column_years": [
+            "2025",
+            "2024"
+          ],
+          "explicit_column_dates": []
+        },
+        "note_column_explicit": false
+      },
+      "table_unit": {
+        "status": "unit_verified",
+        "currency": "CNY",
+        "printed_unit": "元",
+        "multiplier": "1",
+        "currency_basis": "explicit_yuan_monetary_header"
+      },
+      "text_content_sha256": "87b94a996096989d68d0b5995ca6a1661cfeeb24ae0312391809307d4e008847",
+      "pdf_hash_freshly_reverified": false,
+      "full_PIT_or_production_qualified": false,
+      "signals_or_return_labels_calculated": false,
+      "capture_sha256": "abda57f9cf0fa60edb8d93757c98edfd0ff8756b39662d800474113f0683690e",
+      "stock_record_sha256": "42483703815237ff3aa0ee6f26e3b98fe11094e8fdc59b74450943ba1e2d721a",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_data_completion_20261006\\capital_chain_text\\000055_1225081648.txt.gz",
+      "text_sha256": "e1dec991fe30e9558f7e986e52f8d64e4b70f0b322014349a538b703e9287656",
+      "published_at": "2026-04-08",
+      "stored_available_date": "2026-04-09",
+      "comparison_change_barriers_preserved": [],
+      "monetary_source_facts_only": true,
+      "financial_or_production_qualified": false
+    },
+    {
+      "symbol": "000062",
+      "announcement_id": "1225034927",
+      "report_date": "2025-12-31",
+      "status": "three_current_annual_cash_amounts_bound",
+      "fields": {
+        "operating_cash_net": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动产生的现金流量净额",
+          "row_count": 1,
+          "current_amount_yuan": "-990401922.16",
+          "source_page": 99,
+          "source_label": "经营活动产生的现金流量净额 -990,401,922.16 1,442,202,098.11",
+          "source_cells": [
+            "-990,401,922.16",
+            "1,442,202,098.11"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "operating_cash_outflow": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动现金流出小计",
+          "row_count": 1,
+          "current_amount_yuan": "26059908270.95",
+          "source_page": 99,
+          "source_label": "经营活动现金流出小计 26,059,908,270.95 22,020,047,270.32",
+          "source_cells": [
+            "26,059,908,270.95",
+            "22,020,047,270.32"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "capital_expenditure_cash": {
+          "status": "current_annual_amount_bound",
+          "label": "购建固定资产、无形资产和其他长期资产支付的现金",
+          "row_count": 1,
+          "current_amount_yuan": "149299614.38",
+          "source_page": 100,
+          "source_label": "购建固定资产、无形资产和其他长\n期资产支付的现金 149,299,614.38 74,447,292.99",
+          "source_cells": [
+            "149,299,614.38",
+            "74,447,292.99"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        }
+      },
+      "table_columns": {
+        "status": "explicit_annual_column_pair",
+        "source": "项目 2025 年度 2024 年度\n",
+        "spans": {
+          "current_status": "current_period_verified",
+          "current_evidence": {
+            "status": "current_period_verified",
+            "method": "first_flow_period",
+            "years": [
+              "2025",
+              "2024"
+            ]
+          },
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_status": "explicit_prior_same_span",
+          "comparative_start": "2024-01-01",
+          "comparative_end": "2024-12-31",
+          "explicit_column_years": [
+            "2025",
+            "2024"
+          ],
+          "explicit_column_dates": []
+        },
+        "note_column_explicit": false
+      },
+      "table_unit": {
+        "status": "unit_verified",
+        "currency": "CNY",
+        "printed_unit": "元",
+        "multiplier": "1",
+        "currency_basis": "explicit_yuan_monetary_header"
+      },
+      "text_content_sha256": "576136bbde66f70b7c11edc516ed1a9b097f083da25f734f0b9445d29f2f99ad",
+      "pdf_hash_freshly_reverified": false,
+      "full_PIT_or_production_qualified": false,
+      "signals_or_return_labels_calculated": false,
+      "capture_sha256": "fb3091f280ce916c933ee183f0be81caca381e9e7b08bb941130125581f19c77",
+      "stock_record_sha256": "e795bb4be7c1d277ade595d5be7b5a859789f62f50a61f7321bb2a67dbd7735e",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000062_1225034927.txt.gz",
+      "text_sha256": "8e92c739a1874e0664d8a70c97a30c3da5ff4ee2e5c9a40ad3e0e0268f73029c",
+      "published_at": "2026-03-27",
+      "stored_available_date": "2026-03-28",
+      "comparison_change_barriers_preserved": [],
+      "monetary_source_facts_only": true,
+      "financial_or_production_qualified": false
+    },
+    {
+      "symbol": "000065",
+      "announcement_id": "1225061092",
+      "report_date": "2025-12-31",
+      "status": "three_current_annual_cash_amounts_bound",
+      "fields": {
+        "operating_cash_net": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动产生的现金流量净额",
+          "row_count": 1,
+          "current_amount_yuan": "1048812790.94",
+          "source_page": 99,
+          "source_label": "经营活动产生的现金流量净额 1,048,812,790.94 653,348,422.93",
+          "source_cells": [
+            "1,048,812,790.94",
+            "653,348,422.93"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "operating_cash_outflow": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动现金流出小计",
+          "row_count": 1,
+          "current_amount_yuan": "14363171826.33",
+          "source_page": 99,
+          "source_label": "经营活动现金流出小计 14,363,171,826.33 19,693,135,498.28",
+          "source_cells": [
+            "14,363,171,826.33",
+            "19,693,135,498.28"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "capital_expenditure_cash": {
+          "status": "current_annual_amount_bound",
+          "label": "购建固定资产、无形资产和其他长期资产支付的现金",
+          "row_count": 1,
+          "current_amount_yuan": "498615376.27",
+          "source_page": 99,
+          "source_label": "购建固定资产、无形资产和其他长\n期资产支付的现金 498,615,376.27 184,246,850.16",
+          "source_cells": [
+            "498,615,376.27",
+            "184,246,850.16"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        }
+      },
+      "table_columns": {
+        "status": "explicit_annual_column_pair",
+        "source": "项目 2025 年度 2024 年度\n",
+        "spans": {
+          "current_status": "current_period_verified",
+          "current_evidence": {
+            "status": "current_period_verified",
+            "method": "first_flow_period",
+            "years": [
+              "2025",
+              "2024"
+            ]
+          },
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_status": "explicit_prior_same_span",
+          "comparative_start": "2024-01-01",
+          "comparative_end": "2024-12-31",
+          "explicit_column_years": [
+            "2025",
+            "2024"
+          ],
+          "explicit_column_dates": []
+        },
+        "note_column_explicit": false
+      },
+      "table_unit": {
+        "status": "unit_verified",
+        "currency": "CNY",
+        "printed_unit": "元",
+        "multiplier": "1",
+        "currency_basis": "explicit_yuan_monetary_header"
+      },
+      "text_content_sha256": "e491bfa2a206586c28a0d9a010dd4feb60e8077d2b9f289a159fb3c0cede4ed9",
+      "pdf_hash_freshly_reverified": false,
+      "full_PIT_or_production_qualified": false,
+      "signals_or_return_labels_calculated": false,
+      "capture_sha256": "e6707472d2dbf19affca0875e48c7ef1f710414636e05e5bc42d016d3ea8c8c3",
+      "stock_record_sha256": "8ff5d48e739770484299f0f9dc61b3fda3ead20ae9f4ab2ba32fa8b837c32dd0",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\000065_1225061092.txt.gz",
+      "text_sha256": "572d93ea8442c48871d75779f29b0ff265de1e98cbc5b89b56a0dabf13710c1b",
+      "published_at": "2026-03-31",
+      "stored_available_date": "2026-04-01",
+      "comparison_change_barriers_preserved": [],
+      "monetary_source_facts_only": true,
+      "financial_or_production_qualified": false
+    },
+    {
+      "symbol": "000070",
+      "announcement_id": "1225139223",
+      "report_date": "2025-12-31",
+      "status": "three_current_annual_cash_amounts_bound",
+      "fields": {
+        "operating_cash_net": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动产生的现金流量净额",
+          "row_count": 1,
+          "current_amount_yuan": "111830183.59",
+          "source_page": 91,
+          "source_label": "经营活动产生的现金流量净额 111,830,183.59 372,715,369.71",
+          "source_cells": [
+            "111,830,183.59",
+            "372,715,369.71"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "operating_cash_outflow": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动现金流出小计",
+          "row_count": 1,
+          "current_amount_yuan": "5794820052.33",
+          "source_page": 91,
+          "source_label": "经营活动现金流出小计 5,794,820,052.33 5,516,647,601.01",
+          "source_cells": [
+            "5,794,820,052.33",
+            "5,516,647,601.01"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "capital_expenditure_cash": {
+          "status": "current_annual_amount_bound",
+          "label": "购建固定资产、无形资产和其他长期资产支付的现金",
+          "row_count": 1,
+          "current_amount_yuan": "104154926.65",
+          "source_page": 91,
+          "source_label": "购建固定资产、无形资产和其他长\n期资产支付的现金",
+          "source_cells": [
+            "104,154,926.65",
+            "124,936,581.38"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        }
+      },
+      "table_columns": {
+        "status": "explicit_annual_column_pair",
+        "source": "项目 2025 年度 2024 年度\n",
+        "spans": {
+          "current_status": "current_period_verified",
+          "current_evidence": {
+            "status": "current_period_verified",
+            "method": "first_flow_period",
+            "years": [
+              "2025",
+              "2024"
+            ]
+          },
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_status": "explicit_prior_same_span",
+          "comparative_start": "2024-01-01",
+          "comparative_end": "2024-12-31",
+          "explicit_column_years": [
+            "2025",
+            "2024"
+          ],
+          "explicit_column_dates": []
+        },
+        "note_column_explicit": false
+      },
+      "table_unit": {
+        "status": "unit_verified",
+        "currency": "CNY",
+        "printed_unit": "元",
+        "multiplier": "1",
+        "currency_basis": "explicit_yuan_monetary_header"
+      },
+      "text_content_sha256": "49753dee6f763fd5fdceb21d1a370d1bafdb07129c51506446a07874d08aee95",
+      "pdf_hash_freshly_reverified": false,
+      "full_PIT_or_production_qualified": false,
+      "signals_or_return_labels_calculated": false,
+      "capture_sha256": "69257eb884409f2ac28ed2d714f4449d7537c65ce04428e86b618fa51f5d966a",
+      "stock_record_sha256": "315aca1c0d1bebc367fe79a711671b572bf5133841e9f6d7c345177206e33794",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000070_1225139223.txt.gz",
+      "text_sha256": "991748fcfae9f710ce01f3e91ffb87f49002250938d220fb6dfc5d256b750a77",
+      "published_at": "2026-04-22",
+      "stored_available_date": "2026-04-23",
+      "comparison_change_barriers_preserved": [],
+      "monetary_source_facts_only": true,
+      "financial_or_production_qualified": false
+    },
+    {
+      "symbol": "000089",
+      "announcement_id": "1225169129",
+      "report_date": "2025-12-31",
+      "status": "three_current_annual_cash_amounts_bound",
+      "fields": {
+        "operating_cash_net": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动产生的现金流量净额",
+          "row_count": 1,
+          "current_amount_yuan": "1836036908.23",
+          "source_page": 85,
+          "source_label": "经营活动产生的现金流量净额 1,836,036,908.23 1,905,703,787.08",
+          "source_cells": [
+            "1,836,036,908.23",
+            "1,905,703,787.08"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "operating_cash_outflow": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动现金流出小计",
+          "row_count": 1,
+          "current_amount_yuan": "4032606890.89",
+          "source_page": 85,
+          "source_label": "经营活动现金流出小计 4,032,606,890.89 3,198,409,626.69",
+          "source_cells": [
+            "4,032,606,890.89",
+            "3,198,409,626.69"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "capital_expenditure_cash": {
+          "status": "current_annual_amount_bound",
+          "label": "购建固定资产、无形资产和其他长期资产支付的现金",
+          "row_count": 1,
+          "current_amount_yuan": "481538184.30",
+          "source_page": 85,
+          "source_label": "购建固定资产、无形资产和其他长\n期资产支付的现金 481,538,184.30 516,256,309.27",
+          "source_cells": [
+            "481,538,184.30",
+            "516,256,309.27"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        }
+      },
+      "table_columns": {
+        "status": "explicit_annual_column_pair",
+        "source": "项目 2025 年度 2024 年度 \n",
+        "spans": {
+          "current_status": "current_period_verified",
+          "current_evidence": {
+            "status": "current_period_verified",
+            "method": "first_flow_period",
+            "years": [
+              "2025",
+              "2024"
+            ]
+          },
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_status": "explicit_prior_same_span",
+          "comparative_start": "2024-01-01",
+          "comparative_end": "2024-12-31",
+          "explicit_column_years": [
+            "2025",
+            "2024"
+          ],
+          "explicit_column_dates": []
+        },
+        "note_column_explicit": false
+      },
+      "table_unit": {
+        "status": "unit_verified",
+        "currency": "CNY",
+        "printed_unit": "元",
+        "multiplier": "1",
+        "currency_basis": "explicit_yuan_monetary_header"
+      },
+      "text_content_sha256": "8e99efdcc08ca80412bdf60be5da35ce281ebb3d8695782a3ce65b0926977ffa",
+      "pdf_hash_freshly_reverified": false,
+      "full_PIT_or_production_qualified": false,
+      "signals_or_return_labels_calculated": false,
+      "capture_sha256": "6511dfff6bc9b324eaffc08c4f6a8fc83fc959deadc8d5083cd81bf1d9e5ec20",
+      "stock_record_sha256": "9ad36c09a5b2a72ee20cb167022c7770ce0c66ff169ffff8d5bfbf3afa188eef",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000089_1225169129.txt.gz",
+      "text_sha256": "b3ec014faff48ba8bd833fad14da3df107869ae84cecd5b38a0bbde0e9df87b0",
+      "published_at": "2026-04-24",
+      "stored_available_date": "2026-04-25",
+      "comparison_change_barriers_preserved": [],
+      "monetary_source_facts_only": true,
+      "financial_or_production_qualified": false
+    },
+    {
+      "symbol": "000096",
+      "announcement_id": "1225219952",
+      "report_date": "2025-12-31",
+      "status": "three_current_annual_cash_amounts_bound",
+      "fields": {
+        "operating_cash_net": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动产生的现金流量净额",
+          "row_count": 1,
+          "current_amount_yuan": "-40832126.36",
+          "source_page": 69,
+          "source_label": "经营活动产生的现金流量净额 -40,832,126.36 87,905,532.53",
+          "source_cells": [
+            "-40,832,126.36",
+            "87,905,532.53"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "operating_cash_outflow": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动现金流出小计",
+          "row_count": 1,
+          "current_amount_yuan": "2035477428.77",
+          "source_page": 69,
+          "source_label": "经营活动现金流出小计 2,035,477,428.77 2,152,627,114.48",
+          "source_cells": [
+            "2,035,477,428.77",
+            "2,152,627,114.48"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "capital_expenditure_cash": {
+          "status": "current_annual_amount_bound",
+          "label": "购建固定资产、无形资产和其他长期资产支付的现金",
+          "row_count": 1,
+          "current_amount_yuan": "181208073.62",
+          "source_page": 69,
+          "source_label": "购建固定资产、无形资产和其他长\n期资产支付的现金",
+          "source_cells": [
+            "181,208,073.62",
+            "1,600,514.34"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        }
+      },
+      "table_columns": {
+        "status": "explicit_annual_column_pair",
+        "source": "项目 2025 年度 2024 年度\n",
+        "spans": {
+          "current_status": "current_period_verified",
+          "current_evidence": {
+            "status": "current_period_verified",
+            "method": "first_flow_period",
+            "years": [
+              "2025",
+              "2024"
+            ]
+          },
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_status": "explicit_prior_same_span",
+          "comparative_start": "2024-01-01",
+          "comparative_end": "2024-12-31",
+          "explicit_column_years": [
+            "2025",
+            "2024"
+          ],
+          "explicit_column_dates": []
+        },
+        "note_column_explicit": false
+      },
+      "table_unit": {
+        "status": "unit_verified",
+        "currency": "CNY",
+        "printed_unit": "元",
+        "multiplier": "1",
+        "currency_basis": "explicit_yuan_monetary_header"
+      },
+      "text_content_sha256": "c5c498dc2c7d5fbe7270deedafc20613f95c84b1c1e97c31354b71d48fa7a26a",
+      "pdf_hash_freshly_reverified": false,
+      "full_PIT_or_production_qualified": false,
+      "signals_or_return_labels_calculated": false,
+      "capture_sha256": "735cd9392ca45d5934e4ef2271012da30dc28bf0945f47697e5acb7cc0a177a6",
+      "stock_record_sha256": "b9443751ab57f8a9647f025672fa29dba57ce8b65269cea15e15ffae86c1d77b",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_data_completion_20261006\\capital_chain_text\\000096_1225219952.txt.gz",
+      "text_sha256": "3706cab529aeb960d0edd3d028a73a18ac68d827e0165196ca8232ba303db5d7",
+      "published_at": "2026-04-28",
+      "stored_available_date": "2026-04-29",
+      "comparison_change_barriers_preserved": [],
+      "monetary_source_facts_only": true,
+      "financial_or_production_qualified": false
+    },
+    {
+      "symbol": "000151",
+      "announcement_id": "1225113085",
+      "report_date": "2025-12-31",
+      "status": "three_current_annual_cash_amounts_bound",
+      "fields": {
+        "operating_cash_net": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动产生的现金流量净额",
+          "row_count": 1,
+          "current_amount_yuan": "-248826771.00",
+          "source_page": 97,
+          "source_label": "经营活动产生的现金流量净额 -248,826,771.00 -15,434,233.58",
+          "source_cells": [
+            "-248,826,771.00",
+            "-15,434,233.58"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "operating_cash_outflow": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动现金流出小计",
+          "row_count": 1,
+          "current_amount_yuan": "1478519398.65",
+          "source_page": 97,
+          "source_label": "经营活动现金流出小计 1,478,519,398.65 1,828,096,861.96",
+          "source_cells": [
+            "1,478,519,398.65",
+            "1,828,096,861.96"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "capital_expenditure_cash": {
+          "status": "current_annual_amount_bound",
+          "label": "购建固定资产、无形资产和其他长期资产支付的现金",
+          "row_count": 1,
+          "current_amount_yuan": "828558.36",
+          "source_page": 97,
+          "source_label": "购建固定资产、无形资产和其他长\n期资产支付的现金",
+          "source_cells": [
+            "828,558.36",
+            "3,441,068.74"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        }
+      },
+      "table_columns": {
+        "status": "explicit_annual_column_pair",
+        "source": "项目 2025 年度 2024 年度\n",
+        "spans": {
+          "current_status": "current_period_verified",
+          "current_evidence": {
+            "status": "current_period_verified",
+            "method": "first_flow_period",
+            "years": [
+              "2025",
+              "2024"
+            ]
+          },
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_status": "explicit_prior_same_span",
+          "comparative_start": "2024-01-01",
+          "comparative_end": "2024-12-31",
+          "explicit_column_years": [
+            "2025",
+            "2024"
+          ],
+          "explicit_column_dates": []
+        },
+        "note_column_explicit": false
+      },
+      "table_unit": {
+        "status": "unit_verified",
+        "currency": "CNY",
+        "printed_unit": "元",
+        "multiplier": "1",
+        "currency_basis": "explicit_yuan_monetary_header"
+      },
+      "text_content_sha256": "72f69b2d909cb65d8c8d26be97338c1bdad66815a211a54852bc5abd83c6b8f4",
+      "pdf_hash_freshly_reverified": false,
+      "full_PIT_or_production_qualified": false,
+      "signals_or_return_labels_calculated": false,
+      "capture_sha256": "cc72a526bb8398fc63e0f3d515a5bf13e257c419116e8ca055691413134fde29",
+      "stock_record_sha256": "1fbaa0d04f62da602a0d5e5e7593e737474642345fb3260cb9dd48ad9f3ffe65",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\000151_1225113085.txt.gz",
+      "text_sha256": "7a3730a00aeb1ac33427adb2637242824e81f45a6e937bc4faa99eee7061f2f3",
+      "published_at": "2026-04-17",
+      "stored_available_date": "2026-04-18",
+      "comparison_change_barriers_preserved": [],
+      "monetary_source_facts_only": true,
+      "financial_or_production_qualified": false
+    },
+    {
+      "symbol": "000156",
+      "announcement_id": "1225023169",
+      "report_date": "2025-12-31",
+      "status": "three_current_annual_cash_amounts_bound",
+      "fields": {
+        "operating_cash_net": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动产生的现金流量净额",
+          "row_count": 1,
+          "current_amount_yuan": "1859846961.49",
+          "source_page": 93,
+          "source_label": "经营活动产生的现金流量净额 1,859,846,961.49 1,939,935,714.22",
+          "source_cells": [
+            "1,859,846,961.49",
+            "1,939,935,714.22"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "operating_cash_outflow": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动现金流出小计",
+          "row_count": 1,
+          "current_amount_yuan": "8435001868.55",
+          "source_page": 93,
+          "source_label": "经营活动现金流出小计 8,435,001,868.55 8,278,832,375.08",
+          "source_cells": [
+            "8,435,001,868.55",
+            "8,278,832,375.08"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "capital_expenditure_cash": {
+          "status": "current_annual_amount_bound",
+          "label": "购建固定资产、无形资产和其他长期资产支付的现金",
+          "row_count": 1,
+          "current_amount_yuan": "976467130.42",
+          "source_page": 93,
+          "source_label": "购建固定资产、无形资产和其他长\n期资产支付的现金 976,467,130.42 1,235,860,484.04",
+          "source_cells": [
+            "976,467,130.42",
+            "1,235,860,484.04"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        }
+      },
+      "table_columns": {
+        "status": "explicit_annual_column_pair",
+        "source": "项目 2025 年度 2024 年度\n",
+        "spans": {
+          "current_status": "current_period_verified",
+          "current_evidence": {
+            "status": "current_period_verified",
+            "method": "first_flow_period",
+            "years": [
+              "2025",
+              "2024"
+            ]
+          },
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_status": "explicit_prior_same_span",
+          "comparative_start": "2024-01-01",
+          "comparative_end": "2024-12-31",
+          "explicit_column_years": [
+            "2025",
+            "2024"
+          ],
+          "explicit_column_dates": []
+        },
+        "note_column_explicit": false
+      },
+      "table_unit": {
+        "status": "unit_verified",
+        "currency": "CNY",
+        "printed_unit": "元",
+        "multiplier": "1",
+        "currency_basis": "explicit_yuan_monetary_header"
+      },
+      "text_content_sha256": "a25873a24de4d0c009513667170db4d53899fe1bc517a7de44e73612f8b1c47b",
+      "pdf_hash_freshly_reverified": false,
+      "full_PIT_or_production_qualified": false,
+      "signals_or_return_labels_calculated": false,
+      "capture_sha256": "8199acaa5012a23f4e6c404f78a5db1dd705e6e056dde23cf582d347e9b93b59",
+      "stock_record_sha256": "fc9e181277306616a9b634893192c1c446a3c4bf330b360d6f357d3040fc5f0a",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_data_completion_20261006\\capital_chain_text\\000156_1225023169.txt.gz",
+      "text_sha256": "59801b9d2730a3aa2a047ad941180f8502a66d0018c7e601eeef196c6940ff4c",
+      "published_at": "2026-03-21",
+      "stored_available_date": "2026-03-22",
+      "comparison_change_barriers_preserved": [],
+      "monetary_source_facts_only": true,
+      "financial_or_production_qualified": false
+    },
+    {
+      "symbol": "000157",
+      "announcement_id": "1225055609",
+      "report_date": "2025-12-31",
+      "status": "three_current_annual_cash_amounts_bound",
+      "fields": {
+        "operating_cash_net": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动产生的现金流量净额",
+          "row_count": 1,
+          "current_amount_yuan": "4873901652.93",
+          "source_page": 132,
+          "source_label": "经营活动产生的现金流量净额 4,873,901,652.93 2,142,055,023.05",
+          "source_cells": [
+            "4,873,901,652.93",
+            "2,142,055,023.05"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "operating_cash_outflow": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动现金流出小计",
+          "row_count": 1,
+          "current_amount_yuan": "50775019101.79",
+          "source_page": 132,
+          "source_label": "经营活动现金流出小计 50,775,019,101.79 57,162,247,401.20",
+          "source_cells": [
+            "50,775,019,101.79",
+            "57,162,247,401.20"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "capital_expenditure_cash": {
+          "status": "current_annual_amount_bound",
+          "label": "购建固定资产、无形资产和其他长期资产支付的现金",
+          "row_count": 1,
+          "current_amount_yuan": "4654893365.82",
+          "source_page": 132,
+          "source_label": "购建固定资产、无形资产和其他长\n期资产支付的现金 4,654,893,365.82 4,035,316,851.07",
+          "source_cells": [
+            "4,654,893,365.82",
+            "4,035,316,851.07"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        }
+      },
+      "table_columns": {
+        "status": "explicit_annual_column_pair",
+        "source": "项目 2025 年度 2024 年度\n",
+        "spans": {
+          "current_status": "current_period_verified",
+          "current_evidence": {
+            "status": "current_period_verified",
+            "method": "first_flow_period",
+            "years": [
+              "2025",
+              "2024"
+            ]
+          },
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_status": "explicit_prior_same_span",
+          "comparative_start": "2024-01-01",
+          "comparative_end": "2024-12-31",
+          "explicit_column_years": [
+            "2025",
+            "2024"
+          ],
+          "explicit_column_dates": []
+        },
+        "note_column_explicit": false
+      },
+      "table_unit": {
+        "status": "unit_verified",
+        "currency": "CNY",
+        "printed_unit": "元",
+        "multiplier": "1",
+        "currency_basis": "explicit_yuan_monetary_header"
+      },
+      "text_content_sha256": "d06c1ef9ed51b12596478e3e460d45c7bd4fd9aa45234672848be3a71db84d28",
+      "pdf_hash_freshly_reverified": false,
+      "full_PIT_or_production_qualified": false,
+      "signals_or_return_labels_calculated": false,
+      "capture_sha256": "4d285d1f584e48c76302ddb5de7e596f69431a66c7922649a08a3a75831444c0",
+      "stock_record_sha256": "55d0f043fca33f963b68cc1c50c7058baa4d85f5d01f96b6cb186a663612efe7",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000157_1225055609.txt.gz",
+      "text_sha256": "a4ad23ca829af1ce9d770ac0c8d888b12aaaea290daf7677dd35a2d8bc28dc91",
+      "published_at": "2026-03-31",
+      "stored_available_date": "2026-04-01",
+      "comparison_change_barriers_preserved": [],
+      "monetary_source_facts_only": true,
+      "financial_or_production_qualified": false
+    },
+    {
+      "symbol": "000158",
+      "announcement_id": "1225077614",
+      "report_date": "2025-12-31",
+      "status": "three_current_annual_cash_amounts_bound",
+      "fields": {
+        "operating_cash_net": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动产生的现金流量净额",
+          "row_count": 1,
+          "current_amount_yuan": "417891560.49",
+          "source_page": 88,
+          "source_label": "经营活动产生的现金流量净额 417,891,560.49 -867,783,142.92",
+          "source_cells": [
+            "417,891,560.49",
+            "-867,783,142.92"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "operating_cash_outflow": {
+          "status": "current_annual_amount_bound",
+          "label": "经营活动现金流出小计",
+          "row_count": 1,
+          "current_amount_yuan": "8602042235.74",
+          "source_page": 88,
+          "source_label": "经营活动现金流出小计 8,602,042,235.74 10,870,114,189.94",
+          "source_cells": [
+            "8,602,042,235.74",
+            "10,870,114,189.94"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        },
+        "capital_expenditure_cash": {
+          "status": "current_annual_amount_bound",
+          "label": "购建固定资产、无形资产和其他长期资产支付的现金",
+          "row_count": 1,
+          "current_amount_yuan": "1087816791.40",
+          "source_page": 88,
+          "source_label": "购建固定资产、无形资产和其他长期资产支付的现金 1,087,816,791.40 295,302,992.97",
+          "source_cells": [
+            "1,087,816,791.40",
+            "295,302,992.97"
+          ],
+          "column_parse_evidence": {
+            "status": "complete_text_column_pair",
+            "note_reference": null,
+            "method": "strict_retained_text_no_pdf_layout_recovery"
+          },
+          "statement_scope": "consolidated",
+          "printed_unit": "元",
+          "multiplier": "1",
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_amount_claimed": false
+        }
+      },
+      "table_columns": {
+        "status": "explicit_annual_column_pair",
+        "source": "项目 2025 年度 2024 年度\n",
+        "spans": {
+          "current_status": "current_period_verified",
+          "current_evidence": {
+            "status": "current_period_verified",
+            "method": "first_flow_period",
+            "years": [
+              "2025",
+              "2024"
+            ]
+          },
+          "current_start": "2025-01-01",
+          "current_end": "2025-12-31",
+          "comparative_status": "explicit_prior_same_span",
+          "comparative_start": "2024-01-01",
+          "comparative_end": "2024-12-31",
+          "explicit_column_years": [
+            "2025",
+            "2024"
+          ],
+          "explicit_column_dates": []
+        },
+        "note_column_explicit": false
+      },
+      "table_unit": {
+        "status": "unit_verified",
+        "currency": "CNY",
+        "printed_unit": "元",
+        "multiplier": "1",
+        "currency_basis": "explicit_yuan_monetary_header"
+      },
+      "text_content_sha256": "f363549151c90ba8e13e6b5e6d81ecf54b8004e9922e98e5ad75a6c3e03a88fe",
+      "pdf_hash_freshly_reverified": false,
+      "full_PIT_or_production_qualified": false,
+      "signals_or_return_labels_calculated": false,
+      "capture_sha256": "d4e6fe1f0c7c479124f5dda49f33dd1830b6970f78886f45ad954760380dfbe2",
+      "stock_record_sha256": "7ec21e7abfff69abbd27c7f85cd58760c4f31c6e420322acabb61c9325608ee0",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000158_1225077614.txt.gz",
+      "text_sha256": "a2e2a98ada44d7943618e03d3e8d49bcae718688b4bafd994645fa7feb21da3c",
+      "published_at": "2026-04-03",
+      "stored_available_date": "2026-04-04",
+      "comparison_change_barriers_preserved": [],
+      "monetary_source_facts_only": true,
+      "financial_or_production_qualified": false
+    }
+  ],
+  "counts": {
+    "three_current_annual_cash_amounts_bound": 20
+  },
+  "protocol_sha256": "793a4c19c09b8ede1e501ea82fac6f14026be4b2bd6969220ef248fa197a3797",
+  "completed_at_utc": "2026-10-11T17:39:47.591198+00:00",
+  "new_contexts": 0,
+  "new_scores_or_price_labels": false,
+  "HTTP_or_PDF_calls": 0,
+  "official_calls": 0,
+  "complete_text_or_database_copies_saved": false,
+  "production_qualified": false,
+  "limits": "Same-period three monetary source facts only; no native field-value parity, full versions, PIT, financial qualification or economic claim"
+}

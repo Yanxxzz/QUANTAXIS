@@ -1,0 +1,254 @@
+{
+  "id": "CASH_INVESTMENT_SAME_ANNUAL_STATEMENT_SOURCE20_20261012",
+  "kind": "source_only",
+  "frozen_at_utc": "2026-10-11T17:39:18.413002+00:00",
+  "deadline_utc": "2026-10-11T23:00:00+00:00",
+  "registry": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\research_trials.sqlite3",
+  "captures": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\compact_archive\\captured_financial.sqlite3",
+  "selected20": [
+    {
+      "symbol": "000007",
+      "announcement_id": "1225232778",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\000007_1225232778.txt.gz",
+      "capture_sha256": "6e7ae182938512d14a2f75f411f0f85a6f25090a878ecbebcfcda881dfed72f4",
+      "text_sha256": "c20d64ec529513f96111c82e07b71a6c32075bd9a6e92dc3d3a536989bbe2db4",
+      "source_record_sha256": "1f26f217c45b35541a31ef6560a86d19cb4f56a01678e69bb4b36330993af87e"
+    },
+    {
+      "symbol": "000012",
+      "announcement_id": "1225204194",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_data_completion_20261006\\capital_chain_text\\000012_1225204194.txt.gz",
+      "capture_sha256": "82f46d8d1c91b4173dc648fc8bde3f9977f99170957677dc697febcc8fbdaf78",
+      "text_sha256": "54a0086f01d49b23e958278e17871694d0fa7989ddbefb5543e8a4ac179f3f28",
+      "source_record_sha256": "d88b07a297e1d00be249585691a4ed67575e7c366a473899501187103a0f6cd0"
+    },
+    {
+      "symbol": "000017",
+      "announcement_id": "1225132602",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000017_1225132602.txt.gz",
+      "capture_sha256": "e72e9d45ae335561ae8a0302d737a3d98734957e588ec18acfcda3df0f18fa7f",
+      "text_sha256": "ec9c1d3d6586fe4d6e509282a83e6120e5bf761c1a209a72fdaf13dfb4a6db26",
+      "source_record_sha256": "7c0c5ec51583acf7955db373a61160b206855e7764dcd13cc9b1c40b67c54f44"
+    },
+    {
+      "symbol": "000020",
+      "announcement_id": "1225131755",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000020_1225131755.txt.gz",
+      "capture_sha256": "1c23f0a094f41a3c11cfc484c2be22f9f1467c6d1085cae37532b9134cac99c6",
+      "text_sha256": "78bd88c96e8dc0f4160bd7b9f9a56c262c809234dcc03cce5b0533a33a5d9565",
+      "source_record_sha256": "a9c22c829036069fc4ac6e0016bd8694f533be97fb60fc66e74259b9db38bdfe"
+    },
+    {
+      "symbol": "000025",
+      "announcement_id": "1225138352",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000025_1225138352.txt.gz",
+      "capture_sha256": "a4eeed2fc76eee4b986dd34df6fd35e5fa056b9248b34146fa160a6c66830ffd",
+      "text_sha256": "af21ea8840dfe70ec4722b334c310884b4b79fcd6c5c355579118fe9c3fdf585",
+      "source_record_sha256": "e42005fc86e34d67d7682eb97c79182d8eee2c59a3b41277cceda5d37671f233"
+    },
+    {
+      "symbol": "000026",
+      "announcement_id": "1225009595",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000026_1225009595.txt.gz",
+      "capture_sha256": "65845b9be7842600f6b766ecba739401bd3edb42777d3a7d6c3618cf93bd1f5f",
+      "text_sha256": "e67d9d3722ec62ddf1ab6272ae5b3f877133787966c7df1b7f30bc13b028440b",
+      "source_record_sha256": "9762f1e310b28d9854a77588256f18b2686c61bc5a7add53c24faad36fc3b372"
+    },
+    {
+      "symbol": "000031",
+      "announcement_id": "1225184895",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000031_1225184895.txt.gz",
+      "capture_sha256": "0523abe7ea8f9b91eb401b7270874b9ec8002e06a6abbdc345aa08d6f119a390",
+      "text_sha256": "a0fecad803ad151db7fa4677b7a932c1daaf563e3bf4309e4d6f0145ae0fd375",
+      "source_record_sha256": "62f1c46bb29a2681a152ea241e65f8c0b1f65f24ace5727fe3ba82c90d628655"
+    },
+    {
+      "symbol": "000035",
+      "announcement_id": "1225231252",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_data_completion_20261006\\capital_chain_text\\000035_1225231252.txt.gz",
+      "capture_sha256": "5bfe9fde715c2ad237c118db21d7930942a620330097a765c2e7f4d78ab9d27f",
+      "text_sha256": "981306d33c9880806320f9e64b0bfe678c503c9a1f6f17d5337e4b1d472e0335",
+      "source_record_sha256": "9fce66cd7f6b617128c4f1d2e211dd855c967899370d0433da6ca1a0b789ac89"
+    },
+    {
+      "symbol": "000048",
+      "announcement_id": "1225089773",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000048_1225089773.txt.gz",
+      "capture_sha256": "8d32f10699a34020137d0c1a029faa4d222c20e584f14aff4b89cc2580a8a42f",
+      "text_sha256": "998c7e3088f123ce28429316f4d00a6eb67953c0d8c538f991bd3d534a51a7ee",
+      "source_record_sha256": "8d62debf4a717917ac1d38038dedfcff9578021a3cc4187c15fd9c8ce38e5d6a"
+    },
+    {
+      "symbol": "000050",
+      "announcement_id": "1225009341",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_data_completion_20261006\\capital_chain_text\\000050_1225009341.txt.gz",
+      "capture_sha256": "da1a2708a2e3d7da0fbc688f28aec195d7dd0c03b8eeadf8e22eb72bdf019ae2",
+      "text_sha256": "e4d0d4306560ed1966629537f19ca280de668a0b49c4e4974ad790e82f4c1e53",
+      "source_record_sha256": "0c91134b6b4c916acffd0ec339fc9e929bf3386a8b08acb302ef91be9078ebbf"
+    },
+    {
+      "symbol": "000055",
+      "announcement_id": "1225081648",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_data_completion_20261006\\capital_chain_text\\000055_1225081648.txt.gz",
+      "capture_sha256": "abda57f9cf0fa60edb8d93757c98edfd0ff8756b39662d800474113f0683690e",
+      "text_sha256": "e1dec991fe30e9558f7e986e52f8d64e4b70f0b322014349a538b703e9287656",
+      "source_record_sha256": "42483703815237ff3aa0ee6f26e3b98fe11094e8fdc59b74450943ba1e2d721a"
+    },
+    {
+      "symbol": "000062",
+      "announcement_id": "1225034927",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000062_1225034927.txt.gz",
+      "capture_sha256": "fb3091f280ce916c933ee183f0be81caca381e9e7b08bb941130125581f19c77",
+      "text_sha256": "8e92c739a1874e0664d8a70c97a30c3da5ff4ee2e5c9a40ad3e0e0268f73029c",
+      "source_record_sha256": "e795bb4be7c1d277ade595d5be7b5a859789f62f50a61f7321bb2a67dbd7735e"
+    },
+    {
+      "symbol": "000065",
+      "announcement_id": "1225061092",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\000065_1225061092.txt.gz",
+      "capture_sha256": "e6707472d2dbf19affca0875e48c7ef1f710414636e05e5bc42d016d3ea8c8c3",
+      "text_sha256": "572d93ea8442c48871d75779f29b0ff265de1e98cbc5b89b56a0dabf13710c1b",
+      "source_record_sha256": "8ff5d48e739770484299f0f9dc61b3fda3ead20ae9f4ab2ba32fa8b837c32dd0"
+    },
+    {
+      "symbol": "000070",
+      "announcement_id": "1225139223",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000070_1225139223.txt.gz",
+      "capture_sha256": "69257eb884409f2ac28ed2d714f4449d7537c65ce04428e86b618fa51f5d966a",
+      "text_sha256": "991748fcfae9f710ce01f3e91ffb87f49002250938d220fb6dfc5d256b750a77",
+      "source_record_sha256": "315aca1c0d1bebc367fe79a711671b572bf5133841e9f6d7c345177206e33794"
+    },
+    {
+      "symbol": "000089",
+      "announcement_id": "1225169129",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000089_1225169129.txt.gz",
+      "capture_sha256": "6511dfff6bc9b324eaffc08c4f6a8fc83fc959deadc8d5083cd81bf1d9e5ec20",
+      "text_sha256": "b3ec014faff48ba8bd833fad14da3df107869ae84cecd5b38a0bbde0e9df87b0",
+      "source_record_sha256": "9ad36c09a5b2a72ee20cb167022c7770ce0c66ff169ffff8d5bfbf3afa188eef"
+    },
+    {
+      "symbol": "000096",
+      "announcement_id": "1225219952",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_data_completion_20261006\\capital_chain_text\\000096_1225219952.txt.gz",
+      "capture_sha256": "735cd9392ca45d5934e4ef2271012da30dc28bf0945f47697e5acb7cc0a177a6",
+      "text_sha256": "3706cab529aeb960d0edd3d028a73a18ac68d827e0165196ca8232ba303db5d7",
+      "source_record_sha256": "b9443751ab57f8a9647f025672fa29dba57ce8b65269cea15e15ffae86c1d77b"
+    },
+    {
+      "symbol": "000151",
+      "announcement_id": "1225113085",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\000151_1225113085.txt.gz",
+      "capture_sha256": "cc72a526bb8398fc63e0f3d515a5bf13e257c419116e8ca055691413134fde29",
+      "text_sha256": "7a3730a00aeb1ac33427adb2637242824e81f45a6e937bc4faa99eee7061f2f3",
+      "source_record_sha256": "1fbaa0d04f62da602a0d5e5e7593e737474642345fb3260cb9dd48ad9f3ffe65"
+    },
+    {
+      "symbol": "000156",
+      "announcement_id": "1225023169",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_data_completion_20261006\\capital_chain_text\\000156_1225023169.txt.gz",
+      "capture_sha256": "8199acaa5012a23f4e6c404f78a5db1dd705e6e056dde23cf582d347e9b93b59",
+      "text_sha256": "59801b9d2730a3aa2a047ad941180f8502a66d0018c7e601eeef196c6940ff4c",
+      "source_record_sha256": "fc9e181277306616a9b634893192c1c446a3c4bf330b360d6f357d3040fc5f0a"
+    },
+    {
+      "symbol": "000157",
+      "announcement_id": "1225055609",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000157_1225055609.txt.gz",
+      "capture_sha256": "4d285d1f584e48c76302ddb5de7e596f69431a66c7922649a08a3a75831444c0",
+      "text_sha256": "a4ad23ca829af1ce9d770ac0c8d888b12aaaea290daf7677dd35a2d8bc28dc91",
+      "source_record_sha256": "55d0f043fca33f963b68cc1c50c7058baa4d85f5d01f96b6cb186a663612efe7"
+    },
+    {
+      "symbol": "000158",
+      "announcement_id": "1225077614",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000158_1225077614.txt.gz",
+      "capture_sha256": "d4e6fe1f0c7c479124f5dda49f33dd1830b6970f78886f45ad954760380dfbe2",
+      "text_sha256": "a2e2a98ada44d7943618e03d3e8d49bcae718688b4bafd994645fa7feb21da3c",
+      "source_record_sha256": "7ec21e7abfff69abbd27c7f85cd58760c4f31c6e420322acabb61c9325608ee0"
+    }
+  ],
+  "selection": "First20 code/ID in existing FY25 explicit annual sales-cash source-ready metadata, no values/labels selection. Prior source2973 is not current new-field coverage.",
+  "source_contract": "Same original consolidated annual cashflow table/current year/unit and exact3 labels; preserve negativeOCF, only explicit0 is0; prior-year amount and old AR/INV fields not required; all policy/version/availability uncertainty remains",
+  "bindings": {
+    "source_metadata": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_cash_confirmation_20261010\\cash_pairs.parquet",
+      "sha256": "e14726e4df28267fda93c8364f51525da29197cec529f2c94d10754ec841e880"
+    },
+    "parser": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\cash_investment.py",
+      "sha256": "24a1ce2af08a64c20c32901857f532951a2aa892ecc86ad6955c6c8a27765c67"
+    },
+    "tests": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\tests\\test_cash_investment.py",
+      "sha256": "3f88a3b2bc7eb69cb1b4a71faf2b77e1b4d15236084eb03fe89123e8e9c05421"
+    },
+    "runtime": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\cash_investment_source20\\run_source20.py",
+      "sha256": "9613795388f9e78ed305809e4f8520f9038135f9b217428a39ad027aac402648"
+    },
+    "shared_cash_reader": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\cash_collection.py",
+      "sha256": "81bb964eba03b4e0ff4244cb58c3b3fe54395114c7372c088946e484385c934e"
+    },
+    "statement_reader": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\financial_statements.py",
+      "sha256": "4ce12f040f3719e196801563fc524da1f52c49b45bdf948d2a7fdd2349f92f01"
+    },
+    "cold_history": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_bootstrap\\evidence.jsonl",
+      "sha256": "364c3103ffe2efbcfa4232f0a0b6cca1de665feeaec123fbee1e4c255fba22c4"
+    }
+  },
+  "output": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\cash_investment_source20\\source_receipt.json",
+  "native_catalog_names": [
+    "cash_flow_from_operating_activities",
+    "cash_paid_for_operation_activities",
+    "cash_paid_for_asset"
+  ],
+  "native_value_parity_and_production": false,
+  "historical_neighbors": "F210 operating cash margin, F21163day receivables improvement, CB01 netcash/refinance stock and annual sales-cash CQ01 remain closed; capital expenditure cash is distinct new input, no equivalent formula found in structured cold semantic fields or old batches",
+  "economic_formula_direction_window": null,
+  "new_contexts": 0,
+  "official_calls": 0,
+  "prices_or_return_labels_read": false
+}
