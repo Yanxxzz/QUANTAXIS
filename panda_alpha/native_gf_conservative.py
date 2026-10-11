@@ -15,7 +15,7 @@ from .native_gf_transfer import file_sha256, frozen_g_source, render_native_gf
 
 
 SOURCE_KEY = ["date", "symbol", "announcement_id", "report_date", "source_record_sha256"]
-MODES = {"GF", "F141_CONTROL"}
+MODES = {"GF", "F141_CONTROL", "g"}
 
 
 def intersect_and_rank_g(source, parent):
@@ -142,8 +142,12 @@ def render_source_conservative(source, markets, input_calendar, evaluation_windo
     code = _replace_once(code,
                          "observed_pairs = pd.MultiIndex.from_arrays([days, symbols], names=['date', 'symbol'])",
                          "observed_pairs = pd.MultiIndex.from_arrays([days, canonical_peers], names=['date', 'symbol'])")
+    # Keep the existing pair's rendered bytes/signatures unchanged. The new
+    # explicit control emits the actual G component, not cancellation of GF/F
+    # outputs, which could add floating noise to genuine financial ties.
+    component = ("component = signals[0]\n" if mode == "g" else
+                 "component = ((signals[0] + signals[1]) / 2.0 if self.MODE == 'GF' else -signals[1])\n")
     code = _replace_once(code,
                          "output[rows.index.to_numpy()] = ((signals[0] + signals[1]) / 2.0).to_numpy()",
-                         "component = ((signals[0] + signals[1]) / 2.0 if self.MODE == 'GF' else -signals[1])\n"
-                         "                output[rows.index.to_numpy()] = component.to_numpy()")
+                         component + "                output[rows.index.to_numpy()] = component.to_numpy()")
     return code

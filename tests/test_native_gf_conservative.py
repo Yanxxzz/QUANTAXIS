@@ -1,3 +1,5 @@
+import hashlib
+
 import numpy as np
 import pandas as pd
 import pytest
@@ -9,7 +11,7 @@ from test_native_gf_transfer import example, reference
 
 
 def generated(source, close, window, mode):
-    name = "GFConservative" if mode == "GF" else "FConservative"
+    name = "GFConservative" if mode == "GF" else "GConservative" if mode == "g" else "FConservative"
     code = render_source_conservative(source, {c: "sh" for c in source},
                                      close.index.strftime("%Y-%m-%d").tolist(),
                                      window, mode, name)
@@ -64,7 +66,7 @@ def test_control_does_not_escape_constant_G_or_F_variance_gate():
     close, source, window, _ = example()
     constant = {c: [[window["start"], window["end"], .5]] for c in source}
     price = close.rename_axis(index="date", columns="symbol").stack(dropna=False)
-    for mode in ["GF", "F141_CONTROL"]:
+    for mode in ["GF", "F141_CONTROL", "g"]:
         assert generated(constant, close, window, mode)().calculate({"close": price}).isna().all()
         cls = generated(source, close, window, mode)
         # Fixed financial variance is valid, but constant F cannot be used by
@@ -106,3 +108,52 @@ def test_render_rejects_unknown_mode_and_template_drift(monkeypatch):
                         "\n    def _source_code(self, symbol):\n")
     with pytest.raises(ValueError, match="template drifted"):
         generated(source, close, window, "GF")
+
+
+
+def test_g_mode_is_true_winsorized_G_on_exact_shared_support():
+    close, source, window, _ = example()
+    close.iloc[285, 0] = np.nan
+    price = close.rename_axis(index="date", columns="symbol").stack(dropna=False)
+    outputs = {mode: generated(source, close, window, mode)().calculate({"close": price})
+               for mode in ["GF", "F141_CONTROL", "g"]}
+    g = outputs["g"]
+    pd.testing.assert_index_equal(g.index, outputs["GF"].index)
+    np.testing.assert_array_equal(np.isfinite(g), np.isfinite(outputs["GF"]))
+    np.testing.assert_array_equal(np.isfinite(g), np.isfinite(outputs["F141_CONTROL"]))
+    for day in g.index.get_level_values("date").unique():
+        actual = g.xs(day).dropna()
+        values = pd.Series({c: source[c][0][2] for c in actual.index})
+        clipped = values.clip(*values.quantile([.01, .99]).tolist())
+        expected = (clipped - clipped.mean()) / clipped.std(ddof=0)
+        # True component output, not a cancellation-based reconstruction.
+        np.testing.assert_array_equal(actual.to_numpy(), expected.to_numpy())
+    np.testing.assert_allclose(g, 2*outputs["GF"]+outputs["F141_CONTROL"], rtol=0, atol=2e-13, equal_nan=True)
+
+
+def test_true_g_ties_cannot_be_split_by_F_or_cancellation_noise():
+    close, source, window, _ = example()
+    tied = {c: [[window["start"], window["end"], (.25,.5,.75,1.)[i%4]]]
+            for i,c in enumerate(source)}
+    price = close.rename_axis(index="date", columns="symbol").stack(dropna=False)
+    g = generated(tied, close, window, "g")().calculate({"close": price})
+    gf = generated(tied, close, window, "GF")().calculate({"close": price})
+    f = generated(tied, close, window, "F141_CONTROL")().calculate({"close": price})
+    assert not g.dropna().empty
+    for day in g.index.get_level_values("date").unique():
+        actual = g.xs(day).dropna()
+        assert actual.nunique() == 4
+        with pytest.raises(ValueError, match="unique"):
+            pd.qcut(actual, 10, labels=False, duplicates="raise")
+    # Arithmetic reconstruction is allowed only as a tolerant math reference.
+    np.testing.assert_allclose(g, 2*gf+f, rtol=0, atol=2e-13, equal_nan=True)
+    assert gf.groupby(level="date").nunique().min() >= 10
+
+
+def test_g_and_pair_rendering_keep_original_GF_F_code_bytes():
+    close, source, window, _ = example()
+    expected = {"GF": "da07b43d901830d6cc1ebb6e9fd46206c1d76c34f871b80e12b4e1a6f5740a40", "F141_CONTROL": "4c348f38461c318bf3dc70c937af513e2a34424ab2d6d98ce18e852032a1ea0d"}
+    for mode,name in [("GF","GFConservative"),("F141_CONTROL","FConservative")]:
+        code = render_source_conservative(source,{c:"sh" for c in source},
+                                         close.index.strftime("%Y-%m-%d").tolist(),window,mode,name)
+        assert hashlib.sha256(code.encode()).hexdigest() == expected[mode]
