@@ -1,0 +1,386 @@
+{
+  "id": "WC03_CAPITAL_E_SINGLE_NATIVE_AND_FIXED_COST_SCOPE_20261011",
+  "status": "FROZEN_E_NATIVE_AND_ECONOMIC_SCOPE_AWAIT_ROOT_REGISTRATION",
+  "frozen_at_utc": "2026-10-11T09:05:27.106501+00:00",
+  "deadline_utc": "2026-10-11T16:00:00+00:00",
+  "candidate_draft": {
+    "candidate_id": "WC03_E_CAPITAL_EFFICIENCY_NATIVE_CONSERVATIVE_20261011",
+    "direction": 1,
+    "strategy_spec": {
+      "mechanism": "Fixed annual sales growth relative to fiscal capital expansion; change in consolidated sales/assets turnover. Standalone E, direction1.",
+      "E_raw": "log(operating_revenue_1/operating_revenue_0)-log(total_assets_1/total_assets_0)",
+      "operands": "Same bound annual report current and prior-comparative fullannual revenue, current fiscal closing and sameFY fiscal opening assets. Source contract preserves printed Jan1/previousDec31 opening role, currencies/units/display precision/available versions; no year or amount swap inference.",
+      "four_positive_finite": "All four amounts strictly positive finite; all original1736 reportidentities sourceclosed via original1708+exact28 document-field adapter. No zeroimputation/implicitadditionalexclusion.",
+      "source_cohort": "Exactly original native_source_conservative GF financial SOURCE and source qualification:161366 daily identities,32905formation identities,1736 unique financial report identities. No new issuer/source qualification or scope clear.",
+      "financial_identity_fields": [
+        "symbol",
+        "announcement_id",
+        "report_date",
+        "source_record_sha256"
+      ],
+      "source_closure_binding": {
+        "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\capital_efficiency_original_g_unit\\pending28_adapter_receipt.json",
+        "sha256": "94e085430ef474d177a62ce2f974e0b979605c89f995a74931c7a4752624c129"
+      },
+      "original1708_closure_binding": {
+        "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\capital_efficiency_original_g_unit\\source_closure.json",
+        "sha256": "670e464ee9404ec7915ca5ff9a8c4cee2dd391e83d0852d9559b58e45ed1cbca"
+      },
+      "annual_amounts_binding": {
+        "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_expanded_research_20261008\\parser_replay_v2\\bound_annual_amounts.parquet",
+        "sha256": "9301b262dca806d1e4b9ab0bf6812720b37e4e8817d381d4fbd7addc0d7f4a14"
+      },
+      "original_protocol_binding": {
+        "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_source_conservative_unit\\protocol.json",
+        "sha256": "eeefb4bc7e510fb72fd1bf2c4cbc4c98cd7b142dd29069a02b355c04db53e726"
+      },
+      "original_source_mask_binding": {
+        "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_source_conservative_unit\\source_qualification.parquet",
+        "sha256": "1374ff2cff2b4be2c0de4183523638ffd4ecf82139e1a037e27ec8b777aff120"
+      },
+      "helper_binding": {
+        "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\capital_efficiency.py",
+        "sha256": "ae90eb3f65ada1cad3785cec5422a4d5c3180ef331af9fd7ce2e1b73b1c83c44"
+      },
+      "renderer_binding": {
+        "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\native_capital.py",
+        "sha256": "7022a261eb9f341367fceb316ef86c097decf605b4b6eb044affb2e3a9c6eaa0"
+      },
+      "signal": "Per commondate global1/99 winsor E_raw then demean/populationSD; standaloneE only, no sector ranking/blend/weight/sign/window scan.",
+      "shared_support": "Original SOURCE G/nativeF finite and originalG/F winsor populationSD>1e-12 preserved. E_raw finite and E populationSD>1e-12; every original251decision must pass nojitter qcut10. Any mask/anchor-key mismatch blocks originalF reuse and requires rootdecision; no crop.",
+      "F141": "The unchanged original native fullreceivedpricepeer function model120/residual120/smooth20/epsilon1e-6/min30 otherpeers, no fill or native F lookup. E is not mixed with F.",
+      "input_window": {
+        "start": "2024-06-03",
+        "end": "2026-09-03"
+      },
+      "evaluation_window": {
+        "start": "2025-08-14",
+        "end": "2026-09-03"
+      },
+      "formation_dates": [
+        "2025-08-14",
+        "2025-08-21",
+        "2025-08-28",
+        "2025-09-04",
+        "2025-09-11",
+        "2025-09-18",
+        "2025-09-25",
+        "2025-10-10",
+        "2025-10-17",
+        "2025-10-24",
+        "2025-10-31",
+        "2025-11-07",
+        "2025-11-14",
+        "2025-11-21",
+        "2025-11-28",
+        "2025-12-05",
+        "2025-12-12",
+        "2025-12-19",
+        "2025-12-26",
+        "2026-01-06",
+        "2026-01-13",
+        "2026-01-20",
+        "2026-01-27",
+        "2026-02-03",
+        "2026-02-10",
+        "2026-02-25",
+        "2026-03-04",
+        "2026-03-11",
+        "2026-03-18",
+        "2026-03-25",
+        "2026-04-01",
+        "2026-04-09",
+        "2026-04-16",
+        "2026-04-23",
+        "2026-04-30",
+        "2026-05-12",
+        "2026-05-19",
+        "2026-05-26",
+        "2026-06-02",
+        "2026-06-09",
+        "2026-06-16",
+        "2026-06-24",
+        "2026-07-01",
+        "2026-07-08",
+        "2026-07-15",
+        "2026-07-22",
+        "2026-07-29",
+        "2026-08-05",
+        "2026-08-12",
+        "2026-08-19",
+        "2026-08-26"
+      ],
+      "holding_end": "2026-09-03",
+      "cycle": 5,
+      "groups": 10,
+      "wrapper_direction": 1,
+      "research_scope": "Historical mechanism test alreadyexposed prices/labels, no freshblindOOS/fullPIT/allAcoverage/admission claim.",
+      "amount_file_schema": "Original amount parquet code explicitly renamed to source symbol; other exact financialKEY and all four operand roles unchanged."
+    },
+    "formula": null,
+    "window": {
+      "start": "2024-06-03",
+      "end": "2026-09-03"
+    },
+    "cycle": 5,
+    "groups": 10,
+    "native_preflight_purpose": "source_qualified_projection_research",
+    "native_evaluation_contract": {
+      "input_window": {
+        "start": "2024-06-03",
+        "end": "2026-09-03"
+      },
+      "evaluation_window": {
+        "start": "2025-08-14",
+        "end": "2026-09-03"
+      },
+      "formation_dates": [
+        "2025-08-14",
+        "2025-08-21",
+        "2025-08-28",
+        "2025-09-04",
+        "2025-09-11",
+        "2025-09-18",
+        "2025-09-25",
+        "2025-10-10",
+        "2025-10-17",
+        "2025-10-24",
+        "2025-10-31",
+        "2025-11-07",
+        "2025-11-14",
+        "2025-11-21",
+        "2025-11-28",
+        "2025-12-05",
+        "2025-12-12",
+        "2025-12-19",
+        "2025-12-26",
+        "2026-01-06",
+        "2026-01-13",
+        "2026-01-20",
+        "2026-01-27",
+        "2026-02-03",
+        "2026-02-10",
+        "2026-02-25",
+        "2026-03-04",
+        "2026-03-11",
+        "2026-03-18",
+        "2026-03-25",
+        "2026-04-01",
+        "2026-04-09",
+        "2026-04-16",
+        "2026-04-23",
+        "2026-04-30",
+        "2026-05-12",
+        "2026-05-19",
+        "2026-05-26",
+        "2026-06-02",
+        "2026-06-09",
+        "2026-06-16",
+        "2026-06-24",
+        "2026-07-01",
+        "2026-07-08",
+        "2026-07-15",
+        "2026-07-22",
+        "2026-07-29",
+        "2026-08-05",
+        "2026-08-12",
+        "2026-08-19",
+        "2026-08-26"
+      ],
+      "holding_end": "2026-09-03",
+      "warmup": {
+        "minimum_prior_price_rows": 258
+      },
+      "input_calendar": {
+        "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_gf_adapter_unit\\input_calendar.json",
+        "sha256": "54588da59429095e5a5cf4f29272b220e0ec861eec19ac4b0fdaa9424dbc4c46"
+      },
+      "source_qualification": {
+        "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_source_conservative_unit\\source_qualification.parquet",
+        "sha256": "1374ff2cff2b4be2c0de4183523638ffd4ecf82139e1a037e27ec8b777aff120"
+      }
+    }
+  },
+  "evaluation_window": {
+    "start": "2025-08-14",
+    "end": "2026-09-03"
+  },
+  "registration_definition": {
+    "signature": "7dec006a79fa7d91b098a201be81a378c12581ab9fde5c6b7f0aa65cb64f1559",
+    "direction": 1,
+    "window": {
+      "start": "2025-08-14",
+      "end": "2026-09-03"
+    },
+    "cycle": 5,
+    "groups": 10
+  },
+  "registration_trial_key": "745682228c030f94cd339238c040cb995eef1be50ae6abf8cc4bb7e3cbac32d6",
+  "bindings": {
+    "original_protocol": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_source_conservative_unit\\protocol.json",
+      "sha256": "eeefb4bc7e510fb72fd1bf2c4cbc4c98cd7b142dd29069a02b355c04db53e726"
+    },
+    "original_GF_candidate": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_source_conservative_unit\\GF_candidate.json",
+      "sha256": "51a8fa57fb9c34d294d32776da2659e122454818b278e8c7be9e5a81314c6cfa"
+    },
+    "original_GF_code": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_source_conservative_unit\\WC03GFConservative.py",
+      "sha256": "c2ee44b69b2d56c3968eb00015623952e73aecf562ac4de166678db9f79c3248"
+    },
+    "original_GF_preflight": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_source_conservative_unit\\GF_native_preflight.json",
+      "sha256": "ffc1bdb8635b48b0304cf36bbc828fb2218196d90a6fe7b56ea4193b76418f53"
+    },
+    "original_source_mask": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_source_conservative_unit\\source_qualification.parquet",
+      "sha256": "1374ff2cff2b4be2c0de4183523638ffd4ecf82139e1a037e27ec8b777aff120"
+    },
+    "fixture_descriptor": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_gf_adapter_unit\\fixture_descriptor.json",
+      "sha256": "1ff4d793d0793177e4065ddf46c885c2e067d931df6d849ecca953bb8615e20d"
+    },
+    "original_formation_signals": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_source_conservative_unit\\cost_replay\\formation_signals.parquet",
+      "sha256": "9045f29e0968412a14121ed283006942e1593d837a1c108bb028fd16eca02023"
+    },
+    "original_F_candidate": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_source_conservative_unit\\F141_CONTROL_candidate.json",
+      "sha256": "c2f5726450d3a6899c29b7f856640d7b95a8bece9e768ec76cce4d7bbe90d114"
+    },
+    "original_F_preflight": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_source_conservative_unit\\F141_CONTROL_native_preflight.json",
+      "sha256": "ad64ba3616f662eb8b4a346b3f8ba5645bc2411beaf3bf1941c048ded6c4b015"
+    },
+    "annual_amounts": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_expanded_research_20261008\\parser_replay_v2\\bound_annual_amounts.parquet",
+      "sha256": "9301b262dca806d1e4b9ab0bf6812720b37e4e8817d381d4fbd7addc0d7f4a14"
+    },
+    "original1708_closure": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\capital_efficiency_original_g_unit\\source_closure.json",
+      "sha256": "670e464ee9404ec7915ca5ff9a8c4cee2dd391e83d0852d9559b58e45ed1cbca"
+    },
+    "pending28_manifest": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\capital_efficiency_original_g_unit\\pending28_exclusion_reference.json",
+      "sha256": "f78ec7ca09dd947d6118618c0e2eab02dcd9b066c7590037692257ea3b1dcd8c"
+    },
+    "final28_closure": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\capital_efficiency_original_g_unit\\pending28_adapter_receipt.json",
+      "sha256": "94e085430ef474d177a62ce2f974e0b979605c89f995a74931c7a4752624c129"
+    },
+    "capital_helper": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\capital_efficiency.py",
+      "sha256": "ae90eb3f65ada1cad3785cec5422a4d5c3180ef331af9fd7ce2e1b73b1c83c44"
+    },
+    "capital_tests": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\tests\\test_capital_efficiency.py",
+      "sha256": "b4cc27f50576b89dca935219deb224f78f945c2c175a5d62c443cdddc2da7464"
+    },
+    "capital_renderer": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\native_capital.py",
+      "sha256": "7022a261eb9f341367fceb316ef86c097decf605b4b6eb044affb2e3a9c6eaa0"
+    },
+    "renderer_tests": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\test_native_capital.py",
+      "sha256": "e3ce74cc2d7b4db79041d9c0db3f87442829e4ebb9757b20461b1df543ae4802"
+    },
+    "prepare_driver": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\prepare_capital.py",
+      "sha256": "ed8acdf3042b6127709c247046b41e28f0a9a115b08e117f1de5aad9d6a04b67"
+    },
+    "native_reader": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\native_gf_transfer.py",
+      "sha256": "35f706d55bebb8f45e3cb382f6bc84bb9e17863b3f9ecbc330dd865e59cf95a3"
+    },
+    "native_conservative": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\native_gf_conservative.py",
+      "sha256": "33e5c2a66882206989863806e0d46f0b3238bfbf92835973cdc00731b952b297"
+    },
+    "native_preflight": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\native_preflight.py",
+      "sha256": "4e26e95ab5db291328a1b19168e2decc834d0c85c15ad6304d519317f37cc1fb"
+    }
+  },
+  "source_metadata": {
+    "measure": "Annual consolidated assetturnover change",
+    "formula": "log(operating_revenue_1/operating_revenue_0)-log(total_assets_1/total_assets_0)",
+    "source_currency_and_unit_verification": "Sourceclosure binds both legpairs to original printed amounts; independent pair unit scaling cancels mathematically.",
+    "current_and_comparative_income_from_same_annual_report": true,
+    "fiscal_opening_role_preserved": true,
+    "sourceclosed_reportidentities": 1736,
+    "same_original_financial_daily_rows": 161366,
+    "same_original_anchor_rows": 32905,
+    "original_strict_G_native_F_qualification_inherited": true,
+    "source_scope_expansion": false,
+    "field_roles": {
+      "revenue_current": "operating_revenue_1",
+      "revenue_comparative": "operating_revenue_0",
+      "assets_closing": "total_assets_1",
+      "assets_opening": "total_assets_0"
+    },
+    "fresh_blind_OOS": false,
+    "full_PIT_certified": false
+  },
+  "synthetic_validation": "32 purecapital tests passed;6 nativecapital synthetic tests passed once;1 added original code-to-symbol amount-schema regression passed,6 deselected. No real source/price/E/F/returns/labels consumed.",
+  "actual_preflight_command": "& 'D:\\Anaconda\\envs\\open-webui\\python.exe' -X utf8 -B research_runs/night_research_20261011/native_capital_efficiency_unit/prepare_capital.py --protocol-sha <THIS_FINAL_SHA> --execute-after-registration",
+  "official_execution_contract": {
+    "new_jobs": 1,
+    "candidate": "E",
+    "scope": "GF_NIGHT_GIFT60_20261011",
+    "gift_scope_limit": 60,
+    "current_gift_spent_reference": 8,
+    "remaining_scope_reference": 52,
+    "billing_mode": "gift_only",
+    "recharge_limit": 0,
+    "funding_before_dispatch": "Fresh balance/expiry/reservation verified by native platform dispatch; no automatic dispatch until actualpreflightpassed+rootexactofficialplanfreeze.",
+    "original_F_official_reused_only_if_exact_support": true,
+    "no_new_F_context_or_fee_if_matched": true,
+    "no_retry_with_new_run_on_ownership_or_billing_failure": true,
+    "dispatch_API": "panda_alpha.platform.dispatch(candidate_with_nativecode, candidate.window, frozen_config,ledger,client,category=exploration,before_dispatch=rootregistrationhook,native_fixture_reader=read_mongo_gf_fixture)",
+    "resume_API": "resume same owned fingerprint/run only",
+    "runner_owner": "night_budget_audit"
+  },
+  "fixed_economic_scope": {
+    "economic_contexts": 1,
+    "new_factor_windows": 1,
+    "new_window": {
+      "formation_first": "2025-08-14",
+      "formation_last": "2026-08-26",
+      "holding_start": "2025-08-15",
+      "holding_end": "2026-09-03"
+    },
+    "anchors": 51,
+    "holding_days": 256,
+    "cycle": 5,
+    "groups": 10,
+    "held_groups": {
+      "E": "10"
+    },
+    "costs": [
+      0.003,
+      0.005
+    ],
+    "primary_cost": 0.005,
+    "new_cost_paths": 2,
+    "portfolio": "Original study.replay_portfolio equal-target-weight next-open5D source-limitedHFQproxy engine, no returnblending/no new position weighting. Same initialcapital/fees/blockedorder/legalpriorclose/terminalaccounting/risk semantics.",
+    "controls": "Reuse completed originalF141_CONTROL and COMMON_MARKET cost30/50 summary+dailyledger+formationcache onlyafter shared_finite_mask_exact/source_qualification_exact/exact32905orderedkeys and completewindow/fees/source bindings. GF/MID/Product remain contextual historical controls.",
+    "new_F_control_if_mask_different": "NO automatic control build/replay. Root separately freezes/registers new same-sourceF/window if scientificallyneeded; no oldF samecohort claim.",
+    "complete_results_only": "No partial-profit tuning. Resume only missingownedE path after processstopped; do not rerun completed paths or controls.",
+    "diagnostics": "Full256day metrics/accounting/fees/terminalpositions/industry-size-concentration/month-fold stability, E-vsF costcomparisons, descriptive ERankIC/partial-E|F on alreadyknown labels onlyafter economicfreeze. No sectorneutralisation or model/weight scan.",
+    "falsifier": "If standaloneE fails to show directional sorting or usable costed returns relative to same-sourceF/market, retire this unchanged standalone definition; winsor/groupability engineering alone is not alpha. A pass retains exploratory evidence, not pool eligibility.",
+    "execution_owner": "night_income_census",
+    "price_or_label_open_before_root_freeze": false
+  },
+  "expected_prepare_outputs": [
+    "preparation_review.json",
+    "WC03CapitalEfficiency.py",
+    "E_native_preflight.json",
+    "E_candidate.json",
+    "E_formation_signals.parquet"
+  ],
+  "source_inputs_copied": false,
+  "price_snapshots_copied": false,
+  "registry_state_writes": false,
+  "actual_E_values_or_economic_results_generated": false
+}

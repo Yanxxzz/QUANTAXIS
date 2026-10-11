@@ -1,0 +1,162 @@
+{
+  "id": "CAPITAL_E_FIXED51_SAME_SOURCE_INFORMATION_DIAGNOSTIC_20261011",
+  "status": "FROZEN_AWAIT_ROOT_EXISTING_E_ANALYSIS_REGISTRATION",
+  "frozen_at_utc": "2026-10-11T09:28:01.547923+00:00",
+  "deadline_utc": "2026-10-11T16:00:00+00:00",
+  "driver_sha256": "4c50a1fb1c97794dabb89c2fa1ed63e145d7a8961524f500328fc153e94278fb",
+  "registry_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\research_trials.sqlite3",
+  "registered_E_trial_key": "745682228c030f94cd339238c040cb995eef1be50ae6abf8cc4bb7e3cbac32d6",
+  "registration_event_prefix": "capital-e-information-diagnostic-freeze:",
+  "bindings": {
+    "E_signal_cache": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\E_formation_signals.parquet",
+      "sha256": "af9cc19f24500ab04b61d9563f0a4e8bc0a279c5e6c716e2a549098140a755c2"
+    },
+    "E_economic_protocol": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\protocol.json",
+      "sha256": "067264130c8467dcb8a4c53ecf75dea59098d2327fdbaf97636a2fd674663505"
+    },
+    "E_actual_preparation": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\preparation_review.json",
+      "sha256": "f77d70d71d52a57acf9111994bcef7c2b8a8c6c9c8945bb3560d80f84ff90d66"
+    },
+    "E_native_preflight": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\E_native_preflight.json",
+      "sha256": "0e60e89181746dedc887384fed8821fb0c0202e7f3ab77a4ccdbc600eb260534"
+    },
+    "F_signal_cache": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_source_conservative_unit\\cost_replay\\formation_signals.parquet",
+      "sha256": "9045f29e0968412a14121ed283006942e1593d837a1c108bb028fd16eca02023"
+    },
+    "input_calendar": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_gf_adapter_unit\\input_calendar.json",
+      "sha256": "54588da59429095e5a5cf4f29272b220e0ec861eec19ac4b0fdaa9424dbc4c46"
+    },
+    "quotes": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_repaired_research_20261009\\execution_repair_v2\\quotes.parquet",
+      "sha256": "5fee01d9763697421a36fb21d9b2927633b4297aa100d7bbce1f697798ab14dc"
+    },
+    "old_information_driver": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_signal_information_unit\\run_decomposition_repair_v1.py",
+      "sha256": "ec129dd26145a000d525b54c58bb8d5de6fa25e84a637aa828f8a7fc5ff3f29e"
+    },
+    "old_information_protocol": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_signal_information_unit\\protocol_repair_v1.json",
+      "sha256": "662a315e7586e7b3f29ffdb86f9a346ed91a7db719249a9fa7df574deb1372c3"
+    },
+    "original_source_protocol": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_source_conservative_unit\\protocol.json",
+      "sha256": "eeefb4bc7e510fb72fd1bf2c4cbc4c98cd7b142dd29069a02b355c04db53e726"
+    }
+  },
+  "formations": [
+    "2025-08-14",
+    "2025-08-21",
+    "2025-08-28",
+    "2025-09-04",
+    "2025-09-11",
+    "2025-09-18",
+    "2025-09-25",
+    "2025-10-10",
+    "2025-10-17",
+    "2025-10-24",
+    "2025-10-31",
+    "2025-11-07",
+    "2025-11-14",
+    "2025-11-21",
+    "2025-11-28",
+    "2025-12-05",
+    "2025-12-12",
+    "2025-12-19",
+    "2025-12-26",
+    "2026-01-06",
+    "2026-01-13",
+    "2026-01-20",
+    "2026-01-27",
+    "2026-02-03",
+    "2026-02-10",
+    "2026-02-25",
+    "2026-03-04",
+    "2026-03-11",
+    "2026-03-18",
+    "2026-03-25",
+    "2026-04-01",
+    "2026-04-09",
+    "2026-04-16",
+    "2026-04-23",
+    "2026-04-30",
+    "2026-05-12",
+    "2026-05-19",
+    "2026-05-26",
+    "2026-06-02",
+    "2026-06-09",
+    "2026-06-16",
+    "2026-06-24",
+    "2026-07-01",
+    "2026-07-08",
+    "2026-07-15",
+    "2026-07-22",
+    "2026-07-29",
+    "2026-08-05",
+    "2026-08-12",
+    "2026-08-19",
+    "2026-08-26"
+  ],
+  "source_count": 32905,
+  "periods": 51,
+  "directions": {
+    "E": 1,
+    "F141_CONTROL_raw": 0,
+    "aligned_F141": "negativeofsavedraw+ZF forinformation only; heldselectionremainsrawgroup1"
+  },
+  "label_contract": {
+    "measure": "fixedfiveheld adjusted-close cumulative return",
+    "definition": "close(formation+t5_expected_session)/close(formation)-1",
+    "denominator_dates": "formationclose + next5expected sessions on completefrozeninputcalendar; each actualclose must befinitepositive, with same perissuer adjustment basis",
+    "missing": "Anyformation ornext5held session missing/nonpositive leaves labelpending; noffill/zero/proxyexit/substituteprice",
+    "not_used": "No tradepath,openentry/exit orfee/cost claim; target differs from originalnext-openwealth and officialIC labelmapping is unverified",
+    "no_future_availability_selection": true
+  },
+  "original_forward_return_cache_schema_inspected_only_not_consumed": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_repaired_research_20261009\\execution_repair_v2\\fixed_forward_quote_labels.parquet",
+    "decision": "Genericforward_return transactionlabel does not prove samecloseformation→t5 contract; do not read or relabel it. Readboundexistingquotes once intoRAM to reconstruct identicaloldclose labels, no newcache."
+  },
+  "score_and_target_contract": {
+    "E": "Exactsaved nativeE1/99-clippedZ output, no secondclip or rank/weight transform",
+    "F": "ExactsavedF141_CONTROL raw+ZF cached on sameordered32905keys; negated fordirectionalignedinformation, no newfit or price-peer reduction",
+    "keys": "Ordered(date,symbol) support exactequal tooldFcache, allsignalsfinite; no join/crop/firstfinite trim",
+    "held_groups": "qcut10duplicatesdrop require10availablegroups; Egroup10, rawFcontrolgroup1. No jitter/forcedtopK/middlegroup/signedbin retune",
+    "freeze_before_price_read": [
+      "all51formation/source/signalkeys andfinite denominators",
+      "perdate alltargetmembers/tie/groupavailability + combinedmembershipSHA"
+    ],
+    "correlation": "E/F scorePearson andSpearman beforelabelmissingfilter; descriptive only",
+    "partial": "Reuseold rank-residual ordinaryleast-squares partialE-labelgivenrankF on sameobservedlabels, min30, nearconstantresidualNone; notcausalindependentalpha",
+    "IC_summary": "directionalignedPearsonIC andSpearmanRankIC perperiod, equalperiodmean/ddof1ICIRnotannualized, win>0 andwin>.02 bothpredefined; no newstatistics tuning",
+    "folds": "Inheritoldnp.array_split51→11/10/10/10/10 contiguousdescriptivepartitions, no newholdoutselection"
+  },
+  "output_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\information_diagnostic\\diagnostic.json",
+  "outputs": "Onecompact51period diagnostic with2arms/source-label/tie/topdenominators,IC&RankIC/IR/wins,scorecorrelations/partialmean,fiveinheritedfolds andmissingpricebasiscounts. No stocklevelsignals/prices/labels/holdingcopies.",
+  "limitations": [
+    "Alreadyexposed51historicalperiods; explanatory diagnostic ofregisteredE, notfreshOOS/admission ornewfactor",
+    "Fixedformationclose→next5calendarclosetarget differs fromnext-open5Dcostwealth andofficialworker labelmapping; do notcompareICasifidenticalmeasurement",
+    "Originalsource-limitedStockDBadjustedclose cache; actualquoteunitsvalidated, nofill/zero/substituteexit; missinglabelsretainedagainstfrozendenominators",
+    "PartialrankconditiononF is descriptiveassociation, notcausality/beta/industry/size neutrality orguaranteedindependentinformation",
+    "No statisticalpvalue orinferentialannualSharpe promotedfromthisdiagnostic; priorfamilyselection remainsmaterial",
+    "WholeA/PIT andproductionpriceparity unverified; exactsource-supportreuse only"
+  ],
+  "software_preparation_validation": {
+    "compiled": true,
+    "synthetic_summary_boundary_cases_passed": 5,
+    "actualE_values_or_quotes_labels_read": false,
+    "actualdiagnostic_executed": false
+  },
+  "new_contexts": 0,
+  "new_factor_definition": false,
+  "new_window_weight_sign_group_orindustryscan": false,
+  "official_calls": 0,
+  "network_downloads": 0,
+  "root_registry_state_masks_memory_written": false,
+  "formal_admission": false,
+  "storage": "Uniqueprotocol+driver/compactdiagnostic; existing caches referenced, no repeated price/source snapshots."
+}

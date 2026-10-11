@@ -1,0 +1,1231 @@
+{
+  "id": "CAPITAL_E_COMPLETE51_AND_FIXED_TWO_COST_PATH_REVIEW_20261011",
+  "status": "COMPLETE_FIXED_E_MECHANISM_REVIEW",
+  "completed_at_utc": "2026-10-11T09:33:37.573957+00:00",
+  "run_id": "6acb53f59e9d797cfb2d3770",
+  "bindings": {
+    "protocol": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\protocol.json",
+      "sha256": "067264130c8467dcb8a4c53ecf75dea59098d2327fdbaf97636a2fd674663505"
+    },
+    "review_script": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\review_official_result.py",
+      "sha256": "d3b5010295205e6006608326ec5e3e13d0fa13d0a30826119fce536d85349c9b"
+    },
+    "candidate": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\E_candidate.json",
+      "sha256": "ddd713d06739877d6864df2522e94f4d9ea88fff321de2b3e8f3d381981243d7"
+    },
+    "source": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\WC03CapitalEfficiency.py",
+      "sha256": "ad109ed0e61200532fb3146dd65508409ee52cde04e072c132da6f6c1c4af66e"
+    },
+    "complete_official_results": {
+      "E": {
+        "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\official_results\\6acb53f59e9d797cfb2d3770.json",
+        "sha256": "5fcf1c52f347aca322019089bf7f6082f2292e3b962739f0cb9adbc9ad856c2d"
+      },
+      "legacy_GF": {
+        "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_source_conservative_unit\\official_results\\6acaa3e9cd820fa2a40a9bc7.json",
+        "sha256": "319cc8a1816a135043e8bba6ea3b3f263a296c61ab07e8af1a7720bc9afb470b"
+      },
+      "F141_direction0": {
+        "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_source_conservative_unit\\official_results\\6acaa45acd820fa2a40a9bca.json",
+        "sha256": "62f181e69dbdf2b61a94370fff1d17a53fbc021362b3a88931d8d567ef1a3b03"
+      }
+    },
+    "cost_summary": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\cost_replay\\wealth_summary.json",
+      "sha256": "df356816a6afd5bcd953bc0c681683fa171139917531ff02a96b5216c12421ae"
+    },
+    "cost_ledger": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\cost_replay\\E_daily_net_ledger.parquet",
+      "sha256": "44fe647a1122f479a8fbae05511c8f768c79559b9fac73f2b344353bb10fda9f"
+    },
+    "cost_protocol": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\cost_replay\\protocol.json",
+      "sha256": "c1b7feb983941749f2ca0b17c8b5f4978ada310e21add3646621022218312951"
+    },
+    "original_cost_summary": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_source_conservative_unit\\cost_replay\\wealth_summary.json",
+      "sha256": "7709f8ee3e271d0db2dfb344faebe2c8c6c7363de77f0098b5864aef8af50957"
+    },
+    "original_cost_ledger": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_source_conservative_unit\\cost_replay\\daily_net_ledger.parquet",
+      "sha256": "5b84238f9023d5096153ff6ce8e8751f977b89c1cc112481eda062190fd6c2e1"
+    }
+  },
+  "official_additive": {
+    "periods": 51,
+    "formation_first": "2025-08-14",
+    "formation_last": "2026-08-26",
+    "same51dates": true,
+    "benchmark_max_cross_run_difference": 3.725290298461914e-08,
+    "benchmark_final_additive": 0.13069812953472137,
+    "contexts": {
+      "E": {
+        "direction": 1,
+        "held_chart_group": "组10",
+        "published_IC": {
+          "IC_mean": "0.0114",
+          "Rank_IC": "0.0132",
+          "IC_std": "0.0746",
+          "IC_IR": "0.1530",
+          "IR": "0.2877",
+          "P(IC<-0.02)": "35.29%",
+          "P(IC>0.02)": "45.10%",
+          "t统计量": "1.0927",
+          "p-value": "0.2798",
+          "单调性": "0.73"
+        },
+        "published_held_headline": {
+          "return_ratio": "26.11%",
+          "annualized_ratio": "25.80%",
+          "sharpe_ratio": "0.8626",
+          "maximum_drawdown": "26.25%"
+        },
+        "held_table": {
+          "group": "分组10",
+          "annualizedReturn": "25.80%",
+          "excessAnnualized": "12.89%",
+          "maxDrawdown": "26.25%",
+          "excessMaxDrawdown": "10.10%",
+          "annualizedVolatility": "27.02%",
+          "excessAnnualizedVolatility": "12.27%",
+          "turnoverRate": "6.06%",
+          "monthlyWinRate": "69.23%",
+          "excessMonthlyWinRate": "53.85%",
+          "trackingError": "0.0176",
+          "sharpeRatio": "0.8626",
+          "informationRatio": "1.0503"
+        },
+        "direction_aligned_IC_mean": 0.011419175980053667,
+        "direction_aligned_RankIC_mean": 0.013212151592863087,
+        "held_final_additive_return": 0.2611214220523834,
+        "held_final_additive_excess": 0.13042329251766205
+      },
+      "legacy_GF": {
+        "direction": 1,
+        "held_chart_group": "组10",
+        "published_IC": {
+          "IC_mean": "0.0234",
+          "Rank_IC": "0.0323",
+          "IC_std": "0.0709",
+          "IC_IR": "0.3302",
+          "IR": "0.5704",
+          "P(IC<-0.02)": "25.49%",
+          "P(IC>0.02)": "56.86%",
+          "t统计量": "2.3580",
+          "p-value": "0.0223",
+          "单调性": "0.78"
+        },
+        "published_held_headline": {
+          "return_ratio": "29.78%",
+          "annualized_ratio": "29.43%",
+          "sharpe_ratio": "1.4631",
+          "maximum_drawdown": "18.30%"
+        },
+        "held_table": {
+          "group": "分组10",
+          "annualizedReturn": "29.43%",
+          "excessAnnualized": "16.51%",
+          "maxDrawdown": "18.30%",
+          "excessMaxDrawdown": "2.91%",
+          "annualizedVolatility": "18.40%",
+          "excessAnnualizedVolatility": "5.93%",
+          "turnoverRate": "12.07%",
+          "monthlyWinRate": "69.23%",
+          "excessMonthlyWinRate": "84.62%",
+          "trackingError": "0.0091",
+          "sharpeRatio": "1.4631",
+          "informationRatio": "2.7858"
+        },
+        "direction_aligned_IC_mean": 0.02340396271809004,
+        "direction_aligned_RankIC_mean": 0.03232085230290454,
+        "held_final_additive_return": 0.29778212308883667,
+        "held_final_additive_excess": 0.1670840084552765
+      },
+      "F141_direction0": {
+        "direction": 0,
+        "held_chart_group": "组1",
+        "published_IC": {
+          "IC_mean": "-0.0220",
+          "Rank_IC": "-0.0401",
+          "IC_std": "0.0938",
+          "IC_IR": "-0.2350",
+          "IR": "-0.5099",
+          "P(IC<-0.02)": "50.98%",
+          "P(IC>0.02)": "29.41%",
+          "t统计量": "-1.6791",
+          "p-value": "0.0994",
+          "单调性": "0.62"
+        },
+        "published_held_headline": {
+          "return_ratio": "18.63%",
+          "annualized_ratio": "18.41%",
+          "sharpe_ratio": "0.7974",
+          "maximum_drawdown": "22.58%"
+        },
+        "held_table": {
+          "group": "分组1",
+          "annualizedReturn": "18.41%",
+          "excessAnnualized": "5.50%",
+          "maxDrawdown": "22.58%",
+          "excessMaxDrawdown": "11.72%",
+          "annualizedVolatility": "19.96%",
+          "excessAnnualizedVolatility": "9.97%",
+          "turnoverRate": "11.54%",
+          "monthlyWinRate": "69.23%",
+          "excessMonthlyWinRate": "61.54%",
+          "trackingError": "0.0142",
+          "sharpeRatio": "0.7974",
+          "informationRatio": "0.5514"
+        },
+        "direction_aligned_IC_mean": 0.022061469387688607,
+        "direction_aligned_RankIC_mean": 0.04022484772996341,
+        "held_final_additive_return": 0.1863238364458084,
+        "held_final_additive_excess": 0.05562569200992584
+      }
+    },
+    "five_descriptive_folds_inherited": [
+      {
+        "fold": 1,
+        "n": 11,
+        "first": "2025-08-14",
+        "last": "2025-10-31",
+        "benchmark_additive_return": 0.0736343078315258,
+        "contexts": {
+          "E": {
+            "additive_return": 0.11506573855876923,
+            "additive_excess": 0.04143143072724342,
+            "direction_aligned_RankIC_mean": 0.01569183112945347
+          },
+          "legacy_GF": {
+            "additive_return": 0.12425748258829117,
+            "additive_excess": 0.050623174756765366,
+            "direction_aligned_RankIC_mean": 0.057085252723670314
+          },
+          "F141_direction0": {
+            "additive_return": 0.05699469521641731,
+            "additive_excess": -0.01663961261510849,
+            "direction_aligned_RankIC_mean": 0.05258655211810364
+          }
+        }
+      },
+      {
+        "fold": 2,
+        "n": 10,
+        "first": "2025-11-07",
+        "last": "2026-01-13",
+        "benchmark_additive_return": 0.07772326841950417,
+        "contexts": {
+          "E": {
+            "additive_return": 0.09684647619724274,
+            "additive_excess": 0.01912320777773857,
+            "direction_aligned_RankIC_mean": 0.04278832042004532
+          },
+          "legacy_GF": {
+            "additive_return": 0.11766528338193893,
+            "additive_excess": 0.03994201496243477,
+            "direction_aligned_RankIC_mean": 0.027733564011324964
+          },
+          "F141_direction0": {
+            "additive_return": 0.1263558827340603,
+            "additive_excess": 0.04863261431455612,
+            "direction_aligned_RankIC_mean": 0.04224704169428573
+          }
+        }
+      },
+      {
+        "fold": 3,
+        "n": 10,
+        "first": "2026-01-20",
+        "last": "2026-04-01",
+        "benchmark_additive_return": -0.002102792263031006,
+        "contexts": {
+          "E": {
+            "additive_return": 0.0002681612968444824,
+            "additive_excess": 0.0023709535598754883,
+            "direction_aligned_RankIC_mean": -0.014556719459449358
+          },
+          "legacy_GF": {
+            "additive_return": 0.040154218673706055,
+            "additive_excess": 0.04225701093673706,
+            "direction_aligned_RankIC_mean": 0.006580737517650967
+          },
+          "F141_direction0": {
+            "additive_return": -0.01987244188785553,
+            "additive_excess": -0.017769649624824524,
+            "direction_aligned_RankIC_mean": 0.03658904925191845
+          }
+        }
+      },
+      {
+        "fold": 4,
+        "n": 10,
+        "first": "2026-04-09",
+        "last": "2026-06-16",
+        "benchmark_additive_return": -0.009144172072410583,
+        "contexts": {
+          "E": {
+            "additive_return": 0.10635340213775635,
+            "additive_excess": 0.11549757421016693,
+            "direction_aligned_RankIC_mean": 0.045070194472774674
+          },
+          "legacy_GF": {
+            "additive_return": -0.03394228219985962,
+            "additive_excess": -0.024798110127449036,
+            "direction_aligned_RankIC_mean": 0.03329806018383319
+          },
+          "F141_direction0": {
+            "additive_return": -0.05902370810508728,
+            "additive_excess": -0.0498795360326767,
+            "direction_aligned_RankIC_mean": 0.01048294334357912
+          }
+        }
+      },
+      {
+        "fold": 5,
+        "n": 10,
+        "first": "2026-06-24",
+        "last": "2026-08-26",
+        "benchmark_additive_return": -0.009412482380867004,
+        "contexts": {
+          "E": {
+            "additive_return": -0.05741235613822937,
+            "additive_excess": -0.047999873757362366,
+            "direction_aligned_RankIC_mean": -0.023180836552167697
+          },
+          "legacy_GF": {
+            "additive_return": 0.04964742064476013,
+            "additive_excess": 0.059059903025627136,
+            "direction_aligned_RankIC_mean": 0.03443020703596667
+          },
+          "F141_direction0": {
+            "additive_return": 0.08186940848827362,
+            "additive_excess": 0.09128189086914062,
+            "direction_aligned_RankIC_mean": 0.05798248180311609
+          }
+        }
+      }
+    ],
+    "units": "Official additive cumulative cycle return and its first differences; uncosted, not compounded transaction NAV"
+  },
+  "cost_daily_compounded": {
+    "primary_cost": 0.005,
+    "sensitivity_cost": 0.003,
+    "days": 256,
+    "anchors": 51,
+    "contexts": {
+      "E": {
+        "0.003": {
+          "metrics": {
+            "days": 256,
+            "compounded_return": 0.2425248829334261,
+            "cagr": 0.23831626583952525,
+            "sharpe": 0.9221082180423403,
+            "max_drawdown": 0.2430278334198247
+          },
+          "fees_initial_equity_units": 0.032743076510237494,
+          "maximum_industry_wealth_fraction": 0.3157528366845255,
+          "mean_one_side_turnover_proxy": 0.07955866522049046,
+          "mean_unknown_beta_wealth_fraction": 0.0048333767625951,
+          "top10_share_of_positive_contributions": 0.4596227097986235,
+          "terminal_open_position_count": 0,
+          "terminal_unliquidated_fraction": 0.0,
+          "terminal_liquidation_pending": false,
+          "accounting_max_error": 1.5352302762394743e-15,
+          "risk_metadata_status": "risk_metadata_pending",
+          "fixed_daily_cost_folds": [
+            {
+              "fold": 1,
+              "start": "2025-08-15",
+              "end": "2025-11-04",
+              "days": 52,
+              "starting_nav": 1.0,
+              "ending_nav": 1.1260588594265235,
+              "net_return": 0.1260588594265235,
+              "nav_change": 0.1260588594265235,
+              "price_pnl": 0.132868098624339,
+              "fees": 0.00680923919781581,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.132868098624339
+            },
+            {
+              "fold": 2,
+              "start": "2025-11-05",
+              "end": "2026-01-16",
+              "days": 51,
+              "starting_nav": 1.1260588594265235,
+              "ending_nav": 1.2055780300616716,
+              "net_return": 0.07061724169165151,
+              "nav_change": 0.07951917063514813,
+              "price_pnl": 0.08132800478694366,
+              "fees": 0.0018088341517955827,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.08132800478694366
+            },
+            {
+              "fold": 3,
+              "start": "2026-01-19",
+              "end": "2026-04-08",
+              "days": 51,
+              "starting_nav": 1.2055780300616716,
+              "ending_nav": 1.214470039117518,
+              "net_return": 0.00737572254480412,
+              "nav_change": 0.008892009055846417,
+              "price_pnl": 0.015858206775097597,
+              "fees": 0.006966197719251277,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.015858206775097597
+            },
+            {
+              "fold": 4,
+              "start": "2026-04-09",
+              "end": "2026-06-24",
+              "days": 51,
+              "starting_nav": 1.214470039117518,
+              "ending_nav": 1.3390040067202202,
+              "net_return": 0.10254181955216746,
+              "nav_change": 0.12453396760270219,
+              "price_pnl": 0.1350125581644224,
+              "fees": 0.010478590561721098,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.1350125581644224
+            },
+            {
+              "fold": 5,
+              "start": "2026-06-25",
+              "end": "2026-09-03",
+              "days": 51,
+              "starting_nav": 1.3390040067202202,
+              "ending_nav": 1.2425248829334234,
+              "net_return": -0.07205290148691523,
+              "nav_change": -0.0964791237867968,
+              "price_pnl": -0.08979890890714308,
+              "fees": 0.006680214879653732,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": -0.08979890890714308
+            }
+          ]
+        },
+        "0.005": {
+          "metrics": {
+            "days": 256,
+            "compounded_return": 0.22002096531278337,
+            "cagr": 0.21623586188839083,
+            "sharpe": 0.8562400727869216,
+            "max_drawdown": 0.24443222584293056
+          },
+          "fees_initial_equity_units": 0.053997603138054545,
+          "maximum_industry_wealth_fraction": 0.3157607804029147,
+          "mean_one_side_turnover_proxy": 0.07941372447242608,
+          "mean_unknown_beta_wealth_fraction": 0.0048352377175488685,
+          "top10_share_of_positive_contributions": 0.46501726619178446,
+          "terminal_open_position_count": 0,
+          "terminal_unliquidated_fraction": 0.0,
+          "terminal_liquidation_pending": false,
+          "accounting_max_error": 1.4675760606763788e-15,
+          "risk_metadata_status": "risk_metadata_pending",
+          "fixed_daily_cost_folds": [
+            {
+              "fold": 1,
+              "start": "2025-08-15",
+              "end": "2025-11-04",
+              "days": 52,
+              "starting_nav": 1.0,
+              "ending_nav": 1.1212095584170008,
+              "net_return": 0.12120955841700076,
+              "nav_change": 0.12120955841700076,
+              "price_pnl": 0.13251853448721068,
+              "fees": 0.01130897607021027,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.13251853448721068
+            },
+            {
+              "fold": 2,
+              "start": "2025-11-05",
+              "end": "2026-01-16",
+              "days": 51,
+              "starting_nav": 1.1212095584170008,
+              "ending_nav": 1.199111548183394,
+              "net_return": 0.06948031184855452,
+              "nav_change": 0.07790198976639329,
+              "price_pnl": 0.08089642520768453,
+              "fees": 0.002994435441291417,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.08089642520768453
+            },
+            {
+              "fold": 3,
+              "start": "2026-01-19",
+              "end": "2026-04-08",
+              "days": 51,
+              "starting_nav": 1.199111548183394,
+              "ending_nav": 1.2032741687870263,
+              "net_return": 0.0034714206613541965,
+              "nav_change": 0.004162620603632261,
+              "price_pnl": 0.015669883818887363,
+              "fees": 0.011507263215255342,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.015669883818887363
+            },
+            {
+              "fold": 4,
+              "start": "2026-04-09",
+              "end": "2026-06-24",
+              "days": 51,
+              "starting_nav": 1.2032741687870263,
+              "ending_nav": 1.3194847936557772,
+              "net_return": 0.09657867498801065,
+              "nav_change": 0.11621062486875089,
+              "price_pnl": 0.13344581925549137,
+              "fees": 0.017235194386741447,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.13344581925549137
+            },
+            {
+              "fold": 5,
+              "start": "2026-06-25",
+              "end": "2026-09-03",
+              "days": 51,
+              "starting_nav": 1.3194847936557772,
+              "ending_nav": 1.2200209653127845,
+              "net_return": -0.07538080682795689,
+              "nav_change": -0.09946382834299272,
+              "price_pnl": -0.08851209431843644,
+              "fees": 0.01095173402455607,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": -0.08851209431843644
+            }
+          ]
+        }
+      },
+      "legacy_GF": {
+        "0.003": {
+          "metrics": {
+            "days": 256,
+            "compounded_return": 0.33434796965041214,
+            "cagr": 0.3283477041042122,
+            "sharpe": 1.384252967559803,
+            "max_drawdown": 0.20649446233757762
+          },
+          "fees_initial_equity_units": 0.05427341227564722,
+          "maximum_industry_wealth_fraction": 0.27686023341202726,
+          "mean_one_side_turnover_proxy": 0.1337510004845506,
+          "mean_unknown_beta_wealth_fraction": 0.0006661162355523704,
+          "top10_share_of_positive_contributions": 0.4104813506809888,
+          "terminal_open_position_count": 1,
+          "terminal_unliquidated_fraction": 0.008479856474874868,
+          "terminal_liquidation_pending": true,
+          "accounting_max_error": 1.3114509478384662e-15,
+          "risk_metadata_status": "risk_metadata_pending",
+          "fixed_daily_cost_folds": [
+            {
+              "fold": 1,
+              "start": "2025-08-15",
+              "end": "2025-11-04",
+              "days": 52,
+              "starting_nav": 1.0,
+              "ending_nav": 1.1020727230874554,
+              "net_return": 0.10207272308745541,
+              "nav_change": 0.10207272308745541,
+              "price_pnl": 0.11277919526009886,
+              "fees": 0.010706472172644166,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.11277919526009886
+            },
+            {
+              "fold": 2,
+              "start": "2025-11-05",
+              "end": "2026-01-16",
+              "days": 51,
+              "starting_nav": 1.1020727230874554,
+              "ending_nav": 1.24914331499145,
+              "net_return": 0.13344908083014384,
+              "nav_change": 0.14707059190399452,
+              "price_pnl": 0.15220035751633226,
+              "fees": 0.005129765612337531,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.15220035751633226
+            },
+            {
+              "fold": 3,
+              "start": "2026-01-19",
+              "end": "2026-04-08",
+              "days": 51,
+              "starting_nav": 1.24914331499145,
+              "ending_nav": 1.3440416882928012,
+              "net_return": 0.07597076505348865,
+              "nav_change": 0.09489837330135131,
+              "price_pnl": 0.10856783956135355,
+              "fees": 0.013669466260003128,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.10856783956135355
+            },
+            {
+              "fold": 4,
+              "start": "2026-04-09",
+              "end": "2026-06-24",
+              "days": 51,
+              "starting_nav": 1.3440416882928012,
+              "ending_nav": 1.2855713807266969,
+              "net_return": -0.043503343739562994,
+              "nav_change": -0.058470307566104385,
+              "price_pnl": -0.04346926268254167,
+              "fees": 0.015001044883563129,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": -0.04346926268254167
+            },
+            {
+              "fold": 5,
+              "start": "2026-06-25",
+              "end": "2026-09-03",
+              "days": 51,
+              "starting_nav": 1.2855713807266969,
+              "ending_nav": 1.3343479696504101,
+              "net_return": 0.037941564081911405,
+              "nav_change": 0.04877658892371328,
+              "price_pnl": 0.05854325227081249,
+              "fees": 0.009766663347099275,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.05854325227081249
+            }
+          ]
+        },
+        "0.005": {
+          "metrics": {
+            "days": 256,
+            "compounded_return": 0.29599777304084585,
+            "cagr": 0.2907579653391408,
+            "sharpe": 1.25476234537318,
+            "max_drawdown": 0.20936912336349944
+          },
+          "fees_initial_equity_units": 0.08897256787656878,
+          "maximum_industry_wealth_fraction": 0.27674031041955516,
+          "mean_one_side_turnover_proxy": 0.1334991865084693,
+          "mean_unknown_beta_wealth_fraction": 0.0006658457467771914,
+          "top10_share_of_positive_contributions": 0.4195458419444218,
+          "terminal_open_position_count": 1,
+          "terminal_unliquidated_fraction": 0.00849994122226296,
+          "terminal_liquidation_pending": true,
+          "accounting_max_error": 1.3981871216373065e-15,
+          "risk_metadata_status": "risk_metadata_pending",
+          "fixed_daily_cost_folds": [
+            {
+              "fold": 1,
+              "start": "2025-08-15",
+              "end": "2025-11-04",
+              "days": 52,
+              "starting_nav": 1.0,
+              "ending_nav": 1.094516811169964,
+              "net_return": 0.09451681116996391,
+              "nav_change": 0.09451681116996391,
+              "price_pnl": 0.11227312820826522,
+              "fees": 0.017756317038301744,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.11227312820826522
+            },
+            {
+              "fold": 2,
+              "start": "2025-11-05",
+              "end": "2026-01-16",
+              "days": 51,
+              "starting_nav": 1.094516811169964,
+              "ending_nav": 1.2368779264972907,
+              "net_return": 0.1300675456735585,
+              "nav_change": 0.14236111532732676,
+              "price_pnl": 0.15082776922498703,
+              "fees": 0.008466653897660232,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.15082776922498703
+            },
+            {
+              "fold": 3,
+              "start": "2026-01-19",
+              "end": "2026-04-08",
+              "days": 51,
+              "starting_nav": 1.2368779264972907,
+              "ending_nav": 1.3216238863105625,
+              "net_return": 0.06851602571101223,
+              "nav_change": 0.08474595981327182,
+              "price_pnl": 0.10719407322325794,
+              "fees": 0.02244811340998721,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.10719407322325794
+            },
+            {
+              "fold": 4,
+              "start": "2026-04-09",
+              "end": "2026-06-24",
+              "days": 51,
+              "starting_nav": 1.3216238863105625,
+              "ending_nav": 1.2549599415169175,
+              "net_return": -0.050440935189014824,
+              "nav_change": -0.06666394479364501,
+              "price_pnl": -0.04220118504563364,
+              "fees": 0.024462759748012704,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": -0.04220118504563364
+            },
+            {
+              "fold": 5,
+              "start": "2026-06-25",
+              "end": "2026-09-03",
+              "days": 51,
+              "starting_nav": 1.2549599415169175,
+              "ending_nav": 1.2959977730408483,
+              "net_return": 0.032700511120957954,
+              "nav_change": 0.04103783152393081,
+              "price_pnl": 0.056876555306538935,
+              "fees": 0.015838723782606867,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.056876555306538935
+            }
+          ]
+        }
+      },
+      "F141_direction0": {
+        "0.003": {
+          "metrics": {
+            "days": 256,
+            "compounded_return": 0.2005182198581108,
+            "cagr": 0.19709500529916868,
+            "sharpe": 0.876325617276897,
+            "max_drawdown": 0.235630383486362
+          },
+          "fees_initial_equity_units": 0.04618539170489314,
+          "maximum_industry_wealth_fraction": 0.23792568316050056,
+          "mean_one_side_turnover_proxy": 0.12274939596803268,
+          "mean_unknown_beta_wealth_fraction": 0.0006650171652960628,
+          "top10_share_of_positive_contributions": 0.3082435096873723,
+          "terminal_open_position_count": 0,
+          "terminal_unliquidated_fraction": 0.0,
+          "terminal_liquidation_pending": false,
+          "accounting_max_error": 1.3461454173580023e-15,
+          "risk_metadata_status": "risk_metadata_pending",
+          "fixed_daily_cost_folds": [
+            {
+              "fold": 1,
+              "start": "2025-08-15",
+              "end": "2025-11-04",
+              "days": 52,
+              "starting_nav": 1.0,
+              "ending_nav": 1.0756121163219703,
+              "net_return": 0.07561211632197029,
+              "nav_change": 0.07561211632197029,
+              "price_pnl": 0.08496398745418011,
+              "fees": 0.009351871132210001,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.08496398745418011
+            },
+            {
+              "fold": 2,
+              "start": "2025-11-05",
+              "end": "2026-01-16",
+              "days": 51,
+              "starting_nav": 1.0756121163219703,
+              "ending_nav": 1.1963324963946937,
+              "net_return": 0.11223412068425165,
+              "nav_change": 0.12072038007272345,
+              "price_pnl": 0.12692347616471558,
+              "fees": 0.006203096091992471,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.12692347616471558
+            },
+            {
+              "fold": 3,
+              "start": "2026-01-19",
+              "end": "2026-04-08",
+              "days": 51,
+              "starting_nav": 1.1963324963946937,
+              "ending_nav": 1.1778260585798075,
+              "net_return": -0.015469309636457984,
+              "nav_change": -0.018506437814886256,
+              "price_pnl": -0.008934107594111486,
+              "fees": 0.009572330220775124,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": -0.008934107594111486
+            },
+            {
+              "fold": 4,
+              "start": "2026-04-09",
+              "end": "2026-06-24",
+              "days": 51,
+              "starting_nav": 1.1778260585798075,
+              "ending_nav": 1.1301642834776426,
+              "net_return": -0.04046588607458235,
+              "nav_change": -0.04766177510216485,
+              "price_pnl": -0.035459544088642755,
+              "fees": 0.01220223101352197,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": -0.035459544088642755
+            },
+            {
+              "fold": 5,
+              "start": "2026-06-25",
+              "end": "2026-09-03",
+              "days": 51,
+              "starting_nav": 1.1301642834776426,
+              "ending_nav": 1.2005182198581132,
+              "net_return": 0.06225107040543132,
+              "nav_change": 0.0703539363804706,
+              "price_pnl": 0.07920979962686507,
+              "fees": 0.008855863246393576,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.07920979962686507
+            }
+          ]
+        },
+        "0.005": {
+          "metrics": {
+            "days": 256,
+            "compounded_return": 0.16848636054369615,
+            "cagr": 0.16564693980149992,
+            "sharpe": 0.7643438208327835,
+            "max_drawdown": 0.2448276796090043
+          },
+          "fees_initial_equity_units": 0.07581825516564704,
+          "maximum_industry_wealth_fraction": 0.2378414759207094,
+          "mean_one_side_turnover_proxy": 0.12251185039154426,
+          "mean_unknown_beta_wealth_fraction": 0.0006652589939119027,
+          "top10_share_of_positive_contributions": 0.316166476693668,
+          "terminal_open_position_count": 0,
+          "terminal_unliquidated_fraction": 0.0,
+          "terminal_liquidation_pending": false,
+          "accounting_max_error": 1.547373340571312e-15,
+          "risk_metadata_status": "risk_metadata_pending",
+          "fixed_daily_cost_folds": [
+            {
+              "fold": 1,
+              "start": "2025-08-15",
+              "end": "2025-11-04",
+              "days": 52,
+              "starting_nav": 1.0,
+              "ending_nav": 1.0690660667533085,
+              "net_return": 0.06906606675330851,
+              "nav_change": 0.06906606675330851,
+              "price_pnl": 0.08457855298398348,
+              "fees": 0.015512486230675483,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.08457855298398348
+            },
+            {
+              "fold": 2,
+              "start": "2025-11-05",
+              "end": "2026-01-16",
+              "days": 51,
+              "starting_nav": 1.0690660667533085,
+              "ending_nav": 1.184567214591625,
+              "net_return": 0.10803929844026094,
+              "nav_change": 0.11550114783831655,
+              "price_pnl": 0.1257380794038333,
+              "fees": 0.010236931565516567,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.1257380794038333
+            },
+            {
+              "fold": 3,
+              "start": "2026-01-19",
+              "end": "2026-04-08",
+              "days": 51,
+              "starting_nav": 1.184567214591625,
+              "ending_nav": 1.1601721980931448,
+              "net_return": -0.02059403316078645,
+              "nav_change": -0.024395016498480304,
+              "price_pnl": -0.008659937335071949,
+              "fees": 0.015735079163408397,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": -0.008659937335071949
+            },
+            {
+              "fold": 4,
+              "start": "2026-04-09",
+              "end": "2026-06-24",
+              "days": 51,
+              "starting_nav": 1.1601721980931448,
+              "ending_nav": 1.1056941663999016,
+              "net_return": -0.046956849839000725,
+              "nav_change": -0.05447803169324317,
+              "price_pnl": -0.03454014289302494,
+              "fees": 0.019937888800220228,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": -0.03454014289302494
+            },
+            {
+              "fold": 5,
+              "start": "2026-06-25",
+              "end": "2026-09-03",
+              "days": 51,
+              "starting_nav": 1.1056941663999016,
+              "ending_nav": 1.1684863605436961,
+              "net_return": 0.05678983940762161,
+              "nav_change": 0.06279219414379456,
+              "price_pnl": 0.07718806354962153,
+              "fees": 0.01439586940582638,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.07718806354962153
+            }
+          ]
+        }
+      },
+      "COMMON_MARKET": {
+        "0.003": {
+          "metrics": {
+            "days": 256,
+            "compounded_return": 0.113822380747582,
+            "cagr": 0.11194790551523837,
+            "sharpe": 0.6094883939286414,
+            "max_drawdown": 0.2117899796597701
+          },
+          "fees_initial_equity_units": 0.025326484011897795,
+          "maximum_industry_wealth_fraction": 0.15090059622265986,
+          "mean_one_side_turnover_proxy": 0.06429387070963606,
+          "mean_unknown_beta_wealth_fraction": 0.0015285016359073422,
+          "top10_share_of_positive_contributions": 0.19050922678939605,
+          "terminal_open_position_count": 3,
+          "terminal_unliquidated_fraction": 0.0025057462332755726,
+          "terminal_liquidation_pending": true,
+          "accounting_max_error": 3.155462002801812e-15,
+          "risk_metadata_status": "risk_metadata_pending",
+          "fixed_daily_cost_folds": [
+            {
+              "fold": 1,
+              "start": "2025-08-15",
+              "end": "2025-11-04",
+              "days": 52,
+              "starting_nav": 1.0,
+              "ending_nav": 1.066256903222163,
+              "net_return": 0.06625690322216293,
+              "nav_change": 0.06625690322216293,
+              "price_pnl": 0.0715033418546303,
+              "fees": 0.005246438632467897,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.0715033418546303
+            },
+            {
+              "fold": 2,
+              "start": "2025-11-05",
+              "end": "2026-01-16",
+              "days": 51,
+              "starting_nav": 1.066256903222163,
+              "ending_nav": 1.1472445851014585,
+              "net_return": 0.07595513017037048,
+              "nav_change": 0.08098768187929561,
+              "price_pnl": 0.08259222237125735,
+              "fees": 0.001604540491962067,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.08259222237125735
+            },
+            {
+              "fold": 3,
+              "start": "2026-01-19",
+              "end": "2026-04-08",
+              "days": 51,
+              "starting_nav": 1.1472445851014585,
+              "ending_nav": 1.1629808823387526,
+              "net_return": 0.013716601883897672,
+              "nav_change": 0.015736297237294083,
+              "price_pnl": 0.021076065507099805,
+              "fees": 0.005339768269806991,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.021076065507099805
+            },
+            {
+              "fold": 4,
+              "start": "2026-04-09",
+              "end": "2026-06-24",
+              "days": 51,
+              "starting_nav": 1.1629808823387526,
+              "ending_nav": 1.146961059003348,
+              "net_return": -0.013774795079338431,
+              "nav_change": -0.016019823335404526,
+              "price_pnl": -0.008300738303725769,
+              "fees": 0.007719085031682554,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": -0.008300738303725769
+            },
+            {
+              "fold": 5,
+              "start": "2026-06-25",
+              "end": "2026-09-03",
+              "days": 51,
+              "starting_nav": 1.146961059003348,
+              "ending_nav": 1.113822380747583,
+              "net_return": -0.028892592294773145,
+              "nav_change": -0.033138678255765,
+              "price_pnl": -0.02772202666978525,
+              "fees": 0.0054166515859782865,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": -0.02772202666978525
+            }
+          ]
+        },
+        "0.005": {
+          "metrics": {
+            "days": 256,
+            "compounded_return": 0.09713977692370102,
+            "cagr": 0.09555167603840986,
+            "sharpe": 0.5389972659751607,
+            "max_drawdown": 0.21295439754578482
+          },
+          "fees_initial_equity_units": 0.041841224180182386,
+          "maximum_industry_wealth_fraction": 0.15084772062323756,
+          "mean_one_side_turnover_proxy": 0.06417466948719038,
+          "mean_unknown_beta_wealth_fraction": 0.00152872560435032,
+          "top10_share_of_positive_contributions": 0.1941335261374933,
+          "terminal_open_position_count": 3,
+          "terminal_unliquidated_fraction": 0.002511081851698373,
+          "terminal_liquidation_pending": true,
+          "accounting_max_error": 4.318594093444261e-15,
+          "risk_metadata_status": "risk_metadata_pending",
+          "fixed_daily_cost_folds": [
+            {
+              "fold": 1,
+              "start": "2025-08-15",
+              "end": "2025-11-04",
+              "days": 52,
+              "starting_nav": 1.0,
+              "ending_nav": 1.062599555080107,
+              "net_return": 0.06259955508010706,
+              "nav_change": 0.06259955508010706,
+              "price_pnl": 0.07131684694906872,
+              "fees": 0.008717291868962381,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.07131684694906872
+            },
+            {
+              "fold": 2,
+              "start": "2025-11-05",
+              "end": "2026-01-16",
+              "days": 51,
+              "starting_nav": 1.062599555080107,
+              "ending_nav": 1.1421804090892187,
+              "net_return": 0.07489260994760372,
+              "nav_change": 0.07958085400911163,
+              "price_pnl": 0.08224024189840236,
+              "fees": 0.0026593878892908333,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.08224024189840236
+            },
+            {
+              "fold": 3,
+              "start": "2026-01-19",
+              "end": "2026-04-08",
+              "days": 51,
+              "starting_nav": 1.1421804090892187,
+              "ending_nav": 1.1542922403672162,
+              "net_return": 0.01060413152039219,
+              "nav_change": 0.012111831277997531,
+              "price_pnl": 0.02094501966831641,
+              "fees": 0.008833188390318669,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": 0.02094501966831641
+            },
+            {
+              "fold": 4,
+              "start": "2026-04-09",
+              "end": "2026-06-24",
+              "days": 51,
+              "starting_nav": 1.1542922403672162,
+              "ending_nav": 1.133468587749767,
+              "net_return": -0.018040191113841808,
+              "nav_change": -0.02082365261744923,
+              "price_pnl": -0.008099642817315929,
+              "fees": 0.012724009800136044,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": -0.008099642817315929
+            },
+            {
+              "fold": 5,
+              "start": "2026-06-25",
+              "end": "2026-09-03",
+              "days": 51,
+              "starting_nav": 1.133468587749767,
+              "ending_nav": 1.0971397769237017,
+              "net_return": -0.03205100804618466,
+              "nav_change": -0.036328810826065316,
+              "price_pnl": -0.027421464594591743,
+              "fees": 0.00890734623147446,
+              "market_projection": 0.0,
+              "statistical_residual_pnl": 0.0,
+              "unprojected_price_pnl": -0.027421464594591743
+            }
+          ]
+        }
+      }
+    },
+    "E_comparisons": [
+      {
+        "cost": 0.003,
+        "control": "legacy_GF",
+        "E_minus_compounded_return": -0.09182308671698602,
+        "relative_terminal_wealth": -0.06881494842836511,
+        "E_minus_Sharpe": -0.46214474951746265,
+        "E_minus_MaxDD": 0.03653337108224708,
+        "daily_net_return_correlation": 0.8545796042283924
+      },
+      {
+        "cost": 0.003,
+        "control": "F141_direction0",
+        "E_minus_compounded_return": 0.04200666307531531,
+        "relative_terminal_wealth": 0.03499044194454193,
+        "E_minus_Sharpe": 0.04578260076544338,
+        "E_minus_MaxDD": 0.007397449933462696,
+        "daily_net_return_correlation": 0.8088836640232288
+      },
+      {
+        "cost": 0.003,
+        "control": "COMMON_MARKET",
+        "E_minus_compounded_return": 0.12870250218584411,
+        "relative_terminal_wealth": 0.115550292767018,
+        "E_minus_Sharpe": 0.31261982411369893,
+        "E_minus_MaxDD": 0.031237853760054612,
+        "daily_net_return_correlation": 0.932306984595462
+      },
+      {
+        "cost": 0.005,
+        "control": "legacy_GF",
+        "E_minus_compounded_return": -0.07597680772806248,
+        "relative_terminal_wealth": -0.058624180772931855,
+        "E_minus_Sharpe": -0.3985222725862584,
+        "E_minus_MaxDD": 0.03506310247943112,
+        "daily_net_return_correlation": 0.8544011141684641
+      },
+      {
+        "cost": 0.005,
+        "control": "F141_direction0",
+        "E_minus_compounded_return": 0.05153460476908722,
+        "relative_terminal_wealth": 0.044103728130047815,
+        "E_minus_Sharpe": 0.09189625195413809,
+        "E_minus_MaxDD": -0.00039545376607375005,
+        "daily_net_return_correlation": 0.8090158926687884
+      },
+      {
+        "cost": 0.005,
+        "control": "COMMON_MARKET",
+        "E_minus_compounded_return": 0.12288118838908235,
+        "relative_terminal_wealth": 0.11200139761009531,
+        "E_minus_Sharpe": 0.31724280681176087,
+        "E_minus_MaxDD": 0.03147782829714574,
+        "daily_net_return_correlation": 0.9322714141270663
+      }
+    ],
+    "units": "Local compounded daily transaction wealth; fees in initial-capital units; complete original control paths reused"
+  },
+  "quality_checks": {
+    "directional_sorting_positive": true,
+    "positive50bp_compounded_return": true,
+    "50bp_return_and_Sharpe_above_same_source_F": true
+  },
+  "quality_decision": "Standalone E shows positive directional sorting and positive50bp costed wealth on this exposed window; complete F/GF/market comparisons and risks are reported. Independent conditional information, fresh evidence and formal admission remain pending.",
+  "settlement": {
+    "run_id": "6acb53f59e9d797cfb2d3770",
+    "status": 2,
+    "actual": 2.0,
+    "gift_delta": 2.0,
+    "recharge_delta": 0.0,
+    "free_delta": 2.0,
+    "attribution": "serial balance delta, provisional; external spend/grants may confound",
+    "reservation_overrun": false,
+    "day_before": "2026-10-11",
+    "day_after": "2026-10-11",
+    "wallet_balances": {
+      "before": {
+        "total": 428.0,
+        "gift": 52.0,
+        "recharge": 376.0,
+        "free": 52.0
+      },
+      "after": {
+        "total": 426.0,
+        "gift": 50.0,
+        "recharge": 376.0,
+        "free": 50.0
+      }
+    },
+    "raw_wallet_balances": {
+      "before": {
+        "computingPower": 428.0,
+        "giftBalance": 52.0,
+        "freeBalance": 52.0,
+        "rechargeBalance": 376.0
+      },
+      "after": {
+        "computingPower": 426.0,
+        "giftBalance": 50.0,
+        "freeBalance": 50.0,
+        "rechargeBalance": 376.0
+      }
+    },
+    "funding_model": "gift_recharge_free_alias",
+    "funding_aliases": {
+      "free": "gift"
+    },
+    "funding_bucket_deltas": {
+      "gift": 2.0,
+      "recharge": 0.0
+    },
+    "estimate_overrun": false
+  },
+  "shared_scope_usage_observed": {
+    "total": 10.0,
+    "recharge": 0.0,
+    "runs": 5
+  },
+  "limitations": [
+    "Previously exposed historical51period mechanism test, not fresh blind OOS or causal independent alpha certification",
+    "Original strict G/nativeF-qualified source cohort retained; not unrestricted all-A capital efficiency",
+    "Official additive statistics and local daily costed wealth are separate evaluation contracts",
+    "Same-source StockDB QFQ/daily-bar execution proxy; no full PIT, true auction/capacity or server holdings parity claim",
+    "Original terminal residual positions and unknown beta/risk metadata remain explicitly disclosed",
+    "Inherited five folds are descriptive, not retuned holdouts; multiple-testing/formal coverage and pool increment remain pending",
+    "Wallet settlement is provisional serial balance attribution, not per-Run invoice"
+  ],
+  "original_files_rewritten": false,
+  "new_official_calls": 0,
+  "new_experiments": 0,
+  "parameter_search": false,
+  "formal_admission": false,
+  "pool_operation": false,
+  "shared_state_written": false
+}

@@ -1,0 +1,135 @@
+{
+  "id": "CAPITAL_E_SINGLE_OFFICIAL_MECHANISM_TEST_20261011",
+  "frozen_at_utc": "2026-10-11T09:14:03.524972+00:00",
+  "deadline_utc": "2026-10-11T16:00:00+00:00",
+  "fingerprint": "7bc87098df7082e99136f1a6c9d9384b0f714c63acbd2093542fb5e54937eff2",
+  "registration_trial_key": "745682228c030f94cd339238c040cb995eef1be50ae6abf8cc4bb7e3cbac32d6",
+  "max_new_paid_runs": 1,
+  "auto_retry": false,
+  "scope_id": "GF_NIGHT_GIFT60_20261011",
+  "batch_authorization": {
+    "batch_id": "GF_NIGHT_GIFT60_20261011",
+    "valid_from": "2026-10-11",
+    "valid_until": "2026-10-11",
+    "fingerprints": [
+      "cf8cf73d4751a1e4bccf03e9885994cfa710810a2775d197541eac5287ab6738",
+      "d789200d8b6f9d9c2d714946284a526d7e0cf0fffc4708e5d658c1a90d7d534f",
+      "1fe13610f4e90c36c5f76450e241b6741428210ffa62ad13647186c689e3033f",
+      "c5ab6b5d8f1a9b229380920846a603fdbf0f6283bf9f2606bace4d9e350c792a",
+      "7bc87098df7082e99136f1a6c9d9384b0f714c63acbd2093542fb5e54937eff2"
+    ],
+    "max_total_credits": 60,
+    "max_recharge_credits": 0,
+    "max_runs": 30,
+    "accept_estimated_charge_risk": true
+  },
+  "human_permission_interpretation": "Normal gift-only estimated research authorized by original60 and the dayextension; no recharge, scope reset, old20 migration, servicehardcap or >60 permission. Same sharedscopeactual plus unresolvedreservations governs allfuture directions.",
+  "gift_runtime_guard": {
+    "conservative_reservation": 8,
+    "minimum_fresh_gift": 16,
+    "fresh_balance_required_at_dispatch": true,
+    "generator_does_not_query_balance": true,
+    "gift_expiry_timezone_unknown": "Parse actual fresh expiry; ifnaive requirebothUTCandUTC+8 interpretationsalive. Earlier observed18:32:22 is not presumedalive or refreshedhere.",
+    "expiry_rechecked_before_create_start_from_fresh_balance_observation": true,
+    "gift_hard_isolation_or_service_fee_cap_verified": false
+  },
+  "research_decision": {
+    "research_question": "Does source-bound annual revenue growth relative to total-asset expansion offer standalone payoff and incremental financial information on the exact original conservative GF/F141 source support?",
+    "decision_if_pass": "Review completecost/source/stability/conditionalinformation andgenuine later independent evidence before admission; no pooloperation.",
+    "decision_if_fail": "Keep the fixedcomplete result; no sign/window/rank/weight rescue or paidfailure retry."
+  },
+  "controls": "No F ormarket officialdispatch. Reuse oldcompletedF onlywhere realpreflight certifies exactoriginal32905support; sharedcostcontrols retained without replay. Alreadyexposed51periods, notfreshOOS.",
+  "ledger_usage_at_freeze": {
+    "total": 8.0,
+    "recharge": 0.0,
+    "runs": 4
+  },
+  "prior_same_scope_settlements": [
+    {
+      "fingerprint": "cf8cf73d4751a1e4bccf03e9885994cfa710810a2775d197541eac5287ab6738",
+      "state": "SETTLED",
+      "actual": 2.0,
+      "gift_delta": 2.0,
+      "recharge_delta": 0
+    },
+    {
+      "fingerprint": "d789200d8b6f9d9c2d714946284a526d7e0cf0fffc4708e5d658c1a90d7d534f",
+      "state": "SETTLED",
+      "actual": 2.0,
+      "gift_delta": 2.0,
+      "recharge_delta": 0
+    },
+    {
+      "fingerprint": "1fe13610f4e90c36c5f76450e241b6741428210ffa62ad13647186c689e3033f",
+      "state": "SETTLED",
+      "actual": 2.0,
+      "gift_delta": 2.0,
+      "recharge_delta": 0
+    },
+    {
+      "fingerprint": "c5ab6b5d8f1a9b229380920846a603fdbf0f6283bf9f2606bace4d9e350c792a",
+      "state": "SETTLED",
+      "actual": 2.0,
+      "gift_delta": 2.0,
+      "recharge_delta": 0
+    }
+  ],
+  "old_twenty_credit_scope_included": false,
+  "wallet_refreshed_by_generator": false,
+  "new_contexts_registered_by_generator": 0,
+  "bindings": {
+    "runner": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\run_official.py",
+      "sha256": "ad3d45c77731e6b5eb84529250d7d1f4ec062662d8904934913deac8f4794547"
+    },
+    "plan_generator": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\prepare_official_plan.py",
+      "sha256": "a839cc34bfb37ab50e7006dd4b98e0f5122b6e728763356c9347ada53cf94aeb"
+    },
+    "protocol": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\protocol.json",
+      "sha256": "067264130c8467dcb8a4c53ecf75dea59098d2327fdbaf97636a2fd674663505"
+    },
+    "candidate": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\E_candidate.json",
+      "sha256": "ddd713d06739877d6864df2522e94f4d9ea88fff321de2b3e8f3d381981243d7"
+    },
+    "code": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\WC03CapitalEfficiency.py",
+      "sha256": "ad109ed0e61200532fb3146dd65508409ee52cde04e072c132da6f6c1c4af66e"
+    },
+    "native_preflight": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\E_native_preflight.json",
+      "sha256": "0e60e89181746dedc887384fed8821fb0c0202e7f3ab77a4ccdbc600eb260534"
+    },
+    "preparation_review": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\preparation_review.json",
+      "sha256": "f77d70d71d52a57acf9111994bcef7c2b8a8c6c9c8945bb3560d80f84ff90d66"
+    },
+    "original_authorization": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\authorization.json",
+      "sha256": "c11caeb82f7ecfb332a89b65d98ae7e06c592b080537d48ef8d852e7c57b4a09"
+    },
+    "day_extension": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\day_extension_authorization.json",
+      "sha256": "d56c8c098bcc59a1cb1016ece0a1d83b6ccb39a09f95de936a0eb4f462951b86"
+    },
+    "compute_overrides": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\compute_overrides.json",
+      "sha256": "d9115443f80a3a7aeb0622eb81e0ba72f5b888943edc90abf75c07f3e430c02b"
+    },
+    "fixture_reader_module": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\native_gf_transfer.py",
+      "sha256": "35f706d55bebb8f45e3cb382f6bc84bb9e17863b3f9ecbc330dd865e59cf95a3"
+    },
+    "platform_runtime": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\platform.py",
+      "sha256": "819d011c6bd984c221e8277a2360ce41c241a54277e3c5807fcecc93c8982336"
+    },
+    "preflight_runtime": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\native_preflight.py",
+      "sha256": "4e26e95ab5db291328a1b19168e2decc834d0c85c15ad6304d519317f37cc1fb"
+    }
+  },
+  "shared_state_registry_ledger_memory_written_by_generator": false
+}
