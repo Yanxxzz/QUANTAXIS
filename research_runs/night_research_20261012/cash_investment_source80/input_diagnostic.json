@@ -1,0 +1,62 @@
+{
+  "status": "UNUSED_SOURCE_INPUT_DIAGNOSTIC_COMPLETE",
+  "protocol_sha256": "ead178ab3d12c79da76810ea96abed8b83365d6d068fc7e2fa63649bfea4dd85",
+  "expected_companies": 80,
+  "source_triplets": 77,
+  "common_finite_signals": 77,
+  "availability_pending": [],
+  "missing_close_keys": 0,
+  "main_control_Spearman": 0.8434197381565801,
+  "top_decile_count": 8,
+  "top_decile_overlap": 0.625,
+  "top_decile_main_only": [
+    "000560",
+    "000651",
+    "000720"
+  ],
+  "top_decile_control_only": [
+    "000582",
+    "000598",
+    "000603"
+  ],
+  "funding_states": {
+    "operating_cash_covers_capex": 48,
+    "negative_operating_net_cash": 16,
+    "nonnegative_operating_cash_below_capex": 13
+  },
+  "explicit_zero_capex": 0,
+  "implied_negative_operating_inflow": 0,
+  "source_pending": [
+    {
+      "symbol": "000612",
+      "reason": null,
+      "field_reasons": {
+        "operating_cash_outflow": "adjacent_numeric_fragment_requires_geometry"
+      }
+    },
+    {
+      "symbol": "000685",
+      "reason": null,
+      "field_reasons": {
+        "operating_cash_outflow": "adjacent_numeric_fragment_requires_geometry"
+      }
+    },
+    {
+      "symbol": "000727",
+      "reason": null,
+      "field_reasons": {
+        "operating_cash_net": "unique_cashflow_row_required",
+        "operating_cash_outflow": "unique_cashflow_row_required",
+        "capital_expenditure_cash": "unique_cashflow_row_required"
+      }
+    }
+  ],
+  "new_contexts": 0,
+  "registry_total": 494,
+  "return_labels_read": false,
+  "official_calls": 0,
+  "native_dispatch_preflight_passed": false,
+  "production_or_PIT_qualified": false,
+  "completed_at_utc": "2026-10-11T19:07:17.790514+00:00",
+  "limits": "One FY25 source cross-section on a bound close-index date; metadata availability, policy/scope/version and live native input parity unqualified; code order cohort is not market representative or independent alpha evidence"
+}

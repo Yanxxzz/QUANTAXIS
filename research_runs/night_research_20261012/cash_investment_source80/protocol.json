@@ -1,0 +1,924 @@
+{
+  "id": "CASH_INVESTMENT_UNUSED_ANNUAL_SOURCE80_20261012",
+  "kind": "source_only",
+  "frozen_at_utc": "2026-10-11T19:05:07.225131+00:00",
+  "deadline_utc": "2026-10-11T23:00:00+00:00",
+  "selection": "FY25 source-ready old cash-pair metadata code/announcement ID order; next80 after skipping completed20, no monetary values or price/return selection",
+  "inventory_count_only_not_current_field_coverage": 2968,
+  "selected": [
+    {
+      "symbol": "000301",
+      "announcement_id": "1225243361",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000301_1225243361.txt.gz",
+      "capture_sha256": "df402afcedd285fab3305ddb078d0a01288cd1db2a74933e5df643a4bf6b2338",
+      "text_sha256": "e41c00844c39daddd65bdc9ab919b858341f72902ae83d52a357bdec9fccafe7",
+      "source_record_sha256": "1564fa0bd199835421ecd98f59320941425770eeb476cdab67d939f8a98fb43c"
+    },
+    {
+      "symbol": "000338",
+      "announcement_id": "1225037559",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000338_1225037559.txt.gz",
+      "capture_sha256": "983216c32b3b68ab273105b66ba23cf25ff80ebedffb2a2f21458c6f06f717ee",
+      "text_sha256": "11c491b6e1b9b0bc9c48f40ff868ae36706ce36696782d2894e867b7ef365472",
+      "source_record_sha256": "cc3f3321d92fa51a32c40e680cd87da0fc75178c7fa578a843c2395ddf15e464"
+    },
+    {
+      "symbol": "000400",
+      "announcement_id": "1225096177",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\000400_1225096177.txt.gz",
+      "capture_sha256": "469d53a1a051c83ba37b774f7ff9486ddc10314e874111a0cb73d4ad73b9ed30",
+      "text_sha256": "3db45b660118c916c15bbd866b9fec394b0aceecd4356cb8e209658f612ad57b",
+      "source_record_sha256": "f5c798944386bb58ba09cf680910566f866f3ba3dfe2c1024b6d8edf0c2f6f91"
+    },
+    {
+      "symbol": "000401",
+      "announcement_id": "1225038530",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000401_1225038530.txt.gz",
+      "capture_sha256": "928dcf082e5c6a4d012cbc15444e2ec80e22ad6c71b45527506b4ad9f37e018e",
+      "text_sha256": "253ffeac4288920241101037011df308465def16fdd8300ff0986b8d6212f72e",
+      "source_record_sha256": "1f0d80c0a911ec6cbf1f7cfc57e5da70da9482757df3d0b30e945d7b9dc3b5e1"
+    },
+    {
+      "symbol": "000403",
+      "announcement_id": "1225245931",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000403_1225245931.txt.gz",
+      "capture_sha256": "d226446ee41a415ab1dee31cd62ee07a8bcda2475c7ee6d30a009af238e47ee1",
+      "text_sha256": "3debfec462777ec61bec944efecf43a01eaeea3b00e420969496ecf9deabac2c",
+      "source_record_sha256": "297d04bc695709f0405c5a6a4e7e09297047e009171065625d674eb0e24e9bf8"
+    },
+    {
+      "symbol": "000404",
+      "announcement_id": "1225121004",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_data_completion_20261006\\capital_chain_text\\000404_1225121004.txt.gz",
+      "capture_sha256": "580fa0578ac973e05180fd211d57c694e2d9623082c1530c1ef7efa849e79dbc",
+      "text_sha256": "b95099a8cf4a587fb50a79acd7f9f2a0981891fd3d2cf8d058bdaacb35c74497",
+      "source_record_sha256": "576ea69d1188d75ac3c5c5b86715ccf4ffc338abe035a012401b18f99a4d3f52"
+    },
+    {
+      "symbol": "000409",
+      "announcement_id": "1225084580",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000409_1225084580.txt.gz",
+      "capture_sha256": "48c72fc3aa7ea9f62e7af816917990c289e3e018dadf4d791ab9ac3065959beb",
+      "text_sha256": "d64aac3ac03f9f2551eff2331e467ea3b87db6d247e751c608ee31682a0faa67",
+      "source_record_sha256": "0b43932d7ff1bf364ec94a03c5c05c6b949b8792f9f0db274b1a09c2e8ea201d"
+    },
+    {
+      "symbol": "000417",
+      "announcement_id": "1225117747",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000417_1225117747.txt.gz",
+      "capture_sha256": "aa28cabbcb9beb99905642707fb12f3d0c4ceba513d8e4717f7fd8238522d9ee",
+      "text_sha256": "0e044cced0ad84b40deb50a507f8b73ab12b73ac8a29fa7cd9836141b0b8c077",
+      "source_record_sha256": "e8d1bec115996eb7c40ac514fc27d9d43d522d2950d1ae96795a884356fd20e0"
+    },
+    {
+      "symbol": "000419",
+      "announcement_id": "1225117552",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_data_completion_20261006\\capital_chain_text\\000419_1225117552.txt.gz",
+      "capture_sha256": "d977b2c7539ec403459253f3da5ff3b2eaf117fe2260490327674992e16c6a7b",
+      "text_sha256": "36ddba62d634ab8f00f929ed47f13ec331a4a146600714cb29e9439e1bcb2db1",
+      "source_record_sha256": "e422ac3ce560ef6fbee77db18b2cb10fdfc6e5a338cb19590f7f49c236265332"
+    },
+    {
+      "symbol": "000421",
+      "announcement_id": "1225091928",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000421_1225091928.txt.gz",
+      "capture_sha256": "48c48029227ea29111d3e3214c28b6329ea96e4caf6aa2f468572ec47deab4aa",
+      "text_sha256": "fb6091903640400c1995f33c72b6a3dc787a1f47dc945e17aab63882ad3223c3",
+      "source_record_sha256": "2482f64abae583e8e03b183cf4c0a9f8233a657c7df6cf3982271630ed48c284"
+    },
+    {
+      "symbol": "000426",
+      "announcement_id": "1225136963",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000426_1225136963.txt.gz",
+      "capture_sha256": "5c005f2413abcfd7a8efd9bb2092721b5bdb0a63abe6aed52bd2e56ba9aa5838",
+      "text_sha256": "b499b1b8d3ad7eaa9f5360aec98d514199126b38cd81aab03c05a9f56b75e627",
+      "source_record_sha256": "d542f8bc4682bb6c1898893da3d4aa84e0709b1537f29e2a704fa4ae714e031b"
+    },
+    {
+      "symbol": "000428",
+      "announcement_id": "1225212156",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000428_1225212156.txt.gz",
+      "capture_sha256": "8f34425c7f3931b6c1a3649b927834d47e4aec48313e1ba71e4b9f93c2cfcc2a",
+      "text_sha256": "afaab0fe0f2c59f1fe912be4cf51021a5a9613bef0012c9c48373f1959246b62",
+      "source_record_sha256": "18c6fd2b13ee16bd5fc855fc72754c42cf095c13cd4fb7dfcf57c4b202a2647b"
+    },
+    {
+      "symbol": "000488",
+      "announcement_id": "1225058500",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000488_1225058500.txt.gz",
+      "capture_sha256": "6cdc1029431ddef093ca8cf468e049c16d880cf69b6613b5d5f432189c488a8d",
+      "text_sha256": "80ea791582d7d751c5f63d28a9f71f2bb77ebf1e82626e53f97debe15316151c",
+      "source_record_sha256": "5cfebcc98566f15461f364de99f5e0701f07c241300ffaa7470e008a360bbb9f"
+    },
+    {
+      "symbol": "000501",
+      "announcement_id": "1225037417",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\000501_1225037417.txt.gz",
+      "capture_sha256": "b198f72d772f60f4a6c8d0035f52e52a09fd167aedbe31848b3dc63aacc3f5f9",
+      "text_sha256": "b15206ee97bfcf9ab73ff0c82d662c7258e504816a18425b72ea327f29f0d719",
+      "source_record_sha256": "233066ee46835c819d5337aac9b8065cededba30e3562f2fc6a32dc566a46cfd"
+    },
+    {
+      "symbol": "000503",
+      "announcement_id": "1225227480",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000503_1225227480.txt.gz",
+      "capture_sha256": "afdc2434d76b4e2529cbe2171c1b2e3e90b808ab369ec7920b8d03b655c69f06",
+      "text_sha256": "00a0d39180c01001794875be638f81a2f4a15dfa7972e5ef0535140f35a54f5a",
+      "source_record_sha256": "bcdb1e95043d0bc22b1fa013abb89e151be5d21cf144327b326ada7c7130d857"
+    },
+    {
+      "symbol": "000504",
+      "announcement_id": "1225244679",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000504_1225244679.txt.gz",
+      "capture_sha256": "ed644b2bad5482c0817f637886c0789663ce3e62c9799ed284cb6d33757d827a",
+      "text_sha256": "8c954efb4dd760deef835c108e13512ee2265209091ba75775d98420d9488735",
+      "source_record_sha256": "fbdd7d95c513edcae75447a94145dd56cc1fc068b41604f730e5654ae7625ada"
+    },
+    {
+      "symbol": "000506",
+      "announcement_id": "1225087894",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000506_1225087894.txt.gz",
+      "capture_sha256": "518f2b3bee84c8d9c51ce1c991149c1c4568b043a2bd0285835f188d38ebd57a",
+      "text_sha256": "7dc45aea7fad415584e1c01ec0bf45439d802dbf1ed297084a5b35a810f43efc",
+      "source_record_sha256": "286a882bb0e1a26d18a8d04c3377331e6de937e35150dba1037c38ef991aac0f"
+    },
+    {
+      "symbol": "000510",
+      "announcement_id": "1225190142",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000510_1225190142.txt.gz",
+      "capture_sha256": "77d2b290b623e85d42fb7753b434ac1ef28f0e65fb4e2c23250846dbdd3cd3a6",
+      "text_sha256": "8aad13514a168bf1ea04f7ba75de82df46a914a6fd454808b4ea61735b849427",
+      "source_record_sha256": "81eb4728dc735444c02229be5486429b6cc3fe9ad9ab8a28e754b7232d5982b1"
+    },
+    {
+      "symbol": "000516",
+      "announcement_id": "1225161395",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_data_completion_20261006\\capital_chain_text\\000516_1225161395.txt.gz",
+      "capture_sha256": "bbe38e717ee3541415ccaa5cba06ef32e6e694e0d6bd1989db4c2638002e5741",
+      "text_sha256": "752762b10c58be7a9bf8b87862ebedc003cfa7c985ad2d51cc492c7ca087aca3",
+      "source_record_sha256": "800cde2fa56977017b17c4304f81866d07bbe1f7cbd8b98d6f2fd836fa8fba76"
+    },
+    {
+      "symbol": "000519",
+      "announcement_id": "1225160985",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000519_1225160985.txt.gz",
+      "capture_sha256": "e93644154276e22ce3bcdedb215ae55bd96373d5d49758cf3854164de10f0b04",
+      "text_sha256": "da513e341e006885646b16be9bb6fb889d54e98c2ff5307bc06fb4efa85835b7",
+      "source_record_sha256": "56b3f70f41acf6074e8f94aa2d7eb5ee17fe3237856f97f831df43fd80024b8c"
+    },
+    {
+      "symbol": "000520",
+      "announcement_id": "1225252014",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\000520_1225252014.txt.gz",
+      "capture_sha256": "7d665f5c6aef812126bd7aa1bc959b9f09702f0785a1afc6ee82455ae5808212",
+      "text_sha256": "5d6036cab7c007b6ffffe29ea8c8bc72dca3b70a874bd18b3290e58dae78ba8d",
+      "source_record_sha256": "4486d06ce364943c6626f3c694e0adf3f458730defed6b8f7ad21b205729d622"
+    },
+    {
+      "symbol": "000524",
+      "announcement_id": "1225045156",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\000524_1225045156.txt.gz",
+      "capture_sha256": "dc8512f0592135667a955f0612d83e92ba6e56afe05ebac18d83cac2e38e6c7b",
+      "text_sha256": "b45b37c2deb13b82223144b071bbdc18bf34fa601b573a95f07e75a2095baafa",
+      "source_record_sha256": "896e8107b03808ffc6b0d2116044b413b3fce6f98208e9b5b02f2df801a75f8d"
+    },
+    {
+      "symbol": "000525",
+      "announcement_id": "1225219722",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\000525_1225219722.txt.gz",
+      "capture_sha256": "37695e1edfe57f3f7a4689268301295d1dcb41d44631d9225796b3e2248a04c6",
+      "text_sha256": "daeff9b58953777ad953427d8007828548689f1201fd1da89a6950bb4afe1e5e",
+      "source_record_sha256": "18d89e7439b9f0757c470031949045ce27d7bbdab9ab402bdf341d73818992e3"
+    },
+    {
+      "symbol": "000526",
+      "announcement_id": "1225215074",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000526_1225215074.txt.gz",
+      "capture_sha256": "744a8d5470779854d87110f0c86083a028a94deb7ff9461ba5b26957d3408d0c",
+      "text_sha256": "7d30a05a110059827fafe4e738d8ba2057a57619c6849c25001140b6501bedd8",
+      "source_record_sha256": "bf417470d8d1011551afe6e2742090d76465a1015099fc1cbff23ad1df1faec7"
+    },
+    {
+      "symbol": "000528",
+      "announcement_id": "1225185067",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\000528_1225185067.txt.gz",
+      "capture_sha256": "b8fbe4bb68e006b333959b9cd733cec85c6451ba8990582fcdf59444f0ab9357",
+      "text_sha256": "a9c1a1e9f57b5a11b2c57289c8c34faaca7f05108c78f64438ee455f5c14e282",
+      "source_record_sha256": "b0083a93704f948f8a014e2b7cab97838f00679415f715871ba5ff39a9726559"
+    },
+    {
+      "symbol": "000529",
+      "announcement_id": "1225182075",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_data_completion_20261006\\capital_chain_text\\000529_1225182075.txt.gz",
+      "capture_sha256": "8d2869a810846a84b0bb846817d7063120c431a197b6d4d160850129e71a638d",
+      "text_sha256": "0bc8f0d126fd64d0033566b679ec35fa31e801b2d94253399c1e48d549d6fe5d",
+      "source_record_sha256": "3c2cd5de135d40e68d1806c2fb58eecacc76322d3ce1297fb45b3b68b4161edb"
+    },
+    {
+      "symbol": "000532",
+      "announcement_id": "1225111272",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_data_completion_20261006\\capital_chain_text\\000532_1225111272.txt.gz",
+      "capture_sha256": "35e5f83d16273f65a871ad2321c24e96d462c62409f46618ca96736a65206d07",
+      "text_sha256": "df7922b8c96374051f0e0a783c48c04a30ddd88512112e6ce6c24d0fe5630338",
+      "source_record_sha256": "a4746521fc7f27444e1b7c99b244ea0f24aeb2c8d105d4a40b62080ecc38b059"
+    },
+    {
+      "symbol": "000533",
+      "announcement_id": "1225290543",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000533_1225290543.txt.gz",
+      "capture_sha256": "a981c64e661da83f925a8fcae1bd34542a607a323f7d02a87bf72b3534a30258",
+      "text_sha256": "aeed7731b31e424745e308f3e20fcda01f126275d15e25aefb865dd80fb9bef8",
+      "source_record_sha256": "378729c234ca91060d1e593beaf7d247e041cb8207b2290eb2339f6491e5a8e2"
+    },
+    {
+      "symbol": "000534",
+      "announcement_id": "1225128850",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000534_1225128850.txt.gz",
+      "capture_sha256": "24ca5a5f00d00bb3b101a90005fcbe0233022c50d95e0fd85ea0a6977e0b3ce4",
+      "text_sha256": "41e398c491321a427b8f02d8124594cecbb0c182e3d32d87b29396920d87b111",
+      "source_record_sha256": "86fdc16fddd1408751114030b4698fdb41f1529b12a5de0b4e8111cfe0a8ecb0"
+    },
+    {
+      "symbol": "000538",
+      "announcement_id": "1225067975",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000538_1225067975.txt.gz",
+      "capture_sha256": "39c7ca6f203b9999c18510f38493edbb1277814278e91ce4593630141b0660fd",
+      "text_sha256": "e532a134fd5b02787302a70b5f66e5e0d783fabbf2b5bedb96693273be58decc",
+      "source_record_sha256": "600280a8024a9c079005c74c9622ba0ec395f95db02a86e8391e86d6f5bad028"
+    },
+    {
+      "symbol": "000543",
+      "announcement_id": "1225170331",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\000543_1225170331.txt.gz",
+      "capture_sha256": "9b88ee7025f42b217104c66d52a29db8911332892f1f583b5257d90546ee5c97",
+      "text_sha256": "416b1ea389988f04587ca352927424cbb3558f30490a077d5a13761a5a4ce320",
+      "source_record_sha256": "48715ceb64898b52a0fabb30098a35473e63aa25c4bd4ee2e65bb7954ea32795"
+    },
+    {
+      "symbol": "000545",
+      "announcement_id": "1225202546",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000545_1225202546.txt.gz",
+      "capture_sha256": "b47c2ad05cf1649231c68e6e5b425051e67698cad3a50ec8a16b8a13faff60e8",
+      "text_sha256": "bd566ae2a730b32dd71016f2828836c1efcfcddf0cf31ff047069cf4ab6e4d52",
+      "source_record_sha256": "412693bb82bfbf43371f418b4b564697ac1a83f526a81feb61bff8f87d8bd466"
+    },
+    {
+      "symbol": "000546",
+      "announcement_id": "1225217044",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000546_1225217044.txt.gz",
+      "capture_sha256": "88681790f75910169f1c8c63b1bf4056f6c774f4fb67b4fe3b3bb3658ebed48e",
+      "text_sha256": "c2f2f60c023ddd7e987873513a6bd8352bfaffc7ac8c85be7de054643f7bf56a",
+      "source_record_sha256": "bf636bbf5162e03ea32582c56ebbf505a203f672bf1e6f7d70c07313d2e5e30c"
+    },
+    {
+      "symbol": "000555",
+      "announcement_id": "1225059842",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000555_1225059842.txt.gz",
+      "capture_sha256": "dc024c76a29ee18707f94b8416eb4b4898894a42e770287e5898d54bf1d90090",
+      "text_sha256": "6aaa6a2cfb218b73abb1350178c78225e3bbc620c84293f073403ba58cad6743",
+      "source_record_sha256": "439e2d2a59bd6ec16c591cb4e089dfe2e8cc3ca73b4b20bca4ea965e9b66521a"
+    },
+    {
+      "symbol": "000558",
+      "announcement_id": "1225155451",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000558_1225155451.txt.gz",
+      "capture_sha256": "b1bffaa4da7f2258b4f139ec4958c69a3f9506de29bb0ce30f56a791ad72f58f",
+      "text_sha256": "3473ed6a77883b854d8595347a9cc5ea55dee599622f8379d46b909cb6f8d242",
+      "source_record_sha256": "4038b3c1092097053c81b8ece2f8a61c0931f2a1fbbc270b6933320d16e2ff97"
+    },
+    {
+      "symbol": "000560",
+      "announcement_id": "1225133421",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000560_1225133421.txt.gz",
+      "capture_sha256": "a1875ded35b666c2be06364d00c785aec1873af29f463b21bf69aaddd1db443a",
+      "text_sha256": "36a3106051cc75d9df012ec966ffafbfe7b5ff4e59bd66f8f05b2ff925f52850",
+      "source_record_sha256": "a1f81a8a55efb13283d2c6a44054bc1e0994bd3f49f1e29e19c0414ff1b0950b"
+    },
+    {
+      "symbol": "000565",
+      "announcement_id": "1225190517",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_data_completion_20261006\\capital_chain_text\\000565_1225190517.txt.gz",
+      "capture_sha256": "ed6af936e6c20b568e91f19eabb50e1b7633fa61eee9ef3ef3d13ec4d96f28d7",
+      "text_sha256": "41986492e8f9c169a45ea944aa83a5cad0f225f11233a3d9baac6d508556d0a2",
+      "source_record_sha256": "a70f9e5925bcd9b75492a5592f6df8f4ceed7a2da1968638ae78affded0f7c6c"
+    },
+    {
+      "symbol": "000566",
+      "announcement_id": "1225096273",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000566_1225096273.txt.gz",
+      "capture_sha256": "1360131c02308d82f4f7501357eaadb11f71250f11a0433da1fbf1c5d9afa5ce",
+      "text_sha256": "f56b17ed46e30c9f94df010c81915a04a0cd0b50e0f1a9b6d24c20a23ea0ee5e",
+      "source_record_sha256": "7944689f9a2355f33da4363e840226f95f5d5c9d53890c6f32177a8c74f1699d"
+    },
+    {
+      "symbol": "000568",
+      "announcement_id": "1225240660",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000568_1225240660.txt.gz",
+      "capture_sha256": "4ba5613bc587845bc821222a185cdfb03210d14d05ad8e2155da5135e995702f",
+      "text_sha256": "bed7367bc6e6fb30a6ec64e8d10c2b7fdd6d7f13dd5a01173e511077a8317135",
+      "source_record_sha256": "aea76935d744052330222ec6d536747e5bb30c5b72e423f84020b587821ee44c"
+    },
+    {
+      "symbol": "000571",
+      "announcement_id": "1225227935",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000571_1225227935.txt.gz",
+      "capture_sha256": "ee4623ec2081a3190d5f053a77b181dad28517fc241ba5f962fa93e8de1882ce",
+      "text_sha256": "a3fadc532568334b37e2a3e2c50769319d223fa86b87a90b2875b765cc605c2b",
+      "source_record_sha256": "e7bf737a53ccbf448e47894d563fcad4bf9392c276375fe83e01861aae85df98"
+    },
+    {
+      "symbol": "000576",
+      "announcement_id": "1225119259",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_data_completion_20261006\\capital_chain_text\\000576_1225119259.txt.gz",
+      "capture_sha256": "a7e578f8993b6eb61bf72c2a830c6933f8c17f09ea238cea91d4c67a8135a9b0",
+      "text_sha256": "da2ae1240869811db01c810e2b1eb4be16a826aa2e6aabaac97cf7a897c06069",
+      "source_record_sha256": "6df82c6443a4086cc81444c8be19434aa88b76d8143ea6876b131630d141cb86"
+    },
+    {
+      "symbol": "000581",
+      "announcement_id": "1225111397",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000581_1225111397.txt.gz",
+      "capture_sha256": "9b8b8587b85cc83f74cd153707665ae3024dfa14532928a67ba1ef686cba2d6a",
+      "text_sha256": "76b0e5dd2005d073900cce9b6d89668f012fdd55ca0dacedd46b54c8d142321b",
+      "source_record_sha256": "e593662c7d7941d3d5988554c6fb5887b4052c7e4b4b2c22b8e4fb3cbfa35593"
+    },
+    {
+      "symbol": "000582",
+      "announcement_id": "1225061154",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000582_1225061154.txt.gz",
+      "capture_sha256": "341f1ac66f1032de4c6ebb338ed3054b5bf2ec8a324488a3c925e533a00b3397",
+      "text_sha256": "a726cc03a501d9202b224b88ee5772cb520c78d79e18c07057c189b9af2f6c49",
+      "source_record_sha256": "c4a3a845a8f70913ec8b0148bf40fab8f050758795f2ece807401d4de93c4c3d"
+    },
+    {
+      "symbol": "000596",
+      "announcement_id": "1225237594",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000596_1225237594.txt.gz",
+      "capture_sha256": "eafb38649369533611089b70f47d37da22679f7bbc43d135f7f32743dd33bab4",
+      "text_sha256": "391bc9e5de80de859caa42b2e027ebedf16e803d6eccfe28982ddf2064294ac5",
+      "source_record_sha256": "1ec7fe45c9fcb29133bd55e335ef07c2b79bc7ee67fa4cb48ebda25fec1f3dc1"
+    },
+    {
+      "symbol": "000598",
+      "announcement_id": "1225212058",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000598_1225212058.txt.gz",
+      "capture_sha256": "2e9ccdc30ff2f01ef1adf45fcdb1bb63ad89870eb5df1ba357d60bbdb3a345a7",
+      "text_sha256": "9ac439fcc2c7e3b3d4afc6cbf27237141494b65b672045bd368639dfb13b3720",
+      "source_record_sha256": "7bb565696a82892e78bf0183667a4a71104ceb2b7d24718688bb131ca3973440"
+    },
+    {
+      "symbol": "000599",
+      "announcement_id": "1225227803",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\000599_1225227803.txt.gz",
+      "capture_sha256": "376185fb08afbd1fa01179b2109d3c37e846590fb9a1bdd08004ccb6a1ab1c06",
+      "text_sha256": "43710b859e9a45f93ea27516897eb63a1c382eebcd4dacf307d52435876b5ff4",
+      "source_record_sha256": "b12a9ea1c18f5d20239d8a073c5c6f32fe468410d4c8ec2aa2ba8488f184a94b"
+    },
+    {
+      "symbol": "000603",
+      "announcement_id": "1225242915",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000603_1225242915.txt.gz",
+      "capture_sha256": "b065cc5115a16a413baa89fd29faf312622d50052268abd71a333572dc3fc918",
+      "text_sha256": "290d764d397aacdb5114856a78b57f241801e96c011535746fb24526ce6e326e",
+      "source_record_sha256": "b4a84cbc0da16949396f71eb124819617707dc50f3557bfb7ae34ab317695451"
+    },
+    {
+      "symbol": "000607",
+      "announcement_id": "1225163834",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_data_completion_20261006\\capital_chain_text\\000607_1225163834.txt.gz",
+      "capture_sha256": "696efa00c80dabc0ebe15f7e6827c12789fa5e05e0a86a52a7fcab9c9a1f6d94",
+      "text_sha256": "a9c6c0d46f18e9d1529adf01d2165264ccc0622afa560de4efc160c30ed2370c",
+      "source_record_sha256": "ef71a10cb11d679dd81a1d11d0c6afe0ee0d2cb1f1226734aaa6945ba8fb997b"
+    },
+    {
+      "symbol": "000612",
+      "announcement_id": "1225009217",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000612_1225009217.txt.gz",
+      "capture_sha256": "f3bef23bcd3bf9ad108da8b43e871a0a6a91e9d2349f77df0c53069f02b0245d",
+      "text_sha256": "d7184d6f3e76524ac4d434a94e7ab22570167a1aa106109d54570c592854cd41",
+      "source_record_sha256": "b65ce20ce6489976f6147be1453e8603a84e5c69f998ce65b09511ee0eb6c64f"
+    },
+    {
+      "symbol": "000620",
+      "announcement_id": "1225250331",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000620_1225250331.txt.gz",
+      "capture_sha256": "703d8d5d7f3eba1faca28feb1bc24ea969b86c9489767b2fe4738f7ef5895956",
+      "text_sha256": "e1d13cab630506d8e0ddfc2b63947440d7ea157d32dfdc192efe7c26ace755c5",
+      "source_record_sha256": "0f1c102b3abca914d8bdbb7447b0fc4b03247585f969a1bc4ca07ef8e2da34f8"
+    },
+    {
+      "symbol": "000628",
+      "announcement_id": "1225223136",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\000628_1225223136.txt.gz",
+      "capture_sha256": "fa116da846b1c16fb3ed4423cfb36f58a2e75dd8ddbbc2f0a065caabf9b18446",
+      "text_sha256": "08607469548e40e52bdf06b23a00108a6a5181586fa66045765d61b172b05e4b",
+      "source_record_sha256": "e550922837501ee364675149bc273158a9ca1f3aa5a8ebc8154bfc5f799b065f"
+    },
+    {
+      "symbol": "000637",
+      "announcement_id": "1225248741",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000637_1225248741.txt.gz",
+      "capture_sha256": "4c80c41ef373e0c2a61f0694a23a562fa14a10448e1c01522dfb82eb350579c5",
+      "text_sha256": "39060b3b55fc7d16d800a1dd5273bcbafddb16f200c43019a426fa13929a7d31",
+      "source_record_sha256": "94037bd307358bb6c2d16d7f53490217a0359ac9c3829b7049e19367b6b332cb"
+    },
+    {
+      "symbol": "000651",
+      "announcement_id": "1225250396",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000651_1225250396.txt.gz",
+      "capture_sha256": "d7f98d82a4b4c2ea8867bcf2b19fc1878432a30043ede0f6f88b34f45fe0a052",
+      "text_sha256": "5b141346f14864255d789d0fb6ab8e79c056612ace358e7d8282dc04c0c84743",
+      "source_record_sha256": "8435371c7764393b605b04d713aa6bbe149c71d089c0665aeb5b2d0a6474155a"
+    },
+    {
+      "symbol": "000652",
+      "announcement_id": "1225113124",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_data_completion_20261006\\capital_chain_text\\000652_1225113124.txt.gz",
+      "capture_sha256": "28b570e3aa1886385fb971580d97e74d6e4910513054d155916e8dfa63caab4f",
+      "text_sha256": "37492055c4f39b00e5bc0fdd9dd8aa8045741e2f7aff83576b9f30ba20cd33a3",
+      "source_record_sha256": "a3cf05adcd98eeccc9244b1f78de776044d71c5a3045095aac2623517841ed79"
+    },
+    {
+      "symbol": "000661",
+      "announcement_id": "1225135424",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000661_1225135424.txt.gz",
+      "capture_sha256": "58d60eb343a345bbeb8ad1d281d15e389673613b892e271856280e1909873778",
+      "text_sha256": "20b15256dac4d8ec3f04f29033f2db50593b0ef86ca031c8904e356d3398b3a2",
+      "source_record_sha256": "66d28c8388287cba3fcb01b6532d71586ab5f613342c5a8c48065cef1672288d"
+    },
+    {
+      "symbol": "000663",
+      "announcement_id": "1225209828",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_data_completion_20261006\\capital_chain_text\\000663_1225209828.txt.gz",
+      "capture_sha256": "55d19d3493eba4db1e213889ad62a043737d8942382527929631923ce61305d0",
+      "text_sha256": "41d23a6aa0ab127a1690f2d9f9f8749b73db301a2bedd2ca81072b35a896312f",
+      "source_record_sha256": "49fa4848b8471e6a1d7ca19f49c3a829c79474f0212d1dcb4c3683138d798b1e"
+    },
+    {
+      "symbol": "000672",
+      "announcement_id": "1225212571",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000672_1225212571.txt.gz",
+      "capture_sha256": "e7ee62f457a3703e4b2e535ad4d977821a8dfc107933e378450eee83c744494e",
+      "text_sha256": "8580f49099c9fad76231053537dcb5edfed0ad6c7499495ceb267cb5ffb57ada",
+      "source_record_sha256": "cbab753e708c2161ca37b9ec009c56cfd930092d48b970fc8a9e8bf3536ef36b"
+    },
+    {
+      "symbol": "000678",
+      "announcement_id": "1225220917",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000678_1225220917.txt.gz",
+      "capture_sha256": "4b46cabab57088f265482a210b449fa45ff3ffac1887b1183c796aaa75fc6e18",
+      "text_sha256": "b7b1f232f2c7bd3d7b3e85339e651fc45c469218919205fed0fc5fc5b59ec6c1",
+      "source_record_sha256": "6417e5e7e6ad40f9e2996864ff094f4816b5b9d911f471c517f9b61cf4117d10"
+    },
+    {
+      "symbol": "000679",
+      "announcement_id": "1225120919",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000679_1225120919.txt.gz",
+      "capture_sha256": "ab69b67b2eb598e7904c4164e4b6854833c0893a41c3543ae522168b47c80250",
+      "text_sha256": "f56a143c9ee4aec08545b859e7a7c7fd863ed15566d88f21bbe657652dd9ee53",
+      "source_record_sha256": "ef9429fa6bd2a120b2b10087fdf44b639470b40bfc660dc353157ad28f421133"
+    },
+    {
+      "symbol": "000682",
+      "announcement_id": "1225161855",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\000682_1225161855.txt.gz",
+      "capture_sha256": "ef019d8b03f2069e57dbde4e8a5012743ce81c6bbc45a9d19a11658fc6285105",
+      "text_sha256": "3af690363f3ed1a4557db8e39d90faa385d219a24e51cce9b995ccec0b3e9542",
+      "source_record_sha256": "29e967f90537f9e98590c85360e53d91db16d0d4bb06be1c2a570e2235d967a6"
+    },
+    {
+      "symbol": "000683",
+      "announcement_id": "1225131777",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000683_1225131777.txt.gz",
+      "capture_sha256": "cab21e05c0bf387d2a145d47ff64f369e11ceaf199063cae7ff83daff73014ed",
+      "text_sha256": "5de02f536148ec21e3bdc6557f4c7526dc7740668a1b720207e96d43482f240e",
+      "source_record_sha256": "63300e6d431e9cc2ea55befb4698b1b5ab0ccf03e10247fc9c0195cd7fafe1f3"
+    },
+    {
+      "symbol": "000685",
+      "announcement_id": "1225194087",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\000685_1225194087.txt.gz",
+      "capture_sha256": "27ff34bd52095c3616b5137201602abba5a7c7740c06837a0b982351006956e5",
+      "text_sha256": "2ad1ff3cd9248edcd27cbe901f0003c5d1ab929abff4134e0d0892115f4e9621",
+      "source_record_sha256": "23281c689f01a6079cb499a28a7956ccdfeae57764a6e1352e4b2ccc3a818ffa"
+    },
+    {
+      "symbol": "000700",
+      "announcement_id": "1225237694",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\000700_1225237694.txt.gz",
+      "capture_sha256": "5633b67cc533826566155532c5f8b5784dd2955b2c03542a1a0c83d79ef1f6a1",
+      "text_sha256": "35889063481662ad6484aa53feec9727288c8683c993a781a4eeeca77d26c70d",
+      "source_record_sha256": "b0c3e002ac1889bfcf7b42cae6bf77fd2129df96bb5d1fc441c87869f7e842ab"
+    },
+    {
+      "symbol": "000703",
+      "announcement_id": "1225104872",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\000703_1225104872.txt.gz",
+      "capture_sha256": "d1d6d2eb7664f56fa4b3f9ab768ce4b6e092d50225505739f5e383bece36bca2",
+      "text_sha256": "8b36d4381aeb2c3207c221a4a4333e6edb5df6331a77037fb4307443a2890e51",
+      "source_record_sha256": "33f99550be65e1e275b6ba5779a0086f29ef9133c5099e018e6668516e57fc9a"
+    },
+    {
+      "symbol": "000705",
+      "announcement_id": "1225244567",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000705_1225244567.txt.gz",
+      "capture_sha256": "9cb8fd8eb35510d5f59f5cb22e82a5c610fd6d82312e493aa5320ec4ce9dda19",
+      "text_sha256": "20a94c2817320ea0bea479d5b1b5d2f5bf5910b0dd1926bf5b4d10fc9d6f30aa",
+      "source_record_sha256": "fbdc71527338d02df8f3fef1ec42273d8aa0f07c50f83645e999e2f0b3738445"
+    },
+    {
+      "symbol": "000708",
+      "announcement_id": "1225012401",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000708_1225012401.txt.gz",
+      "capture_sha256": "432870ca475527b382e7e8c34a9f17446d4d3543713faa72464f2fa3970209fd",
+      "text_sha256": "05a57b31b39da943005c7b4ada189d6b788e96b35682e40484c2ae417307e905",
+      "source_record_sha256": "d42f8c175f9eb19357bd1f75f3beb596266787c7d530c19a33e88c0f5ee1e78a"
+    },
+    {
+      "symbol": "000710",
+      "announcement_id": "1225235977",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_data_completion_20261006\\capital_chain_text\\000710_1225235977.txt.gz",
+      "capture_sha256": "b217947686c32c946a24801c85fd50ff05c5535a37dea6258ca8d423b9484546",
+      "text_sha256": "2ab70e82092fccc3617f16952b01b2ef87a5c2ba95e0f8178be60a2d1aebb1b7",
+      "source_record_sha256": "9c7e9d4788f4ab2b7e665bf6c54daefb7a4afe8f42ff5e1def4ec0146542c3dc"
+    },
+    {
+      "symbol": "000713",
+      "announcement_id": "1225170362",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000713_1225170362.txt.gz",
+      "capture_sha256": "0e0bb8f3f5bf796658b8f5dd5acbefc44e5d2d9604f65859c6c2c298b973e7ef",
+      "text_sha256": "203723c015abb3604de31d0dc36edf80e1ee56e87299bbd193cf423d5008fda2",
+      "source_record_sha256": "637aaa155cb6b35c854859bde6ff2f951ee645171765d501b19ce0b02b45c1f5"
+    },
+    {
+      "symbol": "000719",
+      "announcement_id": "1225112362",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000719_1225112362.txt.gz",
+      "capture_sha256": "683c5727af4fc8aeb89393637fb1e1b61a14829a1d16f429882f1027b5a27ffe",
+      "text_sha256": "18f0d112055ae7eb84d25c56e82790608c121523cacf1e69a073e63c7ea9af02",
+      "source_record_sha256": "62559fce4a2d8b8ee24dc8db5b72744bd3de8603d3dcbc498f3b04b7c2fa8b7a"
+    },
+    {
+      "symbol": "000720",
+      "announcement_id": "1225242358",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\000720_1225242358.txt.gz",
+      "capture_sha256": "8cf3380db865dff4c62847193f9e0e92c7dfc70ff6b1fff749e44a5dff735ff2",
+      "text_sha256": "d7fd38420d6eb4fe548415f6a3b5d7a32e0c4abd32cafd34677a1c4c7945ced2",
+      "source_record_sha256": "9cfc35c3d0535c50b899f3051afc8ead07130be71988baa20e27bdc134d49d11"
+    },
+    {
+      "symbol": "000721",
+      "announcement_id": "1225163783",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\000721_1225163783.txt.gz",
+      "capture_sha256": "ea74445e8b3f766c618d07c37f5aa77d3ba788b94466946c90eb6b4bebf829fa",
+      "text_sha256": "ea890edc6f6db816b7ce8e554555598d38c7b8bd70d21ba546950d0e20e5b2bf",
+      "source_record_sha256": "4317699f3edfcb494a58bb6c6db80d10f7d83fc0c59956ce0cf808f21fa3bf3f"
+    },
+    {
+      "symbol": "000722",
+      "announcement_id": "1225079970",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000722_1225079970.txt.gz",
+      "capture_sha256": "9ce4c841e1c251aa7e1aef708af79a6720099d1d68e100b60a54c3fb521365e8",
+      "text_sha256": "27b26ea3454397eb6c13a3a77d7e632663d9d702e6e59e4a3face949ef4ad243",
+      "source_record_sha256": "11232bcb1c27e9ba8b8a7366063069713cc5d9ffac02f171b7e9e4d9b7b69064"
+    },
+    {
+      "symbol": "000727",
+      "announcement_id": "1225203682",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_data_completion_20261006\\capital_chain_text\\000727_1225203682.txt.gz",
+      "capture_sha256": "be18492515ffd9724599dcc1a9e042fa7e364d833d47b4cb73128f3f65a51325",
+      "text_sha256": "53e256d878d274793fe3220af57addade6da9b2d093c07175462ba9b4c95515b",
+      "source_record_sha256": "6a0a3198df056dc78aac90f64bc6417156f9238eb3aaa625a0d7224a2192c13d"
+    },
+    {
+      "symbol": "000729",
+      "announcement_id": "1225102552",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000729_1225102552.txt.gz",
+      "capture_sha256": "660474ac0dd4dc765d51761e50945db3cfbf820adbb7fa01497dc1b954564fbb",
+      "text_sha256": "8481ab63cdced8aee986df2e29b06593fc9b2ae66591a26b85fef352c972e9f8",
+      "source_record_sha256": "55f74af0c034e64d4c66861c03ceb884cd4e86493cdc507a95fc17524daa5723"
+    },
+    {
+      "symbol": "000733",
+      "announcement_id": "1225246300",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\000733_1225246300.txt.gz",
+      "capture_sha256": "77b82c2d629b2b3c583bca378a05623f8c22e83c2475ddff9ca6f67c88225b30",
+      "text_sha256": "3fc06061ced0cc4d044adf73f606de54d59915e0ec7e6d5e046dafc287cb1d58",
+      "source_record_sha256": "2a7f4ed2deac50a52fa1cd269907b6bb571dc166e348746798b5779f282bccd0"
+    },
+    {
+      "symbol": "000737",
+      "announcement_id": "1225182337",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000737_1225182337.txt.gz",
+      "capture_sha256": "a007044f21eaa33a49f856abac818e3458f03afd3d4747140f9361838d40c888",
+      "text_sha256": "df20056b6d0f439b7a00483dbad666c219e3782116a95b9e4bbb77a1acbc6a2f",
+      "source_record_sha256": "e7f0f8578bbe383e87236fb31fdc256a591d77e945a6993b8fba989378179627"
+    },
+    {
+      "symbol": "000738",
+      "announcement_id": "1225036461",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000738_1225036461.txt.gz",
+      "capture_sha256": "97c97ecf80027b8eede907a9f224122918fc0a407507f4a0ac26996384fe30ba",
+      "text_sha256": "d83368a05335b05dfbcdcb6ef6560231baf4f6460a6fcb600fa7ddf7492d611f",
+      "source_record_sha256": "e04e462f0ec9f49ce286a508d3ef9cb8bb9ea3e2fe0cdff1a9ae0270fb777ca6"
+    },
+    {
+      "symbol": "000739",
+      "announcement_id": "1225019234",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\000739_1225019234.txt.gz",
+      "capture_sha256": "6ce3a07b57d4f621a38b64293cdbbb8768963e5dc60a20de5c3d7526c0b677d6",
+      "text_sha256": "edcc5cbf4514904c1c9743da6222b320ee1951738a7856bb5216f45a8fc0324e",
+      "source_record_sha256": "8ebaa21624de2c7d8c318df10bfecfa6748f9ccc66fb745ae2e20410c0fa35c1"
+    },
+    {
+      "symbol": "000753",
+      "announcement_id": "1225119199",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000753_1225119199.txt.gz",
+      "capture_sha256": "b7afa35370af924e13ddbea40143ebe9bdaa0941bbd64aabda4d8939b6419150",
+      "text_sha256": "a5c68b99c729bbadff698d6553a430539747afba88f6c7a7df2a15bc8c0a16d3",
+      "source_record_sha256": "b795338aba7ac7da3c45e53db3f7131d2958b1d022ebb378f8f595fcb1630ab9"
+    },
+    {
+      "symbol": "000762",
+      "announcement_id": "1225088270",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000762_1225088270.txt.gz",
+      "capture_sha256": "78846165a73f06a2282243ec646f86e009e8df0ee1d4af0354f9ff8506a12503",
+      "text_sha256": "5e63a45fbe790b585345730b931e144a5c22c7fdf1a145327715d934ce99c8c4",
+      "source_record_sha256": "91b2957d6859c36cd9cbc77207d694d21005c8fc7bba8136e76ded4eacb61cdb"
+    }
+  ],
+  "excluded_identities": [
+    [
+      "000007",
+      "1225232778"
+    ],
+    [
+      "000012",
+      "1225204194"
+    ],
+    [
+      "000017",
+      "1225132602"
+    ],
+    [
+      "000020",
+      "1225131755"
+    ],
+    [
+      "000025",
+      "1225138352"
+    ],
+    [
+      "000026",
+      "1225009595"
+    ],
+    [
+      "000031",
+      "1225184895"
+    ],
+    [
+      "000035",
+      "1225231252"
+    ],
+    [
+      "000048",
+      "1225089773"
+    ],
+    [
+      "000050",
+      "1225009341"
+    ],
+    [
+      "000055",
+      "1225081648"
+    ],
+    [
+      "000062",
+      "1225034927"
+    ],
+    [
+      "000065",
+      "1225061092"
+    ],
+    [
+      "000070",
+      "1225139223"
+    ],
+    [
+      "000089",
+      "1225169129"
+    ],
+    [
+      "000096",
+      "1225219952"
+    ],
+    [
+      "000151",
+      "1225113085"
+    ],
+    [
+      "000156",
+      "1225023169"
+    ],
+    [
+      "000157",
+      "1225055609"
+    ],
+    [
+      "000158",
+      "1225077614"
+    ]
+  ],
+  "registry": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\research_trials.sqlite3",
+  "captures": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\compact_archive\\captured_financial.sqlite3",
+  "output": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\cash_investment_source80\\source_receipt.json",
+  "bindings": {
+    "runtime": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\scripts\\consume_cash_investment_sources.py",
+      "sha256": "6bd779c92419ebbbd6d205a84ec09a7cb5e823b81e1aaae8c8820f8996f0adc2"
+    },
+    "parser": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\cash_investment.py",
+      "sha256": "24a1ce2af08a64c20c32901857f532951a2aa892ecc86ad6955c6c8a27765c67"
+    },
+    "cash_collection_parser": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\cash_collection.py",
+      "sha256": "81bb964eba03b4e0ff4244cb58c3b3fe54395114c7372c088946e484385c934e"
+    },
+    "statement_parser": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\financial_statements.py",
+      "sha256": "4ce12f040f3719e196801563fc524da1f52c49b45bdf948d2a7fdd2349f92f01"
+    },
+    "source_inventory": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_cash_confirmation_20261010\\cash_pairs.parquet",
+      "sha256": "e14726e4df28267fda93c8364f51525da29197cec529f2c94d10754ec841e880"
+    },
+    "completed20_protocol": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\cash_investment_source20\\protocol.json",
+      "sha256": "793a4c19c09b8ede1e501ea82fac6f14026be4b2bd6969220ef248fa197a3797"
+    }
+  },
+  "new_contexts": 0,
+  "price_or_return_labels_read": false,
+  "full_financial_or_PIT_or_production_qualified": false
+}

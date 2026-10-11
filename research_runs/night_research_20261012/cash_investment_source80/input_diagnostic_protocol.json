@@ -1,0 +1,51 @@
+{
+  "id": "CFINV_UNCHANGED_KERNEL_UNUSED80_INPUT_DIAGNOSTIC_20261012",
+  "kind": "source_input_diagnostic",
+  "frozen_at_utc": "2026-10-11T19:07:07.885820+00:00",
+  "deadline_utc": "2026-10-11T23:00:00+00:00",
+  "reference_input_date": "2026-08-03",
+  "reference_date_reason": "First already frozen source-interface calendar date; no returns/window optimization or prior20 kernel replay",
+  "expected_companies": 80,
+  "field_mapping": {
+    "cash_flow_from_operating_activities": "operating_cash_net",
+    "cash_paid_for_operation_activities": "operating_cash_outflow",
+    "cash_paid_for_asset": "capital_expenditure_cash"
+  },
+  "diagnostics": [
+    "unchanged main/control Spearman",
+    "highest decile ceil(n/10) common eligible source-input overlap",
+    "mechanical internal funding cash >= capex, nonnegative cash < capex, negative operating cash states",
+    "explicitzero capex and inferred negative gross operating inflow consistency"
+  ],
+  "scope": "Only new80 monetary-input source evidence; all pending remain in80 denominator, no policy/scope/version/PIT/native equivalence qualification, no annual backfill before stored availability",
+  "new_contexts": 0,
+  "returns_or_wealth_tested": false,
+  "registry": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\research_trials.sqlite3",
+  "output": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\cash_investment_source80\\input_diagnostic.json",
+  "bindings": {
+    "runtime": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\scripts\\diagnose_cash_investment_inputs.py",
+      "sha256": "e636cbc3a2dbef3a812746336a138ae7a10ef62a89841b8bd28e81ee58fe9ae9"
+    },
+    "source_receipt": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\cash_investment_source80\\source_receipt.json",
+      "sha256": "a491dcc2b8d38f26c96e22da003e83efd7866dd095db6de1cf637c8382aa4129"
+    },
+    "source_protocol": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\cash_investment_source80\\protocol.json",
+      "sha256": "017fa84b5bd0ec10c5c35fde4da119a04b0102c290b4a20bffa39f34dc564531"
+    },
+    "fixed_kernels": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\cash_investment_replay\\protocol.json",
+      "sha256": "42e30d859a17d9824db073cb32b44171f49895cdc753cc3b0f7fab87c5aebaa1"
+    },
+    "known_interface": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\native_preflight.py",
+      "sha256": "4e26e95ab5db291328a1b19168e2decc834d0c85c15ad6304d519317f37cc1fb"
+    },
+    "existing_quotes": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_repaired_research_20261009\\execution_repair_v2\\quotes.parquet",
+      "sha256": "5fee01d9763697421a36fb21d9b2927633b4297aa100d7bbce1f697798ab14dc"
+    }
+  }
+}
