@@ -61,12 +61,20 @@ from .registry import ResearchRegistry
 TrialLedger = ResearchRegistry
 
 
+def registry_baseline(cfg):
+    """Explicit immutable history; cumulative memory is reconciled separately."""
+    return int(cfg["research"]["history_denominator"])
+
+
 def historical_denominator(cfg):
-    denominator = int(cfg["research"]["history_denominator"])
+    """Conservative cumulative policy floor, never a registry constructor input."""
+    denominator = registry_baseline(cfg)
     for field in ("memory", "live_memory"):
         value = cfg["research"].get(field)
         if value and Path(value).exists():
-            denominator = max(denominator, int(read(value).get("multiple_testing_denominator", 0)))
+            memory = read(value)
+            denominator = max(denominator, int(memory.get("multiple_testing_denominator", 0)),
+                              int(memory.get("multiple_testing_total", 0)))
     return denominator
 
 
@@ -311,7 +319,7 @@ def main(argv=None):
         print_compact(result)
         return
     if args.command == "registry":
-        ledger = TrialLedger(args.trial_ledger, historical_denominator(cfg))
+        ledger = TrialLedger(args.trial_ledger, registry_baseline(cfg))
         try:
             if args.action == "status":
                 result = {"status": "VERIFIED", "historical_baseline": ledger.historical,
@@ -362,7 +370,7 @@ def main(argv=None):
         from .evolution import Candidate
         from .evaluation import check_window
         check_window(cfg["research"]["probe_start"], cfg["research"]["probe_end"], cfg["research"]["sealed_windows"])
-        ledger = TrialLedger(args.trial_ledger, historical_denominator(cfg))
+        ledger = TrialLedger(args.trial_ledger, registry_baseline(cfg))
         try:
             researcher = engine(cfg, args.state, ledger)
             if args.command == "plan":
@@ -439,7 +447,7 @@ def main(argv=None):
                 if len(panel):
                     check_window(str(panel.index.min()), str(panel.index.max()), cfg["research"]["sealed_windows"])
         candidates = [Candidate.from_dict(c) for c in read(args.candidates)["candidates"]]
-        trial_ledger = TrialLedger(args.trial_ledger, historical_denominator(cfg))
+        trial_ledger = TrialLedger(args.trial_ledger, registry_baseline(cfg))
         try:
             researcher = engine(cfg, registry=trial_ledger,
                                 research_context={"window": {"start": args.start, "end": args.end},
@@ -574,7 +582,7 @@ def main(argv=None):
         check_window(args.start, args.end, cfg["research"]["sealed_windows"])
         candidates = read(args.candidates)["candidates"]
         candidate = next(c for c in candidates if c["candidate_id"] == args.candidate_id)
-        registry = TrialLedger(args.trial_ledger, historical_denominator(cfg))
+        registry = TrialLedger(args.trial_ledger, registry_baseline(cfg))
         try:
             window = {"start": args.start, "end": args.end}
             guard = engine(cfg, registry=registry, research_context={"window": window,

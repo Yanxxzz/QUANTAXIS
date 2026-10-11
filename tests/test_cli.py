@@ -23,7 +23,7 @@ class CLITests(unittest.TestCase):
         cfg["research"]["memory"] = str(REPO / "research_bootstrap/memory.json")
         cfg["research"]["live_memory"] = str(directory / "live_memory.json")
         cfg["research"]["pool_snapshot"] = str(directory / "pool.json")
-        cfg["research"]["history_denominator"] = 1  # Memory's study total must win.
+        cfg["research"]["history_denominator"] = 415  # Explicit registry baseline, separate from cumulative memory.
         cfg["research"]["probe_start"] = "2023-01-02"
         cfg["research"]["probe_end"] = "2023-08-01"
         cfg["research"]["sealed_windows"] = [{"start": "2019-01-01", "end": "2021-12-31"}]
@@ -93,6 +93,77 @@ class CLITests(unittest.TestCase):
             self.assertTrue(ledger.record(c2, window, 5, 10))
             self.assertEqual(ledger.total, 417)
             ledger.close()
+
+    def test_registry_status_and_plan_keep_baseline_separate_from_cumulative_memory(self):
+        with tempfile.TemporaryDirectory() as temp:
+            directory = Path(temp)
+            config, cfg = self.config(directory)
+            cfg["research"]["history_denominator"] = 415
+            config.write_text(json.dumps(cfg), encoding="utf-8")
+            Path(cfg["research"]["live_memory"]).write_text(json.dumps({
+                "multiple_testing_denominator": 416, "multiple_testing_total": 416}), encoding="utf-8")
+            path = directory / "trials.sqlite3"
+            ledger = TrialLedger(path, 415)
+            ledger.record({"candidate_id": "COUNT_ONLY_SYNTHETIC", "formula": "CLOSE/OPEN", "direction": 1},
+                          {"start": "2023-01-02", "end": "2023-02-01"}, 5, 10)
+            original_head = ledger.head
+            ledger.close()
+            status, plan = directory / "status.json", directory / "plan.json"
+            self.run_cli(config, path, ["registry", "status", "--output", str(status)])
+            self.run_cli(config, path, ["plan", "--count", "1", "--state", str(directory / "state.json"),
+                                         "--output", str(plan)])
+            observed = json.loads(status.read_text(encoding="utf-8"))
+            self.assertEqual((observed["historical_baseline"], observed["unique_registered"], observed["total"]),
+                             (415, 1, 416))
+            planned = json.loads(plan.read_text(encoding="utf-8"))
+            self.assertEqual((planned["historical_tested_denominator"], planned["total_tested_denominator"]), (415, 416))
+            ledger = TrialLedger(path, 415)
+            self.assertEqual((ledger.historical, ledger.new_tested, ledger.total, ledger.head), (415, 1, 416, original_head))
+            ledger.close()
+
+    def test_new_registry_does_not_import_cumulative_memory_as_its_baseline(self):
+        with tempfile.TemporaryDirectory() as temp:
+            directory = Path(temp)
+            config, cfg = self.config(directory)
+            cfg["research"]["history_denominator"] = 415
+            config.write_text(json.dumps(cfg), encoding="utf-8")
+            Path(cfg["research"]["live_memory"]).write_text(json.dumps({
+                "multiple_testing_denominator": 491, "multiple_testing_total": 491}), encoding="utf-8")
+            path, status = directory / "trials.sqlite3", directory / "status.json"
+            self.run_cli(config, path, ["registry", "status", "--output", str(status)])
+            observed = json.loads(status.read_text(encoding="utf-8"))
+            self.assertEqual((observed["historical_baseline"], observed["unique_registered"], observed["total"]), (415, 0, 415))
+            with self.assertRaisesRegex(ValueError, "memory is ahead.*reconcile"):
+                self.run_cli(config, path, ["plan", "--state", str(directory / "state.json"),
+                                             "--output", str(directory / "plan.json")])
+
+    def test_admission_keeps_cumulative_total_after_registry_memory_export(self):
+        with tempfile.TemporaryDirectory() as temp:
+            directory = Path(temp)
+            config, cfg = self.config(directory)
+            cfg["research"]["history_denominator"] = 415
+            config.write_text(json.dumps(cfg), encoding="utf-8")
+            Path(cfg["research"]["live_memory"]).write_text(json.dumps({
+                "multiple_testing_denominator": 415, "multiple_testing_total": 491}), encoding="utf-8")
+            evidence, policy = directory / "evidence.json", directory / "policy.json"
+            evidence.write_text("{}", encoding="utf-8")
+            policy.write_text(json.dumps({"minimum_hypotheses": 1}), encoding="utf-8")
+            with patch("panda_alpha.admission.assess_admission", return_value={"status": "pending"}) as assess:
+                self.run_cli(config, directory / "unused.sqlite3", ["admission", "--evidence", str(evidence),
+                             "--policy", str(policy), "--output", str(directory / "review.json")])
+            self.assertEqual(assess.call_args.args[1]["minimum_hypotheses"], 491)
+
+    def test_cli_rejects_an_explicit_increase_to_the_immutable_baseline(self):
+        with tempfile.TemporaryDirectory() as temp:
+            directory = Path(temp)
+            config, cfg = self.config(directory)
+            path = directory / "trials.sqlite3"
+            ledger = TrialLedger(path, 415)
+            ledger.close()
+            cfg["research"]["history_denominator"] = 416
+            config.write_text(json.dumps(cfg), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "Historical baseline is immutable"):
+                self.run_cli(config, path, ["registry", "status", "--output", str(directory / "status.json")])
 
     def test_human_retirement_blocks_evaluation_before_formula_or_new_labels(self):
         with tempfile.TemporaryDirectory() as temp:
