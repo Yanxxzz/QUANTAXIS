@@ -1,0 +1,568 @@
+{
+  "status": "THREE_Q1_NATIVE_ORIGINAL_READS_COMPLETE_FIELDS_PENDING",
+  "protocol_sha256": "71eae4577a30e5b493ffead2f0ae47f853eade1193f2673e1b344e121f6d9537",
+  "records": [
+    {
+      "symbol": "000786",
+      "announcement_id": "1225245596",
+      "metadata_record_sha256": "7fc5336a64af94741067255bebaf8f68a2a23c26c0c0ec7a1bbe3ddd6bcd7140",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225245596.PDF",
+      "published_at": "2026-04-29",
+      "time_precision": "date",
+      "status": "FULL_NATIVE_Q1_ORIGINAL_READ_FIELD_REVIEW_PENDING",
+      "HTTP_attempts": 1,
+      "http_status": 200,
+      "PDF_bytes": 202092,
+      "PDF_sha256": "92af47f655767fe0f3f23e80a6ef7fc79fa3016c0b881a623ff90c42ceca481c",
+      "text_sha256": "c59b52e7465cddfa4c30137455d7b2f9de5b281daecfb688c29c3243126c6b27",
+      "text_recipe": "exact pdfplumber extract_text(layout=False) per physical page; join @@SOURCE_PAGE:n@@ markers, no trimming",
+      "physical_pages": 11,
+      "page_proof": [
+        {
+          "physical_page": 1,
+          "native_characters": 292,
+          "native_text_sha256": "940a7147a976d49d58e9cd934e1b94536f22611f8289eda9a791d6b1cd5053db",
+          "short_first_native_line": "北新集团建材股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 2,
+          "native_characters": 1270,
+          "native_text_sha256": "52dfea0a6856a6678ad943af146fcb229b2cf68a6a0da7f57353af925d552769",
+          "short_first_native_line": "北新集团建材股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 3,
+          "native_characters": 1573,
+          "native_text_sha256": "b4a7b90e144ab0230e6deb3ed809f31399844b2a36d0b8a86fab9e5e4d58389f",
+          "short_first_native_line": "北新集团建材股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 4,
+          "native_characters": 1755,
+          "native_text_sha256": "735d4b7104dc190f16f47dc15cd6e4a69590b78767e95855983ac6d3cb1dcd22",
+          "short_first_native_line": "北新集团建材股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 5,
+          "native_characters": 1623,
+          "native_text_sha256": "3d94b20759c04399a81c2e47aaa731c8c243a3235d0863deb84274c67e0acb4b",
+          "short_first_native_line": "北新集团建材股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 6,
+          "native_characters": 1106,
+          "native_text_sha256": "14cd259e5d4aa3561a9826862332c76b2f789f3fdb91b4b2412eca3bb98640b6",
+          "short_first_native_line": "北新集团建材股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 7,
+          "native_characters": 1611,
+          "native_text_sha256": "5a90dffe30c60f91c14d0ebb6a2e52acd4160bf5785e1027a146f64abcd4c09b",
+          "short_first_native_line": "北新集团建材股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 8,
+          "native_characters": 1329,
+          "native_text_sha256": "479759f0bb6e96805f132f538645f2908114d5559317972f83b0503491e16b31",
+          "short_first_native_line": "北新集团建材股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 9,
+          "native_characters": 1231,
+          "native_text_sha256": "cb7e83d38663c56f56d2f6967694d2d11daef1f155569a219034717d86831724",
+          "short_first_native_line": "北新集团建材股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 10,
+          "native_characters": 1471,
+          "native_text_sha256": "c6609c7a7400c9cfd374a6405440b71952f0339137ae18f227f14468c392d44d",
+          "short_first_native_line": "北新集团建材股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 11,
+          "native_characters": 1038,
+          "native_text_sha256": "365e3af01499696c01d05c10a6691b7b8a8028473aee029aaf485f569c5c36e2",
+          "short_first_native_line": "北新集团建材股份有限公司2026年第一季度报告"
+        }
+      ],
+      "short_locator_hints": [
+        {
+          "physical_page": 1,
+          "page_text_offset": 267,
+          "snippet": "3.第一季度财务会计报告是否经审计",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 49,
+          "snippet": "公司是否需追溯调整或重述以前年度会计数据",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 101,
+          "snippet": "营业收入（元） 6,163,591,626.19 6,246,258,743.71 -1.32%",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 585,
+          "snippet": "单位：元",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 973,
+          "snippet": "被投资单位可辨认净资产公允价值产生的收益",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 4,
+          "page_text_offset": 1239,
+          "snippet": "单位：股",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 6,
+          "page_text_offset": 24,
+          "snippet": "单位：万元",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 6,
+          "page_text_offset": 271,
+          "snippet": "编制单位：北新集团建材股份有限公司",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 6,
+          "page_text_offset": 300,
+          "snippet": "单位：元",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 8,
+          "page_text_offset": 570,
+          "snippet": "2、合并利润表",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 8,
+          "page_text_offset": 578,
+          "snippet": "单位：元",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 8,
+          "page_text_offset": 640,
+          "snippet": "其中：营业收入 6,163,591,626.19 6,246,258,743.71",
+          "field_role_verified": false
+        }
+      ],
+      "fresh_original_PDF_received": true,
+      "complete_native_text_read": true,
+      "manual_fulltext_review_performed": false,
+      "unknown_fields": [
+        "current_quarter_income_roles",
+        "currency_unit_precision",
+        "accounting_restatements_scope",
+        "latest_version_chain",
+        "complete_PIT"
+      ],
+      "qualification_or_tradability_claimed": false,
+      "PDF_or_fulltext_file_saved": false
+    },
+    {
+      "symbol": "300007",
+      "announcement_id": "1225227672",
+      "metadata_record_sha256": "c3db81ed4313ba4b43f6a6e5ba1d6656952b0343edffbf2f00a948f3024533bd",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225227672.PDF",
+      "published_at": "2026-04-29",
+      "time_precision": "date",
+      "status": "FULL_NATIVE_Q1_ORIGINAL_READ_FIELD_REVIEW_PENDING",
+      "HTTP_attempts": 1,
+      "http_status": 200,
+      "PDF_bytes": 161958,
+      "PDF_sha256": "d26f743dbaebe7f735180c601a6b417c6d903fa19941b9c4e9e5c737d66a5ae2",
+      "text_sha256": "95c8b73a388f00afdba024cc76459929c485a5b16977aab70d43759d098e704c",
+      "text_recipe": "exact pdfplumber extract_text(layout=False) per physical page; join @@SOURCE_PAGE:n@@ markers, no trimming",
+      "physical_pages": 11,
+      "page_proof": [
+        {
+          "physical_page": 1,
+          "native_characters": 293,
+          "native_text_sha256": "517e6670933a280601cf3bc9a99babafd697b06fa27b0f6a3bb2e283a4aebcfe",
+          "short_first_native_line": "汉威科技集团股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 2,
+          "native_characters": 1025,
+          "native_text_sha256": "72cb8d371fff84b89d7298f7b9fa92a53fd7c21cc64aab7205d4015ea6c793e4",
+          "short_first_native_line": "汉威科技集团股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 3,
+          "native_characters": 1591,
+          "native_text_sha256": "db63432992018dd1c349a10434e3eaf792dfe7973f666b5ab8a2389742bad91c",
+          "short_first_native_line": "汉威科技集团股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 4,
+          "native_characters": 1258,
+          "native_text_sha256": "bc6fa8fa082a3fbb878ea32ed10363966f1a93d2184136aa65f8cffcf5a40434",
+          "short_first_native_line": "汉威科技集团股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 5,
+          "native_characters": 910,
+          "native_text_sha256": "59036fb4e93162d27ab3c31aaad91bd4535fe27b7ad66f9cabd359dc4556e718",
+          "short_first_native_line": "汉威科技集团股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 6,
+          "native_characters": 1239,
+          "native_text_sha256": "4a1caff36203105eda66bfe043da43f486beca804bd21db35793562164343d56",
+          "short_first_native_line": "汉威科技集团股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 7,
+          "native_characters": 1141,
+          "native_text_sha256": "bfe56a2f97e473386a45899ad0822abcd1be5399ce2ba5ad033ec0e22d88204c",
+          "short_first_native_line": "汉威科技集团股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 8,
+          "native_characters": 1104,
+          "native_text_sha256": "5bfe2c22563ee36e201f973c6b38b7d614593284ccb6e8b27764b56e0e831adf",
+          "short_first_native_line": "汉威科技集团股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 9,
+          "native_characters": 909,
+          "native_text_sha256": "a625d0a45605df06f5cc832c227bb5def8ff0d6a1fbded2c36323fe2ea0be122",
+          "short_first_native_line": "汉威科技集团股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 10,
+          "native_characters": 1356,
+          "native_text_sha256": "a43daf0c07d42363bf65cb04379e18c894a14687e3b8a2562c020d4d4a16c80f",
+          "short_first_native_line": "汉威科技集团股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 11,
+          "native_characters": 104,
+          "native_text_sha256": "901f5458b7665d7eae4dec0d77672a415dddb136037f7664bfa63b9cdde7ceaa",
+          "short_first_native_line": "汉威科技集团股份有限公司2026年第一季度报告"
+        }
+      ],
+      "short_locator_hints": [
+        {
+          "physical_page": 1,
+          "page_text_offset": 267,
+          "snippet": "3.第一季度财务会计报告是否经过审计",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 49,
+          "snippet": "公司是否需追溯调整或重述以前年度会计数据",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 102,
+          "snippet": "营业收入（元） 508,513,085.10 602,567,028.47 -15.61%",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 572,
+          "snippet": "单位：元",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 3,
+          "page_text_offset": 59,
+          "snippet": "单位：元",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 3,
+          "page_text_offset": 595,
+          "snippet": "利润表项目 2026年1-3月 2025年1-3月 变动幅度 变动说明",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 3,
+          "page_text_offset": 1057,
+          "snippet": "现金流量表项目 2026年1-3月 2025年1-3月 变动幅度 变动说明",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 3,
+          "page_text_offset": 1382,
+          "snippet": "单位：股",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 5,
+          "page_text_offset": 46,
+          "snippet": "单位：股",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 5,
+          "page_text_offset": 619,
+          "snippet": "编制单位：汉威科技集团股份有限公司",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 5,
+          "page_text_offset": 649,
+          "snippet": "单位：元",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 7,
+          "page_text_offset": 916,
+          "snippet": "2、合并利润表",
+          "field_role_verified": false
+        }
+      ],
+      "fresh_original_PDF_received": true,
+      "complete_native_text_read": true,
+      "manual_fulltext_review_performed": false,
+      "unknown_fields": [
+        "current_quarter_income_roles",
+        "currency_unit_precision",
+        "accounting_restatements_scope",
+        "latest_version_chain",
+        "complete_PIT"
+      ],
+      "qualification_or_tradability_claimed": false,
+      "PDF_or_fulltext_file_saved": false
+    },
+    {
+      "symbol": "600031",
+      "announcement_id": "1225257191",
+      "metadata_record_sha256": "9e340895d87689fc3d9f247719a297fa18f6216e0f46dfbeee412bfd0e9e1f04",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225257191.PDF",
+      "published_at": "2026-04-30",
+      "time_precision": "date",
+      "status": "FULL_NATIVE_Q1_ORIGINAL_READ_FIELD_REVIEW_PENDING",
+      "HTTP_attempts": 1,
+      "http_status": 200,
+      "PDF_bytes": 168632,
+      "PDF_sha256": "50256432c224e1c5b0666993bf6da3465627632f5ac20affd07c0ea205e1bf62",
+      "text_sha256": "6548d099ee7113a88d47cc02d286baa8e3c0c178fad1085eeacf7ac28af917af",
+      "text_recipe": "exact pdfplumber extract_text(layout=False) per physical page; join @@SOURCE_PAGE:n@@ markers, no trimming",
+      "physical_pages": 16,
+      "page_proof": [
+        {
+          "physical_page": 1,
+          "native_characters": 566,
+          "native_text_sha256": "2458e93cb24b298c15c31c6cbc869e51c25ee0788c05f58e8f22501aee248df2",
+          "short_first_native_line": "三一重工股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 2,
+          "native_characters": 911,
+          "native_text_sha256": "10ef6d761814d822c8f365dac2be492ad051d8ec4f457d8e4ca8c17e12c63c3c",
+          "short_first_native_line": "三一重工股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 3,
+          "native_characters": 732,
+          "native_text_sha256": "45e2f2f413a85a06ca29de6706301b863fe6285f01903dac3953bd506a8073f4",
+          "short_first_native_line": "三一重工股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 4,
+          "native_characters": 791,
+          "native_text_sha256": "5b2ddb04d705a13c831d8a1a25dd77f6e23828ccc0490f67bb4bbb8410d6bb10",
+          "short_first_native_line": "三一重工股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 5,
+          "native_characters": 605,
+          "native_text_sha256": "acd957adb16e554a4b757042df35823a3caa737d423546a10d2bafbbafe9d3f2",
+          "short_first_native_line": "三一重工股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 6,
+          "native_characters": 821,
+          "native_text_sha256": "6967633e81b9908096a2145385d17f6e1d34550315db68068688c8bba68fdbe4",
+          "short_first_native_line": "三一重工股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 7,
+          "native_characters": 796,
+          "native_text_sha256": "dcf6f1c393cf5a0f7e0c4d3d562a82875a0a43d46cd3b57416d73bfd987bf4d6",
+          "short_first_native_line": "三一重工股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 8,
+          "native_characters": 847,
+          "native_text_sha256": "870f6d3c46438f7c6e70c955485ce08d2c62912fd66cbf4eb9b57068a1afa543",
+          "short_first_native_line": "三一重工股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 9,
+          "native_characters": 1112,
+          "native_text_sha256": "dd6665f384973fdae12d2078ea513c248ffade9830195fd3138bef387f6505db",
+          "short_first_native_line": "三一重工股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 10,
+          "native_characters": 900,
+          "native_text_sha256": "b50ba966d88e6791124dfc0c8a82927274759c4c2c5f187beedbe112e436f090",
+          "short_first_native_line": "三一重工股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 11,
+          "native_characters": 1005,
+          "native_text_sha256": "8a850d11871a0654d54c0c1b93129be10c2df9a9c8eb3dda4a538548e5fb2462",
+          "short_first_native_line": "三一重工股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 12,
+          "native_characters": 739,
+          "native_text_sha256": "94165b39647992d9e7dcbf25f3fb5e088728945e92ce345d6ca08fd1249ad346",
+          "short_first_native_line": "三一重工股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 13,
+          "native_characters": 746,
+          "native_text_sha256": "c70d26ad8659d15b7872789fdb05f47f201f08a5e0fc38f8391f2b5544b89571",
+          "short_first_native_line": "三一重工股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 14,
+          "native_characters": 955,
+          "native_text_sha256": "8df513ce36a3ca576199197a461c4f5c588cf1ed281287b7ad26a521271f5368",
+          "short_first_native_line": "三一重工股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 15,
+          "native_characters": 850,
+          "native_text_sha256": "34ba4d09e84b4d492f599cf12ceee2ee0d397479fb9cf850dcf20e039f3ad29d",
+          "short_first_native_line": "三一重工股份有限公司2026年第一季度报告"
+        },
+        {
+          "physical_page": 16,
+          "native_characters": 721,
+          "native_text_sha256": "452e5e78e772e9525c53ff2955165e0863884229f0d572ed344dfcc898db8e2b",
+          "short_first_native_line": "三一重工股份有限公司2026年第一季度报告"
+        }
+      ],
+      "short_locator_hints": [
+        {
+          "physical_page": 1,
+          "page_text_offset": 263,
+          "snippet": "第一季度财务报表是否经审计",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 307,
+          "snippet": "单位：千元 币种：人民币",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 366,
+          "snippet": "营业收入 24,042,362 21,049,036 21,049,036 14.22",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 382,
+          "snippet": "追溯调整或重述的原因说明",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 453,
+          "snippet": "单位:千元 币种:人民币",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 3,
+          "page_text_offset": 74,
+          "snippet": "营业收入 14.22 主要系国内和国际销售均同比增长。",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 3,
+          "page_text_offset": 145,
+          "snippet": "单位：股",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 5,
+          "page_text_offset": 77,
+          "snippet": "(一)审计意见类型",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 5,
+          "page_text_offset": 123,
+          "snippet": "编制单位：三一重工股份有限公司",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 5,
+          "page_text_offset": 139,
+          "snippet": "单位：千元 币种:人民币 审计类型：未经审计",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 5,
+          "page_text_offset": 162,
+          "snippet": "项目 2026年3月31日 2025年12月31日",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 6,
+          "page_text_offset": 22,
+          "snippet": "项目 2026年3月31日 2025年12月31日",
+          "field_role_verified": false
+        }
+      ],
+      "fresh_original_PDF_received": true,
+      "complete_native_text_read": true,
+      "manual_fulltext_review_performed": false,
+      "unknown_fields": [
+        "current_quarter_income_roles",
+        "currency_unit_precision",
+        "accounting_restatements_scope",
+        "latest_version_chain",
+        "complete_PIT"
+      ],
+      "qualification_or_tradability_claimed": false,
+      "PDF_or_fulltext_file_saved": false
+    }
+  ],
+  "attempts": [
+    {
+      "symbol": "000786",
+      "announcement_id": "1225245596"
+    },
+    {
+      "symbol": "300007",
+      "announcement_id": "1225227672"
+    },
+    {
+      "symbol": "600031",
+      "announcement_id": "1225257191"
+    }
+  ],
+  "failed_source": null,
+  "new_contexts": 0,
+  "official_calls": 0,
+  "prices_factor_values_or_labels_read": false,
+  "PDF_or_fulltext_file_saved": false,
+  "manual_field_review": "PENDING",
+  "native_financial_period_or_production_certified": false,
+  "updated_at_utc": "2026-10-11T22:38:33.954354+00:00"
+}

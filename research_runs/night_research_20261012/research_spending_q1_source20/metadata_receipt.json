@@ -1,0 +1,671 @@
+{
+  "status": "BOUNDED_Q1_METADATA_COMPLETE",
+  "protocol_sha256": "8ef37c63e51b33f05677582ce19199c54ac295b176d5319ba2e34f99aadb597f",
+  "org_bindings": {
+    "000786": {
+      "org_id": "gssz0000786",
+      "candidates": [
+        "gssz0000786"
+      ],
+      "URL_evidence": [
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000786&announcementId=1207391167&orgId=gssz0000786&announcementTime=2020-03-21",
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000786&announcementId=1207391168&orgId=gssz0000786&announcementTime=2020-03-21"
+      ]
+    },
+    "300007": {
+      "org_id": "9900008312",
+      "candidates": [
+        "9900008312"
+      ],
+      "URL_evidence": [
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=300007&announcementId=1217709593&orgId=9900008312&announcementTime=2023-08-31",
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=300007&announcementId=1217709596&orgId=9900008312&announcementTime=2023-08-31"
+      ]
+    },
+    "600031": {
+      "org_id": "gssh0600031",
+      "candidates": [
+        "gssh0600031"
+      ],
+      "URL_evidence": [
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600031&announcementId=1207585154&orgId=gssh0600031&announcementTime=2020-04-24",
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600031&announcementId=1207585165&orgId=gssh0600031&announcementTime=2020-04-24"
+      ]
+    },
+    "688015": {
+      "org_id": "9900038993",
+      "candidates": [
+        "9900038993"
+      ],
+      "URL_evidence": [
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688015&announcementId=1217982628&orgId=9900038993&announcementTime=2023-09-29",
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688015&announcementId=1217982629&orgId=9900038993&announcementTime=2023-09-29"
+      ]
+    },
+    "000788": {
+      "org_id": "gssz0000788",
+      "candidates": [
+        "gssz0000788"
+      ],
+      "URL_evidence": [
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000788&announcementId=1207667102&orgId=gssz0000788&announcementTime=2020-04-29",
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000788&announcementId=1207667103&orgId=gssz0000788&announcementTime=2020-04-29"
+      ]
+    },
+    "300008": {
+      "org_id": "9900008271",
+      "candidates": [
+        "9900008271"
+      ],
+      "URL_evidence": [
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=300008&announcementId=1218934088&orgId=9900008271&announcementTime=2024-01-17",
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=300008&announcementId=1219871270&orgId=9900008271&announcementTime=2024-04-29"
+      ]
+    },
+    "600032": {
+      "org_id": "9900041932",
+      "candidates": [
+        "9900041932"
+      ],
+      "URL_evidence": [
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600032&announcementId=1210896508&orgId=9900041932&announcementTime=2021-08-28",
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600032&announcementId=1210896509&orgId=9900041932&announcementTime=2021-08-28"
+      ]
+    },
+    "688016": {
+      "org_id": "9900039142",
+      "candidates": [
+        "9900039142"
+      ],
+      "URL_evidence": [
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688016&announcementId=1217651576&orgId=9900039142&announcementTime=2023-08-26",
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688016&announcementId=1218187589&orgId=9900039142&announcementTime=2023-10-28"
+      ]
+    },
+    "000790": {
+      "org_id": "gssz0000790",
+      "candidates": [
+        "gssz0000790"
+      ],
+      "URL_evidence": [
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000790&announcementId=1207514097&orgId=gssz0000790&announcementTime=2020-04-17",
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000790&announcementId=1207514109&orgId=gssz0000790&announcementTime=2020-04-17"
+      ]
+    },
+    "300009": {
+      "org_id": "9900008310",
+      "candidates": [
+        "9900008310"
+      ],
+      "URL_evidence": [
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=300009&announcementId=1217617287&orgId=9900008310&announcementTime=2023-08-24",
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=300009&announcementId=1217617291&orgId=9900008310&announcementTime=2023-08-24"
+      ]
+    },
+    "600035": {
+      "org_id": "gssh0600035",
+      "candidates": [
+        "gssh0600035"
+      ],
+      "URL_evidence": [
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600035&announcementId=1207657743&orgId=gssh0600035&announcementTime=2020-04-29",
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600035&announcementId=1207657744&orgId=gssh0600035&announcementTime=2020-04-29"
+      ]
+    },
+    "688019": {
+      "org_id": "9900038987",
+      "candidates": [
+        "9900038987"
+      ],
+      "URL_evidence": [
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688019&announcementId=1217718333&orgId=9900038987&announcementTime=2023-08-31",
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688019&announcementId=1217718337&orgId=9900038987&announcementTime=2023-08-31"
+      ]
+    },
+    "000791": {
+      "org_id": "gssz0000791",
+      "candidates": [
+        "gssz0000791"
+      ],
+      "URL_evidence": [
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000791&announcementId=1207415732&orgId=gssz0000791&announcementTime=2020-03-28",
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000791&announcementId=1207415733&orgId=gssz0000791&announcementTime=2020-03-28"
+      ]
+    },
+    "300011": {
+      "org_id": "9900008309",
+      "candidates": [
+        "9900008309"
+      ],
+      "URL_evidence": [
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=300011&announcementId=1217674771&orgId=9900008309&announcementTime=2023-08-29",
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=300011&announcementId=1217674781&orgId=9900008309&announcementTime=2023-08-29"
+      ]
+    },
+    "600038": {
+      "org_id": "gssh0600038",
+      "candidates": [
+        "gssh0600038"
+      ],
+      "URL_evidence": [
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600038&announcementId=1207427466&orgId=gssh0600038&announcementTime=2020-03-31",
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600038&announcementId=1207427471&orgId=gssh0600038&announcementTime=2020-03-31"
+      ]
+    },
+    "688021": {
+      "org_id": "9900039287",
+      "candidates": [
+        "9900039287"
+      ],
+      "URL_evidence": [
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688021&announcementId=1217615844&orgId=9900039287&announcementTime=2023-08-24",
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688021&announcementId=1217615847&orgId=9900039287&announcementTime=2023-08-24"
+      ]
+    },
+    "000796": {
+      "org_id": "gssz0000796",
+      "candidates": [
+        "gssz0000796"
+      ],
+      "URL_evidence": [
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000796&announcementId=1207666470&orgId=gssz0000796&announcementTime=2020-04-29",
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000796&announcementId=1207666471&orgId=gssz0000796&announcementTime=2020-04-29"
+      ]
+    },
+    "300012": {
+      "org_id": "9900008369",
+      "candidates": [
+        "9900008369"
+      ],
+      "URL_evidence": [
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=300012&announcementId=1217509306&orgId=9900008369&announcementTime=2023-08-11",
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=300012&announcementId=1217509307&orgId=9900008369&announcementTime=2023-08-11"
+      ]
+    },
+    "600039": {
+      "org_id": "gssh0600039",
+      "candidates": [
+        "gssh0600039"
+      ],
+      "URL_evidence": [
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600039&announcementId=1207331711&orgId=gssh0600039&announcementTime=2020-02-29",
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600039&announcementId=1207688352&orgId=gssh0600039&announcementTime=2020-04-30"
+      ]
+    },
+    "688023": {
+      "org_id": "9900039124",
+      "candidates": [
+        "9900039124"
+      ],
+      "URL_evidence": [
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688023&announcementId=1217543422&orgId=9900039124&announcementTime=2023-08-16",
+        "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688023&announcementId=1217543425&orgId=9900039124&announcementTime=2023-08-16"
+      ]
+    }
+  },
+  "companies": [
+    {
+      "symbol": "000786",
+      "status": "BOUNDED_METADATA_COMPLETE",
+      "records": 1
+    },
+    {
+      "symbol": "300007",
+      "status": "BOUNDED_METADATA_COMPLETE",
+      "records": 1
+    },
+    {
+      "symbol": "600031",
+      "status": "BOUNDED_METADATA_COMPLETE",
+      "records": 1
+    },
+    {
+      "symbol": "688015",
+      "status": "BOUNDED_METADATA_COMPLETE",
+      "records": 1
+    },
+    {
+      "symbol": "000788",
+      "status": "BOUNDED_METADATA_COMPLETE",
+      "records": 1
+    },
+    {
+      "symbol": "300008",
+      "status": "BOUNDED_METADATA_COMPLETE",
+      "records": 1
+    },
+    {
+      "symbol": "600032",
+      "status": "BOUNDED_METADATA_COMPLETE",
+      "records": 1
+    },
+    {
+      "symbol": "688016",
+      "status": "BOUNDED_METADATA_COMPLETE",
+      "records": 1
+    },
+    {
+      "symbol": "000790",
+      "status": "BOUNDED_METADATA_COMPLETE",
+      "records": 1
+    },
+    {
+      "symbol": "300009",
+      "status": "BOUNDED_METADATA_COMPLETE",
+      "records": 1
+    },
+    {
+      "symbol": "600035",
+      "status": "BOUNDED_METADATA_COMPLETE",
+      "records": 1
+    },
+    {
+      "symbol": "688019",
+      "status": "BOUNDED_METADATA_COMPLETE",
+      "records": 1
+    },
+    {
+      "symbol": "000791",
+      "status": "BOUNDED_METADATA_COMPLETE",
+      "records": 1
+    },
+    {
+      "symbol": "300011",
+      "status": "BOUNDED_METADATA_COMPLETE",
+      "records": 1
+    },
+    {
+      "symbol": "600038",
+      "status": "BOUNDED_METADATA_COMPLETE",
+      "records": 1
+    },
+    {
+      "symbol": "688021",
+      "status": "BOUNDED_METADATA_COMPLETE",
+      "records": 1
+    },
+    {
+      "symbol": "000796",
+      "status": "BOUNDED_METADATA_COMPLETE",
+      "records": 1
+    },
+    {
+      "symbol": "300012",
+      "status": "BOUNDED_METADATA_COMPLETE",
+      "records": 1
+    },
+    {
+      "symbol": "600039",
+      "status": "BOUNDED_METADATA_COMPLETE",
+      "records": 1
+    },
+    {
+      "symbol": "688023",
+      "status": "BOUNDED_METADATA_COMPLETE",
+      "records": 1
+    }
+  ],
+  "metadata": [
+    {
+      "symbol": "000786",
+      "announcement_id": "1225245596",
+      "title": "2026年一季度报告",
+      "published_at": "2026-04-29",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000786&announcementId=1225245596&orgId=gssz0000786&announcementTime=2026-04-29",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225245596.PDF",
+      "category": "一季报",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "300007",
+      "announcement_id": "1225227672",
+      "title": "2026年一季度报告",
+      "published_at": "2026-04-29",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=300007&announcementId=1225227672&orgId=9900008312&announcementTime=2026-04-29",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225227672.PDF",
+      "category": "一季报",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "600031",
+      "announcement_id": "1225257191",
+      "title": "三一重工股份有限公司2026年第一季度报告",
+      "published_at": "2026-04-30",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600031&announcementId=1225257191&orgId=gssh0600031&announcementTime=2026-04-30",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225257191.PDF",
+      "category": "一季报",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "688015",
+      "announcement_id": "1225210458",
+      "title": "交控科技股份有限公司2026年第一季度报告",
+      "published_at": "2026-04-28",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688015&announcementId=1225210458&orgId=9900038993&announcementTime=2026-04-28",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225210458.PDF",
+      "category": "一季报",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "000788",
+      "announcement_id": "1225220950",
+      "title": "2026年一季度报告",
+      "published_at": "2026-04-28",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000788&announcementId=1225220950&orgId=gssz0000788&announcementTime=2026-04-28",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225220950.PDF",
+      "category": "一季报",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "300008",
+      "announcement_id": "1225204613",
+      "title": "2026年一季度报告",
+      "published_at": "2026-04-28",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=300008&announcementId=1225204613&orgId=9900008271&announcementTime=2026-04-28",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225204613.PDF",
+      "category": "一季报",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "600032",
+      "announcement_id": "1225209531",
+      "title": "浙江新能2026年第一季度报告",
+      "published_at": "2026-04-28",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600032&announcementId=1225209531&orgId=9900041932&announcementTime=2026-04-28",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225209531.PDF",
+      "category": "一季报",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "688016",
+      "announcement_id": "1225259126",
+      "title": "心脉医疗：2026年第一季度报告",
+      "published_at": "2026-04-30",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688016&announcementId=1225259126&orgId=9900039142&announcementTime=2026-04-30",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225259126.PDF",
+      "category": "一季报",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "000790",
+      "announcement_id": "1225255335",
+      "title": "2026年一季度报告",
+      "published_at": "2026-04-30",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000790&announcementId=1225255335&orgId=gssz0000790&announcementTime=2026-04-30",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225255335.PDF",
+      "category": "一季报",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "300009",
+      "announcement_id": "1225159283",
+      "title": "2026年一季度报告",
+      "published_at": "2026-04-24",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=300009&announcementId=1225159283&orgId=9900008310&announcementTime=2026-04-24",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225159283.PDF",
+      "category": "一季报",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "600035",
+      "announcement_id": "1225253950",
+      "title": "湖北楚天智能交通股份有限公司2026年第一季度报告",
+      "published_at": "2026-04-30",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600035&announcementId=1225253950&orgId=gssh0600035&announcementTime=2026-04-30",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225253950.PDF",
+      "category": "一季报",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "688019",
+      "announcement_id": "1225224914",
+      "title": "2026年第一季度报告",
+      "published_at": "2026-04-29",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688019&announcementId=1225224914&orgId=9900038987&announcementTime=2026-04-29",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225224914.PDF",
+      "category": "一季报",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "000791",
+      "announcement_id": "1225255011",
+      "title": "2026年一季度报告",
+      "published_at": "2026-04-30",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000791&announcementId=1225255011&orgId=gssz0000791&announcementTime=2026-04-30",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225255011.PDF",
+      "category": "一季报",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "300011",
+      "announcement_id": "1225158610",
+      "title": "2026年一季度报告",
+      "published_at": "2026-04-24",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=300011&announcementId=1225158610&orgId=9900008309&announcementTime=2026-04-24",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225158610.PDF",
+      "category": "一季报",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "600038",
+      "announcement_id": "1225198431",
+      "title": "中航直升机股份有限公司2026年第一季度报告",
+      "published_at": "2026-04-28",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600038&announcementId=1225198431&orgId=gssh0600038&announcementTime=2026-04-28",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225198431.PDF",
+      "category": "一季报",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "688021",
+      "announcement_id": "1225254417",
+      "title": "山东奥福环保科技股份有限公司2026年第一季度报告",
+      "published_at": "2026-04-30",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688021&announcementId=1225254417&orgId=9900039287&announcementTime=2026-04-30",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225254417.PDF",
+      "category": "一季报",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "000796",
+      "announcement_id": "1225250767",
+      "title": "2026年一季度报告",
+      "published_at": "2026-04-29",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000796&announcementId=1225250767&orgId=gssz0000796&announcementTime=2026-04-29",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225250767.PDF",
+      "category": "一季报",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "300012",
+      "announcement_id": "1225115406",
+      "title": "2026年一季度报告",
+      "published_at": "2026-04-20",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=300012&announcementId=1225115406&orgId=9900008369&announcementTime=2026-04-20",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-20/1225115406.PDF",
+      "category": "一季报",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "600039",
+      "announcement_id": "1225254764",
+      "title": "四川路桥2026年第一季度报告",
+      "published_at": "2026-04-30",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600039&announcementId=1225254764&orgId=gssh0600039&announcementTime=2026-04-30",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225254764.PDF",
+      "category": "一季报",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "688023",
+      "announcement_id": "1225207749",
+      "title": "2026年第一季度报告",
+      "published_at": "2026-04-28",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688023&announcementId=1225207749&orgId=9900039124&announcementTime=2026-04-28",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225207749.PDF",
+      "category": "一季报",
+      "time_precision": "date"
+    }
+  ],
+  "attempts": [
+    {
+      "symbol": "000786",
+      "request_sha256": "126ff4282c3c9d0f44bc85b23074af6dd908d138b5789ce3b35e2b8b4ab2c26d",
+      "http_status": 200,
+      "response_sha256": "3cf89c04fef1e7384ed95b1a00b298899b2193a2124d9a63fd7257215f084dba"
+    },
+    {
+      "symbol": "300007",
+      "request_sha256": "0a391efd9d6195838f3ac5b03ddfcdd59c204f3964b66c49562e805ffde368b8",
+      "http_status": 200,
+      "response_sha256": "79967f69dcb790a4d49496872046e18505ce40e7145bcb3b8cf4b701d2df23c7"
+    },
+    {
+      "symbol": "600031",
+      "request_sha256": "d01a946b5d0119a00be08f470b9eab78a4c98abb6bcc5c604bbb65c42c719f1c",
+      "http_status": 200,
+      "response_sha256": "50112b71e01fdb0649a7c178f6bd7f9b20eedfc2f037ea70122ae645debcbb09"
+    },
+    {
+      "symbol": "688015",
+      "request_sha256": "3fe3715528ac3cba2e37d0f35d952c08aa9eb4dd1a37e16ea7de736b3cb1109e",
+      "http_status": 200,
+      "response_sha256": "d5e531a5fac0fefd5eaf67b44a230c59caffa5a5b5a4084984b3d1f7b3125556"
+    },
+    {
+      "symbol": "000788",
+      "request_sha256": "c6bb7612453daa4ee96e0db67863769fdd558d070d450cf2a58b265c34c6d861",
+      "http_status": 200,
+      "response_sha256": "08de1e2d477fc1219b623734c20434ff3ec168f78a9dcb79192bea6aebc04b2b"
+    },
+    {
+      "symbol": "300008",
+      "request_sha256": "7271ddd502c7e54ed9a620f7ff425d3e502c144f30d1f138401122e04e087ca4",
+      "http_status": 200,
+      "response_sha256": "ff54ae9df8f3a9465ed30b2af8543d88d7369b471324036ac56400b46e1aeb2d"
+    },
+    {
+      "symbol": "600032",
+      "request_sha256": "768f5a4248068785e9d3b54c17e94fe02226b4be2cf0e694ebea28f0d8ee2b0b",
+      "http_status": 200,
+      "response_sha256": "20323526b8601d611aac1e63ca7a3c26493da88635c25b91b0e9851ec4577b0c"
+    },
+    {
+      "symbol": "688016",
+      "request_sha256": "ab53da054cc97c4b9b63484a28b323a97dd83ed78159e2161e67dd28f3a9be8b",
+      "http_status": 200,
+      "response_sha256": "43b40e742881a7a713bd9255b9bd94df3ea8b124b279e80f94e3b0323f280ebd"
+    },
+    {
+      "symbol": "000790",
+      "request_sha256": "758f856042538c276595da4efa2a2c09be16a4bc4ea2c8c0f878fad64f5fae31",
+      "http_status": 200,
+      "response_sha256": "769a88d3c584d03c053be870bc4ee6e5e9def58b1f21c9ba7e17255f439a5593"
+    },
+    {
+      "symbol": "300009",
+      "request_sha256": "8bfc6bb710772d6d039b55e7e9a176ca36dd2432260ee78d2be93677167cc577",
+      "http_status": 200,
+      "response_sha256": "11a5e75bf1e28f56b904d3106a8633d037b0822886edc7c67a7241c4f7d70a10"
+    },
+    {
+      "symbol": "600035",
+      "request_sha256": "655bffb97d504a2ae5026c4a2ce71fffe47402d55afe0fb0ec9548c8a7ecbeb0",
+      "http_status": 200,
+      "response_sha256": "9e622ba88317ba9e5c8c6e153c2df5816a8bbebb4a9a9b0633defe08b1096d67"
+    },
+    {
+      "symbol": "688019",
+      "request_sha256": "10dc3c89295158212705b110743c5a32cec898928b2abb821aa8a1858411eb67",
+      "http_status": 200,
+      "response_sha256": "63e3ea368f1e04717a970f21c4fc7ace716d3ba6715d549283574cb75685810a"
+    },
+    {
+      "symbol": "000791",
+      "request_sha256": "abd439ebe2670573a12b3b1872d245a5abd081b6024eabba32ae0c6b6880c5f8",
+      "http_status": 200,
+      "response_sha256": "12258c881ec4979db7ef0e827095f28d6d210332ed879c81c4dae69c25ef8bbc"
+    },
+    {
+      "symbol": "300011",
+      "request_sha256": "4b9fa7e4ca92c19747f7fb108a458bb9b2ce7d1ba521453e95e7bb0ffa9f8056",
+      "http_status": 200,
+      "response_sha256": "8e3b98e7e5c3a6abc3be2759615eb6b4eb4b43f88b49d4e038606086e98281f8"
+    },
+    {
+      "symbol": "600038",
+      "request_sha256": "58515a545b727140723bda22230c35f8f44573e15d692851ad89fc063f898692",
+      "http_status": 200,
+      "response_sha256": "94dc8f9811db80b50626193e46bca02f81a335f83ef8e678ed5208aeaf6ee10d"
+    },
+    {
+      "symbol": "688021",
+      "request_sha256": "07192467c9d18188c3178226359674b9e713c98c858361f399c33f98b32fdcd0",
+      "http_status": 200,
+      "response_sha256": "1cc0a7d02e5c45474e4a6e631a93c66586fd48b5aaf82e51cf9588ec29a40831"
+    },
+    {
+      "symbol": "000796",
+      "request_sha256": "53e7c3d153c314a6219ae0d881192f2b69d63465c157fb4a0a4a236fbda75c28",
+      "http_status": 200,
+      "response_sha256": "349d329b48162ad85f3bea32cb916d1ee27110330e780a5fa0abd140e1127add"
+    },
+    {
+      "symbol": "300012",
+      "request_sha256": "8c88ab996c512205d9f6dfb46e4663ba8fef19682c3eed4ead67dcacd7df93a0",
+      "http_status": 200,
+      "response_sha256": "24e3b754fac096e866ed37518d6fb7ea8d181bb91ce3ba8bca98a2bb139db494"
+    },
+    {
+      "symbol": "600039",
+      "request_sha256": "7abc35250b878daab2a0d8bbef04e0ef98b448b4e82f3d35be46d4b1595b6a24",
+      "http_status": 200,
+      "response_sha256": "7111195f92a215ef3be2b46114bffbbbf46ab62e5c555125eb8c41a3f62c1a02"
+    },
+    {
+      "symbol": "688023",
+      "request_sha256": "87da8068d3581b528115d4791bfb8aa14676b63fd027f14073b99f4b017e9886",
+      "http_status": 200,
+      "response_sha256": "51bba189d5aa26bac4fe0310d221797b425712a8886f0c3baa91801879e08e4f"
+    }
+  ],
+  "new_contexts": 0,
+  "PDF_calls": 0,
+  "official_calls": 0,
+  "prices_factor_values_or_labels_read": false,
+  "full_channel_certified": false,
+  "updated_at_utc": "2026-10-11T22:36:51.948326+00:00",
+  "planned_body_first3": [
+    {
+      "symbol": "600031",
+      "announcement_id": "1225257191",
+      "title": "三一重工股份有限公司2026年第一季度报告",
+      "published_at": "2026-04-30",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600031&announcementId=1225257191&orgId=gssh0600031&announcementTime=2026-04-30",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225257191.PDF",
+      "category": "一季报",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "688015",
+      "announcement_id": "1225210458",
+      "title": "交控科技股份有限公司2026年第一季度报告",
+      "published_at": "2026-04-28",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688015&announcementId=1225210458&orgId=9900038993&announcementTime=2026-04-28",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225210458.PDF",
+      "category": "一季报",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "600032",
+      "announcement_id": "1225209531",
+      "title": "浙江新能2026年第一季度报告",
+      "published_at": "2026-04-28",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600032&announcementId=1225209531&orgId=9900041932&announcementTime=2026-04-28",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225209531.PDF",
+      "category": "一季报",
+      "time_precision": "date"
+    }
+  ],
+  "selection": "first3 available original-title reports by original company order, date and ID; version chains pending"
+}

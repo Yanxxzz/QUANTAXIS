@@ -1,0 +1,106 @@
+{
+  "id": "RDI_Q1_FIRST3_FIELD_REVIEW_20261012",
+  "reviewed_at_utc": "2026-10-11T22:40:43.385024+00:00",
+  "body_receipt": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\research_spending_q1_source20\\body_source_receipt.json",
+    "sha256": "68e793882b5f2d56c9177c54bfceeffb0d472850f79533e7722e9d78960e9493"
+  },
+  "originals_received": 3,
+  "physical_pages_received": 38,
+  "metadata_companies_complete": 20,
+  "new_contexts": 0,
+  "official_spent": 0,
+  "native_live_period_value_parity_certified": false,
+  "formal_PIT_or_production_qualified": false,
+  "source_facts": [
+    {
+      "symbol": "000786",
+      "announcement_id": "1225245596",
+      "name": "北新建材",
+      "published_at": "2026-04-29",
+      "publication_time_precision": "date",
+      "original_signed_date": "2026-04-28",
+      "not_before_calendar_date": "2026-04-30",
+      "decision_rule": "Use only next reference trading-day close formation after publication;04-30 exact market calendar not independently certified by this source unit",
+      "report_date": "2026-03-31",
+      "statement": "2、合并利润表",
+      "physical_page": 8,
+      "native_text_SHA256": "c59b52e7465cddfa4c30137455d7b2f9de5b281daecfb688c29c3243126c6b27",
+      "physical_page_text_SHA256": "479759f0bb6e96805f132f538645f2908114d5559317972f83b0503491e16b31",
+      "original_PDF_SHA256": "92af47f655767fe0f3f23e80a6ef7fc79fa3016c0b881a623ff90c42ceca481c",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225245596.PDF",
+      "full_native_pages_manually_reviewed": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "original_column_header": "项目 本期发生额 上期发生额",
+      "printed_unit": "元",
+      "currency": "CNY inferred from domestic issuer/yuan wording; explicit币种 label not printed in this profit-table header",
+      "current_period": [
+        "2026-01-01",
+        "2026-03-31"
+      ],
+      "comparative_period": [
+        "2025-01-01",
+        "2025-03-31"
+      ],
+      "period_binding": "inferred current/prior same-quarter roles from2026第一季度 report title and current/upper-period columns, not explicitly printed Jan1-Mar31 on income header",
+      "operating_revenue_current": "6163591626.19",
+      "operating_revenue_comparative": "6246258743.71",
+      "expensed_RD_current": "203997900.59",
+      "expensed_RD_comparative": "191242845.32",
+      "amount_scale": 1,
+      "amount_precision": "0.01 printed yuan",
+      "row_evidence": [
+        "其中：营业收入 6,163,591,626.19 6,246,258,743.71",
+        "研发费用 203,997,900.59 191,242,845.32"
+      ],
+      "financial_audit": "unaudited explicit p1/p11",
+      "restatement_checkbox": "p2追溯调整或重述:□是,checked否",
+      "first_execution_new_accounting_standard": "p11□适用,checked不适用; not proof no other policy change",
+      "consolidation_status": "actual current-period new subsidiary acquisition evidenced p3预计负债/p4营业外收入 and少数股东损益; not scope-clean comparative growth",
+      "barriers": [
+        "consolidation_scope_change_evidenced",
+        "latest_correction_version_chain_unreviewed",
+        "all_channel_public_availability_unverified",
+        "native_default_period_value_parity_unverified"
+      ],
+      "new_current_amounts": 2,
+      "new_comparative_amounts": 2,
+      "paired_current_amounts_bound": true,
+      "financial_or_alpha_eligible": false
+    }
+  ],
+  "pending": [
+    {
+      "symbol": "300007",
+      "announcement_id": "1225227672",
+      "PDF_sha256": "d26f743dbaebe7f735180c601a6b417c6d903fa19941b9c4e9e5c737d66a5ae2",
+      "native_text_sha256": "95c8b73a388f00afdba024cc76459929c485a5b16977aab70d43759d098e704c",
+      "physical_pages": 11,
+      "state": "COMPLETE_NATIVE_EXTRACTION_FULL_MANUAL_REVIEW_UNDELIVERED",
+      "reason": "noninteractive stdinEOF caused QUIT before second document; amounts not used or claimed",
+      "field_pair_bound": false
+    },
+    {
+      "symbol": "600031",
+      "announcement_id": "1225257191",
+      "PDF_sha256": "50256432c224e1c5b0666993bf6da3465627632f5ac20affd07c0ea205e1bf62",
+      "native_text_sha256": "6548d099ee7113a88d47cc02d286baa8e3c0c178fad1085eeacf7ac28af917af",
+      "physical_pages": 16,
+      "state": "COMPLETE_NATIVE_EXTRACTION_FULL_MANUAL_REVIEW_UNDELIVERED",
+      "reason": "noninteractive stdinEOF caused QUIT before second document; amounts not used or claimed",
+      "field_pair_bound": false
+    }
+  ],
+  "recovery": "Do not repeat20 metadataPOSTs or3 successful originalGETs. Preserve one reviewed sourcepair and all3 page/hash receipts. Remaining2 complete-native documents were extracted in memory but not delivered for manual review before stdinEOF closed session; financial role/unit/period qualification remains pending."
+}

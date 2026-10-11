@@ -1,0 +1,72 @@
+{
+  "id": "RDI_Q1_CURRENT_SOURCE20_20261012",
+  "kind": "source_only",
+  "frozen_at_utc": "2026-10-11T22:36:31.679549+00:00",
+  "deadline_utc": "2026-10-11T23:00:00+00:00",
+  "codes": [
+    "000786",
+    "300007",
+    "600031",
+    "688015",
+    "000788",
+    "300008",
+    "600032",
+    "688016",
+    "000790",
+    "300009",
+    "600035",
+    "688019",
+    "000791",
+    "300011",
+    "600038",
+    "688021",
+    "000796",
+    "300012",
+    "600039",
+    "688023"
+  ],
+  "selection": "original source200 first20 order; no financial amount, price or return selection",
+  "report_date": "2026-03-31",
+  "current_income_period": [
+    "2026-01-01",
+    "2026-03-31"
+  ],
+  "query_window": [
+    "2026-04-01",
+    "2026-04-30"
+  ],
+  "query_budget": "one first page per company, 20 POST maximum; no retries or pagination expansion",
+  "local_org_lookup": "project only explicit detail_url on quantaxis.stock_filing_index; at most20 rows per code; verify URL code/ID/orgId; no guessed IDs",
+  "config_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\config\\panda-alpha.local.json",
+  "external_workspace": "D:/PandaAI-Alpha",
+  "registry": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\research_trials.sqlite3",
+  "bindings": {
+    "runtime": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\research_spending_q1_source20\\collect_q1.py",
+      "sha256": "41291066da47f42fd6502ca989cfed0518afe622b5b2c6cdcf3722fd430fbc3c"
+    },
+    "original_source200": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\research_spending_source200\\protocol.json",
+      "sha256": "d5d9b7d2e1c93ce0403b7173b652199dfaa287befa46b7218e9381e50a28207e"
+    },
+    "org_map": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\c05_sample_completion_20261005\\org_map.json",
+      "sha256": "d47efd4d6d911caaa32325f1971564ad4dec273b4ddbad01bf7e4241b911c91d"
+    },
+    "index": {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\filings_market_index.py",
+      "sha256": "77e0c28f9c9529efc5377abc5d5e3fa77f72222fb3bb7ba668a23331ff620c5c"
+    },
+    "record_schema": {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\filings_akshare_index.py",
+      "sha256": "4bda02f66146437b829c362339d8ada4add156c26c7d5cbdc116dcf9080bbad1"
+    }
+  },
+  "output": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\research_spending_q1_source20\\metadata_receipt.json",
+  "original_body_plan": "first3 available primary2026Q1 titles by frozen company order/date/ID; separate exact body freeze after metadata; full original physical pages only",
+  "availability": "date-only publication cannot be used before next reference trading-day formation; actual prior versions/all-channel/PIT unknown",
+  "new_contexts": 0,
+  "official_spent": 0,
+  "factor_or_labels": false,
+  "native_default_financial_period_or_values_certified": false
+}

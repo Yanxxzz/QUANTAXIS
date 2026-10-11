@@ -1,0 +1,25 @@
+{
+  "id": "Q1_NONINTERACTIVE_OUTPUT_EOF_REPAIR",
+  "observed_at_utc": "2026-10-11T22:42:51.987741+00:00",
+  "fault": "stdinEOF queuedQUIT before document2, although all3 native originals extracted. Two field reviews uncompleted and not claimed.",
+  "repair": "new read_q1_v2 emits all acquired documents before process disposal without stdin gate; old runtime and original source/hash receipts preserved",
+  "bindings": {
+    "read_q1.py": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\research_spending_q1_source20\\read_q1.py",
+      "sha256": "0643a92844c8f73ff7bef304df0b86240fe72d302454f5af73be63d9dceaf923"
+    },
+    "read_q1_v2.py": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\research_spending_q1_source20\\read_q1_v2.py",
+      "sha256": "164f31e6b0153bf6e71e4bed3c480f1c40a28481c59aeddc0e2e81a950d75c94"
+    },
+    "test_reader_output.py": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\research_spending_q1_source20\\test_reader_output.py",
+      "sha256": "d778cefe26758e00b7a3d01569147b9c5f90862829b726bdbdebd4bd2f114501"
+    }
+  },
+  "validation": "Executed unittest actual empty stdin case emits three complete document bodies/headers in order;1 test passed. AST passed. NoHTTP/financial values/labels/nativepreflight.",
+  "new_contexts": 0,
+  "previous_sources_replayed": 0,
+  "manual_review_complete": 1,
+  "manual_review_pending": 2
+}

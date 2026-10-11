@@ -1,0 +1,70 @@
+{
+  "id": "RDI_Q1_CURRENT_FIRST3_ORIGINALS_20261012",
+  "kind": "source_only_title_format_repair_and_body_review",
+  "frozen_at_utc": "2026-10-11T22:38:10.814766+00:00",
+  "deadline_utc": "2026-10-11T23:00:00+00:00",
+  "selected_cases": [
+    {
+      "symbol": "000786",
+      "announcement_id": "1225245596",
+      "title": "2026年一季度报告",
+      "published_at": "2026-04-29",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000786&announcementId=1225245596&orgId=gssz0000786&announcementTime=2026-04-29",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225245596.PDF",
+      "category": "一季报",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "300007",
+      "announcement_id": "1225227672",
+      "title": "2026年一季度报告",
+      "published_at": "2026-04-29",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=300007&announcementId=1225227672&orgId=9900008312&announcementTime=2026-04-29",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225227672.PDF",
+      "category": "一季报",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "600031",
+      "announcement_id": "1225257191",
+      "title": "三一重工股份有限公司2026年第一季度报告",
+      "published_at": "2026-04-30",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600031&announcementId=1225257191&orgId=gssh0600031&announcementTime=2026-04-30",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-30/1225257191.PDF",
+      "category": "一季报",
+      "time_precision": "date"
+    }
+  ],
+  "title_repair": "original strict第一季度 classifier excluded11 valid一季度 titles; broaden title format only; no newHTTP, price, amount or label based selection; preserve old metadata receipt/hash/runtime",
+  "selection": "first3 original-title companies in frozen source200 order:000786/300007/600031",
+  "bound_report_period": "2026-01-01..2026-03-31",
+  "fields": [
+    "current consolidated operating revenue",
+    "current consolidated expensed R&D",
+    "comparative column role",
+    "currency unit/precision",
+    "policy restatement and consolidation status",
+    "date precision and conservative availability"
+  ],
+  "original_review": "all physical pages in memory;3singleGET maximum/no retries/redirects; save compact fields/pages/SHA only",
+  "registry": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\research_trials.sqlite3",
+  "output": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\research_spending_q1_source20\\body_source_receipt.json",
+  "bindings": {
+    "runtime": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\research_spending_q1_source20\\read_q1.py",
+      "sha256": "0643a92844c8f73ff7bef304df0b86240fe72d302454f5af73be63d9dceaf923"
+    },
+    "metadata": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\research_spending_q1_source20\\metadata_receipt.json",
+      "sha256": "8f926a7cbbb32df69a825dc6d73dfb7afbe923eced175e0e4cf2e4729def1ac2"
+    },
+    "reader": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\announced_unlock_source_unit\\read_native_sources.py",
+      "sha256": "c36fe544b3a5c3e4d9cc7658feb4dae692f88afd032daf18f5731ae423a484e1"
+    }
+  },
+  "new_contexts": 0,
+  "official_spent": 0,
+  "native_current_default_period_certified": false,
+  "full_PIT_certified": false
+}
