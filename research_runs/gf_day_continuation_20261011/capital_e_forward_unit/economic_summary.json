@@ -1,0 +1,97 @@
+{
+  "status": "BOTH_FIXED_COMBINED_E_COST_PATHS_COMPLETE",
+  "protocol_sha256": "7e909bbd966699c111bfeb743299be269c1c19ee506a274986f51b8278cfcc49",
+  "formation_receipt": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\gf_day_continuation_20261011\\capital_e_forward_unit\\formation_receipt.json",
+    "sha256": "49e091c7c3b45888e6d636e0f75fc4d17f8a54076cca351c8b2895d4fbe19150"
+  },
+  "quote_content_sha256": "003696455111358eb024d53d076c1a7bec1d6974e50ed1e892e54ef876222a26",
+  "results": [
+    {
+      "scope": "COMBINED",
+      "name": "E",
+      "cost": 0.003,
+      "metrics": {
+        "days": 11,
+        "compounded_return": -0.013660927695888114,
+        "cagr": -0.2702963327469543,
+        "sharpe": -0.9661203255452866,
+        "max_drawdown": 0.07033996878044202
+      },
+      "fees": 0.006211172366988317,
+      "blocked_orders": {},
+      "terminal_positions": {},
+      "terminal_liquidation_pending": false,
+      "risk_metadata_status": "risk_metadata_pending",
+      "accounting_error": 1.972814273054624e-15
+    },
+    {
+      "scope": "COMBINED",
+      "name": "E",
+      "cost": 0.005,
+      "metrics": {
+        "days": 11,
+        "compounded_return": -0.01775638787718392,
+        "cagr": -0.33664005244079853,
+        "sharpe": -1.2908669605995828,
+        "max_drawdown": 0.07235402557869541
+      },
+      "fees": 0.010329724573630388,
+      "blocked_orders": {},
+      "terminal_positions": {},
+      "terminal_liquidation_pending": false,
+      "risk_metadata_status": "risk_metadata_pending",
+      "accounting_error": 2.2876665839444144e-15
+    }
+  ],
+  "comparisons": [
+    {
+      "cost": 0.003,
+      "control": "F141_CONTROL",
+      "relative_terminal_wealth": -0.04033463616184785,
+      "daily_net_return_correlation": 0.8542672951741833,
+      "old20_risk_details_unknown_not_reconstructed": true,
+      "control_metadata_origin": "original20_lost_risk_details"
+    },
+    {
+      "cost": 0.003,
+      "control": "COMMON_MARKET",
+      "relative_terminal_wealth": -0.005546228672596798,
+      "daily_net_return_correlation": 0.9677978489454702,
+      "old20_risk_details_unknown_not_reconstructed": false,
+      "control_metadata_origin": "original4_pending_repair_retained_metadata"
+    },
+    {
+      "cost": 0.005,
+      "control": "F141_CONTROL",
+      "relative_terminal_wealth": -0.040332083124475115,
+      "daily_net_return_correlation": 0.8543784636969084,
+      "old20_risk_details_unknown_not_reconstructed": true,
+      "control_metadata_origin": "original20_lost_risk_details"
+    },
+    {
+      "cost": 0.005,
+      "control": "COMMON_MARKET",
+      "relative_terminal_wealth": -0.005609877786111106,
+      "daily_net_return_correlation": 0.9681437063463076,
+      "old20_risk_details_unknown_not_reconstructed": false,
+      "control_metadata_origin": "original4_pending_repair_retained_metadata"
+    }
+  ],
+  "ledger": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\gf_day_continuation_20261011\\capital_e_forward_unit\\E_daily_net_ledger.parquet",
+    "sha256": "98014e69a32261a6a4d3ef66a7bb9f2e5da6e81878285709b0803e3eeb09391b"
+  },
+  "holding_days": 11,
+  "errors": [],
+  "old24_paths_replayed": false,
+  "old20_risk_details_unknown": true,
+  "old_fees_daily_NAV_core_reused_only": true,
+  "QFQ_daily_bar_execution_proxy": true,
+  "official_compute": 0,
+  "new_windows": 1,
+  "short_window_Sharpe_descriptive_only": true,
+  "fresh_blind_OOS": false,
+  "formal_admission": false,
+  "shared_state_written": false
+}

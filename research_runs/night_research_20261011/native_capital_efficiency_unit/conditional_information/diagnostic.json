@@ -1,0 +1,2332 @@
+{
+  "id": "FIXED51_CAPITAL_E_INCREMENTAL_INFORMATION_G_F_DESCRIPTIVE_20261011",
+  "status": "COMPLETED_FIXED51_E_G_F_DESCRIPTIVE_CONDITIONAL_INFORMATION",
+  "protocol_sha256": "e7d1ede04ceb9c9265aa59916d496dd2cd01e16178f4553bf38cb2ab5f24c986",
+  "completed_at_utc": "2026-10-11T10:18:04.170817+00:00",
+  "driver_sha256": "c0f0c1c1af022b072ee9f1d766856d578526cf3a83b2ca6a23415364dec0f39a",
+  "bindings": {
+    "E_cache": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\E_formation_signals.parquet",
+      "sha256": "af9cc19f24500ab04b61d9563f0a4e8bc0a279c5e6c716e2a549098140a755c2"
+    },
+    "original_GF_F_cache": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_source_conservative_unit\\cost_replay\\formation_signals.parquet",
+      "sha256": "9045f29e0968412a14121ed283006942e1593d837a1c108bb028fd16eca02023"
+    },
+    "original_GF_code": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_source_conservative_unit\\WC03GFConservative.py",
+      "sha256": "c2ee44b69b2d56c3968eb00015623952e73aecf562ac4de166678db9f79c3248"
+    },
+    "original_GF_preflight": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_source_conservative_unit\\GF_native_preflight.json",
+      "sha256": "ffc1bdb8635b48b0304cf36bbc828fb2218196d90a6fe7b56ea4193b76418f53"
+    },
+    "original_source_protocol": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_source_conservative_unit\\protocol.json",
+      "sha256": "eeefb4bc7e510fb72fd1bf2c4cbc4c98cd7b142dd29069a02b355c04db53e726"
+    },
+    "existing_E_information_driver": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\information_diagnostic\\run_information.py",
+      "sha256": "4c50a1fb1c97794dabb89c2fa1ed63e145d7a8961524f500328fc153e94278fb"
+    },
+    "existing_E_information_protocol": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\information_diagnostic\\protocol.json",
+      "sha256": "a77b21951f6247ac4bc132b66942c0598da5b71d63cf4767ba7ecaee6c03e459"
+    },
+    "existing_decomposition_helpers": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_signal_information_unit\\run_decomposition_repair_v1.py",
+      "sha256": "ec129dd26145a000d525b54c58bb8d5de6fa25e84a637aa828f8a7fc5ff3f29e"
+    },
+    "existing_decomposition_protocol": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_signal_information_unit\\protocol_repair_v1.json",
+      "sha256": "662a315e7586e7b3f29ffdb86f9a346ed91a7db719249a9fa7df574deb1372c3"
+    },
+    "old_official_pair_review": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_source_conservative_unit\\official_pair_review.json",
+      "sha256": "2a4ba0ae1b989e7d8823ea61629fc8b84e5fe1148683c706e172f9aeec7f5adc"
+    },
+    "input_calendar": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_gf_adapter_unit\\input_calendar.json",
+      "sha256": "54588da59429095e5a5cf4f29272b220e0ec861eec19ac4b0fdaa9424dbc4c46"
+    },
+    "quotes": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_repaired_research_20261009\\execution_repair_v2\\quotes.parquet",
+      "sha256": "5fee01d9763697421a36fb21d9b2927633b4297aa100d7bbce1f697798ab14dc"
+    },
+    "E_actual_preparation": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\preparation_review.json",
+      "sha256": "f77d70d71d52a57acf9111994bcef7c2b8a8c6c9c8945bb3560d80f84ff90d66"
+    },
+    "E_native_preflight": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\E_native_preflight.json",
+      "sha256": "0e60e89181746dedc887384fed8821fb0c0202e7f3ab77a4ccdbc600eb260534"
+    },
+    "E_economic_protocol": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\protocol.json",
+      "sha256": "067264130c8467dcb8a4c53ecf75dea59098d2327fdbaf97636a2fd674663505"
+    },
+    "synthetic_tests": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_capital_efficiency_unit\\conditional_information\\test_rank_controls.py",
+      "sha256": "3fe984da00dcd5493da9f5b5529494eb15e04eb3a3bdf873b4e37077a90be387"
+    }
+  },
+  "source_rows": 32905,
+  "periods": 51,
+  "same_ordered_identity_sha256_before_labels": "ba37f0deb7ec239a893aa66c4283c4a88fb620195350137df4f7e9baf028451d",
+  "G_recovery": {
+    "equation": "ZG=2*GF+F141_CONTROL;alignedF=-F141_CONTROL",
+    "max_source_equation_recovery_error": 2.220446049250313e-16,
+    "tolerance": 2e-12,
+    "ranks_use_same_source_ZG_preserving_true_ties": true,
+    "floating_cancellation_noise_not_ranked": true,
+    "raw_GP_inverted": false,
+    "early_different_population_G_not_used": true
+  },
+  "price_basis_review": {
+    "rows_retained": 1337415,
+    "positive_finite_close_rows": 1334838,
+    "actual_price_unit_counts": {
+      "qfq": 1334838
+    },
+    "missing_or_nonpositive_close_rows_retained": 2577,
+    "NULL_adjustment_rows_retained": 2577,
+    "rows_filtered_or_filled": 0
+  },
+  "summary": {
+    "RankIC": {
+      "E": {
+        "observed_periods": 51,
+        "mean": 0.012671763985720804,
+        "positive_periods": 32,
+        "ICIR_ddof1_not_annualized": 0.16269168744031967
+      },
+      "G": {
+        "observed_periods": 51,
+        "mean": 0.00373131657430655,
+        "positive_periods": 28,
+        "ICIR_ddof1_not_annualized": 0.0619944391291252
+      },
+      "GF": {
+        "observed_periods": 51,
+        "mean": 0.03484607776486067,
+        "positive_periods": 35,
+        "ICIR_ddof1_not_annualized": 0.3999949689597711
+      },
+      "aligned_F141": {
+        "observed_periods": 51,
+        "mean": 0.04399303970674997,
+        "positive_periods": 34,
+        "ICIR_ddof1_not_annualized": 0.3479117326810817
+      }
+    },
+    "score_rank_correlation_before_label_filter": {
+      "E_G": {
+        "observed_periods": 51,
+        "mean": 0.36631743612421436,
+        "positive_periods": 51,
+        "ICIR_ddof1_not_annualized": 6.146266198662778
+      },
+      "E_F": {
+        "observed_periods": 51,
+        "mean": 0.001017947800925977,
+        "positive_periods": 22,
+        "ICIR_ddof1_not_annualized": 0.02467024807624922
+      },
+      "G_F": {
+        "observed_periods": 51,
+        "mean": -0.0987557742095283,
+        "positive_periods": 0,
+        "ICIR_ddof1_not_annualized": -2.1177127234848236
+      }
+    },
+    "partial_rank_E_label_given_G_F": {
+      "observed_periods": 51,
+      "mean": 0.00975285218554326,
+      "positive_periods": 31,
+      "ICIR_ddof1_not_annualized": 0.12206174402695234
+    },
+    "partial_rank_G_label_given_F": {
+      "observed_periods": 51,
+      "mean": 0.007508906192559097,
+      "positive_periods": 28,
+      "ICIR_ddof1_not_annualized": 0.13428458423407758
+    }
+  },
+  "five_descriptive_folds_inherited": [
+    {
+      "fold": 1,
+      "n": 11,
+      "first": "2025-08-14",
+      "last": "2025-10-31",
+      "RankIC": {
+        "E": {
+          "observed_periods": 11,
+          "mean": 0.01615721348567146,
+          "positive_periods": 7,
+          "ICIR_ddof1_not_annualized": 0.20613726177082514
+        },
+        "G": {
+          "observed_periods": 11,
+          "mean": 0.012986642910607733,
+          "positive_periods": 8,
+          "ICIR_ddof1_not_annualized": 0.25500171232166385
+        },
+        "GF": {
+          "observed_periods": 11,
+          "mean": 0.055642317615489566,
+          "positive_periods": 8,
+          "ICIR_ddof1_not_annualized": 0.4562358126136239
+        },
+        "aligned_F141": {
+          "observed_periods": 11,
+          "mean": 0.06049259318566261,
+          "positive_periods": 8,
+          "ICIR_ddof1_not_annualized": 0.4183007787411685
+        }
+      },
+      "score_rank_correlation_before_label_filter": {
+        "E_G": {
+          "observed_periods": 11,
+          "mean": 0.32837818679529973,
+          "positive_periods": 11,
+          "ICIR_ddof1_not_annualized": 13.05677833206511
+        },
+        "E_F": {
+          "observed_periods": 11,
+          "mean": -0.024163326758857507,
+          "positive_periods": 0,
+          "ICIR_ddof1_not_annualized": -1.5916409355262315
+        },
+        "G_F": {
+          "observed_periods": 11,
+          "mean": -0.037066338563518375,
+          "positive_periods": 0,
+          "ICIR_ddof1_not_annualized": -2.1794544518922527
+        }
+      },
+      "partial_rank_E_label_given_G_F": {
+        "observed_periods": 11,
+        "mean": 0.012580512646480625,
+        "positive_periods": 7,
+        "ICIR_ddof1_not_annualized": 0.16249472147453278
+      },
+      "partial_rank_G_label_given_F": {
+        "observed_periods": 11,
+        "mean": 0.015944529026834183,
+        "positive_periods": 8,
+        "ICIR_ddof1_not_annualized": 0.3146443358933157
+      }
+    },
+    {
+      "fold": 2,
+      "n": 10,
+      "first": "2025-11-07",
+      "last": "2026-01-13",
+      "RankIC": {
+        "E": {
+          "observed_periods": 10,
+          "mean": 0.028339592668845493,
+          "positive_periods": 6,
+          "ICIR_ddof1_not_annualized": 0.42060969939051535
+        },
+        "G": {
+          "observed_periods": 10,
+          "mean": 0.007701614122823053,
+          "positive_periods": 4,
+          "ICIR_ddof1_not_annualized": 0.14027247223802353
+        },
+        "GF": {
+          "observed_periods": 10,
+          "mean": 0.019849169979454757,
+          "positive_periods": 7,
+          "ICIR_ddof1_not_annualized": 0.3889815394876633
+        },
+        "aligned_F141": {
+          "observed_periods": 10,
+          "mean": 0.02637772903796799,
+          "positive_periods": 7,
+          "ICIR_ddof1_not_annualized": 0.2658777401310104
+        }
+      },
+      "score_rank_correlation_before_label_filter": {
+        "E_G": {
+          "observed_periods": 10,
+          "mean": 0.3082081448987986,
+          "positive_periods": 10,
+          "ICIR_ddof1_not_annualized": 51.17331461145602
+        },
+        "E_F": {
+          "observed_periods": 10,
+          "mean": -0.030334787732723783,
+          "positive_periods": 0,
+          "ICIR_ddof1_not_annualized": -1.6048392390724118
+        },
+        "G_F": {
+          "observed_periods": 10,
+          "mean": -0.0942109522595254,
+          "positive_periods": 0,
+          "ICIR_ddof1_not_annualized": -4.85165865301712
+        }
+      },
+      "partial_rank_E_label_given_G_F": {
+        "observed_periods": 10,
+        "mean": 0.026821581425409136,
+        "positive_periods": 6,
+        "ICIR_ddof1_not_annualized": 0.33610205817038796
+      },
+      "partial_rank_G_label_given_F": {
+        "observed_periods": 10,
+        "mean": 0.010769711109929232,
+        "positive_periods": 4,
+        "ICIR_ddof1_not_annualized": 0.21756989112226463
+      }
+    },
+    {
+      "fold": 3,
+      "n": 10,
+      "first": "2026-01-20",
+      "last": "2026-04-01",
+      "RankIC": {
+        "E": {
+          "observed_periods": 10,
+          "mean": 4.08970735638059e-06,
+          "positive_periods": 6,
+          "ICIR_ddof1_not_annualized": 5.391626402825178e-05
+        },
+        "G": {
+          "observed_periods": 10,
+          "mean": -0.013349638660125798,
+          "positive_periods": 4,
+          "ICIR_ddof1_not_annualized": -0.1713621730824024
+        },
+        "GF": {
+          "observed_periods": 10,
+          "mean": 0.008642444925177533,
+          "positive_periods": 5,
+          "ICIR_ddof1_not_annualized": 0.0848744713801878
+        },
+        "aligned_F141": {
+          "observed_periods": 10,
+          "mean": 0.025376538110531303,
+          "positive_periods": 5,
+          "ICIR_ddof1_not_annualized": 0.1653578073128123
+        }
+      },
+      "score_rank_correlation_before_label_filter": {
+        "E_G": {
+          "observed_periods": 10,
+          "mean": 0.32914762569517886,
+          "positive_periods": 10,
+          "ICIR_ddof1_not_annualized": 22.79311739343587
+        },
+        "E_F": {
+          "observed_periods": 10,
+          "mean": -0.031602211620415696,
+          "positive_periods": 2,
+          "ICIR_ddof1_not_annualized": -1.15898995501679
+        },
+        "G_F": {
+          "observed_periods": 10,
+          "mean": -0.16375272715576705,
+          "positive_periods": 0,
+          "ICIR_ddof1_not_annualized": -8.0241463140627
+        }
+      },
+      "partial_rank_E_label_given_G_F": {
+        "observed_periods": 10,
+        "mean": 0.005275457831822877,
+        "positive_periods": 6,
+        "ICIR_ddof1_not_annualized": 0.06434837541757774
+      },
+      "partial_rank_G_label_given_F": {
+        "observed_periods": 10,
+        "mean": -0.010394696044215512,
+        "positive_periods": 3,
+        "ICIR_ddof1_not_annualized": -0.14708417882518487
+      }
+    },
+    {
+      "fold": 4,
+      "n": 10,
+      "first": "2026-04-09",
+      "last": "2026-06-16",
+      "RankIC": {
+        "E": {
+          "observed_periods": 10,
+          "mean": 0.04736570052671432,
+          "positive_periods": 9,
+          "ICIR_ddof1_not_annualized": 0.7915195109173554
+        },
+        "G": {
+          "observed_periods": 10,
+          "mean": 0.03036404543539404,
+          "positive_periods": 6,
+          "ICIR_ddof1_not_annualized": 0.6087856135200868
+        },
+        "GF": {
+          "observed_periods": 10,
+          "mean": 0.04291890999801387,
+          "positive_periods": 8,
+          "ICIR_ddof1_not_annualized": 0.6182365479023882
+        },
+        "aligned_F141": {
+          "observed_periods": 10,
+          "mean": 0.022640688200178526,
+          "positive_periods": 7,
+          "ICIR_ddof1_not_annualized": 0.2683134684596947
+        }
+      },
+      "score_rank_correlation_before_label_filter": {
+        "E_G": {
+          "observed_periods": 10,
+          "mean": 0.42770276451521705,
+          "positive_periods": 10,
+          "ICIR_ddof1_not_annualized": 12.41722350759446
+        },
+        "E_F": {
+          "observed_periods": 10,
+          "mean": 0.04166003810916223,
+          "positive_periods": 10,
+          "ICIR_ddof1_not_annualized": 2.5433646053216004
+        },
+        "G_F": {
+          "observed_periods": 10,
+          "mean": -0.11459982766815899,
+          "positive_periods": 0,
+          "ICIR_ddof1_not_annualized": -3.430663503157782
+        }
+      },
+      "partial_rank_E_label_given_G_F": {
+        "observed_periods": 10,
+        "mean": 0.03504346469973903,
+        "positive_periods": 9,
+        "ICIR_ddof1_not_annualized": 0.6476903208878476
+      },
+      "partial_rank_G_label_given_F": {
+        "observed_periods": 10,
+        "mean": 0.03376649982726008,
+        "positive_periods": 7,
+        "ICIR_ddof1_not_annualized": 0.6832593963427491
+      }
+    },
+    {
+      "fold": 5,
+      "n": 10,
+      "first": "2026-06-24",
+      "last": "2026-08-26",
+      "RankIC": {
+        "E": {
+          "observed_periods": 10,
+          "mean": -0.028856321409978708,
+          "positive_periods": 4,
+          "ICIR_ddof1_not_annualized": -0.29949830327721155
+        },
+        "G": {
+          "observed_periods": 10,
+          "mean": -0.0199716135707964,
+          "positive_periods": 6,
+          "ICIR_ddof1_not_annualized": -0.3233937016002625
+        },
+        "GF": {
+          "observed_periods": 10,
+          "mean": 0.04509792232110473,
+          "positive_periods": 7,
+          "ICIR_ddof1_not_annualized": 0.5767941624892368
+        },
+        "aligned_F141": {
+          "observed_periods": 10,
+          "mean": 0.08342769465151813,
+          "positive_periods": 7,
+          "ICIR_ddof1_not_annualized": 0.5652895310911157
+        }
+      },
+      "score_rank_correlation_before_label_filter": {
+        "E_G": {
+          "observed_periods": 10,
+          "mean": 0.44194438364946914,
+          "positive_periods": 10,
+          "ICIR_ddof1_not_annualized": 126.56231339133883
+        },
+        "E_F": {
+          "observed_periods": 10,
+          "mean": 0.052048154463442964,
+          "positive_periods": 10,
+          "ICIR_ddof1_not_annualized": 7.0007102541844075
+        },
+        "G_F": {
+          "observed_periods": 10,
+          "mean": -0.09031796896527262,
+          "positive_periods": 0,
+          "ICIR_ddof1_not_annualized": -8.098150787232907
+        }
+      },
+      "partial_rank_E_label_given_G_F": {
+        "observed_periods": 10,
+        "mean": -0.031239521721829082,
+        "positive_periods": 3,
+        "ICIR_ddof1_not_annualized": -0.3146508395461614
+      },
+      "partial_rank_G_label_given_F": {
+        "observed_periods": 10,
+        "mean": -0.013385075240440006,
+        "positive_periods": 6,
+        "ICIR_ddof1_not_annualized": -0.24750033419935283
+      }
+    }
+  ],
+  "period_summaries": [
+    {
+      "formation": "2025-08-14",
+      "base_close_day": "2025-08-14",
+      "held_sessions": [
+        "2025-08-15",
+        "2025-08-18",
+        "2025-08-19",
+        "2025-08-20",
+        "2025-08-21"
+      ],
+      "terminal_close_day": "2025-08-21",
+      "source_count": 314,
+      "observed_labels": 314,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.37997069257998123,
+        "E_F": -0.005345959182407794,
+        "G_F": -0.05712127956537618
+      },
+      "RankIC": {
+        "E": 0.017724928994305344,
+        "G": 0.023811420394615323,
+        "GF": 0.08067730492812056,
+        "aligned_F141": 0.09172612477838535
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.007766518155175963,
+        "n": 314
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.02922163503145353,
+        "n": 314
+      }
+    },
+    {
+      "formation": "2025-08-21",
+      "base_close_day": "2025-08-21",
+      "held_sessions": [
+        "2025-08-22",
+        "2025-08-25",
+        "2025-08-26",
+        "2025-08-27",
+        "2025-08-28"
+      ],
+      "terminal_close_day": "2025-08-28",
+      "source_count": 308,
+      "observed_labels": 307,
+      "missing_labels": 1,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.366198386054431,
+        "E_F": -0.008569262368639486,
+        "G_F": -0.03860385239364864
+      },
+      "RankIC": {
+        "E": 0.09972666802290805,
+        "G": 0.05364420616251137,
+        "GF": 0.07778242512105046,
+        "aligned_F141": 0.0380443854966081
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.08614464009044588,
+        "n": 307
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.05526422118065082,
+        "n": 307
+      }
+    },
+    {
+      "formation": "2025-08-28",
+      "base_close_day": "2025-08-28",
+      "held_sessions": [
+        "2025-08-29",
+        "2025-09-01",
+        "2025-09-02",
+        "2025-09-03",
+        "2025-09-04"
+      ],
+      "terminal_close_day": "2025-09-04",
+      "source_count": 290,
+      "observed_labels": 289,
+      "missing_labels": 1,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.33151011189800034,
+        "E_F": -0.04585122381867443,
+        "G_F": -0.0422738191584645
+      },
+      "RankIC": {
+        "E": -0.05895533444235349,
+        "G": 0.01935954732143067,
+        "GF": -0.11598657131042667,
+        "aligned_F141": -0.1562026768909384
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.07454979713640979,
+        "n": 289
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.012524101476860243,
+        "n": 289
+      }
+    },
+    {
+      "formation": "2025-09-04",
+      "base_close_day": "2025-09-04",
+      "held_sessions": [
+        "2025-09-05",
+        "2025-09-08",
+        "2025-09-09",
+        "2025-09-10",
+        "2025-09-11"
+      ],
+      "terminal_close_day": "2025-09-11",
+      "source_count": 269,
+      "observed_labels": 269,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.31099650468416384,
+        "E_F": -0.01023386224728217,
+        "G_F": -0.03710021089405255
+      },
+      "RankIC": {
+        "E": 0.018705134433342537,
+        "G": 0.019860769523889057,
+        "GF": 0.13377075800840413,
+        "aligned_F141": 0.14494275209188437
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.013124856960884326,
+        "n": 269
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.025525107419515202,
+        "n": 269
+      }
+    },
+    {
+      "formation": "2025-09-11",
+      "base_close_day": "2025-09-11",
+      "held_sessions": [
+        "2025-09-12",
+        "2025-09-15",
+        "2025-09-16",
+        "2025-09-17",
+        "2025-09-18"
+      ],
+      "terminal_close_day": "2025-09-18",
+      "source_count": 268,
+      "observed_labels": 268,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.32091938556257626,
+        "E_F": -0.013428567688023328,
+        "G_F": -0.03653474602401136
+      },
+      "RankIC": {
+        "E": 0.03458009880028901,
+        "G": 0.0317805690404553,
+        "GF": 0.17943970737744325,
+        "aligned_F141": 0.1997389099052534
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.02666275797304025,
+        "n": 268
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.03990827128748928,
+        "n": 268
+      }
+    },
+    {
+      "formation": "2025-09-18",
+      "base_close_day": "2025-09-18",
+      "held_sessions": [
+        "2025-09-19",
+        "2025-09-22",
+        "2025-09-23",
+        "2025-09-24",
+        "2025-09-25"
+      ],
+      "terminal_close_day": "2025-09-25",
+      "source_count": 267,
+      "observed_labels": 267,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.3349283648918141,
+        "E_F": -0.01902022123955177,
+        "G_F": -0.02770509885500527
+      },
+      "RankIC": {
+        "E": 0.09533850286243263,
+        "G": 0.11409485744086986,
+        "GF": 0.09841281299554824,
+        "aligned_F141": 0.005190544294735919
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.061117370208806025,
+        "n": 267
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.11428406998409334,
+        "n": 267
+      }
+    },
+    {
+      "formation": "2025-09-25",
+      "base_close_day": "2025-09-25",
+      "held_sessions": [
+        "2025-09-26",
+        "2025-09-29",
+        "2025-09-30",
+        "2025-10-09",
+        "2025-10-10"
+      ],
+      "terminal_close_day": "2025-10-10",
+      "source_count": 267,
+      "observed_labels": 267,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.3349283648918141,
+        "E_F": -0.016623228261568552,
+        "G_F": -0.025036543733291162
+      },
+      "RankIC": {
+        "E": -0.03633849266356658,
+        "G": 0.0025848041213406953,
+        "GF": 0.0037669657280197627,
+        "aligned_F141": 0.009498438204833471
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.039404492956015114,
+        "n": 267
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.0028236246249183864,
+        "n": 267
+      }
+    },
+    {
+      "formation": "2025-10-10",
+      "base_close_day": "2025-10-10",
+      "held_sessions": [
+        "2025-10-13",
+        "2025-10-14",
+        "2025-10-15",
+        "2025-10-16",
+        "2025-10-17"
+      ],
+      "terminal_close_day": "2025-10-17",
+      "source_count": 257,
+      "observed_labels": 256,
+      "missing_labels": 1,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.3169236025428147,
+        "E_F": -0.025406426472792266,
+        "G_F": -0.0035170173358074243
+      },
+      "RankIC": {
+        "E": -0.039985258330621304,
+        "G": -0.0038176293339502905,
+        "GF": -0.09704882715024102,
+        "aligned_F141": -0.10941952262677797
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.04345854511356998,
+        "n": 256
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.003610437091663701,
+        "n": 256
+      }
+    },
+    {
+      "formation": "2025-10-17",
+      "base_close_day": "2025-10-17",
+      "held_sessions": [
+        "2025-10-20",
+        "2025-10-21",
+        "2025-10-22",
+        "2025-10-23",
+        "2025-10-24"
+      ],
+      "terminal_close_day": "2025-10-24",
+      "source_count": 254,
+      "observed_labels": 254,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.3028914183644273,
+        "E_F": -0.035063547026557174,
+        "G_F": -0.02824798390465364
+      },
+      "RankIC": {
+        "E": 0.02231639566174796,
+        "G": 0.015478586671595566,
+        "GF": 0.28919661605889124,
+        "aligned_F141": 0.35862395469168284
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.030545471603933755,
+        "n": 254
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.0274447827185391,
+        "n": 254
+      }
+    },
+    {
+      "formation": "2025-10-24",
+      "base_close_day": "2025-10-24",
+      "held_sessions": [
+        "2025-10-27",
+        "2025-10-28",
+        "2025-10-29",
+        "2025-10-30",
+        "2025-10-31"
+      ],
+      "terminal_close_day": "2025-10-31",
+      "source_count": 253,
+      "observed_labels": 252,
+      "missing_labels": 1,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.31074387699639416,
+        "E_F": -0.04469736153740131,
+        "G_F": -0.043080296236300664
+      },
+      "RankIC": {
+        "E": 0.14687517106470593,
+        "G": -0.05435177980578327,
+        "GF": -0.05910181971155468,
+        "aligned_F141": -0.029268252445927782
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.17154287817737718,
+        "n": 252
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.0556242039500837,
+        "n": 252
+      }
+    },
+    {
+      "formation": "2025-10-31",
+      "base_close_day": "2025-10-31",
+      "held_sessions": [
+        "2025-11-03",
+        "2025-11-04",
+        "2025-11-05",
+        "2025-11-06",
+        "2025-11-07"
+      ],
+      "terminal_close_day": "2025-11-07",
+      "source_count": 253,
+      "observed_labels": 252,
+      "missing_labels": 1,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.3021493462818799,
+        "E_F": -0.04155693450453427,
+        "G_F": -0.06850887609809071
+      },
+      "RankIC": {
+        "E": -0.12225846606080405,
+        "G": -0.07959227952028924,
+        "GF": 0.02115612172513009,
+        "aligned_F141": 0.11254386754254941
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.10110601885238162,
+        "n": 252
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.0723713533865965,
+        "n": 252
+      }
+    },
+    {
+      "formation": "2025-11-07",
+      "base_close_day": "2025-11-07",
+      "held_sessions": [
+        "2025-11-10",
+        "2025-11-11",
+        "2025-11-12",
+        "2025-11-13",
+        "2025-11-14"
+      ],
+      "terminal_close_day": "2025-11-14",
+      "source_count": 252,
+      "observed_labels": 252,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.2965783308696597,
+        "E_F": -0.045149858386468095,
+        "G_F": -0.07295833571524263
+      },
+      "RankIC": {
+        "E": 0.01027812193783583,
+        "G": 0.0036804508469178063,
+        "GF": -0.06910998376341992,
+        "aligned_F141": -0.10576046123142228
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.007050027445216345,
+        "n": 252
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.0040692620995941495,
+        "n": 252
+      }
+    },
+    {
+      "formation": "2025-11-14",
+      "base_close_day": "2025-11-14",
+      "held_sessions": [
+        "2025-11-17",
+        "2025-11-18",
+        "2025-11-19",
+        "2025-11-20",
+        "2025-11-21"
+      ],
+      "terminal_close_day": "2025-11-21",
+      "source_count": 252,
+      "observed_labels": 252,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.3046345761024305,
+        "E_F": -0.04759669425949658,
+        "G_F": -0.0706798217563322
+      },
+      "RankIC": {
+        "E": -0.0466720307508018,
+        "G": 0.09565730496350193,
+        "GF": 0.06549071922361374,
+        "aligned_F141": 0.013244238546283121
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.07945576242517277,
+        "n": 252
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.09684408002691444,
+        "n": 252
+      }
+    },
+    {
+      "formation": "2025-11-21",
+      "base_close_day": "2025-11-21",
+      "held_sessions": [
+        "2025-11-24",
+        "2025-11-25",
+        "2025-11-26",
+        "2025-11-27",
+        "2025-11-28"
+      ],
+      "terminal_close_day": "2025-11-28",
+      "source_count": 250,
+      "observed_labels": 250,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.30420657980656735,
+        "E_F": -0.057750477417105296,
+        "G_F": -0.07344438323819039
+      },
+      "RankIC": {
+        "E": 0.1277782652532018,
+        "G": -0.053160207322150994,
+        "GF": 0.04946115287498825,
+        "aligned_F141": 0.12292595523144535
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.15701368948315353,
+        "n": 250
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.04458967070324501,
+        "n": 250
+      }
+    },
+    {
+      "formation": "2025-11-28",
+      "base_close_day": "2025-11-28",
+      "held_sessions": [
+        "2025-12-01",
+        "2025-12-02",
+        "2025-12-03",
+        "2025-12-04",
+        "2025-12-05"
+      ],
+      "terminal_close_day": "2025-12-05",
+      "source_count": 251,
+      "observed_labels": 251,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.30392048136651073,
+        "E_F": -0.04839096457132103,
+        "G_F": -0.08557446770892257
+      },
+      "RankIC": {
+        "E": 0.011719695630331877,
+        "G": 0.032952571361581695,
+        "GF": 0.015038615327641931,
+        "aligned_F141": -0.015950427209255064
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.0014799493113695967,
+        "n": 251
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.03170795284264519,
+        "n": 251
+      }
+    },
+    {
+      "formation": "2025-12-05",
+      "base_close_day": "2025-12-05",
+      "held_sessions": [
+        "2025-12-08",
+        "2025-12-09",
+        "2025-12-10",
+        "2025-12-11",
+        "2025-12-12"
+      ],
+      "terminal_close_day": "2025-12-12",
+      "source_count": 253,
+      "observed_labels": 253,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.30851806416707017,
+        "E_F": -0.03693151082847103,
+        "G_F": -0.09291547537238429
+      },
+      "RankIC": {
+        "E": 0.013653956023683649,
+        "G": 0.10317617941546836,
+        "GF": -0.04708777540736721,
+        "aligned_F141": -0.16921316725693214
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.02089309678986814,
+        "n": 253
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.08911876506588146,
+        "n": 253
+      }
+    },
+    {
+      "formation": "2025-12-12",
+      "base_close_day": "2025-12-12",
+      "held_sessions": [
+        "2025-12-15",
+        "2025-12-16",
+        "2025-12-17",
+        "2025-12-18",
+        "2025-12-19"
+      ],
+      "terminal_close_day": "2025-12-19",
+      "source_count": 254,
+      "observed_labels": 253,
+      "missing_labels": 1,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.3153879277689842,
+        "E_F": -0.019353548919548595,
+        "G_F": -0.09661974057599465
+      },
+      "RankIC": {
+        "E": -0.01667728788441995,
+        "G": -0.022995457431360566,
+        "GF": 0.009228591218944484,
+        "aligned_F141": 0.04253723601338499
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.010409651565682285,
+        "n": 253
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.018987500258950293,
+        "n": 253
+      }
+    },
+    {
+      "formation": "2025-12-19",
+      "base_close_day": "2025-12-19",
+      "held_sessions": [
+        "2025-12-22",
+        "2025-12-23",
+        "2025-12-24",
+        "2025-12-25",
+        "2025-12-26"
+      ],
+      "terminal_close_day": "2025-12-26",
+      "source_count": 255,
+      "observed_labels": 254,
+      "missing_labels": 1,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.3096546788159677,
+        "E_F": -0.014965739247739833,
+        "G_F": -0.11236930350167512
+      },
+      "RankIC": {
+        "E": 0.07841557056188254,
+        "G": -0.01226957321815833,
+        "GF": 0.06365844759580544,
+        "aligned_F141": 0.10162743770949567
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.08502209400209572,
+        "n": 254
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.0009092699022203348,
+        "n": 254
+      }
+    },
+    {
+      "formation": "2025-12-26",
+      "base_close_day": "2025-12-26",
+      "held_sessions": [
+        "2025-12-29",
+        "2025-12-30",
+        "2025-12-31",
+        "2026-01-05",
+        "2026-01-06"
+      ],
+      "terminal_close_day": "2026-01-06",
+      "source_count": 257,
+      "observed_labels": 256,
+      "missing_labels": 1,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.3132005652351284,
+        "E_F": -0.005898804120679466,
+        "G_F": -0.09877728176891855
+      },
+      "RankIC": {
+        "E": 0.14754265454197527,
+        "G": -0.001059497727619795,
+        "GF": 0.09068782734324167,
+        "aligned_F141": 0.1348808548449604
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.1538173128809882,
+        "n": 256
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.01162221185039926,
+        "n": 256
+      }
+    },
+    {
+      "formation": "2026-01-06",
+      "base_close_day": "2026-01-06",
+      "held_sessions": [
+        "2026-01-07",
+        "2026-01-08",
+        "2026-01-09",
+        "2026-01-12",
+        "2026-01-13"
+      ],
+      "terminal_close_day": "2026-01-13",
+      "source_count": 254,
+      "observed_labels": 254,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.30985531407120814,
+        "E_F": -0.007882826393646286,
+        "G_F": -0.10805295481216534
+      },
+      "RankIC": {
+        "E": -0.04192002647990289,
+        "G": -0.012754934082608083,
+        "GF": 0.030996299154293236,
+        "aligned_F141": 0.07761515475836434
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.04215296205732728,
+        "n": 254
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.004407409615805382,
+        "n": 254
+      }
+    },
+    {
+      "formation": "2026-01-13",
+      "base_close_day": "2026-01-13",
+      "held_sessions": [
+        "2026-01-14",
+        "2026-01-15",
+        "2026-01-16",
+        "2026-01-19",
+        "2026-01-20"
+      ],
+      "terminal_close_day": "2026-01-20",
+      "source_count": 255,
+      "observed_labels": 255,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.3161249307844597,
+        "E_F": -0.019427453182761643,
+        "G_F": -0.13071775814542833
+      },
+      "RankIC": {
+        "E": -0.0007229921453314094,
+        "G": -0.056210695577341485,
+        "GF": -0.009872193773194092,
+        "aligned_F141": 0.06187046897335554
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.016744213969318387,
+        "n": 255
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.04863278610673284,
+        "n": 255
+      }
+    },
+    {
+      "formation": "2026-01-20",
+      "base_close_day": "2026-01-20",
+      "held_sessions": [
+        "2026-01-21",
+        "2026-01-22",
+        "2026-01-23",
+        "2026-01-26",
+        "2026-01-27"
+      ],
+      "terminal_close_day": "2026-01-27",
+      "source_count": 257,
+      "observed_labels": 256,
+      "missing_labels": 1,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.31997262570878815,
+        "E_F": -0.033850963292245316,
+        "G_F": -0.1373775960270279
+      },
+      "RankIC": {
+        "E": 0.004127809750247057,
+        "G": -0.11941373818377138,
+        "GF": 0.12848764019226366,
+        "aligned_F141": 0.2830335646511889
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.04587297572948223,
+        "n": 256
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.08570447442301887,
+        "n": 256
+      }
+    },
+    {
+      "formation": "2026-01-27",
+      "base_close_day": "2026-01-27",
+      "held_sessions": [
+        "2026-01-28",
+        "2026-01-29",
+        "2026-01-30",
+        "2026-02-02",
+        "2026-02-03"
+      ],
+      "terminal_close_day": "2026-02-03",
+      "source_count": 255,
+      "observed_labels": 255,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.32385980155559335,
+        "E_F": -0.03887878901919008,
+        "G_F": -0.13425122089498057
+      },
+      "RankIC": {
+        "E": -0.06766453815806352,
+        "G": 0.12346442527852174,
+        "GF": 0.0646599498682658,
+        "aligned_F141": -0.0231943696353617
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.11463018243328792,
+        "n": 255
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.12148268162460732,
+        "n": 255
+      }
+    },
+    {
+      "formation": "2026-02-03",
+      "base_close_day": "2026-02-03",
+      "held_sessions": [
+        "2026-02-04",
+        "2026-02-05",
+        "2026-02-06",
+        "2026-02-09",
+        "2026-02-10"
+      ],
+      "terminal_close_day": "2026-02-10",
+      "source_count": 256,
+      "observed_labels": 256,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.32064924279057755,
+        "E_F": -0.04508910817437679,
+        "G_F": -0.1435828148764099
+      },
+      "RankIC": {
+        "E": -0.07900503227472841,
+        "G": -0.09480511481377589,
+        "GF": -0.050965737568753215,
+        "aligned_F141": 0.0302576649115178
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.05157209945952387,
+        "n": 256
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.09144964542209444,
+        "n": 256
+      }
+    },
+    {
+      "formation": "2026-02-10",
+      "base_close_day": "2026-02-10",
+      "held_sessions": [
+        "2026-02-11",
+        "2026-02-12",
+        "2026-02-13",
+        "2026-02-24",
+        "2026-02-25"
+      ],
+      "terminal_close_day": "2026-02-25",
+      "source_count": 256,
+      "observed_labels": 256,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.3160784490738093,
+        "E_F": -0.06383487020734209,
+        "G_F": -0.16263965034264813
+      },
+      "RankIC": {
+        "E": 0.05587395957407244,
+        "G": -0.050708200433539054,
+        "GF": -0.000545749918862149,
+        "aligned_F141": 0.05638215825651111
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.07663146455998643,
+        "n": 256
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.042165823081203646,
+        "n": 256
+      }
+    },
+    {
+      "formation": "2026-02-25",
+      "base_close_day": "2026-02-25",
+      "held_sessions": [
+        "2026-02-26",
+        "2026-02-27",
+        "2026-03-02",
+        "2026-03-03",
+        "2026-03-04"
+      ],
+      "terminal_close_day": "2026-03-04",
+      "source_count": 255,
+      "observed_labels": 255,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.3254837822918022,
+        "E_F": -0.06165849831663478,
+        "G_F": -0.17634860570646524
+      },
+      "RankIC": {
+        "E": -0.03513568134503964,
+        "G": -0.022449059845492444,
+        "GF": -0.11573547118845715,
+        "aligned_F141": -0.1247566731578949
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.030298168168811767,
+        "n": 255
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.04551301928632781,
+        "n": 255
+      }
+    },
+    {
+      "formation": "2026-03-04",
+      "base_close_day": "2026-03-04",
+      "held_sessions": [
+        "2026-03-05",
+        "2026-03-06",
+        "2026-03-09",
+        "2026-03-10",
+        "2026-03-11"
+      ],
+      "terminal_close_day": "2026-03-11",
+      "source_count": 257,
+      "observed_labels": 257,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.33272166980925233,
+        "E_F": -0.05504113044388078,
+        "G_F": -0.18658673944159426
+      },
+      "RankIC": {
+        "E": 0.0020508636815462565,
+        "G": -0.027921382782763918,
+        "GF": 0.18297918668223698,
+        "aligned_F141": 0.2574268694957632
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.010429249110248342,
+        "n": 257
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.021184516361492222,
+        "n": 257
+      }
+    },
+    {
+      "formation": "2026-03-11",
+      "base_close_day": "2026-03-11",
+      "held_sessions": [
+        "2026-03-12",
+        "2026-03-13",
+        "2026-03-16",
+        "2026-03-17",
+        "2026-03-18"
+      ],
+      "terminal_close_day": "2026-03-18",
+      "source_count": 265,
+      "observed_labels": 264,
+      "missing_labels": 1,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.3427695709876068,
+        "E_F": -0.023615918740037246,
+        "G_F": -0.15206698151967324
+      },
+      "RankIC": {
+        "E": 0.04257256301494274,
+        "G": 0.002893480037693204,
+        "GF": -0.0006681711659521714,
+        "aligned_F141": -0.026075988333590303
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.044893852721126254,
+        "n": 264
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.0012153972099537586,
+        "n": 264
+      }
+    },
+    {
+      "formation": "2026-03-18",
+      "base_close_day": "2026-03-18",
+      "held_sessions": [
+        "2026-03-19",
+        "2026-03-20",
+        "2026-03-23",
+        "2026-03-24",
+        "2026-03-25"
+      ],
+      "terminal_close_day": "2026-03-25",
+      "source_count": 283,
+      "observed_labels": 283,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.3094620019457734,
+        "E_F": -0.016267475954843923,
+        "G_F": -0.17960605039637173
+      },
+      "RankIC": {
+        "E": -0.11271747302440746,
+        "G": 0.025783114988314752,
+        "GF": -0.15171740657503993,
+        "aligned_F141": -0.2143127164142375
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.1208926643425347,
+        "n": 283
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.013226131338510444,
+        "n": 283
+      }
+    },
+    {
+      "formation": "2026-03-25",
+      "base_close_day": "2026-03-25",
+      "held_sessions": [
+        "2026-03-26",
+        "2026-03-27",
+        "2026-03-30",
+        "2026-03-31",
+        "2026-04-01"
+      ],
+      "terminal_close_day": "2026-04-01",
+      "source_count": 324,
+      "observed_labels": 323,
+      "missing_labels": 1,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.34620172404095606,
+        "E_F": 0.008590876455157595,
+        "G_F": -0.181920871999384
+      },
+      "RankIC": {
+        "E": 0.0500853495879523,
+        "G": -0.06561594798365532,
+        "GF": 0.00023930256123181376,
+        "aligned_F141": 0.05802899517894007
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.07564622213501047,
+        "n": 323
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.05632206278316952,
+        "n": 323
+      }
+    },
+    {
+      "formation": "2026-04-01",
+      "base_close_day": "2026-04-01",
+      "held_sessions": [
+        "2026-04-02",
+        "2026-04-03",
+        "2026-04-07",
+        "2026-04-08",
+        "2026-04-09"
+      ],
+      "terminal_close_day": "2026-04-09",
+      "source_count": 494,
+      "observed_labels": 494,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.3542773887476297,
+        "E_F": 0.013623761489236486,
+        "G_F": -0.18314674035311557
+      },
+      "RankIC": {
+        "E": 0.13985307626704202,
+        "G": 0.09527603713721036,
+        "GF": 0.029690906364841684,
+        "aligned_F141": -0.04302412384752362
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.11667392846653331,
+        "n": 494
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.08898239511602385,
+        "n": 494
+      }
+    },
+    {
+      "formation": "2026-04-09",
+      "base_close_day": "2026-04-09",
+      "held_sessions": [
+        "2026-04-10",
+        "2026-04-13",
+        "2026-04-14",
+        "2026-04-15",
+        "2026-04-16"
+      ],
+      "terminal_close_day": "2026-04-16",
+      "source_count": 531,
+      "observed_labels": 531,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.35262305914639447,
+        "E_F": 0.015563797143394141,
+        "G_F": -0.18524762813735873
+      },
+      "RankIC": {
+        "E": 0.09227232363891485,
+        "G": 0.03140669304382709,
+        "GF": 0.0996466461115984,
+        "aligned_F141": 0.09747369493795024
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.07829987974217999,
+        "n": 531
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.0505754979799099,
+        "n": 531
+      }
+    },
+    {
+      "formation": "2026-04-16",
+      "base_close_day": "2026-04-16",
+      "held_sessions": [
+        "2026-04-17",
+        "2026-04-20",
+        "2026-04-21",
+        "2026-04-22",
+        "2026-04-23"
+      ],
+      "terminal_close_day": "2026-04-23",
+      "source_count": 626,
+      "observed_labels": 626,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.38022230257026396,
+        "E_F": 0.011129443331186772,
+        "G_F": -0.15576969407338248
+      },
+      "RankIC": {
+        "E": 0.006144590224258458,
+        "G": -0.02132967873939165,
+        "GF": -0.03692279192533212,
+        "aligned_F141": -0.03779336948271407
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.018693499867122015,
+        "n": 626
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.027572768286568936,
+        "n": 626
+      }
+    },
+    {
+      "formation": "2026-04-23",
+      "base_close_day": "2026-04-23",
+      "held_sessions": [
+        "2026-04-24",
+        "2026-04-27",
+        "2026-04-28",
+        "2026-04-29",
+        "2026-04-30"
+      ],
+      "terminal_close_day": "2026-04-30",
+      "source_count": 826,
+      "observed_labels": 823,
+      "missing_labels": 3,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.41525198243068256,
+        "E_F": 0.03091908723953045,
+        "G_F": -0.1314969105153508
+      },
+      "RankIC": {
+        "E": 0.035651157877561485,
+        "G": -0.020233611634643503,
+        "GF": 0.0392906367678058,
+        "aligned_F141": 0.07406593010124178
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.042032444952856955,
+        "n": 823
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.010762877033998985,
+        "n": 823
+      }
+    },
+    {
+      "formation": "2026-04-30",
+      "base_close_day": "2026-04-30",
+      "held_sessions": [
+        "2026-05-06",
+        "2026-05-07",
+        "2026-05-08",
+        "2026-05-11",
+        "2026-05-12"
+      ],
+      "terminal_close_day": "2026-05-12",
+      "source_count": 1290,
+      "observed_labels": 1287,
+      "missing_labels": 3,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.4459004958435375,
+        "E_F": 0.0545399983823045,
+        "G_F": -0.11842374628314815
+      },
+      "RankIC": {
+        "E": 0.0932948370262173,
+        "G": 0.00909726194135169,
+        "GF": 0.007777142803561061,
+        "aligned_F141": 0.002682520141144514
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.09994934224877906,
+        "n": 1287
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.009483287689729699,
+        "n": 1287
+      }
+    },
+    {
+      "formation": "2026-05-12",
+      "base_close_day": "2026-05-12",
+      "held_sessions": [
+        "2026-05-13",
+        "2026-05-14",
+        "2026-05-15",
+        "2026-05-18",
+        "2026-05-19"
+      ],
+      "terminal_close_day": "2026-05-19",
+      "source_count": 1346,
+      "observed_labels": 1346,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.44533556592689527,
+        "E_F": 0.04856364112776864,
+        "G_F": -0.10088968712788926
+      },
+      "RankIC": {
+        "E": 0.025979697756362233,
+        "G": -0.012121298070445354,
+        "GF": 0.09335910604623873,
+        "aligned_F141": 0.13530521569517795
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.021211063955332014,
+        "n": 1346
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.0015517170949563076,
+        "n": 1346
+      }
+    },
+    {
+      "formation": "2026-05-19",
+      "base_close_day": "2026-05-19",
+      "held_sessions": [
+        "2026-05-20",
+        "2026-05-21",
+        "2026-05-22",
+        "2026-05-25",
+        "2026-05-26"
+      ],
+      "terminal_close_day": "2026-05-26",
+      "source_count": 1346,
+      "observed_labels": 1346,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.44727900934614256,
+        "E_F": 0.051879765514191586,
+        "G_F": -0.09239207665556559
+      },
+      "RankIC": {
+        "E": 0.050747076584585236,
+        "G": 0.09905753660476792,
+        "GF": 0.08593580086012859,
+        "aligned_F141": 0.0003828172509808433
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.006264344977481208,
+        "n": 1346
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.09951858354036933,
+        "n": 1346
+      }
+    },
+    {
+      "formation": "2026-05-26",
+      "base_close_day": "2026-05-26",
+      "held_sessions": [
+        "2026-05-27",
+        "2026-05-28",
+        "2026-05-29",
+        "2026-06-01",
+        "2026-06-02"
+      ],
+      "terminal_close_day": "2026-06-02",
+      "source_count": 1340,
+      "observed_labels": 1339,
+      "missing_labels": 1,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.44920166963317215,
+        "E_F": 0.04747734380805564,
+        "G_F": -0.09028524786638932
+      },
+      "RankIC": {
+        "E": -0.08915064773687802,
+        "G": -0.0001265364351774446,
+        "GF": -0.10295825012394545,
+        "aligned_F141": -0.12971059521076017
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.08781822152626212,
+        "n": 1339
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.011869423444966963,
+        "n": 1339
+      }
+    },
+    {
+      "formation": "2026-06-02",
+      "base_close_day": "2026-06-02",
+      "held_sessions": [
+        "2026-06-03",
+        "2026-06-04",
+        "2026-06-05",
+        "2026-06-08",
+        "2026-06-09"
+      ],
+      "terminal_close_day": "2026-06-09",
+      "source_count": 1338,
+      "observed_labels": 1337,
+      "missing_labels": 1,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.44814508021574445,
+        "E_F": 0.05281231984470525,
+        "G_F": -0.08647580946782102
+      },
+      "RankIC": {
+        "E": 0.07933131382914498,
+        "G": 0.029114429173104212,
+        "GF": 0.11012096143267677,
+        "aligned_F141": 0.11115666206301371
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.06320426979536464,
+        "n": 1337
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.03912428016861989,
+        "n": 1337
+      }
+    },
+    {
+      "formation": "2026-06-09",
+      "base_close_day": "2026-06-09",
+      "held_sessions": [
+        "2026-06-10",
+        "2026-06-11",
+        "2026-06-12",
+        "2026-06-15",
+        "2026-06-16"
+      ],
+      "terminal_close_day": "2026-06-16",
+      "source_count": 1334,
+      "observed_labels": 1333,
+      "missing_labels": 1,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.4494218729353837,
+        "E_F": 0.05286304378185877,
+        "G_F": -0.08957288421339937
+      },
+      "RankIC": {
+        "E": 0.12544218214081043,
+        "G": 0.11730135090820998,
+        "GF": 0.04164015328224054,
+        "aligned_F141": -0.06322015027663516
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.08819017583649195,
+        "n": 1333
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.11225674004542278,
+        "n": 1333
+      }
+    },
+    {
+      "formation": "2026-06-16",
+      "base_close_day": "2026-06-16",
+      "held_sessions": [
+        "2026-06-17",
+        "2026-06-18",
+        "2026-06-22",
+        "2026-06-23",
+        "2026-06-24"
+      ],
+      "terminal_close_day": "2026-06-24",
+      "source_count": 1335,
+      "observed_labels": 1333,
+      "missing_labels": 2,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.44364660710395326,
+        "E_F": 0.050851940918626604,
+        "G_F": -0.0954445923412852
+      },
+      "RankIC": {
+        "E": 0.05394447392616629,
+        "G": 0.07147430756233747,
+        "GF": 0.0912996947251664,
+        "aligned_F141": 0.036064156782385656
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.02040784714804453,
+        "n": 1333
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.07535996051912774,
+        "n": 1333
+      }
+    },
+    {
+      "formation": "2026-06-24",
+      "base_close_day": "2026-06-24",
+      "held_sessions": [
+        "2026-06-25",
+        "2026-06-26",
+        "2026-06-29",
+        "2026-06-30",
+        "2026-07-01"
+      ],
+      "terminal_close_day": "2026-07-01",
+      "source_count": 1331,
+      "observed_labels": 1327,
+      "missing_labels": 4,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.44238478402685505,
+        "E_F": 0.05312442309304699,
+        "G_F": -0.0974383436343862
+      },
+      "RankIC": {
+        "E": 0.02884064230494061,
+        "G": 0.04495194613940331,
+        "GF": 0.04554423162086183,
+        "aligned_F141": 0.004595656017779779
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.009146102700208339,
+        "n": 1327
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.04561534689311669,
+        "n": 1327
+      }
+    },
+    {
+      "formation": "2026-07-01",
+      "base_close_day": "2026-07-01",
+      "held_sessions": [
+        "2026-07-02",
+        "2026-07-03",
+        "2026-07-06",
+        "2026-07-07",
+        "2026-07-08"
+      ],
+      "terminal_close_day": "2026-07-08",
+      "source_count": 1330,
+      "observed_labels": 1328,
+      "missing_labels": 2,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.43857310197960386,
+        "E_F": 0.05106336367244047,
+        "G_F": -0.09858652507475625
+      },
+      "RankIC": {
+        "E": -0.09347687016725303,
+        "G": 0.010193720643309446,
+        "GF": 0.03469774786424042,
+        "aligned_F141": 0.04416382691648183
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.11452179847332178,
+        "n": 1328
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.014575732744109591,
+        "n": 1328
+      }
+    },
+    {
+      "formation": "2026-07-08",
+      "base_close_day": "2026-07-08",
+      "held_sessions": [
+        "2026-07-09",
+        "2026-07-10",
+        "2026-07-13",
+        "2026-07-14",
+        "2026-07-15"
+      ],
+      "terminal_close_day": "2026-07-15",
+      "source_count": 1329,
+      "observed_labels": 1329,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.43784051007660024,
+        "E_F": 0.043909510283503254,
+        "G_F": -0.10338140187520646
+      },
+      "RankIC": {
+        "E": -0.12044672511465514,
+        "G": 0.005210835430347639,
+        "GF": -0.005061830451955675,
+        "aligned_F141": -0.010406962183065575
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.1362064659428505,
+        "n": 1329
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.004157449523703634,
+        "n": 1329
+      }
+    },
+    {
+      "formation": "2026-07-15",
+      "base_close_day": "2026-07-15",
+      "held_sessions": [
+        "2026-07-16",
+        "2026-07-17",
+        "2026-07-20",
+        "2026-07-21",
+        "2026-07-22"
+      ],
+      "terminal_close_day": "2026-07-22",
+      "source_count": 1329,
+      "observed_labels": 1328,
+      "missing_labels": 1,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.4407284606654869,
+        "E_F": 0.04131506788038738,
+        "G_F": -0.09996280156747737
+      },
+      "RankIC": {
+        "E": -0.13777826789286218,
+        "G": 0.005727066693008017,
+        "GF": -0.039518933614954746,
+        "aligned_F141": -0.053418424020596156
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.15206423638163835,
+        "n": 1328
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.0003989759262528961,
+        "n": 1328
+      }
+    },
+    {
+      "formation": "2026-07-22",
+      "base_close_day": "2026-07-22",
+      "held_sessions": [
+        "2026-07-23",
+        "2026-07-24",
+        "2026-07-27",
+        "2026-07-28",
+        "2026-07-29"
+      ],
+      "terminal_close_day": "2026-07-29",
+      "source_count": 1327,
+      "observed_labels": 1325,
+      "missing_labels": 2,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.4405601017515322,
+        "E_F": 0.0451273643693022,
+        "G_F": -0.09751269446649895
+      },
+      "RankIC": {
+        "E": -0.059475039127241586,
+        "G": -0.11508048903797959,
+        "GF": 0.12492478368857447,
+        "aligned_F141": 0.3003595196282413
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.04109402532819204,
+        "n": 1325
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.09062146594310734,
+        "n": 1325
+      }
+    },
+    {
+      "formation": "2026-07-29",
+      "base_close_day": "2026-07-29",
+      "held_sessions": [
+        "2026-07-30",
+        "2026-07-31",
+        "2026-08-03",
+        "2026-08-04",
+        "2026-08-05"
+      ],
+      "terminal_close_day": "2026-08-05",
+      "source_count": 1324,
+      "observed_labels": 1319,
+      "missing_labels": 5,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.4402138960482277,
+        "E_F": 0.049164241435549316,
+        "G_F": -0.09443412317964271
+      },
+      "RankIC": {
+        "E": 0.121711474156935,
+        "G": -0.03718119595128979,
+        "GF": 0.13891859097691717,
+        "aligned_F141": 0.2220759272527737
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.1354132562687713,
+        "n": 1319
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.016740398081872502,
+        "n": 1319
+      }
+    },
+    {
+      "formation": "2026-08-05",
+      "base_close_day": "2026-08-05",
+      "held_sessions": [
+        "2026-08-06",
+        "2026-08-07",
+        "2026-08-10",
+        "2026-08-11",
+        "2026-08-12"
+      ],
+      "terminal_close_day": "2026-08-12",
+      "source_count": 1314,
+      "observed_labels": 1314,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.4412036908906678,
+        "E_F": 0.05492285130889613,
+        "G_F": -0.08420885967737166
+      },
+      "RankIC": {
+        "E": 0.11734893475493907,
+        "G": 0.017166784351413552,
+        "GF": 0.0600698742264498,
+        "aligned_F141": 0.0582270581915923
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.11700623348312661,
+        "n": 1314
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.022186329962536264,
+        "n": 1314
+      }
+    },
+    {
+      "formation": "2026-08-12",
+      "base_close_day": "2026-08-12",
+      "held_sessions": [
+        "2026-08-13",
+        "2026-08-14",
+        "2026-08-17",
+        "2026-08-18",
+        "2026-08-19"
+      ],
+      "terminal_close_day": "2026-08-19",
+      "source_count": 1311,
+      "observed_labels": 1311,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.4487827690973737,
+        "E_F": 0.05762502529361699,
+        "G_F": -0.07581993521705828
+      },
+      "RankIC": {
+        "E": -0.030060577444692337,
+        "G": 0.027707513927199653,
+        "GF": -0.09895975708056577,
+        "aligned_F141": -0.1603865119420951
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.03180747198686722,
+        "n": 1311
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": 0.01579639545345683,
+        "n": 1311
+      }
+    },
+    {
+      "formation": "2026-08-19",
+      "base_close_day": "2026-08-19",
+      "held_sessions": [
+        "2026-08-20",
+        "2026-08-21",
+        "2026-08-24",
+        "2026-08-25",
+        "2026-08-26"
+      ],
+      "terminal_close_day": "2026-08-26",
+      "source_count": 1301,
+      "observed_labels": 1301,
+      "missing_labels": 0,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.44720158732261484,
+        "E_F": 0.05931742026721311,
+        "G_F": -0.07761668758313531
+      },
+      "RankIC": {
+        "E": -0.1252552925589213,
+        "G": -0.1420278626817865,
+        "GF": 0.05009084390007521,
+        "aligned_F141": 0.21516377457573516
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.0940938998958299,
+        "n": 1301
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.12872170855962525,
+        "n": 1301
+      }
+    },
+    {
+      "formation": "2026-08-26",
+      "base_close_day": "2026-08-26",
+      "held_sessions": [
+        "2026-08-27",
+        "2026-08-28",
+        "2026-08-31",
+        "2026-09-01",
+        "2026-09-02"
+      ],
+      "terminal_close_day": "2026-09-02",
+      "source_count": 1262,
+      "observed_labels": 1261,
+      "missing_labels": 1,
+      "score_rank_correlation_before_label_filter": {
+        "E_G": 0.44195493463572944,
+        "E_F": 0.0649122770304739,
+        "G_F": -0.074218317377193
+      },
+      "RankIC": {
+        "E": 0.010028506989023857,
+        "G": -0.016384455221589732,
+        "GF": 0.14027367208140465,
+        "aligned_F141": 0.213903082078334
+      },
+      "partial_rank_E_label_given_G_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.004172911661697286,
+        "n": 1261
+      },
+      "partial_rank_G_label_given_F": {
+        "status": "descriptive_partial_rank_observed",
+        "value": -0.0004974103229708731,
+        "n": 1261
+      }
+    }
+  ],
+  "limitations": [
+    "All data/window previouslyexposed; conditional rankassociation isdescriptive, notcausalindependent alpha or outofsample certification",
+    "OriginalstrictG/nativeF-qualified source population only, notfullA coverage or corrected BH/admission evidence",
+    "ProcessedG only; rawGP magnitudes areirreversible fromrank/z components. SOURCE-basedtieprecision check isnotnewGsignal calibration",
+    "Samefixedclose labels differfromofficialadditivecycle charts anddaily compoundedtransactionNAV",
+    "Observed-label conditionalstats retainmissinglabel counts and originalsource denominator; no missinglabel stockexclusion",
+    "Sufficientindependentfinancialincrement foranynewrealblend remainsRootquestion; no newblend/weights/windows/models or revivalofMID/product definitions"
+  ],
+  "new_contexts": 0,
+  "new_factor_or_blend_definition": false,
+  "new_weights_sign_window_or_group_search": false,
+  "new_stocklevel_caches": 0,
+  "economic_paths_replayed": 0,
+  "official_calls": 0,
+  "shared_state_registry_or_masks_written": false,
+  "formal_admission": false,
+  "fresh_OOS": false
+}
