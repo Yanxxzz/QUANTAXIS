@@ -1,0 +1,284 @@
+{
+  "id": "RESEARCH_EXPENSE_INTENSITY_UNUSED_STRATIFIED_SOURCE20_20261012",
+  "kind": "source_only",
+  "frozen_at_utc": "2026-10-11T19:33:57.544553+00:00",
+  "deadline_utc": "2026-10-11T23:00:00+00:00",
+  "selection": "FY25 retained old source-ready metadata, remove previous100 exact identities, independently take first5 each00/30/60/68 bycode/ID; interleave round-robin, no money/prices/labels",
+  "selected": [
+    {
+      "symbol": "000766",
+      "announcement_id": "1225135215",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000766_1225135215.txt.gz",
+      "capture_sha256": "50f35a6017c16b78136fdf4c0e2d96b4d64c501cfaa96d2c5bf5c01c33ebc5fe",
+      "text_sha256": "0620e2c97edbf10c0a9362e0fba1cb1a97cf15e46dbffe0f711f12fa159f9be4",
+      "source_record_sha256": "67c4c2d3dc187126e0cfdb88fb29019fbf5593c5defed4049786c0acbec3909e"
+    },
+    {
+      "symbol": "300001",
+      "announcement_id": "1225086349",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_full_market_source_expansion_20261007\\source_text\\300001_1225086349.txt.gz",
+      "capture_sha256": "d3e50e4d89004536b39c9fd87cdbef68265813c1216ff178ef2ee774e38076ad",
+      "text_sha256": "99b4a9f6912005124d47439f58a31cf3f936e31d78a3abfdd609148831ee3aeb",
+      "source_record_sha256": "20cecf62e68b7ff7d265a2bdf3f57a25a08cc1c673132e7c780fa42cea61cf63"
+    },
+    {
+      "symbol": "600004",
+      "announcement_id": "1225257389",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\600004_1225257389.txt.gz",
+      "capture_sha256": "b22306d093454fc559d426f32d20eef474646820fc5a1a6d3fa5c5d17f8e8e19",
+      "text_sha256": "b6a5db2d075dfc400bbc6bb0b402de8f37fe3870e0ab5d819edff3d027c630ad",
+      "source_record_sha256": "1bb1be734159b88a61c58f36eee679bf68fa5c8a2f77276da6ebf04ae873242e"
+    },
+    {
+      "symbol": "688001",
+      "announcement_id": "1225259389",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_full_market_source_expansion_20261007\\source_text\\688001_1225259389.txt.gz",
+      "capture_sha256": "655b466e40c24927ebe2ae8eca25580e26a149f4b5c8ea77cf4d945203bbd0dd",
+      "text_sha256": "12e22153a4023b04c5dca80c8de00641912a67668ca9d1179b056c5aaf31a668",
+      "source_record_sha256": "18ef25f5091f4a5ccd33abecfe035b78ab962c92e6789af8bb5a15d8b5a7cad7"
+    },
+    {
+      "symbol": "000768",
+      "announcement_id": "1225052459",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\000768_1225052459.txt.gz",
+      "capture_sha256": "a8116adf5e88c8fcc271513727c26995a3c065e29fcdcd9109ae0034a483e810",
+      "text_sha256": "43eb27e851b4ace4ecee63565c668e9215310b96d16ad0efd84b5ce380ac70e5",
+      "source_record_sha256": "5469fe9337806580d5ff8e2ad726e2ff40fd2abf21625081f6734e774da3b719"
+    },
+    {
+      "symbol": "300003",
+      "announcement_id": "1225154965",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_full_market_source_expansion_20261007\\source_text\\300003_1225154965.txt.gz",
+      "capture_sha256": "3eceeb09e1d89029ea5b0275da96fcb0739113f281493d32845171e04bef211b",
+      "text_sha256": "aaac0b7a779bc4662d75517ea85122e934693eb0d0d9241ee6024bd030971be9",
+      "source_record_sha256": "c79f4b28c3dd68eb320a66adb3d6a115a0888dc323107f114cd24904fbdea2e6"
+    },
+    {
+      "symbol": "600010",
+      "announcement_id": "1225121984",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\600010_1225121984.txt.gz",
+      "capture_sha256": "cc786da31a489839fa1d4a0a50fd9413954d405d4489768893c5bc6b02c270e9",
+      "text_sha256": "fc58e2d44ff0378c2baccf7541319f3edd03bf51bb1431c6c208180e648e9cc2",
+      "source_record_sha256": "3aaff63a6e273ceb287bb9e40e2102a23ffcfb90db41c6be528f78fd1c983819"
+    },
+    {
+      "symbol": "688002",
+      "announcement_id": "1225091244",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_full_market_source_expansion_20261007\\source_text\\688002_1225091244.txt.gz",
+      "capture_sha256": "0e6085300c36c4798a6902071af62e57f124b031c758334043946b798be3927b",
+      "text_sha256": "f3d197e2949b1db62c878a9c38e01bc8c80e6315d0d081af86ef4c625a5ac51e",
+      "source_record_sha256": "8d19254929dbacb228415d6317ed909f19a04e1f5a7341ad525603d5e1f532b6"
+    },
+    {
+      "symbol": "000777",
+      "announcement_id": "1225216044",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000777_1225216044.txt.gz",
+      "capture_sha256": "8fa8bbff6b7840a2b2971abfae6065fa4218fe02b83cf42cb286ef046fbc8769",
+      "text_sha256": "8f6ec961ed8b23e738eb1665fc54547ecdd3044bf84418628e46779b75898781",
+      "source_record_sha256": "24f53c277d84265ef5cf2cbe2bf943b5eb13cc06f1c84166c1613de1251e6b84"
+    },
+    {
+      "symbol": "300004",
+      "announcement_id": "1225217855",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_full_market_source_expansion_20261007\\source_text\\300004_1225217855.txt.gz",
+      "capture_sha256": "0406d9271557b388f1b7e025816e14566dc54c64f6384e2d2eec1afcdea3f342",
+      "text_sha256": "be433d04c9b69dfb29a800ee53d0d61cdd061d249052535de4323f9e066d2a00",
+      "source_record_sha256": "8cb6672f66544b3835fe36f1fcbf3278685c917f5e01ef73399db27f8b897aa1"
+    },
+    {
+      "symbol": "600018",
+      "announcement_id": "1225065811",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_full_market_source_expansion_20261007\\source_text\\600018_1225065811.txt.gz",
+      "capture_sha256": "4141423c414c8ec471c5e0a06d3f05640b85b13d1e9b8a35ece3e8d0523e2b6a",
+      "text_sha256": "d73c5a4630de863c8b58cb20ce30b11eb8ca65bf4ed52cad0c9a5cecb9df7726",
+      "source_record_sha256": "55292687fc50d110da2d2409deeb89d63733cd219e13d8889abaf2b4c0d2dfdf"
+    },
+    {
+      "symbol": "688004",
+      "announcement_id": "1225112698",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_full_market_source_expansion_20261007\\source_text\\688004_1225112698.txt.gz",
+      "capture_sha256": "e0d4bc1b528c6d541ab9170f2ae3d9875fb60809c440114b6d6577a2ab799e15",
+      "text_sha256": "00b923fb5f04aa22e2ac98abd51e5ff01321ecb7d54e8948b50a5604dd7565fb",
+      "source_record_sha256": "fafa9b6d1adb9cdbfe4a5128f5c6ea40a4486fa66c48552703f09d71a0ce5c9c"
+    },
+    {
+      "symbol": "000782",
+      "announcement_id": "1225134857",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc02_validation_20261007\\source_text\\000782_1225134857.txt.gz",
+      "capture_sha256": "ddf461e819ce48627eef96b452ec60a61319bb88d400ac4a06d4deeff830e16a",
+      "text_sha256": "d3ac3202e44e2fc5c8591da1eb644e93b09642e34514a55c9d5d4e89d088f16e",
+      "source_record_sha256": "b626fcc23a2cd201f42c4c26213f6f0bfc9d07f9e81d1509214424dae8c3fd7e"
+    },
+    {
+      "symbol": "300005",
+      "announcement_id": "1225233491",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_full_market_source_expansion_20261007\\source_text\\300005_1225233491.txt.gz",
+      "capture_sha256": "21d5edaa1435b516e96fa48c11c36715827f0bc7843403151fe2a953d5ada188",
+      "text_sha256": "dda1f1877b472ce5fcf908690ebc31c0874119ed628bd8b63300f1af44833379",
+      "source_record_sha256": "cefe89e04132b3aa233829b06771986c1184f533ae99a72ea4589f2c35057d55"
+    },
+    {
+      "symbol": "600020",
+      "announcement_id": "1225154207",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\600020_1225154207.txt.gz",
+      "capture_sha256": "c104c38b02705f6ef0a670bff8d2d1f3e4c98ad8161cc936b3f53e1259004dfb",
+      "text_sha256": "b7b83d0d396c1a3e44878c52fe847df80788f3663c1d854ccbfa357315849058",
+      "source_record_sha256": "b57f1838bab5181ddcbc82c86df95364e8751f0f7e7b976e3f9ba146a3cda198"
+    },
+    {
+      "symbol": "688007",
+      "announcement_id": "1225260647",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_full_market_source_expansion_20261007\\source_text\\688007_1225260647.txt.gz",
+      "capture_sha256": "2fc736c8cb9f115e0db0817858d19705139a81ff786a8958e6a2c1cf8d85b542",
+      "text_sha256": "03334f7c3735f222e76c67c42bf836331b6ed591331780741b641191fd312138",
+      "source_record_sha256": "0f32460b08418c976a44cb3ef907942a9bee041351db9aff7bbcad0ea2f66348"
+    },
+    {
+      "symbol": "000785",
+      "announcement_id": "1225242095",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\000785_1225242095.txt.gz",
+      "capture_sha256": "2c7892f576ae2805a1f133f1c91f85db2b05f7e7db96597d08eb8cd3197b9c61",
+      "text_sha256": "ebbe9574d9448b349ff49b4acbef78ffb0a88a4a0980ae00e5a531897cec3cfe",
+      "source_record_sha256": "6657f19a05f9a51d239d9e0d5ad3a864353e40ce97d9d9fa308a805a851366d5"
+    },
+    {
+      "symbol": "300006",
+      "announcement_id": "1225016087",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_full_market_source_expansion_20261007\\source_text\\300006_1225016087.txt.gz",
+      "capture_sha256": "a200e98ca59cf1cc0824db451d752b2d61d324bcf4ddfe941465c31ee4a189ac",
+      "text_sha256": "8df6eefeec31be904b17d0324c9e19d704333af7c94e120c75b23ec61df1bad7",
+      "source_record_sha256": "412b636c7744832e8f71c63e3865dc48e86b7dba3b96bd5e85e2bf532a3491b5"
+    },
+    {
+      "symbol": "600026",
+      "announcement_id": "1225038087",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_text\\600026_1225038087.txt.gz",
+      "capture_sha256": "eb780600c7badaeb7bfc311c2fd9e49e46ec9e5e593baa29c9d0f357917126a1",
+      "text_sha256": "5a17f2a730c49ff678e7199b0cab91b1e98af321197882b98dff0b78cf1d8193",
+      "source_record_sha256": "d606bc43090ca4728544d0648de23b464553c56f3eed7a389edf8eb34a7061d0"
+    },
+    {
+      "symbol": "688013",
+      "announcement_id": "1225243715",
+      "report_date": "2025-12-31",
+      "status": "text_source_pair_ready",
+      "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_full_market_source_expansion_20261007\\source_text\\688013_1225243715.txt.gz",
+      "capture_sha256": "928343edea61ad41be08cd336be82bbb0236e5cfcbb676fd876e26a1da85e32c",
+      "text_sha256": "4fdf3b695ec8f67ac28afea512e4870d123361b7fd52f5638f382f0b5a3a876f",
+      "source_record_sha256": "c5abc532ab470d082162840044f1f9aefd027d43084c108db2e1e8dce6d005d0"
+    }
+  ],
+  "excluded_identity_count": 100,
+  "inventory_count_upper_bound_only": 2968,
+  "captures": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\compact_archive\\captured_financial.sqlite3",
+  "registry": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\research_trials.sqlite3",
+  "output": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\research_spending_source20\\source_receipt.json",
+  "bindings": {
+    "runtime": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\scripts\\consume_research_spending_sources.py",
+      "sha256": "baef38fb302435774f41e483a1b301f1f80d32a394a1f4786a23d58e848a697f"
+    },
+    "reader": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\statement_source.py",
+      "sha256": "6e5cc5cc0e45beebb0bb9e38adbe2aa04d3f420315932f7be5799b688a9c9f42"
+    },
+    "parser": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\research_spending.py",
+      "sha256": "cf88d669291a1cff3cb04842eae74835592406d624a5565d944484ca55916950"
+    },
+    "annual_column_parser": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\cash_collection.py",
+      "sha256": "81bb964eba03b4e0ff4244cb58c3b3fe54395114c7372c088946e484385c934e"
+    },
+    "statement_parser": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\financial_statements.py",
+      "sha256": "4ce12f040f3719e196801563fc524da1f52c49b45bdf948d2a7fdd2349f92f01"
+    },
+    "inventory": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_cash_confirmation_20261010\\cash_pairs.parquet",
+      "sha256": "e14726e4df28267fda93c8364f51525da29197cec529f2c94d10754ec841e880"
+    },
+    "completed20_protocol": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\cash_investment_source20\\protocol.json",
+      "sha256": "793a4c19c09b8ede1e501ea82fac6f14026be4b2bd6969220ef248fa197a3797"
+    },
+    "completed80_protocol": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\cash_investment_source80\\protocol.json",
+      "sha256": "017fa84b5bd0ec10c5c35fde4da119a04b0102c290b4a20bffa39f34dc564531"
+    },
+    "native_draft": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\research_spending_source20\\NativeResearchExpenseIntensityDraft.py",
+      "sha256": "456ffb7379fa375ca8a7b2bb2febd399047eef0b67d69f86827e5071ca481aec"
+    },
+    "cold_history": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_bootstrap\\evidence.jsonl",
+      "sha256": "364c3103ffe2efbcfa4232f0a0b6cca1de665feeaec123fbee1e4c255fba22c4"
+    },
+    "field_catalog": {
+      "path": "C:\\Users\\31013\\.codex\\skills\\pandaai-factor-online\\references\\fields.md",
+      "sha256": "9660c6813b61d978f204dd7bee76cee25bfaeb757da735cb9f3c3a84fb616c3c"
+    }
+  },
+  "mechanism_proposal": "Expensed knowledge investment intensity against current revenue; potential delayed product/knowledge benefits versus current profit expense, independent monetary field not cash-after-capex sign rescue",
+  "native_fields_positive_catalog": [
+    "r_n_d",
+    "operating_revenue",
+    "close"
+  ],
+  "native_live_field_period_value_or_PIT_certified": false,
+  "proposal_numeric_execution": false,
+  "new_contexts": 0,
+  "full_financial_or_production_qualified": false,
+  "history_review": "Semantic formula/fields/mechanism/family in4877cold evidence records, hot no_repeat/human retirement and12prior batch JSONs: no equivalent expensedR&D/revenue definition found. This is scoped registered/history evidence, not proof all unregistered ideas absent.",
+  "literature_context": [
+    {
+      "url": "https://onlinelibrary.wiley.com/doi/10.1111/0022-1082.00411",
+      "title": "The Stock Market Valuation of Research and Development Expenditures",
+      "use": "R&D financial-information hypothesis only, no forecast of this factor performance"
+    },
+    {
+      "url": "https://www.sciencedirect.com/science/article/pii/S0927538X20302468",
+      "title": "The explanatory power of R&D for the stock returns in the Chinese equity market",
+      "use": "Primary search abstract seen; full page403, no claim full paper reviewed or exact reproduction"
+    }
+  ],
+  "source_boundary": "Only same-table currentannual expensedR&D/revenue facts. Missing RD/dash not0, no totalR&D or capitalizeddevelopment proxy. Financial policy/scope/versions/PIT and native currentperiod pending. Do not use price outcomes to select sources or retune cash-investment pilot."
+}
