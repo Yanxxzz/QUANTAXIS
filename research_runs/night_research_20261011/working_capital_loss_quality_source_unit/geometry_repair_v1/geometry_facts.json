@@ -1,0 +1,1616 @@
+{
+  "status": "COMPLETED_FIXED3_GEOMETRY_ONLY_SOURCE_REPAIR",
+  "protocol_sha256": "3cc9c1e8e81f5d751001c429a81e9cd859d23df8e45b4adea70c93212d2fca29",
+  "runtime_sha256": "e51f6dda3c449ba346758ebd04bef6a2c9e9177616c12c7a84c171f8e9df12ef",
+  "records": [
+    {
+      "chapter_start": {
+        "start": 176742,
+        "end": 176755,
+        "source_page": 181,
+        "span_sha256": "874e900ddc85cbb4e036d5b3e3ead7d38e96cff59e2327edea1122b164e1e44a"
+      },
+      "chapter_end": {
+        "start": 225947,
+        "end": 225954,
+        "source_page": 227,
+        "span_sha256": "5e3ffecc127f0f598c5e6d64a63632fdc0a541fea81deb147939fa694816b870"
+      },
+      "chapter_range": {
+        "start": 176742,
+        "end": 225947,
+        "source_page": 181,
+        "span_sha256": "b6fe361d690a2f7d4dd137c85dd6fb2fd2b21d494e42dbcba542a75713f95b57"
+      },
+      "notes": [
+        {
+          "asset": "AR",
+          "parent_ordinal": 4,
+          "next_parent_ordinal": 5,
+          "parent_caption": {
+            "start": 177674,
+            "end": 177681,
+            "source_page": 183,
+            "span_sha256": "64c71e025a5819f1fcd340f4e759bdbe4cc28580db71ef074c5f888e135c08ca",
+            "brief_caption": "4、应收账款"
+          },
+          "next_same_level_caption": {
+            "start": 180367,
+            "end": 180374,
+            "source_page": 185,
+            "span_sha256": "b8302d29b8653160432c29cd59d8b1eff1122bc7aa9fbef17aeb2d649fa2cb95",
+            "brief_caption": "5、合同资产"
+          },
+          "note_range": {
+            "start": 177674,
+            "end": 180367,
+            "source_page": 183,
+            "span_sha256": "5d6efeb25cb494c5cc6e0ba8e13e9ff58989445cacb29b7b28fff3f82da620e8"
+          },
+          "known_bracket_child_captions": [
+            {
+              "start": 177682,
+              "end": 177692,
+              "source_page": 183,
+              "span_sha256": "0c99062b71ab910b457811e2fdc34e5bbbe8c8836a61f23140b0499dc0fafc59",
+              "brief_caption": "（1） 按账龄披露"
+            },
+            {
+              "start": 178074,
+              "end": 178090,
+              "source_page": 183,
+              "span_sha256": "b5d49d9172c84ed42a88bd4c3f2777f4c9c36383b694762dc7557582bd45fded",
+              "brief_caption": "（2） 按坏账计提方法分类披露"
+            },
+            {
+              "start": 179451,
+              "end": 179473,
+              "source_page": 184,
+              "span_sha256": "cd2b37c82d4240638647308c36246e8030a7319fac5b4b82db98826a2e72e17f",
+              "brief_caption": "（3） 本期计提、收回或转回的坏账准备情况"
+            },
+            {
+              "start": 179740,
+              "end": 179758,
+              "source_page": 184,
+              "span_sha256": "9463f18e97c33305aebc6b92bb10d8a115d8296338ee3e4825deee68420c223a",
+              "brief_caption": "（4） 本期实际核销的应收账款情况"
+            },
+            {
+              "start": 179840,
+              "end": 179871,
+              "source_page": 184,
+              "span_sha256": "28975b13941d187218c2c8451ddc036bab7aa77491bd4a549f9a56a16c556781",
+              "brief_caption": "（5） 按欠款方归集的期末余额前五名的应收账款和合同资产情况"
+            },
+            {
+              "start": 180338,
+              "end": 180364,
+              "source_page": 185,
+              "span_sha256": "5275b73b21e80f779af47a0dea39329447f38a4a3ece9b00c604a2ac5abfacbd",
+              "brief_caption": "（6） 转移应收账款且继续涉入形成的资产、负债金额"
+            }
+          ],
+          "native_header_clues": [
+            {
+              "start": 177693,
+              "end": 177697,
+              "source_page": 183,
+              "span_sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0",
+              "brief_native_header": "单位：元",
+              "literal_keywords": [
+                "单位"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 178091,
+              "end": 178095,
+              "source_page": 183,
+              "span_sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0",
+              "brief_native_header": "单位：元",
+              "literal_keywords": [
+                "单位"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 178099,
+              "end": 178108,
+              "source_page": 183,
+              "span_sha256": "0c49394e89790e8e497f2042c99ab439e690785b222272c3e6e75d820760963d",
+              "brief_native_header": "期末余额 期初余额",
+              "literal_keywords": [
+                "期末余额",
+                "期初余额"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 178109,
+              "end": 178122,
+              "source_page": 183,
+              "span_sha256": "ff25e0285c243c918237f59d8bd852a52255606b7d4013b972542c21d343b166",
+              "brief_native_header": "账面余额 坏账准备 账面价",
+              "literal_keywords": [
+                "账面余额",
+                "坏账准备"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 178125,
+              "end": 178138,
+              "source_page": 183,
+              "span_sha256": "ff25e0285c243c918237f59d8bd852a52255606b7d4013b972542c21d343b166",
+              "brief_native_header": "账面余额 坏账准备 账面价",
+              "literal_keywords": [
+                "账面余额",
+                "坏账准备"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 178139,
+              "end": 178168,
+              "source_page": 183,
+              "span_sha256": "8bff646fd97fdcee13035d30b688a91d25e34285f3e355517a8c2c864b0b6b78",
+              "brief_native_header": "金额 比例 金额 计提比 值 例 金额 比例 金额 计提比",
+              "literal_keywords": [
+                "金额",
+                "比例",
+                "计提"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 178646,
+              "end": 178656,
+              "source_page": 183,
+              "span_sha256": "241d0299345ce766ada42a5588471842a39867e2e1f63a5c64ed7206c44816a4",
+              "brief_native_header": "按单项计提坏账准备：",
+              "literal_keywords": [
+                "坏账准备",
+                "计提"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 178657,
+              "end": 178687,
+              "source_page": 183,
+              "span_sha256": "73f49b8e531b0807284d73d781e8a34d28ab6ad0493a8ea29a77431d7e1db2ed",
+              "brief_native_header": "本集团 2025 年度无重要的按单项计提坏账准备的应收账款。",
+              "literal_keywords": [
+                "坏账准备",
+                "计提"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 178688,
+              "end": 178698,
+              "source_page": 183,
+              "span_sha256": "9f1e4847d6369a166dca2a920a54a52b0f69bd8c341b9652ebc4b76f3ebcba57",
+              "brief_native_header": "按组合计提坏账准备：",
+              "literal_keywords": [
+                "坏账准备",
+                "计提"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 178699,
+              "end": 178703,
+              "source_page": 183,
+              "span_sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0",
+              "brief_native_header": "单位：元",
+              "literal_keywords": [
+                "单位"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 178712,
+              "end": 178726,
+              "source_page": 183,
+              "span_sha256": "7369b211d2aaad2b00710ee44521a8b610d6cfa6ea8ef92cd2cb818e5c06f6e2",
+              "brief_native_header": "账面余额 坏账准备 计提比例",
+              "literal_keywords": [
+                "账面余额",
+                "坏账准备",
+                "比例",
+                "计提"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 179416,
+              "end": 179441,
+              "source_page": 184,
+              "span_sha256": "7aad458949b559bbb87b7861415b6954967e3938260b664406077368b5b9cde9",
+              "brief_native_header": "如是按照预期信用损失一般模型计提应收账款坏账准备：",
+              "literal_keywords": [
+                "坏账准备",
+                "计提"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 179451,
+              "end": 179473,
+              "source_page": 184,
+              "span_sha256": "cd2b37c82d4240638647308c36246e8030a7319fac5b4b82db98826a2e72e17f",
+              "brief_native_header": "（3） 本期计提、收回或转回的坏账准备情况",
+              "literal_keywords": [
+                "坏账准备",
+                "计提",
+                "收回或转回"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 179474,
+              "end": 179485,
+              "source_page": 184,
+              "span_sha256": "f4495050052bc61c4529bf835d8455c60d4b8d639875f9b780976ad0b41346f9",
+              "brief_native_header": "本期计提坏账准备情况：",
+              "literal_keywords": [
+                "坏账准备",
+                "计提"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 179486,
+              "end": 179490,
+              "source_page": 184,
+              "span_sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0",
+              "brief_native_header": "单位：元",
+              "literal_keywords": [
+                "单位"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 179491,
+              "end": 179528,
+              "source_page": 184,
+              "span_sha256": "68d155ac6d424a4d4b56de9f47b878a9adfec569bcc8ee870f34bb7e1471d713",
+              "brief_native_header": "类别 期初余额 本期变动金额 期末余额 计提 收回或转回 转销或核销 其他",
+              "literal_keywords": [
+                "期末余额",
+                "期初余额",
+                "金额",
+                "计提",
+                "收回或转回",
+                "转销或核销",
+                "本期变动",
+                "其他"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 179759,
+              "end": 179763,
+              "source_page": 184,
+              "span_sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0",
+              "brief_native_header": "单位：元",
+              "literal_keywords": [
+                "单位"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 179872,
+              "end": 179876,
+              "source_page": 184,
+              "span_sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0",
+              "brief_native_header": "单位：元",
+              "literal_keywords": [
+                "单位"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 179877,
+              "end": 179896,
+              "source_page": 184,
+              "span_sha256": "4033e92a1402823d7235c96047281651a44bd68744764c3cc97a49e6471396e3",
+              "brief_native_header": "单位名称 应收账款期末余额 合同资产期",
+              "literal_keywords": [
+                "期末余额",
+                "单位"
+              ],
+              "roles_interpreted": false
+            }
+          ],
+          "geometry_status": "exact_diagnosed_parent_note_range_bound",
+          "unknown_boundary": null,
+          "amount_roles_units_period_population_status": "unparsed_native_multilevel_layout_pending",
+          "combined_movements_split": false,
+          "percentage_columns_removed": false,
+          "amounts_solved": 0,
+          "financial_eligibility": false
+        },
+        {
+          "asset": "INV",
+          "parent_ordinal": 9,
+          "next_parent_ordinal": 10,
+          "parent_caption": {
+            "start": 183617,
+            "end": 183622,
+            "source_page": 188,
+            "span_sha256": "0c15116321c38995c6f43680dec47b179dd4cfe5286ce3bdd714536585b5c956",
+            "brief_caption": "9、存货"
+          },
+          "next_same_level_caption": {
+            "start": 184643,
+            "end": 184658,
+            "source_page": 189,
+            "span_sha256": "938ebc56f2e6e9a889efad4bdd0e50dcade8ef2bcc30bc07c105d19fbbf75373",
+            "brief_caption": "10、一年内到期的非流动资产"
+          },
+          "note_range": {
+            "start": 183617,
+            "end": 184643,
+            "source_page": 188,
+            "span_sha256": "384c1b067d3d9026bbfaf2bdf3e227daee12fc52948b057f57c7b09c59c7c4e1"
+          },
+          "known_bracket_child_captions": [
+            {
+              "start": 183644,
+              "end": 183653,
+              "source_page": 188,
+              "span_sha256": "54e66df6023320683cba8187632bf51573855e0be888b5a92e47d544d47c4a43",
+              "brief_caption": "（1） 存货分类"
+            },
+            {
+              "start": 184325,
+              "end": 184347,
+              "source_page": 189,
+              "span_sha256": "daa630edad541de93f79fc824fb0e7a62e150112bd53eb5c3f866e167eb845b9",
+              "brief_caption": "（2） 存货跌价准备和合同履约成本减值准备"
+            }
+          ],
+          "native_header_clues": [
+            {
+              "start": 183654,
+              "end": 183658,
+              "source_page": 188,
+              "span_sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0",
+              "brief_native_header": "单位：元",
+              "literal_keywords": [
+                "单位"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 183662,
+              "end": 183671,
+              "source_page": 188,
+              "span_sha256": "0c49394e89790e8e497f2042c99ab439e690785b222272c3e6e75d820760963d",
+              "brief_native_header": "期末余额 期初余额",
+              "literal_keywords": [
+                "期末余额",
+                "期初余额"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 183672,
+              "end": 183676,
+              "source_page": 188,
+              "span_sha256": "b5c7ff4fa89b94927ec5ab3d537ac6bf35b7bb196f26644ba690ee98c27d90a1",
+              "brief_native_header": "账面余额",
+              "literal_keywords": [
+                "账面余额"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 183697,
+              "end": 183706,
+              "source_page": 188,
+              "span_sha256": "17eec03da5cb7e752af6e34f42ffb7e15a9c32098cfc0fbb022d02da979de0ca",
+              "brief_native_header": "账面价值 账面余额",
+              "literal_keywords": [
+                "账面余额",
+                "账面价值"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 183727,
+              "end": 183731,
+              "source_page": 188,
+              "span_sha256": "582daaeda74de830e551f4f547eb3cd16fe965d73cff72b7f50029ab9c12806c",
+              "brief_native_header": "账面价值",
+              "literal_keywords": [
+                "账面价值"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 184348,
+              "end": 184352,
+              "source_page": 189,
+              "span_sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0",
+              "brief_native_header": "单位：元",
+              "literal_keywords": [
+                "单位"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 184353,
+              "end": 184391,
+              "source_page": 189,
+              "span_sha256": "8c9343bc6cfe6adc48e1063cc4e0651d462dcf00fa4b0bf63344e13c2c380c1b",
+              "brief_native_header": "项目 期初余额 本期增加金额 本期减少金额 期末余额 计提 其他 转销 其他",
+              "literal_keywords": [
+                "期末余额",
+                "期初余额",
+                "金额",
+                "计提",
+                "本期增加",
+                "本期减少",
+                "其他"
+              ],
+              "roles_interpreted": false
+            }
+          ],
+          "geometry_status": "exact_diagnosed_parent_note_range_bound",
+          "unknown_boundary": null,
+          "amount_roles_units_period_population_status": "unparsed_native_multilevel_layout_pending",
+          "combined_movements_split": false,
+          "percentage_columns_removed": false,
+          "amounts_solved": 0,
+          "financial_eligibility": false
+        }
+      ],
+      "chapter_reference_or_subline_used_as_end": false,
+      "no_amount_or_financial_mask_created": true,
+      "code": "000157",
+      "source_record_sha256": "55d0f043fca33f963b68cc1c50c7058baa4d85f5d01f96b6cb186a663612efe7",
+      "retained_text_sha256": "a4ad23ca829af1ce9d770ac0c8d888b12aaaea290daf7677dd35a2d8bc28dc91",
+      "known_revision_or_later_report_metadata": [],
+      "scope_policy_restatement_version_status": "source_note_specific_review_pending_not_cleared_by_G_snapshot",
+      "policy_scope_versions_cleared": false
+    },
+    {
+      "chapter_start": {
+        "start": 111540,
+        "end": 111552,
+        "source_page": 118,
+        "span_sha256": "bd965e9016c0ace7c1c7d94e2b489ca996bca06b818e4d89a497680c4b855e67"
+      },
+      "chapter_end": {
+        "start": 142375,
+        "end": 142381,
+        "source_page": 147,
+        "span_sha256": "16f77d8f5a9e05a0d1f099e295a41c90ed78f9044c134f7001233b37a89960cf"
+      },
+      "chapter_range": {
+        "start": 111540,
+        "end": 142375,
+        "source_page": 118,
+        "span_sha256": "8bc030726b0878a629e93fe48e040716f94ab4d8f8ebf22cd957cd4ae00c69d1"
+      },
+      "notes": [
+        {
+          "asset": "AR",
+          "parent_ordinal": 4,
+          "next_parent_ordinal": 5,
+          "parent_caption": {
+            "start": 113270,
+            "end": 113276,
+            "source_page": 120,
+            "span_sha256": "852daf6159ba0c4317a22cd717779e2cec639243c79622dd58fca6d6a3fde4c7",
+            "brief_caption": "4、应收账款"
+          },
+          "next_same_level_caption": {
+            "start": 116323,
+            "end": 116331,
+            "source_page": 122,
+            "span_sha256": "ae530e1ae6c9969ea6127cb5d6b9556010090187f4d0d86c9dd2d8f79e60fe99",
+            "brief_caption": "5、应收款项融资"
+          },
+          "note_range": {
+            "start": 113270,
+            "end": 116323,
+            "source_page": 120,
+            "span_sha256": "26bc0c1245f3b7eb8a107f7f2732d1895c2dfc6179fefb16d5254b846eaa70c3"
+          },
+          "known_bracket_child_captions": [
+            {
+              "start": 113277,
+              "end": 113290,
+              "source_page": 120,
+              "span_sha256": "1895c4f1f63b0d1fab6ec0d2b9d76f8d6d23825cf43a8aabfbcc41cbdc1019a5",
+              "brief_caption": "（1）按客户类别分析如下："
+            },
+            {
+              "start": 113450,
+              "end": 113459,
+              "source_page": 120,
+              "span_sha256": "2d243332c7860a42ea149a279c26070dc4a45c407939f64562ee51ef1bc0d990",
+              "brief_caption": "（2） 按账龄披露"
+            },
+            {
+              "start": 113724,
+              "end": 113739,
+              "source_page": 120,
+              "span_sha256": "ea59af35b0b9fda317b7952f3c9480145134939d3187eb40a442244054a7913d",
+              "brief_caption": "（3） 按坏账计提方法分类披露"
+            },
+            {
+              "start": 115647,
+              "end": 115668,
+              "source_page": 122,
+              "span_sha256": "a5d3e6b15c38c37620e7ce8999c1f3061428d5a840a8e94f6ef0717c4353c45e",
+              "brief_caption": "（4） 本期计提、收回或转回的坏账准备情况"
+            },
+            {
+              "start": 115811,
+              "end": 115841,
+              "source_page": 122,
+              "span_sha256": "21b9c8484ea961e787228614109beaf54dc8edcb8af31416f0fbf75a714ff92f",
+              "brief_caption": "（5） 按欠款方归集的期末余额前五名的应收账款和合同资产情况"
+            }
+          ],
+          "native_header_clues": [
+            {
+              "start": 113291,
+              "end": 113295,
+              "source_page": 120,
+              "span_sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0",
+              "brief_native_header": "单位：元",
+              "literal_keywords": [
+                "单位"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 113460,
+              "end": 113464,
+              "source_page": 120,
+              "span_sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0",
+              "brief_native_header": "单位：元",
+              "literal_keywords": [
+                "单位"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 113740,
+              "end": 113744,
+              "source_page": 120,
+              "span_sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0",
+              "brief_native_header": "单位：元",
+              "literal_keywords": [
+                "单位"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 113748,
+              "end": 113752,
+              "source_page": 120,
+              "span_sha256": "d2ec5b989ff2ac2b1c62069d11e287583eaeef64b2adcfd44321e397decc3ccf",
+              "brief_native_header": "期末余额",
+              "literal_keywords": [
+                "期末余额"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 113753,
+              "end": 113762,
+              "source_page": 120,
+              "span_sha256": "7fde6b94d9b0954c9587d17926490a87e2aaeb42c8da1edfdf5474b6a57a4b2c",
+              "brief_native_header": "账面余额 坏账准备",
+              "literal_keywords": [
+                "账面余额",
+                "坏账准备"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 113763,
+              "end": 113767,
+              "source_page": 120,
+              "span_sha256": "582daaeda74de830e551f4f547eb3cd16fe965d73cff72b7f50029ab9c12806c",
+              "brief_native_header": "账面价值",
+              "literal_keywords": [
+                "账面价值"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 113768,
+              "end": 113781,
+              "source_page": 120,
+              "span_sha256": "a6875cca2a28dbf7c7ae0e339768c32a07310c678073fe9ee7f85f62e44b88a2",
+              "brief_native_header": "金额 比例 金额 计提比例",
+              "literal_keywords": [
+                "金额",
+                "比例",
+                "计提"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 113782,
+              "end": 113794,
+              "source_page": 120,
+              "span_sha256": "2894d5cc013b66dde37d5cb2ee27632b9aa99d291c4ddfc4af7777b12cb67f40",
+              "brief_native_header": "按单项计提坏账准备的应收",
+              "literal_keywords": [
+                "坏账准备",
+                "计提"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 113834,
+              "end": 113846,
+              "source_page": 120,
+              "span_sha256": "38420068f90204f1575f962b6201af7d9110c2250fe19f8ab8781dbbc0552a73",
+              "brief_native_header": "按组合计提坏账准备的应收",
+              "literal_keywords": [
+                "坏账准备",
+                "计提"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 114094,
+              "end": 114098,
+              "source_page": 121,
+              "span_sha256": "bbde263447db00039e4283e910ee2e0624f2f224d45b18a2a23f8bf06b410ccb",
+              "brief_native_header": "期初余额",
+              "literal_keywords": [
+                "期初余额"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 114099,
+              "end": 114108,
+              "source_page": 121,
+              "span_sha256": "7fde6b94d9b0954c9587d17926490a87e2aaeb42c8da1edfdf5474b6a57a4b2c",
+              "brief_native_header": "账面余额 坏账准备",
+              "literal_keywords": [
+                "账面余额",
+                "坏账准备"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 114109,
+              "end": 114113,
+              "source_page": 121,
+              "span_sha256": "582daaeda74de830e551f4f547eb3cd16fe965d73cff72b7f50029ab9c12806c",
+              "brief_native_header": "账面价值",
+              "literal_keywords": [
+                "账面价值"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 114114,
+              "end": 114127,
+              "source_page": 121,
+              "span_sha256": "a6875cca2a28dbf7c7ae0e339768c32a07310c678073fe9ee7f85f62e44b88a2",
+              "brief_native_header": "金额 比例 金额 计提比例",
+              "literal_keywords": [
+                "金额",
+                "比例",
+                "计提"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 114380,
+              "end": 114404,
+              "source_page": 121,
+              "span_sha256": "412fb6ebef17dff8169e97d6041d0857803c6cbd5510f78ab6048047a63f4e62",
+              "brief_native_header": "（a）2025 年按单项计提坏账准备的计提理由：",
+              "literal_keywords": [
+                "坏账准备",
+                "计提"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 114405,
+              "end": 114409,
+              "source_page": 121,
+              "span_sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0",
+              "brief_native_header": "单位：元",
+              "literal_keywords": [
+                "单位"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 114413,
+              "end": 114422,
+              "source_page": 121,
+              "span_sha256": "b8a8aeb8583e7d7396cd8a74133e15c57a9944657488944aff74f6ee06354b56",
+              "brief_native_header": "期初余额 期末余额",
+              "literal_keywords": [
+                "期末余额",
+                "期初余额"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 114423,
+              "end": 114452,
+              "source_page": 121,
+              "span_sha256": "8ce214263eefeb82346e69e8d32ada2edef81f218075419ac9a93cf214ef6657",
+              "brief_native_header": "账面余额 坏账准备 账面余额 坏账准备 计提比例 计提理由",
+              "literal_keywords": [
+                "账面余额",
+                "坏账准备",
+                "比例",
+                "计提"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 114723,
+              "end": 114776,
+              "source_page": 121,
+              "span_sha256": "3697e424febf7d7647f0504db703f9a6251795dfd58944e387a76bf7473913da",
+              "brief_native_header": "2025 年 12 月 31 日本集团除单项计提坏账准备之外的应收账款的信用风险敞口及预期信用损失的相关信",
+              "literal_keywords": [
+                "坏账准备",
+                "计提"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 114780,
+              "end": 114790,
+              "source_page": 121,
+              "span_sha256": "9f1e4847d6369a166dca2a920a54a52b0f69bd8c341b9652ebc4b76f3ebcba57",
+              "brief_native_header": "按组合计提坏账准备：",
+              "literal_keywords": [
+                "坏账准备",
+                "计提"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 114791,
+              "end": 114795,
+              "source_page": 121,
+              "span_sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0",
+              "brief_native_header": "单位：元",
+              "literal_keywords": [
+                "单位"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 114799,
+              "end": 114803,
+              "source_page": 121,
+              "span_sha256": "d2ec5b989ff2ac2b1c62069d11e287583eaeef64b2adcfd44321e397decc3ccf",
+              "brief_native_header": "期末余额",
+              "literal_keywords": [
+                "期末余额"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 114804,
+              "end": 114818,
+              "source_page": 121,
+              "span_sha256": "7369b211d2aaad2b00710ee44521a8b610d6cfa6ea8ef92cd2cb818e5c06f6e2",
+              "brief_native_header": "账面余额 坏账准备 计提比例",
+              "literal_keywords": [
+                "账面余额",
+                "坏账准备",
+                "比例",
+                "计提"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 115210,
+              "end": 115214,
+              "source_page": 122,
+              "span_sha256": "bbde263447db00039e4283e910ee2e0624f2f224d45b18a2a23f8bf06b410ccb",
+              "brief_native_header": "期初余额",
+              "literal_keywords": [
+                "期初余额"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 115215,
+              "end": 115229,
+              "source_page": 122,
+              "span_sha256": "7369b211d2aaad2b00710ee44521a8b610d6cfa6ea8ef92cd2cb818e5c06f6e2",
+              "brief_native_header": "账面余额 坏账准备 计提比例",
+              "literal_keywords": [
+                "账面余额",
+                "坏账准备",
+                "比例",
+                "计提"
+              ],
+              "roles_interpreted": false
+            }
+          ],
+          "geometry_status": "exact_diagnosed_parent_note_range_bound",
+          "unknown_boundary": null,
+          "amount_roles_units_period_population_status": "unparsed_native_multilevel_layout_pending",
+          "combined_movements_split": false,
+          "percentage_columns_removed": false,
+          "amounts_solved": 0,
+          "financial_eligibility": false
+        },
+        {
+          "asset": "INV",
+          "parent_ordinal": 8,
+          "next_parent_ordinal": 9,
+          "parent_caption": {
+            "start": 119491,
+            "end": 119495,
+            "source_page": 126,
+            "span_sha256": "3e602be5a685c7fe37966305b637d11e984f81f4b1dbda9658ecb907371a3c7e",
+            "brief_caption": "8、存货"
+          },
+          "next_same_level_caption": {
+            "start": 120298,
+            "end": 120306,
+            "source_page": 126,
+            "span_sha256": "8af94df263ea1c62ee8d2a0a5eaea41c52ea358919a08cdcd054aa0d2e15ae1a",
+            "brief_caption": "9、其他流动资产"
+          },
+          "note_range": {
+            "start": 119491,
+            "end": 120298,
+            "source_page": 126,
+            "span_sha256": "5195db705bfa73b9061f7acfeb75332a1ce73cff1b7cee0a44aea7385ff077d9"
+          },
+          "known_bracket_child_captions": [
+            {
+              "start": 119496,
+              "end": 119504,
+              "source_page": 126,
+              "span_sha256": "be4fbe2cecf11e0c4042153280945a8d638aa7dad067415e4baa6f0d6fa35fee",
+              "brief_caption": "（1） 存货分类"
+            },
+            {
+              "start": 120047,
+              "end": 120068,
+              "source_page": 126,
+              "span_sha256": "2bac543b2fbfde1b1a4a5abdd9a486db9367f749a00bfef67b017655b4bf164f",
+              "brief_caption": "（2） 存货跌价准备和合同履约成本减值准备"
+            }
+          ],
+          "native_header_clues": [
+            {
+              "start": 119505,
+              "end": 119509,
+              "source_page": 126,
+              "span_sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0",
+              "brief_native_header": "单位：元",
+              "literal_keywords": [
+                "单位"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 119513,
+              "end": 119522,
+              "source_page": 126,
+              "span_sha256": "0c49394e89790e8e497f2042c99ab439e690785b222272c3e6e75d820760963d",
+              "brief_native_header": "期末余额 期初余额",
+              "literal_keywords": [
+                "期末余额",
+                "期初余额"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 119523,
+              "end": 119527,
+              "source_page": 126,
+              "span_sha256": "b5c7ff4fa89b94927ec5ab3d537ac6bf35b7bb196f26644ba690ee98c27d90a1",
+              "brief_native_header": "账面余额",
+              "literal_keywords": [
+                "账面余额"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 119548,
+              "end": 119557,
+              "source_page": 126,
+              "span_sha256": "17eec03da5cb7e752af6e34f42ffb7e15a9c32098cfc0fbb022d02da979de0ca",
+              "brief_native_header": "账面价值 账面余额",
+              "literal_keywords": [
+                "账面余额",
+                "账面价值"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 119578,
+              "end": 119582,
+              "source_page": 126,
+              "span_sha256": "582daaeda74de830e551f4f547eb3cd16fe965d73cff72b7f50029ab9c12806c",
+              "brief_native_header": "账面价值",
+              "literal_keywords": [
+                "账面价值"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 120069,
+              "end": 120073,
+              "source_page": 126,
+              "span_sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0",
+              "brief_native_header": "单位：元",
+              "literal_keywords": [
+                "单位"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 120082,
+              "end": 120095,
+              "source_page": 126,
+              "span_sha256": "a135a5a13a37a65a90cb4fcacc7d5cff054de9ffe34f733055f5000c0929e7d1",
+              "brief_native_header": "本期增加金额 本期减少金额",
+              "literal_keywords": [
+                "金额",
+                "本期增加",
+                "本期减少"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 120096,
+              "end": 120100,
+              "source_page": 126,
+              "span_sha256": "d2ec5b989ff2ac2b1c62069d11e287583eaeef64b2adcfd44321e397decc3ccf",
+              "brief_native_header": "期末余额",
+              "literal_keywords": [
+                "期末余额"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 120101,
+              "end": 120115,
+              "source_page": 126,
+              "span_sha256": "13bfe04a874e583d2de8ebc103d2dd8d94f861c0bdbfabb3611887e0f71ead00",
+              "brief_native_header": "计提 其他 转回或转销 其他",
+              "literal_keywords": [
+                "计提",
+                "转回或转销",
+                "其他"
+              ],
+              "roles_interpreted": false
+            }
+          ],
+          "geometry_status": "exact_diagnosed_parent_note_range_bound",
+          "unknown_boundary": null,
+          "amount_roles_units_period_population_status": "unparsed_native_multilevel_layout_pending",
+          "combined_movements_split": false,
+          "percentage_columns_removed": false,
+          "amounts_solved": 0,
+          "financial_eligibility": false
+        }
+      ],
+      "chapter_reference_or_subline_used_as_end": false,
+      "no_amount_or_financial_mask_created": true,
+      "code": "000403",
+      "source_record_sha256": "297d04bc695709f0405c5a6a4e7e09297047e009171065625d674eb0e24e9bf8",
+      "retained_text_sha256": "3debfec462777ec61bec944efecf43a01eaeea3b00e420969496ecf9deabac2c",
+      "known_revision_or_later_report_metadata": [],
+      "scope_policy_restatement_version_status": "source_note_specific_review_pending_not_cleared_by_G_snapshot",
+      "policy_scope_versions_cleared": false
+    },
+    {
+      "chapter_start": {
+        "start": 150181,
+        "end": 150193,
+        "source_page": 129,
+        "span_sha256": "85b282630f5c1d56fe32d8d1e21b7ec2bc66f99412b3bae228fdddbf5f6ac030"
+      },
+      "chapter_end": {
+        "start": 184824,
+        "end": 184830,
+        "source_page": 168,
+        "span_sha256": "6d34e68feeeb833a8fbc199f6e0c4a2cb36e76fb4a72a0aa5d31f1f8e8a4f889"
+      },
+      "chapter_range": {
+        "start": 150181,
+        "end": 184824,
+        "source_page": 129,
+        "span_sha256": "dc7252f8c7e1b8753a3446f251fbcf3e51c938c2bda6eae3e4e2184c96ef59f4"
+      },
+      "notes": [
+        {
+          "asset": "AR",
+          "parent_ordinal": 5,
+          "next_parent_ordinal": 6,
+          "parent_caption": {
+            "start": 151866,
+            "end": 151872,
+            "source_page": 131,
+            "span_sha256": "3f3ee6b3356dc49eef88e479e5be3e72d51869c06007623e050eba67035e1c6c",
+            "brief_caption": "5、应收账款"
+          },
+          "next_same_level_caption": {
+            "start": 154214,
+            "end": 154220,
+            "source_page": 133,
+            "span_sha256": "af9005c0a8bde750904193645a533121052af3fafd9873aef6b6178d2283b3ef",
+            "brief_caption": "6、合同资产"
+          },
+          "note_range": {
+            "start": 151866,
+            "end": 154214,
+            "source_page": 131,
+            "span_sha256": "8cc308f7ad68119dda259658fd318e85f5cc24536251a9b566c7b517e2bad2ec"
+          },
+          "known_bracket_child_captions": [
+            {
+              "start": 151873,
+              "end": 151882,
+              "source_page": 131,
+              "span_sha256": "14bf2cbb1266efbc0c2c59584ad309112ed08d59c291d8ca4cdf53d80a7abeaf",
+              "brief_caption": "（1） 按账龄披露"
+            },
+            {
+              "start": 152246,
+              "end": 152261,
+              "source_page": 132,
+              "span_sha256": "e3f4ff9d5b38c090adaac1ab194cb9c1b46f21f2e5aeb513c9279717dd0563b5",
+              "brief_caption": "（2） 按坏账计提方法分类披露"
+            },
+            {
+              "start": 153359,
+              "end": 153380,
+              "source_page": 133,
+              "span_sha256": "34972f35427b90e667fdac6671c1ae0808ea04a0f4ea4b3fcf7f16546a243bcd",
+              "brief_caption": "（3） 本期计提、收回或转回的坏账准备情况"
+            },
+            {
+              "start": 153613,
+              "end": 153630,
+              "source_page": 133,
+              "span_sha256": "b5fb0f076d82777373baaa9f62f440e8c8f78ecb95b5178007294b6eb9838176",
+              "brief_caption": "（4） 本期实际核销的应收账款情况"
+            },
+            {
+              "start": 153645,
+              "end": 153675,
+              "source_page": 133,
+              "span_sha256": "21b9c8484ea961e787228614109beaf54dc8edcb8af31416f0fbf75a714ff92f",
+              "brief_caption": "（5） 按欠款方归集的期末余额前五名的应收账款和合同资产情况"
+            }
+          ],
+          "native_header_clues": [
+            {
+              "start": 151883,
+              "end": 151887,
+              "source_page": 131,
+              "span_sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0",
+              "brief_native_header": "单位：元",
+              "literal_keywords": [
+                "单位"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 152262,
+              "end": 152266,
+              "source_page": 132,
+              "span_sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0",
+              "brief_native_header": "单位：元",
+              "literal_keywords": [
+                "单位"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 152270,
+              "end": 152279,
+              "source_page": 132,
+              "span_sha256": "0c49394e89790e8e497f2042c99ab439e690785b222272c3e6e75d820760963d",
+              "brief_native_header": "期末余额 期初余额",
+              "literal_keywords": [
+                "期末余额",
+                "期初余额"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 152280,
+              "end": 152289,
+              "source_page": 132,
+              "span_sha256": "7fde6b94d9b0954c9587d17926490a87e2aaeb42c8da1edfdf5474b6a57a4b2c",
+              "brief_native_header": "账面余额 坏账准备",
+              "literal_keywords": [
+                "账面余额",
+                "坏账准备"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 152296,
+              "end": 152305,
+              "source_page": 132,
+              "span_sha256": "7fde6b94d9b0954c9587d17926490a87e2aaeb42c8da1edfdf5474b6a57a4b2c",
+              "brief_native_header": "账面余额 坏账准备",
+              "literal_keywords": [
+                "账面余额",
+                "坏账准备"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 152310,
+              "end": 152318,
+              "source_page": 132,
+              "span_sha256": "ba71d147a679168c455f6567db2fc9cfea16637069783bf251bdfdce69a065f5",
+              "brief_native_header": "金额 比例 金额",
+              "literal_keywords": [
+                "金额",
+                "比例"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 152327,
+              "end": 152335,
+              "source_page": 132,
+              "span_sha256": "ba71d147a679168c455f6567db2fc9cfea16637069783bf251bdfdce69a065f5",
+              "brief_native_header": "金额 比例 金额",
+              "literal_keywords": [
+                "金额",
+                "比例"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 152904,
+              "end": 152908,
+              "source_page": 132,
+              "span_sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0",
+              "brief_native_header": "单位：元",
+              "literal_keywords": [
+                "单位"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 152912,
+              "end": 152921,
+              "source_page": 132,
+              "span_sha256": "b8a8aeb8583e7d7396cd8a74133e15c57a9944657488944aff74f6ee06354b56",
+              "brief_native_header": "期初余额 期末余额",
+              "literal_keywords": [
+                "期末余额",
+                "期初余额"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 152922,
+              "end": 152951,
+              "source_page": 132,
+              "span_sha256": "8ce214263eefeb82346e69e8d32ada2edef81f218075419ac9a93cf214ef6657",
+              "brief_native_header": "账面余额 坏账准备 账面余额 坏账准备 计提比例 计提理由",
+              "literal_keywords": [
+                "账面余额",
+                "坏账准备",
+                "比例",
+                "计提"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 153123,
+              "end": 153127,
+              "source_page": 132,
+              "span_sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0",
+              "brief_native_header": "单位：元",
+              "literal_keywords": [
+                "单位"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 153131,
+              "end": 153135,
+              "source_page": 132,
+              "span_sha256": "d2ec5b989ff2ac2b1c62069d11e287583eaeef64b2adcfd44321e397decc3ccf",
+              "brief_native_header": "期末余额",
+              "literal_keywords": [
+                "期末余额"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 153136,
+              "end": 153150,
+              "source_page": 132,
+              "span_sha256": "7369b211d2aaad2b00710ee44521a8b610d6cfa6ea8ef92cd2cb818e5c06f6e2",
+              "brief_native_header": "账面余额 坏账准备 计提比例",
+              "literal_keywords": [
+                "账面余额",
+                "坏账准备",
+                "比例",
+                "计提"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 153274,
+              "end": 153299,
+              "source_page": 132,
+              "span_sha256": "7aad458949b559bbb87b7861415b6954967e3938260b664406077368b5b9cde9",
+              "brief_native_header": "如是按照预期信用损失一般模型计提应收账款坏账准备：",
+              "literal_keywords": [
+                "坏账准备",
+                "计提"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 153359,
+              "end": 153380,
+              "source_page": 133,
+              "span_sha256": "34972f35427b90e667fdac6671c1ae0808ea04a0f4ea4b3fcf7f16546a243bcd",
+              "brief_native_header": "（3） 本期计提、收回或转回的坏账准备情况",
+              "literal_keywords": [
+                "坏账准备",
+                "计提",
+                "收回或转回"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 153381,
+              "end": 153392,
+              "source_page": 133,
+              "span_sha256": "f4495050052bc61c4529bf835d8455c60d4b8d639875f9b780976ad0b41346f9",
+              "brief_native_header": "本期计提坏账准备情况：",
+              "literal_keywords": [
+                "坏账准备",
+                "计提"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 153393,
+              "end": 153397,
+              "source_page": 133,
+              "span_sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0",
+              "brief_native_header": "单位：元",
+              "literal_keywords": [
+                "单位"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 153406,
+              "end": 153412,
+              "source_page": 133,
+              "span_sha256": "07626bd050b3e529fbc8c028b90f6e36173014a1151e258e83a160ac5ad23265",
+              "brief_native_header": "本期变动金额",
+              "literal_keywords": [
+                "金额",
+                "本期变动"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 153413,
+              "end": 153417,
+              "source_page": 133,
+              "span_sha256": "d2ec5b989ff2ac2b1c62069d11e287583eaeef64b2adcfd44321e397decc3ccf",
+              "brief_native_header": "期末余额",
+              "literal_keywords": [
+                "期末余额"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 153418,
+              "end": 153432,
+              "source_page": 133,
+              "span_sha256": "30eff117c5e0407c9dfbcee21f20992227f810895fc9fc00160cd5d634a7c9aa",
+              "brief_native_header": "计提 收回或转回 核销 其他",
+              "literal_keywords": [
+                "计提",
+                "收回或转回",
+                "其他"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 153590,
+              "end": 153612,
+              "source_page": 133,
+              "span_sha256": "6a2b8cf052e36685b65d370e6c0c447f694946e0b2fc30f2739d641829818b92",
+              "brief_native_header": "其中本期坏账准备收回或转回金额重要的：不适用",
+              "literal_keywords": [
+                "坏账准备",
+                "金额",
+                "收回或转回"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 153676,
+              "end": 153680,
+              "source_page": 133,
+              "span_sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0",
+              "brief_native_header": "单位：元",
+              "literal_keywords": [
+                "单位"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 153681,
+              "end": 153685,
+              "source_page": 133,
+              "span_sha256": "21e4f26a7c46a47bc2084f95cc508f80dc1556b53be2c82c5361d519c0dac4a4",
+              "brief_native_header": "单位名称",
+              "literal_keywords": [
+                "单位"
+              ],
+              "roles_interpreted": false
+            }
+          ],
+          "geometry_status": "exact_diagnosed_parent_note_range_bound",
+          "unknown_boundary": null,
+          "amount_roles_units_period_population_status": "unparsed_native_multilevel_layout_pending",
+          "combined_movements_split": false,
+          "percentage_columns_removed": false,
+          "amounts_solved": 0,
+          "financial_eligibility": false
+        },
+        {
+          "asset": "INV",
+          "parent_ordinal": 10,
+          "next_parent_ordinal": 11,
+          "parent_caption": {
+            "start": 159344,
+            "end": 159349,
+            "source_page": 139,
+            "span_sha256": "fb93fe175baa6150ff5726e5b9c79d6748b16fd0a4f94711f95b5dc62d8a2fb3",
+            "brief_caption": "10、存货"
+          },
+          "next_same_level_caption": {
+            "start": 160047,
+            "end": 160056,
+            "source_page": 140,
+            "span_sha256": "6376b0a4181fe7f1d1775b76b21debbcd48c5fb8b46e066f8761649a26de1a7f",
+            "brief_caption": "11、持有待售资产"
+          },
+          "note_range": {
+            "start": 159344,
+            "end": 160047,
+            "source_page": 139,
+            "span_sha256": "787b4e96972b2db2acb71273018b2df09a12d5340c76ac9313bae9954d7e8f40"
+          },
+          "known_bracket_child_captions": [
+            {
+              "start": 159421,
+              "end": 159429,
+              "source_page": 140,
+              "span_sha256": "be4fbe2cecf11e0c4042153280945a8d638aa7dad067415e4baa6f0d6fa35fee",
+              "brief_caption": "（1） 存货分类"
+            },
+            {
+              "start": 159783,
+              "end": 159797,
+              "source_page": 140,
+              "span_sha256": "219d9599916dc1d7ace0a510387a7f423c24df674d5aa250a250b9d08e422d14",
+              "brief_caption": "（2） 确认为存货的数据资源"
+            },
+            {
+              "start": 159807,
+              "end": 159828,
+              "source_page": 140,
+              "span_sha256": "11bb6ff62d75cc7284b0fbcf1f5c4048a4d26a3ea7343dd67013157c0d3b7d8a",
+              "brief_caption": "（3） 存货跌价准备和合同履约成本减值准备"
+            },
+            {
+              "start": 159961,
+              "end": 159985,
+              "source_page": 140,
+              "span_sha256": "eb127e9a708e13f1443873799e00b6590660cb9ede38561b9c4d9653e1950da3",
+              "brief_caption": "（4） 存货期末余额含有借款费用资本化金额的说明"
+            },
+            {
+              "start": 160006,
+              "end": 160025,
+              "source_page": 140,
+              "span_sha256": "12993a5b4be03535bfe552bb4eb72360c02d2f90111cd5862a1921931b79af10",
+              "brief_caption": "（5） 合同履约成本本期摊销金额的说明"
+            }
+          ],
+          "native_header_clues": [
+            {
+              "start": 159430,
+              "end": 159434,
+              "source_page": 140,
+              "span_sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0",
+              "brief_native_header": "单位：元",
+              "literal_keywords": [
+                "单位"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 159438,
+              "end": 159447,
+              "source_page": 140,
+              "span_sha256": "0c49394e89790e8e497f2042c99ab439e690785b222272c3e6e75d820760963d",
+              "brief_native_header": "期末余额 期初余额",
+              "literal_keywords": [
+                "期末余额",
+                "期初余额"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 159448,
+              "end": 159452,
+              "source_page": 140,
+              "span_sha256": "b5c7ff4fa89b94927ec5ab3d537ac6bf35b7bb196f26644ba690ee98c27d90a1",
+              "brief_native_header": "账面余额",
+              "literal_keywords": [
+                "账面余额"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 159474,
+              "end": 159483,
+              "source_page": 140,
+              "span_sha256": "17eec03da5cb7e752af6e34f42ffb7e15a9c32098cfc0fbb022d02da979de0ca",
+              "brief_native_header": "账面价值 账面余额",
+              "literal_keywords": [
+                "账面余额",
+                "账面价值"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 159504,
+              "end": 159508,
+              "source_page": 140,
+              "span_sha256": "582daaeda74de830e551f4f547eb3cd16fe965d73cff72b7f50029ab9c12806c",
+              "brief_native_header": "账面价值",
+              "literal_keywords": [
+                "账面价值"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 159829,
+              "end": 159833,
+              "source_page": 140,
+              "span_sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0",
+              "brief_native_header": "单位：元",
+              "literal_keywords": [
+                "单位"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 159842,
+              "end": 159855,
+              "source_page": 140,
+              "span_sha256": "a135a5a13a37a65a90cb4fcacc7d5cff054de9ffe34f733055f5000c0929e7d1",
+              "brief_native_header": "本期增加金额 本期减少金额",
+              "literal_keywords": [
+                "金额",
+                "本期增加",
+                "本期减少"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 159856,
+              "end": 159860,
+              "source_page": 140,
+              "span_sha256": "d2ec5b989ff2ac2b1c62069d11e287583eaeef64b2adcfd44321e397decc3ccf",
+              "brief_native_header": "期末余额",
+              "literal_keywords": [
+                "期末余额"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 159861,
+              "end": 159875,
+              "source_page": 140,
+              "span_sha256": "13bfe04a874e583d2de8ebc103d2dd8d94f861c0bdbfabb3611887e0f71ead00",
+              "brief_native_header": "计提 其他 转回或转销 其他",
+              "literal_keywords": [
+                "计提",
+                "转回或转销",
+                "其他"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 159940,
+              "end": 159951,
+              "source_page": 140,
+              "span_sha256": "b6a5e7e95f2e6a2cd07b5c74600d708460243a9d7fcac52a0a14fa41d0d6fbd9",
+              "brief_native_header": "按组合计提存货跌价准备",
+              "literal_keywords": [
+                "跌价准备",
+                "计提"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 159961,
+              "end": 159985,
+              "source_page": 140,
+              "span_sha256": "eb127e9a708e13f1443873799e00b6590660cb9ede38561b9c4d9653e1950da3",
+              "brief_native_header": "（4） 存货期末余额含有借款费用资本化金额的说明",
+              "literal_keywords": [
+                "期末余额",
+                "金额"
+              ],
+              "roles_interpreted": false
+            },
+            {
+              "start": 159986,
+              "end": 160005,
+              "source_page": 140,
+              "span_sha256": "93015a6fc0e874c740365357cadb3277692f0772dd258c7d387df615a9b52513",
+              "brief_native_header": "存货期末余额不含有借款费用资本化金额。",
+              "literal_keywords": [
+                "期末余额",
+                "金额"
+              ],
+              "roles_interpreted": false
+            }
+          ],
+          "geometry_status": "exact_diagnosed_parent_note_range_bound",
+          "unknown_boundary": null,
+          "amount_roles_units_period_population_status": "unparsed_native_multilevel_layout_pending",
+          "combined_movements_split": false,
+          "percentage_columns_removed": false,
+          "amounts_solved": 0,
+          "financial_eligibility": false
+        }
+      ],
+      "chapter_reference_or_subline_used_as_end": false,
+      "no_amount_or_financial_mask_created": true,
+      "code": "000409",
+      "source_record_sha256": "0b43932d7ff1bf364ec94a03c5c05c6b949b8792f9f0db274b1a09c2e8ea201d",
+      "retained_text_sha256": "d64aac3ac03f9f2551eff2331e467ea3b87db6d247e751c608ee31682a0faa67",
+      "known_revision_or_later_report_metadata": [],
+      "scope_policy_restatement_version_status": "source_note_specific_review_pending_not_cleared_by_G_snapshot",
+      "policy_scope_versions_cleared": false
+    }
+  ],
+  "original_receipt_replaced": false,
+  "amounts_solved": 0,
+  "new_contexts": 0,
+  "official_calls": 0,
+  "new_full_text_copies": 0,
+  "new_factor_price_label_mask_or_shared_state_written": false
+}

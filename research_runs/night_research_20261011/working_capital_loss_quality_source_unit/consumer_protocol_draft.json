@@ -1,0 +1,126 @@
+{
+  "id": "WORKING_CAPITAL_LOSS_QUALITY_FIRST20_SOURCE_CONSUMER_20261011",
+  "status": "FROZEN_SOURCE_ONLY20_CONSUMER_AWAIT_ROOT_EXECUTION",
+  "prepared_at_utc": "2026-10-11T11:14:46.007927+00:00",
+  "deadline_utc": "2026-10-11T16:00:00+00:00",
+  "consumer_sha256": "d28fa64b2e6e3fa43b81ded1b3b9fcebc5d33df1b5380838241bdcf0bef04678",
+  "registry_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\research_trials.sqlite3",
+  "registration_event_prefix": "working-capital-loss-quality-consumer-freeze:",
+  "registration_subject": "32de6edd562368a60fbb3f957462facd262387bebf6d5e483b187068c424b4bb",
+  "selected_identity_sha256": "5b87780db725b1b7628c9d559732993d44f9d2b95ac4643a57eb39c80f1611d4",
+  "bindings": {
+    "source_plan": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\source_plan.json",
+      "sha256": "32de6edd562368a60fbb3f957462facd262387bebf6d5e483b187068c424b4bb"
+    },
+    "capture_db": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\compact_archive\\captured_financial.sqlite3",
+      "sha256": "491c2ef55412d2bd251972c440db5f314cac85c278db0112beb4d7eaa048caa7"
+    },
+    "source_reader": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\g_field_contract_next100_unit\\consume_retained_sources.py",
+      "sha256": "b384abd8fd61cdd3c485c28c403ccb54bf8edc7abb1b18f6afe3406f4cc3967a"
+    },
+    "capture_binding_api": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\income_basis.py",
+      "sha256": "028f3fc54fa47c0c505fa78c6188278f8e9069de44e3f4e596bce35913e25034"
+    },
+    "money_and_page_api": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\financial_statements.py",
+      "sha256": "4ce12f040f3719e196801563fc524da1f52c49b45bdf948d2a7fdd2349f92f01"
+    },
+    "synthetic_tests": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\test_consumer.py",
+      "sha256": "e09c072c9bce2f31fc84a0adf3735b8cc54f35c3a0e6d1f4a49f4c292d22051f"
+    }
+  },
+  "source_reader_contract": "Import read_case only; original canonical capture gzip SHA, original stock record SHA/PDF/text binding, exact index metadata identities and equalbyte duplicates, complete contiguous physicalpages/nonempty/EOF/http200 verified. No old main or field/financial output consumption. Native gzip text only in this minimal reader; unsupported original container remains pending, no fallback/download.",
+  "scope": "Fixed deterministic first20 FY2025 original G financial report identities from source_plan32de; exact capture/source_index bindings. No freshsource qualification, economic window/direction/factor/mask or originalreceipt change.",
+  "evidence_schema": {
+    "source_identity": [
+      "code",
+      "announcement_id",
+      "report_date",
+      "source_record_sha256",
+      "pdf_sha256",
+      "retained_text_sha256",
+      "edition",
+      "retained_text_path",
+      "published_at",
+      "pdf_url"
+    ],
+    "source_location": [
+      "start",
+      "end",
+      "source_page",
+      "span_sha256"
+    ],
+    "stock_roles": [
+      "closing_gross",
+      "closing_provision",
+      "closing_net",
+      "fiscal_opening_gross",
+      "fiscal_opening_provision",
+      "fiscal_opening_net"
+    ],
+    "AR_provision_roll_roles": [
+      "fiscal_opening_provision",
+      "charge",
+      "reversal",
+      "writeoff",
+      "other_increase",
+      "other_decrease",
+      "closing_provision"
+    ],
+    "INV_provision_roll_roles": [
+      "fiscal_opening_provision",
+      "charge",
+      "reversal",
+      "inventory_disposal_or_consumption",
+      "other_increase",
+      "other_decrease",
+      "closing_provision"
+    ],
+    "money_fact": [
+      "printed",
+      "amount_yuan",
+      "quantum_yuan"
+    ],
+    "unit_year_role": [
+      "unit",
+      "currency_CNY",
+      "report_fiscal_year2025",
+      "closing2025-12-31",
+      "sameFY_fiscal_opening2025-01-01",
+      "opening_literal_date_printed_false",
+      "period_binding_method",
+      "table_header_span",
+      "same_table_total_row_span",
+      "unit_source_span",
+      "complete_CNY_declaration_and_no_explicit_date_mapping_supported"
+    ],
+    "source_arithmetic": "Only sameexplicitheader/one totalrow and allrequired printed roles: gross-provision=net atclosing/opening, opening+charge-reversal-writeoff_or_inventory_transfer_out+other_increase-other_decrease=closing. Decimal rounding tolerance=sum(abs(coefficient)*printedquantum/2); conflict stayspending. No missing role/dash/blank0imputation or unsignedother direction inference.",
+    "barriers": "Original latestannual/revision/laterreport metadata and scope/policy/restatement/version status retained; unknowns and emptyflags never clear eligibility. Printed facts maybind despite these barriers, but no cashrelease/wholecomparable statement.",
+    "uninterpreted_native_header_clues": "For unsupported header geometry only, retain up to4 actual role-keyword headerline locators+brief originaltext<=200chars each. This does not manufacture a header, bind amountroles, infer dates/units/signs or lift pending.",
+    "population_scope": "StockdirectAR/INVnote with no interveningheading, or exact wholeasset classification caption; reserveflow requires exact overallprovisioncaption. Arithmetic closure cannot prove population. Explicitsubgroup/unclear category table pending; unknownnextnumberedheading never contributes its table. Knownpartialancestor按组合/按单项 cannot be reset by a nearer generic wholeasset caption; remainspending."
+  },
+  "minimal_native_grammar": "Unique explicit consolidated-notes section and numberedAR/INV caption. Any nextnumbered caption, including unknown/ambiguouslevel, terminates its range. Exact flat roleheader and one complete same-table totalrow plus directly named wholeasset scope (stockdirectnote or explicitfullpopulationcaption; reserveflow explicitwholeassetcaption). Complete table-local CNY currency declaration only, no foreign/mixed prefix acceptance. Any explicitdated/H1/quarter tablepreamble unsupported andpending; previousDec31 is never relabelledprintedJan1. Subgroup/single/combined/unmappedpopulation and unknown geometry remainpending with exactheader/spans; no genericformat sweep or role/date/unit/sign inference. Existingtablepreamble whitespace-normalized only for rejecting foreign/nonannual/date conflicts, never for creating or interpreting a new date role.",
+  "economic_semantics": "Net receivable/inventory decline cannot certify realcollection/consumption. ARwriteoff and INVtransfer-out are distinct typedfacts; INVtransfer-out maynormalconsumption/disposal and is never blanketbad. Provisionrollclosure is accountingarithmetic, not cash flow or independentalpha.",
+  "output_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\source_facts.json",
+  "retention": "One compact20record sourcefact receipt with hashes/pages/short printedmonetaryfacts and comparabilitybarriers; no retainedfulltext copies/PDF downloads, no daily stock series or masks.",
+  "validation": {
+    "synthetic_tests_passed": 22,
+    "default_inert": true,
+    "actual_selected_native_body_or_amounts_read": false,
+    "compile_checked": true
+  },
+  "new_contexts": 0,
+  "economic_definition": null,
+  "window": null,
+  "direction": null,
+  "new_factor": false,
+  "official_calls": 0,
+  "network_calls": 0,
+  "shared_state_registry_or_original_receipts_written": false,
+  "execution_command": "& 'D:\\Anaconda\\envs\\open-webui\\python.exe' -X utf8 -B research_runs/night_research_20261011/working_capital_loss_quality_source_unit/consumer.py --execute --protocol research_runs/night_research_20261011/working_capital_loss_quality_source_unit/consumer_protocol_draft.json --protocol-sha <FINAL_SHA>"
+}

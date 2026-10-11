@@ -1,0 +1,2122 @@
+{
+  "id": "WC03_WORKING_CAPITAL_LOSS_QUALITY_FIRST20_RETAINED_SOURCE_PLAN_20261011",
+  "schema_version": 1,
+  "status": "FROZEN_SOURCE_METADATA_PLAN_AWAIT_ROOT_SOURCE_REPAIR_REGISTRATION_AND_CONSUMER_FREEZE",
+  "created_at_utc": "2026-10-11T11:07:10.799504+00:00",
+  "deadline_utc": "2026-10-11T16:00:00+00:00",
+  "source_review_asof": "2026-10-09",
+  "economic_window": null,
+  "new_economic_definition": null,
+  "direction": null,
+  "bindings": {
+    "original_native_protocol": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_source_conservative_unit\\protocol.json",
+      "sha256": "eeefb4bc7e510fb72fd1bf2c4cbc4c98cd7b142dd29069a02b355c04db53e726"
+    },
+    "original_source_mask": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_source_conservative_unit\\source_qualification.parquet",
+      "sha256": "1374ff2cff2b4be2c0de4183523638ffd4ecf82139e1a037e27ec8b777aff120"
+    },
+    "original_components": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_arinv_increment_20261009\\registered_component_values.parquet",
+      "sha256": "d4488f3d1d337870d0fcc86afc4b4dbbd63295da0aba4527e8629092c2016113"
+    },
+    "captures": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\compact_archive\\captured_financial.sqlite3",
+      "sha256": "491c2ef55412d2bd251972c440db5f314cac85c278db0112beb4d7eaa048caa7"
+    },
+    "original_source_metadata_closure": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\capital_efficiency_original_g_unit\\source_closure.json",
+      "sha256": "670e464ee9404ec7915ca5ff9a8c4cee2dd391e83d0852d9559b58e45ed1cbca"
+    },
+    "original_remaining28_metadata_closure": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\capital_efficiency_original_g_unit\\pending28_adapter_receipt.json",
+      "sha256": "94e085430ef474d177a62ce2f974e0b979605c89f995a74931c7a4752624c129"
+    },
+    "financial_publication_index": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_tail_diagnosis_20261009\\financial_publication_index.json",
+      "sha256": "094e9b394935c60fd9d9daa3a00a45e46eb2901ae7822783cb07b8cc514a2831"
+    },
+    "source_index_lineage_map_only": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\g_source_next100_deferred_plan.json",
+      "sha256": "870fe7d4c18028520a9a6d185523de6353204e054adad7e0759b645e95791e7e"
+    },
+    "source_indices": {
+      "source_index_0": {
+        "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_index.json",
+        "sha256": "fd6375331b690dfb928c8d99e1dc6fb50e2bd8cd3ed45ba461fc32addd26d3f9"
+      },
+      "source_index_1": {
+        "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_index.json",
+        "sha256": "a695a1bda962b0f01f4be7148fb55cbd486adbe3a022b37e3e90eb57685cd3ea"
+      },
+      "source_index_2": {
+        "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_full_market_source_expansion_20261007\\source_index.json",
+        "sha256": "e892310e3f449f285bc0f579169d4567622a3badf62d0aefc1c50430d7300fb9"
+      },
+      "source_index_3": {
+        "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_history_2022_20261009\\source_index.json",
+        "sha256": "b759aa5f94212d13dd24781a12e72fa770f966fd6a5644186a3934f38f1bc3e2"
+      }
+    },
+    "original_input_calendar": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_gf_adapter_unit\\input_calendar.json",
+      "sha256": "54588da59429095e5a5cf4f29272b220e0ec861eec19ac4b0fdaa9424dbc4c46"
+    },
+    "recent_vendor_calendar": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\recent_stockdb_tail_ingest\\calendar_escalated_diagnostic\\vendor_reference_calendar.json",
+      "sha256": "d4e4260a2151eaf6fa9d0ebf9765dd9e7701d2d275e4a5eee282e4e71e9e51d3"
+    },
+    "recent_vendor_calendar_receipt": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\recent_stockdb_tail_ingest\\calendar_escalated_diagnostic\\vendor_reference_receipt.json",
+      "sha256": "6281fad68db90f93ed6cb24963abfe6a7d69806bccdbf9203a631fd81a00cbad"
+    },
+    "recent_announcement_metadata": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\announcement_metadata_tail_unit\\metadata.sqlite3",
+      "sha256": "fbd6c1c26d53de50449c3369cbd4980b77a471d172529802dbd01e9b23cb16cf"
+    },
+    "recent_announcement_census_receipt": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\announcement_metadata_tail_unit\\resume_summary.json",
+      "sha256": "657556c484f3d49465358c4f5baad442b099bea1a67432d97358160052ab1389"
+    },
+    "historical_correction_metadata": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_full_market_source_expansion_20261007\\correction_events.json",
+      "sha256": "4b61e65fff5c731a048fe0fd560845b611a0970d9f131f03ac3dcf92bfaddee6"
+    },
+    "old_posthoc_identity_exclusion_only": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_tail_diagnosis_20261009\\loss_report_examples.json",
+      "sha256": "8ebee16d50cda9740e63e1f46ef1119180398a8ed4fd8926cb6011ca830ef1d1"
+    }
+  },
+  "selected_cases": [
+    {
+      "code": "000157",
+      "announcement_id": "1225055609",
+      "report_date": "2025-12-31",
+      "published_at": "2026-03-31",
+      "available_date_metadata": "2026-04-01",
+      "available_date_method": "inherited_vendor_calendar_next_session",
+      "original_recorded_available_date_metadata": "2026-04-01",
+      "edition": "ORIGINAL_FULL_REPORT",
+      "source_record_sha256": "55d0f043fca33f963b68cc1c50c7058baa4d85f5d01f96b6cb186a663612efe7",
+      "capture_gzip_sha256": "4d285d1f584e48c76302ddb5de7e596f69431a66c7922649a08a3a75831444c0",
+      "capture_database_key": {
+        "code": "000157",
+        "annid": "1225055609",
+        "period": "2025-12-31"
+      },
+      "capture_state_metadata": "accepted capture before cache pruning; local original must be refetched before any new PDF hash re-verification",
+      "pdf_sha256": "7337024c99356cb2087c09578525461334a1a8dee48f0aee3a61262e5fbba6ce",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-03-31/1225055609.PDF",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000157&announcementId=1225055609&orgId=gssz0000157&announcementTime=2026-03-31",
+      "retained_text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000157_1225055609.txt.gz",
+      "retained_text_sha256": "a4ad23ca829af1ce9d770ac0c8d888b12aaaea290daf7677dd35a2d8bc28dc91",
+      "source_index_binding_key": "source_index_1",
+      "native_pages": 269,
+      "metadata_native_character_count": 266127,
+      "index_metadata_evidence": {
+        "report_date": "2025-12-31",
+        "published_at": "2026-03-31",
+        "edition": "ORIGINAL_FULL_REPORT",
+        "pdf_sha256": "7337024c99356cb2087c09578525461334a1a8dee48f0aee3a61262e5fbba6ce",
+        "text_sha256": "a4ad23ca829af1ce9d770ac0c8d888b12aaaea290daf7677dd35a2d8bc28dc91",
+        "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000157_1225055609.txt.gz",
+        "pages": 269,
+        "pages_without_native_text": 0,
+        "native_text_characters": 266127,
+        "EOF_tail_verified": true,
+        "http_status": 200
+      },
+      "first_inherited_G_source_decision_metadata": "2026-04-01",
+      "annual_AR_INV_note_presence_or_amounts_status": "not_consumed_unknown_pending",
+      "source_qualification_proposal": false,
+      "scope_policy_restatement_version_status": "source_note_specific_review_pending_not_cleared_by_G_snapshot",
+      "fresh_original_PDF_verified": false,
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "single_latest_matches_selected_but_body_scope_pending",
+        "latest_rows": [
+          {
+            "announcement_id": "1225055609",
+            "report_date": "2025-12-31",
+            "published_at": "2026-03-31",
+            "edition": "ORIGINAL_FULL_REPORT",
+            "title": "2025年年度报告",
+            "pdf_sha256": "7337024c99356cb2087c09578525461334a1a8dee48f0aee3a61262e5fbba6ce",
+            "text_sha256": "a4ad23ca829af1ce9d770ac0c8d888b12aaaea290daf7677dd35a2d8bc28dc91"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "known_revision_or_later_report_metadata": [],
+      "all_known_scope_events_reviewed_for_AR_INV_notes": false
+    },
+    {
+      "code": "000403",
+      "announcement_id": "1225245931",
+      "report_date": "2025-12-31",
+      "published_at": "2026-04-29",
+      "available_date_metadata": "2026-04-30",
+      "available_date_method": "inherited_vendor_calendar_next_session",
+      "original_recorded_available_date_metadata": "2026-04-30",
+      "edition": "ORIGINAL_FULL_REPORT",
+      "source_record_sha256": "297d04bc695709f0405c5a6a4e7e09297047e009171065625d674eb0e24e9bf8",
+      "capture_gzip_sha256": "d226446ee41a415ab1dee31cd62ee07a8bcda2475c7ee6d30a009af238e47ee1",
+      "capture_database_key": {
+        "code": "000403",
+        "annid": "1225245931",
+        "period": "2025-12-31"
+      },
+      "capture_state_metadata": "accepted capture before cache pruning; local original must be refetched before any new PDF hash re-verification",
+      "pdf_sha256": "d02d7b2830701fb28a7878fd17faa76cf07b66808f8c995a74bffd3279843e05",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225245931.PDF",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000403&announcementId=1225245931&orgId=gssz0000403&announcementTime=2026-04-29",
+      "retained_text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000403_1225245931.txt.gz",
+      "retained_text_sha256": "3debfec462777ec61bec944efecf43a01eaeea3b00e420969496ecf9deabac2c",
+      "source_index_binding_key": "source_index_1",
+      "native_pages": 160,
+      "metadata_native_character_count": 154810,
+      "index_metadata_evidence": {
+        "report_date": "2025-12-31",
+        "published_at": "2026-04-29",
+        "edition": "ORIGINAL_FULL_REPORT",
+        "pdf_sha256": "d02d7b2830701fb28a7878fd17faa76cf07b66808f8c995a74bffd3279843e05",
+        "text_sha256": "3debfec462777ec61bec944efecf43a01eaeea3b00e420969496ecf9deabac2c",
+        "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000403_1225245931.txt.gz",
+        "pages": 160,
+        "pages_without_native_text": 0,
+        "native_text_characters": 154810,
+        "EOF_tail_verified": true,
+        "http_status": 200
+      },
+      "first_inherited_G_source_decision_metadata": "2026-07-02",
+      "annual_AR_INV_note_presence_or_amounts_status": "not_consumed_unknown_pending",
+      "source_qualification_proposal": false,
+      "scope_policy_restatement_version_status": "source_note_specific_review_pending_not_cleared_by_G_snapshot",
+      "fresh_original_PDF_verified": false,
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "single_latest_matches_selected_but_body_scope_pending",
+        "latest_rows": [
+          {
+            "announcement_id": "1225245931",
+            "report_date": "2025-12-31",
+            "published_at": "2026-04-29",
+            "edition": "ORIGINAL_FULL_REPORT",
+            "title": "2025年年度报告",
+            "pdf_sha256": "d02d7b2830701fb28a7878fd17faa76cf07b66808f8c995a74bffd3279843e05",
+            "text_sha256": "3debfec462777ec61bec944efecf43a01eaeea3b00e420969496ecf9deabac2c"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "known_revision_or_later_report_metadata": [],
+      "all_known_scope_events_reviewed_for_AR_INV_notes": false
+    },
+    {
+      "code": "000409",
+      "announcement_id": "1225084580",
+      "report_date": "2025-12-31",
+      "published_at": "2026-04-09",
+      "available_date_metadata": "2026-04-10",
+      "available_date_method": "inherited_vendor_calendar_next_session",
+      "original_recorded_available_date_metadata": "2026-04-10",
+      "edition": "ORIGINAL_FULL_REPORT",
+      "source_record_sha256": "0b43932d7ff1bf364ec94a03c5c05c6b949b8792f9f0db274b1a09c2e8ea201d",
+      "capture_gzip_sha256": "48c72fc3aa7ea9f62e7af816917990c289e3e018dadf4d791ab9ac3065959beb",
+      "capture_database_key": {
+        "code": "000409",
+        "annid": "1225084580",
+        "period": "2025-12-31"
+      },
+      "capture_state_metadata": "accepted capture before cache pruning; local original must be refetched before any new PDF hash re-verification",
+      "pdf_sha256": "7873f0485c01bdfd29ed24343318bf7f868a8b7fc5147bbb8377d8f9db1aea17",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-09/1225084580.PDF",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000409&announcementId=1225084580&orgId=gssz0000409&announcementTime=2026-04-09",
+      "retained_text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000409_1225084580.txt.gz",
+      "retained_text_sha256": "d64aac3ac03f9f2551eff2331e467ea3b87db6d247e751c608ee31682a0faa67",
+      "source_index_binding_key": "source_index_1",
+      "native_pages": 214,
+      "metadata_native_character_count": 241477,
+      "index_metadata_evidence": {
+        "report_date": "2025-12-31",
+        "published_at": "2026-04-09",
+        "edition": "ORIGINAL_FULL_REPORT",
+        "pdf_sha256": "7873f0485c01bdfd29ed24343318bf7f868a8b7fc5147bbb8377d8f9db1aea17",
+        "text_sha256": "d64aac3ac03f9f2551eff2331e467ea3b87db6d247e751c608ee31682a0faa67",
+        "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000409_1225084580.txt.gz",
+        "pages": 214,
+        "pages_without_native_text": 0,
+        "native_text_characters": 241477,
+        "EOF_tail_verified": true,
+        "http_status": 200
+      },
+      "first_inherited_G_source_decision_metadata": "2026-04-10",
+      "annual_AR_INV_note_presence_or_amounts_status": "not_consumed_unknown_pending",
+      "source_qualification_proposal": false,
+      "scope_policy_restatement_version_status": "source_note_specific_review_pending_not_cleared_by_G_snapshot",
+      "fresh_original_PDF_verified": false,
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "single_latest_matches_selected_but_body_scope_pending",
+        "latest_rows": [
+          {
+            "announcement_id": "1225084580",
+            "report_date": "2025-12-31",
+            "published_at": "2026-04-09",
+            "edition": "ORIGINAL_FULL_REPORT",
+            "title": "2025年年度报告",
+            "pdf_sha256": "7873f0485c01bdfd29ed24343318bf7f868a8b7fc5147bbb8377d8f9db1aea17",
+            "text_sha256": "d64aac3ac03f9f2551eff2331e467ea3b87db6d247e751c608ee31682a0faa67"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "known_revision_or_later_report_metadata": [],
+      "all_known_scope_events_reviewed_for_AR_INV_notes": false
+    },
+    {
+      "code": "000533",
+      "announcement_id": "1225290543",
+      "report_date": "2025-12-31",
+      "published_at": "2026-04-16",
+      "available_date_metadata": "2026-04-17",
+      "available_date_method": "inherited_vendor_calendar_next_session",
+      "original_recorded_available_date_metadata": "2026-04-17",
+      "edition": "ORIGINAL_FULL_REPORT",
+      "source_record_sha256": "378729c234ca91060d1e593beaf7d247e041cb8207b2290eb2339f6491e5a8e2",
+      "capture_gzip_sha256": "a981c64e661da83f925a8fcae1bd34542a607a323f7d02a87bf72b3534a30258",
+      "capture_database_key": {
+        "code": "000533",
+        "annid": "1225290543",
+        "period": "2025-12-31"
+      },
+      "capture_state_metadata": "accepted capture before cache pruning; local original must be refetched before any new PDF hash re-verification",
+      "pdf_sha256": "80d523dc9f1d0adf918a531bd76cf614dc6ccc1285fc650db6e2947ff88f5cdf",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-16/1225290543.pdf",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000533&announcementId=1225290543&orgId=gssz0000533&announcementTime=2026-04-16",
+      "retained_text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000533_1225290543.txt.gz",
+      "retained_text_sha256": "aeed7731b31e424745e308f3e20fcda01f126275d15e25aefb865dd80fb9bef8",
+      "source_index_binding_key": "source_index_1",
+      "native_pages": 173,
+      "metadata_native_character_count": 177061,
+      "index_metadata_evidence": {
+        "report_date": "2025-12-31",
+        "published_at": "2026-04-16",
+        "edition": "ORIGINAL_FULL_REPORT",
+        "pdf_sha256": "80d523dc9f1d0adf918a531bd76cf614dc6ccc1285fc650db6e2947ff88f5cdf",
+        "text_sha256": "aeed7731b31e424745e308f3e20fcda01f126275d15e25aefb865dd80fb9bef8",
+        "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000533_1225290543.txt.gz",
+        "pages": 173,
+        "pages_without_native_text": 0,
+        "native_text_characters": 177061,
+        "EOF_tail_verified": true,
+        "http_status": 200
+      },
+      "first_inherited_G_source_decision_metadata": "2026-04-17",
+      "annual_AR_INV_note_presence_or_amounts_status": "not_consumed_unknown_pending",
+      "source_qualification_proposal": false,
+      "scope_policy_restatement_version_status": "source_note_specific_review_pending_not_cleared_by_G_snapshot",
+      "fresh_original_PDF_verified": false,
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "single_latest_matches_selected_but_body_scope_pending",
+        "latest_rows": [
+          {
+            "announcement_id": "1225290543",
+            "report_date": "2025-12-31",
+            "published_at": "2026-04-16",
+            "edition": "ORIGINAL_FULL_REPORT",
+            "title": "2025年年度报告",
+            "pdf_sha256": "80d523dc9f1d0adf918a531bd76cf614dc6ccc1285fc650db6e2947ff88f5cdf",
+            "text_sha256": "aeed7731b31e424745e308f3e20fcda01f126275d15e25aefb865dd80fb9bef8"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "known_revision_or_later_report_metadata": [],
+      "all_known_scope_events_reviewed_for_AR_INV_notes": false
+    },
+    {
+      "code": "000637",
+      "announcement_id": "1225248741",
+      "report_date": "2025-12-31",
+      "published_at": "2026-04-29",
+      "available_date_metadata": "2026-04-30",
+      "available_date_method": "inherited_vendor_calendar_next_session",
+      "original_recorded_available_date_metadata": "2026-04-30",
+      "edition": "ORIGINAL_FULL_REPORT",
+      "source_record_sha256": "94037bd307358bb6c2d16d7f53490217a0359ac9c3829b7049e19367b6b332cb",
+      "capture_gzip_sha256": "4c80c41ef373e0c2a61f0694a23a562fa14a10448e1c01522dfb82eb350579c5",
+      "capture_database_key": {
+        "code": "000637",
+        "annid": "1225248741",
+        "period": "2025-12-31"
+      },
+      "capture_state_metadata": "accepted capture before cache pruning; local original must be refetched before any new PDF hash re-verification",
+      "pdf_sha256": "18231670324fb8ab60c264dbaebf4972004a4c153aa5a046dc7be4d2e40646d9",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225248741.PDF",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225248741&orgId=gssz0000637&announcementTime=2026-04-29",
+      "retained_text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000637_1225248741.txt.gz",
+      "retained_text_sha256": "39060b3b55fc7d16d800a1dd5273bcbafddb16f200c43019a426fa13929a7d31",
+      "source_index_binding_key": "source_index_1",
+      "native_pages": 209,
+      "metadata_native_character_count": 175094,
+      "index_metadata_evidence": {
+        "report_date": "2025-12-31",
+        "published_at": "2026-04-29",
+        "edition": "ORIGINAL_FULL_REPORT",
+        "pdf_sha256": "18231670324fb8ab60c264dbaebf4972004a4c153aa5a046dc7be4d2e40646d9",
+        "text_sha256": "39060b3b55fc7d16d800a1dd5273bcbafddb16f200c43019a426fa13929a7d31",
+        "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000637_1225248741.txt.gz",
+        "pages": 209,
+        "pages_without_native_text": 0,
+        "native_text_characters": 175094,
+        "EOF_tail_verified": true,
+        "http_status": 200
+      },
+      "first_inherited_G_source_decision_metadata": "2026-04-30",
+      "annual_AR_INV_note_presence_or_amounts_status": "not_consumed_unknown_pending",
+      "source_qualification_proposal": false,
+      "scope_policy_restatement_version_status": "source_note_specific_review_pending_not_cleared_by_G_snapshot",
+      "fresh_original_PDF_verified": false,
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "later_or_ambiguous_version_pending_no_fallback",
+        "latest_rows": [
+          {
+            "announcement_id": "1225460240",
+            "report_date": "2025-12-31",
+            "published_at": "2026-08-06",
+            "edition": "REVISED_FULL_REPORT",
+            "title": "2025年年度报告（更正后）",
+            "pdf_sha256": "1188d9bcac97cc67fa75424b8382acfbb387384b5e3dfeb71f545d1f90fb4791",
+            "text_sha256": "8692826cd1712f14cf20f2f31390a6d4dbae797a460a5abb3b2ceb47bdef96a3"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "known_revision_or_later_report_metadata": [
+        {
+          "announcement_id": "1225460224",
+          "title": "2024年第一季度报告（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460224.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460224&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2024-03-31",
+          "report_dates": [
+            "2024-03-31"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460225",
+          "title": "2023年年度报告（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460225.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460225&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2023-12-31",
+          "report_dates": [
+            "2023-12-31"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460226",
+          "title": "2025年第三季度报告（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460226.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460226&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2025-09-30",
+          "report_dates": [
+            "2025-09-30"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460227",
+          "title": "2024年半年度报告（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460227.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460227&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2024-06-30",
+          "report_dates": [
+            "2024-06-30"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460228",
+          "title": "2025年半年度报告（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460228.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460228&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2025-06-30",
+          "report_dates": [
+            "2025-06-30"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460229",
+          "title": "2023年第三季度报告（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460229.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460229&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2023-09-30",
+          "report_dates": [
+            "2023-09-30"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460230",
+          "title": "2023年第一季度报告（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460230.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460230&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2023-03-31",
+          "report_dates": [
+            "2023-03-31"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460231",
+          "title": "2025年第一季度报告（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460231.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460231&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2025-03-31",
+          "report_dates": [
+            "2025-03-31"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460232",
+          "title": "2024年第三季度报告（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460232.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460232&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2024-09-30",
+          "report_dates": [
+            "2024-09-30"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460233",
+          "title": "2023年半年度报告（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460233.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460233&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2023-06-30",
+          "report_dates": [
+            "2023-06-30"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460234",
+          "title": "2023年年度报告摘要（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460234.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460234&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2023-12-31",
+          "report_dates": [
+            "2023-12-31"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460235",
+          "title": "2025年半年度报告摘要（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460235.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460235&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2025-06-30",
+          "report_dates": [
+            "2025-06-30"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460236",
+          "title": "2024年半年度报告摘要（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460236.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460236&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2024-06-30",
+          "report_dates": [
+            "2024-06-30"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460237",
+          "title": "2025年年度报告摘要（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460237.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460237&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2025-12-31",
+          "report_dates": [
+            "2025-12-31"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460238",
+          "title": "2023年半年度报告摘要（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460238.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460238&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2023-06-30",
+          "report_dates": [
+            "2023-06-30"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460239",
+          "title": "2024年年度报告摘要（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460239.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460239&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2024-12-31",
+          "report_dates": [
+            "2024-12-31"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460240",
+          "title": "2025年年度报告（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460240.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460240&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2025-12-31",
+          "report_dates": [
+            "2025-12-31"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460241",
+          "title": "2024年年度报告（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460241.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460241&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2024-12-31",
+          "report_dates": [
+            "2024-12-31"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460242",
+          "title": "2026年第一季度报告（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460242.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460242&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2026-03-31",
+          "report_dates": [
+            "2026-03-31"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460245",
+          "title": "关于前期会计差错更正的公告",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460245.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460245&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": null,
+          "report_dates": [],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        }
+      ],
+      "all_known_scope_events_reviewed_for_AR_INV_notes": false
+    },
+    {
+      "code": "000672",
+      "announcement_id": "1225212571",
+      "report_date": "2025-12-31",
+      "published_at": "2026-04-28",
+      "available_date_metadata": "2026-04-29",
+      "available_date_method": "inherited_vendor_calendar_next_session",
+      "original_recorded_available_date_metadata": "2026-04-29",
+      "edition": "ORIGINAL_FULL_REPORT",
+      "source_record_sha256": "cbab753e708c2161ca37b9ec009c56cfd930092d48b970fc8a9e8bf3536ef36b",
+      "capture_gzip_sha256": "e7ee62f457a3703e4b2e535ad4d977821a8dfc107933e378450eee83c744494e",
+      "capture_database_key": {
+        "code": "000672",
+        "annid": "1225212571",
+        "period": "2025-12-31"
+      },
+      "capture_state_metadata": "accepted capture before cache pruning; local original must be refetched before any new PDF hash re-verification",
+      "pdf_sha256": "95bf69656b3925744281da9a510ce86ebf7a3b5eb7a7ed1f903e190202a1e2f6",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225212571.PDF",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000672&announcementId=1225212571&orgId=gssz0000672&announcementTime=2026-04-28",
+      "retained_text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000672_1225212571.txt.gz",
+      "retained_text_sha256": "8580f49099c9fad76231053537dcb5edfed0ad6c7499495ceb267cb5ffb57ada",
+      "source_index_binding_key": "source_index_1",
+      "native_pages": 208,
+      "metadata_native_character_count": 202460,
+      "index_metadata_evidence": {
+        "report_date": "2025-12-31",
+        "published_at": "2026-04-28",
+        "edition": "ORIGINAL_FULL_REPORT",
+        "pdf_sha256": "95bf69656b3925744281da9a510ce86ebf7a3b5eb7a7ed1f903e190202a1e2f6",
+        "text_sha256": "8580f49099c9fad76231053537dcb5edfed0ad6c7499495ceb267cb5ffb57ada",
+        "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000672_1225212571.txt.gz",
+        "pages": 208,
+        "pages_without_native_text": 0,
+        "native_text_characters": 202460,
+        "EOF_tail_verified": true,
+        "http_status": 200
+      },
+      "first_inherited_G_source_decision_metadata": "2026-04-29",
+      "annual_AR_INV_note_presence_or_amounts_status": "not_consumed_unknown_pending",
+      "source_qualification_proposal": false,
+      "scope_policy_restatement_version_status": "source_note_specific_review_pending_not_cleared_by_G_snapshot",
+      "fresh_original_PDF_verified": false,
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "single_latest_matches_selected_but_body_scope_pending",
+        "latest_rows": [
+          {
+            "announcement_id": "1225212571",
+            "report_date": "2025-12-31",
+            "published_at": "2026-04-28",
+            "edition": "ORIGINAL_FULL_REPORT",
+            "title": "2025年年度报告",
+            "pdf_sha256": "95bf69656b3925744281da9a510ce86ebf7a3b5eb7a7ed1f903e190202a1e2f6",
+            "text_sha256": "8580f49099c9fad76231053537dcb5edfed0ad6c7499495ceb267cb5ffb57ada"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "known_revision_or_later_report_metadata": [],
+      "all_known_scope_events_reviewed_for_AR_INV_notes": false
+    },
+    {
+      "code": "000678",
+      "announcement_id": "1225220917",
+      "report_date": "2025-12-31",
+      "published_at": "2026-04-28",
+      "available_date_metadata": "2026-04-29",
+      "available_date_method": "inherited_vendor_calendar_next_session",
+      "original_recorded_available_date_metadata": "2026-04-29",
+      "edition": "ORIGINAL_FULL_REPORT",
+      "source_record_sha256": "6417e5e7e6ad40f9e2996864ff094f4816b5b9d911f471c517f9b61cf4117d10",
+      "capture_gzip_sha256": "4b46cabab57088f265482a210b449fa45ff3ffac1887b1183c796aaa75fc6e18",
+      "capture_database_key": {
+        "code": "000678",
+        "annid": "1225220917",
+        "period": "2025-12-31"
+      },
+      "capture_state_metadata": "accepted capture before cache pruning; local original must be refetched before any new PDF hash re-verification",
+      "pdf_sha256": "9b3a322afee07c275aee405b97a741f0a59b8656d4c5a01c5a678dc5cca3d430",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-28/1225220917.PDF",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000678&announcementId=1225220917&orgId=gssz0000678&announcementTime=2026-04-28",
+      "retained_text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000678_1225220917.txt.gz",
+      "retained_text_sha256": "b7b1f232f2c7bd3d7b3e85339e651fc45c469218919205fed0fc5fc5b59ec6c1",
+      "source_index_binding_key": "source_index_1",
+      "native_pages": 161,
+      "metadata_native_character_count": 147232,
+      "index_metadata_evidence": {
+        "report_date": "2025-12-31",
+        "published_at": "2026-04-28",
+        "edition": "ORIGINAL_FULL_REPORT",
+        "pdf_sha256": "9b3a322afee07c275aee405b97a741f0a59b8656d4c5a01c5a678dc5cca3d430",
+        "text_sha256": "b7b1f232f2c7bd3d7b3e85339e651fc45c469218919205fed0fc5fc5b59ec6c1",
+        "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000678_1225220917.txt.gz",
+        "pages": 161,
+        "pages_without_native_text": 0,
+        "native_text_characters": 147232,
+        "EOF_tail_verified": true,
+        "http_status": 200
+      },
+      "first_inherited_G_source_decision_metadata": "2026-04-29",
+      "annual_AR_INV_note_presence_or_amounts_status": "not_consumed_unknown_pending",
+      "source_qualification_proposal": false,
+      "scope_policy_restatement_version_status": "source_note_specific_review_pending_not_cleared_by_G_snapshot",
+      "fresh_original_PDF_verified": false,
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "single_latest_matches_selected_but_body_scope_pending",
+        "latest_rows": [
+          {
+            "announcement_id": "1225220917",
+            "report_date": "2025-12-31",
+            "published_at": "2026-04-28",
+            "edition": "ORIGINAL_FULL_REPORT",
+            "title": "2025年年度报告",
+            "pdf_sha256": "9b3a322afee07c275aee405b97a741f0a59b8656d4c5a01c5a678dc5cca3d430",
+            "text_sha256": "b7b1f232f2c7bd3d7b3e85339e651fc45c469218919205fed0fc5fc5b59ec6c1"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "known_revision_or_later_report_metadata": [],
+      "all_known_scope_events_reviewed_for_AR_INV_notes": false
+    },
+    {
+      "code": "000708",
+      "announcement_id": "1225012401",
+      "report_date": "2025-12-31",
+      "published_at": "2026-03-17",
+      "available_date_metadata": "2026-03-18",
+      "available_date_method": "inherited_vendor_calendar_next_session",
+      "original_recorded_available_date_metadata": "2026-03-18",
+      "edition": "ORIGINAL_FULL_REPORT",
+      "source_record_sha256": "d42f8c175f9eb19357bd1f75f3beb596266787c7d530c19a33e88c0f5ee1e78a",
+      "capture_gzip_sha256": "432870ca475527b382e7e8c34a9f17446d4d3543713faa72464f2fa3970209fd",
+      "capture_database_key": {
+        "code": "000708",
+        "annid": "1225012401",
+        "period": "2025-12-31"
+      },
+      "capture_state_metadata": "accepted capture before cache pruning; local original must be refetched before any new PDF hash re-verification",
+      "pdf_sha256": "2a8224665ec8b8841033bcf2f7dd312e30a0f4019b3394591a24601a5a61dc89",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-03-17/1225012401.PDF",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000708&announcementId=1225012401&orgId=gssz0000708&announcementTime=2026-03-17",
+      "retained_text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000708_1225012401.txt.gz",
+      "retained_text_sha256": "05a57b31b39da943005c7b4ada189d6b788e96b35682e40484c2ae417307e905",
+      "source_index_binding_key": "source_index_1",
+      "native_pages": 219,
+      "metadata_native_character_count": 252261,
+      "index_metadata_evidence": {
+        "report_date": "2025-12-31",
+        "published_at": "2026-03-17",
+        "edition": "ORIGINAL_FULL_REPORT",
+        "pdf_sha256": "2a8224665ec8b8841033bcf2f7dd312e30a0f4019b3394591a24601a5a61dc89",
+        "text_sha256": "05a57b31b39da943005c7b4ada189d6b788e96b35682e40484c2ae417307e905",
+        "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000708_1225012401.txt.gz",
+        "pages": 219,
+        "pages_without_native_text": 0,
+        "native_text_characters": 252261,
+        "EOF_tail_verified": true,
+        "http_status": 200
+      },
+      "first_inherited_G_source_decision_metadata": "2026-03-18",
+      "annual_AR_INV_note_presence_or_amounts_status": "not_consumed_unknown_pending",
+      "source_qualification_proposal": false,
+      "scope_policy_restatement_version_status": "source_note_specific_review_pending_not_cleared_by_G_snapshot",
+      "fresh_original_PDF_verified": false,
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "single_latest_matches_selected_but_body_scope_pending",
+        "latest_rows": [
+          {
+            "announcement_id": "1225012401",
+            "report_date": "2025-12-31",
+            "published_at": "2026-03-17",
+            "edition": "ORIGINAL_FULL_REPORT",
+            "title": "2025年年度报告",
+            "pdf_sha256": "2a8224665ec8b8841033bcf2f7dd312e30a0f4019b3394591a24601a5a61dc89",
+            "text_sha256": "05a57b31b39da943005c7b4ada189d6b788e96b35682e40484c2ae417307e905"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "known_revision_or_later_report_metadata": [],
+      "all_known_scope_events_reviewed_for_AR_INV_notes": false
+    },
+    {
+      "code": "000722",
+      "announcement_id": "1225079970",
+      "report_date": "2025-12-31",
+      "published_at": "2026-04-04",
+      "available_date_metadata": "2026-04-07",
+      "available_date_method": "inherited_vendor_calendar_next_session",
+      "original_recorded_available_date_metadata": "2026-04-05",
+      "edition": "ORIGINAL_FULL_REPORT",
+      "source_record_sha256": "11232bcb1c27e9ba8b8a7366063069713cc5d9ffac02f171b7e9e4d9b7b69064",
+      "capture_gzip_sha256": "9ce4c841e1c251aa7e1aef708af79a6720099d1d68e100b60a54c3fb521365e8",
+      "capture_database_key": {
+        "code": "000722",
+        "annid": "1225079970",
+        "period": "2025-12-31"
+      },
+      "capture_state_metadata": "accepted capture before cache pruning; local original must be refetched before any new PDF hash re-verification",
+      "pdf_sha256": "82fb6364c2f56a398976ce8ed375b8ca8aa1a18f6541cc418f443832a69ffe71",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-04/1225079970.PDF",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000722&announcementId=1225079970&orgId=gssz0000722&announcementTime=2026-04-04",
+      "retained_text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000722_1225079970.txt.gz",
+      "retained_text_sha256": "27b26ea3454397eb6c13a3a77d7e632663d9d702e6e59e4a3face949ef4ad243",
+      "source_index_binding_key": "source_index_1",
+      "native_pages": 185,
+      "metadata_native_character_count": 166626,
+      "index_metadata_evidence": {
+        "report_date": "2025-12-31",
+        "published_at": "2026-04-04",
+        "edition": "ORIGINAL_FULL_REPORT",
+        "pdf_sha256": "82fb6364c2f56a398976ce8ed375b8ca8aa1a18f6541cc418f443832a69ffe71",
+        "text_sha256": "27b26ea3454397eb6c13a3a77d7e632663d9d702e6e59e4a3face949ef4ad243",
+        "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000722_1225079970.txt.gz",
+        "pages": 185,
+        "pages_without_native_text": 0,
+        "native_text_characters": 166626,
+        "EOF_tail_verified": true,
+        "http_status": 200
+      },
+      "first_inherited_G_source_decision_metadata": "2026-04-27",
+      "annual_AR_INV_note_presence_or_amounts_status": "not_consumed_unknown_pending",
+      "source_qualification_proposal": false,
+      "scope_policy_restatement_version_status": "source_note_specific_review_pending_not_cleared_by_G_snapshot",
+      "fresh_original_PDF_verified": false,
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "single_latest_matches_selected_but_body_scope_pending",
+        "latest_rows": [
+          {
+            "announcement_id": "1225079970",
+            "report_date": "2025-12-31",
+            "published_at": "2026-04-04",
+            "edition": "ORIGINAL_FULL_REPORT",
+            "title": "2025年年度报告",
+            "pdf_sha256": "82fb6364c2f56a398976ce8ed375b8ca8aa1a18f6541cc418f443832a69ffe71",
+            "text_sha256": "27b26ea3454397eb6c13a3a77d7e632663d9d702e6e59e4a3face949ef4ad243"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "known_revision_or_later_report_metadata": [],
+      "all_known_scope_events_reviewed_for_AR_INV_notes": false
+    },
+    {
+      "code": "000799",
+      "announcement_id": "1225230358",
+      "report_date": "2025-12-31",
+      "published_at": "2026-04-29",
+      "available_date_metadata": "2026-04-30",
+      "available_date_method": "inherited_vendor_calendar_next_session",
+      "original_recorded_available_date_metadata": "2026-04-30",
+      "edition": "ORIGINAL_FULL_REPORT",
+      "source_record_sha256": "5248e0119c5f3d28828d80027357d2f3c66b42781b14d9d950887e8278a2a3e6",
+      "capture_gzip_sha256": "c1200e55c0299cf3f7dd44bbf5e48ace16b671509aecacabc9fd462b5c687984",
+      "capture_database_key": {
+        "code": "000799",
+        "annid": "1225230358",
+        "period": "2025-12-31"
+      },
+      "capture_state_metadata": "accepted capture before cache pruning; local original must be refetched before any new PDF hash re-verification",
+      "pdf_sha256": "3f1148dea32dadf5366896fe9c6b983235a9085e876501de6260681da938d186",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225230358.PDF",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000799&announcementId=1225230358&orgId=gssz0000799&announcementTime=2026-04-29",
+      "retained_text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000799_1225230358.txt.gz",
+      "retained_text_sha256": "bc6a1430dba32f41cc786234f60e2f07d6fcb1281b629f9940b6e916cf2ae271",
+      "source_index_binding_key": "source_index_1",
+      "native_pages": 155,
+      "metadata_native_character_count": 132664,
+      "index_metadata_evidence": {
+        "report_date": "2025-12-31",
+        "published_at": "2026-04-29",
+        "edition": "ORIGINAL_FULL_REPORT",
+        "pdf_sha256": "3f1148dea32dadf5366896fe9c6b983235a9085e876501de6260681da938d186",
+        "text_sha256": "bc6a1430dba32f41cc786234f60e2f07d6fcb1281b629f9940b6e916cf2ae271",
+        "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000799_1225230358.txt.gz",
+        "pages": 155,
+        "pages_without_native_text": 0,
+        "native_text_characters": 132664,
+        "EOF_tail_verified": true,
+        "http_status": 200
+      },
+      "first_inherited_G_source_decision_metadata": "2026-04-30",
+      "annual_AR_INV_note_presence_or_amounts_status": "not_consumed_unknown_pending",
+      "source_qualification_proposal": false,
+      "scope_policy_restatement_version_status": "source_note_specific_review_pending_not_cleared_by_G_snapshot",
+      "fresh_original_PDF_verified": false,
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "single_latest_matches_selected_but_body_scope_pending",
+        "latest_rows": [
+          {
+            "announcement_id": "1225230358",
+            "report_date": "2025-12-31",
+            "published_at": "2026-04-29",
+            "edition": "ORIGINAL_FULL_REPORT",
+            "title": "2025年年度报告",
+            "pdf_sha256": "3f1148dea32dadf5366896fe9c6b983235a9085e876501de6260681da938d186",
+            "text_sha256": "bc6a1430dba32f41cc786234f60e2f07d6fcb1281b629f9940b6e916cf2ae271"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "known_revision_or_later_report_metadata": [
+        {
+          "announcement_id": "1225563392",
+          "title": "关于召开2026年半年度报告网上业绩说明会的公告",
+          "published_at": "2026-09-15",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-15/1225563392.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000799&announcementId=1225563392&orgId=gssz0000799&announcementTime=2026-09-15",
+          "metadata_source": "recent_announcement_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "available_session_metadata": "2026-09-16",
+          "availability_status_metadata": "next_verified_reference_session"
+        }
+      ],
+      "all_known_scope_events_reviewed_for_AR_INV_notes": false
+    },
+    {
+      "code": "000801",
+      "announcement_id": "1225066197",
+      "report_date": "2025-12-31",
+      "published_at": "2026-04-01",
+      "available_date_metadata": "2026-04-02",
+      "available_date_method": "inherited_vendor_calendar_next_session",
+      "original_recorded_available_date_metadata": "2026-04-02",
+      "edition": "ORIGINAL_FULL_REPORT",
+      "source_record_sha256": "65090a50221bfdbe75a417ffa0c7301985928ffbc78a73b9bba45ea1cab987e3",
+      "capture_gzip_sha256": "d1c2ae8992a0dadb1ca0cf3def8f40c5ead82b669a77ac3ff27e9471ee6b72ef",
+      "capture_database_key": {
+        "code": "000801",
+        "annid": "1225066197",
+        "period": "2025-12-31"
+      },
+      "capture_state_metadata": "accepted capture before cache pruning; local original must be refetched before any new PDF hash re-verification",
+      "pdf_sha256": "8414e5e0eb4f51acd152b38fc9530630939b3b0f593ae8131516ceb2a94d560d",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-01/1225066197.PDF",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000801&announcementId=1225066197&orgId=gssz0000801&announcementTime=2026-04-01",
+      "retained_text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000801_1225066197.txt.gz",
+      "retained_text_sha256": "50f5d61b723e668a9acc9c578a1ade2b293ce5c1f6c278c2e356f32173580048",
+      "source_index_binding_key": "source_index_1",
+      "native_pages": 212,
+      "metadata_native_character_count": 204773,
+      "index_metadata_evidence": {
+        "report_date": "2025-12-31",
+        "published_at": "2026-04-01",
+        "edition": "ORIGINAL_FULL_REPORT",
+        "pdf_sha256": "8414e5e0eb4f51acd152b38fc9530630939b3b0f593ae8131516ceb2a94d560d",
+        "text_sha256": "50f5d61b723e668a9acc9c578a1ade2b293ce5c1f6c278c2e356f32173580048",
+        "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000801_1225066197.txt.gz",
+        "pages": 212,
+        "pages_without_native_text": 0,
+        "native_text_characters": 204773,
+        "EOF_tail_verified": true,
+        "http_status": 200
+      },
+      "first_inherited_G_source_decision_metadata": "2026-04-02",
+      "annual_AR_INV_note_presence_or_amounts_status": "not_consumed_unknown_pending",
+      "source_qualification_proposal": false,
+      "scope_policy_restatement_version_status": "source_note_specific_review_pending_not_cleared_by_G_snapshot",
+      "fresh_original_PDF_verified": false,
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "single_latest_matches_selected_but_body_scope_pending",
+        "latest_rows": [
+          {
+            "announcement_id": "1225066197",
+            "report_date": "2025-12-31",
+            "published_at": "2026-04-01",
+            "edition": "ORIGINAL_FULL_REPORT",
+            "title": "2025年年度报告",
+            "pdf_sha256": "8414e5e0eb4f51acd152b38fc9530630939b3b0f593ae8131516ceb2a94d560d",
+            "text_sha256": "50f5d61b723e668a9acc9c578a1ade2b293ce5c1f6c278c2e356f32173580048"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "known_revision_or_later_report_metadata": [],
+      "all_known_scope_events_reviewed_for_AR_INV_notes": false
+    },
+    {
+      "code": "000823",
+      "announcement_id": "1225020573",
+      "report_date": "2025-12-31",
+      "published_at": "2026-03-21",
+      "available_date_metadata": "2026-03-23",
+      "available_date_method": "inherited_vendor_calendar_next_session",
+      "original_recorded_available_date_metadata": "2026-03-22",
+      "edition": "ORIGINAL_FULL_REPORT",
+      "source_record_sha256": "6a4814a02a897341236c6258511419d0f798965f9e130c674d77d24cb8524ab7",
+      "capture_gzip_sha256": "ea802124fd92850a3cc7c4656b74b896296f55926f44936e502cc4882f814c28",
+      "capture_database_key": {
+        "code": "000823",
+        "annid": "1225020573",
+        "period": "2025-12-31"
+      },
+      "capture_state_metadata": "accepted capture before cache pruning; local original must be refetched before any new PDF hash re-verification",
+      "pdf_sha256": "791ca9cb3fee151dc2314735e9224067b49503c6b082691c30168908af0b88ea",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-03-21/1225020573.PDF",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000823&announcementId=1225020573&orgId=gssz0000823&announcementTime=2026-03-21",
+      "retained_text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000823_1225020573.txt.gz",
+      "retained_text_sha256": "9e85ddc35245f38ad1638aa2631c534d3561849c85330007dc421205b1081e67",
+      "source_index_binding_key": "source_index_1",
+      "native_pages": 180,
+      "metadata_native_character_count": 168384,
+      "index_metadata_evidence": {
+        "report_date": "2025-12-31",
+        "published_at": "2026-03-21",
+        "edition": "ORIGINAL_FULL_REPORT",
+        "pdf_sha256": "791ca9cb3fee151dc2314735e9224067b49503c6b082691c30168908af0b88ea",
+        "text_sha256": "9e85ddc35245f38ad1638aa2631c534d3561849c85330007dc421205b1081e67",
+        "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000823_1225020573.txt.gz",
+        "pages": 180,
+        "pages_without_native_text": 0,
+        "native_text_characters": 168384,
+        "EOF_tail_verified": true,
+        "http_status": 200
+      },
+      "first_inherited_G_source_decision_metadata": "2026-03-23",
+      "annual_AR_INV_note_presence_or_amounts_status": "not_consumed_unknown_pending",
+      "source_qualification_proposal": false,
+      "scope_policy_restatement_version_status": "source_note_specific_review_pending_not_cleared_by_G_snapshot",
+      "fresh_original_PDF_verified": false,
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "single_latest_matches_selected_but_body_scope_pending",
+        "latest_rows": [
+          {
+            "announcement_id": "1225020573",
+            "report_date": "2025-12-31",
+            "published_at": "2026-03-21",
+            "edition": "ORIGINAL_FULL_REPORT",
+            "title": "2025年年度报告",
+            "pdf_sha256": "791ca9cb3fee151dc2314735e9224067b49503c6b082691c30168908af0b88ea",
+            "text_sha256": "9e85ddc35245f38ad1638aa2631c534d3561849c85330007dc421205b1081e67"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "known_revision_or_later_report_metadata": [],
+      "all_known_scope_events_reviewed_for_AR_INV_notes": false
+    },
+    {
+      "code": "000852",
+      "announcement_id": "1225171452",
+      "report_date": "2025-12-31",
+      "published_at": "2026-04-24",
+      "available_date_metadata": "2026-04-27",
+      "available_date_method": "inherited_vendor_calendar_next_session",
+      "original_recorded_available_date_metadata": "2026-04-25",
+      "edition": "ORIGINAL_FULL_REPORT",
+      "source_record_sha256": "e249cf95d8e204f5a64cd73659253a7be25f0023da150f26bde9cf3dbc5c7658",
+      "capture_gzip_sha256": "2f14f146a4e0dfbe47b03522f5e1be9a33ce54d388c047ffe0c6da3ac670d673",
+      "capture_database_key": {
+        "code": "000852",
+        "annid": "1225171452",
+        "period": "2025-12-31"
+      },
+      "capture_state_metadata": "accepted capture before cache pruning; local original must be refetched before any new PDF hash re-verification",
+      "pdf_sha256": "dee060960ad74ccbf6906c414e905dbf08aa3c2b7117ac2c4705cb1715e61d84",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-24/1225171452.PDF",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000852&announcementId=1225171452&orgId=gssz0000852&announcementTime=2026-04-24",
+      "retained_text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000852_1225171452.txt.gz",
+      "retained_text_sha256": "887a3252b98296a27d79ef8539e4abd97377bc8e7407e52700dabfaa2d64452b",
+      "source_index_binding_key": "source_index_1",
+      "native_pages": 229,
+      "metadata_native_character_count": 203480,
+      "index_metadata_evidence": {
+        "report_date": "2025-12-31",
+        "published_at": "2026-04-24",
+        "edition": "ORIGINAL_FULL_REPORT",
+        "pdf_sha256": "dee060960ad74ccbf6906c414e905dbf08aa3c2b7117ac2c4705cb1715e61d84",
+        "text_sha256": "887a3252b98296a27d79ef8539e4abd97377bc8e7407e52700dabfaa2d64452b",
+        "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000852_1225171452.txt.gz",
+        "pages": 229,
+        "pages_without_native_text": 0,
+        "native_text_characters": 203480,
+        "EOF_tail_verified": true,
+        "http_status": 200
+      },
+      "first_inherited_G_source_decision_metadata": "2026-04-27",
+      "annual_AR_INV_note_presence_or_amounts_status": "not_consumed_unknown_pending",
+      "source_qualification_proposal": false,
+      "scope_policy_restatement_version_status": "source_note_specific_review_pending_not_cleared_by_G_snapshot",
+      "fresh_original_PDF_verified": false,
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "single_latest_matches_selected_but_body_scope_pending",
+        "latest_rows": [
+          {
+            "announcement_id": "1225171452",
+            "report_date": "2025-12-31",
+            "published_at": "2026-04-24",
+            "edition": "ORIGINAL_FULL_REPORT",
+            "title": "2025年年度报告",
+            "pdf_sha256": "dee060960ad74ccbf6906c414e905dbf08aa3c2b7117ac2c4705cb1715e61d84",
+            "text_sha256": "887a3252b98296a27d79ef8539e4abd97377bc8e7407e52700dabfaa2d64452b"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "known_revision_or_later_report_metadata": [],
+      "all_known_scope_events_reviewed_for_AR_INV_notes": false
+    },
+    {
+      "code": "000859",
+      "announcement_id": "1225087375",
+      "report_date": "2025-12-31",
+      "published_at": "2026-04-10",
+      "available_date_metadata": "2026-04-13",
+      "available_date_method": "inherited_vendor_calendar_next_session",
+      "original_recorded_available_date_metadata": "2026-04-11",
+      "edition": "ORIGINAL_FULL_REPORT",
+      "source_record_sha256": "4a3fb190208bdfbdcabf55a6bad3d8fba48c3f6db20afd2c8881bbbb19e34ba1",
+      "capture_gzip_sha256": "a2c0e274a1503c981bd258d7b112d48c02c5f0434141f33ee6549de665f35cdd",
+      "capture_database_key": {
+        "code": "000859",
+        "annid": "1225087375",
+        "period": "2025-12-31"
+      },
+      "capture_state_metadata": "accepted capture before cache pruning; local original must be refetched before any new PDF hash re-verification",
+      "pdf_sha256": "2f5a922857a703bdd98e9b424414ce4e3caf339d930b25db0ee35b5152335448",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-10/1225087375.PDF",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000859&announcementId=1225087375&orgId=gssz0000859&announcementTime=2026-04-10",
+      "retained_text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000859_1225087375.txt.gz",
+      "retained_text_sha256": "b7d3df4916abcded73768860cedfc0bd60f1b06b605c8a8a9f81615081d29e34",
+      "source_index_binding_key": "source_index_1",
+      "native_pages": 188,
+      "metadata_native_character_count": 160428,
+      "index_metadata_evidence": {
+        "report_date": "2025-12-31",
+        "published_at": "2026-04-10",
+        "edition": "ORIGINAL_FULL_REPORT",
+        "pdf_sha256": "2f5a922857a703bdd98e9b424414ce4e3caf339d930b25db0ee35b5152335448",
+        "text_sha256": "b7d3df4916abcded73768860cedfc0bd60f1b06b605c8a8a9f81615081d29e34",
+        "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000859_1225087375.txt.gz",
+        "pages": 188,
+        "pages_without_native_text": 0,
+        "native_text_characters": 160428,
+        "EOF_tail_verified": true,
+        "http_status": 200
+      },
+      "first_inherited_G_source_decision_metadata": "2026-04-13",
+      "annual_AR_INV_note_presence_or_amounts_status": "not_consumed_unknown_pending",
+      "source_qualification_proposal": false,
+      "scope_policy_restatement_version_status": "source_note_specific_review_pending_not_cleared_by_G_snapshot",
+      "fresh_original_PDF_verified": false,
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "single_latest_matches_selected_but_body_scope_pending",
+        "latest_rows": [
+          {
+            "announcement_id": "1225087375",
+            "report_date": "2025-12-31",
+            "published_at": "2026-04-10",
+            "edition": "ORIGINAL_FULL_REPORT",
+            "title": "2025年年度报告",
+            "pdf_sha256": "2f5a922857a703bdd98e9b424414ce4e3caf339d930b25db0ee35b5152335448",
+            "text_sha256": "b7d3df4916abcded73768860cedfc0bd60f1b06b605c8a8a9f81615081d29e34"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "known_revision_or_later_report_metadata": [
+        {
+          "announcement_id": "1225539034",
+          "title": "关于发行股份及支付现金购买资产并募集配套资金暨关联交易报告书（草案）（修订稿）修订说明的公告",
+          "published_at": "2026-09-01",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-01/1225539034.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000859&announcementId=1225539034&orgId=gssz0000859&announcementTime=2026-09-01",
+          "metadata_source": "recent_announcement_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "available_session_metadata": "2026-09-02",
+          "availability_status_metadata": "next_verified_reference_session"
+        },
+        {
+          "announcement_id": "1225539036",
+          "title": "国元证券股份有限公司关于安徽国风新材料股份有限公司发行股份及支付现金购买资产并募集配套资金暨关联交易之独立财务顾问报告(修订稿)",
+          "published_at": "2026-09-01",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-01/1225539036.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000859&announcementId=1225539036&orgId=gssz0000859&announcementTime=2026-09-01",
+          "metadata_source": "recent_announcement_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "available_session_metadata": "2026-09-02",
+          "availability_status_metadata": "next_verified_reference_session"
+        },
+        {
+          "announcement_id": "1225539037",
+          "title": "国元证券股份有限公司关于深圳证券交易所《关于安徽国风新材料股份有限公司发行股份购买资产并募集配套资金申请的审核问询函》回复之核查意见（修订稿）",
+          "published_at": "2026-09-01",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-01/1225539037.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000859&announcementId=1225539037&orgId=gssz0000859&announcementTime=2026-09-01",
+          "metadata_source": "recent_announcement_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "available_session_metadata": "2026-09-02",
+          "availability_status_metadata": "next_verified_reference_session"
+        },
+        {
+          "announcement_id": "1225539038",
+          "title": "安徽国风新材料股份有限公司发行股份及支付现金购买资产并募集配套资金暨关联交易报告书(草案)(修订稿)",
+          "published_at": "2026-09-01",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-01/1225539038.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000859&announcementId=1225539038&orgId=gssz0000859&announcementTime=2026-09-01",
+          "metadata_source": "recent_announcement_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "available_session_metadata": "2026-09-02",
+          "availability_status_metadata": "next_verified_reference_session"
+        },
+        {
+          "announcement_id": "1225539041",
+          "title": "安徽国风新材料股份有限公司发行股份及支付现金购买资产并募集配套资金暨关联交易报告书（草案）（修订稿）摘要",
+          "published_at": "2026-09-01",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-01/1225539041.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000859&announcementId=1225539041&orgId=gssz0000859&announcementTime=2026-09-01",
+          "metadata_source": "recent_announcement_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "available_session_metadata": "2026-09-02",
+          "availability_status_metadata": "next_verified_reference_session"
+        },
+        {
+          "announcement_id": "1225539042",
+          "title": "安徽国风新材料股份有限公司关于深圳证券交易所《关于安徽国风新材料股份有限公司发行股份购买资产并募集配套资金申请的审核问询函》之回复（修订稿）",
+          "published_at": "2026-09-01",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-01/1225539042.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000859&announcementId=1225539042&orgId=gssz0000859&announcementTime=2026-09-01",
+          "metadata_source": "recent_announcement_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "available_session_metadata": "2026-09-02",
+          "availability_status_metadata": "next_verified_reference_session"
+        },
+        {
+          "announcement_id": "1225573283",
+          "title": "关于发行股份及支付现金购买资产并募集配套资金暨关联交易报告书（草案）（修订稿）修订说明的公告",
+          "published_at": "2026-09-19",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-19/1225573283.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000859&announcementId=1225573283&orgId=gssz0000859&announcementTime=2026-09-19",
+          "metadata_source": "recent_announcement_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "available_session_metadata": "2026-09-21",
+          "availability_status_metadata": "next_verified_reference_session"
+        },
+        {
+          "announcement_id": "1225573284",
+          "title": "安徽天禾律师事务所关于安徽国风新材料股份有限公司发行股份及支付现金购买资产并募集配套资金暨关联交易之补充法律意见书（八）",
+          "published_at": "2026-09-19",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-19/1225573284.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000859&announcementId=1225573284&orgId=gssz0000859&announcementTime=2026-09-19",
+          "metadata_source": "recent_announcement_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "available_session_metadata": "2026-09-21",
+          "availability_status_metadata": "next_verified_reference_session"
+        },
+        {
+          "announcement_id": "1225573285",
+          "title": "安徽国风新材料股份有限公司关于深圳证券交易所《关于安徽国风新材料股份有限公司发行股份购买资产并募集配套资金申请的审核问询函》之回复（修订稿）",
+          "published_at": "2026-09-19",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-19/1225573285.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000859&announcementId=1225573285&orgId=gssz0000859&announcementTime=2026-09-19",
+          "metadata_source": "recent_announcement_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "available_session_metadata": "2026-09-21",
+          "availability_status_metadata": "next_verified_reference_session"
+        },
+        {
+          "announcement_id": "1225573286",
+          "title": "国元证券股份有限公司关于深圳证券交易所《关于安徽国风新材料股份有限公司发行股份购买资产并募集配套资金申请的审核问询函》回复之核查意见（修订稿）",
+          "published_at": "2026-09-19",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-19/1225573286.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000859&announcementId=1225573286&orgId=gssz0000859&announcementTime=2026-09-19",
+          "metadata_source": "recent_announcement_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "available_session_metadata": "2026-09-21",
+          "availability_status_metadata": "next_verified_reference_session"
+        },
+        {
+          "announcement_id": "1225573288",
+          "title": "国元证券股份有限公司关于安徽国风新材料股份有限公司发行股份及支付现金购买资产并募集配套资金暨关联交易之独立财务顾问报告（修订稿）",
+          "published_at": "2026-09-19",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-19/1225573288.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000859&announcementId=1225573288&orgId=gssz0000859&announcementTime=2026-09-19",
+          "metadata_source": "recent_announcement_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "available_session_metadata": "2026-09-21",
+          "availability_status_metadata": "next_verified_reference_session"
+        },
+        {
+          "announcement_id": "1225573290",
+          "title": "安徽国风新材料股份有限公司发行股份及支付现金购买资产并募集配套资金暨关联交易报告书（草案）（修订稿）",
+          "published_at": "2026-09-19",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-19/1225573290.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000859&announcementId=1225573290&orgId=gssz0000859&announcementTime=2026-09-19",
+          "metadata_source": "recent_announcement_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "available_session_metadata": "2026-09-21",
+          "availability_status_metadata": "next_verified_reference_session"
+        },
+        {
+          "announcement_id": "1225573291",
+          "title": "安徽国风新材料股份有限公司发行股份及支付现金购买资产并募集配套资金暨关联交易报告书（草案）（修订稿）摘要",
+          "published_at": "2026-09-19",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-19/1225573291.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000859&announcementId=1225573291&orgId=gssz0000859&announcementTime=2026-09-19",
+          "metadata_source": "recent_announcement_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "available_session_metadata": "2026-09-21",
+          "availability_status_metadata": "next_verified_reference_session"
+        }
+      ],
+      "all_known_scope_events_reviewed_for_AR_INV_notes": false
+    },
+    {
+      "code": "000932",
+      "announcement_id": "1225061884",
+      "report_date": "2025-12-31",
+      "published_at": "2026-03-31",
+      "available_date_metadata": "2026-04-01",
+      "available_date_method": "inherited_vendor_calendar_next_session",
+      "original_recorded_available_date_metadata": "2026-04-01",
+      "edition": "ORIGINAL_FULL_REPORT",
+      "source_record_sha256": "ae2dd5616a8947ccac1597c6f91b6eca52b65ccefea50746057c7730e57b21d8",
+      "capture_gzip_sha256": "4b2c02c7a627b8d32867df4898e37b7c54f582012c91337bd20e132c410efec8",
+      "capture_database_key": {
+        "code": "000932",
+        "annid": "1225061884",
+        "period": "2025-12-31"
+      },
+      "capture_state_metadata": "accepted capture before cache pruning; local original must be refetched before any new PDF hash re-verification",
+      "pdf_sha256": "4125d11fa4c4daf07cf0b9f3f56cae270ce58958b9d219f6fde6d65c538da310",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-03-31/1225061884.PDF",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000932&announcementId=1225061884&orgId=gssz0000932&announcementTime=2026-03-31",
+      "retained_text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000932_1225061884.txt.gz",
+      "retained_text_sha256": "f4ef516b53e953315d3ad02ec21f405f45a53c49b6c02d9e7ca9b41b4514e944",
+      "source_index_binding_key": "source_index_1",
+      "native_pages": 204,
+      "metadata_native_character_count": 204747,
+      "index_metadata_evidence": {
+        "report_date": "2025-12-31",
+        "published_at": "2026-03-31",
+        "edition": "ORIGINAL_FULL_REPORT",
+        "pdf_sha256": "4125d11fa4c4daf07cf0b9f3f56cae270ce58958b9d219f6fde6d65c538da310",
+        "text_sha256": "f4ef516b53e953315d3ad02ec21f405f45a53c49b6c02d9e7ca9b41b4514e944",
+        "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000932_1225061884.txt.gz",
+        "pages": 204,
+        "pages_without_native_text": 0,
+        "native_text_characters": 204747,
+        "EOF_tail_verified": true,
+        "http_status": 200
+      },
+      "first_inherited_G_source_decision_metadata": "2026-04-01",
+      "annual_AR_INV_note_presence_or_amounts_status": "not_consumed_unknown_pending",
+      "source_qualification_proposal": false,
+      "scope_policy_restatement_version_status": "source_note_specific_review_pending_not_cleared_by_G_snapshot",
+      "fresh_original_PDF_verified": false,
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "single_latest_matches_selected_but_body_scope_pending",
+        "latest_rows": [
+          {
+            "announcement_id": "1225061884",
+            "report_date": "2025-12-31",
+            "published_at": "2026-03-31",
+            "edition": "ORIGINAL_FULL_REPORT",
+            "title": "2025年年度报告",
+            "pdf_sha256": "4125d11fa4c4daf07cf0b9f3f56cae270ce58958b9d219f6fde6d65c538da310",
+            "text_sha256": "f4ef516b53e953315d3ad02ec21f405f45a53c49b6c02d9e7ca9b41b4514e944"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "known_revision_or_later_report_metadata": [
+        {
+          "announcement_id": "1225561730",
+          "title": "关于2026年半年度报告的更正公告",
+          "published_at": "2026-09-12",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-12/1225561730.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000932&announcementId=1225561730&orgId=gssz0000932&announcementTime=2026-09-12",
+          "metadata_source": "recent_announcement_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "available_session_metadata": "2026-09-14",
+          "availability_status_metadata": "next_verified_reference_session"
+        },
+        {
+          "announcement_id": "1225561731",
+          "title": "2026年半年度报告（更正后）",
+          "published_at": "2026-09-12",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-12/1225561731.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000932&announcementId=1225561731&orgId=gssz0000932&announcementTime=2026-09-12",
+          "metadata_source": "recent_announcement_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "available_session_metadata": "2026-09-14",
+          "availability_status_metadata": "next_verified_reference_session"
+        }
+      ],
+      "all_known_scope_events_reviewed_for_AR_INV_notes": false
+    },
+    {
+      "code": "000957",
+      "announcement_id": "1225184009",
+      "report_date": "2025-12-31",
+      "published_at": "2026-04-25",
+      "available_date_metadata": "2026-04-27",
+      "available_date_method": "inherited_vendor_calendar_next_session",
+      "original_recorded_available_date_metadata": "2026-04-26",
+      "edition": "ORIGINAL_FULL_REPORT",
+      "source_record_sha256": "9e06c54b253fb34bbe0f0e6b61be33a40667e437fe0935d6d5e50d37164d3c6f",
+      "capture_gzip_sha256": "a0dbc419d72f2cf8a85f3d0c7eee037af94a82becfdedb760acc733f6a24422f",
+      "capture_database_key": {
+        "code": "000957",
+        "annid": "1225184009",
+        "period": "2025-12-31"
+      },
+      "capture_state_metadata": "accepted capture before cache pruning; local original must be refetched before any new PDF hash re-verification",
+      "pdf_sha256": "5d6663140e71f594ccfd73486f563fac981b206297ef4ab6f54f6a84c83cb887",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-25/1225184009.PDF",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000957&announcementId=1225184009&orgId=gssz0000957&announcementTime=2026-04-25",
+      "retained_text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000957_1225184009.txt.gz",
+      "retained_text_sha256": "ac24c0b64e5be34a2a1e2a9f065b775d9ca73d32c9cbde48d7a0542d60cd4b3a",
+      "source_index_binding_key": "source_index_1",
+      "native_pages": 204,
+      "metadata_native_character_count": 168408,
+      "index_metadata_evidence": {
+        "report_date": "2025-12-31",
+        "published_at": "2026-04-25",
+        "edition": "ORIGINAL_FULL_REPORT",
+        "pdf_sha256": "5d6663140e71f594ccfd73486f563fac981b206297ef4ab6f54f6a84c83cb887",
+        "text_sha256": "ac24c0b64e5be34a2a1e2a9f065b775d9ca73d32c9cbde48d7a0542d60cd4b3a",
+        "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000957_1225184009.txt.gz",
+        "pages": 204,
+        "pages_without_native_text": 0,
+        "native_text_characters": 168408,
+        "EOF_tail_verified": true,
+        "http_status": 200
+      },
+      "first_inherited_G_source_decision_metadata": "2026-04-27",
+      "annual_AR_INV_note_presence_or_amounts_status": "not_consumed_unknown_pending",
+      "source_qualification_proposal": false,
+      "scope_policy_restatement_version_status": "source_note_specific_review_pending_not_cleared_by_G_snapshot",
+      "fresh_original_PDF_verified": false,
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "single_latest_matches_selected_but_body_scope_pending",
+        "latest_rows": [
+          {
+            "announcement_id": "1225184009",
+            "report_date": "2025-12-31",
+            "published_at": "2026-04-25",
+            "edition": "ORIGINAL_FULL_REPORT",
+            "title": "2025年年度报告",
+            "pdf_sha256": "5d6663140e71f594ccfd73486f563fac981b206297ef4ab6f54f6a84c83cb887",
+            "text_sha256": "ac24c0b64e5be34a2a1e2a9f065b775d9ca73d32c9cbde48d7a0542d60cd4b3a"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "known_revision_or_later_report_metadata": [],
+      "all_known_scope_events_reviewed_for_AR_INV_notes": false
+    },
+    {
+      "code": "000965",
+      "announcement_id": "1225034675",
+      "report_date": "2025-12-31",
+      "published_at": "2026-03-27",
+      "available_date_metadata": "2026-03-30",
+      "available_date_method": "inherited_vendor_calendar_next_session",
+      "original_recorded_available_date_metadata": "2026-03-28",
+      "edition": "ORIGINAL_FULL_REPORT",
+      "source_record_sha256": "5d6b8e97d0caaf48f9703ddacb3e3f4a75b56d96515c499a59869f26e274f61f",
+      "capture_gzip_sha256": "f990904164bc8530fb8442b58134ae1c89b5eab620594a3ecfc055e8a6f21679",
+      "capture_database_key": {
+        "code": "000965",
+        "annid": "1225034675",
+        "period": "2025-12-31"
+      },
+      "capture_state_metadata": "accepted capture before cache pruning; local original must be refetched before any new PDF hash re-verification",
+      "pdf_sha256": "d77fde821fcaf4058b2d2ba4177c479b8dcba111b41040fbc4d289eb4c71d3bf",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-03-27/1225034675.PDF",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000965&announcementId=1225034675&orgId=gssz0000965&announcementTime=2026-03-27",
+      "retained_text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000965_1225034675.txt.gz",
+      "retained_text_sha256": "11900fedf5af2c751931f25832c4b63f6b1cbc8d546082666b3a1c2517d7a0f9",
+      "source_index_binding_key": "source_index_1",
+      "native_pages": 193,
+      "metadata_native_character_count": 160915,
+      "index_metadata_evidence": {
+        "report_date": "2025-12-31",
+        "published_at": "2026-03-27",
+        "edition": "ORIGINAL_FULL_REPORT",
+        "pdf_sha256": "d77fde821fcaf4058b2d2ba4177c479b8dcba111b41040fbc4d289eb4c71d3bf",
+        "text_sha256": "11900fedf5af2c751931f25832c4b63f6b1cbc8d546082666b3a1c2517d7a0f9",
+        "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000965_1225034675.txt.gz",
+        "pages": 193,
+        "pages_without_native_text": 0,
+        "native_text_characters": 160915,
+        "EOF_tail_verified": true,
+        "http_status": 200
+      },
+      "first_inherited_G_source_decision_metadata": "2026-03-30",
+      "annual_AR_INV_note_presence_or_amounts_status": "not_consumed_unknown_pending",
+      "source_qualification_proposal": false,
+      "scope_policy_restatement_version_status": "source_note_specific_review_pending_not_cleared_by_G_snapshot",
+      "fresh_original_PDF_verified": false,
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "single_latest_matches_selected_but_body_scope_pending",
+        "latest_rows": [
+          {
+            "announcement_id": "1225034675",
+            "report_date": "2025-12-31",
+            "published_at": "2026-03-27",
+            "edition": "ORIGINAL_FULL_REPORT",
+            "title": "2025年年度报告",
+            "pdf_sha256": "d77fde821fcaf4058b2d2ba4177c479b8dcba111b41040fbc4d289eb4c71d3bf",
+            "text_sha256": "11900fedf5af2c751931f25832c4b63f6b1cbc8d546082666b3a1c2517d7a0f9"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "known_revision_or_later_report_metadata": [
+        {
+          "announcement_id": "1225435389",
+          "title": "关于公司实际控制人名称变更的补充公告",
+          "published_at": "2026-07-22",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-07-22/1225435389.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000965&announcementId=1225435389&orgId=gssz0000965&announcementTime=2026-07-22",
+          "report_date": null,
+          "report_dates": [],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        }
+      ],
+      "all_known_scope_events_reviewed_for_AR_INV_notes": false
+    },
+    {
+      "code": "000983",
+      "announcement_id": "1225244165",
+      "report_date": "2025-12-31",
+      "published_at": "2026-04-29",
+      "available_date_metadata": "2026-04-30",
+      "available_date_method": "inherited_vendor_calendar_next_session",
+      "original_recorded_available_date_metadata": "2026-04-30",
+      "edition": "ORIGINAL_FULL_REPORT",
+      "source_record_sha256": "75aab1d22dadc22913ed1634be06c4548a2d4e4f32fcb2122c29e3b9675c28fc",
+      "capture_gzip_sha256": "6ab5aa9a44cd6bfd3f951ecd93a2ab089d1412b97160369ea55ae4433b6439e9",
+      "capture_database_key": {
+        "code": "000983",
+        "annid": "1225244165",
+        "period": "2025-12-31"
+      },
+      "capture_state_metadata": "accepted capture before cache pruning; local original must be refetched before any new PDF hash re-verification",
+      "pdf_sha256": "d5159a98351de42b75c245c64c01ab436b9ec7db29d2697549d75522136ba498",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-29/1225244165.PDF",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000983&announcementId=1225244165&orgId=gssz0000983&announcementTime=2026-04-29",
+      "retained_text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000983_1225244165.txt.gz",
+      "retained_text_sha256": "a96ffb0140453703794f00551649042d32db48a9e0e263197c6f44bf97272bf0",
+      "source_index_binding_key": "source_index_1",
+      "native_pages": 253,
+      "metadata_native_character_count": 231695,
+      "index_metadata_evidence": {
+        "report_date": "2025-12-31",
+        "published_at": "2026-04-29",
+        "edition": "ORIGINAL_FULL_REPORT",
+        "pdf_sha256": "d5159a98351de42b75c245c64c01ab436b9ec7db29d2697549d75522136ba498",
+        "text_sha256": "a96ffb0140453703794f00551649042d32db48a9e0e263197c6f44bf97272bf0",
+        "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\000983_1225244165.txt.gz",
+        "pages": 253,
+        "pages_without_native_text": 0,
+        "native_text_characters": 231695,
+        "EOF_tail_verified": true,
+        "http_status": 200
+      },
+      "first_inherited_G_source_decision_metadata": "2026-04-30",
+      "annual_AR_INV_note_presence_or_amounts_status": "not_consumed_unknown_pending",
+      "source_qualification_proposal": false,
+      "scope_policy_restatement_version_status": "source_note_specific_review_pending_not_cleared_by_G_snapshot",
+      "fresh_original_PDF_verified": false,
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "later_or_ambiguous_version_pending_no_fallback",
+        "latest_rows": [
+          {
+            "announcement_id": "1225367585",
+            "report_date": "2025-12-31",
+            "published_at": "2026-06-13",
+            "edition": "ORIGINAL_FULL_REPORT",
+            "title": "2025年年度报告（补充后）",
+            "pdf_sha256": "8435de32c570745fad434a0dfe2f8003b56a671d654562f84c5967ad8ac4c1cd",
+            "text_sha256": "ff4bc0892069f5da416e888be57af69764965f16160e00c8fe4de68604be837b"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "known_revision_or_later_report_metadata": [
+        {
+          "announcement_id": "1225367584",
+          "title": "关于公司2025年年度报告的补充公告",
+          "published_at": "2026-06-13",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-06-13/1225367584.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000983&announcementId=1225367584&orgId=gssz0000983&announcementTime=2026-06-13",
+          "report_date": "2025-12-31",
+          "report_dates": [
+            "2025-12-31"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225367585",
+          "title": "2025年年度报告（补充后）",
+          "published_at": "2026-06-13",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-06-13/1225367585.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000983&announcementId=1225367585&orgId=gssz0000983&announcementTime=2026-06-13",
+          "report_date": "2025-12-31",
+          "report_dates": [
+            "2025-12-31"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        }
+      ],
+      "all_known_scope_events_reviewed_for_AR_INV_notes": false
+    },
+    {
+      "code": "001207",
+      "announcement_id": "1224999911",
+      "report_date": "2025-12-31",
+      "published_at": "2026-03-07",
+      "available_date_metadata": "2026-03-09",
+      "available_date_method": "inherited_vendor_calendar_next_session",
+      "original_recorded_available_date_metadata": "2026-03-08",
+      "edition": "ORIGINAL_FULL_REPORT",
+      "source_record_sha256": "e70b7c0cf2fce0d3a335d8e5e4bab19e1e7d57023bfe8fb08cd44446e14903be",
+      "capture_gzip_sha256": "7de078fa597992f2dc41f2af70e9c97a467cbedb72522af8347765e9dc4bb948",
+      "capture_database_key": {
+        "code": "001207",
+        "annid": "1224999911",
+        "period": "2025-12-31"
+      },
+      "capture_state_metadata": "accepted capture before cache pruning; local original must be refetched before any new PDF hash re-verification",
+      "pdf_sha256": "2815304a154912c6f8be98be303f9ead24449daa5ad357616b75c0fb33faa993",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-03-07/1224999911.PDF",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=001207&announcementId=1224999911&orgId=9900041710&announcementTime=2026-03-07",
+      "retained_text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\001207_1224999911.txt.gz",
+      "retained_text_sha256": "1aa1baf0bd4710812ed4fb7153820b9af8d1e0d8206392ec9e7d3adc4a5a461d",
+      "source_index_binding_key": "source_index_1",
+      "native_pages": 286,
+      "metadata_native_character_count": 210983,
+      "index_metadata_evidence": {
+        "report_date": "2025-12-31",
+        "published_at": "2026-03-07",
+        "edition": "ORIGINAL_FULL_REPORT",
+        "pdf_sha256": "2815304a154912c6f8be98be303f9ead24449daa5ad357616b75c0fb33faa993",
+        "text_sha256": "1aa1baf0bd4710812ed4fb7153820b9af8d1e0d8206392ec9e7d3adc4a5a461d",
+        "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\001207_1224999911.txt.gz",
+        "pages": 286,
+        "pages_without_native_text": 0,
+        "native_text_characters": 210983,
+        "EOF_tail_verified": true,
+        "http_status": 200
+      },
+      "first_inherited_G_source_decision_metadata": "2026-03-09",
+      "annual_AR_INV_note_presence_or_amounts_status": "not_consumed_unknown_pending",
+      "source_qualification_proposal": false,
+      "scope_policy_restatement_version_status": "source_note_specific_review_pending_not_cleared_by_G_snapshot",
+      "fresh_original_PDF_verified": false,
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "single_latest_matches_selected_but_body_scope_pending",
+        "latest_rows": [
+          {
+            "announcement_id": "1224999911",
+            "report_date": "2025-12-31",
+            "published_at": "2026-03-07",
+            "edition": "ORIGINAL_FULL_REPORT",
+            "title": "2025年年度报告",
+            "pdf_sha256": "2815304a154912c6f8be98be303f9ead24449daa5ad357616b75c0fb33faa993",
+            "text_sha256": "1aa1baf0bd4710812ed4fb7153820b9af8d1e0d8206392ec9e7d3adc4a5a461d"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "known_revision_or_later_report_metadata": [],
+      "all_known_scope_events_reviewed_for_AR_INV_notes": false
+    },
+    {
+      "code": "001239",
+      "announcement_id": "1225038557",
+      "report_date": "2025-12-31",
+      "published_at": "2026-03-27",
+      "available_date_metadata": "2026-03-30",
+      "available_date_method": "inherited_vendor_calendar_next_session",
+      "original_recorded_available_date_metadata": "2026-03-28",
+      "edition": "ORIGINAL_FULL_REPORT",
+      "source_record_sha256": "7644c5aaaf2d021a683c3b3901482148e7ea80ff4aa53a0c03715650c0e86c44",
+      "capture_gzip_sha256": "8ce691d2fd744d6aef09175fe3c2501163ab45122000817e260ac788e9d3cd6e",
+      "capture_database_key": {
+        "code": "001239",
+        "annid": "1225038557",
+        "period": "2025-12-31"
+      },
+      "capture_state_metadata": "accepted capture before cache pruning; local original must be refetched before any new PDF hash re-verification",
+      "pdf_sha256": "c01d969d6d1ad3eb4138769c62b9cbc6fb05199f715340c7ef39aa883761bcab",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-03-27/1225038557.pdf",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=001239&announcementId=1225038557&orgId=9900054494&announcementTime=2026-03-27",
+      "retained_text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_full_market_source_expansion_20261007\\source_text\\001239_1225038557.txt.gz",
+      "retained_text_sha256": "923e0c2ab20b81778eb7474eabf2231ab39b5a792044cb2524c1b3a45b83fce6",
+      "source_index_binding_key": "source_index_2",
+      "native_pages": 190,
+      "metadata_native_character_count": 187418,
+      "index_metadata_evidence": {
+        "report_date": "2025-12-31",
+        "published_at": "2026-03-27",
+        "edition": "ORIGINAL_FULL_REPORT",
+        "pdf_sha256": "c01d969d6d1ad3eb4138769c62b9cbc6fb05199f715340c7ef39aa883761bcab",
+        "text_sha256": "923e0c2ab20b81778eb7474eabf2231ab39b5a792044cb2524c1b3a45b83fce6",
+        "text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_full_market_source_expansion_20261007\\source_text\\001239_1225038557.txt.gz",
+        "pages": 190,
+        "pages_without_native_text": 0,
+        "native_text_characters": 187418,
+        "EOF_tail_verified": true,
+        "http_status": 200
+      },
+      "first_inherited_G_source_decision_metadata": "2026-03-30",
+      "annual_AR_INV_note_presence_or_amounts_status": "not_consumed_unknown_pending",
+      "source_qualification_proposal": false,
+      "scope_policy_restatement_version_status": "source_note_specific_review_pending_not_cleared_by_G_snapshot",
+      "fresh_original_PDF_verified": false,
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "single_latest_matches_selected_but_body_scope_pending",
+        "latest_rows": [
+          {
+            "announcement_id": "1225038557",
+            "report_date": "2025-12-31",
+            "published_at": "2026-03-27",
+            "edition": "ORIGINAL_FULL_REPORT",
+            "title": "2025年年度报告",
+            "pdf_sha256": "c01d969d6d1ad3eb4138769c62b9cbc6fb05199f715340c7ef39aa883761bcab",
+            "text_sha256": "923e0c2ab20b81778eb7474eabf2231ab39b5a792044cb2524c1b3a45b83fce6"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "known_revision_or_later_report_metadata": [
+        {
+          "announcement_id": "1225105061",
+          "title": "湘潭永达机械制造股份有限公司关于召开2026年第一次临时股东会通知的更正公告",
+          "published_at": "2026-04-16",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-04-16/1225105061.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=001239&announcementId=1225105061&orgId=9900054494&announcementTime=2026-04-16",
+          "report_date": null,
+          "report_dates": [],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225576489",
+          "title": "湖南启元律师事务所关于湘潭永达机械制造股份有限公司发行股份及支付现金购买资产并募集配套资金暨关联交易的补充法律意见书（二）",
+          "published_at": "2026-09-23",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-23/1225576489.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=001239&announcementId=1225576489&orgId=9900054494&announcementTime=2026-09-23",
+          "metadata_source": "recent_announcement_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "available_session_metadata": "2026-09-24",
+          "availability_status_metadata": "next_verified_reference_session"
+        },
+        {
+          "announcement_id": "1225576490",
+          "title": "湘潭永达机械制造股份有限公司关于深圳证券交易所《关于湘潭永达机械制造股份有限公司发行股份及支付现金购买资产并募集配套资金申请的审核问询函》的回复（修订稿）",
+          "published_at": "2026-09-23",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-23/1225576490.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=001239&announcementId=1225576490&orgId=9900054494&announcementTime=2026-09-23",
+          "metadata_source": "recent_announcement_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "available_session_metadata": "2026-09-24",
+          "availability_status_metadata": "next_verified_reference_session"
+        },
+        {
+          "announcement_id": "1225576491",
+          "title": "国金证券股份有限公司关于深圳证券交易所《关于湘潭永达机械制造股份有限公司发行股份及支付现金购买资产并募集配套资金申请的审核问询函》的回复之核查意见（修订稿）",
+          "published_at": "2026-09-23",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-23/1225576491.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=001239&announcementId=1225576491&orgId=9900054494&announcementTime=2026-09-23",
+          "metadata_source": "recent_announcement_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "available_session_metadata": "2026-09-24",
+          "availability_status_metadata": "next_verified_reference_session"
+        },
+        {
+          "announcement_id": "1225576494",
+          "title": "湘潭永达机械制造股份有限公司发行股份及支付现金购买资产并募集配套资金暨关联交易报告书（草案）（申报稿）（修订稿）",
+          "published_at": "2026-09-23",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-23/1225576494.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=001239&announcementId=1225576494&orgId=9900054494&announcementTime=2026-09-23",
+          "metadata_source": "recent_announcement_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "available_session_metadata": "2026-09-24",
+          "availability_status_metadata": "next_verified_reference_session"
+        },
+        {
+          "announcement_id": "1225576495",
+          "title": "湘潭永达机械制造股份有限公司发行股份及支付现金购买资产并募集配套资金暨关联交易报告书（草案）摘要（修订稿）",
+          "published_at": "2026-09-23",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-23/1225576495.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=001239&announcementId=1225576495&orgId=9900054494&announcementTime=2026-09-23",
+          "metadata_source": "recent_announcement_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "available_session_metadata": "2026-09-24",
+          "availability_status_metadata": "next_verified_reference_session"
+        },
+        {
+          "announcement_id": "1225576499",
+          "title": "江苏金源高端装备有限公司股东全部权益价值资产评估报告（修订稿）",
+          "published_at": "2026-09-23",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-23/1225576499.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=001239&announcementId=1225576499&orgId=9900054494&announcementTime=2026-09-23",
+          "metadata_source": "recent_announcement_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "available_session_metadata": "2026-09-24",
+          "availability_status_metadata": "next_verified_reference_session"
+        },
+        {
+          "announcement_id": "1225576501",
+          "title": "国金证券股份有限公司关于湘潭永达机械制造股份有限公司发行股份及支付现金购买资产并募集配套资金暨关联交易之独立财务顾问报告（修订稿）",
+          "published_at": "2026-09-23",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-23/1225576501.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=001239&announcementId=1225576501&orgId=9900054494&announcementTime=2026-09-23",
+          "metadata_source": "recent_announcement_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "available_session_metadata": "2026-09-24",
+          "availability_status_metadata": "next_verified_reference_session"
+        },
+        {
+          "announcement_id": "1225576503",
+          "title": "湘潭永达机械制造股份有限公司关于发行股份及支付现金购买资产并募集配套资金暨关联交易报告书（草案）（申报稿）修订说明的公告",
+          "published_at": "2026-09-23",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-23/1225576503.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=001239&announcementId=1225576503&orgId=9900054494&announcementTime=2026-09-23",
+          "metadata_source": "recent_announcement_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "available_session_metadata": "2026-09-24",
+          "availability_status_metadata": "next_verified_reference_session"
+        }
+      ],
+      "all_known_scope_events_reviewed_for_AR_INV_notes": false
+    }
+  ],
+  "selected_identity_digest_sha256": "51225ac50d1673ec8a251d7ee17508f8067369c914dc954d0289f49df4218ec1",
+  "selection_rule": {
+    "origin": "Original frozen G financial source snapshot, source_qualified identity only. Original source lineage may inherit historic F support; no new F values, expected_finite or performance filtering is used.",
+    "read_columns": {
+      "components": [
+        "date",
+        "symbol",
+        "announcement_id",
+        "report_date",
+        "source_record_sha256"
+      ],
+      "source_mask": [
+        "date",
+        "symbol",
+        "source_qualified"
+      ],
+      "captures_SQL": "SELECT code,annid,period,source_sha256,capture_state (never original_json_gzip)"
+    },
+    "original_total_report_identities": 1736,
+    "original_FY25_report_identities": 1406,
+    "metadata_eligible_report_identities": 1298,
+    "unique_latest_original_G_FY25_issuers": 1297,
+    "candidate_pending_metadata_counts": {
+      "complete_native_index_exact_binding_or_gzip_path_missing": 107,
+      "explicit_posthoc_issuer_exclusion": 1
+    },
+    "select_count": 20,
+    "sort": [
+      "code",
+      "report_date",
+      "announcement_id",
+      "source_record_sha256"
+    ],
+    "per_issuer_selection": "Unique latest publication-date original G FY25 identity; competing same-day identities remain pending, never ID-order guess.",
+    "native_index_requirements": "Unique exact identity signatures within and across retained indexes; original full report, explicitEOF, HTTP200, pages>0, missing-native-pages0, positive native-character metadata, captured-provenance matching retained gzip path/PDF SHA/text SHA. Only compressed20 text bytes hashed; actual page/body validation deferred.",
+    "not_selection_inputs": [
+      "returns",
+      "prices",
+      "turnover",
+      "capitalisation",
+      "F_values",
+      "G_values",
+      "E_values",
+      "labels",
+      "reported_contribution_or_loss",
+      "AR_INV_balance_or_note_values",
+      "accounting_cleanliness_from_empty_flags"
+    ],
+    "posthoc_exclusions": {
+      "identities": [
+        {
+          "code": "300571",
+          "announcement_id": "1225238822",
+          "report_date": "2025-12-31"
+        },
+        {
+          "code": "301313",
+          "announcement_id": "1225215754",
+          "report_date": "2025-12-31"
+        },
+        {
+          "code": "300432",
+          "announcement_id": "1225247752",
+          "report_date": "2025-12-31"
+        }
+      ],
+      "excluded_issuers": [
+        "300432",
+        "300571",
+        "301313"
+      ],
+      "purpose": "Explicitly prevent reuse of the three posthoc loss examples as source selection or evidence-quality criteria. No example financial values/body consumed; exclusions are not a blind OOS claim."
+    }
+  },
+  "planned_source_schema": {
+    "scope": "Consolidated FY2025 annual and same-report FY2025 opening; literal priorDec31 vs fiscalJan1 role preserved. Never H1 or parent-company substitution.",
+    "AR": {
+      "balance_roles": [
+        "gross_carrying_amount",
+        "allowance",
+        "net_carrying_amount"
+      ],
+      "allowance_rollforward_roles": [
+        "opening",
+        "charge",
+        "recover_or_reverse",
+        "writeoff_or_transfer",
+        "other_increase",
+        "other_decrease",
+        "closing"
+      ],
+      "required_raw_labels_preserved": true,
+      "combined_recover_or_reverse_not_pure_cash_receipt": true
+    },
+    "INV": {
+      "balance_roles": [
+        "gross_carrying_amount",
+        "allowance",
+        "net_carrying_amount"
+      ],
+      "allowance_rollforward_roles": [
+        "opening",
+        "charge",
+        "reverse",
+        "transfer_or_writeoff",
+        "other_increase",
+        "other_decrease",
+        "closing"
+      ],
+      "required_raw_labels_preserved": true,
+      "transfer_or_combined_reverse_transfer_cause": "unknown_without_specific_bound_evidence_not_automatically_bad"
+    },
+    "evidence_locator": [
+      "capture_record_sha256",
+      "pdf_sha256",
+      "text_gzip_sha256",
+      "text_content_sha256",
+      "native_physical_page",
+      "bounded_statement_or_note_start_end",
+      "header_offset",
+      "row_offset",
+      "literal_header",
+      "literal_field_label",
+      "column_roles",
+      "printed_unit",
+      "currency",
+      "printed_quantum",
+      "consolidated_scope",
+      "raw_source_cells"
+    ],
+    "arithmetic_contract": "gross minus allowance equals net at printed-quantum interval; complete explicit movement table closes opening plus signed mapped movements to closing. Group/category partials cannot substitute total. No blank-zero, ambiguous sign, duplicate table or unsupported term inference.",
+    "outcome_layers": [
+      "field_presence_or_format_status",
+      "bound_amount_facts",
+      "printed_precision_rollforward_status",
+      "policy_scope_restatement_and_latest_version_status",
+      "public_asof_status",
+      "causal_interpretation_pending"
+    ],
+    "source_qualification_is_not_assumed": true
+  },
+  "consumer_execution_conditions": {
+    "new_frozen_consumer_protocol_and_root_source_repair_event_required": true,
+    "source_only_max_cases": 20,
+    "no_actual_consumer_authorized_by_plan_generation": true,
+    "reuse_read_case": "g_field_contract_next100_unit/consume_retained_sources.py::read_case+complete_index, with case.source_index_ref resolved from bindings.source_indices[source_index_binding_key]; never call oldmain/h1/economic helpers.",
+    "next_checks": "Fresh byte/canonical capture identity validation, retained gzip/content/page sequence binding, actual consolidated notes/table boundaries and printed field roles, then field-specific policy/scope/restatement/version/latest/later correction availability. Metadata-only full-report presence or original G snapshot is not AR/INV note/source qualification.",
+    "latest_and_corrections": "Known metadata candidates recorded only; titles/absence/oldG flags do not clear field scope. Unread/unknown/missing later version stays pending and no stale fallback. Prior unrelated periods cannot be permanently blocked by code-wide ancestry without role-specific evidence.",
+    "original_PDF_fresh_verification_claim": false,
+    "old_source_flags_masks_DB_mutation": false,
+    "economic_scores_labels_returns_or_prices": false,
+    "new_downloads_or_API_calls": 0,
+    "official_spent": 0,
+    "registry_or_state_writes": false
+  },
+  "boundaries": {
+    "metadata_selection_complete": true,
+    "body_or_amount_consumption": false,
+    "native_text_decompressed": false,
+    "original_json_gzip_selected_or_decompressed": false,
+    "field_presence_or_zero_certified": false,
+    "qualified_samples": 0,
+    "new_contexts": 0,
+    "formal_admission": false,
+    "full_PIT": false,
+    "all_A_coverage_claim": false,
+    "new_price_text_PDF_or_database_copies": 0
+  }
+}

@@ -1,0 +1,192 @@
+{
+  "id": "WORKING_CAPITAL_LOSS_QUALITY_FIXED3_PARENT_CHILD_GEOMETRY_REPAIR_20261011",
+  "status": "FROZEN_FIXED3_GEOMETRY_ONLY_AWAIT_ROOT_EXECUTION",
+  "prepared_at_utc": "2026-10-11T11:53:40.313176+00:00",
+  "deadline_utc": "2026-10-11T16:00:00+00:00",
+  "runtime_sha256": "e51f6dda3c449ba346758ebd04bef6a2c9e9177616c12c7a84c171f8e9df12ef",
+  "registry_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\research_trials.sqlite3",
+  "event_prefix": "working-capital-loss-quality-geometry3-freeze:",
+  "registration_subject": "32de6edd562368a60fbb3f957462facd262387bebf6d5e483b187068c424b4bb",
+  "selected_codes": [
+    "000157",
+    "000403",
+    "000409"
+  ],
+  "geometry_contracts": {
+    "000157": {
+      "announcement_id": "1225055609",
+      "chapter_start": {
+        "start": 176742,
+        "end": 176755,
+        "sha256": "874e900ddc85cbb4e036d5b3e3ead7d38e96cff59e2327edea1122b164e1e44a",
+        "source_page": 181
+      },
+      "chapter_end": {
+        "start": 225947,
+        "end": 225954,
+        "sha256": "5e3ffecc127f0f598c5e6d64a63632fdc0a541fea81deb147939fa694816b870",
+        "source_page": 227
+      },
+      "chapter_range": {
+        "start": 176742,
+        "end": 225947,
+        "sha256": "b6fe361d690a2f7d4dd137c85dd6fb2fd2b21d494e42dbcba542a75713f95b57"
+      },
+      "chapter_start_caption_dense": "七、合并财务报表项目注释",
+      "chapter_end_caption_dense": "八、研发支出",
+      "notes": [
+        {
+          "asset": "AR",
+          "title": "应收账款",
+          "ordinal": 4,
+          "next_ordinal": 5,
+          "start": 177674,
+          "next_parent_start": 180367
+        },
+        {
+          "asset": "INV",
+          "title": "存货",
+          "ordinal": 9,
+          "next_ordinal": 10,
+          "start": 183617,
+          "next_parent_start": 184643
+        }
+      ]
+    },
+    "000403": {
+      "announcement_id": "1225245931",
+      "chapter_start": {
+        "start": 111540,
+        "end": 111552,
+        "sha256": "bd965e9016c0ace7c1c7d94e2b489ca996bca06b818e4d89a497680c4b855e67",
+        "source_page": 118
+      },
+      "chapter_end": {
+        "start": 142375,
+        "end": 142381,
+        "sha256": "16f77d8f5a9e05a0d1f099e295a41c90ed78f9044c134f7001233b37a89960cf",
+        "source_page": 147
+      },
+      "chapter_range": {
+        "start": 111540,
+        "end": 142375,
+        "sha256": "8bc030726b0878a629e93fe48e040716f94ab4d8f8ebf22cd957cd4ae00c69d1"
+      },
+      "chapter_start_caption_dense": "五、合并财务报表项目注释",
+      "chapter_end_caption_dense": "六、研发支出",
+      "notes": [
+        {
+          "asset": "AR",
+          "title": "应收账款",
+          "ordinal": 4,
+          "next_ordinal": 5,
+          "start": 113270,
+          "next_parent_start": 116323
+        },
+        {
+          "asset": "INV",
+          "title": "存货",
+          "ordinal": 8,
+          "next_ordinal": 9,
+          "start": 119491,
+          "next_parent_start": 120298
+        }
+      ]
+    },
+    "000409": {
+      "announcement_id": "1225084580",
+      "chapter_start": {
+        "start": 150181,
+        "end": 150193,
+        "sha256": "85b282630f5c1d56fe32d8d1e21b7ec2bc66f99412b3bae228fdddbf5f6ac030",
+        "source_page": 129
+      },
+      "chapter_end": {
+        "start": 184824,
+        "end": 184830,
+        "sha256": "6d34e68feeeb833a8fbc199f6e0c4a2cb36e76fb4a72a0aa5d31f1f8e8a4f889",
+        "source_page": 168
+      },
+      "chapter_range": {
+        "start": 150181,
+        "end": 184824,
+        "sha256": "dc7252f8c7e1b8753a3446f251fbcf3e51c938c2bda6eae3e4e2184c96ef59f4"
+      },
+      "chapter_start_caption_dense": "七、合并财务报表项目注释",
+      "chapter_end_caption_dense": "八、研发支出",
+      "notes": [
+        {
+          "asset": "AR",
+          "title": "应收账款",
+          "ordinal": 5,
+          "next_ordinal": 6,
+          "start": 151866,
+          "next_parent_start": 154214
+        },
+        {
+          "asset": "INV",
+          "title": "存货",
+          "ordinal": 10,
+          "next_ordinal": 11,
+          "start": 159344,
+          "next_parent_start": 160047
+        }
+      ]
+    }
+  },
+  "bindings": {
+    "source_plan": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\source_plan.json",
+      "sha256": "32de6edd562368a60fbb3f957462facd262387bebf6d5e483b187068c424b4bb"
+    },
+    "capture_db": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\compact_archive\\captured_financial.sqlite3",
+      "sha256": "491c2ef55412d2bd251972c440db5f314cac85c278db0112beb4d7eaa048caa7"
+    },
+    "source_reader": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\g_field_contract_next100_unit\\consume_retained_sources.py",
+      "sha256": "b384abd8fd61cdd3c485c28c403ccb54bf8edc7abb1b18f6afe3406f4cc3967a"
+    },
+    "capture_binding_api": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\income_basis.py",
+      "sha256": "028f3fc54fa47c0c505fa78c6188278f8e9069de44e3f4e596bce35913e25034"
+    },
+    "original_consumer_protocol": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\consumer_protocol_draft.json",
+      "sha256": "501705a66c04da351e8b296970edbca4387e97d461de2ec9207c8ed74a1898c0"
+    },
+    "original_consumer_runtime": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\consumer.py",
+      "sha256": "d28fa64b2e6e3fa43b81ded1b3b9fcebc5d33df1b5380838241bdcf0bef04678"
+    },
+    "original_source_receipt": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\source_facts.json",
+      "sha256": "7d1602ca7a06cc18f4290a67920f23bf8e4cdc38a647778dfb05dc140e550c63"
+    },
+    "synthetic_tests": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\geometry_repair_v1\\test_geometry.py",
+      "sha256": "b4e0ad089e28aabe73519d9b9854b70056b9dc892e357ac1713dfa6ed7edb842"
+    }
+  },
+  "authority": "Only income-agent authorized actual native first3 inspection already supplied exactchapter/nextR&D captions offsets+SHA andchapterspan SHA; noteparent/nextsamelevel offsets andordinals fromsameinspection. No other body/amount/label read in preparing this protocol.",
+  "fixed_failed_note_scope": "3 exact report identities,6 AR/INV note ranges, including000409INV missingunderoldfalsechapterend. No actual20 rerun, no otherissuer/template/source producer.",
+  "geometry_contract": "Explicit frozenchapter start and actual named nextR&D chapter/span SHA; no generic Chinesechapterregex. Exact bareArabicparent andnextordinal/same-delimiter anchor; bracketchildren retained. AnyunexpectedbareArabicnumberedheading beforeknownend still closes conservatively/pending, includingunknownsamelevel. Literal七.30）reference/一、合营企业/一、账面原值 are notchapter boundaries.",
+  "header_contract": "Shortnative multiline/header locator+clues<=24lines/note,each<=200chars. Retain originalpercent/combinedmovementwords, no flatteningtablehead/percentdeletion/amount solver/combinedcause split. Everyunit/date/wholepopulation/table-column-role remainspending, also knowncrosspage two-blockARstock.",
+  "output_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\geometry_repair_v1\\geometry_facts.json",
+  "validation": {
+    "synthetic_regressions_passed": 5,
+    "compiled": true,
+    "default_inert": true,
+    "actual_native_body_or_amounts_read": false
+  },
+  "old_5017_or_7d_receipt_changed": false,
+  "amounts_solved": 0,
+  "new_contexts": 0,
+  "new_factor_or_mask": false,
+  "economic_window": null,
+  "official_calls": 0,
+  "network_calls": 0,
+  "new_report_or_native_text_copies": 0,
+  "shared_state_or_registry_writes": false,
+  "execute_command": "& 'D:\\Anaconda\\envs\\open-webui\\python.exe' -X utf8 -B research_runs/night_research_20261011/working_capital_loss_quality_source_unit/geometry_repair_v1/consumer_geometry.py --execute --protocol-sha <FINAL_SHA>"
+}
