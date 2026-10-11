@@ -64,9 +64,99 @@ def _H1_scope_none_note(text, stock):
             **_location(text, hit.start(), stop)}
 
 
+def _bounded_note(text, heading, following):
+    hits = list(re.finditer(heading, text))
+    if len(hits) != 1:
+        return None
+    hit = hits[0]
+    end = re.search(following, text[hit.end():])
+    return (hit, hit.end() + end.start()) if end else None
+
+
+def _note_body_without_presentation(text, start, end, stock):
+    """Remove only bound page markers and matching issuer-report page furniture."""
+    period = str(stock.get("report_date", "")); year = period[:4]
+    report = "半年度报告" if period.endswith("-06-30") else "年度报告"
+    title = re.compile(r"[^\n]{1,120}" + re.escape(year) + r"\s*年\s*" + report + r"(?:全文)?\s*$")
+    pages = [int(x) for x in re.findall(r"===SOURCE_PAGE:(\d+)===" ,text)]
+    total = max(pages) if pages else None
+    page = source_page(text, start); result = []
+    lines = text[start:end].splitlines(); index = 0
+    while index < len(lines):
+        stripped = lines[index].strip()
+        marker = re.fullmatch(r"===SOURCE_PAGE:(\d+)===" ,stripped)
+        if marker:
+            page = int(marker[1])
+            counter = re.fullmatch(r"(\d+)\s*/\s*(\d+)", lines[index + 2].strip()) if index + 2 < len(lines) else None
+            if (counter and title.fullmatch(lines[index + 1].strip())
+                    and (int(counter[1]), int(counter[2])) == (page, total)):
+                index += 3; continue
+            index += 1; continue
+        if stripped:
+            result.append(stripped)
+        index += 1
+    return "".join(re.sub(r"\s+", "", line) for line in result)
+
+
+def _note_applicable_choice(body):
+    """An applicable checkbox is a disclosed state, not a quantified effect."""
+    applicable = False
+    for line in body.splitlines():
+        yes = bool(re.search(r"[☑√✓■]\s*适用", line))
+        no = bool(re.search(r"[☑√✓■]\s*不适用", line))
+        if yes and no:
+            return "unknown"
+        if yes:
+            applicable = True
+    return "actual_change" if applicable else None
+
+
+def _shex_scope_state(text, stock):
+    bound = _bounded_note(text, r"(?m)^[^\S\n]*九[、.．][^\S\n]*合并范围的变更[^\S\n]*$",
+                          r"(?m)^[^\S\n]*十[、.．][^\S\n]*在其他主体中的权益[^\S\n]*$")
+    if bound is None:
+        return None
+    hit, stop = bound
+    body = text[hit.end():stop]
+    state = _note_applicable_choice(body)
+    dense = _note_body_without_presentation(text, hit.end(), stop, stock)
+    no = r"(?:[□]适用[☑√✓■]不适用|[☑√✓■]不适用[□]适用)"
+    other = r"(?:其他说明[：:]?" + no + r")?"
+    disposal = r"4[、.．]处置子公司(?:本期是否存在丧失子公司控制权的交易或事项)?" + no + other
+    disposal += r"(?:是否存在通过多次交易分步处置对子公司投资且在本期丧失控制权的情形" + no + other + r")?"
+    prompt = r"(?:说明其他原因导致的合并范围变动[（(]如，新设子公司、清算子公司等[）)]及其相关情况[：:]?)?"
+    pattern = r"1[、.．]非同一控制下企业合并" + no + r"2[、.．]同一控制下企业合并" + no
+    pattern += r"3[、.．]反向购买" + no + disposal + r"5[、.．]其他原因的合并范围变动" + prompt + no + r"6[、.．]其他" + no
+    if state is None:
+        state = "negative" if re.fullmatch(pattern, dense) else "unknown"
+    return {"kind": "consolidation_scope", "state": state, "choice": state,
+            "method": "bounded_SHEX_scope_note_checked_state", **_location(text, hit.start(), stop)}
+
+
+def _shex_error_state(text, stock):
+    bound = _bounded_note(text, r"(?m)^[^\S\n]*1[、.．][^\S\n]*前期会计差错更正[^\S\n]*$",
+                          r"(?m)^[^\S\n]*2[、.．][^\S\n]*重要债务重组[^\S\n]*$")
+    if bound is None:
+        return None
+    hit, stop = bound
+    parent = list(re.finditer(r"(?m)^[^\S\n]*十八[、.．][^\S\n]*其他重要事项[^\S\n]*$", text[:hit.start()]))
+    if not parent or _note_body_without_presentation(text, parent[-1].end(), hit.start(), stock):
+        return None
+    body = text[hit.end():stop]
+    state = _note_applicable_choice(body)
+    dense = _note_body_without_presentation(text, hit.end(), stop, stock)
+    no = r"(?:[□]适用[☑√✓■]不适用|[☑√✓■]不适用[□]适用)"
+    if state is None:
+        pattern = r"[（(]1[）)][.．]?追溯重述法" + no + r"[（(]2[）)][.．]?未来适用法" + no
+        state = "negative" if re.fullmatch(pattern, dense) else "unknown"
+    return {"kind": "restatement", "state": state, "choice": state,
+            "method": "bounded_SHEX_prior_error_note_checked_state",
+            "cross_reference_unbridged": "详见" in dense, **_location(text, hit.start(), stop)}
+
+
 def current_comparability(text, income_header, stock):
     """Retain true or unknown current changes; absence of flags is not clean."""
-    pending, locators = [], []
+    pending, locators, note_changes = [], [], []
     sections = policy_change_sections(text)
     if not sections:
         pending.append("current_accounting_policy_section_unbound")
@@ -91,8 +181,16 @@ def current_comparability(text, income_header, stock):
         hits = list(re.finditer(pattern, text))
         if not hits:
             note = _H1_scope_none_note(text, stock) if kind == "consolidation_scope" else None
+            if note is None:
+                note = _shex_scope_state(text, stock) if kind == "consolidation_scope" else _shex_error_state(text, stock)
             if note:
                 locators.append(note)
+                state = note.get("state", note["choice"])
+                if state == "actual_change":
+                    note_changes.append(kind)
+                    pending.append("current_" + kind + "_explicit_note_change_bridge_pending")
+                elif state != "negative":
+                    pending.append("current_" + kind + "_note_disclosure_pending")
             else:
                 pending.append("current_" + kind + "_section_unbound")
         for hit in hits:
@@ -112,7 +210,7 @@ def current_comparability(text, income_header, stock):
     return {"status": "current_G_comparability_ready" if not pending else "current_G_comparability_pending",
             "pending_reasons": sorted(set(pending)), "locators": locators,
             "captured_barriers_preserved": original,
-            "actual_change_kinds": sorted({e.get("kind") for e in actual})}
+            "actual_change_kinds": sorted({e.get("kind") for e in actual} | set(note_changes))}
 
 
 def _statement_bounds(e, text, label):

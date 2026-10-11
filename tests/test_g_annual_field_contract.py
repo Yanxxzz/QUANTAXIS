@@ -231,6 +231,74 @@ def test_exact_six_scope_note_requires_every_named_item_explicit_none(bad):
         assert any(e.get("method") == "bounded_H1_note_explicit_all_six_none" for e in out["locators"])
 
 
+def SHEX_note_fixture(*, scope_body=None, error_body=None):
+    doc, text = fixture()
+    no = "□适用 √不适用\n"
+    if scope_body is None:
+        scope_body = ("1、 非同一控制下企业合并\n" + no + "2、 同一控制下企业合并\n" + no
+                      + "3、 反向购买\n" + no + "4、 处置子公司\n本期是否存在丧失子公司控制权的交易或事项\n" + no
+                      + "其他说明：\n" + no + "是否存在通过多次交易分步处置对子公司投资且在本期丧失控制权的情形\n" + no
+                      + "其他说明：\n" + no + "5、 其他原因的合并范围变动\n说明其他原因导致的合并范围变动（如，新设子公司、清算子公司等）及其相关情况：\n" + no
+                      + "6、 其他\n" + no)
+    if error_body is None:
+        error_body = "(1) 追溯重述法\n" + no + "(2) 未来适用法\n" + no
+    oldscope = "与上年度财务报告相比，合并报表范围发生变化的情况说明\n□适用 不适用\n报告期无合并报表范围变化。"
+    text = text.replace(oldscope, "九、 合并范围的变更\n" + scope_body + "十、 在其他主体中的权益\n")
+    text = text.replace("是否需追溯调整或重述以前年度会计数据\n□是 否", "十八、 其他重要事项\n1、 前期会计差错更正\n" + error_body + "2、 重要债务重组\n□适用 √不适用")
+    return doc, text
+
+
+def test_SHEX_complete_six_checked_scope_and_two_error_methods_are_explicit_negative():
+    doc, text = SHEX_note_fixture()
+    result = current_comparability(text, "", doc["stock"])
+    assert result["status"] == "current_G_comparability_ready"
+    assert [(e["kind"], e.get("state")) for e in result["locators"] if "state" in e] == [("restatement", "negative"), ("consolidation_scope", "negative")]
+
+
+@pytest.mark.parametrize("case", ["missing_item", "unchecked", "narrative", "applicable", "contradictory"])
+def test_SHEX_scope_never_borrows_other_items_negative(case):
+    doc, text = SHEX_note_fixture()
+    if case == "missing_item": text = text.replace("6、 其他\n□适用 √不适用\n", "")
+    elif case == "unchecked": text = text.replace("5、 其他原因的合并范围变动", "5、 其他原因的合并范围变动", 1).replace("6、 其他\n□适用 √不适用", "6、 其他\n□适用 □不适用")
+    elif case == "narrative": text = text.replace("6、 其他\n□适用 √不适用", "6、 其他\n□适用 √不适用\n本期新设子公司。")
+    elif case == "applicable": text = text.replace("2、 同一控制下企业合并\n□适用 √不适用", "2、 同一控制下企业合并\n√适用 □不适用\n本期收购子公司。")
+    else: text = text.replace("2、 同一控制下企业合并\n□适用 √不适用", "2、 同一控制下企业合并\n√适用 √不适用")
+    result = current_comparability(text, "", doc["stock"])
+    note = next(e for e in result["locators"] if e["kind"] == "consolidation_scope")
+    assert note["state"] == ("actual_change" if case == "applicable" else "unknown")
+    assert result["status"] == "current_G_comparability_pending"
+
+
+@pytest.mark.parametrize("body,state", [
+    ("(1) 追溯重述法\n□适用 √不适用\n(2) 未来适用法\n□适用 □不适用\n", "unknown"),
+    ("详见重要事项中重大会计差错更正原因及影响的分析说明。\n", "unknown"),
+    ("无重大影响0.00\n", "unknown"),
+    ("(1) 追溯重述法\n√适用 □不适用\n(2) 未来适用法\n□适用 √不适用\n", "actual_change"),
+])
+def test_SHEX_prior_error_parent_and_both_methods_are_required(body, state):
+    doc, text = SHEX_note_fixture(error_body=body)
+    result = current_comparability(text, "", doc["stock"])
+    note = next(e for e in result["locators"] if e["kind"] == "restatement")
+    assert note["state"] == state and result["status"] == "current_G_comparability_pending"
+
+
+def test_SHEX_page_furniture_only_removed_with_matching_report_page_and_total():
+    doc, text = SHEX_note_fixture()
+    furniture = "===SOURCE_PAGE:22===\n公司2025 年年度报告\n22 / 22\n"
+    text = text.replace("4、 处置子公司", furniture + "4、 处置子公司")
+    assert current_comparability(text, "", doc["stock"])["status"] == "current_G_comparability_ready"
+    changed = text.replace("公司2025 年年度报告", "公司2024 年年度报告")
+    assert current_comparability(changed, "", doc["stock"])["status"] == "current_G_comparability_pending"
+    unbound = text.replace("===SOURCE_PAGE:22===\n", "")
+    assert current_comparability(unbound, "", doc["stock"])["status"] == "current_G_comparability_pending"
+
+
+def test_SHEX_missing_parent_or_sibling_cannot_reuse_negative_other_notes():
+    doc, text = SHEX_note_fixture()
+    for changed in [text.replace("十八、 其他重要事项", "其他说明"), text.replace("2、 重要债务重组", "其他问题"), text.replace("十、 在其他主体中的权益", "其他权益")]:
+        assert current_comparability(changed, "", doc["stock"])["status"] == "current_G_comparability_pending"
+
+
 def native_H1_fixture():
     doc, text = fixture()
     text = text.replace("公司2025年年度报告", "公司2026年半年度报告").replace("2025 年 12 月 31 日", "2026 年 06 月 30 日")
