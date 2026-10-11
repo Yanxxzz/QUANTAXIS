@@ -41,7 +41,7 @@ def _choice(text, end, yes, no):
 
 
 def _H1_scope_none_note(text, stock):
-    """One retained H1 note saying only '1、其他 / 无。', never a qualifier."""
+    """One bounded H1 note of the exact one-item or six-item explicit-none form."""
     if not str(stock.get("report_date", "")).endswith("-06-30"):
         return None
     headings = list(re.finditer(r"(?m)^[^\S\n]*九[、.．][^\S\n]*合并范围的变更[^\S\n]*$", text))
@@ -53,10 +53,15 @@ def _H1_scope_none_note(text, stock):
         return None
     stop = hit.end() + end.start()
     body = re.sub(r"\s+", "", text[hit.end():stop])
-    if not re.fullmatch(r"(?:1[、.．]其他)?无[。.]?", body):
+    simple_none = bool(re.fullmatch(r"(?:1[、.．]其他)?无[。.]?", body))
+    labels = ["非同一控制下企业合并", "同一控制下企业合并", "反向购买", "处置子公司", "其他原因的合并范围变动", "其他"]
+    six_none = bool(re.fullmatch("".join(str(index) + r"[、.．]" + label + r"无[。.]?"
+                                        for index, label in enumerate(labels, 1)), body))
+    if not simple_none and not six_none:
         return None
     return {"kind": "consolidation_scope", "choice": "negative",
-            "method": "bounded_H1_note_explicit_none", **_location(text, hit.start(), stop)}
+            "method": "bounded_H1_note_explicit_all_six_none" if six_none else "bounded_H1_note_explicit_none",
+            **_location(text, hit.start(), stop)}
 
 
 def current_comparability(text, income_header, stock):
@@ -133,11 +138,26 @@ def _assets(document, stock, text, period):
         raise ValueError("G_assets_same_report_scope_currency_pending")
     geometry = e.get("status") == "original_consolidated_dated_grid_two_stock_amounts_bound"
     if geometry:
-        # Retained geometry uses its existing dated-page annotation. Do not
-        # infer an unbound continuation grid from a different physical page.
-        sections = [s for s in stock.get("statement_evidence", [])
-                    if s.get("status") == "bounded_consolidated_statement" and s.get("source_page") == old.get("source_page")]
-        header_offset = None
+        # Reuse bound grid annotations only inside their one actual native
+        # consolidated table. A continuation row need not share header page.
+        row_offset = e.get("native_source_row_offset")
+        if not isinstance(row_offset, int):
+            raise ValueError("G_assets_retained_geometry_row_offset_pending")
+        native = _balance_sections(text, period, text[:2500])
+        joined = [(c, s) for c in stock.get("statement_evidence", []) for s in native
+                  if c.get("status") == s.get("status") == "bounded_consolidated_statement"
+                  and c.get("header") == s.get("header") and c.get("period") == s.get("period")
+                  and c.get("source_page") == s.get("source_page")
+                  and s["body_start"] <= row_offset < s["body_start"] + len(s["body"])]
+        sections = [c for c, _ in joined]
+        if len(joined) != 1:
+            raise ValueError("G_assets_unique_consolidated_table_pending")
+        native_section = joined[0][1]
+        start = native_section["body_start"]; end = start + len(native_section["body"])
+        header_positions = [m.start() + start for m in re.finditer(re.escape(native_section["header"]), text[start:end])]
+        if len(header_positions) != 1:
+            raise ValueError("G_assets_unique_geometry_native_header_pending")
+        header_offset = header_positions[0]
     else:
         # Header and total-assets rows can occupy different physical pages.
         # Bind one exact original header inside this row's original statement
@@ -189,18 +209,24 @@ def _assets(document, stock, text, period):
             or not all(str(cell) in label for cell in cells)):
         raise ValueError("G_assets_native_row_offset_page_or_cells_mismatch")
     if geometry:
+        dates = e.get("original_header_date_cells", [])
+        normal_dates = [re.sub(r"\s+", "", str(value)) for value in dates] if isinstance(dates, list) else []
+        dated_page = e.get("dated_header_source_page")
         if (e.get("bounded_native_and_actual_grid_row_text_match") is not True
                 or e.get("same_table_grid_x_edges_verified") is not True
+                or not isinstance(dated_page, int)
+                or not source_page(text, start) <= dated_page <= source_page(text, offset)
                 or e.get("currency") != "CNY" or e.get("printed_unit") != unit
-                or e.get("original_header_date_cells") != [period.replace("-", "年", 1).replace("-", "月", 1) + "日",
-                                                           periods["opening_stock_asof"].replace("-", "年", 1).replace("-", "月", 1) + "日"]
+                or normal_dates != [period.replace("-", "年", 1).replace("-", "月", 1) + "日",
+                                    periods["opening_stock_asof"].replace("-", "年", 1).replace("-", "月", 1) + "日"]
+                or e.get("current_stock_asof") != period or e.get("opening_stock_asof") != periods["opening_stock_asof"]
                 or money(str(e.get("current_yuan"))) != current or money(str(e.get("opening_yuan"))) != opening):
             raise ValueError("G_assets_retained_geometry_annotation_pending")
-    else:
-        continuation_unit = amount_unit(text[header_offset:offset])
-        if (continuation_unit.get("status") != "unit_verified"
-                or continuation_unit.get("printed_unit") != unit):
-            raise ValueError("G_assets_bounded_continuation_unit_pending")
+    continuation_unit = amount_unit(text[header_offset:offset])
+    if (continuation_unit.get("status") != "unit_verified"
+            or continuation_unit.get("printed_unit") != unit):
+        raise ValueError("G_assets_bounded_continuation_unit_pending")
+    if not geometry:
         if (e.get("actual_table_header") != header or e.get("source_cells") != cells
                 or e.get("period_evidence") != periods or e.get("printed_unit") != unit
                 or e.get("statement_scope") != "consolidated" or e.get("currency") != "CNY"
@@ -214,6 +240,7 @@ def _assets(document, stock, text, period):
             "opening_quantum_yuan": printed_quantum_yuan(cells[1], unit),
             "source_page": source_page(text, offset), "source_row_offset": offset,
             "source_header_page": section["source_page"], "source_header_offset": header_offset,
+            "statement_start_offset": start, "statement_end_offset": end,
             "source_row_sha256": _sha(label), "source_header_sha256": _sha(header),
             "retained_geometry_reused": geometry, "fresh_PDF_geometry_verified": False}
 

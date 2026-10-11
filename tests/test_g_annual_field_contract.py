@@ -94,6 +94,60 @@ def test_cross_page_binding_rejects_ambiguous_table_scope_or_changed_unit(bad):
     with pytest.raises(ValueError): bound_annual_G_fields(doc, bind(doc, text))
 
 
+def geometry_continuation_fixture(*, spaced_dates=False):
+    doc, text = fixture(literal_opening=True)
+    row = doc["fields"]["total_assets"]["source_label"]
+    text = text.replace(row, "流动资产：\n货币资金 100.00 200.00\n===SOURCE_PAGE:11===\n" + row)
+    section = _balance_sections(text, "2025-12-31", text[:2500])[0]
+    doc["stock"]["statement_evidence"] = [{k: v for k, v in section.items() if k not in {"body", "body_start"}}]
+    old = doc["stock"]["field_evidence"]["total_assets"]
+    old.update(source_page=11, period_evidence=section["period"], source_label=row)
+    doc["fields"]["total_assets"] = {
+        "status": "original_consolidated_dated_grid_two_stock_amounts_bound", "currency": "CNY", "printed_unit": "元",
+        "bounded_native_and_actual_grid_row_text_match": True, "same_table_grid_x_edges_verified": True,
+        "native_source_row_offset": text.index(row), "native_source_label": row, "source_page": 11,
+        "current_yuan": "1200.00", "opening_yuan": "1000.00", "current_stock_asof": "2025-12-31", "opening_stock_asof": "2024-12-31",
+        "original_header_date_cells": ["2025 年12 月31 日", "2024 年12 月31 日"] if spaced_dates else ["2025年12月31日", "2024年12月31日"],
+        "dated_header_source_page": 10}
+    for field in ["operating_revenue", "operating_cost"]:
+        e = doc["fields"][field]
+        e.update(source_row_offset=text.index(e["source_label"]), statement_start_offset=text.index(e["actual_table_header"]), statement_end_offset=text.index(e["end_boundary_heading"]))
+    return doc, text
+
+
+@pytest.mark.parametrize("spaced_dates", [False, True])
+def test_retained_geometry_continuation_binds_original_native_range_and_only_date_spacing(spaced_dates):
+    # Actual600338/601231 header-parent precedes originalgridrow byonepage;
+    # revised603729 additionally prints spaced date cells.
+    doc, text = geometry_continuation_fixture(spaced_dates=spaced_dates)
+    assets = bound_annual_G_fields(doc, bind(doc, text))["amounts"]["total_assets"]
+    assert assets["source_header_page"] == 10 and assets["source_page"] == 11
+    assert assets["statement_start_offset"] <= assets["source_row_offset"] < assets["statement_end_offset"]
+    assert assets["opening_stock_asof"] == "2024-12-31" and assets["retained_geometry_reused"]
+    assert not assets["fresh_PDF_geometry_verified"]
+
+
+@pytest.mark.parametrize("bad", ["outside_table", "wrong_date", "grid_flag", "role", "dated_page", "unit"])
+def test_geometry_reuse_cannot_borrow_other_table_year_grid_or_unit(bad):
+    doc, text = geometry_continuation_fixture()
+    e = doc["fields"]["total_assets"]
+    if bad == "outside_table": e["native_source_row_offset"] = text.index("2、母公司资产负债表")
+    elif bad == "wrong_date": e["original_header_date_cells"][1] = "2023年12月31日"
+    elif bad == "grid_flag": e["same_table_grid_x_edges_verified"] = False
+    elif bad == "role": e["opening_stock_asof"] = "2025-01-01"
+    elif bad == "dated_page": e["dated_header_source_page"] = 20
+    elif bad == "unit": e["printed_unit"] = "万元"
+    with pytest.raises(ValueError): bound_annual_G_fields(doc, bind(doc, text))
+
+
+def test_geometry_amount_binding_does_not_clear_revised_edition():
+    doc, text = geometry_continuation_fixture(spaced_dates=True)
+    doc["stock"]["edition"] = "REVISED_FULL_REPORT"
+    out = bound_annual_G_fields(doc, bind(doc, text))
+    assert out["amounts_status"] == "three_G_same_report_amounts_bound"
+    assert "current_revised_edition_G_version_bridge_pending" in out["current_comparability"]["pending_reasons"]
+
+
 @pytest.mark.parametrize("literal_opening", [False, True])
 def test_three_fields_do_not_require_AR_INV_AP_and_preserve_real_opening_role(literal_opening):
     doc, text = fixture(literal_opening=literal_opening)
@@ -156,6 +210,25 @@ def test_H1_note_cannot_clear_annual_scope_or_a_separate_unchecked_question():
         doc["stock"]["report_date"] = period
         out = current_comparability(text, "", doc["stock"])
         assert "current_consolidation_scope_G_field_scope_pending" in out["pending_reasons"]
+
+
+@pytest.mark.parametrize("bad", [None, "missing_item", "blank", "material", "subsidiary", "extra_item"])
+def test_exact_six_scope_note_requires_every_named_item_explicit_none(bad):
+    doc, text = fixture()
+    labels = ["非同一控制下企业合并", "同一控制下企业合并", "反向购买", "处置子公司", "其他原因的合并范围变动", "其他"]
+    items = [f"{i}、{label}\n无\n" for i, label in enumerate(labels, 1)]
+    if bad == "missing_item": items.pop(2)
+    elif bad == "blank": items[2] = "3、反向购买\n\n"
+    elif bad == "material": items[2] = "3、反向购买\n无重大影响\n"
+    elif bad == "subsidiary": items[4] = "5、其他原因的合并范围变动\n新设子公司\n"
+    elif bad == "extra_item": items.append("7、其他变化\n本期收购。\n")
+    q = "与上年度财务报告相比，合并报表范围发生变化的情况说明\n□适用 不适用\n报告期无合并报表范围变化。"
+    text = text.replace(q, "九、合并范围的变更 \n" + "".join(items) + "十、在其他主体中的权益")
+    doc["stock"]["report_date"] = "2026-06-30"
+    out = current_comparability(text, "", doc["stock"])
+    assert (out["status"] == "current_G_comparability_ready") == (bad is None)
+    if bad is None:
+        assert any(e.get("method") == "bounded_H1_note_explicit_all_six_none" for e in out["locators"])
 
 
 def native_H1_fixture():
