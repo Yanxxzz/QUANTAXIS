@@ -1,0 +1,36 @@
+{
+  "status": "SOURCE_AMOUNT_KNOWN_INTERFACE_REPLAY_COMPLETE",
+  "protocol_sha256": "42e30d859a17d9824db073cb32b44171f49895cdc753cc3b0f7fab87c5aebaa1",
+  "checks": {
+    "CFINV01_SOURCE_INTERFACE_20261012": {
+      "minimum_finite_assets": 20,
+      "maximum_finite_assets": 20,
+      "minimum_distinct_values": 20,
+      "source_input_rows": 480,
+      "output_sha256": "a636392689d1b4415ed31eb3abb0e3824ab8d454afe01063d4234ef09891e18a"
+    },
+    "CFINV_OPERATING_OUTFLOW_CONTROL_20261012": {
+      "minimum_finite_assets": 20,
+      "maximum_finite_assets": 20,
+      "minimum_distinct_values": 20,
+      "source_input_rows": 480,
+      "output_sha256": "fe44ca1b4b2e53601eee7cd5dde62900f5fa150073e25d7da331793a3f6e0b33"
+    }
+  },
+  "source_amount_rows": 20,
+  "calendar_sessions": 24,
+  "median_main_control_Spearman": 0.8105263157894737,
+  "mean_extreme_overlap": 1.0,
+  "missing_price_input_rows": 0,
+  "source_vintage": "Original FY25 annual cashflow examples, publicly available before this example grid; not live native latest financial values",
+  "source_grid": "fixed20 x independently frozen reference calendar; actual existing price keys, missing rows not removed",
+  "all_A_or_live_input_period_parity_certified": false,
+  "production_or_admission_qualified": false,
+  "dispatch_native_preflight_passed": false,
+  "wealth_or_return_labels_read": false,
+  "official_calls": 0,
+  "new_economic_contexts": 2,
+  "registry_total": 494,
+  "completed_at_utc": "2026-10-11T18:41:29.342299+00:00",
+  "next": "Full dispatch preflight and native field period/value evidence still pending; do not submit on this source-interface receipt alone"
+}

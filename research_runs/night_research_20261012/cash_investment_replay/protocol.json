@@ -1,0 +1,92 @@
+{
+  "id": "CFINV_FIXED_SOURCE_INTERFACE_AND_COMPONENT_FALSIFIER_20261012",
+  "frozen_at_utc": "2026-10-11T18:40:57.415338+00:00",
+  "deadline_utc": "2026-10-11T23:00:00+00:00",
+  "window": {
+    "start": "2026-08-03",
+    "end": "2026-09-03"
+  },
+  "cycle": 5,
+  "groups": 10,
+  "candidates": [
+    {
+      "candidate_id": "CFINV01_SOURCE_INTERFACE_20261012",
+      "code": "# Unregistered research draft. No score, native input fetch or official run yet.\n# Input assumptions: the three native cashflow fields share report period/unit.\n# Their live period/availability/value parity remains to be checked.\nclass NativeCashFundingPrototype(Factor):\n    def calculate(self, factors):\n        close = factors['close'].astype('float64')\n        operating_net = factors['cash_flow_from_operating_activities'].astype('float64')\n        operating_out = factors['cash_paid_for_operation_activities'].astype('float64')\n        capex = factors['cash_paid_for_asset'].astype('float64')\n        spending = operating_out + capex\n        value = ((operating_net-capex)/spending).reindex(close.index)\n        valid = ((operating_out >= 0) & (capex >= 0) & (spending > 0)).reindex(close.index, fill_value=False)\n        return value.where(valid & ((value-value) == 0) & (close > 0)).rename('value')\n",
+      "direction": 1,
+      "role": "cash_after_asset_purchase_over_cash_spending"
+    },
+    {
+      "candidate_id": "CFINV_OPERATING_OUTFLOW_CONTROL_20261012",
+      "code": "class CashOperatingOutflowControl(Factor):\n    def calculate(self, factors):\n        close = factors['close'].astype('float64')\n        cash = factors['cash_flow_from_operating_activities'].astype('float64')\n        outflow = factors['cash_paid_for_operation_activities'].astype('float64')\n        value = (cash/outflow).reindex(close.index)\n        valid = (outflow > 0).reindex(close.index, fill_value=False)\n        return value.where(valid & ((value-value) == 0) & (close > 0)).rename('value')\n",
+      "direction": 1,
+      "role": "delete_capital_investment_cash_input_falsifier"
+    }
+  ],
+  "calendar": [
+    "2026-08-03",
+    "2026-08-04",
+    "2026-08-05",
+    "2026-08-06",
+    "2026-08-07",
+    "2026-08-10",
+    "2026-08-11",
+    "2026-08-12",
+    "2026-08-13",
+    "2026-08-14",
+    "2026-08-17",
+    "2026-08-18",
+    "2026-08-19",
+    "2026-08-20",
+    "2026-08-21",
+    "2026-08-24",
+    "2026-08-25",
+    "2026-08-26",
+    "2026-08-27",
+    "2026-08-28",
+    "2026-08-31",
+    "2026-09-01",
+    "2026-09-02",
+    "2026-09-03"
+  ],
+  "registry": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\research_trials.sqlite3",
+  "output": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\cash_investment_replay\\summary.json",
+  "bindings": {
+    "runtime": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\cash_investment_replay\\run_replay.py",
+      "sha256": "a4dbeb8bf7bedc6beec76d2b4e1017fb1672a254722154bbf1ae8af0ca81dd05"
+    },
+    "source20": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\cash_investment_source20\\source_receipt.json",
+      "sha256": "06d5bb5570d59dc4a41515d77f98d89ba5258ea1995d84b70c6b129b8eb22336"
+    },
+    "candidate_code": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\cash_investment_source20\\NativeCashFundingPrototype.py",
+      "sha256": "8f5b5b6372535370eee9cf4795cbe911dbb18caec530750b6c744d2d28b38b87"
+    },
+    "calendar_parent": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_arinv_increment_20261009\\protocol.json",
+      "sha256": "45bc14f8b0d084af89876bb07fd874b50d850c9478c28ecd91c046fcffdadf4b"
+    },
+    "existing_quotes": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_repaired_research_20261009\\execution_repair_v2\\quotes.parquet",
+      "sha256": "5fee01d9763697421a36fb21d9b2927633b4297aa100d7bbce1f697798ab14dc"
+    },
+    "known_native_interface": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\native_preflight.py",
+      "sha256": "4e26e95ab5db291328a1b19168e2decc834d0c85c15ad6304d519317f37cc1fb"
+    }
+  },
+  "economic_mechanism": "Source monetary input exploration of internal cash supporting productive asset purchases; lower financing pressure favored. Capital cash excludes acquisitions and securities investment; not completeFCFF or proof sustained earnings.",
+  "falsifier": "Remove new capital-expenditure field on identical source-input grid, compare signal redundancy before any return labels. Control is cash/outflow, not the retired cash/revenue F210.",
+  "source_interface_only": true,
+  "returns_tested": false,
+  "primary_limits": [
+    "Actual original FY25 financial amounts are representative mathematical inputs, not latest native quarters or complete native history",
+    "Fixed20 reference grid plus existing same-source close inputs; coverage counted on all20, missing price never drops identities",
+    "Current/prior fiscal monetary source facts unchanged; no annual amount projected before its source availability",
+    "Known local FactorSeries attribute-delegation check does not verify deployed financial field availability, latest period/PIT/value parity or remote all-A",
+    "No dispatch-native preflight receipt produced and no result to admit factor or authorize official spending"
+  ],
+  "new_contexts": 2,
+  "official_calls": 0
+}
