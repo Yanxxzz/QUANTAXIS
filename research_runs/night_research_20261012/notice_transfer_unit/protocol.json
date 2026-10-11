@@ -1,0 +1,37 @@
+{
+  "id": "ANNOUNCED_UNLOCK_THREE_REVIEWED_NOTICE_SOURCE_PROJECTION_20261012",
+  "kind": "source_software_only",
+  "frozen_at_utc": "2026-10-11T16:35:18.754834+00:00",
+  "deadline_utc": "2026-10-11T23:00:00+00:00",
+  "bindings": {
+    "review": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\announced_unlock_source_unit\\manual_field_review.json",
+      "sha256": "7a81390db892832b3e09e3cbc83e371701e8ce97b83aa14b3af7e24d5431824b"
+    },
+    "reference_calendar": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\recent_stockdb_tail_ingest\\calendar_escalated_diagnostic\\vendor_reference_calendar.json",
+      "sha256": "d4e4260a2151eaf6fa9d0ebf9765dd9e7701d2d275e4a5eee282e4e71e9e51d3"
+    },
+    "consumer": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\announced_unlock.py",
+      "sha256": "b2e986f6fca7269de60f5b9cc7c760f43fe27e2b814a898351e6ede0f62eaeef"
+    },
+    "tests": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\tests\\test_announced_unlock.py",
+      "sha256": "699c140beca886c6f5a8017e3a8f4c134e8d673d51994965d07b1357094c86a9"
+    }
+  },
+  "economic_definition": null,
+  "economic_return_window": null,
+  "native_shape_contract": "close Series index with symbol/date levels in either order; source-only announced quantity, not actual sale or alpha",
+  "source_scope": "same3 already fully read original notices; no original reread/download",
+  "offline_grid": "reviewed3 source symbols plus explicit uncovered example x bound reference-calendar verified dates <=2026-10-09; not actual native production quote keys, not tradability certification",
+  "availability": "date-only9/22 known at next verified reference session9/23 close; project original notice facts only before its planned listing date; latest version remains uncertified",
+  "unknown_rows": "NaN, never absence-of-event zero or invented actual selling",
+  "preflight_tests": 4,
+  "new_contexts": 0,
+  "official_calls": 0,
+  "new_HTTP_calls": 0,
+  "prices_or_return_labels_read": false,
+  "retention": "self-contained shortprobe and onecompact summary; no per-key table, PDF/fulltext or database copy"
+}

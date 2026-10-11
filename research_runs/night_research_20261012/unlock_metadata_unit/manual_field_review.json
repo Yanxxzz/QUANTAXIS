@@ -1,0 +1,331 @@
+{
+  "id": "ANNOUNCED_UNLOCK_NEW_SIX_FULL_NATIVE_MANUAL_REVIEW_20261012",
+  "status": "SIX_NOTICE_FACTS_REVIEWED_CONSTRAINTS_PRESERVED",
+  "reviewed_at_utc": "2026-10-11T16:51:47.951044+00:00",
+  "body_receipt": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\unlock_metadata_unit\\body_receipt.json",
+    "sha256": "8a2eb65669f4b409d9e975dc2663e278e3752aeb6f489987d1891f0507c96a91"
+  },
+  "calendar_reference": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\recent_stockdb_tail_ingest\\calendar_escalated_diagnostic\\vendor_reference_calendar.json",
+    "sha256": "d4e4260a2151eaf6fa9d0ebf9765dd9e7701d2d275e4a5eee282e4e71e9e51d3"
+  },
+  "records": [
+    {
+      "symbol": "603089",
+      "announcement_id": "1225562895",
+      "PDF_url": "https://static.cninfo.com.cn/finalpage/2026-09-15/1225562895.PDF",
+      "PDF_sha256": "edb9e6d8b34e99e54744c607309c45330448e7516bf8aad47068e110f678363a",
+      "native_text_sha256": "a8e3f9b7bd7edac98a20cf2f2fd23575a2d9efa2734fc6d7fbb85395fd2ee051",
+      "complete_native_pages_read": 5,
+      "published_at": "2026-09-15",
+      "publication_precision": "date",
+      "conservative_next_verified_reference_session": "2026-09-16",
+      "formation_convention": "Reference close only from next verified session, release instant and tradability not certified",
+      "source_fact_review_performed": true,
+      "actual_listing_occurrence": null,
+      "actual_sale_quantity": null,
+      "latest_version_chain_certified": false,
+      "production_qualified": false,
+      "source_facts": {
+        "listing": "2026-09-21",
+        "headline_shares": 35685963,
+        "planned_after_notice_constraints_shares": 35685963,
+        "total_A_shares": 275719231,
+        "pre_unrestricted_classification_A_shares": 240033268,
+        "pages": {
+          "amount": [
+            1,
+            3,
+            4
+          ],
+          "capital": [
+            2,
+            4
+          ],
+          "holders": [
+            3,
+            4
+          ],
+          "constraints": [
+            2
+          ]
+        },
+        "type": "targeted issuance6month tranche",
+        "holders": 17,
+        "constraints": "Notice says no other special commitments beyond6month lock; general applicable sale rules and realized sales remain unknown."
+      }
+    },
+    {
+      "symbol": "603091",
+      "announcement_id": "1225562953",
+      "PDF_url": "https://static.cninfo.com.cn/finalpage/2026-09-15/1225562953.PDF",
+      "PDF_sha256": "7a123ed9e3c0a061030e08ee6d6f6079a17d9a8179a7d44460db37afa8cf90a8",
+      "native_text_sha256": "6066ec7cfe1cd3be9f579741bfc27d84323969782975d23b2068517b7abcf8bc",
+      "complete_native_pages_read": 3,
+      "published_at": "2026-09-15",
+      "publication_precision": "date",
+      "conservative_next_verified_reference_session": "2026-09-16",
+      "formation_convention": "Reference close only from next verified session, release instant and tradability not certified",
+      "source_fact_review_performed": true,
+      "actual_listing_occurrence": null,
+      "actual_sale_quantity": null,
+      "latest_version_chain_certified": false,
+      "production_qualified": false,
+      "source_facts": {
+        "listing": "2026-09-21",
+        "headline_shares": 930653,
+        "planned_after_notice_constraints_shares": 930653,
+        "total_A_shares": 143134310,
+        "pre_unrestricted_classification_A_shares": 44018267,
+        "pages": {
+          "amount": [
+            1,
+            2,
+            3
+          ],
+          "capital": [
+            2,
+            3
+          ],
+          "holders": [
+            2
+          ],
+          "constraints": [
+            2
+          ]
+        },
+        "type": "IPO strategic allocation24month tranche",
+        "holders": 1,
+        "constraints": "Insurance-investment fund; notice preserves applicable reduction rules after lock. 664752 shares before1.4capital conversion,930653 is current tranche."
+      }
+    },
+    {
+      "symbol": "603270",
+      "announcement_id": "1225563256",
+      "PDF_url": "https://static.cninfo.com.cn/finalpage/2026-09-15/1225563256.PDF",
+      "PDF_sha256": "e4fc6fc90d78e9928f77ae7a1c305b46d4eac479f83a2c3f9f07633e6901645f",
+      "native_text_sha256": "bea7f7ffe7f962a8f4e596ed6569aefbcd103aeb02fbd779cf718f0e1afd7f3e",
+      "complete_native_pages_read": 4,
+      "published_at": "2026-09-15",
+      "publication_precision": "date",
+      "conservative_next_verified_reference_session": "2026-09-16",
+      "formation_convention": "Reference close only from next verified session, release instant and tradability not certified",
+      "source_fact_review_performed": true,
+      "actual_listing_occurrence": null,
+      "actual_sale_quantity": null,
+      "latest_version_chain_certified": false,
+      "production_qualified": false,
+      "source_facts": {
+        "listing": "2026-09-18",
+        "headline_shares": 33000000,
+        "planned_after_notice_constraints_shares": 6930000,
+        "total_A_shares": 219106667,
+        "pre_unrestricted_classification_A_shares": 70716667,
+        "pages": {
+          "amount": [
+            1,
+            4
+          ],
+          "capital": [
+            4
+          ],
+          "holders": [
+            2,
+            4
+          ],
+          "constraints": [
+            2,
+            3,
+            4
+          ]
+        },
+        "type": "IPO36month tranche with continued voluntary indirect-holder lock",
+        "holders": 1,
+        "constraints": "33000000 headline/tranche; indirect controlling limited partner26070000 voluntarily locked until2027-08-31; footnote explicitly plans6930000 actual listing. Capital structure classifies all33000000 as unrestricted, so that table is not immediately transferable supply. No actual sales inferred.",
+        "continued_lock_shares": 26070000,
+        "continued_lock_until": "2027-08-31",
+        "partnership_interests": [
+          {
+            "percent": 79,
+            "indirect_shares": 26070000
+          },
+          {
+            "percent": 20,
+            "indirect_shares": 6600000
+          },
+          {
+            "percent": 1,
+            "indirect_shares": 330000
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "600428",
+      "announcement_id": "1225565501",
+      "PDF_url": "https://static.cninfo.com.cn/finalpage/2026-09-16/1225565501.PDF",
+      "PDF_sha256": "1c147834acec719f3aec3e2ef4becb93aafcc6d5b53068f4da73cb5d1d043a54",
+      "native_text_sha256": "44ee2ee874a8ffd33738ce7fc1eba2cfb7a55bcafe2e372f7ed121ed98eb6d2c",
+      "complete_native_pages_read": 3,
+      "published_at": "2026-09-16",
+      "publication_precision": "date",
+      "conservative_next_verified_reference_session": "2026-09-17",
+      "formation_convention": "Reference close only from next verified session, release instant and tradability not certified",
+      "source_fact_review_performed": true,
+      "actual_listing_occurrence": null,
+      "actual_sale_quantity": null,
+      "latest_version_chain_certified": false,
+      "production_qualified": false,
+      "source_facts": {
+        "listing": "2026-09-21",
+        "headline_shares": 298634812,
+        "planned_after_notice_constraints_shares": 298634812,
+        "total_A_shares": 2743920395,
+        "pre_unrestricted_classification_A_shares": 2445285583,
+        "pages": {
+          "amount": [
+            1,
+            2,
+            3
+          ],
+          "capital": [
+            2,
+            3
+          ],
+          "holders": [
+            3
+          ],
+          "constraints": [
+            1,
+            2
+          ]
+        },
+        "type": "targeted issuance18month indirect-controller tranche",
+        "holders": 1,
+        "constraints": "Holder China COSCO Shipping Group is the indirect controller;18month lock is only stated commitment here. Listing amount does not demonstrate near-term selling."
+      }
+    },
+    {
+      "symbol": "603418",
+      "announcement_id": "1225568136",
+      "PDF_url": "https://static.cninfo.com.cn/finalpage/2026-09-17/1225568136.PDF",
+      "PDF_sha256": "01275c8aaf69172bf36e9e1c2d6548b59cd9753fa304adf6bae33f003484e831",
+      "native_text_sha256": "930090eb53ffe9a4799c3a3074602b3771a2ba509d595af1af14b62b61009eaa",
+      "complete_native_pages_read": 10,
+      "published_at": "2026-09-17",
+      "publication_precision": "date",
+      "conservative_next_verified_reference_session": "2026-09-18",
+      "formation_convention": "Reference close only from next verified session, release instant and tradability not certified",
+      "source_fact_review_performed": true,
+      "actual_listing_occurrence": null,
+      "actual_sale_quantity": null,
+      "latest_version_chain_certified": false,
+      "production_qualified": false,
+      "source_facts": {
+        "listing": "2026-09-23",
+        "headline_shares": 46683990,
+        "planned_after_notice_constraints_shares": 46683990,
+        "total_A_shares": 193068444,
+        "pre_unrestricted_classification_A_shares": 41364612,
+        "pages": {
+          "amount": [
+            1,
+            2,
+            8,
+            9
+          ],
+          "capital": [
+            1,
+            10
+          ],
+          "holders": [
+            8,
+            9
+          ],
+          "constraints": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ]
+        },
+        "type": "mixed IPO pre-issuance42801333 and strategic3882657 shares12month tranche",
+        "holders": 15,
+        "constraints": "Mixed PE/venture/other pre-IPO holders plus employee strategic asset plan. Holder-specific announcements/price/legal rules remain;100% allowance within24months does not state intended sales. Tranche remaining0 does not eliminate selling conditions.",
+        "tranches": [
+          {
+            "shares": 42801333,
+            "type": "pre_IPO14holders"
+          },
+          {
+            "shares": 3882657,
+            "type": "employee_strategic1holder"
+          }
+        ]
+      }
+    },
+    {
+      "symbol": "688387",
+      "announcement_id": "1225568400",
+      "PDF_url": "https://static.cninfo.com.cn/finalpage/2026-09-17/1225568400.PDF",
+      "PDF_sha256": "07196ce40be1ecee7db97bfa5a1e8b4d2d2fa940fd1a69c5b323faf7fca07211",
+      "native_text_sha256": "97eaa687f34ccd443ccab11fa650c412b0e66f95f7843fa1b044d5c6878409a2",
+      "complete_native_pages_read": 5,
+      "published_at": "2026-09-17",
+      "publication_precision": "date",
+      "conservative_next_verified_reference_session": "2026-09-18",
+      "formation_convention": "Reference close only from next verified session, release instant and tradability not certified",
+      "source_fact_review_performed": true,
+      "actual_listing_occurrence": null,
+      "actual_sale_quantity": null,
+      "latest_version_chain_certified": false,
+      "production_qualified": false,
+      "source_facts": {
+        "listing": "2026-09-28",
+        "headline_shares": 1401972800,
+        "planned_after_notice_constraints_shares": null,
+        "total_A_shares": 3418750000,
+        "pre_unrestricted_classification_A_shares": null,
+        "pages": {
+          "amount": [
+            1,
+            2,
+            4,
+            5
+          ],
+          "capital": [
+            1,
+            2
+          ],
+          "holders": [
+            5
+          ],
+          "constraints": [
+            2,
+            3,
+            4
+          ]
+        },
+        "type": "pre-IPO controlling holder with36month, automatic6month and voluntary6month extensions",
+        "holders": 1,
+        "constraints": "Controller China Information Communication Technologies Group. Profitability-dependent4th/5th accounting-year2% of issuer-share-capital annual sale limit, price floor and plans remain; current profitability/used annual quota not established.1401972800 is listed-tranche quantity, immediately allowed supply unknown.460038242/562600742 onpage1 are historical2022 float quantities, not current float."
+      }
+    }
+  ],
+  "fresh_originals_read_once": 6,
+  "complete_native_physical_pages": 30,
+  "new_contexts": 0,
+  "official_calls": 0,
+  "price_or_label_reads": false,
+  "original_PDF_or_fulltext_copies_saved": false,
+  "limits": [
+    "Single public source/keyword is not full-channel coverage",
+    "All quantities are notice facts, not realized listing or sales",
+    "Unrestricted capital classification is not actual transferable float",
+    "Version correction coverage and native automatic production event feed pending"
+  ],
+  "reviewer": "root read every complete native page once; no new subagent delegation"
+}

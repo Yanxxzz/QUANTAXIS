@@ -1,0 +1,194 @@
+{
+  "selection": "First20 SH main-board source-effective lifecycle codes by numeric ID, listed throughout9/16..30; exclude9notice issuers; prices/labels not read",
+  "observed_at_utc": "2026-10-11T16:56:23.065029+00:00",
+  "profile_name": "stockdb",
+  "price_source": "stockdb",
+  "eligible_lifecycle_codes_sha256": "2cd0ab97d1bcce96e5679faf130990d158b94cd3b70e1368b9f833f35acba14f",
+  "peer_codes": [
+    "600000",
+    "600004",
+    "600006",
+    "600007",
+    "600008",
+    "600009",
+    "600010",
+    "600011",
+    "600012",
+    "600015",
+    "600016",
+    "600017",
+    "600018",
+    "600019",
+    "600020",
+    "600021",
+    "600022",
+    "600023",
+    "600025",
+    "600026"
+  ],
+  "peer_source_lifecycles": [
+    {
+      "code": "600000",
+      "ipo_date": "1999-11-10",
+      "delisted_date": null,
+      "source": "baostock",
+      "membership_basis": "retrospective_source_effective_lifecycle",
+      "membership_pit": false
+    },
+    {
+      "code": "600004",
+      "ipo_date": "2003-04-28",
+      "delisted_date": null,
+      "source": "baostock",
+      "membership_basis": "retrospective_source_effective_lifecycle",
+      "membership_pit": false
+    },
+    {
+      "code": "600006",
+      "ipo_date": "1999-07-27",
+      "delisted_date": null,
+      "source": "baostock",
+      "membership_basis": "retrospective_source_effective_lifecycle",
+      "membership_pit": false
+    },
+    {
+      "code": "600007",
+      "ipo_date": "1999-03-12",
+      "delisted_date": null,
+      "source": "baostock",
+      "membership_basis": "retrospective_source_effective_lifecycle",
+      "membership_pit": false
+    },
+    {
+      "code": "600008",
+      "ipo_date": "2000-04-27",
+      "delisted_date": null,
+      "source": "baostock",
+      "membership_basis": "retrospective_source_effective_lifecycle",
+      "membership_pit": false
+    },
+    {
+      "code": "600009",
+      "ipo_date": "1998-02-18",
+      "delisted_date": null,
+      "source": "baostock",
+      "membership_basis": "retrospective_source_effective_lifecycle",
+      "membership_pit": false
+    },
+    {
+      "code": "600010",
+      "ipo_date": "2001-03-09",
+      "delisted_date": null,
+      "source": "baostock",
+      "membership_basis": "retrospective_source_effective_lifecycle",
+      "membership_pit": false
+    },
+    {
+      "code": "600011",
+      "ipo_date": "2001-12-06",
+      "delisted_date": null,
+      "source": "baostock",
+      "membership_basis": "retrospective_source_effective_lifecycle",
+      "membership_pit": false
+    },
+    {
+      "code": "600012",
+      "ipo_date": "2003-01-07",
+      "delisted_date": null,
+      "source": "baostock",
+      "membership_basis": "retrospective_source_effective_lifecycle",
+      "membership_pit": false
+    },
+    {
+      "code": "600015",
+      "ipo_date": "2003-09-12",
+      "delisted_date": null,
+      "source": "baostock",
+      "membership_basis": "retrospective_source_effective_lifecycle",
+      "membership_pit": false
+    },
+    {
+      "code": "600016",
+      "ipo_date": "2000-12-19",
+      "delisted_date": null,
+      "source": "baostock",
+      "membership_basis": "retrospective_source_effective_lifecycle",
+      "membership_pit": false
+    },
+    {
+      "code": "600017",
+      "ipo_date": "2006-10-17",
+      "delisted_date": null,
+      "source": "baostock",
+      "membership_basis": "retrospective_source_effective_lifecycle",
+      "membership_pit": false
+    },
+    {
+      "code": "600018",
+      "ipo_date": "2006-10-26",
+      "delisted_date": null,
+      "source": "baostock",
+      "membership_basis": "retrospective_source_effective_lifecycle",
+      "membership_pit": false
+    },
+    {
+      "code": "600019",
+      "ipo_date": "2000-12-12",
+      "delisted_date": null,
+      "source": "baostock",
+      "membership_basis": "retrospective_source_effective_lifecycle",
+      "membership_pit": false
+    },
+    {
+      "code": "600020",
+      "ipo_date": "2003-08-08",
+      "delisted_date": null,
+      "source": "baostock",
+      "membership_basis": "retrospective_source_effective_lifecycle",
+      "membership_pit": false
+    },
+    {
+      "code": "600021",
+      "ipo_date": "2003-10-29",
+      "delisted_date": null,
+      "source": "baostock",
+      "membership_basis": "retrospective_source_effective_lifecycle",
+      "membership_pit": false
+    },
+    {
+      "code": "600022",
+      "ipo_date": "2004-06-29",
+      "delisted_date": null,
+      "source": "baostock",
+      "membership_basis": "retrospective_source_effective_lifecycle",
+      "membership_pit": false
+    },
+    {
+      "code": "600023",
+      "ipo_date": "2013-12-19",
+      "delisted_date": null,
+      "source": "baostock",
+      "membership_basis": "retrospective_source_effective_lifecycle",
+      "membership_pit": false
+    },
+    {
+      "code": "600025",
+      "ipo_date": "2017-12-15",
+      "delisted_date": null,
+      "source": "baostock",
+      "membership_basis": "retrospective_source_effective_lifecycle",
+      "membership_pit": false
+    },
+    {
+      "code": "600026",
+      "ipo_date": "2002-05-23",
+      "delisted_date": null,
+      "source": "baostock",
+      "membership_basis": "retrospective_source_effective_lifecycle",
+      "membership_pit": false
+    }
+  ],
+  "historical_full_universe_or_PIT_certified": false,
+  "unknown_lifecycles_not_treated_as_verified": true,
+  "new_contexts": 0
+}

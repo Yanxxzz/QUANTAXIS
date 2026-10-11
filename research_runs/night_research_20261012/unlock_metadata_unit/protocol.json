@@ -1,0 +1,46 @@
+{
+  "id": "ANNOUNCED_UNLOCK_NEW_WEEK_SOURCE_METADATA_20261012",
+  "kind": "source_metadata_only",
+  "frozen_at_utc": "2026-10-11T16:44:34.667904+00:00",
+  "deadline_utc": "2026-10-11T23:00:00+00:00",
+  "query": {
+    "start": "20260914",
+    "end": "20260920",
+    "category": "",
+    "stock": "",
+    "plate": "",
+    "searchkey": "限售股上市流通",
+    "page_size": 30,
+    "max_pages": 3,
+    "max_rows": 90
+  },
+  "bindings": {
+    "runtime": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\unlock_metadata_unit\\collect_week.py",
+      "sha256": "8310f83de7d5412d155376fd6741e1d06fdc52a92597a05d0724aa4311935cd6"
+    },
+    "tests": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\unlock_metadata_unit\\test_collect_week.py",
+      "sha256": "cfdb15b5d8ca194b6347d721ebfd8ea5466f02fcc9d93984439468ef0070ef6b"
+    },
+    "index": {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\filings_market_index.py",
+      "sha256": "77e0c28f9c9529efc5377abc5d5e3fa77f72222fb3bb7ba668a23331ff620c5c"
+    },
+    "record_schema": {
+      "path": "D:\\PandaAI-Alpha\\factor_workflow\\filings_akshare_index.py",
+      "sha256": "4bda02f66146437b829c362339d8ada4add156c26c7d5cbdc116dcf9080bbad1"
+    }
+  },
+  "external_workspace": "D:\\PandaAI-Alpha",
+  "registry_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\research_trials.sqlite3",
+  "output": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\unlock_metadata_unit\\metadata_receipt.json",
+  "selection": "First6 primary-title notices ordered publication/code/ID among returned validated rows; no prices, amounts or outcome selection",
+  "source_scope": "New9/14..20 keyword week distinct from already complete9/21..27; single provider/keyword, not full-channel certification",
+  "body_phase": "No PDF calls; later exact selected body identities require frozen source protocol",
+  "preflight_synthetic_tests": 4,
+  "new_contexts": 0,
+  "official_calls": 0,
+  "economic_failure": false,
+  "retention": "Small public metadata and response hashes; no full raw response, financial text, price database or per-stock daily dump"
+}

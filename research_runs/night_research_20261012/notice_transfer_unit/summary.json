@@ -1,0 +1,38 @@
+{
+  "id": "ANNOUNCED_UNLOCK_THREE_REVIEWED_NOTICE_SOURCE_PROJECTION_20261012",
+  "status": "SOURCE_SOFTWARE_PROJECTION_COMPLETE_KNOWN_TEN_GROUP_SHORTFALL",
+  "completed_at_utc": "2026-10-11T16:35:19.087157+00:00",
+  "protocol": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\notice_transfer_unit\\protocol.json",
+    "sha256": "c695401ed20dc98b1b524dde78d31a52aebe17c5b81c56e7e1b5d432cfa17eeb"
+  },
+  "consumer": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\announced_unlock.py",
+    "sha256": "b2e986f6fca7269de60f5b9cc7c760f43fe27e2b814a898351e6ede0f62eaeef"
+  },
+  "source_only_generated_probe": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\notice_transfer_unit\\AnnouncedUnlockSourceContractProbe.py",
+    "sha256": "eb64067e7e8d0b17b9cb0b717e44e2ce5380f0a2b02e938f7132785395e4c944"
+  },
+  "notice_events_bound": 3,
+  "reference_dates": 8,
+  "grid_rows": 32,
+  "grid_type": "reviewed source symbols plus uncovered example x actual reference dates; not real production provider keys",
+  "finite_original_notice_fact_rows": 11,
+  "maximum_known_symbol_count_per_date": 3,
+  "maximum_distinct_quantity_per_date": 3,
+  "unknown_example_filled_zero": false,
+  "generated_code_matches_consumer": true,
+  "tests_passed": 4,
+  "native_syntax_and_selfcontained_history_fact_path": "OFFLINE_SUPPORTED_NOT_REAL_REMOTE_TRANSFER_CERTIFIED",
+  "ten_group_economic_experiment_ready": false,
+  "why_no_paid_trial": "At most3 known symbols/values per date, below configured10 groups; known shortage rather than a paid runtime probe",
+  "actual_sales_or_current_legal_saleability_inferred": false,
+  "latest_version_chain_or_daily_updater_certified": false,
+  "formal_or_economic_qualified": 0,
+  "new_contexts": 0,
+  "official_calls": 0,
+  "source_HTTP_calls": 0,
+  "real_prices_or_return_labels_read": false,
+  "next_unit": "Verify scoped followup metadata/version for already reviewed notices; broaden only a preselected pure-source identity set or move to a viable history-distinct native mechanism."
+}

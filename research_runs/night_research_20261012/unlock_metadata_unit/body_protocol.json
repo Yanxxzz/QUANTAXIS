@@ -1,0 +1,97 @@
+{
+  "id": "ANNOUNCED_UNLOCK_NEW_SIX_BODY_SOURCE_20261012",
+  "kind": "source_only",
+  "frozen_at_utc": "2026-10-11T16:47:19.782589+00:00",
+  "deadline_utc": "2026-10-11T23:00:00+00:00",
+  "registry_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\research_trials.sqlite3",
+  "output": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\unlock_metadata_unit\\body_receipt.json",
+  "selected_cases": [
+    {
+      "symbol": "603089",
+      "announcement_id": "1225562895",
+      "title": "关于向特定对象发行<em>股</em>票<em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>的公告",
+      "published_at": "2026-09-15",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=603089&announcementId=1225562895&orgId=9900023726&announcementTime=2026-09-15",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-15/1225562895.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "603091",
+      "announcement_id": "1225562953",
+      "title": "关于首次公开发行部分战略配<em>售</em><em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>的公告",
+      "published_at": "2026-09-15",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=603091&announcementId=1225562953&orgId=9900056873&announcementTime=2026-09-15",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-15/1225562953.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "603270",
+      "announcement_id": "1225563256",
+      "title": "山东金帝精密机械科技<em>股</em>份有<em>限</em>公司首次公开发行部分<em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>及自愿承诺延长部分<em>股</em>票锁定期的公告",
+      "published_at": "2026-09-15",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=603270&announcementId=1225563256&orgId=9900049007&announcementTime=2026-09-15",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-15/1225563256.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "600428",
+      "announcement_id": "1225565501",
+      "title": "中远海运特种运输<em>股</em>份有<em>限</em>公司关于向特定对象发行<em>股</em>票<em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>的公告",
+      "published_at": "2026-09-16",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=600428&announcementId=1225565501&orgId=gssh0600428&announcementTime=2026-09-16",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-16/1225565501.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "603418",
+      "announcement_id": "1225568136",
+      "title": "上海友升铝业<em>股</em>份有<em>限</em>公司关于首次公开发行部分<em>限</em><em>售</em><em>股</em>及部分战略配<em>售</em><em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>公告",
+      "published_at": "2026-09-17",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=603418&announcementId=1225568136&orgId=9900046966&announcementTime=2026-09-17",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-17/1225568136.PDF",
+      "category": "",
+      "time_precision": "date"
+    },
+    {
+      "symbol": "688387",
+      "announcement_id": "1225568400",
+      "title": "首次公开发行部分<em>限</em><em>售</em><em>股</em><em>上市</em><em>流通</em>公告",
+      "published_at": "2026-09-17",
+      "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=688387&announcementId=1225568400&orgId=9900052408&announcementTime=2026-09-17",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-17/1225568400.PDF",
+      "category": "",
+      "time_precision": "date"
+    }
+  ],
+  "bindings": {
+    "runtime": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\unlock_metadata_unit\\read_selected.py",
+      "sha256": "b5ebf9371b73a5d91f7e17fdbd9779218d1baca2cafd648347c84f279dfecaa8"
+    },
+    "metadata": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\unlock_metadata_unit\\metadata_receipt.json",
+      "sha256": "e70bcdb20a72b1d25e60f49bdb1f8af6ec2c0ba77770fd2dbe08d8702986cfc3"
+    },
+    "PDF_reader": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\announced_unlock_source_unit\\read_native_sources.py",
+      "sha256": "c36fe544b3a5c3e4d9cc7658feb4dae692f88afd032daf18f5731ae423a484e1"
+    }
+  },
+  "selection": "First6 primary-title source candidates from full fixed9/14..20 keyword metadata by publication/code/ID; no labels or amount selection",
+  "reader": "reuse prior validated read_once only; no old execute/consume or old3 fetch",
+  "request_budget": {
+    "GET": 6,
+    "retry": 0,
+    "redirect": false,
+    "max_PDF_bytes": 16777216
+  },
+  "review": "All physical native pages once; metadata candidate status is not field or alpha qualification",
+  "retention": "URL/PDF/text/page SHA and short fields only; complete native text memory-only for root reading, no PDF/text files",
+  "new_contexts": 0,
+  "official_calls": 0,
+  "economic_definition": null
+}

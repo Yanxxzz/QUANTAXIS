@@ -1,0 +1,181 @@
+{
+  "id": "UNLOCK_SUPPLY_SOURCE_LIMITED_EVENT_MECHANISM_20261012",
+  "frozen_at_utc": "2026-10-11T17:03:45.236797+00:00",
+  "deadline_utc": "2026-10-11T23:00:00+00:00",
+  "candidate": {
+    "candidate_id": "UNLOCK_SUPPLY_NOTICE_PILOT_20261012",
+    "direction": 0,
+    "strategy_spec": {
+      "economic_mechanism": "Forthcoming publicly announced share supply after explicitly quantified continued locks; lower potential supply expected to outperform, not forecast actual selling",
+      "raw_signal": "notice planned listing shares after quantified continued locks / notice current A-share capital; future listing only, source-unknown events never zero",
+      "event_sources": [
+        {
+          "symbol": "603089",
+          "announcement_id": "1225562895",
+          "formation_day": "2026-09-16",
+          "announced_listing_day": "2026-09-21",
+          "notice_planned_shares_after_explicit_continued_locks": 35685963,
+          "notice_current_A_capital_shares": 275719231,
+          "raw_supply_ratio": 0.12942863241918734,
+          "actual_sales_known": false
+        },
+        {
+          "symbol": "603091",
+          "announcement_id": "1225562953",
+          "formation_day": "2026-09-16",
+          "announced_listing_day": "2026-09-21",
+          "notice_planned_shares_after_explicit_continued_locks": 930653,
+          "notice_current_A_capital_shares": 143134310,
+          "raw_supply_ratio": 0.006501956099833786,
+          "actual_sales_known": false
+        },
+        {
+          "symbol": "603270",
+          "announcement_id": "1225563256",
+          "formation_day": "2026-09-16",
+          "announced_listing_day": "2026-09-18",
+          "notice_planned_shares_after_explicit_continued_locks": 6930000,
+          "notice_current_A_capital_shares": 219106667,
+          "raw_supply_ratio": 0.03162843054885226,
+          "actual_sales_known": false
+        },
+        {
+          "symbol": "600428",
+          "announcement_id": "1225565501",
+          "formation_day": "2026-09-17",
+          "announced_listing_day": "2026-09-21",
+          "notice_planned_shares_after_explicit_continued_locks": 298634812,
+          "notice_current_A_capital_shares": 2743920395,
+          "raw_supply_ratio": 0.10883508593914584,
+          "actual_sales_known": false
+        },
+        {
+          "symbol": "603418",
+          "announcement_id": "1225568136",
+          "formation_day": "2026-09-18",
+          "announced_listing_day": "2026-09-23",
+          "notice_planned_shares_after_explicit_continued_locks": 46683990,
+          "notice_current_A_capital_shares": 193068444,
+          "raw_supply_ratio": 0.24180020842763927,
+          "actual_sales_known": false
+        },
+        {
+          "symbol": "600548",
+          "announcement_id": "1225575337",
+          "formation_day": "2026-09-23",
+          "announced_listing_day": "2026-09-28",
+          "notice_planned_shares_after_explicit_continued_locks": 75930144,
+          "notice_current_A_capital_shares": 1790356127,
+          "raw_supply_ratio": 0.04241063711007704,
+          "actual_sales_known": false
+        },
+        {
+          "symbol": "603459",
+          "announcement_id": "1225575321",
+          "formation_day": "2026-09-23",
+          "announced_listing_day": "2026-10-08",
+          "notice_planned_shares_after_explicit_continued_locks": 2813681,
+          "notice_current_A_capital_shares": 753753588,
+          "raw_supply_ratio": 0.0037328923467758006,
+          "actual_sales_known": false
+        }
+      ],
+      "excluded_source_events": [
+        {
+          "symbol": "688387",
+          "reason": "conditional holder sale ceiling unresolved; keep facts, no scalar signal"
+        },
+        {
+          "symbol": "688531",
+          "reason": "annual holder quota bases and remaining quotas unresolved; no scalar signal"
+        }
+      ],
+      "timing": "Date-only filing: next verified reference session close formation, following open entry, fifth subsequent session close exit;9/25 and10/1..7 vendor-reference closures preserved",
+      "reference": "Fixed20 SH main-board lifecycle codes chosen by code excluding9notice issuers, same dates/entry/exit; source-limited reference, not industry neutral index",
+      "groups": "fixed median raw ratio, ties intact; lower supply favored, no parameter/sign/window scan",
+      "scope": "one descriptive event-mechanism pilot; not native10-group official candidate or investable aggregate NAV"
+    }
+  },
+  "window": {
+    "start": "2026-09-16",
+    "end": "2026-10-08"
+  },
+  "cycle": 5,
+  "groups": 2,
+  "calendar": [
+    "2026-09-16",
+    "2026-09-17",
+    "2026-09-18",
+    "2026-09-21",
+    "2026-09-22",
+    "2026-09-23",
+    "2026-09-24",
+    "2026-09-28",
+    "2026-09-29",
+    "2026-09-30",
+    "2026-10-08"
+  ],
+  "costs": [
+    0.003,
+    0.005
+  ],
+  "price_profile": "stockdb",
+  "public_price_profile": {
+    "name": "stockdb",
+    "database": "quantaxis_stockdb_research",
+    "price_source": "stockdb",
+    "reference_database": "quantaxis",
+    "calendar_source": "baostock_trade_dates"
+  },
+  "bindings": {
+    "old3_review": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\announced_unlock_source_unit\\manual_field_review.json",
+      "sha256": "7a81390db892832b3e09e3cbc83e371701e8ce97b83aa14b3af7e24d5431824b"
+    },
+    "new6_review": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\unlock_metadata_unit\\manual_field_review.json",
+      "sha256": "f79cca1e5097b933c9e705d05a44073e1be76c523356e42fc20921218f385065"
+    },
+    "peers": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\unlock_event_pilot\\peer_metadata_plan.json",
+      "sha256": "668a9b62997a419531430fe9e2bbb5b345f1e575d3f598136d35764f374c7dec"
+    },
+    "calendar": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\recent_stockdb_tail_ingest\\calendar_escalated_diagnostic\\vendor_reference_calendar.json",
+      "sha256": "d4e4260a2151eaf6fa9d0ebf9765dd9e7701d2d275e4a5eee282e4e71e9e51d3"
+    },
+    "engine": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\event_study.py",
+      "sha256": "94c9b111d0a88d72043db24f1423a57086c40ca630c44ea7b3fecaae92171cc1"
+    },
+    "tests": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\tests\\test_event_study.py",
+      "sha256": "e652f5e5f9c2928554295e0cb017e880eff9078fc8f428bb5ca3cf7a2ffa154a"
+    },
+    "runtime": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\unlock_event_pilot\\run_pilot.py",
+      "sha256": "9fdb09fbe2d5d0fbfaf99c5d01e0b464722e004a88ac7523e7b71983a41ec95c"
+    },
+    "price_adapter": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\data.py",
+      "sha256": "ab5c48beda538f0fe73ed20262d5de72a47bbc207d51fe4da582fd9b520e73e2"
+    },
+    "source_selector": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\sources.py",
+      "sha256": "f66cfed96cba1967b4a40d4fe6d94f985daf322d2b66a4da84967e25ba0e3823"
+    }
+  },
+  "registry_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\research_trials.sqlite3",
+  "output": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261012\\unlock_event_pilot\\summary.json",
+  "registration_before_price_labels": true,
+  "new_contexts": 1,
+  "official_calls": 0,
+  "limits": [
+    "Seven source-order events, four overlapping formation clusters; descriptive only",
+    "Single-source/keyword and latest revision chains not fully certified",
+    "Fixed20-board references are code-selected and bank-heavy, not industry/size neutral or market index",
+    "Amounts measure declared listing supply, not actual sales; two source-unknown events excluded before outcomes",
+    "Accepted positive opening/closing bars and fee proxy do not certify fills, price limits or executable capacity",
+    "No annual Sharpe, ICIR, formal admission or actual pool score inferred from sparse event labels"
+  ]
+}

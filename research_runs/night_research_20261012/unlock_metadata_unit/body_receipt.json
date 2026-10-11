@@ -1,0 +1,831 @@
+{
+  "status": "SIX_FULL_NATIVE_NOTICE_READS_FIELDS_PENDING",
+  "protocol_sha256": "6ef9150f057979985efebabf7cc09c2766626fc87eca0d50eb16274ac976f1c5",
+  "records": [
+    {
+      "symbol": "603089",
+      "announcement_id": "1225562895",
+      "metadata_record_sha256": "949b92f2dc9cce5c3a174529a8bb2d42ad3cbec68cfb43205bba04fb8cf770df",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-15/1225562895.PDF",
+      "published_at": "2026-09-15",
+      "time_precision": "date",
+      "status": "FULL_NATIVE_SOURCE_READ_FIELD_REVIEW_PENDING",
+      "HTTP_attempts": 1,
+      "http_status": 200,
+      "PDF_bytes": 106766,
+      "PDF_sha256": "edb9e6d8b34e99e54744c607309c45330448e7516bf8aad47068e110f678363a",
+      "text_sha256": "a8e3f9b7bd7edac98a20cf2f2fd23575a2d9efa2734fc6d7fbb85395fd2ee051",
+      "text_recipe": "exact pdfplumber extract_text(layout=False) per physical page; join @@SOURCE_PAGE:n@@ markers, no trimming",
+      "physical_pages": 5,
+      "page_proof": [
+        {
+          "physical_page": 1,
+          "native_characters": 617,
+          "native_text_sha256": "88901a6c23def247f2ab4e8b6a7189685fef35c85395041a36e0abc597cc64c5",
+          "short_first_native_line": "证券代码：603089 证券简称：正裕工业 公告编号：2026-050"
+        },
+        {
+          "physical_page": 2,
+          "native_characters": 618,
+          "native_text_sha256": "d9ee7dc6b0c947b626f5185f14e2dd41d7066ce1325bda28df68a42fdb4a8b2f",
+          "short_first_native_line": "披露的《浙江正裕工业股份有限公司向特定对象发行股票结果暨股本变动公告》"
+        },
+        {
+          "physical_page": 3,
+          "native_characters": 614,
+          "native_text_sha256": "d4ed664e5b9958236e66f3d3f2f1b5404a53721a9fcbf5ecd8ebda5c1b0564f9",
+          "short_first_native_line": "综上所述，保荐人对公司本次向特定对象发行股票限售股上市流通事项无异"
+        },
+        {
+          "physical_page": 4,
+          "native_characters": 647,
+          "native_text_sha256": "d382c568981c5bb57c296a4f78a357948cab9bc9620bdc27507eacf027c613c3",
+          "short_first_native_line": "绍兴上虞舜越控股有限"
+        },
+        {
+          "physical_page": 5,
+          "native_characters": 34,
+          "native_text_sha256": "1880844334186e81afd22c35606688667328fa52b1db28a650ac4b553e780302",
+          "short_first_native_line": "特此公告。"
+        }
+      ],
+      "short_locator_hints": [
+        {
+          "physical_page": 1,
+          "page_text_offset": 219,
+          "snippet": " 本次股票上市流通日期为2026 年 9 月 21 日。",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 496,
+          "snippet": "发行新增股份为有限售条件流通股，将于 6 个月限售期满后的次一交易日在上海",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 53,
+          "snippet": "本次限售股上市流通日期为2026 年9月21 日。",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 102,
+          "snippet": "本次发行完成后，公司总股本由240,033,268 股增至275,719,231 股。",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 198,
+          "snippet": "三、本次限售股上市流通的有关承诺",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 215,
+          "snippet": "本次上市流通的限售股属于向特定对象发行股份，认购对象均承诺认购所获",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 271,
+          "snippet": "除上述承诺外，本次申请上市流通的限售股股东无其他特别承诺。截至本公",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 305,
+          "snippet": "告披露日，本次申请上市流通的限售股股东均严格履行了上述承诺，不存在相关",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 341,
+          "snippet": "承诺未履行影响本次限售股上市流通的情况。",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 428,
+          "snippet": "公司向特定对象发行股票中做出的各项承诺；公司本次限售股份上市流通数量、",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 464,
+          "snippet": "上市流通时间均符合《证券发行上市保荐业务管理办法》《上海证券交易所股票",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 3,
+          "page_text_offset": 80,
+          "snippet": "（二）本次上市流通日期为2026 年9月21 日",
+          "field_role_verified": false
+        }
+      ],
+      "fresh_original_PDF_received": true,
+      "complete_native_text_read": true,
+      "manual_fulltext_review_performed": false,
+      "unknown_fields": [
+        "actual_listing_date",
+        "released_shares",
+        "actual_circulating_shares",
+        "share_unit",
+        "holder_restrictions",
+        "latest_revision_chain",
+        "market_denominator"
+      ],
+      "qualification_or_tradability_claimed": false,
+      "PDF_or_fulltext_file_saved": false
+    },
+    {
+      "symbol": "603091",
+      "announcement_id": "1225562953",
+      "metadata_record_sha256": "c28bca0efe99e76d1979d023c76dc751091b40b761c46f91e51619f6af8884c6",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-15/1225562953.PDF",
+      "published_at": "2026-09-15",
+      "time_precision": "date",
+      "status": "FULL_NATIVE_SOURCE_READ_FIELD_REVIEW_PENDING",
+      "HTTP_attempts": 1,
+      "http_status": 200,
+      "PDF_bytes": 105552,
+      "PDF_sha256": "7a123ed9e3c0a061030e08ee6d6f6079a17d9a8179a7d44460db37afa8cf90a8",
+      "text_sha256": "6066ec7cfe1cd3be9f579741bfc27d84323969782975d23b2068517b7abcf8bc",
+      "text_recipe": "exact pdfplumber extract_text(layout=False) per physical page; join @@SOURCE_PAGE:n@@ markers, no trimming",
+      "physical_pages": 3,
+      "page_proof": [
+        {
+          "physical_page": 1,
+          "native_characters": 822,
+          "native_text_sha256": "691d60e41349b623001bff3229ade55bf71f7fcd31cd84c19cb5e32f2ac9ab74",
+          "short_first_native_line": "证券代码：603091 证券简称：众鑫股份 公告编号：2026-060"
+        },
+        {
+          "physical_page": 2,
+          "native_characters": 841,
+          "native_text_sha256": "e4d0f9fcfd2c9405bc94c902f20addf902dad56d0de9f5f56850436dc95f78df",
+          "short_first_native_line": "股东每10股转增4股，公司股本由102,238,793股变更为143,134,310股，上述战略"
+        },
+        {
+          "physical_page": 3,
+          "native_characters": 524,
+          "native_text_sha256": "7fc1d5afc9461d1da99db81e53e3030ab29966dd492114de510c043d6cfcde9d",
+          "short_first_native_line": "（四）限售股上市流通情况表："
+        }
+      ],
+      "short_locator_hints": [
+        {
+          "physical_page": 1,
+          "page_text_offset": 233,
+          "snippet": " 本次股票上市流通日期为2026 年 9月 21 日（因 2026 年 9 月 20 日为非交",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 474,
+          "snippet": "证券交易所主板上市交易。公司首次公开发行股票完成后，总股本为102,238,793",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 516,
+          "snippet": "股，其中有限售条件流通股82,201,560股，占公司总股本的80.40%，无限售条件流",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 561,
+          "snippet": "通股20,037,233股，占公司总股本的19.60%。",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 623,
+          "snippet": "930,653股（含资本公积转增股本数量），占公司总股本的比例为0.65%。前述股份",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 0,
+          "snippet": "股东每10股转增4股，公司股本由102,238,793股变更为143,134,310股，上述战略",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 49,
+          "snippet": "限售股同比例由664,752股变更为930,653股。具体内容详见公司于2026年6月25日",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 206,
+          "snippet": "三、本次上市流通的限售股的有关承诺",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 259,
+          "snippet": "上市招股说明书》，本次上市流通的首次公开发行部分战略配售限售股的股东承诺",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 334,
+          "snippet": "限合伙）承诺：",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 436,
+          "snippet": "除上述承诺外，本次申请上市流通的限售股股东无其他特别承诺。截至本公告",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 471,
+          "snippet": "披露日，上述股东在限售期内严格遵守了上述承诺，不存在未履行相关承诺而影响",
+          "field_role_verified": false
+        }
+      ],
+      "fresh_original_PDF_received": true,
+      "complete_native_text_read": true,
+      "manual_fulltext_review_performed": false,
+      "unknown_fields": [
+        "actual_listing_date",
+        "released_shares",
+        "actual_circulating_shares",
+        "share_unit",
+        "holder_restrictions",
+        "latest_revision_chain",
+        "market_denominator"
+      ],
+      "qualification_or_tradability_claimed": false,
+      "PDF_or_fulltext_file_saved": false
+    },
+    {
+      "symbol": "603270",
+      "announcement_id": "1225563256",
+      "metadata_record_sha256": "2ebd031d7b426b5b7eef4104f55793dd22a12a6243956781035a034101bb265d",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-15/1225563256.PDF",
+      "published_at": "2026-09-15",
+      "time_precision": "date",
+      "status": "FULL_NATIVE_SOURCE_READ_FIELD_REVIEW_PENDING",
+      "HTTP_attempts": 1,
+      "http_status": 200,
+      "PDF_bytes": 145934,
+      "PDF_sha256": "e4fc6fc90d78e9928f77ae7a1c305b46d4eac479f83a2c3f9f07633e6901645f",
+      "text_sha256": "bea7f7ffe7f962a8f4e596ed6569aefbcd103aeb02fbd779cf718f0e1afd7f3e",
+      "text_recipe": "exact pdfplumber extract_text(layout=False) per physical page; join @@SOURCE_PAGE:n@@ markers, no trimming",
+      "physical_pages": 4,
+      "page_proof": [
+        {
+          "physical_page": 1,
+          "native_characters": 772,
+          "native_text_sha256": "c22e823c66dc55245060a86402782677457131f8a355e54f6a6ce8df0e7314df",
+          "short_first_native_line": "证券代码：603270 证券简称：金帝股份 公告编号：2026-094"
+        },
+        {
+          "physical_page": 2,
+          "native_characters": 835,
+          "native_text_sha256": "8d66fd5dbe8cfd5a9e7d1c27418146865ee31120c58a9a37774be7ffadeaf701",
+          "short_first_native_line": "金源基金持有公司股份数量为33,000,000 股，占发行后总股本的 15.06%，各"
+        },
+        {
+          "physical_page": 3,
+          "native_characters": 764,
+          "native_text_sha256": "ea4a4d4b3623f0dcfd740ecf8eee215938a88d37783c9318b8b0d0ee73b65ee7",
+          "short_first_native_line": "业持有的公司首次公开发行股票前已发行的股份，也不由公司回购该部分股份，"
+        },
+        {
+          "physical_page": 4,
+          "native_characters": 542,
+          "native_text_sha256": "569a7b0b18de98bf9dc4713110a564eb6941e183df4603359c2864e85a92f05a",
+          "short_first_native_line": "单位：股"
+        }
+      ],
+      "short_locator_hints": [
+        {
+          "physical_page": 1,
+          "page_text_offset": 92,
+          "snippet": "自愿承诺延长部分股票锁定期的公告",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 254,
+          "snippet": "本次股票上市流通日期为2026 年9月18 日。",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 464,
+          "snippet": "日在上海证券交易所主板上市交易。首次公开发行股票完成后公司总股本为",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 548,
+          "snippet": "后总股本的比例为 77.62%；无流通限制及限售安排的股份数量 49,039,523 股，占",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 595,
+          "snippet": "发行后总股本的比例为 22.38%。",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 684,
+          "snippet": "33,000,000 股，占发行后总股本的 15.06%，该部分限售股将于 2026 年 9 月 18 日",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 745,
+          "snippet": "二、金源基金部分有限合伙人自愿承诺延长锁定期的相关情况",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 0,
+          "snippet": "金源基金持有公司股份数量为33,000,000 股，占发行后总股本的 15.06%，各",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 317,
+          "snippet": "愿承诺将通过金源基金间接持有的公司首发前原锁定到期日为 2026 年 8 月 31 日",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 540,
+          "snippet": "不会通过违反减持承诺获得任何投资收益。",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 560,
+          "snippet": "若本企业违反相关承诺减持公司股份的，则由此所得收益归公司所有，且承",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 727,
+          "snippet": "四、本次限售股上市流通的有关承诺",
+          "field_role_verified": false
+        }
+      ],
+      "fresh_original_PDF_received": true,
+      "complete_native_text_read": true,
+      "manual_fulltext_review_performed": false,
+      "unknown_fields": [
+        "actual_listing_date",
+        "released_shares",
+        "actual_circulating_shares",
+        "share_unit",
+        "holder_restrictions",
+        "latest_revision_chain",
+        "market_denominator"
+      ],
+      "qualification_or_tradability_claimed": false,
+      "PDF_or_fulltext_file_saved": false
+    },
+    {
+      "symbol": "600428",
+      "announcement_id": "1225565501",
+      "metadata_record_sha256": "b95ac41cc0b989b23f49918125e87002cd975dd68b1037929a26c2e5922ca983",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-16/1225565501.PDF",
+      "published_at": "2026-09-16",
+      "time_precision": "date",
+      "status": "FULL_NATIVE_SOURCE_READ_FIELD_REVIEW_PENDING",
+      "HTTP_attempts": 1,
+      "http_status": 200,
+      "PDF_bytes": 117676,
+      "PDF_sha256": "1c147834acec719f3aec3e2ef4becb93aafcc6d5b53068f4da73cb5d1d043a54",
+      "text_sha256": "44ee2ee874a8ffd33738ce7fc1eba2cfb7a55bcafe2e372f7ed121ed98eb6d2c",
+      "text_recipe": "exact pdfplumber extract_text(layout=False) per physical page; join @@SOURCE_PAGE:n@@ markers, no trimming",
+      "physical_pages": 3,
+      "page_proof": [
+        {
+          "physical_page": 1,
+          "native_characters": 627,
+          "native_text_sha256": "fd0f2fca257940cc7ddec0d7416d03ee904128724344adb6c90afe06cb8b49bf",
+          "short_first_native_line": "证券代码：600428 证券简称：中远海特 公告编号：2026-036"
+        },
+        {
+          "physical_page": 2,
+          "native_characters": 612,
+          "native_text_sha256": "7ca1e3939e7362b1cfb2f5c011f97dd96dd53f9ce8b7f026a2ccc92aa827f85a",
+          "short_first_native_line": "接控股股东中国远洋海运集团有限公司认购股份，合计"
+        },
+        {
+          "physical_page": 3,
+          "native_characters": 503,
+          "native_text_sha256": "6b2c8d9d6b678d0875abf49814e8bd8dcfb38d95cecf9fa2d15a7e3940841b21",
+          "short_first_native_line": "通事项无异议。"
+        }
+      ],
+      "short_locator_hints": [
+        {
+          "physical_page": 1,
+          "page_text_offset": 224,
+          "snippet": " 本次股票上市流通日期为2026 年 9 月 21 日。",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 25,
+          "snippet": "298,634,812 股，上市流通日期为 2026 年 9 月 21 日。",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 167,
+          "snippet": "三、本次限售股上市流通的有关承诺",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 211,
+          "snippet": "国远洋海运集团有限公司承诺其所认购的股份自发行结束之日起",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 271,
+          "snippet": "格遵守认购股份相关锁定期限承诺，不存在相关承诺未履行影响",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 409,
+          "snippet": "中远海特本次限售股份上市流通的解除限售数量、上市流通",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 495,
+          "snippet": "的要求；本次解除限售股份股东严格履行了其在向特定对象发行",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 524,
+          "snippet": "股票中做出的股份锁定承诺；截至本公告披露日，中远海特关于本",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 584,
+          "snippet": "券对中远海特本次向特定对象发行股票限售股份解除限售上市流",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 3,
+          "page_text_offset": 54,
+          "snippet": "（二）本次上市流通日期为 2026 年 9 月 21 日。",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 3,
+          "page_text_offset": 130,
+          "snippet": "号 名称 量（股） 司总股本比例 通数量 股数量",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 3,
+          "page_text_offset": 259,
+          "snippet": "序号 限售股类型 本次上市流通数量（股）",
+          "field_role_verified": false
+        }
+      ],
+      "fresh_original_PDF_received": true,
+      "complete_native_text_read": true,
+      "manual_fulltext_review_performed": false,
+      "unknown_fields": [
+        "actual_listing_date",
+        "released_shares",
+        "actual_circulating_shares",
+        "share_unit",
+        "holder_restrictions",
+        "latest_revision_chain",
+        "market_denominator"
+      ],
+      "qualification_or_tradability_claimed": false,
+      "PDF_or_fulltext_file_saved": false
+    },
+    {
+      "symbol": "603418",
+      "announcement_id": "1225568136",
+      "metadata_record_sha256": "27d9860ac9d9e7095b75118f92efcad5d17302226444c3e0ccde08818c1deeef",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-17/1225568136.PDF",
+      "published_at": "2026-09-17",
+      "time_precision": "date",
+      "status": "FULL_NATIVE_SOURCE_READ_FIELD_REVIEW_PENDING",
+      "HTTP_attempts": 1,
+      "http_status": 200,
+      "PDF_bytes": 131435,
+      "PDF_sha256": "01275c8aaf69172bf36e9e1c2d6548b59cd9753fa304adf6bae33f003484e831",
+      "text_sha256": "930090eb53ffe9a4799c3a3074602b3771a2ba509d595af1af14b62b61009eaa",
+      "text_recipe": "exact pdfplumber extract_text(layout=False) per physical page; join @@SOURCE_PAGE:n@@ markers, no trimming",
+      "physical_pages": 10,
+      "page_proof": [
+        {
+          "physical_page": 1,
+          "native_characters": 798,
+          "native_text_sha256": "a8f47ec5e0535926fb654e29f5e499be689baba73c4818f53d63c583b52c285a",
+          "short_first_native_line": "证券代码：603418 证券简称：友升股份 公告编号：2026-031"
+        },
+        {
+          "physical_page": 2,
+          "native_characters": 844,
+          "native_text_sha256": "32843d5ea20f12dd04f5b82f91f265730ef0964e27d9fe2cfa0b9816878c1cef",
+          "short_first_native_line": "发战略配售限售股，股份数量合计 46,683,990 股，占公司当前总股本的比例为"
+        },
+        {
+          "physical_page": 3,
+          "native_characters": 956,
+          "native_text_sha256": "2c3703fc51c60fb46c6ac821799e098e3f6892320def0155e420c08a293d115a",
+          "short_first_native_line": "审慎制定股票减持计划。"
+        },
+        {
+          "physical_page": 4,
+          "native_characters": 951,
+          "native_text_sha256": "e5c2468414725bdb11c37a57a9b348f0eee8478ccb4b4069a999b83af4795458",
+          "short_first_native_line": "审慎制定股票减持计划。"
+        },
+        {
+          "physical_page": 5,
+          "native_characters": 965,
+          "native_text_sha256": "24df90522d7bb5d1b2230fcc00d9c7eff099cc3013106e41cbdc8a38dfd20526",
+          "short_first_native_line": "3、本企业减持发行人股票时，依照《公司法》《证券法》、中国证券监督管"
+        },
+        {
+          "physical_page": 6,
+          "native_characters": 839,
+          "native_text_sha256": "acf1a94e51bc098ff695a3dae6d89acd2df4bcdaa8446399136b10cb0bb2a7dc",
+          "short_first_native_line": "的股份。"
+        },
+        {
+          "physical_page": 7,
+          "native_characters": 810,
+          "native_text_sha256": "715aaf5009c4f0e3e1f3bd261e1b05a682bf6cba48ec0a81bde6837187c6b44b",
+          "short_first_native_line": "（二）持股及减持意向的承诺"
+        },
+        {
+          "physical_page": 8,
+          "native_characters": 856,
+          "native_text_sha256": "849d5cf0524d047eef95213f5fd28309d491772526974bfb9ea4a69f524207e4",
+          "short_first_native_line": "四、中介机构核查意见"
+        },
+        {
+          "physical_page": 9,
+          "native_characters": 747,
+          "native_text_sha256": "118b774b8704881478f9e6e2df6063f812d9b89e7846dc2a4aa759b1d8e35221",
+          "short_first_native_line": "有限公司－深圳市达晨创程私"
+        },
+        {
+          "physical_page": 10,
+          "native_characters": 193,
+          "native_text_sha256": "8dd3dc3022cdee4913580fe3aa2d6689bf85745b7e46ac434fcdc87f8714a971",
+          "short_first_native_line": "六、股本变动结构表"
+        }
+      ],
+      "short_locator_hints": [
+        {
+          "physical_page": 1,
+          "page_text_offset": 225,
+          "snippet": " 本次股票上市流通日期为2026 年9月23 日。",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 425,
+          "snippet": "易所主板上市，发行完成后总股本为 193,068,444 股，其中有限售条件流通股",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 467,
+          "snippet": "152,646,034 股，无限售条件流通股40,422,410 股。",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 629,
+          "snippet": "配售限售股上市流通公告》（2026-002）。前述股份上市流通后，公司总股本为",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 669,
+          "snippet": "193,068,444 股，其中有限售条件流通股151,703,832 股，占公司总股本的比例为",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 718,
+          "snippet": "78.58%；无限售条件流通股 41,364,612 股，占公司总股本的比例为21.42%。",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 0,
+          "snippet": "发战略配售限售股，股份数量合计 46,683,990 股，占公司当前总股本的比例为",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 279,
+          "snippet": "三、本次限售股上市流通的有关承诺",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 403,
+          "snippet": "市流通做出的有关承诺如下：",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 417,
+          "snippet": "深圳市达晨创联私募股权投资基金合伙企业（有限合伙）承诺：",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 446,
+          "snippet": "（一）关于所持股份的限售安排、自愿锁定股份、延长锁定期限的承诺",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 687,
+          "snippet": "3、本企业将忠实履行承诺，如本企业违反上述承诺或法律强制性规定减持股",
+          "field_role_verified": false
+        }
+      ],
+      "fresh_original_PDF_received": true,
+      "complete_native_text_read": true,
+      "manual_fulltext_review_performed": false,
+      "unknown_fields": [
+        "actual_listing_date",
+        "released_shares",
+        "actual_circulating_shares",
+        "share_unit",
+        "holder_restrictions",
+        "latest_revision_chain",
+        "market_denominator"
+      ],
+      "qualification_or_tradability_claimed": false,
+      "PDF_or_fulltext_file_saved": false
+    },
+    {
+      "symbol": "688387",
+      "announcement_id": "1225568400",
+      "metadata_record_sha256": "0e45ad14f205b504fccd922cce3e8a848e5ecefb8e63422da34f9930f52c26bd",
+      "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-09-17/1225568400.PDF",
+      "published_at": "2026-09-17",
+      "time_precision": "date",
+      "status": "FULL_NATIVE_SOURCE_READ_FIELD_REVIEW_PENDING",
+      "HTTP_attempts": 1,
+      "http_status": 200,
+      "PDF_bytes": 116159,
+      "PDF_sha256": "07196ce40be1ecee7db97bfa5a1e8b4d2d2fa940fd1a69c5b323faf7fca07211",
+      "text_sha256": "97eaa687f34ccd443ccab11fa650c412b0e66f95f7843fa1b044d5c6878409a2",
+      "text_recipe": "exact pdfplumber extract_text(layout=False) per physical page; join @@SOURCE_PAGE:n@@ markers, no trimming",
+      "physical_pages": 5,
+      "page_proof": [
+        {
+          "physical_page": 1,
+          "native_characters": 805,
+          "native_text_sha256": "2d0b39ef9a5a795525c019080e0d32eaefccdb2c1e49ea0a7ed15a720013f5b6",
+          "short_first_native_line": "证券代码：688387 证券简称：信科移动 公告编号：2026-039"
+        },
+        {
+          "physical_page": 2,
+          "native_characters": 896,
+          "native_text_sha256": "427e61988bc71c1f4d57981dde28400ebd0909992b1d281cf7104e7e71ed5ada",
+          "short_first_native_line": "公司首次公开发行部分限售股涉及股东数量1名，对应股份数量为1,401,972,800"
+        },
+        {
+          "physical_page": 3,
+          "native_characters": 970,
+          "native_text_sha256": "ee33accb2ccfb45a45a5a9c3ee5a95f6f56369eb54c47c19defe6bc960d9ec98",
+          "short_first_native_line": "5、如本公司违反上述承诺或法律强制性规定减持发行人股份的，本公司承诺"
+        },
+        {
+          "physical_page": 4,
+          "native_characters": 724,
+          "native_text_sha256": "6e014966d23fb6ee3f171d582f9f8bf69bedad0eed33cc5f2bd78b3a450c46c7",
+          "short_first_native_line": "锁定期届满后，本公司拟减持发行人股份的，应按照相关法律法规及上海证"
+        },
+        {
+          "physical_page": 5,
+          "native_characters": 280,
+          "native_text_sha256": "cf142e6f2fdc0405e22231e80ee3d4de7201aca5d356b434720d371cafda46ac",
+          "short_first_native_line": "持有限售股占 剩余限售"
+        }
+      ],
+      "short_locator_hints": [
+        {
+          "physical_page": 1,
+          "page_text_offset": 223,
+          "snippet": " 本次股票上市流通日期为2026年9月28日（因2026年9月26日为非交易日，",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 616,
+          "snippet": "公司首次公开发行人民币普通股（A股）后总股本为3,418,750,000 股，其中",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 658,
+          "snippet": "无限售条件流通股 562,600,742 股，有限售条件流通股 2,856,149,258 股。超额",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 1,
+          "page_text_offset": 709,
+          "snippet": "配售选择权行使期结束后，无限售条件流通股为 460,038,242 股，有限售条件流",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 199,
+          "snippet": "三、本次上市流通的限售股的有关承诺",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 287,
+          "snippet": "信息通信科技集团有限公司关于其所持有的限售股上市流通所作承诺如下：",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 321,
+          "snippet": "（一）关于股份锁定的承诺",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 2,
+          "page_text_offset": 654,
+          "snippet": "二项承诺所述的减持限制。",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 3,
+          "page_text_offset": 0,
+          "snippet": "5、如本公司违反上述承诺或法律强制性规定减持发行人股份的，本公司承诺",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 3,
+          "page_text_offset": 169,
+          "snippet": "公开发行股票价格 6.05 元/股的情形，触发上述承诺的履行条件。依照关于股份",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 3,
+          "page_text_offset": 209,
+          "snippet": "锁定等相关承诺，公司控股股东持有的公司股份在原锁定期基础上自动延长 6 个",
+          "field_role_verified": false
+        },
+        {
+          "physical_page": 3,
+          "page_text_offset": 488,
+          "snippet": "大投资者利益，公司控股股东承诺，将自愿延长其所持信科移动首次公开发行 A",
+          "field_role_verified": false
+        }
+      ],
+      "fresh_original_PDF_received": true,
+      "complete_native_text_read": true,
+      "manual_fulltext_review_performed": false,
+      "unknown_fields": [
+        "actual_listing_date",
+        "released_shares",
+        "actual_circulating_shares",
+        "share_unit",
+        "holder_restrictions",
+        "latest_revision_chain",
+        "market_denominator"
+      ],
+      "qualification_or_tradability_claimed": false,
+      "PDF_or_fulltext_file_saved": false
+    }
+  ],
+  "failed_source": null,
+  "HTTP_attempts": 6,
+  "unattempted_sources": 0,
+  "PDF_or_fulltext_file_saved": false,
+  "new_contexts": 0,
+  "official_calls": 0,
+  "prices_values_or_labels_read": false,
+  "manual_field_review": "PENDING",
+  "completed_at_utc": "2026-10-11T16:47:40.424930+00:00"
+}

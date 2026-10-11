@@ -1,0 +1,286 @@
+{
+  "status": "COMPLETE_FIXED_EVENT_DIAGNOSTIC",
+  "events": [
+    {
+      "symbol": "603089",
+      "announcement_id": "1225562895",
+      "formation_day": "2026-09-16",
+      "announced_listing_day": "2026-09-21",
+      "notice_planned_shares_after_explicit_continued_locks": 35685963,
+      "notice_current_A_capital_shares": 275719231,
+      "raw_supply_ratio": 0.12942863241918734,
+      "actual_sales_known": false,
+      "event_path": {
+        "status": "complete",
+        "entry_date": "2026-09-17",
+        "exit_date": "2026-09-23",
+        "held_sessions": 5,
+        "information_return": 0.05735930735930728,
+        "next_open_gross_return": 0.05053763440860193,
+        "round_trip_cost_proxy": {
+          "0.003": 0.0442532617202156,
+          "0.005": 0.040084523618466816
+        }
+      },
+      "fixed_reference_count": 20,
+      "missing_reference_peers": [],
+      "reference_status": "complete",
+      "reference_information_return": -0.009003245073057215,
+      "reference_next_open_gross_return": -0.008572174152267936,
+      "relative_information_return": 0.0663625524323645
+    },
+    {
+      "symbol": "603091",
+      "announcement_id": "1225562953",
+      "formation_day": "2026-09-16",
+      "announced_listing_day": "2026-09-21",
+      "notice_planned_shares_after_explicit_continued_locks": 930653,
+      "notice_current_A_capital_shares": 143134310,
+      "raw_supply_ratio": 0.006501956099833786,
+      "actual_sales_known": false,
+      "event_path": {
+        "status": "complete",
+        "entry_date": "2026-09-17",
+        "exit_date": "2026-09-23",
+        "held_sessions": 5,
+        "information_return": 0.01165254237288127,
+        "next_open_gross_return": 0.015957446808510634,
+        "round_trip_cost_proxy": {
+          "0.003": 0.009879934664092982,
+          "0.005": 0.00584841748703302
+        }
+      },
+      "fixed_reference_count": 20,
+      "missing_reference_peers": [],
+      "reference_status": "complete",
+      "reference_information_return": -0.009003245073057215,
+      "reference_next_open_gross_return": -0.008572174152267936,
+      "relative_information_return": 0.020655787445938482
+    },
+    {
+      "symbol": "603270",
+      "announcement_id": "1225563256",
+      "formation_day": "2026-09-16",
+      "announced_listing_day": "2026-09-18",
+      "notice_planned_shares_after_explicit_continued_locks": 6930000,
+      "notice_current_A_capital_shares": 219106667,
+      "raw_supply_ratio": 0.03162843054885226,
+      "actual_sales_known": false,
+      "event_path": {
+        "status": "complete",
+        "entry_date": "2026-09-17",
+        "exit_date": "2026-09-23",
+        "held_sessions": 5,
+        "information_return": 0.06255331248222906,
+        "next_open_gross_return": 0.07323377369327955,
+        "round_trip_cost_proxy": {
+          "0.003": 0.06681363147776653,
+          "0.005": 0.06255483067145606
+        }
+      },
+      "fixed_reference_count": 20,
+      "missing_reference_peers": [],
+      "reference_status": "complete",
+      "reference_information_return": -0.009003245073057215,
+      "reference_next_open_gross_return": -0.008572174152267936,
+      "relative_information_return": 0.07155655755528628
+    },
+    {
+      "symbol": "600428",
+      "announcement_id": "1225565501",
+      "formation_day": "2026-09-17",
+      "announced_listing_day": "2026-09-21",
+      "notice_planned_shares_after_explicit_continued_locks": 298634812,
+      "notice_current_A_capital_shares": 2743920395,
+      "raw_supply_ratio": 0.10883508593914584,
+      "actual_sales_known": false,
+      "event_path": {
+        "status": "complete",
+        "entry_date": "2026-09-18",
+        "exit_date": "2026-09-24",
+        "held_sessions": 5,
+        "information_return": -0.003603603603603567,
+        "next_open_gross_return": -0.0018050541516244634,
+        "round_trip_cost_proxy": {
+          "0.003": -0.007776310058992486,
+          "0.005": -0.011737342170016207
+        }
+      },
+      "fixed_reference_count": 20,
+      "missing_reference_peers": [],
+      "reference_status": "complete",
+      "reference_information_return": -0.006820279565559956,
+      "reference_next_open_gross_return": -0.005162008657806622,
+      "relative_information_return": 0.003216675961956389
+    },
+    {
+      "symbol": "603418",
+      "announcement_id": "1225568136",
+      "formation_day": "2026-09-18",
+      "announced_listing_day": "2026-09-23",
+      "notice_planned_shares_after_explicit_continued_locks": 46683990,
+      "notice_current_A_capital_shares": 193068444,
+      "raw_supply_ratio": 0.24180020842763927,
+      "actual_sales_known": false,
+      "event_path": {
+        "status": "complete",
+        "entry_date": "2026-09-21",
+        "exit_date": "2026-09-28",
+        "held_sessions": 5,
+        "information_return": 0.06534090909090917,
+        "next_open_gross_return": 0.06047422231890365,
+        "round_trip_cost_proxy": {
+          "0.003": 0.054130408426667165,
+          "0.005": 0.04992224000727297
+        }
+      },
+      "fixed_reference_count": 20,
+      "missing_reference_peers": [],
+      "reference_status": "complete",
+      "reference_information_return": -0.002596967326023503,
+      "reference_next_open_gross_return": -0.00254246389786828,
+      "relative_information_return": 0.06793787641693268
+    },
+    {
+      "symbol": "600548",
+      "announcement_id": "1225575337",
+      "formation_day": "2026-09-23",
+      "announced_listing_day": "2026-09-28",
+      "notice_planned_shares_after_explicit_continued_locks": 75930144,
+      "notice_current_A_capital_shares": 1790356127,
+      "raw_supply_ratio": 0.04241063711007704,
+      "actual_sales_known": false,
+      "event_path": {
+        "status": "complete",
+        "entry_date": "2026-09-24",
+        "exit_date": "2026-10-08",
+        "held_sessions": 5,
+        "information_return": 0.014925373134328401,
+        "next_open_gross_return": 0.013664596273291751,
+        "round_trip_cost_proxy": {
+          "0.003": 0.007600800084219372,
+          "0.005": 0.003578381385000551
+        }
+      },
+      "fixed_reference_count": 20,
+      "missing_reference_peers": [],
+      "reference_status": "complete",
+      "reference_information_return": 0.02721426836815925,
+      "reference_next_open_gross_return": 0.026659237547551118,
+      "relative_information_return": -0.012288895233830848
+    },
+    {
+      "symbol": "603459",
+      "announcement_id": "1225575321",
+      "formation_day": "2026-09-23",
+      "announced_listing_day": "2026-10-08",
+      "notice_planned_shares_after_explicit_continued_locks": 2813681,
+      "notice_current_A_capital_shares": 753753588,
+      "raw_supply_ratio": 0.0037328923467758006,
+      "actual_sales_known": false,
+      "event_path": {
+        "status": "complete",
+        "entry_date": "2026-09-24",
+        "exit_date": "2026-10-08",
+        "held_sessions": 5,
+        "information_return": -0.15397612074791622,
+        "next_open_gross_return": -0.14744608399545966,
+        "round_trip_cost_proxy": {
+          "0.003": -0.15254610742120955,
+          "0.005": -0.15592920753779327
+        }
+      },
+      "fixed_reference_count": 20,
+      "missing_reference_peers": [],
+      "reference_status": "complete",
+      "reference_information_return": 0.02721426836815925,
+      "reference_next_open_gross_return": 0.026659237547551118,
+      "relative_information_return": -0.18119038911607546
+    }
+  ],
+  "planned_event_count": 7,
+  "complete_event_paths": 7,
+  "complete_matched_references": 7,
+  "formation_clusters": 4,
+  "source_limited_preliminary": true,
+  "annual_Sharpe": null,
+  "ICIR": null,
+  "portfolio_compound_return": null,
+  "eligible_for_review": false,
+  "scope": "Sparse event paths and overlapping fixed five-session labels; no portfolio NAV, realized fills or significance claim",
+  "direction_aligned_event_RankIC": -0.4642857142857144,
+  "fixed_median_groups": {
+    "lower_supply": {
+      "count": 4,
+      "mean_relative_information_return": -0.025316734837170386,
+      "mean_per_event_cost_proxy": {
+        "0.003": -0.017062935298782667,
+        "0.005": -0.02098689449857591
+      },
+      "not_portfolio_return": true
+    },
+    "higher_supply": {
+      "count": 3,
+      "mean_relative_information_return": 0.04583903493708452,
+      "mean_per_event_cost_proxy": {
+        "0.003": 0.030202453362630093,
+        "0.005": 0.026089807151907857
+      },
+      "not_portfolio_return": true
+    }
+  },
+  "quote_subset_sha256": "edfaf515bf8dbcf7b2053fc945817d7c58a630290bd9a6af7064befaba8988ef",
+  "price_source_review": {
+    "profile": "stockdb",
+    "adjustment": "same-source qfq",
+    "positive_bar_contract": "Existing accepted StockDB/AXIS provider; fills, price limits and contemporaneous executable liquidity not certified",
+    "rows": 297,
+    "duplicates": 0,
+    "invalid_rows": 0,
+    "known_suspended_rows": 0,
+    "missing_by_code": {
+      "600000": [],
+      "600004": [],
+      "600006": [],
+      "600007": [],
+      "600008": [],
+      "600009": [],
+      "600010": [],
+      "600011": [],
+      "600012": [],
+      "600015": [],
+      "600016": [],
+      "600017": [],
+      "600018": [],
+      "600019": [],
+      "600020": [],
+      "600021": [],
+      "600022": [],
+      "600023": [],
+      "600025": [],
+      "600026": [],
+      "600428": [],
+      "600548": [],
+      "603089": [],
+      "603091": [],
+      "603270": [],
+      "603418": [],
+      "603459": []
+    }
+  },
+  "protocol_sha256": "d270b7a953584682ff3afbb2d688cbf7288306cfa8384bcc1ce5a53f2238df98",
+  "registration_key": "a9f11264972ca9b8ab84e597ac243f778784ca0be2af6b9421f5228de8a03f03",
+  "registry_total": 492,
+  "completed_at_utc": "2026-10-11T17:04:07.185306+00:00",
+  "official_calls": 0,
+  "new_registered_contexts": 1,
+  "original_source_files_or_market_store_changed": false,
+  "source_limits": [
+    "Seven source-order events, four overlapping formation clusters; descriptive only",
+    "Single-source/keyword and latest revision chains not fully certified",
+    "Fixed20-board references are code-selected and bank-heavy, not industry/size neutral or market index",
+    "Amounts measure declared listing supply, not actual sales; two source-unknown events excluded before outcomes",
+    "Accepted positive opening/closing bars and fee proxy do not certify fills, price limits or executable capacity",
+    "No annual Sharpe, ICIR, formal admission or actual pool score inferred from sparse event labels"
+  ]
+}
