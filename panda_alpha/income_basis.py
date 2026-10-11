@@ -150,16 +150,35 @@ def _income_column_header(header: str, period: str) -> str:
              if not (re.fullmatch(r"[^\n]{0,100}20\d{2}\s*年?\s*年度报告(?:全文)?", line.strip())
                      and len(re.findall(r"20\d{2}", line)) == 1
                      and "项目" not in line)]
-    captions = []
+    captions, annual_captions = [], []
     for index, line in enumerate(lines):
+        annual = re.fullmatch(r"(20\d{2})\s*年\s*度", line.strip())
+        if annual:
+            if annual[1] != period[:4] or not period.endswith("-12-31"):
+                raise ValueError("income_period_caption_conflicts_with_columns")
+            captions.append(index)
+            annual_captions.append(index)
+            continue
         hit = re.fullmatch(r"(20\d{2})\s*年?\s*(\d{1,2})\s*[-－—~至]\s*(\d{1,2})\s*月", line.strip())
         if hit:
             if (hit[1], int(hit[2]), int(hit[3])) != (period[:4], 1, 12):
                 raise ValueError("income_period_caption_conflicts_with_columns")
             captions.append(index)
     column_lines = [(index, line) for index, line in enumerate(lines) if "项目" in line]
-    # A reporting-period caption is removable only before one complete pair of
-    # explicit FY columns. Split/extra/contradictory columns stay pending.
+    if annual_captions:
+        # flow_spans intentionally recognises named fiscal spans. Bare extra
+        # year tokens are nevertheless unknown columns, not safe omissions.
+        if (len(captions) != 1 or len(column_lines) != 1
+                or captions[0] >= column_lines[0][0]
+                or re.findall(r"20\d{2}", column_lines[0][1]) != [period[:4], str(int(period[:4]) - 1)]
+                or any(re.search(r"20\d{2}", line) for index, line in enumerate(lines)
+                       if index not in {captions[0], column_lines[0][0]})
+                or any(re.fullmatch(r"[^\n]{0,100}20\d{2}\s*年?\s*年度报告(?:全文)?", line.strip())
+                       and re.findall(r"20\d{2}", line) != [period[:4]] for line in header.splitlines())):
+            raise ValueError("income_annual_caption_extra_or_ambiguous_year_pending")
+    # A standalone FY/1--12 caption is removable only before one independently
+    # complete project row. It cannot supply or reorder either annual column.
+    # The unchanged original header still binds the source text and row offsets.
     if (len(captions) == 1 and len(column_lines) == 1
             and captions[0] < column_lines[0][0]
             and flow_spans(column_lines[0][1], period)["comparative_status"] == "explicit_prior_same_span"):

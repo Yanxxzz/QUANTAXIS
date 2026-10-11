@@ -263,6 +263,70 @@ def test_600010_600018_matching_period_caption_is_not_a_third_fiscal_column(head
 
 
 @pytest.mark.parametrize("header", [
+    "\n2025 年度 \n \n编制单位：深圳市新城市规划建筑设计股份有限公司 单位：人民币元\n项目 附注 2025 年度 2024 年度 \n",
+    "\n编制单位：安克创新科技股份有限公司\n2025 年度\n单位：元\n项目 附注 2025 年度 2024 年度\n",
+])
+def test_real_300778_300866_standalone_annual_caption_keeps_complete_column_pair(header):
+    # Retained1225251030/1225090973 original header forms. Only column
+    # interpretation changes; the complete original header remains source-bound.
+    args = list(pair(NO_EFFECT))
+    replace_source_header(args, header)
+    fields = _income_fields(args[0], args[2], "2025-12-31")
+    assert fields["operating_revenue"]["evidence"]["actual_table_header"] == header
+    assert fields["operating_cost"]["comparative"].is_finite()
+    assert resolve(args)["status"] == "income_fields_resolved"
+
+
+@pytest.mark.parametrize("header", [
+    "\n2024 年度\n单位：元\n项目 2025 年度 2024 年度\n",
+    "\n2025 年度\n2025 年度\n单位：元\n项目 2025 年度 2024 年度\n",
+    "\n2025 年度\n2025 年 1—12 月\n单位：元\n项目 2025 年度 2024 年度\n",
+    "\n2025 年度\n单位：元\n项目 本期金额 上期金额\n",
+    "\n2025 年度\n单位：元\n项目 2024 年度 2025 年度\n",
+    "\n2025 年度\n单位：元\n项目 2025 年度 2023 年度\n",
+    "\n2025 年度\n单位：元\n项目 2025 年度 2024 年度 2023 年度\n",
+    "\n2025 年度\n单位：元\n项目 2025 年度 2024 年度 2023\n",
+    "\n2025 年度\n2026 年\n单位：元\n项目 2025 年度 2024 年度\n",
+    "\n2025 年度\n公司2024年年度报告全文\n单位：元\n项目 2025 年度 2024 年度\n",
+    "\n2025 年度\n单位：元\n项目 2025 年度 2024 年度\n项目 2024 年度 2023 年度\n",
+    "\n单位：元\n项目 2025 年度 2024 年度\n2025 年度\n",
+])
+def test_annual_caption_never_supplies_unknown_or_reorders_conflicting_columns(header):
+    args = list(pair(NO_EFFECT))
+    replace_source_header(args, header)
+    assert resolve(args)["status"] == "pending"
+
+
+@pytest.mark.parametrize("bad", ["capture", "header", "offset", "year", "unit", "material"])
+def test_standalone_annual_caption_preserves_existing_source_and_policy_gates(bad):
+    args = list(pair(NO_EFFECT))
+    header = "\n2025 年度\n单位：元\n项目 2025 年度 2024 年度\n"
+    replace_source_header(args, header)
+    if bad == "capture":
+        args[3]["current"]["capture_sha256"] = "0" * 64
+    elif bad == "header":
+        args[0]["fields"]["operating_cost"]["actual_table_header"] = header.replace("单位：元", "单位：元 币种：人民币")
+        rebound(args)
+    elif bad == "offset":
+        args[0]["fields"]["operating_cost"]["source_row_offset"] = 0
+        rebound(args)
+    elif bad == "year":
+        args[0]["fields"]["operating_cost"]["period_evidence"]["comparative_end"] = "2023-12-31"
+        rebound(args)
+    elif bad == "unit":
+        args[0]["fields"]["operating_cost"]["printed_unit"] = "unknown"
+        rebound(args)
+    else:
+        text = args[2].replace("无影响", "无重大影响")
+        raw_text = gzip.compress(text.encode(), mtime=0)
+        args[0]["stock"]["provenance"]["text_sha256"] = digest(raw_text)
+        args[3]["current"]["text_gzip"] = raw_text
+        args[2] = text
+        rebound(args)
+    assert resolve(args)["status"] == "pending"
+
+
+@pytest.mark.parametrize("header", [
     "\n2024 年 1—12 月\n单位：元\n项目 2025 年度 2024 年度\n",
     "\n2025 年 1—6 月\n单位：元\n项目 2025 年度 2024 年度\n",
     "\n2025 年 2—12 月\n单位：元\n项目 2025 年度 2024 年度\n",
