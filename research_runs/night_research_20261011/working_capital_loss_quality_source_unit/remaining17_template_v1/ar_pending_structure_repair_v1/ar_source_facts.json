@@ -1,0 +1,1344 @@
+{
+  "status": "COMPLETED_FOUR_PENDING_AR_SOURCE_FACTS",
+  "protocol_sha256": "ec5229d19e61a1d9bf136b58f3a5101ed80bad101a6ae4746a41aaf6800644c1",
+  "records": [
+    {
+      "source_identity": {
+        "code": "000637",
+        "announcement_id": "1225248741",
+        "report_date": "2025-12-31",
+        "source_record_sha256": "94037bd307358bb6c2d16d7f53490217a0359ac9c3829b7049e19367b6b332cb"
+      },
+      "prior_source17_status": "source_only_stock_template_facts",
+      "prior_AR_pending": [
+        "unique_whole_classification_total_pending"
+      ],
+      "prior_case_pending": [],
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "later_or_ambiguous_version_pending_no_fallback",
+        "latest_rows": [
+          {
+            "announcement_id": "1225460240",
+            "report_date": "2025-12-31",
+            "published_at": "2026-08-06",
+            "edition": "REVISED_FULL_REPORT",
+            "title": "2025年年度报告（更正后）",
+            "pdf_sha256": "1188d9bcac97cc67fa75424b8382acfbb387384b5e3dfeb71f545d1f90fb4791",
+            "text_sha256": "8692826cd1712f14cf20f2f31390a6d4dbae797a460a5abb3b2ceb47bdef96a3"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "known_revision_or_later_report_metadata": [
+        {
+          "announcement_id": "1225460224",
+          "title": "2024年第一季度报告（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460224.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460224&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2024-03-31",
+          "report_dates": [
+            "2024-03-31"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460225",
+          "title": "2023年年度报告（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460225.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460225&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2023-12-31",
+          "report_dates": [
+            "2023-12-31"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460226",
+          "title": "2025年第三季度报告（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460226.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460226&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2025-09-30",
+          "report_dates": [
+            "2025-09-30"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460227",
+          "title": "2024年半年度报告（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460227.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460227&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2024-06-30",
+          "report_dates": [
+            "2024-06-30"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460228",
+          "title": "2025年半年度报告（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460228.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460228&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2025-06-30",
+          "report_dates": [
+            "2025-06-30"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460229",
+          "title": "2023年第三季度报告（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460229.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460229&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2023-09-30",
+          "report_dates": [
+            "2023-09-30"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460230",
+          "title": "2023年第一季度报告（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460230.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460230&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2023-03-31",
+          "report_dates": [
+            "2023-03-31"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460231",
+          "title": "2025年第一季度报告（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460231.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460231&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2025-03-31",
+          "report_dates": [
+            "2025-03-31"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460232",
+          "title": "2024年第三季度报告（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460232.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460232&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2024-09-30",
+          "report_dates": [
+            "2024-09-30"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460233",
+          "title": "2023年半年度报告（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460233.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460233&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2023-06-30",
+          "report_dates": [
+            "2023-06-30"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460234",
+          "title": "2023年年度报告摘要（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460234.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460234&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2023-12-31",
+          "report_dates": [
+            "2023-12-31"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460235",
+          "title": "2025年半年度报告摘要（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460235.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460235&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2025-06-30",
+          "report_dates": [
+            "2025-06-30"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460236",
+          "title": "2024年半年度报告摘要（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460236.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460236&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2024-06-30",
+          "report_dates": [
+            "2024-06-30"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460237",
+          "title": "2025年年度报告摘要（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460237.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460237&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2025-12-31",
+          "report_dates": [
+            "2025-12-31"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460238",
+          "title": "2023年半年度报告摘要（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460238.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460238&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2023-06-30",
+          "report_dates": [
+            "2023-06-30"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460239",
+          "title": "2024年年度报告摘要（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460239.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460239&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2024-12-31",
+          "report_dates": [
+            "2024-12-31"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460240",
+          "title": "2025年年度报告（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460240.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460240&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2025-12-31",
+          "report_dates": [
+            "2025-12-31"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460241",
+          "title": "2024年年度报告（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460241.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460241&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2024-12-31",
+          "report_dates": [
+            "2024-12-31"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460242",
+          "title": "2026年第一季度报告（更正后）",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460242.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460242&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": "2026-03-31",
+          "report_dates": [
+            "2026-03-31"
+          ],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        },
+        {
+          "announcement_id": "1225460245",
+          "title": "关于前期会计差错更正的公告",
+          "published_at": "2026-08-06",
+          "pdf_url": "https://static.cninfo.com.cn/finalpage/2026-08-06/1225460245.PDF",
+          "detail_url": "https://www.cninfo.com.cn/new/disclosure/detail?stockCode=000637&announcementId=1225460245&orgId=gssz0000637&announcementTime=2026-08-06",
+          "report_date": null,
+          "report_dates": [],
+          "metadata_source": "historical_correction_metadata",
+          "body_scope_status": "not_consumed_pending",
+          "availability_status": "metadata_publication_not_source_clearance"
+        }
+      ],
+      "source_policy_estimate_scope_version_qualification": "not_reviewed_pending",
+      "source_qualified": false,
+      "original_metadata_flags": [],
+      "status": "source_only_pending_AR_structure_repair_facts",
+      "report": {
+        "year": 2025,
+        "annual_title": {
+          "start": 62,
+          "end": 72,
+          "source_page": 1,
+          "span_sha256": "c9b273b8c0fd3cee83b6b7b928ee4829e2f8132c5726b84c000b87fb385705cc"
+        },
+        "annual_fiscal_policy": {
+          "start": 95686,
+          "end": 95721,
+          "source_page": 117,
+          "span_sha256": "3d2c9c052332ea056fe3d097fcbb9e901395d3e2d0db2df50cc20bda0d30a92e"
+        },
+        "annual_calendar_status": "literal_policy_bound",
+        "presentation_CNY": null,
+        "date_method": "annual_FY_closing_and_fiscal_opening_roles_not_literal_printed_dates",
+        "closing_fiscal_role": "FY2025_closing",
+        "opening_fiscal_role": "FY2025_opening"
+      },
+      "chapter": {
+        "start": {
+          "start": 117792,
+          "end": 117804,
+          "source_page": 143,
+          "span_sha256": "85b282630f5c1d56fe32d8d1e21b7ec2bc66f99412b3bae228fdddbf5f6ac030"
+        },
+        "end": {
+          "start": 156826,
+          "end": 156835,
+          "source_page": 186,
+          "span_sha256": "d556d3757ae99646b24d94af031f2416c8ab84754c61efd0110534c87a042948"
+        },
+        "boundary_method": "unique_exact_complete_heading_and_first_expected_semantic_successor"
+      },
+      "AR": {
+        "note_geometry": {
+          "status": "bounded_consolidated_asset_note",
+          "start": 118988,
+          "end": 121623,
+          "parent": {
+            "start": 118988,
+            "end": 118994,
+            "source_page": 145,
+            "span_sha256": "3f3ee6b3356dc49eef88e479e5be3e72d51869c06007623e050eba67035e1c6c"
+          },
+          "next_parent": {
+            "start": 121623,
+            "end": 121629,
+            "source_page": 147,
+            "span_sha256": "af9005c0a8bde750904193645a533121052af3fafd9873aef6b6178d2283b3ef"
+          },
+          "range": {
+            "start": 118988,
+            "end": 121623,
+            "source_page": 145,
+            "span_sha256": "1c9179c3f7c71347e7693eea28dd5137cd860d71a335ca6d52a8f440c4c1f76e"
+          }
+        },
+        "stock": [
+          {
+            "status": "printed_stock_roles_bound_normalization_pending",
+            "asset": "AR",
+            "template": "AR_both",
+            "period_roles": [
+              "closing",
+              "opening"
+            ],
+            "header": {
+              "start": 119295,
+              "end": 119369,
+              "source_page": 145,
+              "span_sha256": "5157047e9557cdd30b3936bb06a983fada5e9e1b846d24e7487625e3539bd2a1"
+            },
+            "row": {
+              "start": 119959,
+              "end": 120083,
+              "source_page": 146,
+              "span_sha256": "86fb38de39e7fb7a10a8fe00ec68c5d250b28f6945274bf0dd9cda62fcf0a00e"
+            },
+            "unit": {
+              "start": 119290,
+              "end": 119294,
+              "source_page": 145,
+              "span_sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0"
+            },
+            "percentage_indices_preserved": [
+              1,
+              3,
+              6,
+              8
+            ],
+            "cells": [
+              {
+                "printed": "116,286,442.13",
+                "kind": "money",
+                "cell": {
+                  "start": 119962,
+                  "end": 119977,
+                  "source_page": 146,
+                  "span_sha256": "759a7e966b61a28b59bd6b2f19e81ea2581dbc4709430d89edbc640c3ad3973a"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "closing_gross",
+                "printed_decimal": "116286442.13",
+                "amount_yuan": null,
+                "printed_quantum": "0.01",
+                "printed_quantum_yuan": null,
+                "printed_unit": "元",
+                "currency": null
+              },
+              {
+                "printed": "100.00%",
+                "kind": "percentage",
+                "cell": {
+                  "start": 119978,
+                  "end": 119985,
+                  "source_page": 146,
+                  "span_sha256": "85ebe7faf55e0f409d9835af28de3f650d796854c5d214dbca3d94bdd674d35b"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "excluded_percentage"
+              },
+              {
+                "printed": "72,713,891.49",
+                "kind": "money",
+                "cell": {
+                  "start": 119986,
+                  "end": 120000,
+                  "source_page": 146,
+                  "span_sha256": "cc8479cc20068f2940c38545c7bde7d0d93f44d0d727b57ed34bda295e406efc"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "closing_allowance",
+                "printed_decimal": "72713891.49",
+                "amount_yuan": null,
+                "printed_quantum": "0.01",
+                "printed_quantum_yuan": null,
+                "printed_unit": "元",
+                "currency": null
+              },
+              {
+                "printed": "62.53%",
+                "kind": "percentage",
+                "cell": {
+                  "start": 120001,
+                  "end": 120007,
+                  "source_page": 146,
+                  "span_sha256": "cb27c52c6405f8c1f0788b8ed724c390c553e2b48ff564d52b4e01efd23d8f7a"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "excluded_percentage"
+              },
+              {
+                "printed": "43,572,550.64",
+                "kind": "money",
+                "cell": {
+                  "start": 120008,
+                  "end": 120022,
+                  "source_page": 146,
+                  "span_sha256": "1c2c4b418e459ac85a63535013155de0ae998ee0bce0964db3265ac3c266799b"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "closing_net",
+                "printed_decimal": "43572550.64",
+                "amount_yuan": null,
+                "printed_quantum": "0.01",
+                "printed_quantum_yuan": null,
+                "printed_unit": "元",
+                "currency": null
+              },
+              {
+                "printed": "132,085,833.06",
+                "kind": "money",
+                "cell": {
+                  "start": 120023,
+                  "end": 120038,
+                  "source_page": 146,
+                  "span_sha256": "97c690c5c3b6fc5133e88490f32d2f983ca5e5deeee752aace9204beecd4cfcd"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "opening_gross",
+                "printed_decimal": "132085833.06",
+                "amount_yuan": null,
+                "printed_quantum": "0.01",
+                "printed_quantum_yuan": null,
+                "printed_unit": "元",
+                "currency": null
+              },
+              {
+                "printed": "100.00%",
+                "kind": "percentage",
+                "cell": {
+                  "start": 120039,
+                  "end": 120046,
+                  "source_page": 146,
+                  "span_sha256": "85ebe7faf55e0f409d9835af28de3f650d796854c5d214dbca3d94bdd674d35b"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "excluded_percentage"
+              },
+              {
+                "printed": "72,757,445.88",
+                "kind": "money",
+                "cell": {
+                  "start": 120047,
+                  "end": 120061,
+                  "source_page": 146,
+                  "span_sha256": "d7796a423a93806f20819b78564ad8eb38285d55a9daab0124685c7820d5e871"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "opening_allowance",
+                "printed_decimal": "72757445.88",
+                "amount_yuan": null,
+                "printed_quantum": "0.01",
+                "printed_quantum_yuan": null,
+                "printed_unit": "元",
+                "currency": null
+              },
+              {
+                "printed": "55.08%",
+                "kind": "percentage",
+                "cell": {
+                  "start": 120062,
+                  "end": 120068,
+                  "source_page": 146,
+                  "span_sha256": "29bba4dc293b8c75894455bf30e065dcee57674962488a4001ad24663c4ba905"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "excluded_percentage"
+              },
+              {
+                "printed": "59,328,387.18",
+                "kind": "money",
+                "cell": {
+                  "start": 120069,
+                  "end": 120083,
+                  "source_page": 146,
+                  "span_sha256": "cdb6f3c8d7e3529e612477a6f3feb0ad491d447d11a4c2b25a40d03e4aec823a"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "opening_net",
+                "printed_decimal": "59328387.18",
+                "amount_yuan": null,
+                "printed_quantum": "0.01",
+                "printed_quantum_yuan": null,
+                "printed_unit": "元",
+                "currency": null
+              }
+            ],
+            "CNY_normalization_status": "presentation_currency_pending",
+            "period_policy_status": "literal_policy_bound",
+            "stock_display_reconciliations": [
+              {
+                "period_role": "closing",
+                "residual_at_printed_unit": "0.00",
+                "display_interval_tolerance": "0.015",
+                "status": "source_display_intervals_overlap",
+                "values_reassigned_or_corrected": false
+              },
+              {
+                "period_role": "opening",
+                "residual_at_printed_unit": "0.00",
+                "display_interval_tolerance": "0.015",
+                "status": "source_display_intervals_overlap",
+                "values_reassigned_or_corrected": false
+              }
+            ],
+            "population": {
+              "start": 119274,
+              "end": 120084,
+              "source_page": 145,
+              "span_sha256": "9c93b366ab513d21d733bad14fadeb16c1fe97ab8aa92ff83d292adaebcc98cc"
+            },
+            "population_kind": "whole_asset_classification_total",
+            "allowance_population": "AR_bad_debt_allowance",
+            "literal_calendar_dates_printed": false,
+            "cash_or_loss_cause": "not_inferred",
+            "financial_eligibility": false,
+            "rollforward_arithmetic_not_used": true
+          }
+        ],
+        "pending_reasons": [],
+        "movement": {
+          "status": "unparsed_pending_independent_of_stock",
+          "amounts_solved": 0
+        },
+        "complete_unique_closing_opening_stock": true,
+        "comparability_policy_scope_version": "unreviewed_pending",
+        "classification": {
+          "start": 119274,
+          "end": 120084,
+          "source_page": 145,
+          "span_sha256": "9c93b366ab513d21d733bad14fadeb16c1fe97ab8aa92ff83d292adaebcc98cc"
+        }
+      },
+      "INV_or_first3_or_old17_replayed": false,
+      "financial_qualification": false,
+      "Q_cash_release_or_loss_cause": "not_computed_or_inferred"
+    },
+    {
+      "source_identity": {
+        "code": "000672",
+        "announcement_id": "1225212571",
+        "report_date": "2025-12-31",
+        "source_record_sha256": "cbab753e708c2161ca37b9ec009c56cfd930092d48b970fc8a9e8bf3536ef36b"
+      },
+      "prior_source17_status": "source_only_stock_template_facts",
+      "prior_AR_pending": [
+        "unique_next_bare_parent_ordinal_pending"
+      ],
+      "prior_case_pending": [],
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "single_latest_matches_selected_but_body_scope_pending",
+        "latest_rows": [
+          {
+            "announcement_id": "1225212571",
+            "report_date": "2025-12-31",
+            "published_at": "2026-04-28",
+            "edition": "ORIGINAL_FULL_REPORT",
+            "title": "2025年年度报告",
+            "pdf_sha256": "95bf69656b3925744281da9a510ce86ebf7a3b5eb7a7ed1f903e190202a1e2f6",
+            "text_sha256": "8580f49099c9fad76231053537dcb5edfed0ad6c7499495ceb267cb5ffb57ada"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "known_revision_or_later_report_metadata": [],
+      "source_policy_estimate_scope_version_qualification": "not_reviewed_pending",
+      "source_qualified": false,
+      "original_metadata_flags": [],
+      "status": "source_only_pending_AR_structure_repair_facts",
+      "report": {
+        "year": 2025,
+        "annual_title": {
+          "start": 62,
+          "end": 72,
+          "source_page": 1,
+          "span_sha256": "c9b273b8c0fd3cee83b6b7b928ee4829e2f8132c5726b84c000b87fb385705cc"
+        },
+        "annual_fiscal_policy": null,
+        "annual_calendar_status": "calendar_policy_pending",
+        "presentation_CNY": {
+          "start": 104002,
+          "end": 104024,
+          "source_page": 108,
+          "span_sha256": "2aa1d72f11b0cd96d7b207b0bc622e75bf26937a0c2a9c87be8d7ef1bc37ed1a"
+        },
+        "date_method": "annual_FY_closing_and_fiscal_opening_roles_not_literal_printed_dates",
+        "closing_fiscal_role": "FY2025_closing",
+        "opening_fiscal_role": "FY2025_opening"
+      },
+      "chapter": {
+        "start": {
+          "start": 137505,
+          "end": 137517,
+          "source_page": 140,
+          "span_sha256": "85b282630f5c1d56fe32d8d1e21b7ec2bc66f99412b3bae228fdddbf5f6ac030"
+        },
+        "end": {
+          "start": 177476,
+          "end": 177482,
+          "source_page": 180,
+          "span_sha256": "6d34e68feeeb833a8fbc199f6e0c4a2cb36e76fb4a72a0aa5d31f1f8e8a4f889"
+        },
+        "boundary_method": "unique_exact_complete_heading_and_first_expected_semantic_successor"
+      },
+      "AR": {
+        "note_geometry": {
+          "status": "bounded_consolidated_asset_note",
+          "start": 139244,
+          "end": 141880,
+          "parent": {
+            "start": 139244,
+            "end": 139250,
+            "source_page": 142,
+            "span_sha256": "852daf6159ba0c4317a22cd717779e2cec639243c79622dd58fca6d6a3fde4c7"
+          },
+          "next_parent": {
+            "start": 141880,
+            "end": 141888,
+            "source_page": 144,
+            "span_sha256": "ae530e1ae6c9969ea6127cb5d6b9556010090187f4d0d86c9dd2d8f79e60fe99"
+          },
+          "range": {
+            "start": 139244,
+            "end": 141880,
+            "source_page": 142,
+            "span_sha256": "df8eaa0d1f75040c59cf62ff7dddff44a6fa75cf246ebf6ebb0a92ec6888a82b"
+          }
+        },
+        "stock": [
+          {
+            "status": "printed_stock_amount_facts_bound",
+            "asset": "AR",
+            "template": "AR_both",
+            "period_roles": [
+              "closing",
+              "opening"
+            ],
+            "header": {
+              "start": 139585,
+              "end": 139655,
+              "source_page": 142,
+              "span_sha256": "38ad8435215cb6563d8d8978bdca8a9aaa62564cc67c46c547273ad3009d8ba9"
+            },
+            "row": {
+              "start": 140110,
+              "end": 140230,
+              "source_page": 142,
+              "span_sha256": "14b9938d4cd104b63a07c953a710806456a000f85f034d2edfe14ac109ea16b3"
+            },
+            "unit": {
+              "start": 139580,
+              "end": 139584,
+              "source_page": 142,
+              "span_sha256": "9291cfb1e831fe84de19bf7d02a7c9b7a059202b41f07cad06f59535ae5c07e0"
+            },
+            "percentage_indices_preserved": [
+              1,
+              3,
+              6,
+              8
+            ],
+            "cells": [
+              {
+                "printed": "217,186,358.03",
+                "kind": "money",
+                "cell": {
+                  "start": 140113,
+                  "end": 140127,
+                  "source_page": 142,
+                  "span_sha256": "9528f0996169fb865c8d1f8d0e819f5bc900c5f1f12dd47b3b165de07954518b"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "closing_gross",
+                "printed_decimal": "217186358.03",
+                "amount_yuan": "217186358.03",
+                "printed_quantum": "0.01",
+                "printed_quantum_yuan": "0.01",
+                "printed_unit": "元",
+                "currency": "CNY"
+              },
+              {
+                "printed": "100.00%",
+                "kind": "percentage",
+                "cell": {
+                  "start": 140128,
+                  "end": 140135,
+                  "source_page": 142,
+                  "span_sha256": "85ebe7faf55e0f409d9835af28de3f650d796854c5d214dbca3d94bdd674d35b"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "excluded_percentage"
+              },
+              {
+                "printed": "51,700,268.19",
+                "kind": "money",
+                "cell": {
+                  "start": 140136,
+                  "end": 140149,
+                  "source_page": 142,
+                  "span_sha256": "793f9e5c1a1a0a3c2c96e69318e25536f3a01d655d1bb1b9eb9b2c932bb25428"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "closing_allowance",
+                "printed_decimal": "51700268.19",
+                "amount_yuan": "51700268.19",
+                "printed_quantum": "0.01",
+                "printed_quantum_yuan": "0.01",
+                "printed_unit": "元",
+                "currency": "CNY"
+              },
+              {
+                "printed": "23.80%",
+                "kind": "percentage",
+                "cell": {
+                  "start": 140150,
+                  "end": 140156,
+                  "source_page": 142,
+                  "span_sha256": "51067af2410cf9dd76fcc3c35b1f5e3c6cc5ebe8d144929a53e3fa361142b8e2"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "excluded_percentage"
+              },
+              {
+                "printed": "165,486,089.84",
+                "kind": "money",
+                "cell": {
+                  "start": 140157,
+                  "end": 140171,
+                  "source_page": 142,
+                  "span_sha256": "35250eff1440919a090df882ba0c1106eb2f52432233f24c413f7e27caaa63c1"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "closing_net",
+                "printed_decimal": "165486089.84",
+                "amount_yuan": "165486089.84",
+                "printed_quantum": "0.01",
+                "printed_quantum_yuan": "0.01",
+                "printed_unit": "元",
+                "currency": "CNY"
+              },
+              {
+                "printed": "248,628,024.63",
+                "kind": "money",
+                "cell": {
+                  "start": 140172,
+                  "end": 140186,
+                  "source_page": 142,
+                  "span_sha256": "55357ee00e92efc8f878ecc888aeaafc5cbc98f10eee8483a75c76512b79b537"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "opening_gross",
+                "printed_decimal": "248628024.63",
+                "amount_yuan": "248628024.63",
+                "printed_quantum": "0.01",
+                "printed_quantum_yuan": "0.01",
+                "printed_unit": "元",
+                "currency": "CNY"
+              },
+              {
+                "printed": "100.00%",
+                "kind": "percentage",
+                "cell": {
+                  "start": 140187,
+                  "end": 140194,
+                  "source_page": 142,
+                  "span_sha256": "85ebe7faf55e0f409d9835af28de3f650d796854c5d214dbca3d94bdd674d35b"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "excluded_percentage"
+              },
+              {
+                "printed": "39,420,405.97",
+                "kind": "money",
+                "cell": {
+                  "start": 140195,
+                  "end": 140208,
+                  "source_page": 142,
+                  "span_sha256": "82bf788da4ba6c2a590560090f1fa02e9a2cc015e48f9625ca06a111600fa458"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "opening_allowance",
+                "printed_decimal": "39420405.97",
+                "amount_yuan": "39420405.97",
+                "printed_quantum": "0.01",
+                "printed_quantum_yuan": "0.01",
+                "printed_unit": "元",
+                "currency": "CNY"
+              },
+              {
+                "printed": "15.86%",
+                "kind": "percentage",
+                "cell": {
+                  "start": 140209,
+                  "end": 140215,
+                  "source_page": 142,
+                  "span_sha256": "31da1469c29f420ac95b0f8a731165faa16576b986e9b3d8072d7fd414e424cd"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "excluded_percentage"
+              },
+              {
+                "printed": "209,207,618.66",
+                "kind": "money",
+                "cell": {
+                  "start": 140216,
+                  "end": 140230,
+                  "source_page": 142,
+                  "span_sha256": "183bebd797d0a3741338ccb9c003c57bb648c174ce74e6fee5bff223f6e450f4"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "opening_net",
+                "printed_decimal": "209207618.66",
+                "amount_yuan": "209207618.66",
+                "printed_quantum": "0.01",
+                "printed_quantum_yuan": "0.01",
+                "printed_unit": "元",
+                "currency": "CNY"
+              }
+            ],
+            "CNY_normalization_status": "bound_from_report_presentation",
+            "period_policy_status": "calendar_policy_pending",
+            "stock_display_reconciliations": [
+              {
+                "period_role": "closing",
+                "residual_at_printed_unit": "0.00",
+                "display_interval_tolerance": "0.015",
+                "status": "source_display_intervals_overlap",
+                "values_reassigned_or_corrected": false
+              },
+              {
+                "period_role": "opening",
+                "residual_at_printed_unit": "0.00",
+                "display_interval_tolerance": "0.015",
+                "status": "source_display_intervals_overlap",
+                "values_reassigned_or_corrected": false
+              }
+            ],
+            "population": {
+              "start": 139565,
+              "end": 140231,
+              "source_page": 142,
+              "span_sha256": "5bd002abed66005814d525b0b87babd7b4b4821f8fa3ed9f7198987a2f8d9e4e"
+            },
+            "population_kind": "whole_asset_classification_total",
+            "allowance_population": "AR_bad_debt_allowance",
+            "literal_calendar_dates_printed": false,
+            "cash_or_loss_cause": "not_inferred",
+            "financial_eligibility": false,
+            "rollforward_arithmetic_not_used": true
+          }
+        ],
+        "pending_reasons": [],
+        "movement": {
+          "status": "unparsed_pending_independent_of_stock",
+          "amounts_solved": 0
+        },
+        "complete_unique_closing_opening_stock": true,
+        "comparability_policy_scope_version": "unreviewed_pending",
+        "classification": {
+          "start": 139565,
+          "end": 140231,
+          "source_page": 142,
+          "span_sha256": "5bd002abed66005814d525b0b87babd7b4b4821f8fa3ed9f7198987a2f8d9e4e"
+        }
+      },
+      "INV_or_first3_or_old17_replayed": false,
+      "financial_qualification": false,
+      "Q_cash_release_or_loss_cause": "not_computed_or_inferred"
+    },
+    {
+      "source_identity": {
+        "code": "000533",
+        "announcement_id": "1225290543",
+        "report_date": "2025-12-31",
+        "source_record_sha256": "378729c234ca91060d1e593beaf7d247e041cb8207b2290eb2339f6491e5a8e2"
+      },
+      "prior_source17_status": "source_binding_or_template_pending",
+      "prior_AR_pending": [],
+      "prior_case_pending": [
+        "unique_consolidated_note_chapter_pending"
+      ],
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "single_latest_matches_selected_but_body_scope_pending",
+        "latest_rows": [
+          {
+            "announcement_id": "1225290543",
+            "report_date": "2025-12-31",
+            "published_at": "2026-04-16",
+            "edition": "ORIGINAL_FULL_REPORT",
+            "title": "2025年年度报告",
+            "pdf_sha256": "80d523dc9f1d0adf918a531bd76cf614dc6ccc1285fc650db6e2947ff88f5cdf",
+            "text_sha256": "aeed7731b31e424745e308f3e20fcda01f126275d15e25aefb865dd80fb9bef8"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "known_revision_or_later_report_metadata": [],
+      "source_policy_estimate_scope_version_qualification": "not_reviewed_pending",
+      "source_qualified": false,
+      "original_metadata_flags": [],
+      "status": "source_binding_or_pending_AR_structure",
+      "pending_reasons": [
+        "first_next_semantic_chapter_ordinal_pending"
+      ]
+    },
+    {
+      "source_identity": {
+        "code": "000678",
+        "announcement_id": "1225220917",
+        "report_date": "2025-12-31",
+        "source_record_sha256": "6417e5e7e6ad40f9e2996864ff094f4816b5b9d911f471c517f9b61cf4117d10"
+      },
+      "prior_source17_status": "source_binding_or_template_pending",
+      "prior_AR_pending": [],
+      "prior_case_pending": [
+        "unique_next_semantic_chapter_ordinal_pending"
+      ],
+      "latest_annual_version_metadata": {
+        "asof": "2026-10-09",
+        "status": "single_latest_matches_selected_but_body_scope_pending",
+        "latest_rows": [
+          {
+            "announcement_id": "1225220917",
+            "report_date": "2025-12-31",
+            "published_at": "2026-04-28",
+            "edition": "ORIGINAL_FULL_REPORT",
+            "title": "2025年年度报告",
+            "pdf_sha256": "9b3a322afee07c275aee405b97a741f0a59b8656d4c5a01c5a678dc5cca3d430",
+            "text_sha256": "b7b1f232f2c7bd3d7b3e85339e651fc45c469218919205fed0fc5fc5b59ec6c1"
+          }
+        ],
+        "latest_unique_metadata_only": true,
+        "full_version_chain_certified": false
+      },
+      "known_revision_or_later_report_metadata": [],
+      "source_policy_estimate_scope_version_qualification": "not_reviewed_pending",
+      "source_qualified": false,
+      "original_metadata_flags": [],
+      "status": "source_only_pending_AR_structure_repair_facts",
+      "report": {
+        "year": 2025,
+        "annual_title": {
+          "start": 80,
+          "end": 95,
+          "source_page": 1,
+          "span_sha256": "720898f3938fef13c722b471984f9d57fe4840cc832bfa8d80c470026155ced3"
+        },
+        "annual_fiscal_policy": {
+          "start": 65243,
+          "end": 65280,
+          "source_page": 77,
+          "span_sha256": "46c370a247ecc293f43f3fab33d12d7f5d45c1480efdf9241a604b0da4a54fbb"
+        },
+        "annual_calendar_status": "literal_policy_bound",
+        "presentation_CNY": {
+          "start": 65434,
+          "end": 65456,
+          "source_page": 77,
+          "span_sha256": "2aa1d72f11b0cd96d7b207b0bc622e75bf26937a0c2a9c87be8d7ef1bc37ed1a"
+        },
+        "date_method": "annual_FY_closing_and_fiscal_opening_roles_not_literal_printed_dates",
+        "closing_fiscal_role": "FY2025_closing",
+        "opening_fiscal_role": "FY2025_opening"
+      },
+      "chapter": {
+        "start": {
+          "start": 93136,
+          "end": 93149,
+          "source_page": 104,
+          "span_sha256": "874e900ddc85cbb4e036d5b3e3ead7d38e96cff59e2327edea1122b164e1e44a"
+        },
+        "end": {
+          "start": 129664,
+          "end": 129671,
+          "source_page": 140,
+          "span_sha256": "5e3ffecc127f0f598c5e6d64a63632fdc0a541fea81deb147939fa694816b870"
+        },
+        "boundary_method": "unique_exact_complete_heading_and_first_expected_semantic_successor"
+      },
+      "AR": {
+        "note_geometry": {
+          "status": "bounded_consolidated_asset_note",
+          "start": 95026,
+          "end": 97415,
+          "parent": {
+            "start": 95026,
+            "end": 95033,
+            "source_page": 106,
+            "span_sha256": "64c71e025a5819f1fcd340f4e759bdbe4cc28580db71ef074c5f888e135c08ca"
+          },
+          "next_parent": {
+            "start": 97415,
+            "end": 97422,
+            "source_page": 108,
+            "span_sha256": "b8302d29b8653160432c29cd59d8b1eff1122bc7aa9fbef17aeb2d649fa2cb95"
+          },
+          "range": {
+            "start": 95026,
+            "end": 97415,
+            "source_page": 106,
+            "span_sha256": "8c0c7f0b2821bca8723b25774ae7f9e61db2857bb18e72fc1ea9ef2d28935a3d"
+          }
+        },
+        "stock": [
+          {
+            "status": "printed_stock_amount_facts_bound",
+            "asset": "AR",
+            "template": "AR_both",
+            "period_roles": [
+              "closing",
+              "opening"
+            ],
+            "header": {
+              "start": 95306,
+              "end": 95384,
+              "source_page": 106,
+              "span_sha256": "de454d84689faaa04804fa57dc2bd3779f1ec4501c047fdd6ab37d03e1a22253"
+            },
+            "row": {
+              "start": 95854,
+              "end": 95980,
+              "source_page": 107,
+              "span_sha256": "73b697450f296151b1bed01eb9215357bc600abd7aa425b153e9ef33633196f1"
+            },
+            "unit": {
+              "start": 95300,
+              "end": 95305,
+              "source_page": 106,
+              "span_sha256": "6328c83f51cc7cfd192a63ca0eb5b668ba21e9bbe24892d626d3c86a2e5ca761"
+            },
+            "percentage_indices_preserved": [
+              1,
+              3,
+              6,
+              8
+            ],
+            "cells": [
+              {
+                "printed": "394,391,421.79",
+                "kind": "money",
+                "cell": {
+                  "start": 95857,
+                  "end": 95872,
+                  "source_page": 107,
+                  "span_sha256": "e2efa79fc41893d82e23282bc287ed86f4be553917c3514b6967e4a1139b4acb"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "closing_gross",
+                "printed_decimal": "394391421.79",
+                "amount_yuan": "394391421.79",
+                "printed_quantum": "0.01",
+                "printed_quantum_yuan": "0.01",
+                "printed_unit": "元",
+                "currency": "CNY"
+              },
+              {
+                "printed": "100.00%",
+                "kind": "percentage",
+                "cell": {
+                  "start": 95873,
+                  "end": 95880,
+                  "source_page": 107,
+                  "span_sha256": "85ebe7faf55e0f409d9835af28de3f650d796854c5d214dbca3d94bdd674d35b"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "excluded_percentage"
+              },
+              {
+                "printed": "54,801,045.46",
+                "kind": "money",
+                "cell": {
+                  "start": 95881,
+                  "end": 95895,
+                  "source_page": 107,
+                  "span_sha256": "ff99eaf642146c77c5a00a18d13b3b6942c839a55fd0c9291d97d2860ec2a8fb"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "closing_allowance",
+                "printed_decimal": "54801045.46",
+                "amount_yuan": "54801045.46",
+                "printed_quantum": "0.01",
+                "printed_quantum_yuan": "0.01",
+                "printed_unit": "元",
+                "currency": "CNY"
+              },
+              {
+                "printed": "13.90%",
+                "kind": "percentage",
+                "cell": {
+                  "start": 95896,
+                  "end": 95902,
+                  "source_page": 107,
+                  "span_sha256": "2ce2eecd871f65499ff99ee6b741ab6df146f906a2fd26b3fad4b054d3a946e0"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "excluded_percentage"
+              },
+              {
+                "printed": "339,590,376.33",
+                "kind": "money",
+                "cell": {
+                  "start": 95903,
+                  "end": 95918,
+                  "source_page": 107,
+                  "span_sha256": "24749fd0b88e0f9a5f8413903f236f434ab414880e11d2e3b9a03d697105e0f7"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "closing_net",
+                "printed_decimal": "339590376.33",
+                "amount_yuan": "339590376.33",
+                "printed_quantum": "0.01",
+                "printed_quantum_yuan": "0.01",
+                "printed_unit": "元",
+                "currency": "CNY"
+              },
+              {
+                "printed": "350,315,257.50",
+                "kind": "money",
+                "cell": {
+                  "start": 95919,
+                  "end": 95934,
+                  "source_page": 107,
+                  "span_sha256": "dcf0c6fe622b79810b755f1b7d44f7d48cf476638c5c6fe874825d34fc1074f5"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "opening_gross",
+                "printed_decimal": "350315257.50",
+                "amount_yuan": "350315257.50",
+                "printed_quantum": "0.01",
+                "printed_quantum_yuan": "0.01",
+                "printed_unit": "元",
+                "currency": "CNY"
+              },
+              {
+                "printed": "100.00%",
+                "kind": "percentage",
+                "cell": {
+                  "start": 95935,
+                  "end": 95942,
+                  "source_page": 107,
+                  "span_sha256": "85ebe7faf55e0f409d9835af28de3f650d796854c5d214dbca3d94bdd674d35b"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "excluded_percentage"
+              },
+              {
+                "printed": "48,351,626.45",
+                "kind": "money",
+                "cell": {
+                  "start": 95943,
+                  "end": 95957,
+                  "source_page": 107,
+                  "span_sha256": "5d417ada7120640f43b3371af19c989c652f52b9f13839b3c99b75afc883f9ba"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "opening_allowance",
+                "printed_decimal": "48351626.45",
+                "amount_yuan": "48351626.45",
+                "printed_quantum": "0.01",
+                "printed_quantum_yuan": "0.01",
+                "printed_unit": "元",
+                "currency": "CNY"
+              },
+              {
+                "printed": "13.80%",
+                "kind": "percentage",
+                "cell": {
+                  "start": 95958,
+                  "end": 95964,
+                  "source_page": 107,
+                  "span_sha256": "96c172aba130eb70a553acde1d2716be9e2bb4274656a99986d44dcabd753731"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "excluded_percentage"
+              },
+              {
+                "printed": "301,963,631.05",
+                "kind": "money",
+                "cell": {
+                  "start": 95965,
+                  "end": 95980,
+                  "source_page": 107,
+                  "span_sha256": "a07e4aea2145602d14778bdc052feb8207c3f0d9caf7290c10a4aab63860dc77"
+                },
+                "boundary_method": "whole_token_or_required_lexical_continuation",
+                "role": "opening_net",
+                "printed_decimal": "301963631.05",
+                "amount_yuan": "301963631.05",
+                "printed_quantum": "0.01",
+                "printed_quantum_yuan": "0.01",
+                "printed_unit": "元",
+                "currency": "CNY"
+              }
+            ],
+            "CNY_normalization_status": "bound_from_report_presentation",
+            "period_policy_status": "literal_policy_bound",
+            "stock_display_reconciliations": [
+              {
+                "period_role": "closing",
+                "residual_at_printed_unit": "0.00",
+                "display_interval_tolerance": "0.015",
+                "status": "source_display_intervals_overlap",
+                "values_reassigned_or_corrected": false
+              },
+              {
+                "period_role": "opening",
+                "residual_at_printed_unit": "0.00",
+                "display_interval_tolerance": "0.015",
+                "status": "source_display_intervals_overlap",
+                "values_reassigned_or_corrected": false
+              }
+            ],
+            "population": {
+              "start": 95283,
+              "end": 95981,
+              "source_page": 106,
+              "span_sha256": "ee20ef1b6b5e05529914e1f16e90d8c6439d3866e9d9deaab20bdb5b5d35bc24"
+            },
+            "population_kind": "whole_asset_classification_total",
+            "allowance_population": "AR_bad_debt_allowance",
+            "literal_calendar_dates_printed": false,
+            "cash_or_loss_cause": "not_inferred",
+            "financial_eligibility": false,
+            "rollforward_arithmetic_not_used": true
+          }
+        ],
+        "pending_reasons": [],
+        "movement": {
+          "status": "unparsed_pending_independent_of_stock",
+          "amounts_solved": 0
+        },
+        "complete_unique_closing_opening_stock": true,
+        "comparability_policy_scope_version": "unreviewed_pending",
+        "classification": {
+          "start": 95283,
+          "end": 95981,
+          "source_page": 106,
+          "span_sha256": "ee20ef1b6b5e05529914e1f16e90d8c6439d3866e9d9deaab20bdb5b5d35bc24"
+        }
+      },
+      "INV_or_first3_or_old17_replayed": false,
+      "financial_qualification": false,
+      "Q_cash_release_or_loss_cause": "not_computed_or_inferred"
+    }
+  ],
+  "execution_stop": null,
+  "resume_position": {
+    "first_uncompleted_index_zero_based": 4,
+    "remaining_identity_rows": [],
+    "automatic_resume_allowed": false
+  },
+  "new_contexts": 0,
+  "economic_failure_claimed": false,
+  "Q_or_any_factor_computed": false,
+  "old17_first3_INV_or_other_sources_replayed": false,
+  "old_receipts_sources_DB_masks_state_registry_changed": false,
+  "financial_qualification_created": false,
+  "fulltext_copies": 0,
+  "network_or_official_calls": 0
+}

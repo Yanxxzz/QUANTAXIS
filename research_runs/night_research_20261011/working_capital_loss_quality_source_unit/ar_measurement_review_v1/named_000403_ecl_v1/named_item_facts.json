@@ -1,0 +1,166 @@
+{
+  "status": "COMPLETED_NAMED_AR_ITEM_SOURCE_INVENTORY_ONLY",
+  "protocol_sha256": "b14c79130be55de4ec8134928d8ca044cadd72665caaf31b357ca8cd22028721",
+  "records": [
+    {
+      "source_identity": {
+        "code": "000403",
+        "announcement_id": "1225245931",
+        "report_date": "2025-12-31",
+        "source_record_sha256": "297d04bc695709f0405c5a6a4e7e09297047e009171065625d674eb0e24e9bf8"
+      },
+      "status": "NAMED_AR_ITEM_COMPLETE_BOUNDARY_SHORT_METHOD_INVENTORY_ONLY",
+      "item": {
+        "start": 114568,
+        "end": 115647,
+        "source_page": 121,
+        "span_sha256": "f0ffb0b14f9489e5a81266cbe3e82c0b37d2b2bdd029aafb912cf0b004000119"
+      },
+      "named_header": {
+        "start": 114568,
+        "end": 114585,
+        "source_page": 121,
+        "span_sha256": "083c8ceef25a30818653c549ddd3b086d4bed10feb3399d3018dede52271aa31"
+      },
+      "ending_kind": "known_enclosing_numbered_sibling_after_last_letter_child",
+      "ending_caption": {
+        "start": 115647,
+        "end": 115668,
+        "source_page": 122,
+        "span_sha256": "a5d3e6b15c38c37620e7ce8999c1f3061428d5a840a8e94f6ef0717c4353c45e"
+      },
+      "retained_contiguous_pages": [
+        121,
+        122
+      ],
+      "short_method_evidence": [
+        {
+          "kind": "group_AR_subject",
+          "start": 114586,
+          "end": 114617,
+          "source_page": 121,
+          "span_sha256": "625e4946a61a4e10cea010abc1298512f865f16022b2a74ea2901115ed3c0aac",
+          "brief_source_phrase": "本集团始终按照相当于整个存续期内预期信用损失的金额计量应收账款",
+          "fragment_only_not_complete_effect_or_period_proof": true
+        },
+        {
+          "kind": "group_AR_subject",
+          "start": 114739,
+          "end": 114758,
+          "source_page": 121,
+          "span_sha256": "f354b97f05220b505dcb8e855342cf3db4aee7009e1ee16b17cfcaea6b9e7184",
+          "brief_source_phrase": "本集团除单项计提坏账准备之外的应收账款",
+          "fragment_only_not_complete_effect_or_period_proof": true
+        },
+        {
+          "kind": "individual_assessment",
+          "start": 114743,
+          "end": 114747,
+          "source_page": 121,
+          "span_sha256": "10cf644db153e9c6a627c73e08a85ee39821ce4da5ed8394ed0bb6efd3b6e1fb",
+          "brief_source_phrase": "单项计提",
+          "fragment_only_not_complete_effect_or_period_proof": true
+        },
+        {
+          "kind": "portfolio_assessment",
+          "start": 114781,
+          "end": 114783,
+          "source_page": 121,
+          "span_sha256": "ce3df931927bd92f98688c65c880a076740acb6ba7708de8732e627a8b2e6908",
+          "brief_source_phrase": "组合",
+          "fragment_only_not_complete_effect_or_period_proof": true
+        },
+        {
+          "kind": "lifetime_ECL",
+          "start": 114596,
+          "end": 114608,
+          "source_page": 121,
+          "span_sha256": "cb3901be7cd883db83740cd5f89348476f67ee192a34dba7644262cfbcc89aec",
+          "brief_source_phrase": "整个存续期内预期信用损失",
+          "fragment_only_not_complete_effect_or_period_proof": true
+        },
+        {
+          "kind": "age_and_loss_rate",
+          "start": 114625,
+          "end": 114627,
+          "source_page": 121,
+          "span_sha256": "fab8f1829a526a2fc35c12093c9c24d5933be118a323306446e925ff495d2863",
+          "brief_source_phrase": "账龄",
+          "fragment_only_not_complete_effect_or_period_proof": true
+        },
+        {
+          "kind": "age_and_loss_rate",
+          "start": 114691,
+          "end": 114693,
+          "source_page": 121,
+          "span_sha256": "fab8f1829a526a2fc35c12093c9c24d5933be118a323306446e925ff495d2863",
+          "brief_source_phrase": "账龄",
+          "fragment_only_not_complete_effect_or_period_proof": true
+        },
+        {
+          "kind": "age_and_loss_rate",
+          "start": 115565,
+          "end": 115572,
+          "source_page": 122,
+          "span_sha256": "a5d19fa312d9d3b5b2ddfbed0071265337ab4437c2d7358b6260048ab93f511a",
+          "brief_source_phrase": "预期信用损失率",
+          "fragment_only_not_complete_effect_or_period_proof": true
+        },
+        {
+          "kind": "historical_loss_experience",
+          "start": 115574,
+          "end": 115587,
+          "source_page": 122,
+          "span_sha256": "61a1818b3801ad3db2b61190e5e72a5cae0af308271bdfdf5d83c893dafb2fc8",
+          "brief_source_phrase": "过去年度的实际信用损失经验",
+          "fragment_only_not_complete_effect_or_period_proof": true
+        },
+        {
+          "kind": "forward_credit_judgment",
+          "start": 115602,
+          "end": 115606,
+          "source_page": 122,
+          "span_sha256": "447e0a05fb9548091d27256a1efa5a61844e5a0a68fa6a2bc1a2c2811ec3034d",
+          "brief_source_phrase": "经济状况",
+          "fragment_only_not_complete_effect_or_period_proof": true
+        },
+        {
+          "kind": "forward_credit_judgment",
+          "start": 115611,
+          "end": 115615,
+          "source_page": 122,
+          "span_sha256": "447e0a05fb9548091d27256a1efa5a61844e5a0a68fa6a2bc1a2c2811ec3034d",
+          "brief_source_phrase": "经济状况",
+          "fragment_only_not_complete_effect_or_period_proof": true
+        },
+        {
+          "kind": "forward_credit_judgment",
+          "start": 115630,
+          "end": 115634,
+          "source_page": 122,
+          "span_sha256": "447e0a05fb9548091d27256a1efa5a61844e5a0a68fa6a2bc1a2c2811ec3034d",
+          "brief_source_phrase": "经济状况",
+          "fragment_only_not_complete_effect_or_period_proof": true
+        }
+      ],
+      "whole_group_AR_object_and_single_portfolio_scope": "candidate_phrases_only_complete_semantics_pending",
+      "current_opening_method_applicability": "unreviewed_pending",
+      "normal_forward_credit_judgment_is_automatic_regime_block": false,
+      "missing_change_words_or_ECL_negative_clears_measurement": false,
+      "AR_measurement_or_financial_eligibility_cleared": false,
+      "stock_or_movement_amounts_recomputed": false,
+      "Q_computed": false,
+      "known_revision_or_later_report_metadata": [],
+      "full_version_chain_certified": false
+    }
+  ],
+  "errors": [],
+  "resume_position": null,
+  "new_contexts": 0,
+  "new_factor_or_mask": false,
+  "Q_price_or_labels_computed": false,
+  "amount_consumer_replayed": false,
+  "AR_eligibility_cleared": false,
+  "official_calls": 0,
+  "new_native_or_PDF_copies": 0
+}

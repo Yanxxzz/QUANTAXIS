@@ -1,0 +1,126 @@
+{
+  "id": "WC03_000403_NAMED_AR_ECL_ITEM_SOURCE_ONLY_20261011",
+  "status": "FROZEN_NAMED_AR_ITEM_AWAIT_ROOT_REGISTRATION",
+  "prepared_at_utc": "2026-10-11T14:12:36.689384+00:00",
+  "deadline_utc": "2026-10-11T16:00:00+00:00",
+  "runtime_sha256": "b098fc33b2edeec4c4ca5c3961e91db4aac756936b15419c3b62c4dda02a1cc0",
+  "registry_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\research_trials.sqlite3",
+  "event_prefix": "working-capital-000403-named-ECL-item-freeze:",
+  "registration_subject": "59f5122b3c0641ba2b6a8f946bd5424a2b95639ea713bbed3468e68b8cd45b34",
+  "bindings": {
+    "source_plan": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\source_plan.json",
+      "sha256": "32de6edd562368a60fbb3f957462facd262387bebf6d5e483b187068c424b4bb"
+    },
+    "capture_db": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\compact_archive\\captured_financial.sqlite3",
+      "sha256": "491c2ef55412d2bd251972c440db5f314cac85c278db0112beb4d7eaa048caa7"
+    },
+    "source_reader": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\g_field_contract_next100_unit\\consume_retained_sources.py",
+      "sha256": "b384abd8fd61cdd3c485c28c403ccb54bf8edc7abb1b18f6afe3406f4cc3967a"
+    },
+    "capture_binding_api": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\income_basis.py",
+      "sha256": "028f3fc54fa47c0c505fa78c6188278f8e9069de44e3f4e596bce35913e25034"
+    },
+    "money_api": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\financial_statements.py",
+      "sha256": "4ce12f040f3719e196801563fc524da1f52c49b45bdf948d2a7fdd2349f92f01"
+    },
+    "imported_G_contract_module": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\g_annual_field_contract.py",
+      "sha256": "3c03fe566a96b193f4eb219e0f6f14083fbae80af13d7edd75672660bb8b21c9"
+    },
+    "inventory_API": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\ar_measurement_review_v1\\review_events.py",
+      "sha256": "d4a8352a6155f147f55677da018db276f4e8d89b41e1d18324e804dc848c4764"
+    },
+    "first3_inventory": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\ar_measurement_review_v1\\first3_event_inventory.json",
+      "sha256": "59f5122b3c0641ba2b6a8f946bd5424a2b95639ea713bbed3468e68b8cd45b34"
+    },
+    "existing_geometry_receipt": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\geometry_repair_v1\\geometry_facts.json",
+      "sha256": "7c52bd1e38c41bae3b9909ed1d5cbecdff3bd6ebab1bb264b865cf9cb1f119bc"
+    },
+    "existing_amount_receipt_hash_only": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\amount_roles_v1\\amount_facts.json",
+      "sha256": "eb448a091b3dec34693e2d1b0f387b11cd674cbe5b4e643274abc269e0d56570"
+    },
+    "synthetic_tests": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\ar_measurement_review_v1\\named_000403_ecl_v1\\test_named_item.py",
+      "sha256": "6d87c00341a1436ad7dc2424887482056b7a4de82de2ecedb352ce62df0d2b0f"
+    }
+  },
+  "source_identity": {
+    "code": "000403",
+    "announcement_id": "1225245931",
+    "report_date": "2025-12-31",
+    "source_record_sha256": "297d04bc695709f0405c5a6a4e7e09297047e009171065625d674eb0e24e9bf8"
+  },
+  "item_contract": {
+    "AR_note": {
+      "start": 113270,
+      "end": 116323,
+      "source_page": 120,
+      "span_sha256": "26bc0c1245f3b7eb8a107f7f2732d1895c2dfc6179fefb16d5254b846eaa70c3"
+    },
+    "enclosing_parent": {
+      "start": 113724,
+      "end": 113739,
+      "source_page": 120,
+      "span_sha256": "ea59af35b0b9fda317b7952f3c9480145134939d3187eb40a442244054a7913d"
+    },
+    "next_enclosing_sibling": {
+      "start": 115647,
+      "end": 115668,
+      "source_page": 122,
+      "span_sha256": "a5d3e6b15c38c37620e7ce8999c1f3061428d5a840a8e94f6ef0717c4353c45e"
+    },
+    "named_item": {
+      "start": 114568,
+      "end": 114585,
+      "source_page": 121,
+      "span_sha256": "083c8ceef25a30818653c549ddd3b086d4bed10feb3399d3018dede52271aa31"
+    }
+  },
+  "known_local_fragments_not_complete_item_proof": [
+    {
+      "start": 114586,
+      "end": 114629,
+      "source_page": 121,
+      "span_sha256": "8d932dd4f0c1d09ff376d975e385790c198d2b4c32b4137e9e2e4af98f6f3ec8"
+    },
+    {
+      "start": 115565,
+      "end": 115608,
+      "source_page": 122,
+      "span_sha256": "8a29153aecf266f264a6764605441a1413ca2cd1618c8d218c90678d1f81d6ac"
+    }
+  ],
+  "output_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\ar_measurement_review_v1\\named_000403_ecl_v1\\named_item_facts.json",
+  "fixed_source_purpose": {
+    "scope": "000403/1225245931 only, existing complete consolidated AR note and its named (b) ECL assessment item.",
+    "boundary_rule": "Exact existing AR/parent3/next4/named-b span hashes; unique contiguous a,b[,c...] letter siblings with matching delimiters. End at next c if present; otherwise b must be last letter child and end at already bound parent4 sibling. Unknown nested heading, duplicate/jumped letters or noncontiguous native pages remains pending; unrelated chapters or keywords never accepted as boundaries.",
+    "body_scope": "Only read_case original complete native/capture identity; locate the fixed named item inside exact inherited AR note. Do not invoke stock/movement/source17/amount consumers.",
+    "facts": "Small source phrase locators for group-AR subject, individual/portfolio, lifetime ECL, aging/loss rates, historical experience/forward judgment, explicit change/restatement wording. Fragments are not complete effect or period proof.",
+    "pending": "Current-versus-opening applicability, complete measurement comparability and metadata version chain remain unreviewed. Normal forward credit judgments are not automatic regime blocks; absence of words, ECL negative, matching amounts or empty flags is not an unaffected/ready certificate.",
+    "selection": "Already bound first3 receipt source-only different purpose, no new definition/window, economic sample or OOS qualification."
+  },
+  "partialstop_contract": "Any current reader/runtime exception saves fixed KEY/type/resume metadata in the unique source-pending output and stops; no automatic replay. Unsupported boundaries produce pending facts, not economic failure.",
+  "validation": {
+    "synthetic_tests_passed": 6,
+    "compiled": true,
+    "default_inert": true,
+    "actual_source_body_amount_Q_price_or_label_consumed_by_preparation": false
+  },
+  "new_contexts": 0,
+  "new_economic_definition_window_or_direction": null,
+  "Q_computed": false,
+  "mask_or_existing_source_changed": false,
+  "official_or_network_calls": 0,
+  "new_native_or_PDF_snapshots": 0,
+  "registered_unexecuted_predecessor_protocol_sha256": "48be90b88de27c2d3afa506366ac175c3866a3edbb96e78d97daac6deabf5a71",
+  "narrow_source_boundary_repair": "Unrecognized parenthesized alphabet headings inside named b cause pending, including uppercase C. No uppercase-to-lowercase normalization or new layout grammar. Scope, source identity, method inventory and eligibility remain unchanged."
+}

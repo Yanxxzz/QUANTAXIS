@@ -1,0 +1,151 @@
+{
+  "id": "WC03_FOUR_PENDING_AR_GENERIC_STRUCTURE_REPAIR_20261011",
+  "status": "FROZEN_FOUR_PENDING_AR_AWAIT_ROOT_REGISTRATION",
+  "prepared_at_utc": "2026-10-11T14:08:11.833634+00:00",
+  "deadline_utc": "2026-10-11T16:00:00+00:00",
+  "registry_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\research_trials.sqlite3",
+  "registration_subject": "WC03_FOUR_PENDING_AR_GENERIC_STRUCTURE_REPAIR_20261011",
+  "event_prefix": "working-capital-pending-ar-four-structure-freeze:",
+  "runtime_bindings": {
+    "observed_source17_parser": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\remaining17_template_v1\\source_templates.py",
+      "sha256": "f7b9c973d77e1861b7f214261ecd7f2437fa053881d1eb8353a55e5ae4abecd1"
+    },
+    "capture_binding_api": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\income_basis.py",
+      "sha256": "028f3fc54fa47c0c505fa78c6188278f8e9069de44e3f4e596bce35913e25034"
+    },
+    "money_api_import_only": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\financial_statements.py",
+      "sha256": "4ce12f040f3719e196801563fc524da1f52c49b45bdf948d2a7fdd2349f92f01"
+    },
+    "imported_G_contract_module": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\g_annual_field_contract.py",
+      "sha256": "3c03fe566a96b193f4eb219e0f6f14083fbae80af13d7edd75672660bb8b21c9"
+    },
+    "adapter": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\remaining17_template_v1\\ar_pending_structure_repair_v1\\ar_structure.py",
+      "sha256": "3af056db4e9e0cdfbe9748ccde732f5140dfb722f980ba53e138e60195da34a2"
+    },
+    "consumer": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\remaining17_template_v1\\ar_pending_structure_repair_v1\\consume_pending_ar.py",
+      "sha256": "5f1464d06894740400366d0449bd3c90f509c2b7d9c7c1a86be0ef5ce19c08d1"
+    },
+    "synthetic_tests": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\remaining17_template_v1\\ar_pending_structure_repair_v1\\test_ar_structure.py",
+      "sha256": "35b70f638758e806963b6f96522a9a7fe3e7a4602924d64dc8846409b7a692e8"
+    }
+  },
+  "bindings": {
+    "source_plan": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\source_plan.json",
+      "sha256": "32de6edd562368a60fbb3f957462facd262387bebf6d5e483b187068c424b4bb"
+    },
+    "capture_db": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\compact_archive\\captured_financial.sqlite3",
+      "sha256": "491c2ef55412d2bd251972c440db5f314cac85c278db0112beb4d7eaa048caa7"
+    },
+    "shared_reader": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\g_field_contract_next100_unit\\consume_retained_sources.py",
+      "sha256": "b384abd8fd61cdd3c485c28c403ccb54bf8edc7abb1b18f6afe3406f4cc3967a"
+    },
+    "source_index_0": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_index.json",
+      "sha256": "fd6375331b690dfb928c8d99e1dc6fb50e2bd8cd3ed45ba461fc32addd26d3f9"
+    },
+    "source_index_1": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_index.json",
+      "sha256": "a695a1bda962b0f01f4be7148fb55cbd486adbe3a022b37e3e90eb57685cd3ea"
+    },
+    "source_index_2": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_full_market_source_expansion_20261007\\source_index.json",
+      "sha256": "e892310e3f449f285bc0f579169d4567622a3badf62d0aefc1c50430d7300fb9"
+    },
+    "source_index_3": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_history_2022_20261009\\source_index.json",
+      "sha256": "b759aa5f94212d13dd24781a12e72fa770f966fd6a5644186a3934f38f1bc3e2"
+    },
+    "completed17_protocol": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\remaining17_template_v1\\protocol_v2.json",
+      "sha256": "c034f7549206a39675ae8e9b2a04babf0cc6badb40d4e06b107f9cdf0dcbf8c9"
+    },
+    "completed17_receipt": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\remaining17_template_v1\\source_facts.json",
+      "sha256": "bdd7dbddc9b537041a59da1e063c488e50549af1d2bed5ebef4bcd88c0112337"
+    },
+    "completed_fixed5_diagnostic": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\remaining17_template_v1\\diagnostic5_v1\\diagnostic.json",
+      "sha256": "7d44e9f991b23a0fdb313b88214c7cbc5298fcacbe9cf4ff9878422820ca71a2"
+    },
+    "completed_fixed5_protocol": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\remaining17_template_v1\\diagnostic5_v1\\protocol_v2.json",
+      "sha256": "84098f68fe9df5148ed80988f006c10b1f017c421a2197904e84bcc284c632a2"
+    }
+  },
+  "selected_codes": [
+    "000637",
+    "000672",
+    "000533",
+    "000678"
+  ],
+  "selected_identity_rows": [
+    {
+      "code": "000637",
+      "announcement_id": "1225248741",
+      "report_date": "2025-12-31",
+      "source_record_sha256": "94037bd307358bb6c2d16d7f53490217a0359ac9c3829b7049e19367b6b332cb"
+    },
+    {
+      "code": "000672",
+      "announcement_id": "1225212571",
+      "report_date": "2025-12-31",
+      "source_record_sha256": "cbab753e708c2161ca37b9ec009c56cfd930092d48b970fc8a9e8bf3536ef36b"
+    },
+    {
+      "code": "000533",
+      "announcement_id": "1225290543",
+      "report_date": "2025-12-31",
+      "source_record_sha256": "378729c234ca91060d1e593beaf7d247e041cb8207b2290eb2339f6491e5a8e2"
+    },
+    {
+      "code": "000678",
+      "announcement_id": "1225220917",
+      "report_date": "2025-12-31",
+      "source_record_sha256": "6417e5e7e6ad40f9e2996864ff094f4816b5b9d911f471c517f9b61cf4117d10"
+    }
+  ],
+  "selected_identity_sha256": "caf8b6bec14b2896aa4d2fcfd7a180e77548c21c4615e9d13e9ce1a5d6fd6238",
+  "excluded_pending_year_case": "000965/1225034675 has no separately retained native current-year evidence in structural receipt; remains source pending and is not consumed.",
+  "output_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\remaining17_template_v1\\ar_pending_structure_repair_v1\\ar_source_facts.json",
+  "structural_evidence": {
+    "000637": "Exact whole-classification bracket section and initial header exist. Printed explicit single/combination detail captions carry trailing text after colon, so old colon-at-line-end pattern failed to bound detail TOTALs. New first explicit detail boundary cuts before that caption.",
+    "000672": "Closest bare successor after consolidated AR4 is 5/receivables financing. Old global all-later-ordinal uniqueness can reject later repeated numeral; only nearest bare successor may close AR, unknown nearest remains pending.",
+    "000533": "Full exact consolidated-note chapter heading follows a completed sentence fullstop on same line, missed by line-start-only spelling. Only exact heading ending at line boundary and sentence-start/fullstop boundary is added.",
+    "000678": "Earliest expected-next ordinal is true eighth chapter/ResearchDevelopment; later same-numeral netprofit table line made global uniqueness reject. First same-ordinal must be an exact semantic chapter; unknown earlier is never skipped."
+  },
+  "contract": {
+    "actual_body_consumption_before_root_registration": false,
+    "only_uncompleted_AR": "Exact four selected KEYs. Reject any inherited complete OR partial stock facts before body read; no previous AR amount replay. No other remaining13, first3, INV, old20/17 consumer, diagnostic rerun.",
+    "read_case": "Complete original capture/canonicalissuer/PDF/text SHA/nativepage/HTTP/EOF gates unchanged. Only original bound full retained text used; no fresh PDF claim, no new copy/download.",
+    "report_binding": "Reuse existing literal report locators and verify exact span SHA, or unchanged f7b9 report_contract only when old report-level fact was never retained. No new spaced-year/metadata-year grammar; closing/opening dates are fiscal roles, never claimed literal dates.",
+    "geometry": "Unique exact consolidated-note chapter, including same-line sentence-terminated spelling. First expected ordinal heading must exact semantic known chapter. Unique bare AR parent; closest bare next heading must ordinal+1 and known asset caption, unknown/bare nesting remains pending. Never arithmetic-based scope.",
+    "whole_vs_detail": "Unique known bracket whole-classification caption. Bound to first next bracket child and first explicit single/combination heading with colon anywhere in printed title. Preserve legal no-colon category rows after whole header. Preheader subtitle/new detail header protective f7b9-v2 logic retained.",
+    "unchanged_amount_grammar": "Only call frozen f7b9 table/tokens for AR three already proved shapes. Full current/opening header exact original roles/percent indices. Printed total row/cells/lexical wrap only; sparse/ambiguous data pending. No percent stripping, blank zero, amount reconstruction or monetary closure to choose columns/bounds.",
+    "partial_facts": "Retain independently bound stock block if other block missing; stock does not need movement to be available. Currency/calendar pending stays partial. Original display-interval arithmetic remains diagnostic only with printed amounts unchanged.",
+    "barriers": "Original policy/estimate/consolidation/restatement/later-version/source-qualification metadata preserved unreviewed/pending. Empty barriers not clean; no comparability or eligibility certification.",
+    "output": "One small AR fact delta with source identity, literal locators/SHA/printed cells and pending. No original receipt overwrites/no fulltext or INV duplicates. Runtime/deadline stop saves completed records and failed exact KEY/index/type; no implicit resumption.",
+    "no_economics": "No Q/new factor/direction/price/F/labels/returns/selection by outcome; no economic failure inference."
+  },
+  "validation": {
+    "synthetic_tests_passed": 14,
+    "default_inert_verified": true,
+    "test_command": "& 'D:\\Anaconda\\envs\\open-webui\\python.exe' -X utf8 -B -m pytest research_runs/night_research_20261011/working_capital_loss_quality_source_unit/remaining17_template_v1/ar_pending_structure_repair_v1/test_ar_structure.py -q -p no:cacheprovider",
+    "new_actual_native_read": false
+  },
+  "new_contexts": 0,
+  "official_calls": 0,
+  "network_calls": 0,
+  "Q_or_any_factor_computed": false,
+  "old_source_masks_receipts_DB_state_registry_Git_changed": false,
+  "economic_failure_claimed": false
+}
