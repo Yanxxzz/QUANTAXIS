@@ -1,0 +1,88 @@
+{
+  "id": "WC03_AR_SOURCE80_METADATA_VERSION_AVAILABILITY_VIEW_20261011",
+  "status": "FROZEN_SOURCE80_METADATA_TIMELINE_AWAIT_ROOT_EXECUTION",
+  "prepared_at_utc": "2026-10-11T14:55:49.913238+00:00",
+  "deadline_utc": "2026-10-11T16:00:00+00:00",
+  "registry_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\research_trials.sqlite3",
+  "event_prefix": "working-capital-source80-metadata-timeline-freeze:",
+  "registration_subject": "WC03_AR_SOURCE80_METADATA_VERSION_AVAILABILITY_VIEW_20261011",
+  "runtime_sha256": "ca662bba9a78925ce95f11cd6e5e829b16ec119fe8ea90e57252604fee1557f8",
+  "bindings": {
+    "source_plan": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\next80_source_plan.json",
+      "sha256": "5e18b594fe550e25758dc1aa838a0c592b7cadbdcec434b940ea7f036d918c5d"
+    },
+    "original_calendar": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\native_gf_adapter_unit\\input_calendar.json",
+      "sha256": "54588da59429095e5a5cf4f29272b220e0ec861eec19ac4b0fdaa9424dbc4c46"
+    },
+    "recent_calendar": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\recent_stockdb_tail_ingest\\calendar_escalated_diagnostic\\vendor_reference_calendar.json",
+      "sha256": "d4e4260a2151eaf6fa9d0ebf9765dd9e7701d2d275e4a5eee282e4e71e9e51d3"
+    },
+    "recent_calendar_receipt": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\recent_stockdb_tail_ingest\\calendar_escalated_diagnostic\\vendor_reference_receipt.json",
+      "sha256": "6281fad68db90f93ed6cb24963abfe6a7d69806bccdbf9203a631fd81a00cbad"
+    },
+    "publication": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_tail_diagnosis_20261009\\financial_publication_index.json",
+      "sha256": "094e9b394935c60fd9d9daa3a00a45e46eb2901ae7822783cb07b8cc514a2831"
+    },
+    "corrections": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_full_market_source_expansion_20261007\\correction_events.json",
+      "sha256": "4b61e65fff5c731a048fe0fd560845b611a0970d9f131f03ac3dcf92bfaddee6"
+    },
+    "recent_metadata": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\announcement_metadata_tail_unit\\metadata.sqlite3",
+      "sha256": "fbd6c1c26d53de50449c3369cbd4980b77a471d172529802dbd01e9b23cb16cf"
+    },
+    "recent_census": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\announcement_metadata_tail_unit\\resume_summary.json",
+      "sha256": "657556c484f3d49465358c4f5baad442b099bea1a67432d97358160052ab1389"
+    },
+    "synthetic_tests": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\next80_ar_source_unit\\metadata_timeline_v1\\test_timeline.py",
+      "sha256": "9917d2174176c41dccc4f40aeb4c1596b10f84415a97ecf4c8e17ac306ad5ce4"
+    },
+    "source_index_0": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\quality_direction_20261007\\source_index.json",
+      "sha256": "fd6375331b690dfb928c8d99e1dc6fb50e2bd8cd3ed45ba461fc32addd26d3f9"
+    },
+    "source_index_1": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_index.json",
+      "sha256": "a695a1bda962b0f01f4be7148fb55cbd486adbe3a022b37e3e90eb57685cd3ea"
+    },
+    "source_index_2": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_full_market_source_expansion_20261007\\source_index.json",
+      "sha256": "e892310e3f449f285bc0f579169d4567622a3badf62d0aefc1c50430d7300fb9"
+    },
+    "source_index_3": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_history_2022_20261009\\source_index.json",
+      "sha256": "b759aa5f94212d13dd24781a12e72fa770f966fd6a5644186a3934f38f1bc3e2"
+    }
+  },
+  "selected_identity_sha256": "2c88802463edaaa03b9c9c05084c6cb854dd181fafd0e93b53b2a7c11b3ce4c0",
+  "fixed_source_count": 80,
+  "input_scope": "Exact5e18 source80 orderedKEY and originalG restrictedfinancialsource population. Only plan/source index/publication/correction/recentannouncement identity-time-period-kind/coveragemetadata. No capturegzip/nativebody/stockmoney/G/F/Q/price/labels, no newsource or oldinput mutation.",
+  "availability_contract": "Preserve oldavailabledate. Conservative publicationdate→next independentverifiedreference trade session; no same-day/preopen claim evensecondtimestamp. Originalcalendar coverage plus recent historicalverifiedwindows only; futureplannedOct12 never enters verifiedsessions. Missingcoverage returnspending not later-session jump. These are marketcalendar reference sessions, not perstock auction or emergencyclosure evidence.",
+  "version_contract": "Group announcementID with original source refs and literal timeprecision. Conflicting code/published day/explicitperiod sets/type/preciseinstant is pending. Explicitlinked FY25 full/revised candidates define potentialsource intervals; knownnewfullreport preventsclaimingoriginal remainslatest aftereffective day. Same-day competing IDs allpendingfieldeffect. Unknownperiod/conflicted events and otherperiod rows remain separate with permanentcode-wide-block=False; no body/title inference of ARimpact or absence.",
+  "coverage_contract": "Recentmetadata querywindowPENDING/UNRESOLVED counts and recordavailabilityplannedstatus retained. Suppliedmetadata rows are not fullchannel/latest/no-correction certification; None revisions is unknown notclean. No G RevCost/asset/INV/cash completeness required.",
+  "output_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\working_capital_loss_quality_source_unit\\next80_ar_source_unit\\metadata_timeline_v1\\version_availability_map.json",
+  "retention": "One owned compact80-record view with ID/source-reference/clock/version candidates and partialstop only; no separatefullpool/stockday/newmetadataDB snapshot. Exactexists guard prevents implicitreplay.",
+  "execution_guard": "Explicit--execute--protocol-sha exact plus Rootexecution_repair0context event; allSHA checks anddeadlinebeforeinputs. Per-case deadline/runtime failure preservescompletedmetadatarecords in the same uniquepartialreceipt; no automaticresume.",
+  "validation": {
+    "synthetic_tests_passed": 12,
+    "compile_checked": true,
+    "default_inert_test_passed": true,
+    "actual80metadata_map_generated": false,
+    "actualbody_or_values_read": false
+  },
+  "new_contexts": 0,
+  "economic_window": null,
+  "new_Q_factor_or_direction": null,
+  "qualified_samples_created": 0,
+  "full_PIT": false,
+  "all_channel_latest_certified": false,
+  "network_or_official_calls": 0,
+  "old_DB_source_state_registry_Git_changed": false
+}

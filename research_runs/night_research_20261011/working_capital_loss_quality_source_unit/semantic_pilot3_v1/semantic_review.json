@@ -1,0 +1,302 @@
+{
+  "status": "COMPLETED_FIXED3_MANUAL_AR_SOURCE_SEMANTIC_REVIEW",
+  "protocol_sha256": "b99820b9a0e5b74f0f14eccaacffcec448613597c509b91e268417893d2bac96",
+  "started_at_utc": "2026-10-11T14:53:26.323755+00:00",
+  "updated_at_utc": "2026-10-11T15:06:23.937314+00:00",
+  "records": [
+    {
+      "source_identity": {
+        "code": "001324",
+        "announcement_id": "1225172819",
+        "report_date": "2025-12-31",
+        "source_record_sha256": "718c0ef42cea638df2e70bb14ee08bbee9bca12efa3a6ef26e0312fbe29a7d36"
+      },
+      "source_binding": {
+        "capture_gzip_sha256": "b56aedb9278ce5c7dd08c9a630c86810e50be752c0faaa1f0388c14379d085c8",
+        "pdf_sha256": "1e36e3bc2e450a0a62dbfd74a4d7f24ca46c5ea60ffc12ea9f1c300b1f16a591",
+        "retained_text_sha256": "b3baebff38308001ccadb93493aeb7d29fb6ac26127d7a7c6aa1644f568985b8",
+        "retained_text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\001324_1225172819.txt.gz",
+        "published_at": "2026-04-24",
+        "available_date_metadata": "2026-04-27",
+        "edition": "ORIGINAL_FULL_REPORT"
+      },
+      "status": "ORIGINAL_EDITION_AR_METHOD_REVIEWED_QUALIFICATION_PENDING",
+      "evidence": [
+        {
+          "kind": "financial_tool_impairment_complete_5_to_6_item",
+          "start": 118837,
+          "end": 122824,
+          "source_page": 149,
+          "span_sha256": "51c1e2721da044b0ad8fdad67186efa4cc0855361b4484385de3d0c1e3b8beae",
+          "brief_excerpt": "（5）金融工具减值\n本公司对于以摊余成本计量的金融资产、以公允价值计量且其变动计入其他综合收益的债权投资、合同资产、租\n赁应收款、贷款承诺及财务担保合同等，以预期信用损失为基础确认损失准备。\n①预期信用损失的计量\n预期信用损失，是指以发生违约的风险为权重的金融工具信用损失的加权平均值。信用损失，是指本公司按照原\n实际利",
+          "complete_item_read": true,
+          "manual_field_period_interpretation": "Original annual policy applies lifetime ECL to AR; objective impaired accounts individually tested and common creditrisk portfolio assessment uses aging/historicalloss/currentforwardviews. These normal ECL judgments are not methodchange evidence."
+        },
+        {
+          "kind": "AR_portfolio_specific_whole_subitem",
+          "start": 120284,
+          "end": 120423,
+          "source_page": 151,
+          "span_sha256": "b4dcf6908ea331a2af40dd8004da0b5f40a8957329efa50c956ce72de35b9f62",
+          "brief_excerpt": "应收账款确定组合的依据如下：\n应收账款组合 1 应收合并范围内公司款项\n应收账款组合 2 应收合并范围外公司款项\n对于划分为组合的应收账款，本公司参考历史信用损失经验，结合当前状况以及对未来经济状况的预测，编制应\n收账款账龄与整个存续期预期信用损失率对照表，计算预期信用损失。",
+          "complete_item_read": true,
+          "manual_field_period_interpretation": "AR portfolios are within/outside consolidation entities; aging versus lifetime-lossrate matrix. Full AR portfolio subitem read. Does not prove all period-specific causes or historical data versions."
+        },
+        {
+          "kind": "annual_policy_estimate_first_execution_complete_section",
+          "start": 145282,
+          "end": 145445,
+          "source_page": 181,
+          "span_sha256": "3b9da20d8b3a859994d79f5e4c93c1b0b79a4fa786fd07c3331a753ddd794cab",
+          "brief_excerpt": "43、重要会计政策和会计估计变更\n（1） 重要会计政策变更\n□适用 不适用\n（2） 重要会计估计变更\n□适用 不适用\n（3） 2025 年起首次执行新会计准则调整首次执行当年年初财务报表相关项目情况\n□适用 不适用\n===SOURCE_PAGE:182===\n常州长青科技股份有限公司 2025 年年度报告全文\n1",
+          "complete_item_read": true,
+          "manual_field_period_interpretation": "All three specific annual items explicitly notapplicable: policychange, estimatechange, firstyear newstandard openingadjustment. Read with current AR policy; no claim based solely on one partial checkbox."
+        },
+        {
+          "kind": "board_comparison_complete_section",
+          "start": 68423,
+          "end": 68502,
+          "source_page": 88,
+          "span_sha256": "d7c74f1f41a1a84a1b9811deddc6f5f0b6ecda705c0f156c454dee94de8a4c6a",
+          "brief_excerpt": "六、与上年度财务报告相比，会计政策、会计估计变更或重大会计差错更正的情况说明\n□适用 不适用\n公司报告期无会计政策、会计估计变更或重大会计差错更正的情况。",
+          "complete_item_read": true,
+          "manual_field_period_interpretation": "Reports no policy/estimatechange or majorerrorcorrection compared with priorfinancialreport; this is a majorerror statement, not certification that every minor opening correction is absent."
+        },
+        {
+          "kind": "prior_error_complete_1_to_2_section",
+          "start": 201362,
+          "end": 201463,
+          "source_page": 256,
+          "span_sha256": "affb7265f7d27a124639e7008a7905ab5728676adfd6b5c76de49c41f20d6729",
+          "brief_excerpt": "1、前期会计差错更正\n（1） 追溯重述法\n单位：元\n会计差错更正的内容 处理程序\n受影响的各个比较期间报表\n项目名称\n累积影响数\n（2） 未来适用法\n会计差错更正的内容 批准程序 采用未来适用法的原因",
+          "complete_item_read": true,
+          "manual_field_period_interpretation": "Retrospective/futureapplication items show empty template headers with no explicit negative declaration. Do not treat blank table as zero corrections."
+        }
+      ],
+      "original_edition_method_status": "AR_specific_current_report_lifetime_ECL_and_single_portfolio_definition_bound",
+      "current_opening_applicability": "annual_no_policy_or_estimatechange_statement_supported_but_no_independent_complete_opening_restatement_certification",
+      "opening_restatement_status": "empty_detail_template_and_majorerror_only_statement_not_fullnegative_certificate",
+      "normal_forward_credit_judgment_is_automatic_block": false,
+      "composition_or_customer_identity_required": false,
+      "currency_absolute_normalization_gate_for_ratio": false,
+      "latest_version_status": "not_certified_in_this_originaledition_pilot",
+      "source_qualified": false,
+      "unexpected_output_limit": {
+        "audit_segment_monetary_tokens_inadvertently_displayed": 2,
+        "values_retained_in_receipt": false,
+        "used_for_ratio_Q_selection_or_semantic_decision": false,
+        "incidental_nonstock_nearby_financial_text_seen": true,
+        "none_retained_as_monetary_values_or_used_for_decisions": true
+      },
+      "stock_or_movement_amounts_reextracted": false,
+      "Q_computed": false,
+      "price_or_label_read": false
+    },
+    {
+      "source_identity": {
+        "code": "001395",
+        "announcement_id": "1225158421",
+        "report_date": "2025-12-31",
+        "source_record_sha256": "76995525a206b17985ccef9295ea22699b3300be67a8e7e0e4d222813ac407d1"
+      },
+      "source_binding": {
+        "capture_gzip_sha256": "eb9e2f32b75a6c194a43e53c354601ee991774e2b9080b4b928dfef25745e718",
+        "pdf_sha256": "c699246f1ef14dc4ec2bde5ff3c64169f3cc85c629863d61d0fabe68be4195ca",
+        "retained_text_sha256": "a4c0a9678e551e6359cd336a383a2095bf681e50f106ebdad83bf389672b197e",
+        "retained_text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\001395_1225158421.txt.gz",
+        "published_at": "2026-04-24",
+        "available_date_metadata": "2026-04-27",
+        "edition": "ORIGINAL_FULL_REPORT"
+      },
+      "status": "ORIGINAL_EDITION_AR_METHOD_REVIEWED_LATER_REVISION_PENDING",
+      "evidence": [
+        {
+          "kind": "whole_financial_asset_impairment_item",
+          "start": 94611,
+          "end": 97595,
+          "source_page": 127,
+          "span_sha256": "4e937ffbcc180560f798201187ae9339484db4480de85187f6ddfd3b100973d0",
+          "brief_excerpt": "（7）金融资产减值\n本公司需确认减值损失的金融资产系以摊余成本计量的金融资产、以公允价值计量且其变动计入其他综\n合收益的债务工具投资，主要包括应收票据、应收账款、合同资产、其他应收款、长期应收款等，以预\n期信用损失为基础确认损失准备。\n①减值准备的确认方法 \n本公司以预期信用损失为基础，对上述各项目按照其适用的预期信用",
+          "complete_item_read": true,
+          "manual_field_period_interpretation": "Complete expectedloss measurement segment read, including separate general/simplified approaches, individual assessment/portfolio commonrisks and financialasset-specific scope. Current lossjudgments are normal ECL inputs, not automatic methodchange."
+        },
+        {
+          "kind": "AR_contract_asset_specific_b_to_c_item",
+          "start": 96248,
+          "end": 97152,
+          "source_page": 128,
+          "span_sha256": "03a4e839d71c54105e1ce0e5d39adb4c06860b78a2bc05e6705ff44a360f17ad",
+          "brief_excerpt": "b.应收账款及合同资产\n===SOURCE_PAGE:129===\n 亚联机械股份有限公司 2025 年年度报告全文\n129/219\n对于不含重大融资成分的应收款项和合同资产，本公司按照相当于整个存续期内的预期信用损失金额计\n量损失准备。\n对于包含重大融资成分的应收款项、合同资产，本公司选择始终按照相当于存续期内预期信",
+          "complete_item_read": true,
+          "manual_field_period_interpretation": "Both financing/nonfinancing AR use lifetime ECL; AR separately from contractasset portfolio descriptions, individually assessed cases and aging/withinconsolidation portfolios. Whole AR-specific b item read; combined clause does not merge Q operands with contractassets."
+        },
+        {
+          "kind": "AR_specific_policy_crossreference_13_to_14",
+          "start": 97713,
+          "end": 97776,
+          "source_page": 131,
+          "span_sha256": "84eade2cb37170ba83885c90c04f6355a28d0a98ef2fbde082d668ce6cae94b4",
+          "brief_excerpt": "13、应收账款\n应收账款的预期信用损失的确定方法及会计处理方法详见附注“五、重要会计政策及会计估计”之\n“11、金融工具”。",
+          "complete_item_read": true,
+          "manual_field_period_interpretation": "AR policy explicitly points to same report11 financialtools; no otherreceivable/AP/INV field substitution."
+        },
+        {
+          "kind": "annual_policy_estimate_and_firstyear_adjustment_items",
+          "start": 114919,
+          "end": 115027,
+          "source_page": 150,
+          "span_sha256": "2d32e3f5781a9dd75ca93e3b3014abf7e5335f94d240091bbcf0041049070ce0",
+          "brief_excerpt": "43、重要会计政策和会计估计变更\n（1）重要会计政策变更\n□适用 不适用\n（2）重要会计估计变更\n□适用 不适用\n（3）2025 年起首次执行新会计准则调整首次执行当年年初财务报表相关项目情况\n□适用 不适用",
+          "complete_item_read": true,
+          "manual_field_period_interpretation": "Policychange, estimatechange and firstnewstandard openingadjustment each explicitly notapplicable in complete annualsection."
+        },
+        {
+          "kind": "prior_error_1_to_2_complete_item",
+          "start": 152562,
+          "end": 152577,
+          "source_page": 210,
+          "span_sha256": "430a58aaedb2e31e8341be7c0a46caa349df0fd041879507ffabf471a3291646",
+          "brief_excerpt": "1、前期会计差错更正\n不适用",
+          "complete_item_read": true,
+          "manual_field_period_interpretation": "The entire prioraccountingerror item explicitly says notapplicable, separate from majorerror boardlanguage."
+        },
+        {
+          "kind": "board_comparison_complete_section",
+          "start": 54097,
+          "end": 54177,
+          "source_page": 67,
+          "span_sha256": "881db0ac2b1e7e5067003b8c597c103ff612031e9fbb107414f5a1d883c7f84d",
+          "brief_excerpt": "六、与上年度财务报告相比，会计政策、会计估计变更或重大会计差错更正的情况说明 \n□适用 不适用\n公司报告期无会计政策、会计估计变更或重大会计差错更正的情况。",
+          "complete_item_read": true,
+          "manual_field_period_interpretation": "Reports no policy/estimatechange or majorerrorcorrection in this original edition; does not prove laterrevision effect."
+        }
+      ],
+      "original_edition_method_status": "AR_specific_lifetime_ECL_and_individual_portfolio_policy_bound",
+      "current_opening_applicability": "same_original_report_AR_table_roles_with_explicit_no_policy_estimate_firstyear_adjustment_or_priorerror_items; sourcefacts_only_not_full_versionchain",
+      "opening_restatement_status": "original_edition_explicit_prior_error_notapplicable; laterrevision_opening_effect_unread_pending",
+      "known_later_revision": {
+        "announcement_id": "1225309665",
+        "published_at_metadata": "2026-05-16",
+        "available_session_status": "not_resolved_in_this_pilot",
+        "revision_body_or_notices_read": false,
+        "AR_method_or_opening_effect": "unknown_pending",
+        "original_report_latest_after_revision": "not_certified"
+      },
+      "normal_forward_credit_judgment_is_automatic_block": false,
+      "composition_or_customer_identity_required": false,
+      "currency_absolute_normalization_gate_for_ratio": false,
+      "latest_version_status": "postrevision_current_original_edition_use_pending; no stale fallback or noeffect assertion",
+      "source_qualified": false,
+      "source_read_limitations": {
+        "incidental_nonstock_nearby_financial_text_was_displayed": true,
+        "not_retained_as_monetary_values_or_used_for_Q_selection_or_semantic_eligibility": true
+      },
+      "stock_or_movement_amounts_reextracted": false,
+      "Q_computed": false,
+      "price_or_label_read": false
+    },
+    {
+      "source_identity": {
+        "code": "002041",
+        "announcement_id": "1225144820",
+        "report_date": "2025-12-31",
+        "source_record_sha256": "568211ee5693414ae08783faa9f519ed402ed84f45629a2239bec8f7c6955f03"
+      },
+      "source_binding": {
+        "capture_gzip_sha256": "50aff733ec44f3c91230a789110b94fc85044ca0421f63704185657bb77b53af",
+        "pdf_sha256": "b5a8ca9c13461740df80ee0aa5eea66ef524d55e825a30eecb49b612748b2227",
+        "retained_text_sha256": "4a5860bb22142c54e9cafe6d10523b745547f55bb8e637a63e78cd556e231cb2",
+        "retained_text_path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_source_expansion_20261007\\source_text\\002041_1225144820.txt.gz",
+        "published_at": "2026-04-23",
+        "available_date_metadata": "2026-04-24",
+        "edition": "ORIGINAL_FULL_REPORT"
+      },
+      "status": "ORIGINAL_EDITION_AR_METHOD_REVIEWED_OPENING_VERSION_PENDING",
+      "evidence": [
+        {
+          "kind": "financial_tool_impairment_complete_six_to_seven_item",
+          "start": 80626,
+          "end": 83133,
+          "source_page": 82,
+          "span_sha256": "562148b14b049cb5864dbfa31b307adcbd612a78111311247c09d722fdb3eb14",
+          "brief_excerpt": "（六）金融工具减值\n本公司对以摊余成本计量的金融资产、分类为以公允价值计量且其变动计入其他综合收益的金融\n资产、合同资产以及财务担保合同以预期信用损失为基础进行减值会计处理并确认损失准备。\n===SOURCE_PAGE:83===\n—— 努力 · 探索 · 创新 —— 山东登海种业股份有限公司 2025 年年度报告全文",
+          "complete_item_read": true,
+          "manual_field_period_interpretation": "Complete financialtool impairment item read. Revenue-standard AR uses lifetime simplified ECL; individual impairment/portfolio assessment, normal reasonable forward-looking credit judgments and explicit gross writeoff when no cashflow expected. No cashrecovery inference from net or allowance movement."
+        },
+        {
+          "kind": "AR_specific_12_to_13_item",
+          "start": 83282,
+          "end": 83548,
+          "source_page": 85,
+          "span_sha256": "c3d0a2db336932066fd82ff1b0b2bdd6afe15ac7d4bada10dd48b73711ab49ad",
+          "brief_excerpt": "12、应收账款\n本公司对应收账款的预期信用损失的确定方法及会计处理方法详见本附注（十一）6、金融工具减\n值。\n本公司对单项金额在初始确认后已经发生信用减值的应收账款单独确定其信用损失。\n当在单项工具层面无法以合理成本评估预期信用损失的充分证据时，本公司参考历史信用损失经\n验，结合当前状况以及对未来经济状况的判断，依据信",
+          "complete_item_read": true,
+          "manual_field_period_interpretation": "AR explicitly refers to financialtool impairment6; impaired accounts individually assessed, otherwise portfolio by withinconsolidationrelatedparty/aging. Whole ARspecific item read; otherreceivables not substituted."
+        },
+        {
+          "kind": "annual_policy_estimate_and_firstyear_adjustment_complete_32_to_33_section",
+          "start": 98984,
+          "end": 99095,
+          "source_page": 103,
+          "span_sha256": "a95fff20e3b7dd9b03b914e6a303d0d6d56c6b410e52ab39ef50e157ace36f53",
+          "brief_excerpt": "32、重要会计政策和会计估计变更\n（1） 重要会计政策变更\n□适用 不适用\n（2） 重要会计估计变更\n□适用 不适用\n（3） 2025 年起首次执行新会计准则调整首次执行当年年初财务报表相关项目情况\n□适用 不适用",
+          "complete_item_read": true,
+          "manual_field_period_interpretation": "Policychange, estimatechange and firstnewstandard openingadjustment each explicitly notapplicable in full annualsection."
+        },
+        {
+          "kind": "board_comparison_complete_section",
+          "start": 46438,
+          "end": 46517,
+          "source_page": 42,
+          "span_sha256": "d7c74f1f41a1a84a1b9811deddc6f5f0b6ecda705c0f156c454dee94de8a4c6a",
+          "brief_excerpt": "六、与上年度财务报告相比，会计政策、会计估计变更或重大会计差错更正的情况说明\n□适用 不适用\n公司报告期无会计政策、会计估计变更或重大会计差错更正的情况。",
+          "complete_item_read": true,
+          "manual_field_period_interpretation": "Reports no policy/estimatechange or majorerrorcorrection; does not certify absence of every minor opening correction."
+        }
+      ],
+      "original_edition_method_status": "current_report_AR_lifetime_ECL_individual_portfolio_basis_bound",
+      "current_opening_applicability": "annual_no_policy_or_estimatechange_statement_supported; full openingrestatement_and_version_chain_not_certified",
+      "opening_restatement_status": "targeted_full_prior_error_negative_item_not_uniquely_bound; majorerror_statement_not_minorerror_absence",
+      "prior_error_not_located_is_negative_evidence": false,
+      "normal_forward_credit_judgment_is_automatic_block": false,
+      "composition_or_customer_identity_required": false,
+      "currency_absolute_normalization_gate_for_ratio": false,
+      "latest_version_status": "not_certified_in_original_edition_pilot",
+      "source_qualified": false,
+      "stock_or_movement_amounts_reextracted": false,
+      "Q_computed": false,
+      "price_or_label_read": false
+    }
+  ],
+  "execution_stop": null,
+  "resume_position": {
+    "completed_records": 3,
+    "remaining_source_identities": [],
+    "automatic_resume_allowed": false
+  },
+  "new_contexts": 0,
+  "Q_amount_or_any_factor_computed": false,
+  "financial_qualification_created": false,
+  "old_sourcefacts_masks_DB_state_registry_or_Git_changed": false,
+  "new_native_or_PDF_copies": 0,
+  "official_or_network_calls": 0,
+  "completed_at_utc": "2026-10-11T15:06:23.947315+00:00",
+  "human_steering": "Latest user requested daily summary/reflection and newdirection. All3 sourcebytes had already been opened before steering; finished only already-started thirdcase. No newsource/Q/value/labels or expansion aftersteering.",
+  "source_qualification_summary": {
+    "manual_sourcecases_reviewed": 3,
+    "qualified_created": 0,
+    "original_edition_AR_method_bound": 3,
+    "opening_restatement_complete_negative_originaledition_items": 1,
+    "latest_version_or_later_revision_pending": 3
+  },
+  "reader_sessions_closed_after_completion": true,
+  "execution_limitations": {
+    "incidental_audit_monetary_tokens_displayed": 2,
+    "adjacent_nonstock_financial_text_also_displayed": true,
+    "monetary_values_not_retained_in_result": true,
+    "no_stock_or_movement_tables_reextracted": true,
+    "no_Q_ratio_or_factor_computed": true,
+    "no_prices_or_labels_read": true,
+    "audit_or_other_adjacent_sections_not_used_as_method_opening_or_revision_certification": true
+  }
+}
