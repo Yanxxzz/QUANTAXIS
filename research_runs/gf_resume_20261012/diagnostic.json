@@ -1,0 +1,44 @@
+{
+  "status": "COMPLETE_VALUE_ONLY_F141_INPUT_GRID_DIAGNOSIS",
+  "protocol_sha256": "3f4c197f1450e768dad3ca64334319ba58d0075739416a2d7f20d1e52edf6710",
+  "source_rows": 2977581,
+  "symbols": 5608,
+  "calendar_days": 550,
+  "price_frame_hash": "93dc4fe1220e0e0d64ebc0d815eb9b8a3cb40134a2ce3cfd5de4226acf943933",
+  "dates": [
+    {
+      "date": "2026-08-26",
+      "received_price_peers": 5517,
+      "observed_finite": 5315,
+      "calendar_finite": 4834,
+      "research_finite": 4834,
+      "joint_finite": 4834,
+      "observed_calendar_max_rank_error": 0.023333505885521633,
+      "calendar_research_max_rank_error": 0.0,
+      "observed_research_rank_correlation": 0.9999908576546691,
+      "observed_research_low_decile_overlap": 0.9958677685950413,
+      "calendar_research_low_decile_overlap": 1.0
+    },
+    {
+      "date": "2026-09-03",
+      "received_price_peers": 5517,
+      "observed_finite": 5307,
+      "calendar_finite": 4829,
+      "research_finite": 4829,
+      "joint_finite": 4829,
+      "observed_calendar_max_rank_error": 0.024767883160524806,
+      "calendar_research_max_rank_error": 0.0,
+      "observed_research_rank_correlation": 0.9999910833816316,
+      "observed_research_low_decile_overlap": 0.9958592132505176,
+      "calendar_research_low_decile_overlap": 1.0
+    }
+  ],
+  "operator_assumption": "previous observed per-symbol close, no fill; same rule on rectangular calendar. Actual platform RETURNS remains unverified.",
+  "native_platform_values_parity_certified": false,
+  "old_GF_F141_outputs_replaced": false,
+  "new_economic_contexts": 0,
+  "forward_return_labels_read": false,
+  "official_calls": 0,
+  "price_snapshot_saved": false,
+  "completed_at_utc": "2026-10-12T05:39:32.231911+00:00"
+}
