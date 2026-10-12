@@ -197,6 +197,25 @@ def test_unknown_same_year_h1_income_correction_blocks_annual_delta(store):
     assert not row(store).pit_usable
 
 
+@pytest.mark.parametrize("period", ["2024-12-31", "2024-06-30"])
+def test_prior_comparative_year_revision_also_blocks_g_delta(store, period):
+    ready(store)
+    store.append("blocker", "000001", {
+        "source_binding": PROOF, "published_at": "2026-10-09", "report_dates": [period],
+        "affected_fields": ["operating_cost"], "scope_verified": False,
+    }, observed_at=OBSERVED)
+    assert not row(store).pit_usable
+
+
+def test_announced_future_fiscal_year_is_not_a_completed_annual(store):
+    ready(store)
+    store.append("report_metadata", "000001", {
+        "source_binding": PROOF, "published_at": "2026-10-09",
+        "report_date": "2026-12-31", "announcement_id": "future-report-work-plan",
+    }, observed_at=OBSERVED)
+    assert row(store).announcement_id == "annual-2025"
+
+
 def test_latest_industry_edition_omission_does_not_fall_back(store):
     ready(store)
     industry(store, {"000002": "C31"}, publication="2026-10-09")

@@ -1,0 +1,21 @@
+{
+  "status": "LOCAL_CONTINUITY_V2_COMPARATIVE_YEAR_GUARD_TESTED",
+  "base_review": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\g_continuity_20261012\\continuity_review.json",
+    "sha256": "2326e4053217f00aecfa2cdff9975b0d1433e15eb89e84c1de35816b85b0131b"
+  },
+  "module": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\g_continuity.py",
+    "sha256": "4751ac73a68594f0c822bf51e40b91fc72e452ae4e2ecb656fc736878fd5d0cb"
+  },
+  "tests": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\tests\\test_g_continuity.py",
+    "sha256": "ba3e0fe9d5e1389d0f63b55e6ec0caae4ef47e40335f0a3fb84b808fb20651c6"
+  },
+  "synthetic_g_and_model_tests_passed": 54,
+  "source_patch": "Gdelta also depends on prior comparativeFY; unresolved priorFY/H1 changes block. Future incompleteFY metadata is not current annual. Industry fragment output cites the actual issuer source event.",
+  "financial_formula_or_old_results_changed": false,
+  "new_economic_contexts": 0,
+  "official_channel_pending": true,
+  "official_spent": 0
+}

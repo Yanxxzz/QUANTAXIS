@@ -154,7 +154,8 @@ class GSourceStore:
             if (clock(cutoff)-clock(check['observed_at'])).total_seconds()>max_refresh_age_days*86400:
                 rows.append({**base,'source_status':'source_refresh_stale'});continue
             reports=[e for e in own if e['kind'] in ('annual','report_metadata') and available(e)
-                     and str(e.get('report_date','')).endswith('-12-31')]
+                     and str(e.get('report_date','')).endswith('-12-31')
+                     and e['report_date']<=day]
             period=max((e['report_date'] for e in reports),default=None)
             if not period:
                 rows.append({**base,'source_status':'annual_report_pending'});continue
@@ -184,7 +185,8 @@ class GSourceStore:
                 rows.append({**base,'source_status':str(error),'announcement_id':annid});continue
             blockers=[e for e in own if e['kind']=='blocker' and available(e)
                       and (not e.get('report_dates') or period in e['report_dates']
-                           or any(str(p).startswith(period[:4]+'-') for p in e['report_dates']))]
+                           or any(str(p)[:4] in {period[:4],str(int(period[:4])-1)}
+                                  for p in e['report_dates']))]
             resolved={e.get('resolves_event_id') for e in own if e['kind']=='resolution' and available(e)
                       and e.get('effect_status')=='unchanged_selected_annual'
                       and e.get('annual_source_id')==annid}
