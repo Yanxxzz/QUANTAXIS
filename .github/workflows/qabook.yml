@@ -1,8 +1,7 @@
 name: Build LaTeX document
-on: 
-  push:
-    branches:
-      - "master"
+on:
+  # Legacy book compilation and release are optional, separate from research validation.
+  workflow_dispatch:
 jobs:
   build_latex:
     runs-on: ubuntu-latest

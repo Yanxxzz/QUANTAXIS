@@ -1,7 +1,7 @@
-# QUANTAXIS QABook PDF自动编译与发布
+# QUANTAXIS QABook PDF手动编译与发布
 #
 # 功能说明:
-# - 当qabook/目录有更新时自动触发
+# - 仅通过workflow_dispatch手动触发；本Fork的普通研究提交不发布上游书籍
 # - 使用XeLaTeX编译生成PDF
 # - 自动发布到GitHub Releases
 #
@@ -11,12 +11,6 @@
 name: 编译QABook PDF
 
 on:
-  push:
-    branches:
-      - master
-    paths:
-      - 'qabook/**'
-      - '.github/workflows/qabook-build.yml'
   workflow_dispatch:
 
 permissions:

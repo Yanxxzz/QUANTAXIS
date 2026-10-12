@@ -144,6 +144,8 @@ schedule免费读取余额；compute-status与compute-review完全离线。dispa
 
 GitHub Actions对研究层执行公开源码与合成数据检查，以及离线回归。测试不调用真实官网回测，也不替代外部来源、完整历史股票池、修订链、竞价或容量验收。独立研究镜像说明见[docker/panda-alpha](docker/panda-alpha/README.md)。
 
+日常提交保留Panda Alpha harness、Python application、Python package和研究镜像构建检查。上游遗留的三个Docker发布任务、两个QABook编译发布任务和mdbook Pages部署均改为手动触发，避免每次提交研究代码时反复执行无关发布。旧任务的镜像源、LaTeX依赖与发布权限需在手动使用前单独配置；当前研究镜像发布仍通过[docker-publish.yml](.github/workflows/docker-publish.yml)的手动publish选项启用。
+
 ## 上游与许可
 
 - [QUANTAXIS](https://github.com/yutiansut/QUANTAXIS)：数据结构、来源接口、复权及量化框架；原说明与版权保留。

@@ -1,7 +1,7 @@
-# QUANTAXIS 文档自动构建与发布
+# QUANTAXIS 文档手动构建与发布
 #
 # 功能说明:
-# - 当推送到master分支时自动触发
+# - 仅通过workflow_dispatch手动触发；本Fork的普通研究提交不部署上游文档
 # - 使用mdbook构建中文文档
 # - 发布到GitHub Pages
 #
@@ -11,13 +11,6 @@
 name: 部署mdbook文档
 
 on:
-  push:
-    branches:
-      - master
-    paths:
-      - 'doc/**'
-      - 'book.toml'
-      - '.github/workflows/mdbook-deploy.yml'
   workflow_dispatch:
 
 # 设置GITHUB_TOKEN权限
