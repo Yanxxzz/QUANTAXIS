@@ -1,0 +1,178 @@
+{
+  "id": "G_CONTINUITY_EXISTING_SOURCE_CONTRACT_REVIEW_20261012",
+  "created_at_utc": "2026-10-12T15:07:11.283077+00:00",
+  "scope": "Read existing source contracts and producer code only; no source ingestion, labels, prices, official dispatch or prior result replay.",
+  "bindings": {
+    "annual_GP02_selector": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\annual_gross_profitability.py",
+      "sha256": "db540f82319482b54daaebc7dfb5ac9f4577c4c0f345f1b4b612dc0afb414cc0"
+    },
+    "G_amount_contract": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\g_annual_field_contract.py",
+      "sha256": "bd710cf1037ce216263b096be87dc57b20c339d117bf4bfc7e0f6c03ab6048ed"
+    },
+    "industry_asof": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\industry.py",
+      "sha256": "a8fea62e41fa210d1bf0971ac1ea7a72fcfb95497c0cd76e7423ce01884f388a"
+    },
+    "original_G_definition_producer": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_arinv_increment_20261009\\prepare_increment_inputs.py",
+      "sha256": "b20ec06dbbf6704f4f6c918fe3456344050c3efa7fd303b0f3eee0f28d80f21c"
+    },
+    "original_G_definition_protocol": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\wc03_arinv_increment_20261009\\protocol.json",
+      "sha256": "45bc14f8b0d084af89876bb07fd874b50d850c9478c28ecd91c046fcffdadf4b"
+    },
+    "first20_original": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\g_field_contract_first20_unit\\source_contracts.json",
+      "sha256": "9ac46922b66ea6cc696911cfd25badeea6e6c76d9f9b3f717b39b7029ff7c48e"
+    },
+    "first20_amount_delta": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\g_field_contract_first20_unit\\asset_continuation_repair_v1\\source_contract_delta.json",
+      "sha256": "baf4fc4f6bf5500fcd7d9703938f0ad8ed4eddda31255f0cd80e886b2e661b21"
+    },
+    "300564_later_boundary": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\g_field_contract_first20_unit\\h1_asset_native_adapter_v1\\source_continuation.json",
+      "sha256": "8c364fff4cb9334513cc7eaf8c5c161468faf5b9ffb04ea52ee065ad8a0094cf"
+    },
+    "next100_original": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\g_field_contract_next100_unit\\source_contracts.json",
+      "sha256": "d6f4a92da673c8525a42ba9cbcf71d0223bcfe1c00bf3f3760f13998a4be640b"
+    },
+    "next100_amount_delta": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\g_field_contract_next100_unit\\geometry_continuation_repair_v1\\source_contract_delta.json",
+      "sha256": "8d01a5e24fcdc1fd6d88cea682dc78d93ea2c303c80bdf6d2411bcbeade9d3cc"
+    },
+    "next100_semantic_delta": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\g_field_contract_next100_unit\\shex_semantic_state_adapter_v1\\source_semantic_delta.json",
+      "sha256": "8dc80ae9b90991cc4d2f5a720b4f1a6b18a1b3b1a753f9f7e2582e098a288654"
+    },
+    "301102_later_boundary": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\g_field_contract_next100_unit\\301102_source_contract_v1\\source_continuation.json",
+      "sha256": "aa554d344844f924481d64b349cb25017af34819d62437b57b43850256e643e6"
+    },
+    "next100_frozen_versions": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\g_field_contract_next100_unit\\protocol.json",
+      "sha256": "4e930f51a9a55ad2a0848871e464ae59f7cb2affa6f23441b36e346c5345ff85"
+    },
+    "metadata_tail_range": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\announcement_metadata_tail_unit\\protocol.json",
+      "sha256": "23c7035e953223d31c806e2963ace1d881c1191e833ecd239e3a1d8e4b06d5cc"
+    },
+    "metadata_tail_result": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\announcement_metadata_tail_unit\\resume_summary.json",
+      "sha256": "657556c484f3d49465358c4f5baad442b099bea1a67432d97358160052ab1389"
+    },
+    "calendar_reference": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\recent_stockdb_tail_ingest\\calendar_escalated_diagnostic\\vendor_reference_calendar.json",
+      "sha256": "d4e4260a2151eaf6fa9d0ebf9765dd9e7701d2d275e4a5eee282e4e71e9e51d3"
+    },
+    "G_inventory": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\g_source_coverage_inventory.json",
+      "sha256": "fffc89c58bcb35e8da0ab9f7d828cc61de4e9b644d049e99f4118ae57dfac5f8"
+    }
+  },
+  "original_G_definition": {
+    "raw": "((current_year_revenue-current_year_operating_cost)-(same_report_prior_year_revenue-same_report_prior_year_operating_cost))/((current_year_closing_assets+same_report_fiscal_opening_assets)/2)",
+    "rank": "average-tie percentile raw GP_delta within dated published industry for source-qualified G cohort before native F missingness",
+    "sign": "higher annual gross-profit improvement is higher G",
+    "annual_only": true,
+    "singleton_rank": "Existing pandas rank(method=average,pct=True) is retained, including singleton=1; do not silently replace with midpoint .5."
+  },
+  "non_equivalent_existing_module": {
+    "module": "panda_alpha.annual_gross_profitability.select_annual_gross_profit_asof",
+    "value": "current FY gross-profit / current closing assets",
+    "finding": "This is GP02 and not GF annual GP_delta. Reusing value directly changes the economic definition. Its correction checks may inform source gates but it is not the G scalar producer."
+  },
+  "usable_producers": [
+    {
+      "module": "panda_alpha.g_annual_field_contract.bound_annual_G_fields",
+      "input": "document original captured JSON + binding {capture_gzip,capture_sha256,text_gzip}",
+      "output": "amounts.operating_revenue/cost current_yuan/comparative_yuan, current_span/comparative_span; assets current_yuan/opening_yuan/current_stock_asof/opening_stock_asof/opening role and printed precision; current_comparability pending reasons, locators and preserved original barriers",
+      "notes": "Full retained text and original capture/source hashes bind field/period/unit/scope. Amount facts are distinct from comparability and latest-version coverage. No AR/INV/AP or F141 dependency."
+    },
+    {
+      "module": "g_field_contract_next100_unit/consume_retained_sources.py",
+      "input": "frozen cases + captured_financial.sqlite3 + complete source indices + verified reference calendar + annual_version_metadata + metadata.sqlite3 + correction scope + published industry edition",
+      "output": "per-formation source_contract_proposed_ready/pending_reasons; exact source identity, H1 comparison and known-event state",
+      "notes": "Reusable source-only algorithm but currently one-shot with deadline and fixed dates. Do not execute complete unit again or extrapolate its date gates indefinitely."
+    },
+    {
+      "module": "panda_alpha.industry.asof_industry / query_industry_asof",
+      "input": "globally named published industry vintages / DB edition+rows",
+      "output": "globally latest public edition and exact code within scope or UNKNOWN",
+      "notes": "Do not fall back to older code-specific industry if omitted from newest edition. Financial category J remains outside original G domain."
+    }
+  ],
+  "existing_source_state": {
+    "first20": "3 original amount bound + 17 cross-page amount delta =20; only300564 complete G3 and named H1/version source proposal at2026-09-16 and2026-09-23.",
+    "next100": "42 original amount bound +58 geometry amount delta=100; semantic delta has actual remaining barriers; only301102 has exact full source proposal at2026-09-16 and2026-09-23.",
+    "ready_proposals": [
+      "300564",
+      "301102"
+    ],
+    "financial_full_PIT_certified": false,
+    "can_extend_formations_to_today_without_source_refresh": false,
+    "amounts_bound_not_eligibility": true
+  },
+  "recommended_live_input_schema": {
+    "identity": [
+      "symbol six digits",
+      "announcement_id",
+      "report_date FY-end",
+      "published_at literal + precision",
+      "edition",
+      "record_sha256",
+      "PDF SHA",
+      "text SHA",
+      "capture SHA",
+      "source_contract SHA"
+    ],
+    "time": [
+      "public_available_reference_session strictly after date-only publication",
+      "first_observed_at UTC",
+      "first_validated_at UTC",
+      "effective_reference_session=max(public available, local accepted availability)",
+      "coverage_attestation source scope/query ranges/watermark/expiry",
+      "independently accepted decision calendar"
+    ],
+    "operands": [
+      "revenue_current_yuan",
+      "revenue_comparative_yuan",
+      "cost_current_yuan",
+      "cost_comparative_yuan",
+      "assets_current_yuan",
+      "assets_opening_yuan",
+      "separate full-year flow dates, asset closing/opening role, source units/precision/scope"
+    ],
+    "states": [
+      "amounts_status",
+      "comparability_state + unresolved reasons",
+      "known successor/correction identities and relevant fiscal field roles",
+      "exact exception/scope evidence only",
+      "latest edition uniqueness",
+      "dated industry vintage"
+    ],
+    "append_only": "New discovery/review appends a new observation. Existing source and emitted decisions retain their original knowledge cutoff; retrospective research requires separately named vintage mode."
+  },
+  "selection_rules": [
+    "At decision date, select latest disclosed annual FY and latest disclosed edition for that FY, including metadata-only pending filings; latest pending blocks old report carry. H1/Q1 never silently replaces annual operands.",
+    "Bind the six original annual operands from one same-report contract; mean assets requires its independent closing/opening roles. Jan1 fiscal-opening label stays literal and is not falsely described as an originally printed Dec31.",
+    "Same-day differing report/record identity is pending unless explicit supersession is source-bound; no amount-good tie break. Later full-year revision resets effective source version only after accepted availability.",
+    "Later notice or H1 comparison that changes relevant prior FY fiscal operands remains pending. Do not clear policy/consolidation/restatement barriers because amounts match or missing flags are empty.",
+    "Known scope-unrelated exact event may be exempted only for its bound source and field-period contract; exemption is not issuer-wide. Review all remaining known events, not just first blocker.",
+    "Late discovery cannot rewrite a previously emitted decision or pretend original live availability. Store public availability separately from accepted local knowledge and fail closed on unverified time/coverage.",
+    "Use source coverage watermark and expiry. At present metadata queries end2026-10-09, calendar references cover actual dates through10/08 and10/12 is planned/unverified; two old proposal dates alone cannot prove current complete/latest.",
+    "Construct G source cohort independently of AR/INV and F141. Rank G within G-qualified dated sectors first, then intersect finite F for GF. This may change historical cohort versus old frozen artifact; never overwrite its backtest/rank values.",
+    "If source refresh fails or expires, mark source_pending without numeric zero or forward-fill beyond validated coverage; source failures are not economic failures/investigation exhaustion."
+  ],
+  "production_channel_limit": "Local dynamic store/provider and source refresh do not prove PandaAI Factor runtime can read/update that store. Static SOURCE upload and finite projection cannot automatically serve future live decisions; exact platform-supported dynamic field/period/public-time contract or authenticated source refresh channel remains separate.",
+  "not_done": {
+    "file_changes_to_core": 0,
+    "downloads": 0,
+    "prices_or_labels_read": 0,
+    "official_runs": 0,
+    "economic_contexts": 0,
+    "claim_current_signal_or_pool_eligibility": false
+  }
+}

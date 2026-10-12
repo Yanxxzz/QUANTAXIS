@@ -518,6 +518,28 @@ class AxisProvider:
         from .industry import query_industry_asof
         return query_industry_asof(self.reference_db, code=normalize_code(code), decision_date=_date(decision_date))
 
+    def annual_g_asof(self, codes: Iterable[str], decision_date: str, *, source_store: str,
+                      knowledge_cutoff: str | None = None) -> DailyData:
+        """Read continuously selected annual G; no frozen SOURCE/window cutoff.
+
+        Updating the source ledger is an explicit source sync, separate from
+        market retrieval. This local contract does not certify the competition
+        worker's dynamic financial input or complete market PIT coverage.
+        """
+        from .g_continuity import GSourceStore
+        store = GSourceStore(source_store)
+        try:
+            frame = store.asof(sorted(set(normalize_code(c) for c in codes)),
+                               _date(decision_date), knowledge_cutoff=knowledge_cutoff)
+        finally:
+            store.close()
+        ready = int(frame.pit_usable.sum()) if not frame.empty else 0
+        return DailyData(frame, {"status": "scoped_continuous_G" if ready else "pending",
+            "requested": len(frame), "ready": ready, "full_pit_certified": False,
+            "official_production_channel_certified": False,
+            "pending_reasons": frame.loc[~frame.pit_usable, "source_status"].value_counts().to_dict() if not frame.empty else {},
+            "source_store": str(source_store), "date": _date(decision_date)})
+
 
 def migration_gate(coverage: dict[str, Any], *, require_all_a: bool = True,
                    require_minutes: bool = False, require_delisted: bool = True,

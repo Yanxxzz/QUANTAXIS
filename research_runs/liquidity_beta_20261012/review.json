@@ -1,0 +1,46 @@
+{
+  "status": "FIXED_SOURCE_PILOT_COMPLETE_WEAK_NO_OFFICIAL_DISPATCH",
+  "summary": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\liquidity_beta_20261012\\summary.json",
+    "sha256": "9ee520db69c9d7b3495625a38f6e2f2b64476b79bea7f48a22148e7614129ba3"
+  },
+  "protocol": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\liquidity_beta_20261012\\protocol.json",
+    "sha256": "479c06fb2257f91c0a0fcf98124998dafd894f414d8635abc678564e56812e55"
+  },
+  "audit": [
+    {
+      "name": "LQ01",
+      "cost": 0.003,
+      "metric_difference": 0,
+      "accounting_residual": 3.0773994463828558e-15
+    },
+    {
+      "name": "COMMON_MARKET",
+      "cost": 0.003,
+      "metric_difference": 0,
+      "accounting_residual": 3.271341530997063e-14
+    },
+    {
+      "name": "LQ01",
+      "cost": 0.005,
+      "metric_difference": 0,
+      "accounting_residual": 2.5049406993105094e-15
+    },
+    {
+      "name": "COMMON_MARKET",
+      "cost": 0.005,
+      "metric_difference": 0,
+      "accounting_residual": 3.4496711043274786e-14
+    }
+  ],
+  "direction": 1,
+  "definition_or_window_or_weights_changed_after_labels": false,
+  "label_coverage": 0.820629596181138,
+  "label_quality_complete": false,
+  "economic_path_source_complete": true,
+  "formal_admission": false,
+  "next": "One predeclared broader original market-source falsification may be useful because current1521financial-identity union is non-representative; first inventory metadata coverage, then freeze separate shared-support contexts. No sign/window rescue or picking profitable samples.",
+  "no_global_liquidity_information_elimination": true,
+  "official_spent": 0
+}

@@ -1,0 +1,70 @@
+{
+  "schema": "next-mechanism-definition-review-v1",
+  "review_date": "2026-10-12",
+  "proposed_mechanism": "Sampling-noise-corrected temporal instability of market beta",
+  "definition_under_review": "Six non-overlapping21-observation intercept OLS beta estimates and slope samplingSE squared. excess_between = sample variance of six beta estimates - mean of six samplingSE squared; score = -excess_between. Negative estimates retained as signed estimates, not claimed negative true variances. Full received-universe leave-own-out mean return market; only close.",
+  "decision": "NO_NEW_MECHANISM_PASS_PRIOR_RR02_SAME_ECONOMIC_DIRECTION_REJECTED",
+  "exact_algebraic_duplicate": false,
+  "same_previously_closed_economic_mechanism": true,
+  "new_price_values_computed": 0,
+  "new_return_labels_read": 0,
+  "new_registration": 0,
+  "official_compute": 0,
+  "scan_scope": {
+    "structured_cold_records": 4877,
+    "registry_registration_payloads": 101,
+    "files": [
+      "research_bootstrap/evidence.jsonl",
+      "research_runs/live_memory.json",
+      "research_runs/research_trials.sqlite3 (read only)",
+      "panda_alpha/risk_relation.py",
+      "panda_alpha/residual_commonality.py",
+      "research_runs/risk_relation_rotation_20261006/prepare_sources.py",
+      "research_runs/risk_relation_rotation_20261006/probe_risk.py",
+      "research_runs/risk_relation_rotation_20261006/finalize_rotation.py",
+      "research_runs/risk_relation_rotation_20261006/round_summary.json",
+      "original stockdb_factor_eval core definitions and preregistrations"
+    ],
+    "important_scope_correction": "The initial alternate-direction review checked the older compact cold catalog and original preregistrations, but omitted the modern RR02 mechanism in risk_relation_rotation_20261006. That was an incomplete audit. The earlier second alternative must not be used as a novelty PASS."
+  },
+  "blocking_evidence": {
+    "candidate": "RR02",
+    "registered_family": "market_loading_instability_normalized_by_total_variation",
+    "formula": "MA20(VAR120(beta_t)*VAR120(m_t)/(VAR120(r_t)+1e-6)), beta_t is intercept rolling120 market OLS slope",
+    "mechanism_from_original_source": "Lower market-relation instability reflects persistent demand and less repricing risk at the same return variance scale.",
+    "registered_provenance": "risk_relation_rotation_20261006/prepare_sources.py and probe_risk.py explicitly describe time instability of the market-loading relationship, distinct from beta level, amplitude, momentum and price delay",
+    "existing_completed_result_not_recomputed": {
+      "status": "FIXED_DIRECTION_REJECTED",
+      "direction_rank_association": -0.018313,
+      "positive_quote_excess_folds": "1/5",
+      "continuous_fixed_targets_50bp_cumulative_return": -0.01306459,
+      "scope": "Previously completed limited same-source quote/wealth proxy, not official full-A or a formal certified new-candidate RankIC. Numbers are existing closure evidence, not a new return replay."
+    },
+    "no_repeat_rule": "do_not_repeat_unchanged_fixed_risk_relation_definition_or_parameter_grid",
+    "reopen_condition": "material_new_information_or_verified_source_change_and_new_frozen_falsifier",
+    "result_evidence_path": "research_runs/risk_relation_rotation_20261006/results.json",
+    "result_evidence_sha256_in_live_memory": "312208bcf0a7ab19709fed6f16b2b1facb1cf079b622143404452f5658160d30",
+    "original_closure": "Preserve F141 baseline; RR01/RR02 fixed definitions stop. Future experiments need material independent information and preregistration, not beta/forecast-error sign/window rescue."
+  },
+  "what_the_new_estimator_changes": [
+    "Changes overlapping120-observation rolling beta histories into six non-overlapping21-observation slope estimates.",
+    "Removes market/stock variance normalization and subtracts a mean sampling-variance estimate.",
+    "Uses signed excess variance and negative direction instead of low normalized raw beta-history variance."
+  ],
+  "why_this_is_not_an_independent_economic_source": "Both scores prefer stocks whose market exposure changes less through time, using the same stock/market close-return history. SamplingSE is estimation uncertainty derived from the same regressions. Correcting measurement noise is a statistically meaningful estimator change, but it does not by itself establish a new economic information mechanism or satisfy the existing RR02 reopening condition. Merely stating a new window/partition/normalization cannot erase the already observed mechanism failure.",
+  "measurement_risks_if_a_later_explicit_reopen_is_justified": [
+    "Classical OLS samplingSE squared is conditional on residual/serial dependence assumptions; it is not automatically the true estimation noise under heteroskedastic or autocorrelated stock returns.",
+    "A strongly negative excess_between can favor stocks with high residual noise or unstable variance estimates. It must not be narrated as confirmed exceptionally stable exposure or a negative true variance.",
+    "Noise subtraction may change ranking materially, but that must be distinguished from the already closed residual-risk/volatility mechanisms before any return test.",
+    "A label-free source/estimator validation demonstrating a specific measurement fault in the old RR02 may motivate a separately recorded reopen; the new formula alone does not establish that fault.",
+    "Six small samples must each be paired, full rank and sufficiently supported; missingness/singular fits cannot be filled or truncated after outcomes."
+  ],
+  "neighbor_classification": [
+    {"family": "F129/F191/F192 conditional up/down beta", "relation": "Different partition from the proposed statistic; already closed and not the decisive block here"},
+    {"family": "F42 overall beta risk overlay", "relation": "Beta level rather than temporal instability; not an exact duplicate and not the decisive block"},
+    {"family": "F141 residual variance share", "relation": "Related risk information but mathematically different; preserve its current research status"},
+    {"family": "RR02 temporal market-loading instability", "relation": "Same economic information and held rationale; decisive existing same-family rejection"}
+  ],
+  "recommendation": "Do not register or replay the6x21 sampling-corrected beta stability score as a wholly new independent direction. Save this negative audit and retain LQ01's fixed scoped closure. A subsequent direction must bring demonstrably different information or meet a specifically evidenced source/measurement reopen condition before any new values or complete labels.",
+  "global_family_falsification_claim": false
+}

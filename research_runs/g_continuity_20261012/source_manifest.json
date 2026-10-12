@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "store": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\g_source.sqlite3",
+  "contracts": [
+    {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\g_field_contract_first20_unit\\source_contracts.json",
+      "sha256": "9ac46922b66ea6cc696911cfd25badeea6e6c76d9f9b3f717b39b7029ff7c48e"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\g_field_contract_first20_unit\\asset_continuation_repair_v1\\source_contract_delta.json",
+      "sha256": "baf4fc4f6bf5500fcd7d9703938f0ad8ed4eddda31255f0cd80e886b2e661b21"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\g_field_contract_next100_unit\\source_contracts.json",
+      "sha256": "d6f4a92da673c8525a42ba9cbcf71d0223bcfe1c00bf3f3760f13998a4be640b"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\g_field_contract_next100_unit\\geometry_continuation_repair_v1\\source_contract_delta.json",
+      "sha256": "8d01a5e24fcdc1fd6d88cea682dc78d93ea2c303c80bdf6d2411bcbeade9d3cc"
+    }
+  ],
+  "continuations": [
+    {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\g_field_contract_first20_unit\\h1_asset_native_adapter_v1\\source_continuation.json",
+      "sha256": "8c364fff4cb9334513cc7eaf8c5c161468faf5b9ffb04ea52ee065ad8a0094cf"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_research_20261011\\g_field_contract_next100_unit\\301102_source_contract_v1\\source_continuation.json",
+      "sha256": "aa554d344844f924481d64b349cb25017af34819d62437b57b43850256e643e6"
+    }
+  ],
+  "continuous_definition": "((annual_revenue_current-annual_cost_current)-(annual_revenue_comparative-annual_cost_comparative))/mean(current_assets,opening_assets)",
+  "official_production_channel_certified": false,
+  "old_historical_data_or_returns_modified": false,
+  "industry_source": "quantaxis.stock_industry_editions and stock_industry_pit; latest accepted global edition, no old-edition fallback"
+}

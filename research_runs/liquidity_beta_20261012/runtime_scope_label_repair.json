@@ -1,0 +1,12 @@
+{
+  "protocol_sha256": "479c06fb2257f91c0a0fcf98124998dafd894f414d8635abc678564e56812e55",
+  "original_runtime": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\scripts\\run_liquidity_beta_pilot.py",
+    "sha256": "8c571d6268e8f43b4cd6b32cd93495a20fc825483b02e38efee2543b26d1e5d5"
+  },
+  "new_runtime": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\scripts\\run_liquidity_beta_pilot.py",
+    "sha256": "8c78cfb72d8bfab835ccdd6848541e5e57bf027ede3a8ed2746e1c066858395d"
+  },
+  "change": "Fix source-scope descriptive count1516 to exact frozen1521; add explicit repair binding before first execution. No score, direction, anchors, controls, source population or cost change."
+}

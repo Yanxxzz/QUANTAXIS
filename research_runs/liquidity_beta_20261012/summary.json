@@ -1,0 +1,1205 @@
+{
+  "status": "ALL_FOUR_LIQUIDITY_PATHS_COMPLETE",
+  "completed_at_utc": "2026-10-12T15:48:01.111767+00:00",
+  "protocol_sha256": "479c06fb2257f91c0a0fcf98124998dafd894f414d8635abc678564e56812e55",
+  "results": [
+    {
+      "name": "LQ01",
+      "cost": 0.003,
+      "metrics": {
+        "days": 256,
+        "compounded_return": 0.09070382051227965,
+        "cagr": 0.0892251613754278,
+        "sharpe": 0.4537453533121984,
+        "max_drawdown": 0.3008936161751008
+      },
+      "annual": {
+        "2025": {
+          "start": "2025-08-15",
+          "end": "2025-12-31",
+          "days": 93,
+          "compounded_return": 0.10816256574841265,
+          "cagr": 0.32087290045991335,
+          "sharpe": 1.4298220949389295,
+          "max_drawdown": 0.08297281995480121,
+          "fees_initial_equity_units": 0.0224023696856673,
+          "partial_calendar_year": true
+        },
+        "2026": {
+          "start": "2026-01-05",
+          "end": "2026-09-03",
+          "days": 163,
+          "compounded_return": -0.015754678759015928,
+          "cagr": -0.024251913300027517,
+          "sharpe": 0.06477767808882301,
+          "max_drawdown": 0.3008936161751006,
+          "fees_initial_equity_units": 0.044520171739380936,
+          "partial_calendar_year": true
+        }
+      },
+      "folds": [
+        {
+          "fold": 1,
+          "start": "2025-08-15",
+          "end": "2025-11-04",
+          "days": 52,
+          "starting_nav": 1.0,
+          "ending_nav": 1.0453721477412687,
+          "net_return": 0.04537214774126874,
+          "nav_change": 0.04537214774126874,
+          "price_pnl": 0.059265596398051554,
+          "fees": 0.013893448656781235,
+          "market_projection": 0.0,
+          "statistical_residual_pnl": 0.0,
+          "unprojected_price_pnl": 0.059265596398051554
+        },
+        {
+          "fold": 2,
+          "start": "2025-11-05",
+          "end": "2026-01-16",
+          "days": 51,
+          "starting_nav": 1.0453721477412687,
+          "ending_nav": 1.2116600707206528,
+          "net_return": 0.15907055046251406,
+          "nav_change": 0.1662879229793841,
+          "price_pnl": 0.17713876207897847,
+          "fees": 0.010850839099594525,
+          "market_projection": 0.0,
+          "statistical_residual_pnl": 0.0,
+          "unprojected_price_pnl": 0.17713876207897847
+        },
+        {
+          "fold": 3,
+          "start": "2026-01-19",
+          "end": "2026-04-08",
+          "days": 51,
+          "starting_nav": 1.2116600707206528,
+          "ending_nav": 1.1560778754400294,
+          "net_return": -0.04587276301641696,
+          "nav_change": -0.05558219528062347,
+          "price_pnl": -0.04093660794524777,
+          "fees": 0.014645587335376652,
+          "market_projection": 0.0,
+          "statistical_residual_pnl": 0.0,
+          "unprojected_price_pnl": -0.04093660794524777
+        },
+        {
+          "fold": 4,
+          "start": "2026-04-09",
+          "end": "2026-06-24",
+          "days": 51,
+          "starting_nav": 1.1560778754400294,
+          "ending_nav": 1.2222137383989877,
+          "net_return": 0.05720710028620313,
+          "nav_change": 0.06613586295895835,
+          "price_pnl": 0.0789663361826522,
+          "fees": 0.01283047322369472,
+          "market_projection": 0.0,
+          "statistical_residual_pnl": 0.0,
+          "unprojected_price_pnl": 0.0789663361826522
+        },
+        {
+          "fold": 5,
+          "start": "2026-06-25",
+          "end": "2026-09-03",
+          "days": 51,
+          "starting_nav": 1.2222137383989877,
+          "ending_nav": 1.0907038205122803,
+          "net_return": -0.10759977060884285,
+          "nav_change": -0.1315099178867074,
+          "price_pnl": -0.11680772477710627,
+          "fees": 0.014702193109601105,
+          "market_projection": 0.0,
+          "statistical_residual_pnl": 0.0,
+          "unprojected_price_pnl": -0.11680772477710627
+        }
+      ],
+      "fees": 0.06692254142504822,
+      "concentration": {
+        "positive_contribution_hhi": 0.008828467881685191,
+        "top_1_share_of_positive_contributions": 0.028078765397670086,
+        "top_5_share_of_positive_contributions": 0.11283137432179383,
+        "top_10_share_of_positive_contributions": 0.1958943305609022,
+        "top_20_share_of_positive_contributions": 0.31874215196923295
+      },
+      "exposure_summary": {
+        "mean_cash_fraction": 0.004414452323682422,
+        "mean_unknown_beta_wealth_fraction": 0.021295163242912925,
+        "mean_unknown_sector_wealth_fraction": 0.0010326932735586925,
+        "mean_beta_exposure": null,
+        "mean_known_beta_component": 1.0966936951469668,
+        "known_beta_component_scope": "Partial wealth-weighted contribution, not total beta or a renormalized known-only portfolio",
+        "mean_known_beta_wealth_fraction": 0.9742903844334042,
+        "known_beta_coverage_of_invested_wealth": 0.9786104134470257,
+        "beta_coverage_denominator": "Sum of daily invested wealth fractions; cash excluded; cash-only coverage is None",
+        "unknown_beta_days": 220,
+        "fully_known_beta_days": 36,
+        "cash_only_days": 1,
+        "unknown_beta_stock_day_count": 829,
+        "unknown_beta_stock_count": 23,
+        "unknown_beta_stock_examples": [
+          {
+            "symbol": "300385",
+            "unknown_days": 110,
+            "first": "2026-03-26",
+            "last": "2026-09-02"
+          },
+          {
+            "symbol": "001206",
+            "unknown_days": 85,
+            "first": "2025-11-24",
+            "last": "2026-04-23"
+          },
+          {
+            "symbol": "603189",
+            "unknown_days": 81,
+            "first": "2026-04-30",
+            "last": "2026-09-02"
+          },
+          {
+            "symbol": "002323",
+            "unknown_days": 80,
+            "first": "2026-05-13",
+            "last": "2026-09-02"
+          },
+          {
+            "symbol": "300087",
+            "unknown_days": 50,
+            "first": "2026-01-14",
+            "last": "2026-04-30"
+          },
+          {
+            "symbol": "603001",
+            "unknown_days": 50,
+            "first": "2026-06-25",
+            "last": "2026-09-02"
+          },
+          {
+            "symbol": "600187",
+            "unknown_days": 40,
+            "first": "2026-06-03",
+            "last": "2026-09-02"
+          },
+          {
+            "symbol": "600593",
+            "unknown_days": 40,
+            "first": "2025-08-15",
+            "last": "2025-10-17"
+          },
+          {
+            "symbol": "603336",
+            "unknown_days": 40,
+            "first": "2025-08-15",
+            "last": "2025-10-17"
+          },
+          {
+            "symbol": "688206",
+            "unknown_days": 35,
+            "first": "2025-08-15",
+            "last": "2025-10-10"
+          }
+        ],
+        "unknown_beta_stocks_outside_examples": 13,
+        "maximum_industry_wealth_fraction": null,
+        "total_fees_initial_equity_units": 0.06692254142504822,
+        "mean_one_side_turnover_proxy": 0.1866844286889128,
+        "market_projection_report": {
+          "status": "not_provided",
+          "beta_and_same_leg_market_inputs_provided": false,
+          "market_projection_reported": null,
+          "internal_accounting_market_projection": 0.0,
+          "internal_value_is_complete_projection": false,
+          "zero_projection_implies_risk_neutrality": false
+        }
+      },
+      "risk_metadata_status": "risk_metadata_pending",
+      "accounting_max_error": 3.0773994463828558e-15,
+      "blocked_orders": {
+        "buy_blocked_one_price": 6,
+        "buy_blocked_suspension": 1,
+        "sell_blocked_one_price": 2,
+        "sell_blocked_suspension": 1
+      },
+      "terminal_open_positions": {},
+      "terminal_unliquidated_fraction": 0.0,
+      "terminal_liquidation_pending": false,
+      "turnover_proxy_scope": "Initial/rebalance traded value divided by twice pretrade equity; excludes terminal liquidation; fees include it"
+    },
+    {
+      "name": "COMMON_MARKET",
+      "cost": 0.003,
+      "metrics": {
+        "days": 256,
+        "compounded_return": 0.133666352996211,
+        "cagr": 0.1314462435771362,
+        "sharpe": 0.6823888125739215,
+        "max_drawdown": 0.20959269034188044
+      },
+      "annual": {
+        "2025": {
+          "start": "2025-08-15",
+          "end": "2025-12-31",
+          "days": 93,
+          "compounded_return": 0.09169951571554269,
+          "cagr": 0.2683734933562092,
+          "sharpe": 1.5096405187043707,
+          "max_drawdown": 0.06976701649400263,
+          "fees_initial_equity_units": 0.005266631240380913,
+          "partial_calendar_year": true
+        },
+        "2026": {
+          "start": "2026-01-05",
+          "end": "2026-09-03",
+          "days": 163,
+          "compounded_return": 0.038441747638920276,
+          "cagr": 0.06005155762974357,
+          "sharpe": 0.36385202047395093,
+          "max_drawdown": 0.20959269034188022,
+          "fees_initial_equity_units": 0.008739689782847122,
+          "partial_calendar_year": true
+        }
+      },
+      "folds": [
+        {
+          "fold": 1,
+          "start": "2025-08-15",
+          "end": "2025-11-04",
+          "days": 52,
+          "starting_nav": 1.0,
+          "ending_nav": 1.0695855789792585,
+          "net_return": 0.06958557897925854,
+          "nav_change": 0.06958557897925854,
+          "price_pnl": 0.07385926797397636,
+          "fees": 0.004273688994751146,
+          "market_projection": 0.0,
+          "statistical_residual_pnl": 0.0,
+          "unprojected_price_pnl": 0.07385926797397636
+        },
+        {
+          "fold": 2,
+          "start": "2025-11-05",
+          "end": "2026-01-16",
+          "days": 51,
+          "starting_nav": 1.0695855789792585,
+          "ending_nav": 1.1757073623762524,
+          "net_return": 0.09921766475036953,
+          "nav_change": 0.10612178339699385,
+          "price_pnl": 0.1074134474332119,
+          "fees": 0.001291664036217626,
+          "market_projection": 0.0,
+          "statistical_residual_pnl": 0.0,
+          "unprojected_price_pnl": 0.1074134474332119
+        },
+        {
+          "fold": 3,
+          "start": "2026-01-19",
+          "end": "2026-04-08",
+          "days": 51,
+          "starting_nav": 1.1757073623762524,
+          "ending_nav": 1.1670633748055836,
+          "net_return": -0.007352159089314636,
+          "nav_change": -0.008643987570668754,
+          "price_pnl": -0.007172175363790674,
+          "fees": 0.0014718122068811783,
+          "market_projection": 0.0,
+          "statistical_residual_pnl": 0.0,
+          "unprojected_price_pnl": -0.007172175363790674
+        },
+        {
+          "fold": 4,
+          "start": "2026-04-09",
+          "end": "2026-06-24",
+          "days": 51,
+          "starting_nav": 1.1670633748055836,
+          "ending_nav": 1.1639052258682967,
+          "net_return": -0.002706064645215167,
+          "nav_change": -0.003158148937286942,
+          "price_pnl": -0.00137449698194854,
+          "fees": 0.0017836519553373453,
+          "market_projection": 0.0,
+          "statistical_residual_pnl": 0.0,
+          "unprojected_price_pnl": -0.00137449698194854
+        },
+        {
+          "fold": 5,
+          "start": "2026-06-25",
+          "end": "2026-09-03",
+          "days": 51,
+          "starting_nav": 1.1639052258682967,
+          "ending_nav": 1.133666352996211,
+          "net_return": -0.025980528482915655,
+          "nav_change": -0.03023887287208571,
+          "price_pnl": -0.025053369042044304,
+          "fees": 0.00518550383004074,
+          "market_projection": 0.0,
+          "statistical_residual_pnl": 0.0,
+          "unprojected_price_pnl": -0.025053369042044304
+        }
+      ],
+      "fees": 0.01400632102322803,
+      "concentration": {
+        "positive_contribution_hhi": 0.0026624733724273336,
+        "top_1_share_of_positive_contributions": 0.007342720207612033,
+        "top_5_share_of_positive_contributions": 0.034990242576346295,
+        "top_10_share_of_positive_contributions": 0.06560144445323972,
+        "top_20_share_of_positive_contributions": 0.11857995842443575
+      },
+      "exposure_summary": {
+        "mean_cash_fraction": 0.003896342768459064,
+        "mean_unknown_beta_wealth_fraction": 0.015622848866142597,
+        "mean_unknown_sector_wealth_fraction": 0.0006126792168293471,
+        "mean_beta_exposure": null,
+        "mean_known_beta_component": 0.9684297230413483,
+        "known_beta_component_scope": "Partial wealth-weighted contribution, not total beta or a renormalized known-only portfolio",
+        "mean_known_beta_wealth_fraction": 0.980480808365398,
+        "known_beta_coverage_of_invested_wealth": 0.9843160410538366,
+        "beta_coverage_denominator": "Sum of daily invested wealth fractions; cash excluded; cash-only coverage is None",
+        "unknown_beta_days": 256,
+        "fully_known_beta_days": 0,
+        "cash_only_days": 0,
+        "unknown_beta_stock_day_count": 6072,
+        "unknown_beta_stock_count": 87,
+        "unknown_beta_stock_examples": [
+          {
+            "symbol": "003041",
+            "unknown_days": 203,
+            "first": "2025-11-05",
+            "last": "2026-09-02"
+          },
+          {
+            "symbol": "002175",
+            "unknown_days": 170,
+            "first": "2025-12-15",
+            "last": "2026-09-02"
+          },
+          {
+            "symbol": "300087",
+            "unknown_days": 161,
+            "first": "2026-01-06",
+            "last": "2026-09-02"
+          },
+          {
+            "symbol": "002968",
+            "unknown_days": 130,
+            "first": "2025-09-15",
+            "last": "2026-04-02"
+          },
+          {
+            "symbol": "688012",
+            "unknown_days": 129,
+            "first": "2025-12-19",
+            "last": "2026-07-06"
+          },
+          {
+            "symbol": "688981",
+            "unknown_days": 126,
+            "first": "2025-09-01",
+            "last": "2026-03-13"
+          },
+          {
+            "symbol": "688591",
+            "unknown_days": 125,
+            "first": "2025-08-25",
+            "last": "2026-03-05"
+          },
+          {
+            "symbol": "001206",
+            "unknown_days": 124,
+            "first": "2025-10-14",
+            "last": "2026-04-23"
+          },
+          {
+            "symbol": "603595",
+            "unknown_days": 121,
+            "first": "2025-10-30",
+            "last": "2026-04-29"
+          },
+          {
+            "symbol": "603798",
+            "unknown_days": 121,
+            "first": "2026-01-26",
+            "last": "2026-07-28"
+          }
+        ],
+        "unknown_beta_stocks_outside_examples": 77,
+        "maximum_industry_wealth_fraction": null,
+        "total_fees_initial_equity_units": 0.01400632102322803,
+        "mean_one_side_turnover_proxy": 0.03190979083039902,
+        "market_projection_report": {
+          "status": "not_provided",
+          "beta_and_same_leg_market_inputs_provided": false,
+          "market_projection_reported": null,
+          "internal_accounting_market_projection": 0.0,
+          "internal_value_is_complete_projection": false,
+          "zero_projection_implies_risk_neutrality": false
+        }
+      },
+      "risk_metadata_status": "risk_metadata_pending",
+      "accounting_max_error": 3.271341530997063e-14,
+      "blocked_orders": {
+        "buy_blocked_one_price": 15,
+        "sell_blocked_suspension": 35,
+        "buy_blocked_suspension": 3,
+        "sell_blocked_one_price": 6,
+        "final_sell_blocked_one_price": 2,
+        "final_sell_blocked_suspension": 2
+      },
+      "terminal_open_positions": {
+        "000017": 7.657111682927104e-05,
+        "600929": 0.00013774165189024882,
+        "603339": 5.131551737087702e-05,
+        "688432": 1.7435776823829213e-05
+      },
+      "terminal_unliquidated_fraction": 0.0027735908892091844,
+      "terminal_liquidation_pending": true,
+      "turnover_proxy_scope": "Initial/rebalance traded value divided by twice pretrade equity; excludes terminal liquidation; fees include it"
+    },
+    {
+      "name": "LQ01",
+      "cost": 0.005,
+      "metrics": {
+        "days": 256,
+        "compounded_return": 0.04823094752598944,
+        "cagr": 0.047459734513009444,
+        "sharpe": 0.30747294418841464,
+        "max_drawdown": 0.3062811462264453
+      },
+      "annual": {
+        "2025": {
+          "start": "2025-08-15",
+          "end": "2025-12-31",
+          "days": 93,
+          "compounded_return": 0.09255226136721761,
+          "cagr": 0.2710598959222248,
+          "sharpe": 1.2518169578257397,
+          "max_drawdown": 0.08351634444976841,
+          "fees_initial_equity_units": 0.037034774306074575,
+          "partial_calendar_year": true
+        },
+        "2026": {
+          "start": "2026-01-05",
+          "end": "2026-09-03",
+          "days": 163,
+          "compounded_return": -0.04056676774964174,
+          "cagr": -0.06201780630609921,
+          "sharpe": -0.06843003095216635,
+          "max_drawdown": 0.30628114622644564,
+          "fees_initial_equity_units": 0.07213640596647945,
+          "partial_calendar_year": true
+        }
+      },
+      "folds": [
+        {
+          "fold": 1,
+          "start": "2025-08-15",
+          "end": "2025-11-04",
+          "days": 52,
+          "starting_nav": 1.0,
+          "ending_nav": 1.0360914927298266,
+          "net_return": 0.03609149272982659,
+          "nav_change": 0.03609149272982659,
+          "price_pnl": 0.059130228831340836,
+          "fees": 0.023038736101516705,
+          "market_projection": 0.0,
+          "statistical_residual_pnl": 0.0,
+          "unprojected_price_pnl": 0.059130228831340836
+        },
+        {
+          "fold": 2,
+          "start": "2025-11-05",
+          "end": "2026-01-16",
+          "days": 51,
+          "starting_nav": 1.0360914927298266,
+          "ending_nav": 1.1930084883873344,
+          "net_return": 0.151450906371283,
+          "nav_change": 0.15691699565750783,
+          "price_pnl": 0.1747526391697872,
+          "fees": 0.017835643512280907,
+          "market_projection": 0.0,
+          "statistical_residual_pnl": 0.0,
+          "unprojected_price_pnl": 0.1747526391697872
+        },
+        {
+          "fold": 3,
+          "start": "2026-01-19",
+          "end": "2026-04-08",
+          "days": 51,
+          "starting_nav": 1.1930084883873344,
+          "ending_nav": 1.1289881958288224,
+          "net_return": -0.05366289777623656,
+          "nav_change": -0.06402029255851205,
+          "price_pnl": -0.04012456692422496,
+          "fees": 0.02389572563428817,
+          "market_projection": 0.0,
+          "statistical_residual_pnl": 0.0,
+          "unprojected_price_pnl": -0.04012456692422496
+        },
+        {
+          "fold": 4,
+          "start": "2026-04-09",
+          "end": "2026-06-24",
+          "days": 51,
+          "starting_nav": 1.1289881958288224,
+          "ending_nav": 1.1853343732697807,
+          "net_return": 0.049908562063922135,
+          "nav_change": 0.05634617744095838,
+          "price_pnl": 0.07711687915016885,
+          "fees": 0.02077070170921134,
+          "market_projection": 0.0,
+          "statistical_residual_pnl": 0.0,
+          "unprojected_price_pnl": 0.07711687915016885
+        },
+        {
+          "fold": 5,
+          "start": "2026-06-25",
+          "end": "2026-09-03",
+          "days": 51,
+          "starting_nav": 1.1853343732697807,
+          "ending_nav": 1.0482309475259874,
+          "net_return": -0.11566645567325395,
+          "nav_change": -0.1371034257437933,
+          "price_pnl": -0.11347305242853618,
+          "fees": 0.023630373315256893,
+          "market_projection": 0.0,
+          "statistical_residual_pnl": 0.0,
+          "unprojected_price_pnl": -0.11347305242853618
+        }
+      ],
+      "fees": 0.10917118027255401,
+      "concentration": {
+        "positive_contribution_hhi": 0.009187077709965933,
+        "top_1_share_of_positive_contributions": 0.02862962162294261,
+        "top_5_share_of_positive_contributions": 0.11579839558850666,
+        "top_10_share_of_positive_contributions": 0.20110558861533143,
+        "top_20_share_of_positive_contributions": 0.32687910352468685
+      },
+      "exposure_summary": {
+        "mean_cash_fraction": 0.004333795805264511,
+        "mean_unknown_beta_wealth_fraction": 0.021298936991770195,
+        "mean_unknown_sector_wealth_fraction": 0.0010332042767139862,
+        "mean_beta_exposure": null,
+        "mean_known_beta_component": 1.0968018288936356,
+        "known_beta_component_scope": "Partial wealth-weighted contribution, not total beta or a renormalized known-only portfolio",
+        "mean_known_beta_wealth_fraction": 0.974367267202966,
+        "known_beta_coverage_of_invested_wealth": 0.9786083559911566,
+        "beta_coverage_denominator": "Sum of daily invested wealth fractions; cash excluded; cash-only coverage is None",
+        "unknown_beta_days": 220,
+        "fully_known_beta_days": 36,
+        "cash_only_days": 1,
+        "unknown_beta_stock_day_count": 829,
+        "unknown_beta_stock_count": 23,
+        "unknown_beta_stock_examples": [
+          {
+            "symbol": "300385",
+            "unknown_days": 110,
+            "first": "2026-03-26",
+            "last": "2026-09-02"
+          },
+          {
+            "symbol": "001206",
+            "unknown_days": 85,
+            "first": "2025-11-24",
+            "last": "2026-04-23"
+          },
+          {
+            "symbol": "603189",
+            "unknown_days": 81,
+            "first": "2026-04-30",
+            "last": "2026-09-02"
+          },
+          {
+            "symbol": "002323",
+            "unknown_days": 80,
+            "first": "2026-05-13",
+            "last": "2026-09-02"
+          },
+          {
+            "symbol": "300087",
+            "unknown_days": 50,
+            "first": "2026-01-14",
+            "last": "2026-04-30"
+          },
+          {
+            "symbol": "603001",
+            "unknown_days": 50,
+            "first": "2026-06-25",
+            "last": "2026-09-02"
+          },
+          {
+            "symbol": "600187",
+            "unknown_days": 40,
+            "first": "2026-06-03",
+            "last": "2026-09-02"
+          },
+          {
+            "symbol": "600593",
+            "unknown_days": 40,
+            "first": "2025-08-15",
+            "last": "2025-10-17"
+          },
+          {
+            "symbol": "603336",
+            "unknown_days": 40,
+            "first": "2025-08-15",
+            "last": "2025-10-17"
+          },
+          {
+            "symbol": "688206",
+            "unknown_days": 35,
+            "first": "2025-08-15",
+            "last": "2025-10-10"
+          }
+        ],
+        "unknown_beta_stocks_outside_examples": 13,
+        "maximum_industry_wealth_fraction": null,
+        "total_fees_initial_equity_units": 0.10917118027255401,
+        "mean_one_side_turnover_proxy": 0.18633347119062865,
+        "market_projection_report": {
+          "status": "not_provided",
+          "beta_and_same_leg_market_inputs_provided": false,
+          "market_projection_reported": null,
+          "internal_accounting_market_projection": 0.0,
+          "internal_value_is_complete_projection": false,
+          "zero_projection_implies_risk_neutrality": false
+        }
+      },
+      "risk_metadata_status": "risk_metadata_pending",
+      "accounting_max_error": 2.5049406993105094e-15,
+      "blocked_orders": {
+        "buy_blocked_one_price": 6,
+        "buy_blocked_suspension": 1,
+        "sell_blocked_one_price": 2,
+        "sell_blocked_suspension": 1
+      },
+      "terminal_open_positions": {},
+      "terminal_unliquidated_fraction": 0.0,
+      "terminal_liquidation_pending": false,
+      "turnover_proxy_scope": "Initial/rebalance traded value divided by twice pretrade equity; excludes terminal liquidation; fees include it"
+    },
+    {
+      "name": "COMMON_MARKET",
+      "cost": 0.005,
+      "metrics": {
+        "days": 256,
+        "compounded_return": 0.12410558162212726,
+        "cagr": 0.1220526693446331,
+        "sharpe": 0.6438589971801402,
+        "max_drawdown": 0.210579069460616
+      },
+      "annual": {
+        "2025": {
+          "start": "2025-08-15",
+          "end": "2025-12-31",
+          "days": 93,
+          "compounded_return": 0.08796687456836638,
+          "cagr": 0.2566567290985682,
+          "sharpe": 1.458351814629587,
+          "max_drawdown": 0.0698470943801216,
+          "fees_initial_equity_units": 0.008750187689201442,
+          "partial_calendar_year": true
+        },
+        "2026": {
+          "start": "2026-01-05",
+          "end": "2026-09-03",
+          "days": 163,
+          "compounded_return": 0.03321673471731201,
+          "cagr": 0.051816858846648994,
+          "sharpe": 0.331141107486145,
+          "max_drawdown": 0.2105790694606161,
+          "fees_initial_equity_units": 0.014470538658366554,
+          "partial_calendar_year": true
+        }
+      },
+      "folds": [
+        {
+          "fold": 1,
+          "start": "2025-08-15",
+          "end": "2025-11-04",
+          "days": 52,
+          "starting_nav": 1.0,
+          "ending_nav": 1.066586351836256,
+          "net_return": 0.06658635183625594,
+          "nav_change": 0.06658635183625594,
+          "price_pnl": 0.073690123973073,
+          "fees": 0.007103772136850226,
+          "market_projection": 0.0,
+          "statistical_residual_pnl": 0.0,
+          "unprojected_price_pnl": 0.073690123973073
+        },
+        {
+          "fold": 2,
+          "start": "2025-11-05",
+          "end": "2026-01-16",
+          "days": 51,
+          "starting_nav": 1.066586351836256,
+          "ending_nav": 1.1714851179355437,
+          "net_return": 0.09834999849631676,
+          "nav_change": 0.10489876609928772,
+          "price_pnl": 0.10704049646951161,
+          "fees": 0.002141730370223937,
+          "market_projection": 0.0,
+          "statistical_residual_pnl": 0.0,
+          "unprojected_price_pnl": 0.10704049646951161
+        },
+        {
+          "fold": 3,
+          "start": "2026-01-19",
+          "end": "2026-04-08",
+          "days": 51,
+          "starting_nav": 1.1714851179355437,
+          "ending_nav": 1.1619175628250742,
+          "net_return": -0.008167030860221192,
+          "nav_change": -0.009567555110469472,
+          "price_pnl": -0.007129012249969376,
+          "fees": 0.0024385428605017937,
+          "market_projection": 0.0,
+          "statistical_residual_pnl": 0.0,
+          "unprojected_price_pnl": -0.007129012249969376
+        },
+        {
+          "fold": 4,
+          "start": "2026-04-09",
+          "end": "2026-06-24",
+          "days": 51,
+          "starting_nav": 1.1619175628250742,
+          "ending_nav": 1.1576304477841972,
+          "net_return": -0.003689689508137972,
+          "nav_change": -0.0042871150408769765,
+          "price_pnl": -0.0013344987676519489,
+          "fees": 0.002952616273227006,
+          "market_projection": 0.0,
+          "statistical_residual_pnl": 0.0,
+          "unprojected_price_pnl": -0.0013344987676519489
+        },
+        {
+          "fold": 5,
+          "start": "2026-06-25",
+          "end": "2026-09-03",
+          "days": 51,
+          "starting_nav": 1.1576304477841972,
+          "ending_nav": 1.1241055816221268,
+          "net_return": -0.02895990359120204,
+          "nav_change": -0.0335248661620704,
+          "price_pnl": -0.024940801455301705,
+          "fees": 0.008584064706765034,
+          "market_projection": 0.0,
+          "statistical_residual_pnl": 0.0,
+          "unprojected_price_pnl": -0.024940801455301705
+        }
+      ],
+      "fees": 0.023220726347567996,
+      "concentration": {
+        "positive_contribution_hhi": 0.0027053294304887937,
+        "top_1_share_of_positive_contributions": 0.007436973604909792,
+        "top_5_share_of_positive_contributions": 0.0354474160525612,
+        "top_10_share_of_positive_contributions": 0.06644262052957686,
+        "top_20_share_of_positive_contributions": 0.12007327550967763
+      },
+      "exposure_summary": {
+        "mean_cash_fraction": 0.003895394707592567,
+        "mean_unknown_beta_wealth_fraction": 0.015622183104098231,
+        "mean_unknown_sector_wealth_fraction": 0.0006124712780437876,
+        "mean_beta_exposure": null,
+        "mean_known_beta_component": 0.9684269900199443,
+        "known_beta_component_scope": "Partial wealth-weighted contribution, not total beta or a renormalized known-only portfolio",
+        "mean_known_beta_wealth_fraction": 0.9804824221883094,
+        "known_beta_coverage_of_invested_wealth": 0.9843167243469251,
+        "beta_coverage_denominator": "Sum of daily invested wealth fractions; cash excluded; cash-only coverage is None",
+        "unknown_beta_days": 256,
+        "fully_known_beta_days": 0,
+        "cash_only_days": 0,
+        "unknown_beta_stock_day_count": 6072,
+        "unknown_beta_stock_count": 87,
+        "unknown_beta_stock_examples": [
+          {
+            "symbol": "003041",
+            "unknown_days": 203,
+            "first": "2025-11-05",
+            "last": "2026-09-02"
+          },
+          {
+            "symbol": "002175",
+            "unknown_days": 170,
+            "first": "2025-12-15",
+            "last": "2026-09-02"
+          },
+          {
+            "symbol": "300087",
+            "unknown_days": 161,
+            "first": "2026-01-06",
+            "last": "2026-09-02"
+          },
+          {
+            "symbol": "002968",
+            "unknown_days": 130,
+            "first": "2025-09-15",
+            "last": "2026-04-02"
+          },
+          {
+            "symbol": "688012",
+            "unknown_days": 129,
+            "first": "2025-12-19",
+            "last": "2026-07-06"
+          },
+          {
+            "symbol": "688981",
+            "unknown_days": 126,
+            "first": "2025-09-01",
+            "last": "2026-03-13"
+          },
+          {
+            "symbol": "688591",
+            "unknown_days": 125,
+            "first": "2025-08-25",
+            "last": "2026-03-05"
+          },
+          {
+            "symbol": "001206",
+            "unknown_days": 124,
+            "first": "2025-10-14",
+            "last": "2026-04-23"
+          },
+          {
+            "symbol": "603595",
+            "unknown_days": 121,
+            "first": "2025-10-30",
+            "last": "2026-04-29"
+          },
+          {
+            "symbol": "603798",
+            "unknown_days": 121,
+            "first": "2026-01-26",
+            "last": "2026-07-28"
+          }
+        ],
+        "unknown_beta_stocks_outside_examples": 77,
+        "maximum_industry_wealth_fraction": null,
+        "total_fees_initial_equity_units": 0.023220726347567996,
+        "mean_one_side_turnover_proxy": 0.0318496002741322,
+        "market_projection_report": {
+          "status": "not_provided",
+          "beta_and_same_leg_market_inputs_provided": false,
+          "market_projection_reported": null,
+          "internal_accounting_market_projection": 0.0,
+          "internal_value_is_complete_projection": false,
+          "zero_projection_implies_risk_neutrality": false
+        }
+      },
+      "risk_metadata_status": "risk_metadata_pending",
+      "accounting_max_error": 3.4496711043274786e-14,
+      "blocked_orders": {
+        "buy_blocked_one_price": 15,
+        "sell_blocked_suspension": 35,
+        "buy_blocked_suspension": 3,
+        "sell_blocked_one_price": 6,
+        "final_sell_blocked_one_price": 2,
+        "final_sell_blocked_suspension": 2
+      },
+      "terminal_open_positions": {
+        "000017": 7.608353906517654e-05,
+        "600929": 0.00013686456181461268,
+        "603339": 5.098875832309101e-05,
+        "688432": 1.7314445824407523e-05
+      },
+      "terminal_unliquidated_fraction": 0.0027789548563720875,
+      "terminal_liquidation_pending": true,
+      "turnover_proxy_scope": "Initial/rebalance traded value divided by twice pretrade equity; excludes terminal liquidation; fees include it"
+    }
+  ],
+  "cost_comparisons": [
+    {
+      "cost": 0.003,
+      "relative_terminal_wealth": -0.03789698121531382,
+      "annualized_relative_wealth": -0.03731603020592755,
+      "metrics_recomputed": {
+        "days": 256,
+        "compounded_return": 0.09070382051227965,
+        "cagr": 0.0892251613754278,
+        "sharpe": 0.4537453533121984,
+        "max_drawdown": 0.3008936161751008
+      }
+    },
+    {
+      "cost": 0.005,
+      "relative_terminal_wealth": -0.06749778253627159,
+      "annualized_relative_wealth": -0.06647899592377737,
+      "metrics_recomputed": {
+        "days": 256,
+        "compounded_return": 0.04823094752598944,
+        "cagr": 0.047459734513009444,
+        "sharpe": 0.30747294418841464,
+        "max_drawdown": 0.3062811462264453
+      }
+    }
+  ],
+  "formation_periods": 51,
+  "holding_days": 256,
+  "mean_RankIC": -0.007404172548301973,
+  "information_periods": [
+    {
+      "date": "2025-08-14",
+      "assets": 1295,
+      "RankIC": -0.005229815983301928
+    },
+    {
+      "date": "2025-08-21",
+      "assets": 1277,
+      "RankIC": 0.12183199582828144
+    },
+    {
+      "date": "2025-08-28",
+      "assets": 1226,
+      "RankIC": -0.09900689312038294
+    },
+    {
+      "date": "2025-09-04",
+      "assets": 1173,
+      "RankIC": -0.029538574277653905
+    },
+    {
+      "date": "2025-09-11",
+      "assets": 1174,
+      "RankIC": -0.0023609253702425374
+    },
+    {
+      "date": "2025-09-18",
+      "assets": 1176,
+      "RankIC": 0.08634322310861081
+    },
+    {
+      "date": "2025-09-25",
+      "assets": 1176,
+      "RankIC": -0.15192486594081892
+    },
+    {
+      "date": "2025-10-10",
+      "assets": 1132,
+      "RankIC": -0.1440609593209191
+    },
+    {
+      "date": "2025-10-17",
+      "assets": 1131,
+      "RankIC": 0.12411071088370722
+    },
+    {
+      "date": "2025-10-24",
+      "assets": 1135,
+      "RankIC": 0.015187118255809092
+    },
+    {
+      "date": "2025-10-31",
+      "assets": 1138,
+      "RankIC": -0.030725638185853842
+    },
+    {
+      "date": "2025-11-07",
+      "assets": 1144,
+      "RankIC": -0.10480463782742432
+    },
+    {
+      "date": "2025-11-14",
+      "assets": 1148,
+      "RankIC": -0.025238694109654552
+    },
+    {
+      "date": "2025-11-21",
+      "assets": 1151,
+      "RankIC": 0.06388756971075148
+    },
+    {
+      "date": "2025-11-28",
+      "assets": 1158,
+      "RankIC": -0.005271794115779609
+    },
+    {
+      "date": "2025-12-05",
+      "assets": 1161,
+      "RankIC": 0.04917991391984922
+    },
+    {
+      "date": "2025-12-12",
+      "assets": 1163,
+      "RankIC": -0.12267348263148041
+    },
+    {
+      "date": "2025-12-19",
+      "assets": 1167,
+      "RankIC": 0.09097880906921724
+    },
+    {
+      "date": "2025-12-26",
+      "assets": 1173,
+      "RankIC": 0.10199225176863069
+    },
+    {
+      "date": "2026-01-06",
+      "assets": 1174,
+      "RankIC": 0.1337391608177705
+    },
+    {
+      "date": "2026-01-13",
+      "assets": 1179,
+      "RankIC": -0.023022865394677558
+    },
+    {
+      "date": "2026-01-20",
+      "assets": 1183,
+      "RankIC": -0.06032392667692024
+    },
+    {
+      "date": "2026-01-27",
+      "assets": 1183,
+      "RankIC": -0.04537700791908499
+    },
+    {
+      "date": "2026-02-03",
+      "assets": 1188,
+      "RankIC": 0.023592286490376018
+    },
+    {
+      "date": "2026-02-10",
+      "assets": 1191,
+      "RankIC": -0.07410508872583876
+    },
+    {
+      "date": "2026-02-25",
+      "assets": 1194,
+      "RankIC": -0.05197951923631266
+    },
+    {
+      "date": "2026-03-04",
+      "assets": 1195,
+      "RankIC": -0.03520442219063417
+    },
+    {
+      "date": "2026-03-11",
+      "assets": 1200,
+      "RankIC": -0.007398948294098461
+    },
+    {
+      "date": "2026-03-18",
+      "assets": 1206,
+      "RankIC": 0.04608617801570144
+    },
+    {
+      "date": "2026-03-25",
+      "assets": 1213,
+      "RankIC": -0.044139384900233634
+    },
+    {
+      "date": "2026-04-01",
+      "assets": 1247,
+      "RankIC": -0.15431342689684344
+    },
+    {
+      "date": "2026-04-09",
+      "assets": 1262,
+      "RankIC": 0.01818109565471771
+    },
+    {
+      "date": "2026-04-16",
+      "assets": 1275,
+      "RankIC": 0.015824185974483283
+    },
+    {
+      "date": "2026-04-23",
+      "assets": 1303,
+      "RankIC": -0.020870191485584076
+    },
+    {
+      "date": "2026-04-30",
+      "assets": 1371,
+      "RankIC": 0.04673990560236097
+    },
+    {
+      "date": "2026-05-12",
+      "assets": 1382,
+      "RankIC": -0.07563839127289708
+    },
+    {
+      "date": "2026-05-19",
+      "assets": 1382,
+      "RankIC": -0.07068923366254008
+    },
+    {
+      "date": "2026-05-26",
+      "assets": 1376,
+      "RankIC": 0.12234939528020504
+    },
+    {
+      "date": "2026-06-02",
+      "assets": 1373,
+      "RankIC": -0.13646272572783374
+    },
+    {
+      "date": "2026-06-09",
+      "assets": 1369,
+      "RankIC": -0.1495504840569256
+    },
+    {
+      "date": "2026-06-16",
+      "assets": 1367,
+      "RankIC": -0.13065872166081072
+    },
+    {
+      "date": "2026-06-24",
+      "assets": 1365,
+      "RankIC": -0.07655220060787464
+    },
+    {
+      "date": "2026-07-01",
+      "assets": 1364,
+      "RankIC": 0.05554342502009191
+    },
+    {
+      "date": "2026-07-08",
+      "assets": 1364,
+      "RankIC": 0.0208623512428618
+    },
+    {
+      "date": "2026-07-15",
+      "assets": 1363,
+      "RankIC": 0.17001653654104507
+    },
+    {
+      "date": "2026-07-22",
+      "assets": 1361,
+      "RankIC": 0.03945304283790409
+    },
+    {
+      "date": "2026-07-29",
+      "assets": 1357,
+      "RankIC": -0.04754119884438166
+    },
+    {
+      "date": "2026-08-05",
+      "assets": 1349,
+      "RankIC": 0.007565081242658302
+    },
+    {
+      "date": "2026-08-12",
+      "assets": 1346,
+      "RankIC": 0.06305785353583271
+    },
+    {
+      "date": "2026-08-19",
+      "assets": 1335,
+      "RankIC": 0.08757470645957459
+    },
+    {
+      "date": "2026-08-26",
+      "assets": 1292,
+      "RankIC": 0.042954421213162265
+    }
+  ],
+  "usable_labels": 63607,
+  "original_formed_label_denominator": 77510,
+  "missing_or_unusable_labels": 13903,
+  "labels_previously_exposed": true,
+  "new_contexts": 2,
+  "official_spent": 0,
+  "formal_admission": false,
+  "full_PIT": false,
+  "errors": [],
+  "ledger_sha256": "ff58034271a06d7db3a8b38f43f4123b958a347eb81e5924d9312682eff820c0"
+}

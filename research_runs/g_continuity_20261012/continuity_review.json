@@ -1,0 +1,47 @@
+{
+  "status": "LOCAL_G_CONTINUITY_IMPLEMENTED_OFFICIAL_CHANNEL_PENDING",
+  "module": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\panda_alpha\\g_continuity.py",
+    "sha256": "3de0ebe90aa6d5614eeeebef76879565b258fef0e394a241a784c86806115ab3"
+  },
+  "updater": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\scripts\\update_g_source.py",
+    "sha256": "50a0d307af0489ec4ebd3fe0c1c2a3e49b6b53060f8508d7dc5423245e0bbafc"
+  },
+  "manifest": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\g_continuity_20261012\\source_manifest.json",
+    "sha256": "004cfa6496240a2d226e51b932e32a86935889a532ff34bda9abe5cccb819172"
+  },
+  "source_store": "research_runs/g_source.sqlite3",
+  "real_amount_contracts_loaded": 120,
+  "historical_source_tail_complete_cases": 2,
+  "known_annual_control_passed_codes": [
+    "300564"
+  ],
+  "known_annual_control_pending_codes": [
+    "301102"
+  ],
+  "latest_industry_rows_bound": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\g_continuity_20261012\\industry_extension_receipt.json",
+    "sha256": "95ee44fd73c469c4230b64353fe7c73eed5f277b96bf5a199937450b08513b0b"
+  },
+  "real_G_300564": -0.013602701926379362,
+  "real_G_value_demonstration_date": "2026-10-13 source-forward software check using current observations, not actual trading/PIT proof",
+  "real_301102_pending": "latest_source_refresh_incomplete",
+  "new_factor_meaningful_source_count_insufficient": true,
+  "no_static_GF_upload_recommendation": true,
+  "independent_full_PIT": false,
+  "official_dynamic_channel": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\g_continuity_20261012\\native_path_review.json",
+    "sha256": "4f048e676236332725abb6c416b00fdde101b2096ef42de7ac3f7cb8c56d4477"
+  },
+  "new_economic_contexts": 0,
+  "official_spent": 0,
+  "old_returns_or_g_source_snapshots_mutated": false,
+  "synthetic_g_and_native_model_tests": 51,
+  "related_regression_tests": 108,
+  "data_and_new_module_tests": 79,
+  "test_counts_overlap": true,
+  "public_smoke": "64modules/42syntheticpaths passed;0 official/market reads",
+  "software_source_clock": "publication/observation/decision separate; duplicate facts preserve firstobserved; new unknown editions and failed/stale refresh block old values"
+}

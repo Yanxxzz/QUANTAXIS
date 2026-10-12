@@ -1,0 +1,85 @@
+{
+  "schema": "g-continuity-native-path-review-v1",
+  "review_date": "2026-10-12",
+  "status": "LOCAL_CONTINUOUS_SOURCE_DESIGN_SUPPORTED_OFFICIAL_DYNAMIC_G_CONTRACT_NOT_CERTIFIED",
+  "definition_preserved": "((revenue_current-cost_current)-(revenue_comparative-cost_comparative))/mean(total_assets_current,total_assets_opening), from the same bound annual disclosure; original date-specific industry percentile and source barriers preserved",
+  "official_compute_spent": 0,
+  "factor_create_calls": 0,
+  "factor_start_calls": 0,
+  "pool_operations": 0,
+  "new_economic_contexts": 0,
+  "return_labels_read": 0,
+  "account_financial_data_queries": 0,
+  "public_source_scope": "Bounded read of original-author PandaAI repositories on 2026-10-12; public main is not authentication of deployed worker version or account entitlement",
+  "native_input_findings": {
+    "catalog": {
+      "retained_source": "C:/Users/31013/.codex/skills/pandaai-factor-online/references/fields.md",
+      "declared_unprefixed_fields": ["operating_revenue", "cost_of_goods_sold", "total_assets"],
+      "prefixed_table_examples": ["is_revenue", "bs_total_assets"],
+      "period_suffixes": "Retained field index describes _lyr as last fiscal year and _mrq_n as the n-th previous report before query date. Neither defines n calendar days, fixed calendar quarters, TTM nor the current annual comparative role.",
+      "candidate_fields_not_entitled_values": true,
+      "annual_current_comparative_same_disclosure_binding_found": false,
+      "opening_asset_role_and_version_binding_found": false,
+      "financial_period_publication_version_dynamic_industry_field_contract_found": false,
+      "catalog_is_not_current_server_field_metadata": true
+    },
+    "loader": {
+      "supported_visible_entry": "Literal factors['field_name'] keys in Python AST are collected, lowercased and passed to get_base_factors_pro; generic dictionary names selected only at runtime are not visibly collected by this public implementation.",
+      "input_shape": "get_base_factors_pro receives a merged frame and constructs a pd.Series per requested column with [date,symbol] index; it does not preserve source disclosure metadata unless those metadata are themselves explicitly requested and returned columns",
+      "financial_period_announcement_version_source_contract": "Not established by the reviewed loader. A daily date index alone does not certify which annual report/current-comparative pair/version was usable on that date.",
+      "financial_field_values_in_current_account_received": false,
+      "public_eight_base_factor_stub": "Public old FactorReader.get_factor/get_available_factors contain eight-price-field implementations/stubs; newer author tool documentation explicitly describes financial get_factor fields. The old stub is not treated as the production service support ceiling.",
+      "factor_worker_network_bridge": "No reviewed documented entitled bridge for the independent report API inside an official competition worker. Python import/AST permissiveness alone is not a production access contract.",
+      "production_version_certified": false
+    },
+    "independent_report_api": {
+      "exists_in_author_tool": true,
+      "method": "get_fina_reports",
+      "parameters": ["symbol", "start_date", "end_date", "start_quarter", "end_quarter", "fields", "is_latest"],
+      "date_semantics": "The tool converts start/end YYYYMMDD to yyyyqN quarter bounds; end_date also maps to SDK date filter. The public wrapper does not itself establish exact disclosure-publication semantics for that filter.",
+      "version_semantics": "is_latest defaults true in documented schema and selects latest record per symbol+quarter. A historical source contract must inspect all versions, establish publication usability and not silently take today's latest replacement backward.",
+      "not_info_date": "get_fina_reports has no info_date parameter in this reviewed wrapper. info_date appears in forecast/performance APIs, not this report API.",
+      "annual_same_disclosure_current_comparative_and_opening_roles": "Not established by wrapper schema; needs actual returned records and explicit field-role/version proof",
+      "local_main_runtime_modules_present": {"panda_data": false, "panda_tools": false, "panda_factor": false},
+      "module_check_runtime": "D:/Anaconda/envs/open-webui/python.exe",
+      "account_entitlement_verified": false,
+      "free_or_no_competition_compute_charge_documented": false,
+      "fee_evidence_scope": "Bounded original-author README, API schema, skill and credential implementation review did not establish pricing/no-charge semantics; no financial request made under an assumed free entitlement.",
+      "credential_contract": "Original-author CredentialManager invokes panda_data.init_token(username,password). Reuse of the existing competition CLI bearer token for this SDK is not documented in reviewed sources. No credentials are placed in factor code and no new login performed.",
+      "new_login_or_new_account_needed_inferred": false,
+      "installed_cli_source_access": "Sandbox file read denied for installed CLI source; no attempt to bypass and no account endpoint guessed. This is a tooling limit, not evidence financial access is unavailable."
+    },
+    "independent_industry_api": {
+      "author_methods": ["get_industry_detail", "get_industry_constituents", "get_stock_industry"],
+      "visible_history_parameter": "Reviewed get_stock_industry/get_industry_constituents schemas have code/level/fields, but no explicit historical date argument. Current membership alone cannot certify original date-specific historical industry editions.",
+      "native_factors_dynamic_industry_contract": "Not found in bounded review; current source requires sector edition/as-of evidence separately"
+    }
+  },
+  "minimum_testable_design": {
+    "local_continuous_source": [
+      "Store compact annual report-version facts keyed by symbol, report end, announcement ID, record SHA and public available_from; keep original current/comparative income and current/opening asset roles.",
+      "At a requested date, select only the latest explicitly bound annual report version whose public usable time is <= that date. Never use FY/H1/quarter aggregates to replace the registered annual same-disclosure definition.",
+      "Keep an annual report available on later dates until superseded or invalidated by an explicitly known correction/policy/scope event; do not terminate merely at the historical backtest end date.",
+      "Resolve industry edition as of requested date before within-industry ranking; unknown industry/version/scope evidence remains NaN or pending rather than zero.",
+      "Recompute percentile across current qualified universe each requested date, then original same-date common F141 cohort winsor-Z fixed-half blend; do not carry stale historical percentile rank instead of the raw annual amount fact."
+    ],
+    "official_dynamic_contract_control": {
+      "no_paid_probe_yet": true,
+      "fixed_small_control": "Use one already bound annual disclosure with current/comparative income and current/opening assets, one known amendment/version boundary and one known annual-to-H1 transition; query supported free official report/factor inputs for dates immediately before and after public usability.",
+      "required_actual_receipt": ["documented fee and entitled supported query path", "actual field names and values", "annual period and same-report comparative role", "current/opening asset date roles", "source disclosure/version and publication usability", "industry edition usability", "worker acceptance of these dynamic inputs or an officially supported external source adapter without credential literals in factor code"],
+      "reject_substitutes": ["SOURCE constant snapshot", "local Mongo injection", "_mrq_4 assumed annual", "annual field today ffilled backward", "current industry membership applied historically", "local provider working claimed official worker automatically updates"],
+      "success_requirement": "Official factor can calculate unchanged annual G for a future requested date from newly available dynamic inputs without source literal regeneration or manual code replacement. A historical local continuous ledger alone does not meet this requirement."
+    }
+  },
+  "minimal_official_blocker": "No authenticated dynamic factor-worker input contract currently binds annual same-disclosure current/comparative revenue and cost, current/opening assets, report/publication/version and date-specific industry. Names in a catalog or generic daily Series do not solve these roles. A local point-in-time continuous provider can remove historical cutoff while this official production interface remains pending.",
+  "primary_sources": [
+    {"url": "https://raw.githubusercontent.com/PandaAI-Tech/panda_factor/main/panda_factor/panda_factor/generate/macro_factor.py", "supports": "literal factors keys are extracted before data loading; calculate receives wrapper over requested input series; actual deployed version not verified"},
+    {"url": "https://raw.githubusercontent.com/PandaAI-Tech/panda_factor/main/panda_factor/panda_factor/generate/factor_data_handler.py", "supports": "requested columns become date/symbol indexed Series; no report-role contract emitted"},
+    {"url": "https://raw.githubusercontent.com/PandaAI-Tech/panda_factor/main/panda_factor/panda_factor/data/data_provider.py", "supports": "generic get_factor_data delegation and old base-only available-factor stub, not live financial field metadata"},
+    {"url": "https://raw.githubusercontent.com/PandaAI-Tech/panda-data/main/panda_tools/tools/financial.py", "supports": "independent report and factor query wrappers; quarter/date and is_latest schema; financial fields explicitly described"},
+    {"url": "https://raw.githubusercontent.com/PandaAI-Tech/panda-data/main/panda-data-skill/api_reference.md", "supports": "separate industry query methods and parameter schemas"},
+    {"url": "https://raw.githubusercontent.com/PandaAI-Tech/panda-data/main/README.md", "supports": "independent panda_data SDK/tool credential initialization; does not certify existing account entitlement or native worker bridge"},
+    {"url": "https://raw.githubusercontent.com/PandaAI-Tech/panda-data/main/panda_tools/credential.py", "supports": "SDK-specific username/password init_token flow; no CLI bearer token reuse contract in reviewed implementation"}
+  ],
+  "other_files_modified": false
+}

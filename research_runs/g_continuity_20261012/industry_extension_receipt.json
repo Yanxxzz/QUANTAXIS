@@ -1,0 +1,44 @@
+{
+  "status": "TWO_LATEST_EDITION_ROWS_BOUND_TO_RETAINED_NATIVE_TEXT",
+  "publication_date": "2026-09-30",
+  "vintage_id": "2026H1",
+  "source_sha256": "1f1862ae2199a82a3a35c62f16a7d576120bca97f3de608989c8897df9b6c8a6",
+  "rows": {
+    "300564": {
+      "symbol": "300564",
+      "company_name": "筑博设计",
+      "category_code": "M",
+      "category_name": "科学研究和技术服务业",
+      "secondary_code": null,
+      "major_code": "74",
+      "source_page": 59,
+      "source_row_text": "300564筑博设计 M 科学研究和技术服务业 74 专业技术服务业"
+    },
+    "301102": {
+      "symbol": "301102",
+      "company_name": "兆讯传媒",
+      "category_code": "L",
+      "category_name": "租赁和商务服务业",
+      "secondary_code": null,
+      "major_code": "72",
+      "source_page": 74,
+      "source_row_text": "301102兆讯传媒 L 租赁和商务服务业 72 商务服务业"
+    }
+  },
+  "bindings": [
+    {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_industry_current_20261006\\industry_2026H1.json",
+      "sha256": "5e33edd98acf577d0e646a28e7793b6e470449b48fd59b4ffeaf5a015fb11357"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_industry_current_20261006\\industry_parse_receipt.json",
+      "sha256": "61c4b7b3267df005c89ae2386baa91da7cf48047bdce490389c1e2eab710416b"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\f141_industry_current_20261006\\industry_source\\2026H1.pypdf.txt",
+      "sha256": "049fbec948307ee925b627625c800a17d03427b9cdcd5a8741511afbd592ae46"
+    }
+  ],
+  "fresh_original_PDF_check": false,
+  "full_A_independent_industry_certification": false
+}

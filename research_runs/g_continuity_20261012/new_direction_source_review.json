@@ -1,0 +1,81 @@
+{
+  "schema": "new-direction-source-review-v1",
+  "review_date": "2026-10-12",
+  "scope": "Definition/retirement/source audit only. No new price, forward-return label, signal values, portfolio or official run computed.",
+  "new_economic_contexts": 0,
+  "official_compute": 0,
+  "registrations": 0,
+  "cold_evidence_rows_scanned": 4877,
+  "current_registry_registration_definitions_scanned": 99,
+  "legacy_registry_trial_definitions_scanned": 27,
+  "cold_evidence": "research_bootstrap/evidence.jsonl",
+  "live_memory": "research_runs/live_memory.json",
+  "human_retirement_preserved": "EP01..08 and source/definition closures in current live memory remain binding; prior Sharpe2/2.5 settings in historical preregistrations are retired and not reinstated by this review",
+  "preferred_conditional_beta_candidate": {
+    "decision": "DO_NOT_REOPEN_EQUIVALENT_CLOSED_DEFINITIONS",
+    "mechanism": "Market-up beta minus market-down beta using native close-derived returns",
+    "exact_earlier_examples": [
+      {"id": "F129", "source": "D:/PandaAI-Alpha/stockdb_factor_eval/batch16_public_risk_delay_preregistered.md", "definition": "MA20(beta_down120-beta_up120), separate intercept regressions, each sign at least30 observations; negative direction", "retirement": "raw_residual_volatility_and_price_delay_neighbors"},
+      {"id": "F191", "source": "D:/PandaAI-Alpha/stockdb_factor_eval/core_batch26.py", "definition": "-SUM100(IF(MKT_RET<0,RET*MKT_RET,0))/SUM100(IF(MKT_RET<0,MKT_RET^2,0)), minimum20 downside observations", "retirement": "slow_conditional_market_beta_asymmetry"},
+      {"id": "F192", "source": "D:/PandaAI-Alpha/stockdb_factor_eval/core_batch26.py", "definition": "BETA_UP100-BETA_DOWN100, minimum20 observations on each side", "retirement": "slow_conditional_market_beta_asymmetry"}
+    ],
+    "retirement_evidence": "knowledge_base/live_memory explicitly close low-downside beta and up-minus-down beta after negative adjusted IC or negative net economics; no direction reversal or100-day window scan",
+    "family42_correction": {
+      "source": "D:/PandaAI-Alpha/stockdb_factor_eval/core_batch42.py",
+      "actual_contents": "F265..F276 overlay F253 with LV120, IV120 and BETA120 ranks. BETA120 is symmetric full-window covariance/variance OLS beta, smoothed20; family42 does not implement beta_down or up-minus-down.",
+      "reason_not_to_reopen": "The proposed asymmetry already appears in F129/F191/F192 irrespective of this family42 correction. Changing leave-one-out aggregation, intercept or lookback is not a new economic information mechanism."
+    },
+    "native_field_feasibility": "close is a proven historical official native input, but field feasibility cannot override the closed economic definition"
+  },
+  "alternative_candidates": [
+    {
+      "candidate_label": "Marketwide transaction-cost shock exposure",
+      "priority": 1,
+      "new_information": "Time-varying price-impact/cost shocks across other stocks, measured from close returns and traded money, rather than own turnover magnitude or the return market alone",
+      "mechanism_hypothesis": "Some stocks retain demand when market trading becomes costly while others lose it. The stock-return loading on an independently constructed marketwide illiquidity innovation may distinguish liquidity insurance/exposure from plain market beta and residual-variance share.",
+      "outline_not_frozen_formula": "Construct a causal same-date leave-own-out market price-impact state from positive amount and valid adjusted returns. Remove predictable lagged state before measuring a stock return's historical sensitivity to cost-state innovations; establish what high/low sensitivity economically means before fixing a held direction.",
+      "required_native_fields": ["close", "amount"],
+      "field_support": "Both are basic fields in reviewed FactorReader and public native loader; close has been used in owned GF runs. Actual remote amount unit and revision/adjustment parity have not been certified by this source-only review.",
+      "distinct_from": ["F20/F126/F181/F194: own illiquidity/own impact or own relative-turnover sensitivity", "F141/F42: return-market beta or residual variance", "F414/F415: CLV-own-turnover decomposition under common unsigned activity"],
+      "bounded_cold_search": "No matching cross-stock cost-state innovation/stock return loading definition found in 4877 structured cold records, live hypotheses/no_repeat and targeted original preregistrations/core definitions. This absence is bounded evidence, not proof of global novelty.",
+      "minimum_no_label_checks": ["Same-date peer set/lifecycle; own stock excluded", "Amount is observed traded money; no zero imputation for missing volume/amount", "Corporate-action adjustment consistency in close returns", "Cost-state not simply market return, own liquidity level or old unsigned activity under another name", "Finite coverage, rank differentiation, top-group membership turnover and component correlation without future labels"],
+      "stop_condition": "Stop before economic replay if innovation collapses to an old component or source units/worker dynamic amount contract cannot be bound. Do not salvage with state thresholds/window scans.",
+      "economic_registration_ready": false,
+      "independent_alpha_confirmed": false
+    },
+    {
+      "candidate_label": "Uncertainty of changing market exposure",
+      "priority": 2,
+      "new_information": "Temporal stability of a stock's return-market relationship, separated from beta level and estimation noise",
+      "mechanism_hypothesis": "A stable exposure can be priced and hedged more reliably; abrupt exposure changes may create valuation uncertainty and concentration risk. A source-only diagnostic can test whether this property exists independently of the known residual-variance share.",
+      "outline_not_frozen_formula": "Use completed historical returns and leave-own-out peer market returns to compare explicitly predeclared subperiod slopes, scaling the parameter-change statistic by its estimation uncertainty rather than selecting high/low full-window beta. No sign-based up/down partition, no future result and no overall-beta weight overlay.",
+      "required_native_fields": ["close"],
+      "field_support": "Only the already demonstrated native close input is needed. Factor index ordering, sparse-return convention and peer aggregation must be fixed to current GF production contract.",
+      "distinct_from": ["F129/F191/F192: conditional up/down-market slopes", "F42: full-period beta-level risk overlay", "F141: rolling endpoint residual variance divided by total return variance"],
+      "bounded_cold_search": "No equivalent noise-scaled temporal beta-change statistic found in scanned cold formula/mechanism declarations, live hypotheses/retirement and targeted original core definitions. Raw volatility, price delay, residual momentum and risk-overlay neighbors remain closed.",
+      "main_risk": "Changing slopes may merely be another view of high residual noise and therefore duplicate F141. This is a serious reason for a value-only independence check before any return-label experiment, not a claim of a new alpha.",
+      "minimum_no_label_checks": ["Distinct statistic after controlling beta level, realized volatility and F141 source values", "Estimation uncertainty valid and no short sparse subsample denominator inflation", "Sufficient complete peer-supported histories", "Signal/group turnover compatible with five-day research", "No revival of the already rejected beta asymmetry through renamed subperiods"],
+      "stop_condition": "Stop if the statistic is algebraically or empirically redundant with closed residual-risk definitions, or only the alpha sign/window changes create differentiation. Do not convert a failed diagnostic into a parameter grid.",
+      "economic_registration_ready": false,
+      "independent_alpha_confirmed": false
+    }
+  ],
+  "recommended_next_step": "Choose at most one alternative for a frozen source/value-only diagnostic. Candidate1 measures a genuinely different common trading-cost state but requires amount semantics; Candidate2 has the simplest close-only transfer but the greater F141 redundancy risk. Freeze exact source universe/index/adjustment/lookback/direction/test controls before numerical signals and register any actual new economic return experiment before opening complete labels.",
+  "exact_liquidity_beta_followup": {
+    "status": "NO_EQUIVALENT_CLOSED_DEFINITION_FOUND_IN_BOUNDED_AUDIT_SOURCE_PREFLIGHT_NEXT",
+    "proposed_by_root_not_registered_by_this_review": "Daily market median log(abs(close-derived return)/amount_in_100million_CNY); shock equals today's state minus mean of20 completed prior market states. Stock signed return regressed on intercept, completed same-date market return and cost shock using120 completed historical observations. Retain partial slope on cost shock, positive direction as relatively better price response to market cost deterioration.",
+    "scan_scope": "4877 structured cold formula/family/mechanism records, live hypotheses/no_repeat/human retirements, all99 current registration payloads,27 legacy trial definitions, existing core*.py formulas and original preregistered.md under stockdb_factor_eval/factor_workflow",
+    "terms_checked": ["Amihud", "marketwide illiquidity", "liquidity beta/risk/shock/innovation", "Pastor/Pastor-Stambaugh", "Acharya/Pedersen", "流动性冲击/贝塔/共振/系统流动性", "return/amount and own impact formulas"],
+    "nearest_closed_definitions": [
+      {"id": "F20", "definition": "0.5*rank(STD20(TURNOVER/MA20TURNOVER)) +0.5*rank(MA60(abs(r)/TURNOVER))", "non_equivalence": "own liquidity level/variability, not stock signed-return sensitivity to another-stock cost-state innovation"},
+      {"id": "F125/F126", "definition": "own absolute-return/relative-turnover joint concentration or rolling own absolute-return beta on own relative turnover", "non_equivalence": "own-state absolute response lacks marketwide cost state and signed-return partial loading conditional on market return"},
+      {"id": "F181/F194", "definition": "own tail negative-return/relative-turnover impact, or own abs(return)/sqrt(turnover) rank", "non_equivalence": "own impact level and conditional own tail observations, not the specified common-cost innovation beta"},
+      {"id": "F414/F415", "definition": "CLV-own-turnover covariance decomposition under leave-own-out median log positive turnover", "non_equivalence": "unsigned activity and CLV decomposition use a different economic state and dependent variable than market cost-state and signed return"},
+      {"id": "F129/F191/F192/F42", "definition": "market return beta level or up/down market beta", "non_equivalence": "proposed second explanatory variable is an independently measured cost innovation, not market return sign/level"}
+    ],
+    "pastor_stambaugh_claim": "Not a replication of the Pastor-Stambaugh original market liquidity construction. The proposed abs(r)/money-volume market state is an Amihud-inspired cost-state proxy; literature labels cannot substitute for precise definition.",
+    "preflight_before_any_return_label": ["Freeze exact stock/date universe, observed-zero-return handling before log, positive-amount handling, missingness and IPO/stop trading exclusions", "Bind money-volume units; a global constant log shift is algebraically canceled by the lagged-state mean, but inconsistent source-specific units/unknown fields cannot be silently mixed", "Use20 prior completed days, excluding today's state, for the mean; no backward filling", "Freeze whether market state includes own stock; do not choose leave-own-out after seeing results", "Full-rank intercept/market/cost design and cost residual variance must be sufficient to identify a distinct slope", "Declare causal rolling/sample support and no adaptive window/epsilon/sign rescue", "Check same-index dynamic native close and amount entry, field unit/parity and qcut eligibility without any new fee"],
+    "approval_scope": "Only root may freeze/register the exact numerical experiment before values/complete labels. This subagent review has not registered, executed or certified it."
+  },
+  "caveat": "The two alternatives are distinct research mechanisms with basic native fields, not ready-to-dispatch or admission-qualified factors. Stable field names do not alone establish original financial/price PIT, production amount semantics, future performance or statistical independence."
+}

@@ -9,6 +9,7 @@
     "require_delisted": true,
     "require_pit_financial": true,
     "active_market_source": null,
+    "g_source_store": "research_runs/g_source.sqlite3",
     "source_profiles": {
       "stockdb": {"database": "quantaxis_stockdb_research", "price_source": "stockdb", "reference_database": "quantaxis", "calendar_source": "baostock_trade_dates", "role": "primary_daily_local_proxy", "collector_state": "requires_scoped_source_contract"},
       "baostock": {"database": "quantaxis", "price_source": "baostock", "reference_database": "quantaxis", "calendar_source": "baostock_trade_dates", "role": "cached_reference_and_comparison", "collector_state": "manual_explicit_resume"},
