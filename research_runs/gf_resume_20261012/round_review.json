@@ -1,0 +1,30 @@
+{
+  "status": "ROUND_COMPLETE_ORIGINAL_GF_RETAINED_SECTOR_RANK_CLOSED",
+  "reviewed_at_utc": "2026-10-12T08:26:05.564924+00:00",
+  "completed_local_cost_paths": 8,
+  "new_contexts_including_proxy_controls": 4,
+  "research_total": 505,
+  "baseline_source_proxy_result": {
+    "days": 256,
+    "compounded_return": 0.29547867471578004,
+    "cagr": 0.2902490422897519,
+    "sharpe": 1.2546972108286845,
+    "max_drawdown": 0.2066410801230002
+  },
+  "risk_variant_result": {
+    "days": 256,
+    "compounded_return": 0.1675944865748964,
+    "cagr": 0.16477112952919382,
+    "sharpe": 0.8130653897446809,
+    "max_drawdown": 0.19519155898519647
+  },
+  "original_GF_retained": true,
+  "sector_rank_fixed_definition_closed": true,
+  "formal_admission": false,
+  "independent_alpha_confirmed": false,
+  "official_runs": 0,
+  "official_spent": 0,
+  "next_priority": "One mechanistically justified trade-churn mitigation review on unchanged GF; do not scan G/F arithmetic or revive sector ranking. Genuine later/native production input and actual pool increment remain required before admission.",
+  "native_actual_values_and_input_contract": "pending",
+  "all_results_complete_no_inflight": true
+}
