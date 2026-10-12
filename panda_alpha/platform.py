@@ -17,9 +17,16 @@ import sqlite3
 import subprocess
 from typing import Any
 
+from .research_budget import (load_policy, request as research_request,
+                              guard as research_guard, read_state as research_state,
+                              bind_policy)
+
 
 SOFT_RESEARCH_PENDING = frozenset({"full_a_coverage_pending", "official_pool_increment_pending",
                                   "formal_admission_pending", "post_effective_B_pending"})
+NATIVE_SOURCE_DIAGNOSTIC_PENDING = frozenset({"native_financial_period_pending",
+                                            "native_financial_value_parity_pending",
+                                            "full_pit_certification_pending"})
 
 
 def beijing_day() -> str:
@@ -159,6 +166,8 @@ class ExperimentLedger:
             fingerprint TEXT PRIMARY KEY, candidate_id TEXT, category TEXT, day TEXT,
             state TEXT, reserved REAL DEFAULT 0, actual REAL, factor_id TEXT, run_id TEXT,
             definition TEXT, balance_before TEXT, receipt TEXT)""")
+        self.db.execute("CREATE TABLE IF NOT EXISTS research_budget_control (singleton INTEGER PRIMARY KEY CHECK(singleton=1), policy TEXT NOT NULL)")
+        self.db.execute("CREATE TABLE IF NOT EXISTS research_budget_reviews (review_id TEXT PRIMARY KEY, payload TEXT NOT NULL)")
 
     def get(self, key: str) -> dict | None:
         row = self.db.execute("SELECT * FROM jobs WHERE fingerprint=?", (key,)).fetchone()
@@ -166,6 +175,9 @@ class ExperimentLedger:
 
     def jobs(self) -> list[dict]:
         return [dict(r) for r in self.db.execute("SELECT * FROM jobs ORDER BY rowid")]
+
+    def research_state(self) -> dict:
+        return research_state(self.db)
 
     def reserve(self, key: str, candidate: dict, definition: dict, category: str,
                 ceiling: float, daily_limit: float, balance: dict, day: str | None = None):
@@ -186,6 +198,17 @@ class ExperimentLedger:
                 raise ValueError("Daily experiment budget exhausted")
             if ceiling > balance["total"]:
                 raise ValueError("Account balance below reservation")
+            meta = definition.get("research_budget")
+            if meta is None and self.research_state().get("policy"):
+                raise ValueError("Active study requires research_budget metadata")
+            if meta is not None:
+                policy = load_policy({"official_research_policy": meta["limits"]})
+                if meta != research_request(policy, candidate, category):
+                    raise ValueError("Study request metadata differs from the frozen candidate")
+                check = research_guard(policy, meta, self.jobs(), self.research_state(), ceiling)
+                if check["blocker"]:
+                    raise ValueError(check["blocker"])
+                bind_policy(self.db, policy)
             billing = definition.get("billing_authorization", {})
             recharge_reserved = max(0., ceiling - float(balance["gift"]))
             if billing:
@@ -221,6 +244,14 @@ def read_experiment_jobs(path: str | Path) -> list[dict]:
     with sqlite3.connect(path.as_uri() + "?mode=ro", uri=True) as connection:
         connection.row_factory = sqlite3.Row
         return [dict(row) for row in connection.execute("SELECT * FROM jobs ORDER BY rowid")]
+
+
+def read_research_state(path: str | Path) -> dict:
+    path = Path(path).resolve()
+    if not path.is_file():
+        return {}
+    with sqlite3.connect(path.as_uri() + "?mode=ro", uri=True) as connection:
+        return research_state(connection)
 
 
 def _batch_authorization(authorization: Any, amount_field: str, minimum: float,
@@ -325,13 +356,15 @@ def _adaptive_estimate(compute: dict, jobs: list[dict]) -> float | None:
     return estimate
 
 
-def budget_plan(candidates: list[dict], compute: dict, balance: dict, *, jobs: list[dict] | None = None) -> dict:
+def budget_plan(candidates: list[dict], compute: dict, balance: dict, *, jobs: list[dict] | None = None,
+                study_state: dict | None = None) -> dict:
     """Preview caps or authorized estimates; shared-priority quotas are targets.
 
     Supplying current ledger jobs accounts for already consumed daily/batch
     budgets. Dispatch always supplies them and rechecks atomically at reserve.
     """
     jobs = jobs or []
+    research_policy = load_policy(compute)
     ceiling = compute.get("cost_ceiling")
     if ceiling is not None and (type(ceiling) not in (int, float) or not math.isfinite(ceiling) or ceiling <= 0):
         raise ValueError("cost_ceiling must be a positive finite number or null")
@@ -399,6 +432,10 @@ def budget_plan(candidates: list[dict], compute: dict, balance: dict, *, jobs: l
             if reservation:
                 cost_basis = "authorized_estimate"
     ready = bool(cost_basis and reservation and not authorization_problem)
+    study_check = research_guard(research_policy, None, jobs, study_state, float(reservation or estimate or 0))
+    if study_check["blocker"]:
+        ready = False
+        authorization_problem = authorization_problem or study_check["blocker"]
     slots = int(limit // (reservation if ready else estimate)) if (ready or estimate) else 0
     if run_slots is not None:
         slots = min(slots, run_slots)
@@ -411,6 +448,7 @@ def budget_plan(candidates: list[dict], compute: dict, balance: dict, *, jobs: l
     quota = {k: (max(0 if allocation == "shared_priority" else 1, round(slots * v)) if slots else 0)
              for k, v in fractions.items()}
     ordered, counters = [], dict.fromkeys(quota, 0)
+    local_review, research_blocked, planned_jobs = [], [], list(jobs)
     ranked = list(candidates)
     if allocation == "shared_priority":
         for candidate in ranked:
@@ -422,9 +460,23 @@ def budget_plan(candidates: list[dict], compute: dict, balance: dict, *, jobs: l
         category = c.get("experiment_category", "exploration")
         if category not in quota:
             raise ValueError("Unknown experiment category")
+        try:
+            meta = research_request(research_policy, c, category)
+        except ValueError as error:
+            target = local_review if c.get("official_task") in {"syntax_check", "cost_sensitivity", "attribution", "correlation", "pool_increment", "stability_replay"} else research_blocked
+            target.append({"candidate_id": c["candidate_id"], "reason": str(error)})
+            continue
+        check = research_guard(research_policy, meta, planned_jobs, study_state, float(reservation or estimate or 0))
+        if check["blocker"]:
+            research_blocked.append({"candidate_id": c["candidate_id"], "reason": check["blocker"]})
+            continue
         if len(ordered) < slots and (allocation == "shared_priority" or counters[category] < quota[category]):
             ordered.append({"candidate_id": c["candidate_id"], "category": category})
             counters[category] += 1
+            if meta:
+                planned_jobs.append({"fingerprint": "planned:" + str(len(ordered)), "state": "RESERVED",
+                                     "actual": None, "reserved": float(reservation or estimate or 0),
+                                     "definition": json.dumps({"research_budget": meta})})
     return {"date_beijing": beijing_day(), "budget": limit, "cost_ceiling": ceiling,
             "dispatch_ready": ready, "server_enforced_cap": enforceable,
             "cost_basis": cost_basis, "reservation_credit_estimate": reservation,
@@ -435,6 +487,8 @@ def budget_plan(candidates: list[dict], compute: dict, balance: dict, *, jobs: l
             "allocation_note": ("Category fractions are targets; spare slots, including zero-fraction categories, may be borrowed"
                                 if allocation == "shared_priority" else "Category quotas limit selection"),
             "quota": quota, "selected": ordered, "unspent_slots": max(0, slots - len(ordered)),
+            "research_budget": study_check, "local_review": local_review,
+            "research_blocked": research_blocked,
             "official_test_not_pool_admission": True,
             "admission_gates_apply_at": "Formal pool admission only; official research categories require executable research evidence"}
 
@@ -449,7 +503,10 @@ def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedg
     informative_research = (category in ("source_probe", "exploration", "validation") and
                             all(isinstance(candidate.get(field), str) and candidate[field].strip()
                                 for field in ("research_question", "decision_if_pass", "decision_if_fail")))
-    unresolved = [r for r in requirements if not (informative_research and isinstance(r, str) and r in SOFT_RESEARCH_PENDING)]
+    allowed_pending = SOFT_RESEARCH_PENDING
+    if category == "source_probe" and candidate.get("official_task") == "source_diagnostic":
+        allowed_pending = allowed_pending | NATIVE_SOURCE_DIAGNOSTIC_PENDING
+    unresolved = [r for r in requirements if not (informative_research and isinstance(r, str) and r in allowed_pending)]
     if (candidate.get("source", "").startswith("historical") or
         candidate.get("provenance") == "historical_memory_requires_revalidation" or
         any("requires_source:" in str(r) or "revalidate_legacy" in str(r) or "_pending" in str(r)
@@ -458,6 +515,12 @@ def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedg
     key = fingerprint(candidate, window, cycle, groups)
     if ledger.get(key):
         return ledger.get(key)  # Zero duplicate dispatches on resume.
+    research_policy = load_policy(compute)
+    research_meta = research_request(research_policy, candidate, category)
+    study_check = research_guard(research_policy, research_meta, ledger.jobs(), ledger.research_state(),
+                                 float(_adaptive_estimate(compute, ledger.jobs()) or 0))
+    if study_check["blocker"]:
+        raise ValueError(study_check["blocker"])
     native_preflight = None
     if candidate.get("code") and not candidate.get("formula"):
         from .native_preflight import verify_native_preflight
@@ -483,7 +546,8 @@ def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedg
         if recharge_authorization and recharge_authorization["batch_id"] != risk_authorization["batch_id"]:
             raise ValueError("Recharge and estimated-billing permissions must refer to the same confirmed batch")
     balance = client.balance()
-    plan = budget_plan([dict(candidate, experiment_category=category)], compute, balance, jobs=ledger.jobs())
+    plan = budget_plan([dict(candidate, experiment_category=category)], compute, balance,
+                       jobs=ledger.jobs(), study_state=ledger.research_state())
     if not plan["dispatch_ready"] or not plan["selected"]:
         raise ValueError(plan["blocker"] or "No authorized budget slot")
     ceiling = float(plan["reservation_credit_estimate"])
@@ -500,6 +564,8 @@ def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedg
     definition["reservation_credit_estimate"] = ceiling
     definition["daily_credit_limit"] = compute["daily_credit_limit"]
     definition["official_test_not_pool_admission"] = True
+    if research_meta:
+        definition["research_budget"] = research_meta
     if native_preflight is not None:
         definition["native_preflight"] = native_preflight
     if before_dispatch is not None:

@@ -44,6 +44,7 @@
     "minimum_dates": 20
   },
   "compute": {
+    "official_research_policy_file": "config/research-workflow.v1.json",
     "daily_gift_target": 10,
     "daily_credit_limit": 10,
     "recharge_credit_limit": 0,

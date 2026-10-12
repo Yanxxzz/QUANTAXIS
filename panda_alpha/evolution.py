@@ -38,6 +38,13 @@ class Candidate:
     economic_status: str = "pending"
     falsification_plan: tuple[str, ...] = ()
     provenance: str = "deterministic_unvalidated"
+    official_task: str = ""
+    budget_mechanism_id: str = ""
+    research_question: str = ""
+    decision_if_pass: str = ""
+    decision_if_fail: str = ""
+    official_information_gap: str = ""
+    local_review_evidence: tuple[dict, ...] = ()
 
     def __post_init__(self) -> None:
         if not self.hypothesis.strip() or not self.mechanism.strip():
@@ -46,7 +53,7 @@ class Candidate:
             raise ValueError("A candidate needs a formula or code")
         if self.direction not in (0, 1):
             raise ValueError("PandaAI direction must be 0 (lower values) or 1 (higher values)")
-        for name in ("data_requirements", "parents", "fields", "operators", "falsification_plan"):
+        for name in ("data_requirements", "parents", "fields", "operators", "falsification_plan", "local_review_evidence"):
             items = getattr(self, name)
             if isinstance(items, str) or not isinstance(items, (list, tuple)):
                 raise ValueError(f"{name} must be a list or tuple")
@@ -131,6 +138,11 @@ mechanism, data_requirements, source, formula and/or Python code, direction (0/1
 parents, fields, operators, parameters and falsification_plan. Python definitions
 may contain arbitrary multistep/stateful calculations; do not restrict research to
 a catalogue of arithmetic templates. Declare missing data sources explicitly.
+For an official experiment declare official_task (native_screen, source_diagnostic,
+or key_confirmation), stable budget_mechanism_id, research_question, decision_if_pass,
+decision_if_fail and the specific official_information_gap. Keep syntax, costs,
+attribution, correlations and existing-data stability local. Key confirmation
+must bind existing local/official review artifacts; full admission is not required.
 Never use future observations or infer factor-value correlation from IC/return
 summary metrics. Never claim economic acceptance; generated candidates are pending.
 When mutating/crossing trajectories explain which causal hypothesis changed, why

@@ -239,6 +239,12 @@ def main(argv=None):
     schedule.add_argument("--candidates", required=True)
     schedule.add_argument("--ledger", default="research_runs/experiments.sqlite3", help="Existing budget ledger; read-only preview")
     schedule.add_argument("--output", default="research_runs/compute_plan.json")
+    compute_status = sub.add_parser("compute-status", help="Offline shared study usage; no account access or runs")
+    compute_status.add_argument("--ledger", default="research_runs/experiments.sqlite3")
+    compute_review = sub.add_parser("compute-review", help="Free local review at a study milestone; no backtests")
+    compute_review.add_argument("--ledger", default="research_runs/experiments.sqlite3")
+    compute_review.add_argument("--evidence", required=True)
+    compute_review.add_argument("--execute", action="store_true", help="Record the local review in the existing experiment ledger")
     launch = sub.add_parser("dispatch", help="Reserve once, persist factor/Run ID, never retry ambiguous dispatch")
     launch.add_argument("--candidates", required=True)
     launch.add_argument("--candidate-id", required=True)
@@ -291,6 +297,31 @@ def main(argv=None):
                        "status": "compacted; raw evidence preserved"})
         return
     cfg = get_config(args.config)
+    if args.command in ("compute-status", "compute-review"):
+        from .platform import ExperimentLedger, read_experiment_jobs, read_research_state
+        from .research_budget import load_policy, guard, record_review
+        policy = load_policy(cfg["compute"])
+        if policy is None:
+            raise ValueError("Configure official_research_policy_file before using shared study controls")
+        if args.command == "compute-status":
+            result = guard(policy, None, read_experiment_jobs(args.ledger), read_research_state(args.ledger), 0)
+            print_compact(dict(result, official_calls=0, new_economic_contexts=0))
+        elif args.execute:
+            ledger = ExperimentLedger(args.ledger)
+            try:
+                print_compact(record_review(ledger, policy, read(args.evidence), execute=True))
+            finally:
+                ledger.db.close()
+        else:
+            import sqlite3
+            from types import SimpleNamespace
+            path = Path(args.ledger).resolve()
+            if not path.is_file():
+                raise ValueError("No executed study to review; preview does not create a ledger")
+            with sqlite3.connect(path.as_uri() + "?mode=ro", uri=True) as connection:
+                ledger = SimpleNamespace(db=connection, jobs=lambda: read_experiment_jobs(path))
+                print_compact(record_review(ledger, policy, read(args.evidence)))
+        return
     if args.command == "data-export":
         from .sources import export_research_input
         path = Path(args.codes_file)
@@ -565,7 +596,7 @@ def main(argv=None):
             return
         finally:
             trial_ledger.close()
-    from .platform import PandaClient, ExperimentLedger, budget_plan, dispatch, fingerprint, resume, read_experiment_jobs
+    from .platform import PandaClient, ExperimentLedger, budget_plan, dispatch, fingerprint, resume, read_experiment_jobs, read_research_state
     client = PandaClient(cfg["platform"])
     if args.command == "account":
         balance = client.balance()
@@ -573,7 +604,7 @@ def main(argv=None):
         print_compact({"balance": balance, "factor_count": count, "runs_started": 0})
     elif args.command == "schedule":
         plan = budget_plan(read(args.candidates)["candidates"], cfg["compute"], client.balance(),
-                           jobs=read_experiment_jobs(args.ledger))
+                           jobs=read_experiment_jobs(args.ledger), study_state=read_research_state(args.ledger))
         write(args.output, plan)
         print_compact(plan)
     elif args.command == "dispatch":
@@ -593,8 +624,8 @@ def main(argv=None):
                 print_compact({"candidate": candidate, "fingerprint": fingerprint(candidate, window,
                                 cfg["research"]["cycle"], cfg["research"]["groups"]),
                                "window": window, "category": args.category,
-                               "budget": budget_plan([candidate], cfg["compute"], client.balance(),
-                                                     jobs=read_experiment_jobs(args.ledger)), "runs_started": 0})
+                               "budget": budget_plan([dict(candidate, experiment_category=args.category)], cfg["compute"], client.balance(),
+                                                     jobs=read_experiment_jobs(args.ledger), study_state=read_research_state(args.ledger)), "runs_started": 0})
             else:
                 job = dispatch(candidate, window, cfg, ExperimentLedger(args.ledger), client, args.category,
                                before_dispatch=lambda: registry.record(candidate, window, cfg["research"]["cycle"], cfg["research"]["groups"]))

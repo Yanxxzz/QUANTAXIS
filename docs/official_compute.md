@@ -10,6 +10,36 @@
 
 三项决策字段是研究记录规范；派发代码在放行上述待核事项时强制检查它们，其他候选尚未强制这三项。Python源码候选有原生免费预检；公式的字段与算子检查属于准备步骤，`dispatch`本身不额外发起公式试跑。
 
+## 本地与官网分工（2026-10-12）
+
+启用`compute.official_research_policy_file=config/research-workflow.v1.json`后，所有新官网候选都必须说明研究问题、通过/失败后的决定、稳定经济机制及官网能补充的具体信息。上一段仅三项待核事项时强制的规则属于未启用新政策的旧调用；旧Run查询与恢复不受新元数据要求影响。
+
+本地优先完成语法/索引检查、30/50bp成本复算、价格损益与费用归因、行业及持仓集中度、信号/收益相关、真实信号组合增量和已有数据上的阶段稳定性检查。相同定义、窗口、形成股票、持有日期与口径的已完成对照直接复用；不为费用档或读取已有结果再次派发。
+
+官网只接收三种`official_task`：`native_screen`对应`exploration`，`source_diagnostic`对应`source_probe`，`key_confirmation`对应`validation`。前两者解决原生输入下的初筛和可执行来源诊断；后者只确认已有本地或官网证据中的关键未知事项，必须提供`local_review_evidence`中的既有文件路径/SHA256。这不要求先通过正式入池Sharpe、200周期或全本地季度数据认证。
+
+原生财务期间、实值等价和完整PIT尚未知时，可在明确`source_diagnostic`问题下保留`native_financial_period_pending`、`native_financial_value_parity_pending`、`full_pit_certification_pending`。字段实际缺失、历史SOURCE未核、方向未知、索引错误和失败原生预检仍不能派发；目录字段存在不认证金额或生产PIT。先做有界诊断，再决定哪些来源值得补，不先批量重建全部财务历史。
+
+## 跨方向累计门槛
+
+默认一个寻找候选的研究轮共用60点、最多20次官网尝试，覆盖多个方向、日期及资金批次。单经济机制初探最多2次（含来源探测及必要对照），总计最多4次；后续调用须为有证据的关键确认。名字变化、窗口变化、数值参数变化都不重新得到初探额度：以稳定`budget_mechanism_id`（省略时使用`mechanism`）和忽略数值参数的代码族并行归组。这只是预算归组，不表示不同参数经济等价。
+
+总额按已结算实扣加未结算预留计算，失败尝试计运行次数，失败扣费计金额；已确认零扣费且未创建Factor/Run的取消才不占额度。派发在SQLite原子预留中再次检查，不能通过换资金batch、跨午夜、改研究ID、提高配置上限或关闭政策绕过已绑定研究轮。第一笔新研究预留才绑定本轮；旧结算账本保留，不伪造为本轮消费。
+
+每累计20点，下一笔派发前要求一次免费本地复盘：说明已获得的信息、已关闭/保留的机制和下一步，绑定已有结果文件，并选择`continue`、`redirect`或`local_only`。这不是逐次人工审批，研究流程可以在授权范围内完成；未结算执行先结算，未达到节点不能预填复盘，复盘不会增加算力授权、次数上限或新经济context。达到60点/20次停止新增官网派发，额度不能因换方向自动重置；后续提高总预算或新开研究轮需新的明确安排。
+
+这套门槛控制本地派发。平台实际单次扣费可能超估算，原批次授权、资金来源及异常结算锁定继续适用；它不构成服务端硬封顶。配置并未新增60点收费许可，原赠送优先、充值每批确认及暂停/截止指令保留。
+
+离线查看累计及复盘节点（不访问账号、不创建缺失账本）：
+
+```powershell
+python -m panda_alpha --config config/panda-alpha.local.json compute-status
+python -m panda_alpha --config config/panda-alpha.local.json compute-review --evidence research_runs/review.json
+python -m panda_alpha --config config/panda-alpha.local.json compute-review --evidence research_runs/review.json --execute
+```
+
+复盘文件包含`study_id`、`decision`、`findings`、`next_steps`和`artifacts:[{path,sha256}]`。预览只读，`--execute`把一条精简复盘写入同一`experiments.sqlite3`，不复制结果、不启动回测、不更改科学试验分母。
+
 ## 两种计费模型
 
 - `enforced_cap`：有真实服务端上限及其来源。超上限不能当成正常预估误差。

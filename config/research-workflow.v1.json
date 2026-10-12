@@ -1,0 +1,18 @@
+{
+  "identity": "hybrid_research_v1_20261012",
+  "study_id": "pool_candidate_search_20261012",
+  "max_total_credits": 60,
+  "max_runs": 20,
+  "review_interval_credits": 20,
+  "max_initial_runs_per_mechanism": 2,
+  "max_runs_per_mechanism": 4,
+  "local_first": ["syntax_check", "cost_sensitivity", "attribution", "correlation", "pool_increment", "stability_replay"],
+  "official_tasks": ["native_screen", "source_diagnostic", "key_confirmation"],
+  "exploration_requires_formal_admission": false,
+  "unknown_native_financial_period_requires": "Explicit diagnostic question, executable field/index evidence and bounded official source probe; not bulk local quarterly collection first",
+  "scope": "One cumulative search across dates, directions, funding batches and parameter variants; changing identifiers does not open a new allowance",
+  "funding_authorization": false,
+  "recharge_rule": "Gift first; recharge requires the existing concrete batch authorization",
+  "review_rule": "Free local evidence review after each20 actual/committed credits; continue, redirect or local_only; no per-run human confirmation",
+  "billing_limit": "Local dispatch guard using actual settlements and unresolved reservations; not a server-enforced single-run charge ceiling"
+}

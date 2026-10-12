@@ -18,6 +18,55 @@ REPO = Path(__file__).resolve().parents[1]
 
 
 class CLITests(unittest.TestCase):
+    def test_compute_status_is_offline_and_does_not_create_ledgers(self):
+        with tempfile.TemporaryDirectory() as temp:
+            directory = Path(temp)
+            config, _ = self.config(directory)
+            ledger = directory / "absent.sqlite3"
+            out = io.StringIO()
+            with redirect_stdout(out), patch("panda_alpha.platform.PandaClient", side_effect=AssertionError("Unexpected account access")):
+                main(["--config", str(config), "compute-status", "--ledger", str(ledger)])
+            result = json.loads(out.getvalue())
+            self.assertEqual(result["limits"]["max_total_credits"], 60)
+            self.assertEqual(result["usage"]["credits"], 0)
+            self.assertEqual(result["official_calls"], 0)
+            self.assertFalse(ledger.exists())
+
+    def test_compute_review_preview_is_readonly_and_execute_is_free(self):
+        import hashlib
+        from panda_alpha.platform import ExperimentLedger
+        from panda_alpha.research_budget import load_policy, request
+        with tempfile.TemporaryDirectory() as temp:
+            directory = Path(temp)
+            config, cfg = self.config(directory)
+            policy = load_policy(cfg["compute"])
+            policy["review_interval_credits"] = 2
+            cfg["compute"]["official_research_policy"] = policy
+            config.write_text(json.dumps(cfg), encoding="utf-8")
+            ledger_path = directory / "jobs.sqlite3"
+            ledger = ExperimentLedger(ledger_path)
+            c = {"candidate_id": "fixture", "formula": "RANK(close)", "direction": 1,
+                 "mechanism": "fixture", "official_task": "native_screen",
+                 "research_question": "Frozen question", "decision_if_pass": "Review locally",
+                 "decision_if_fail": "Close", "official_information_gap": "Native input parity"}
+            ledger.reserve("fixture", c, {"research_budget": request(policy, c, "exploration")},
+                           "exploration", 2, 10, {"total": 10, "gift": 10})
+            ledger.transition("fixture", "RESERVED", "SETTLED", actual=2)
+            source = directory / "results.json"
+            source.write_text('{"completed":true}')
+            ev = {"study_id": policy["study_id"], "decision": "continue",
+                  "findings": "Existing native result reviewed", "next_steps": "Independent next mechanism",
+                  "artifacts": [{"path": str(source), "sha256": hashlib.sha256(source.read_bytes()).hexdigest()}]}
+            evidence = directory / "review.json"; evidence.write_text(json.dumps(ev))
+            args = ["--config", str(config), "compute-review", "--ledger", str(ledger_path), "--evidence", str(evidence)]
+            with redirect_stdout(io.StringIO()), patch("panda_alpha.platform.PandaClient", side_effect=AssertionError("Unexpected account access")):
+                main(args)
+                self.assertEqual(ledger.research_state()["reviews"], [])
+                main(args + ["--execute"])
+            self.assertEqual(len(ledger.research_state()["reviews"]), 1)
+            self.assertEqual(len(ledger.jobs()), 1)
+            ledger.db.close()
+
     def config(self, directory):
         cfg = json.loads((REPO / "config/panda-alpha.example.json").read_text(encoding="utf-8"))
         cfg["research"]["memory"] = str(REPO / "research_bootstrap/memory.json")
