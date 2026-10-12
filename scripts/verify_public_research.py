@@ -28,7 +28,8 @@ if str(ROOT) not in sys.path:
 PUBLIC_PATTERNS = (
     "panda_alpha/**/*.py", "tests/**/*.py", "scripts/*.py", "scripts/*.ps1",
     "docs/*.md", ".github/workflows/panda-alpha.yml", "requirements-panda-alpha.txt",
-    "config/panda-alpha.example.json", "README*.md", "RESEARCH.md", "pyproject.toml",
+    "config/panda-alpha.example.json", "config/research-workflow.v1.json",
+    "README*.md", "RESEARCH.md", "pyproject.toml",
     "tests/fixtures/statement_layout_original.json", "tests/fixtures/statement_layout_continuation.json",
 )
 PRIVATE_PARTS = {"research_runs", ".runtime", ".venv", "data", "_data_", ".git", "__pycache__"}
@@ -88,6 +89,16 @@ def run_smoke(root=ROOT):
                     raise AssertionError("CLI help failed") from result
         if "evaluate" not in help_output.getvalue() or "registry" not in help_output.getvalue():
             raise AssertionError("Public CLI help is incomplete")
+        budget_output = io.StringIO()
+        missing_ledger = root / "public-smoke-missing-ledger.sqlite3"
+        if missing_ledger.exists():
+            raise AssertionError("Public smoke requires a nonexistent budget ledger")
+        with redirect_stdout(budget_output):
+            cli_main(["--config", str(root / "config/panda-alpha.example.json"),
+                      "compute-status", "--ledger", str(missing_ledger)])
+        budget = json.loads(budget_output.getvalue())
+        if budget["usage"]["credits"] != 0 or budget["funding_authorization"] or missing_ledger.exists():
+            raise AssertionError("Public budget check accessed funds or created a ledger")
 
         from tests.test_financial_statements import original_report
         from panda_alpha.annual_gross_profitability import select_annual_gross_profit_asof
