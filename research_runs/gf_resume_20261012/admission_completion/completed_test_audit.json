@@ -1,0 +1,941 @@
+{
+  "status": "COMPLETED_LEDGER_AND_DEPLOYMENT_AUDIT",
+  "audit_protocol": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\gf_resume_20261012\\admission_completion\\audit_protocol.json",
+    "sha256": "5392663652fed40f536d72fa1a9f43e6b9f384683671cdd91fc976405f07651c"
+  },
+  "checks": [
+    {
+      "name": "CURRENT_POOL",
+      "cost": 0.003,
+      "rows": 256,
+      "metrics_max_absolute_difference": 0,
+      "NAV_compound_error": 6.661338147750939e-16,
+      "accounting_residual_max": 1.1657341758564144e-15
+    },
+    {
+      "name": "CURRENT_ADD_GF",
+      "cost": 0.003,
+      "rows": 256,
+      "metrics_max_absolute_difference": 0,
+      "NAV_compound_error": 1.7763568394002505e-15,
+      "accounting_residual_max": 1.1900203045200897e-15
+    },
+    {
+      "name": "RETAINED_POOL",
+      "cost": 0.003,
+      "rows": 256,
+      "metrics_max_absolute_difference": 0,
+      "NAV_compound_error": 8.881784197001252e-16,
+      "accounting_residual_max": 1.214306433183765e-15
+    },
+    {
+      "name": "RETAINED_ADD_GF",
+      "cost": 0.003,
+      "rows": 256,
+      "metrics_max_absolute_difference": 0,
+      "NAV_compound_error": 1.3322676295501878e-15,
+      "accounting_residual_max": 1.5785983631388945e-15
+    },
+    {
+      "name": "RETAINED_REPLACE_C16_GF",
+      "cost": 0.003,
+      "rows": 256,
+      "metrics_max_absolute_difference": 0,
+      "NAV_compound_error": 1.1102230246251565e-15,
+      "accounting_residual_max": 1.2776238400569184e-15
+    },
+    {
+      "name": "SIZE_GF",
+      "cost": 0.003,
+      "rows": 256,
+      "metrics_max_absolute_difference": 0,
+      "NAV_compound_error": 4.440892098500626e-16,
+      "accounting_residual_max": 1.4536982728685643e-15
+    },
+    {
+      "name": "SIZE_MARKET",
+      "cost": 0.003,
+      "rows": 256,
+      "metrics_max_absolute_difference": 0,
+      "NAV_compound_error": 4.440892098500626e-16,
+      "accounting_residual_max": 4.853756285783106e-15
+    },
+    {
+      "name": "CURRENT_POOL",
+      "cost": 0.005,
+      "rows": 256,
+      "metrics_max_absolute_difference": 0,
+      "NAV_compound_error": 0.0,
+      "accounting_residual_max": 1.0675054590292277e-15
+    },
+    {
+      "name": "CURRENT_ADD_GF",
+      "cost": 0.005,
+      "rows": 256,
+      "metrics_max_absolute_difference": 0,
+      "NAV_compound_error": 8.881784197001252e-16,
+      "accounting_residual_max": 9.783840404509192e-16
+    },
+    {
+      "name": "RETAINED_POOL",
+      "cost": 0.005,
+      "rows": 256,
+      "metrics_max_absolute_difference": 0,
+      "NAV_compound_error": 2.886579864025407e-15,
+      "accounting_residual_max": 1.1744077932362984e-15
+    },
+    {
+      "name": "RETAINED_ADD_GF",
+      "cost": 0.005,
+      "rows": 256,
+      "metrics_max_absolute_difference": 0,
+      "NAV_compound_error": 1.3322676295501878e-15,
+      "accounting_residual_max": 1.222980050563649e-15
+    },
+    {
+      "name": "RETAINED_REPLACE_C16_GF",
+      "cost": 0.005,
+      "rows": 256,
+      "metrics_max_absolute_difference": 0,
+      "NAV_compound_error": 1.7763568394002505e-15,
+      "accounting_residual_max": 1.1340754724198376e-15
+    },
+    {
+      "name": "SIZE_GF",
+      "cost": 0.005,
+      "rows": 256,
+      "metrics_max_absolute_difference": 0,
+      "NAV_compound_error": 3.552713678800501e-15,
+      "accounting_residual_max": 1.3773704399255848e-15
+    },
+    {
+      "name": "SIZE_MARKET",
+      "cost": 0.005,
+      "rows": 256,
+      "metrics_max_absolute_difference": 0,
+      "NAV_compound_error": 2.6645352591003757e-15,
+      "accounting_residual_max": 5.287437154777308e-15
+    }
+  ],
+  "accounting_and_metric_checks_passed": true,
+  "size_information": {
+    "original_size_formation_denominator": 27532,
+    "available_label_rows": 27509,
+    "unusable_label_rows": 23,
+    "periods": 51,
+    "mean_RankIC": 0.02813586339329765,
+    "period_metrics": [
+      {
+        "date": "2025-08-14",
+        "assets": 272,
+        "RankIC": 0.09633609415446029
+      },
+      {
+        "date": "2025-08-21",
+        "assets": 267,
+        "RankIC": 0.13984656303564214
+      },
+      {
+        "date": "2025-08-28",
+        "assets": 253,
+        "RankIC": -0.13894794875219926
+      },
+      {
+        "date": "2025-09-04",
+        "assets": 235,
+        "RankIC": 0.09841803066852664
+      },
+      {
+        "date": "2025-09-11",
+        "assets": 236,
+        "RankIC": 0.19969470513345466
+      },
+      {
+        "date": "2025-09-18",
+        "assets": 234,
+        "RankIC": 0.12258012853533032
+      },
+      {
+        "date": "2025-09-25",
+        "assets": 234,
+        "RankIC": -0.03988875355382827
+      },
+      {
+        "date": "2025-10-10",
+        "assets": 223,
+        "RankIC": -0.1363056442618049
+      },
+      {
+        "date": "2025-10-17",
+        "assets": 221,
+        "RankIC": 0.26115185737378965
+      },
+      {
+        "date": "2025-10-24",
+        "assets": 216,
+        "RankIC": -0.09585613541961374
+      },
+      {
+        "date": "2025-10-31",
+        "assets": 217,
+        "RankIC": -0.021634558923697728
+      },
+      {
+        "date": "2025-11-07",
+        "assets": 217,
+        "RankIC": -0.0926051193881913
+      },
+      {
+        "date": "2025-11-14",
+        "assets": 217,
+        "RankIC": 0.11053804266608737
+      },
+      {
+        "date": "2025-11-21",
+        "assets": 213,
+        "RankIC": -0.005992933529165702
+      },
+      {
+        "date": "2025-11-28",
+        "assets": 217,
+        "RankIC": -0.015312878190518088
+      },
+      {
+        "date": "2025-12-05",
+        "assets": 218,
+        "RankIC": 0.01640327868663674
+      },
+      {
+        "date": "2025-12-12",
+        "assets": 217,
+        "RankIC": 0.006655253578138596
+      },
+      {
+        "date": "2025-12-19",
+        "assets": 221,
+        "RankIC": 0.0989252249042735
+      },
+      {
+        "date": "2025-12-26",
+        "assets": 221,
+        "RankIC": 0.03701627376366817
+      },
+      {
+        "date": "2026-01-06",
+        "assets": 218,
+        "RankIC": 0.030816605291189746
+      },
+      {
+        "date": "2026-01-13",
+        "assets": 219,
+        "RankIC": -0.021559639185520545
+      },
+      {
+        "date": "2026-01-20",
+        "assets": 219,
+        "RankIC": 0.09547921838892336
+      },
+      {
+        "date": "2026-01-27",
+        "assets": 218,
+        "RankIC": 0.04815290040087729
+      },
+      {
+        "date": "2026-02-03",
+        "assets": 218,
+        "RankIC": -0.02663339254183398
+      },
+      {
+        "date": "2026-02-10",
+        "assets": 219,
+        "RankIC": -0.015249048077003346
+      },
+      {
+        "date": "2026-02-25",
+        "assets": 219,
+        "RankIC": -0.09509658755946751
+      },
+      {
+        "date": "2026-03-04",
+        "assets": 221,
+        "RankIC": 0.0994676024042315
+      },
+      {
+        "date": "2026-03-11",
+        "assets": 228,
+        "RankIC": -0.03199984205358789
+      },
+      {
+        "date": "2026-03-18",
+        "assets": 241,
+        "RankIC": -0.0743656069676998
+      },
+      {
+        "date": "2026-03-25",
+        "assets": 277,
+        "RankIC": -0.026959556148907455
+      },
+      {
+        "date": "2026-04-01",
+        "assets": 430,
+        "RankIC": 0.07973955650967877
+      },
+      {
+        "date": "2026-04-09",
+        "assets": 458,
+        "RankIC": 0.10549067935847123
+      },
+      {
+        "date": "2026-04-16",
+        "assets": 543,
+        "RankIC": -0.016440050182623633
+      },
+      {
+        "date": "2026-04-23",
+        "assets": 708,
+        "RankIC": 0.021270965704329965
+      },
+      {
+        "date": "2026-04-30",
+        "assets": 1059,
+        "RankIC": 0.010660002584405673
+      },
+      {
+        "date": "2026-05-12",
+        "assets": 1102,
+        "RankIC": 0.09850457825192355
+      },
+      {
+        "date": "2026-05-19",
+        "assets": 1107,
+        "RankIC": 0.15251881481608665
+      },
+      {
+        "date": "2026-05-26",
+        "assets": 1103,
+        "RankIC": -0.1103784250029553
+      },
+      {
+        "date": "2026-06-02",
+        "assets": 1096,
+        "RankIC": 0.10044422427603746
+      },
+      {
+        "date": "2026-06-09",
+        "assets": 1099,
+        "RankIC": 0.1069606741561714
+      },
+      {
+        "date": "2026-06-16",
+        "assets": 1102,
+        "RankIC": 0.1303494098278117
+      },
+      {
+        "date": "2026-06-24",
+        "assets": 1102,
+        "RankIC": 0.05961136157895834
+      },
+      {
+        "date": "2026-07-01",
+        "assets": 1099,
+        "RankIC": -0.014542182981167386
+      },
+      {
+        "date": "2026-07-08",
+        "assets": 1106,
+        "RankIC": -0.059660223578737515
+      },
+      {
+        "date": "2026-07-15",
+        "assets": 1098,
+        "RankIC": -0.02998451061912221
+      },
+      {
+        "date": "2026-07-22",
+        "assets": 1101,
+        "RankIC": 0.047349416974612264
+      },
+      {
+        "date": "2026-07-29",
+        "assets": 1098,
+        "RankIC": 0.14131106849637945
+      },
+      {
+        "date": "2026-08-05",
+        "assets": 1083,
+        "RankIC": 0.01381513818464921
+      },
+      {
+        "date": "2026-08-12",
+        "assets": 1076,
+        "RankIC": -0.1293123911180154
+      },
+      {
+        "date": "2026-08-19",
+        "assets": 1065,
+        "RankIC": -0.02669530710379036
+      },
+      {
+        "date": "2026-08-26",
+        "assets": 1028,
+        "RankIC": 0.1308420984928855
+      }
+    ],
+    "historical_size_vintage_verified": false
+  },
+  "same_source_net_excess_reviews": [
+    {
+      "scope": "ORIGINAL_GF",
+      "cost": 0.003,
+      "annualized_relative_net_wealth": 0.193933154068191,
+      "folds": [
+        {
+          "fold": 1,
+          "start": "2025-08-15",
+          "end": "2025-11-07",
+          "days": 55,
+          "annualized_relative_net_wealth": 0.16670024448430243
+        },
+        {
+          "fold": 2,
+          "start": "2025-11-10",
+          "end": "2026-01-20",
+          "days": 50,
+          "annualized_relative_net_wealth": 0.21038924926062097
+        },
+        {
+          "fold": 3,
+          "start": "2026-01-21",
+          "end": "2026-04-09",
+          "days": 50,
+          "annualized_relative_net_wealth": 0.4169891284233178
+        },
+        {
+          "fold": 4,
+          "start": "2026-04-10",
+          "end": "2026-06-24",
+          "days": 50,
+          "annualized_relative_net_wealth": -0.12815752863175955
+        },
+        {
+          "fold": 5,
+          "start": "2026-06-25",
+          "end": "2026-09-03",
+          "days": 51,
+          "annualized_relative_net_wealth": 0.3896164553897097
+        }
+      ],
+      "p25_fold_annualized_relative_net_wealth": 0.16670024448430243,
+      "benchmark": "Matched-source equal weighted market, not certified CSIallshare"
+    },
+    {
+      "scope": "ORIGINAL_GF",
+      "cost": 0.005,
+      "annualized_relative_net_wealth": 0.17771627802659018,
+      "folds": [
+        {
+          "fold": 1,
+          "start": "2025-08-15",
+          "end": "2025-11-07",
+          "days": 55,
+          "annualized_relative_net_wealth": 0.1493512278144058
+        },
+        {
+          "fold": 2,
+          "start": "2025-11-10",
+          "end": "2026-01-20",
+          "days": 50,
+          "annualized_relative_net_wealth": 0.1981390552719937
+        },
+        {
+          "fold": 3,
+          "start": "2026-01-21",
+          "end": "2026-04-09",
+          "days": 50,
+          "annualized_relative_net_wealth": 0.3896836997616757
+        },
+        {
+          "fold": 4,
+          "start": "2026-04-10",
+          "end": "2026-06-24",
+          "days": 50,
+          "annualized_relative_net_wealth": -0.14098296972524516
+        },
+        {
+          "fold": 5,
+          "start": "2026-06-25",
+          "end": "2026-09-03",
+          "days": 51,
+          "annualized_relative_net_wealth": 0.37728802635918424
+        }
+      ],
+      "p25_fold_annualized_relative_net_wealth": 0.1493512278144058,
+      "benchmark": "Matched-source equal weighted market, not certified CSIallshare"
+    },
+    {
+      "scope": "SIZE_GF",
+      "cost": 0.003,
+      "annualized_relative_net_wealth": 0.2003247355291915,
+      "folds": [
+        {
+          "fold": 1,
+          "start": "2025-08-15",
+          "end": "2025-11-07",
+          "days": 55,
+          "annualized_relative_net_wealth": 0.13779969824483906
+        },
+        {
+          "fold": 2,
+          "start": "2025-11-10",
+          "end": "2026-01-20",
+          "days": 50,
+          "annualized_relative_net_wealth": 0.20585413854226142
+        },
+        {
+          "fold": 3,
+          "start": "2026-01-21",
+          "end": "2026-04-09",
+          "days": 50,
+          "annualized_relative_net_wealth": 0.533710352687486
+        },
+        {
+          "fold": 4,
+          "start": "2026-04-10",
+          "end": "2026-06-24",
+          "days": 50,
+          "annualized_relative_net_wealth": 0.10654234484828118
+        },
+        {
+          "fold": 5,
+          "start": "2026-06-25",
+          "end": "2026-09-03",
+          "days": 51,
+          "annualized_relative_net_wealth": 0.07814585742714764
+        }
+      ],
+      "p25_fold_annualized_relative_net_wealth": 0.10654234484828118,
+      "benchmark": "Matched-source equal weighted market, not certified CSIallshare"
+    },
+    {
+      "scope": "SIZE_GF",
+      "cost": 0.005,
+      "annualized_relative_net_wealth": 0.18369706792458795,
+      "folds": [
+        {
+          "fold": 1,
+          "start": "2025-08-15",
+          "end": "2025-11-07",
+          "days": 55,
+          "annualized_relative_net_wealth": 0.12411351230907952
+        },
+        {
+          "fold": 2,
+          "start": "2025-11-10",
+          "end": "2026-01-20",
+          "days": 50,
+          "annualized_relative_net_wealth": 0.1919535771250549
+        },
+        {
+          "fold": 3,
+          "start": "2026-01-21",
+          "end": "2026-04-09",
+          "days": 50,
+          "annualized_relative_net_wealth": 0.5043581564684709
+        },
+        {
+          "fold": 4,
+          "start": "2026-04-10",
+          "end": "2026-06-24",
+          "days": 50,
+          "annualized_relative_net_wealth": 0.08928105870219194
+        },
+        {
+          "fold": 5,
+          "start": "2026-06-25",
+          "end": "2026-09-03",
+          "days": 51,
+          "annualized_relative_net_wealth": 0.06609061971104957
+        }
+      ],
+      "p25_fold_annualized_relative_net_wealth": 0.08928105870219194,
+      "benchmark": "Matched-source equal weighted market, not certified CSIallshare"
+    }
+  ],
+  "pool_factor_dependencies": [
+    {
+      "member": "C01",
+      "mean_pearson": -0.07416760749555462,
+      "mean_spearman": -0.07506799589667297,
+      "max_abs_period_pearson": 0.2336115571827272,
+      "max_abs_period_spearman": 0.24033561138501022
+    },
+    {
+      "member": "C02",
+      "mean_pearson": -0.07569590560392188,
+      "mean_spearman": -0.0750874219201329,
+      "max_abs_period_pearson": 0.24638535456725308,
+      "max_abs_period_spearman": 0.24919493177744778
+    },
+    {
+      "member": "C03",
+      "mean_pearson": 0.0682958601627464,
+      "mean_spearman": 0.06394397782062607,
+      "max_abs_period_pearson": 0.17979922888613442,
+      "max_abs_period_spearman": 0.17560819322567708
+    },
+    {
+      "member": "C04",
+      "mean_pearson": 0.1821037303142333,
+      "mean_spearman": 0.17779775832379086,
+      "max_abs_period_pearson": 0.29222895509366326,
+      "max_abs_period_spearman": 0.28433782495295945
+    },
+    {
+      "member": "C16",
+      "mean_pearson": 0.6702826038620919,
+      "mean_spearman": 0.6635270330637051,
+      "max_abs_period_pearson": 0.701524356685807,
+      "max_abs_period_spearman": 0.7018970285494525
+    },
+    {
+      "member": "C17",
+      "mean_pearson": 0.0005028562792514724,
+      "mean_spearman": 0.06904980239169665,
+      "max_abs_period_pearson": 0.06763848882037864,
+      "max_abs_period_spearman": 0.1468700070973413
+    },
+    {
+      "member": "F253",
+      "mean_pearson": 0.42667146552988916,
+      "mean_spearman": 0.410954387254956,
+      "max_abs_period_pearson": 0.5048664759635647,
+      "max_abs_period_spearman": 0.5039202078064211
+    }
+  ],
+  "source_coverage_observations": [
+    {
+      "date": "2025-08-14",
+      "source_common": 314,
+      "received_F_finite_denominator": 5156,
+      "scoped_ratio": 0.06089992242048099
+    },
+    {
+      "date": "2025-08-21",
+      "source_common": 308,
+      "received_F_finite_denominator": 5152,
+      "scoped_ratio": 0.059782608695652176
+    },
+    {
+      "date": "2025-08-28",
+      "source_common": 290,
+      "received_F_finite_denominator": 5165,
+      "scoped_ratio": 0.05614714424007745
+    },
+    {
+      "date": "2025-09-04",
+      "source_common": 269,
+      "received_F_finite_denominator": 5171,
+      "scoped_ratio": 0.052020885708760393
+    },
+    {
+      "date": "2025-09-11",
+      "source_common": 268,
+      "received_F_finite_denominator": 5179,
+      "scoped_ratio": 0.05174744159104074
+    },
+    {
+      "date": "2025-09-18",
+      "source_common": 267,
+      "received_F_finite_denominator": 5184,
+      "scoped_ratio": 0.05150462962962963
+    },
+    {
+      "date": "2025-09-25",
+      "source_common": 267,
+      "received_F_finite_denominator": 5189,
+      "scoped_ratio": 0.051455000963576795
+    },
+    {
+      "date": "2025-10-10",
+      "source_common": 257,
+      "received_F_finite_denominator": 4988,
+      "scoped_ratio": 0.051523656776263034
+    },
+    {
+      "date": "2025-10-17",
+      "source_common": 254,
+      "received_F_finite_denominator": 4971,
+      "scoped_ratio": 0.051096358881512774
+    },
+    {
+      "date": "2025-10-24",
+      "source_common": 253,
+      "received_F_finite_denominator": 4971,
+      "scoped_ratio": 0.05089519211426272
+    },
+    {
+      "date": "2025-10-31",
+      "source_common": 253,
+      "received_F_finite_denominator": 4998,
+      "scoped_ratio": 0.05062024809923969
+    },
+    {
+      "date": "2025-11-07",
+      "source_common": 252,
+      "received_F_finite_denominator": 5015,
+      "scoped_ratio": 0.05024925224327019
+    },
+    {
+      "date": "2025-11-14",
+      "source_common": 252,
+      "received_F_finite_denominator": 5044,
+      "scoped_ratio": 0.0499603489294211
+    },
+    {
+      "date": "2025-11-21",
+      "source_common": 250,
+      "received_F_finite_denominator": 5053,
+      "scoped_ratio": 0.04947555907381753
+    },
+    {
+      "date": "2025-11-28",
+      "source_common": 251,
+      "received_F_finite_denominator": 5071,
+      "scoped_ratio": 0.04949714060343128
+    },
+    {
+      "date": "2025-12-05",
+      "source_common": 253,
+      "received_F_finite_denominator": 5086,
+      "scoped_ratio": 0.04974439638222572
+    },
+    {
+      "date": "2025-12-12",
+      "source_common": 254,
+      "received_F_finite_denominator": 5086,
+      "scoped_ratio": 0.049941014549744395
+    },
+    {
+      "date": "2025-12-19",
+      "source_common": 255,
+      "received_F_finite_denominator": 5116,
+      "scoped_ratio": 0.04984362783424551
+    },
+    {
+      "date": "2025-12-26",
+      "source_common": 257,
+      "received_F_finite_denominator": 5121,
+      "scoped_ratio": 0.05018551064245265
+    },
+    {
+      "date": "2026-01-06",
+      "source_common": 254,
+      "received_F_finite_denominator": 5140,
+      "scoped_ratio": 0.04941634241245136
+    },
+    {
+      "date": "2026-01-13",
+      "source_common": 255,
+      "received_F_finite_denominator": 5141,
+      "scoped_ratio": 0.049601244893989496
+    },
+    {
+      "date": "2026-01-20",
+      "source_common": 257,
+      "received_F_finite_denominator": 5181,
+      "scoped_ratio": 0.04960432348967381
+    },
+    {
+      "date": "2026-01-27",
+      "source_common": 255,
+      "received_F_finite_denominator": 5186,
+      "scoped_ratio": 0.04917084458156575
+    },
+    {
+      "date": "2026-02-03",
+      "source_common": 256,
+      "received_F_finite_denominator": 5188,
+      "scoped_ratio": 0.04934464148033924
+    },
+    {
+      "date": "2026-02-10",
+      "source_common": 256,
+      "received_F_finite_denominator": 5206,
+      "scoped_ratio": 0.04917402996542451
+    },
+    {
+      "date": "2026-02-25",
+      "source_common": 255,
+      "received_F_finite_denominator": 5212,
+      "scoped_ratio": 0.048925556408288565
+    },
+    {
+      "date": "2026-03-04",
+      "source_common": 257,
+      "received_F_finite_denominator": 5218,
+      "scoped_ratio": 0.04925258719816022
+    },
+    {
+      "date": "2026-03-11",
+      "source_common": 265,
+      "received_F_finite_denominator": 5240,
+      "scoped_ratio": 0.05057251908396947
+    },
+    {
+      "date": "2026-03-18",
+      "source_common": 283,
+      "received_F_finite_denominator": 5232,
+      "scoped_ratio": 0.054090214067278285
+    },
+    {
+      "date": "2026-03-25",
+      "source_common": 324,
+      "received_F_finite_denominator": 5234,
+      "scoped_ratio": 0.061902942300343905
+    },
+    {
+      "date": "2026-04-01",
+      "source_common": 494,
+      "received_F_finite_denominator": 5255,
+      "scoped_ratio": 0.09400570884871551
+    },
+    {
+      "date": "2026-04-09",
+      "source_common": 531,
+      "received_F_finite_denominator": 5298,
+      "scoped_ratio": 0.10022650056625142
+    },
+    {
+      "date": "2026-04-16",
+      "source_common": 626,
+      "received_F_finite_denominator": 5315,
+      "scoped_ratio": 0.11777986829727187
+    },
+    {
+      "date": "2026-04-23",
+      "source_common": 826,
+      "received_F_finite_denominator": 5329,
+      "scoped_ratio": 0.15500093826233816
+    },
+    {
+      "date": "2026-04-30",
+      "source_common": 1290,
+      "received_F_finite_denominator": 5293,
+      "scoped_ratio": 0.24371811826941242
+    },
+    {
+      "date": "2026-05-12",
+      "source_common": 1346,
+      "received_F_finite_denominator": 5326,
+      "scoped_ratio": 0.25272249342846415
+    },
+    {
+      "date": "2026-05-19",
+      "source_common": 1346,
+      "received_F_finite_denominator": 5329,
+      "scoped_ratio": 0.2525802214299118
+    },
+    {
+      "date": "2026-05-26",
+      "source_common": 1340,
+      "received_F_finite_denominator": 5324,
+      "scoped_ratio": 0.2516904583020286
+    },
+    {
+      "date": "2026-06-02",
+      "source_common": 1338,
+      "received_F_finite_denominator": 5311,
+      "scoped_ratio": 0.2519299566936547
+    },
+    {
+      "date": "2026-06-09",
+      "source_common": 1334,
+      "received_F_finite_denominator": 5316,
+      "scoped_ratio": 0.2509405568096313
+    },
+    {
+      "date": "2026-06-16",
+      "source_common": 1335,
+      "received_F_finite_denominator": 5308,
+      "scoped_ratio": 0.25150715900527504
+    },
+    {
+      "date": "2026-06-24",
+      "source_common": 1331,
+      "received_F_finite_denominator": 5310,
+      "scoped_ratio": 0.25065913370998116
+    },
+    {
+      "date": "2026-07-01",
+      "source_common": 1330,
+      "received_F_finite_denominator": 5310,
+      "scoped_ratio": 0.2504708097928437
+    },
+    {
+      "date": "2026-07-08",
+      "source_common": 1329,
+      "received_F_finite_denominator": 5317,
+      "scoped_ratio": 0.24995298100432575
+    },
+    {
+      "date": "2026-07-15",
+      "source_common": 1329,
+      "received_F_finite_denominator": 5319,
+      "scoped_ratio": 0.24985899605188946
+    },
+    {
+      "date": "2026-07-22",
+      "source_common": 1327,
+      "received_F_finite_denominator": 5322,
+      "scoped_ratio": 0.2493423524990605
+    },
+    {
+      "date": "2026-07-29",
+      "source_common": 1324,
+      "received_F_finite_denominator": 5320,
+      "scoped_ratio": 0.24887218045112783
+    },
+    {
+      "date": "2026-08-05",
+      "source_common": 1314,
+      "received_F_finite_denominator": 5327,
+      "scoped_ratio": 0.24666791815280645
+    },
+    {
+      "date": "2026-08-12",
+      "source_common": 1311,
+      "received_F_finite_denominator": 5328,
+      "scoped_ratio": 0.24605855855855857
+    },
+    {
+      "date": "2026-08-19",
+      "source_common": 1301,
+      "received_F_finite_denominator": 5315,
+      "scoped_ratio": 0.24477892756349953
+    },
+    {
+      "date": "2026-08-26",
+      "source_common": 1262,
+      "received_F_finite_denominator": 5315,
+      "scoped_ratio": 0.2374412041392286
+    }
+  ],
+  "full_eligible_PIT_denominator_verified": false,
+  "deployment": {
+    "adapter_sha256": "817fd4aef57a3afe509beaae241c76786b6a5f26712cc9d9a5425f2b53aa2533",
+    "evaluation_start": "2025-08-14",
+    "evaluation_end": "2026-09-03",
+    "maximum_G_source_interval_end": "2026-08-26",
+    "historical_synthetic_finite_output": 50,
+    "future_supplied_rows": 50,
+    "future_rows_returned": 0,
+    "future_finite_after_caller_reindex": 0,
+    "finite_F_stub": true,
+    "production_ready": false,
+    "blocking_reason": "Fixed past projection excludes future dates; immutable G intervals have no continuous publication/version update source"
+  },
+  "new_economic_contexts": 0,
+  "official_spent": 0,
+  "formal_admission": false
+}

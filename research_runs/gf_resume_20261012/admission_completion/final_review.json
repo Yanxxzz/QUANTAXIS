@@ -1,0 +1,116 @@
+{
+  "status": "REMAINING_TESTS_COMPLETE_CURRENT_ADAPTER_NOT_FOR_LIVE_POOL",
+  "completed_at_utc": "2026-10-12T14:37:09.019952+00:00",
+  "policy": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\config\\pool-admission.v2.json",
+    "sha256": "e1108791f304bb8eaee01058908f59b4ea95f86299b5dc1c1f7b7cce07ed4835"
+  },
+  "historical_gate_policy_changed": false,
+  "findings": {
+    "standalone_GF_net30_sharpe": 1.3836303907198282,
+    "minimum": 0.5,
+    "direction_IC_fold_count": 5,
+    "direction_IC_fold_interpretation": "Original producer uses five contiguous mean directional RankIC signs; actual IC folds, not net-return folds",
+    "scale_proxy": {
+      "net30": 0.3224355291803813,
+      "sharpe30": 1.3027507464295742,
+      "net50": 0.2824221694845801,
+      "sharpe50": 1.1715683040551141,
+      "RankIC": 0.02813586339329765,
+      "certified_historical_size_vintage": false
+    },
+    "factor_diversity_proxy_max_abs_period_correlation": 0.7018970285494525,
+    "pool_increment": "GF improves current6 member backcast, but addGF and replaceC16withGF both lower retained5 member net return/Sharpe and raise drawdown at both costs",
+    "deployment": {
+      "adapter_sha256": "817fd4aef57a3afe509beaae241c76786b6a5f26712cc9d9a5425f2b53aa2533",
+      "evaluation_start": "2025-08-14",
+      "evaluation_end": "2026-09-03",
+      "maximum_G_source_interval_end": "2026-08-26",
+      "historical_synthetic_finite_output": 50,
+      "future_supplied_rows": 50,
+      "future_rows_returned": 0,
+      "future_finite_after_caller_reindex": 0,
+      "finite_F_stub": true,
+      "production_ready": false,
+      "blocking_reason": "Fixed past projection excludes future dates; immutable G intervals have no continuous publication/version update source"
+    },
+    "periods": 51,
+    "minimum_periods_local_rule": 200,
+    "additional_periods_missing": 149,
+    "BH_q": null,
+    "BH_status": "Missing full one-to-one registered hypothesis family p-values; raw p is not q",
+    "full_target_coverage_certified": false,
+    "observed_GF_source_vs_received_F_finite_coverage_min": 0.048925556408288565,
+    "observed_GF_source_vs_received_F_finite_coverage_max": 0.25272249342846415,
+    "coverage_denominator": "Received finite price-derived F peers, not certified allA historical eligible PIT universe",
+    "complete_forward_validation_certified": false
+  },
+  "current_pool_snapshot": {
+    "effective_count": 6,
+    "pending_effective_count": 1,
+    "next_rebalance": "2026-10-15T00:00:00+08:00",
+    "modification_window": {
+      "open": false,
+      "opens_at": "2026-11-01T00:00:00+08:00",
+      "closes_at": "2026-11-03T23:59:59.999999+08:00"
+    }
+  },
+  "economic_scope": {
+    "formed_GF_keys": 32905,
+    "shared_all_seven_member_keys": 32892,
+    "missing_technical_keys": 13,
+    "formation_periods": 51,
+    "held_days": 256,
+    "window": "2025-08-14 formation to2026-09-03 holding end",
+    "fields": "Frozen own definitions; existing StockDB bars plus accepted proxy close, with field/runtime parity pending",
+    "pool_comparison": "Fixed member versions backcast on common GF source support, not actual historical pool membership/official points",
+    "candidate_and_member_signals_combined_before_targets": true,
+    "sleeve_return_average_used": false
+  },
+  "completed_cost_paths": 14,
+  "registered_contexts_this_unit": 7,
+  "new_independent_alpha_claims": 0,
+  "official_runs_this_unit": 0,
+  "official_spent_this_unit": 0,
+  "pool_operations": 0,
+  "decision": "Do not launch this static GF adapter or claim complete eligibility. Keep standalone/size evidence; close these exact add/replace pool proposals as non-improving in this proxy scope; no weight/sign/window scan.",
+  "next_valid_work": "Continuous G publication/version and usable-date pipeline, plus genuinely incremental information versus the scheduled retained pool. New source/window testing needs a separately frozen contract; cancelled2023 task remains cancelled.",
+  "evidence": {
+    "protocol": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\gf_resume_20261012\\admission_completion\\test_protocol.json",
+      "sha256": "42ab632eddd4d7aa13b546373f8140ec40a2f02cb0d4372ef918b7857dfcd0de"
+    },
+    "summary": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\gf_resume_20261012\\admission_completion\\test_summary.json",
+      "sha256": "a1d1e2efb6150d2a51d9b9f7e8b4b53d8116be37b772826a2a532e1746cdd8aa"
+    },
+    "audit": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\gf_resume_20261012\\admission_completion\\completed_test_audit.json",
+      "sha256": "25f9642c0f5ee88ef64ea655a7374fc585b99a90521f68efba81042407e64736"
+    },
+    "statistical_review": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\gf_resume_20261012\\admission_completion\\admission_statistics_review.json",
+      "sha256": "682d8d9744ce5e9e2bc61845e8bd07c8c2ce2db86d5d8dde50062696b5edcb1c"
+    },
+    "own_snapshot": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\gf_resume_20261012\\admission_completion\\owned_pool_snapshot.json",
+      "sha256": "ccf2a1db39b56c81be01be3855882dff2513496c6a3c10957e1026abfc9eeeea"
+    },
+    "definition_receipts": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\gf_resume_20261012\\admission_completion\\definition_receipts.json",
+      "sha256": "6fe392bae4ba23ea75c9f629ca9d2bf38a4fe2a2301914787a802cb756b44b1b"
+    },
+    "input_receipt": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\gf_resume_20261012\\admission_completion\\test_input_receipt.json",
+      "sha256": "569e4d7397f4f12e3107d6f7f5293cd1e1230f0dc75674c88ee5ace267116e50"
+    },
+    "target_receipt": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\gf_resume_20261012\\admission_completion\\test_target_receipt.json",
+      "sha256": "5dfba91ea7893a47a7eeda65a141b5996ca8cbca37a4c10f96419c3afd133d61"
+    },
+    "ledger": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\gf_resume_20261012\\admission_completion\\test_daily_net_ledger.parquet",
+      "sha256": "0c32739671040803e28c42157048e4b0f268f90237024d59df56bbaed924ca73"
+    }
+  }
+}

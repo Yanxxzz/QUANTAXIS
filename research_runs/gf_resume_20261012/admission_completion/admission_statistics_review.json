@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "status": "ADMISSION_STATISTICS_AUDIT_COMPLETE_WITH_KNOWN_PERIOD_SHORTFALL_AND_BH_PENDING",
+  "reviewed_at_utc": "2026-10-12T14:25:44.704670+00:00",
+  "scope": "Read-only audit of retained statistics and metric producers; no labels, prices, signals, cost paths, pool operations or official API requests.",
+  "bindings": {
+    "policy": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\config\\pool-admission.v2.json",
+      "sha256": "e1108791f304bb8eaee01058908f59b4ea95f86299b5dc1c1f7b7cce07ed4835"
+    },
+    "quality_diagnostic": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\gf_resume_20261012\\quality_diagnostic.json",
+      "sha256": "c80f25fa3bb985b046588b6b07db5f9f89b040f12865a2287181d8683b72d268"
+    },
+    "quality_protocol": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\gf_resume_20261012\\quality_diagnostic_protocol.json",
+      "sha256": "30181cb3f5211f1ddc2295064bec5388c9e63005f61ae19bbed59ce746e9cfb7"
+    },
+    "cold_evidence": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_bootstrap\\evidence.jsonl",
+      "sha256": "364c3103ffe2efbcfa4232f0a0b6cca1de665feeaec123fbee1e4c255fba22c4"
+    },
+    "old_metric_producer": {
+      "path": "D:/PandaAI-Alpha/stockdb_factor_eval/evaluate.py",
+      "sha256": "8a87560d78505ddbe2cd9d0ca3b57e109024ab5dddf49adb41b64abb370e6a9d"
+    },
+    "old_relative_wealth_helper": {
+      "path": "D:/PandaAI-Alpha/stockdb_factor_eval/core.py",
+      "sha256": "0ac2f7201b0a3072165247dc33718ee66e035945b886bbd7704af8de5eb06336"
+    }
+  },
+  "registry_snapshot": {
+    "sequence": 478,
+    "head": "f78e0bddc93f436d059c78bfd2e5f5f37675f9da0d6dbb8a5ca8af440488759e",
+    "historical_baseline": 415,
+    "unique_registered_contexts": 92,
+    "cumulative_contexts": 507,
+    "cumulative_count_is_not_independent_alpha_count": true,
+    "registry_was_not_opened_with_mutating_constructor": true
+  },
+  "periods_review": {
+    "definition": "Completed ordered factor formation / rebalance cycles; not daily holdings, observations, cumulative research contexts or duplicated cost paths.",
+    "required": 200,
+    "observed": 51,
+    "shortfall": 149,
+    "status": "KNOWN_NOT_MET",
+    "policy_is_local_not_official_competition_requirement": true,
+    "cancelled_2023_extension_restarted": false
+  },
+  "folds_review": {
+    "old_producer_definition": "np.array_split of chronological formation periods into five chunks; count(direction_aligned(mean RankIC in chunk)>0).",
+    "producer_location": "evaluate.py:3072-3099; docs/wc03-admission-progress-20261010.md:16 confirms information folds, not net-return folds.",
+    "existing_GF_chunk_counts": [
+      11,
+      10,
+      10,
+      10,
+      10
+    ],
+    "existing_GF_direction_RankIC_means": [
+      0.05310825853996508,
+      0.018888489035059124,
+      0.008122849732444096,
+      0.03855289646074789,
+      0.046061271826391664
+    ],
+    "existing_GF_direction_IC_means": [
+      0.04212751800550889,
+      0.02143851549122691,
+      0.013811791583374594,
+      0.021847876786490313,
+      0.03441348579261503
+    ],
+    "positive_RankIC_fold_count": 5,
+    "positive_Pearson_IC_fold_count": 5,
+    "information_fold_5_of_5_observed": true,
+    "net_return_4_of_5_does_not_fail_this_field": true,
+    "formal_evidence_status": "Semantics now traceable to retained legacy producer; original diagnostic remains explicitly descriptive/post-exposure. No original protocol, result or verified quality artifact is rewritten."
+  },
+  "net_metric_semantics": {
+    "net30_and_net50_are": "Direction-held cost-adjusted relative-wealth annualized excess proxy against a matched benchmark; decimal fraction, .02=2% and .0025=.25%.",
+    "old_producer": "evaluate.py:3037-3056 -> core.py:942 annualize_relative_returns",
+    "old_formula": "prod((1+cost_adjusted_period_return)/(1+benchmark_period_return)) ** (252/(cycle*valid_periods))-1",
+    "p25_fold_net_is": "25th percentile of the five matched chronological fold relative-wealth annualized excesses; not absolute held-side fold profits.",
+    "new_potential_daily_ledger_requires_explicit_basis": "If paired daily net ledgers are used, exponent uses actual joint holding-day count; benchmark cost/basis and complete-date support must be declared. No implicit field conversion is made in this audit.",
+    "official_unpriced_headline_cannot_substitute": true,
+    "GF_absolute_net_return_is_not_net_excess": true,
+    "common_market_is_research_proxy_not_verified_CSI_allshare": true,
+    "numerical_return_recalculation_performed": false
+  },
+  "BH_review": {
+    "status": "PENDING_NO_COMPLETE_SOURCE_BOUND_FAMILY_FOR_CURRENT_GF",
+    "existing_raw_Gf_RankIC_p": 0.006001498857171553,
+    "existing_raw_Gf_Pearson_IC_p": 0.006002584097367248,
+    "official_report_raw_p": 0.0223,
+    "official_p_is_not_assumed_same_test_as_local_RankIC_p": true,
+    "catalogue_inventory": {
+      "retained_evidence_records": 4877,
+      "distinct_catalogue_hypothesis_ids": 428,
+      "records_with_valid_raw_RankIC_p": 1489,
+      "hypothesis_ids_with_valid_raw_RankIC_p": 336,
+      "catalogue_ids_without_valid_raw_RankIC_p": 92,
+      "ids_with_multiple_distinct_p_values": 67,
+      "p_source_paths": 306
+    },
+    "catalogue_count_limitation": "428 named catalogue identifiers are not the immutable historical415 or current507 strategy-window/source contexts. The92 missing catalogue IDs are not claimed to be92 missing formal family tests.67 IDs have multiple p values from definitions/windows/source versions; choosing one by significance is invalid.",
+    "registered_payload_explicit_family_and_p_vector_found": false,
+    "complete_family_identity_mapping_found": false,
+    "no_retrospective_new_small_family_chosen": true,
+    "full_history_q_value": null,
+    "math_bound_without_family": "For valid raw p in a specified BH family of size m, p <= adjusted q <= min(1,m*p); missing family membership/rank prevents a tighter certified value.",
+    "conservative_history_size_sensitivity_only": {
+      "assumed_m": 507,
+      "m_is_context_count_not_claimed_independent_test_family": true,
+      "raw_p_lower_bound": 0.006001498857171553,
+      "q_upper_bound": 1,
+      "upper_bound_cannot_prove_q_le_0_05": true,
+      "this_is_not_computed_BH_q": true
+    },
+    "serial_dependence_and_data_reuse_adjustment_certified": false,
+    "needed": "Source-bound complete hypothesis/test family and exact p values from matching fixed definitions, windows and endpoints, including failures or explicit missing outcomes; define duplicates/control/window counting before adjustment. Fresh frozen OOS tests are a separate route, not a retroactive reset of the exposed search history."
+  },
+  "formal_eligible": false,
+  "new_economic_contexts": 0,
+  "labels_read": false,
+  "prices_read": false,
+  "official_runs": 0,
+  "official_spent": 0,
+  "pool_operations": 0
+}
