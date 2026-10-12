@@ -1,0 +1,90 @@
+{
+  "status": "OFFICIAL_GF_NATIVE_CONFIRMATION_SUCCESS_SETTLED",
+  "reviewed_at_utc": "2026-10-12T12:51:14.238127+00:00",
+  "run_id": "6accd57ca8ba1ed343bf9f97",
+  "factor_id": "6accd57ba8ba1ed343bf9f96",
+  "fingerprint": "898db6773502e2b6eb0af9b7770b6e221249b484960d94812d0d19236ab20aee",
+  "protocol_sha256": "a0fff9fffdea3541e26bbe2259ff2e9ad396f730b86410c51a1ba35b39f81a67",
+  "received_original_sha256": "8b48ea48cb3e63c93ff1ddf7e2136966ec69e5b00c93cde13c907f57b4f3bfe0",
+  "compact_result": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\gf_resume_20261012\\native_production_gf_confirmation\\official_results\\6accd57ca8ba1ed343bf9f97.json",
+    "sha256": "bdf75d990a788f87f388c461bf99eca6169fc9b24989dcc18b64858b4cbaf4be"
+  },
+  "redundant_inline_bytes_removed": 1123876,
+  "periods": 51,
+  "formation_first": "2025-08-14",
+  "formation_last": "2026-08-26",
+  "holding_end": "2026-09-03",
+  "official_published_IC": {
+    "IC_mean": "0.0234",
+    "Rank_IC": "0.0323",
+    "IC_std": "0.0709",
+    "IC_IR": "0.3302",
+    "IR": "0.5704",
+    "P(IC<-0.02)": "25.49%",
+    "P(IC>0.02)": "56.86%",
+    "t统计量": "2.3580",
+    "p-value": "0.0223",
+    "单调性": "0.78"
+  },
+  "official_held_headline": {
+    "return_ratio": "29.78%",
+    "annualized_ratio": "29.43%",
+    "sharpe_ratio": "1.4631",
+    "maximum_drawdown": "18.30%"
+  },
+  "official_held_table": {
+    "group": "分组10",
+    "annualizedReturn": "29.43%",
+    "excessAnnualized": "16.51%",
+    "maxDrawdown": "18.30%",
+    "excessMaxDrawdown": "2.91%",
+    "annualizedVolatility": "18.40%",
+    "excessAnnualizedVolatility": "5.93%",
+    "turnoverRate": "12.07%",
+    "monthlyWinRate": "69.23%",
+    "excessMonthlyWinRate": "84.62%",
+    "trackingError": "0.0091",
+    "sharpeRatio": "1.4631",
+    "informationRatio": "2.7858"
+  },
+  "old_GF_reference": {
+    "path": "research_runs\\night_research_20261011\\native_source_conservative_unit\\official_results\\6acaa3e9cd820fa2a40a9bc7.json",
+    "sha256": "319cc8a1816a135043e8bba6ea3b3f263a296c61ab07e8af1a7720bc9afb470b"
+  },
+  "prior_GF_published_statistics_equal": true,
+  "prior_GF_group_tables_equal": false,
+  "maximum_chart_absolute_difference_by_key": {
+    "query_return_chart": 0.0,
+    "query_factor_excess_chart": 0.0,
+    "query_ic_sequence_chart": 7.923139921928168e-11,
+    "query_rank_ic_sequence_chart": 0.0003312410409590516
+  },
+  "interpretation": "Same rounded headline/IC metrics and identical group cumulative return/excess curves; RankIC sequence differs by at most0.000331241 and other group-table rounding details can differ. Confirms bounded native representation without proving individual factor vectors or live/full-PIT/pool increment.",
+  "billing": {
+    "actual": 2.0,
+    "gift_delta": 2.0,
+    "recharge_delta": 0.0,
+    "funding_model": "gift_recharge_free_alias",
+    "funding_bucket_deltas": {
+      "gift": 2.0,
+      "recharge": 0.0
+    }
+  },
+  "formal_admission": false,
+  "live_source_ready": false,
+  "actual_pool_increment_verified": false,
+  "official_metrics_are_not_cost_adjusted_compounded_nav": true,
+  "limitation": "Same exposed51-period source-limited window; no new OOS, fullA/PIT, BH,200period or full actual-pool certification; unadmitted candidates need no official post-effectiveB to be researched",
+  "automatic_retries": 0,
+  "other_group_table_differences": [
+    {
+      "group": "分组5",
+      "metric": "turnoverRate",
+      "new": "31.97%",
+      "old": "31.98%"
+    }
+  ],
+  "new_sequence_RankIC_mean": 0.03232101796237399,
+  "old_sequence_RankIC_mean": 0.03232085230290454
+}
