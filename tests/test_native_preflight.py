@@ -695,3 +695,126 @@ def test_financial_diagnostic_contract_fingerprint_matches_platform_without_chan
     definition = {key: legacy.get(key) for key in ('code', 'formula', 'direction')}
     definition.update(window=WINDOW, cycle=5, groups=10)
     assert _digest(_definition(legacy, WINDOW, 5, 10)) == fingerprint(legacy, WINDOW, 5, 10) == _digest(definition)
+
+
+MINORITY_DIAGNOSTIC_FIELDS = ['close', 'net_profit', 'minority_profit',
+                              'net_profit_parent_company', 'total_assets']
+MINORITY_DIAGNOSTIC_CODE = '''import numpy as np
+import pandas as pd
+class MinorityComparison(Factor):
+    def calculate(self, factors):
+        index = factors['close'].index
+        profit = pd.Series(factors['net_profit'].to_numpy(), index=index)
+        minority = pd.Series(factors['minority_profit'].to_numpy(), index=index)
+        parent = pd.Series(factors['net_profit_parent_company'].to_numpy(), index=index)
+        assets = pd.Series(factors['total_assets'].to_numpy(), index=index)
+        valid = (np.isfinite(profit) & np.isfinite(minority) & np.isfinite(parent)
+                 & np.isfinite(assets) & profit.gt(0) & assets.gt(0))
+        with np.errstate(divide='ignore', invalid='ignore', over='ignore'):
+            minority_share = minority.where(valid) / profit.where(valid)
+            parent_asset_return = parent.where(valid) / assets.where(valid)
+        common = valid & np.isfinite(minority_share) & np.isfinite(parent_asset_return)
+        result = SELECTED.where(common)
+        result.name = 'value'
+        return result
+'''
+
+
+def _minority_financial_diagnostic_fixture(tmp_path, selected):
+    candidate, fixture, manifest, observed, path = _financial_diagnostic_fixture(tmp_path)
+    dates = pd.bdate_range(WINDOW['start'], WINDOW['end'])
+    symbols = candidate['native_diagnostic_contract']['nominal_symbols']
+    index = pd.MultiIndex.from_product([dates, symbols], names=['date', 'symbol'])
+    profit, assets = np.full(200, np.nan), np.full(200, np.nan)
+    minority, parent = np.full(200, np.nan), np.full(200, np.nan)
+    profit[:40], assets[:40] = 100., 100.
+    minority[:40], parent[:40] = np.arange(40, dtype=float), 100. - np.arange(40, dtype=float)
+    minority[0], parent[0] = -1., 101.
+    minority[1], parent[1] = 2., -2.
+    profit[2:5] = [0., -1., np.nan]
+    assets[5:8] = [0., -1., np.nan]
+    minority[8], parent[9] = np.nan, np.nan
+    profit[10], minority[10] = 1e-308, 1e308  # only candidate ratio overflows
+    assets[11], parent[11] = 1e-308, 1e308  # only control ratio overflows
+    profit[12], minority[13], parent[14], assets[15] = np.nan, np.nan, np.nan, np.nan
+    minority[16] = 0.
+    frame = pd.DataFrame({'close': 1., 'net_profit': np.tile(profit, len(dates)),
+                          'minority_profit': np.tile(minority, len(dates)),
+                          'net_profit_parent_company': np.tile(parent, len(dates)),
+                          'total_assets': np.tile(assets, len(dates))}, index=index)
+    frame.iloc[::-1].reset_index().to_parquet(fixture, index=False)
+    candidate['code'] = MINORITY_DIAGNOSTIC_CODE.replace('SELECTED', selected)
+    candidate['direction'] = 0 if selected == 'minority_share' else 1
+    return candidate, fixture, manifest, observed, path
+
+
+def _build_minority_financial(case, fields=None):
+    candidate, fixture, manifest, observed, path = case
+    return build_native_preflight(candidate, WINDOW, 5, 10, fixture, [manifest], [observed], path,
+                                  fields=MINORITY_DIAGNOSTIC_FIELDS if fields is None else fields)
+
+
+@pytest.mark.parametrize('selected', ['minority_share', 'parent_asset_return'])
+def test_minority_financial_diagnostic_preserves_common_support_and_negative_amounts(tmp_path, selected):
+    case = _minority_financial_diagnostic_fixture(tmp_path, selected)
+    receipt = _build_minority_financial(case)
+    assert receipt['research_replay_passed'] and not receipt['passed']
+    proof = receipt['proof']
+    assert proof['input_symbols'] == proof['nominal_symbols_per_date'] == 200
+    assert proof['minimum_valid_symbols_on_usable_dates'] == 26
+    assert proof['finite_window_rows'] == 30 * 26
+    assert proof['genuine_missing_rows'] == 30 * 174
+    assert proof['median_symbol_coverage'] == pytest.approx(.13)
+    assert proof['usable_group_dates'] == proof['coverage_evaluation_dates'] == 30
+    assert not proof['full_A_certified'] and not proof['full_PIT_certified']
+    assert not proof['native_period_or_PIT_certified'] and not proof['admission_qualified']
+    assert verify_native_preflight(case[0], WINDOW, 5, 10)['proof'] == proof
+
+
+@pytest.mark.parametrize('selected,change', [('minority_share', 'candidate_only_mask'),
+                                          ('parent_asset_return', 'control_only_mask'),
+                                          ('minority_share', 'drop_negative_minority'),
+                                          ('parent_asset_return', 'drop_negative_parent'),
+                                          ('minority_share', 'fill_missing'),
+                                          ('minority_share', 'allow_negative_group_profit')])
+def test_minority_financial_diagnostic_rejects_changed_joint_mask(tmp_path, selected, change):
+    case = _minority_financial_diagnostic_fixture(tmp_path, selected)
+    candidate = case[0]
+    if change == 'candidate_only_mask':
+        candidate['code'] = candidate['code'].replace(' & np.isfinite(parent_asset_return)', '')
+    elif change == 'control_only_mask':
+        candidate['code'] = candidate['code'].replace('np.isfinite(minority_share) & ', '')
+    elif change == 'drop_negative_minority':
+        candidate['code'] = candidate['code'].replace('result.name', 'result = result.where(minority.ge(0))\n        result.name')
+    elif change == 'drop_negative_parent':
+        candidate['code'] = candidate['code'].replace('result.name', 'result = result.where(parent.ge(0))\n        result.name')
+    elif change == 'fill_missing':
+        candidate['code'] = candidate['code'].replace('result.name', 'result = result.fillna(0.)\n        result.name')
+    else:
+        candidate['code'] = candidate['code'].replace(' & profit.gt(0)', '')
+    receipt = _build_minority_financial(case)
+    assert not receipt['research_replay_passed'] and not receipt['passed']
+    assert 'invalid financial inputs as NaN' in receipt['failure']['message']
+
+
+def test_minority_financial_diagnostic_rejects_unknown_field_sets(tmp_path):
+    case = _minority_financial_diagnostic_fixture(tmp_path, 'minority_share')
+    candidate, fixture, _, _, _ = case
+    frame = pd.read_parquet(fixture)
+    frame['operating_revenue'] = 100.
+    frame.to_parquet(fixture, index=False)
+    candidate['code'] = candidate['code'].replace("        index = factors['close'].index",
+                                                "        other = factors['operating_revenue']\n        index = factors['close'].index")
+    receipt = _build_minority_financial(case, MINORITY_DIAGNOSTIC_FIELDS + ['operating_revenue'])
+    assert not receipt['research_replay_passed'] and not receipt['passed']
+    assert 'exact supported provision or minority inputs set' in receipt['failure']['message']
+
+
+def test_minority_financial_diagnostic_retains_early_infinite_input_rejection(tmp_path):
+    case = _minority_financial_diagnostic_fixture(tmp_path, 'minority_share')
+    frame = pd.read_parquet(case[1])
+    frame.loc[frame.symbol.eq('SYN000'), 'net_profit'] = np.inf
+    frame.to_parquet(case[1], index=False)
+    receipt = _build_minority_financial(case)
+    assert not receipt['research_replay_passed'] and not receipt['passed']
+    assert 'infinite input values' in receipt['failure']['message']

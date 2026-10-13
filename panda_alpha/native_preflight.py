@@ -243,18 +243,32 @@ def _financial_diagnostic_contract(contract, window, cycle, groups) -> tuple:
 def _financial_diagnostic_proof(output, frame, fields, contract, window, cycle, groups,
                                 policy, factor_class, input_hash) -> dict:
     symbols, dates = _financial_diagnostic_contract(contract, window, cycle, groups)
-    if set(fields) != {"close", "estimated_liabilities", "total_assets"}:
-        raise NativePreflightError("Financial diagnostic requires the exact close/provision/assets inputs")
+    field_set = set(fields)
+    provision_fields = {"close", "estimated_liabilities", "total_assets"}
+    minority_fields = {"close", "net_profit", "minority_profit", "net_profit_parent_company", "total_assets"}
+    if field_set not in (provision_fields, minority_fields):
+        raise NativePreflightError("Financial diagnostic requires an exact supported provision or minority inputs set")
     if not frame.index.get_level_values("date").unique().sort_values().equals(dates):
         raise NativePreflightError("Financial diagnostic fixture must retain every manifest date; no tail trimming")
     for day in dates:
         daily_symbols = frame.xs(day, level="date").index
         if len(daily_symbols) != 200 or set(daily_symbols) != set(symbols):
             raise NativePreflightError("Financial diagnostic must retain all nominal 200 rows on every date")
-    provision, assets = frame["estimated_liabilities"].to_numpy(float), frame["total_assets"].to_numpy(float)
+    assets = frame["total_assets"].to_numpy(float)
     with np.errstate(divide="ignore", invalid="ignore", over="ignore"):
-        expected_finite = (np.isfinite(provision) & (provision >= 0) & np.isfinite(assets)
-                           & (assets > 0) & np.isfinite(provision / assets))
+        if field_set == provision_fields:
+            provision = frame["estimated_liabilities"].to_numpy(float)
+            expected_finite = (np.isfinite(provision) & (provision >= 0) & np.isfinite(assets)
+                               & (assets > 0) & np.isfinite(provision / assets))
+        else:
+            profit = frame["net_profit"].to_numpy(float)
+            minority = frame["minority_profit"].to_numpy(float)
+            parent = frame["net_profit_parent_company"].to_numpy(float)
+            # Both comparisons retain the same support, including either
+            # ratio's overflow. Negative minority/parent amounts remain valid.
+            expected_finite = (np.isfinite(profit) & np.isfinite(minority) & np.isfinite(parent)
+                               & np.isfinite(assets) & (profit > 0) & (assets > 0)
+                               & np.isfinite(minority / profit) & np.isfinite(parent / assets))
     values = output.to_numpy(float)
     observed = np.isfinite(values)
     if not np.array_equal(observed, expected_finite) or not np.isnan(values[~observed]).all():
