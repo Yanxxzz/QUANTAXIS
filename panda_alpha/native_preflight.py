@@ -25,6 +25,7 @@ SCHEMA = "panda-native-preflight-v1"
 STRICT_PURPOSE = "full_universe_strict"
 SOURCE_TRANSFER_PURPOSE = "source_qualified_transfer_research"
 PROJECTION_RESEARCH_PURPOSE = "source_qualified_projection_research"
+FINANCIAL_DIAGNOSTIC_PURPOSE = "financial_source_diagnostic_research"
 LIMITATION = ("Known local FactorSeries attribute-delegation/date-first contract only; "
               "not remote all-A input equivalence, server-success or billing assurance. "
               "Grouping uses conservative deterministic no-jitter qcut; remote tradeability "
@@ -64,12 +65,15 @@ def _definition(candidate: dict, window: dict, cycle: int, groups: int) -> dict:
         result["native_preflight_purpose"] = purpose
     if purpose == PROJECTION_RESEARCH_PURPOSE:
         result["native_evaluation_contract"] = candidate.get("native_evaluation_contract")
+    if purpose == FINANCIAL_DIAGNOSTIC_PURPOSE:
+        result["native_diagnostic_contract"] = candidate.get("native_diagnostic_contract")
     return result
 
 
 def _purpose(candidate: dict) -> str:
     purpose = candidate.get("native_preflight_purpose", STRICT_PURPOSE)
-    if purpose not in (STRICT_PURPOSE, SOURCE_TRANSFER_PURPOSE, PROJECTION_RESEARCH_PURPOSE):
+    if purpose not in (STRICT_PURPOSE, SOURCE_TRANSFER_PURPOSE, PROJECTION_RESEARCH_PURPOSE,
+                       FINANCIAL_DIAGNOSTIC_PURPOSE):
         raise NativePreflightError("Native preflight requires a known explicit coverage purpose")
     return purpose
 
@@ -87,10 +91,23 @@ def _coverage_policy(purpose: str) -> dict:
                 "minimum_finite_assets_per_decision_date": 10,
                 "minimum_distinct_values_per_decision_date": 10,
                 "first_finite_trimming_allowed": False}
+    if purpose == FINANCIAL_DIAGNOSTIC_PURPOSE:
+        return {"nominal_symbols_per_requested_date": 200,
+                "minimum_complete_nominal_identity_date_coverage": 1.0,
+                "minimum_group_ready_requested_date_coverage": 1.0,
+                "minimum_finite_outputs_every_requested_date": 20,
+                "minimum_distinct_outputs_every_requested_date": 10,
+                "first_finite_trimming_allowed": False}
     raise NativePreflightError("Native preflight coverage purpose is unknown")
 
 
 def _scope(purpose: str) -> dict:
+    if purpose == FINANCIAL_DIAGNOSTIC_PURPOSE:
+        return {"purpose": purpose, "research_only": True,
+                "source_limited_exploration": True, "full_A_certified": False,
+                "full_PIT_certified": False, "native_period_or_PIT_certified": False,
+                "admission_qualified": False,
+                "coverage_denominator": "all_fixed200_nominal_rows_on_all_requested_fixture_dates"}
     if purpose == PROJECTION_RESEARCH_PURPOSE:
         return {"purpose": purpose, "research_only": True,
                 "source_limited_exploration": True, "full_A_certified": False,
@@ -194,6 +211,92 @@ def _projection_contract(contract, window, cycle, groups) -> tuple:
     if not formation_dates.equals(decision_dates[::cycle]):
         raise NativePreflightError("Projection formations must equal every frozen cycle on all decision dates")
     return evaluation_start, evaluation_end, calendar, formation_dates, decision_dates
+
+
+def _financial_diagnostic_contract(contract, window, cycle, groups) -> tuple:
+    if not isinstance(contract, dict):
+        raise NativePreflightError("Financial diagnostic requires a native diagnostic contract")
+    symbols = contract.get("nominal_symbols")
+    if (not isinstance(symbols, list) or len(symbols) != 200
+            or any(not isinstance(s, str) or not s for s in symbols) or len(set(symbols)) != 200):
+        raise NativePreflightError("Financial diagnostic requires all 200 unique nominal symbols")
+    if contract.get("nominal_period") != "currentFY25_only_fixture" or groups != 10:
+        raise NativePreflightError("Financial diagnostic requires currentFY25-only fixture and ten groups")
+    _check_artifact(contract.get("source_manifest"), "source manifest")
+    manifest = json.loads(Path(contract["source_manifest"]["path"]).read_text(encoding="utf-8"))
+    if (not isinstance(manifest, dict) or manifest.get("nominal_symbols") != symbols
+            or manifest.get("nominal_period") != contract["nominal_period"]):
+        raise NativePreflightError("Financial diagnostic manifest must match the complete nominal contract")
+    raw_dates = manifest.get("fixture_dates")
+    if (not isinstance(raw_dates, list) or not raw_dates
+            or any(not isinstance(day, str) or not day for day in raw_dates)):
+        raise NativePreflightError("Financial diagnostic manifest requires all requested fixture dates")
+    dates = pd.DatetimeIndex(pd.to_datetime(raw_dates, errors="raise"))
+    start, end = _parameters(window, cycle, groups)
+    if (dates.has_duplicates or dates.hasnans or dates.tz is not None
+            or not dates.is_monotonic_increasing or not dates.equals(dates.normalize())
+            or dates[0] != start or dates[-1] != end):
+        raise NativePreflightError("Financial diagnostic manifest must preserve exact requested endpoints and dates")
+    return symbols, dates
+
+
+def _financial_diagnostic_proof(output, frame, fields, contract, window, cycle, groups,
+                                policy, factor_class, input_hash) -> dict:
+    symbols, dates = _financial_diagnostic_contract(contract, window, cycle, groups)
+    if set(fields) != {"close", "estimated_liabilities", "total_assets"}:
+        raise NativePreflightError("Financial diagnostic requires the exact close/provision/assets inputs")
+    if not frame.index.get_level_values("date").unique().sort_values().equals(dates):
+        raise NativePreflightError("Financial diagnostic fixture must retain every manifest date; no tail trimming")
+    for day in dates:
+        daily_symbols = frame.xs(day, level="date").index
+        if len(daily_symbols) != 200 or set(daily_symbols) != set(symbols):
+            raise NativePreflightError("Financial diagnostic must retain all nominal 200 rows on every date")
+    provision, assets = frame["estimated_liabilities"].to_numpy(float), frame["total_assets"].to_numpy(float)
+    with np.errstate(divide="ignore", invalid="ignore", over="ignore"):
+        expected_finite = (np.isfinite(provision) & (provision >= 0) & np.isfinite(assets)
+                           & (assets > 0) & np.isfinite(provision / assets))
+    values = output.to_numpy(float)
+    observed = np.isfinite(values)
+    if not np.array_equal(observed, expected_finite) or not np.isnan(values[~observed]).all():
+        raise NativePreflightError("Financial diagnostic must retain actual invalid financial inputs as NaN")
+    finite = output[observed]
+    count = finite.groupby(level="date").size().reindex(dates, fill_value=0)
+    distinct = finite.groupby(level="date").nunique().reindex(dates, fill_value=0)
+    if (count.lt(policy["minimum_finite_outputs_every_requested_date"]).any()
+            or distinct.lt(max(groups, policy["minimum_distinct_outputs_every_requested_date"])).any()):
+        raise NativePreflightError("Financial diagnostic needs 20 finite and ten distinct outputs on every requested date")
+    for day in dates:
+        try:
+            labels = pd.qcut(finite.xs(day, level="date").to_numpy(float), q=groups,
+                             labels=False, duplicates="raise")
+        except ValueError as exc:
+            raise NativePreflightError("Financial diagnostic lacks deterministic groups on every requested date") from exc
+        if len(np.unique(labels)) != groups:
+            raise NativePreflightError("Financial diagnostic has an empty requested group")
+    coverage = count / policy["nominal_symbols_per_requested_date"]
+    return {"contract": "financial-source-diagnostic/full-nominal-index/no-first-finite-trimming",
+            "factor_class": factor_class, "input_rows": len(frame), "input_fields": fields,
+            "input_index_names": list(frame.index.names), "input_symbols": 200,
+            "input_frame_sha256": input_hash, "nominal_symbols_per_date": 200,
+            "nominal_period": contract["nominal_period"], "nominal_identity_date_coverage": 1.0,
+            "coverage_evaluation_basis": "all_requested_manifest_dates_without_first_finite_trimming",
+            "coverage_evaluation_dates": len(dates), "usable_group_dates": len(dates),
+            "finite_window_rows": len(finite), "genuine_missing_rows": int((~observed).sum()),
+            "minimum_valid_symbols_on_usable_dates": int(count.min()),
+            "minimum_distinct_values_on_usable_dates": int(distinct.min()),
+            "median_symbol_coverage": float(coverage.median()), "minimum_symbol_coverage": float(coverage.min()),
+            "per_date_coverage": [{"date": day.date().isoformat(), "nominal": 200,
+                                   "finite": int(count.loc[day]), "missing": int(200 - count.loc[day]),
+                                   "distinct": int(distinct.loc[day]), "coverage": float(coverage.loc[day])}
+                                  for day in dates],
+            "coverage_policy_purpose": FINANCIAL_DIAGNOSTIC_PURPOSE,
+            "grouping_smoke_test": {"method": "deterministic_no_jitter_qcut_all_requested_groups_nonempty",
+                                    "requested_groups": groups, "quantile_ready_dates": len(dates),
+                                    "remote_filtering_cleaning_and_jitter_simulated": False},
+            "output_index_restored": True, "full_A_certified": False,
+            "full_PIT_certified": False, "native_period_or_PIT_certified": False,
+            "admission_qualified": False,
+            "output_sha256": hashlib.sha256(pd.util.hash_pandas_object(output, index=True).values.tobytes()).hexdigest()}
 
 
 def _projection_proof(output, frame, fields, contract, window, cycle, groups,
@@ -314,7 +417,8 @@ def _projection_proof(output, frame, fields, contract, window, cycle, groups,
 
 def _replay(code: str, fixture: str, fields: list[str], window: dict,
             cycle: int, groups: int, policy: dict, purpose: str = STRICT_PURPOSE,
-            evaluation_contract: dict | None = None, fixture_reader=None) -> dict:
+            evaluation_contract: dict | None = None, fixture_reader=None,
+            diagnostic_contract: dict | None = None) -> dict:
     start, end = _parameters(window, cycle, groups)
     projected = purpose == PROJECTION_RESEARCH_PURPOSE
     if fixture_reader is not None and not projected:
@@ -391,6 +495,9 @@ def _replay(code: str, fixture: str, fields: list[str], window: dict,
     if projected:
         return _projection_proof(output, frame, fields, evaluation_contract, window, cycle, groups,
                                  policy, classes[0].__name__, input_hash)
+    if purpose == FINANCIAL_DIAGNOSTIC_PURPOSE:
+        return _financial_diagnostic_proof(output, frame, fields, diagnostic_contract, window,
+                                           cycle, groups, policy, classes[0].__name__, input_hash)
     # The public process_result names these two levels then filters by date.
     filtered = output[in_window]
     finite = filtered[np.isfinite(filtered.to_numpy(dtype=float))]
@@ -493,11 +600,20 @@ def build_native_preflight(candidate: dict, window: dict, cycle: int, groups: in
                "environment": {"python": platform.python_version(), "numpy": np.__version__, "pandas": pd.__version__},
                "limitation": LIMITATION}
     projected = purpose == PROJECTION_RESEARCH_PURPOSE
+    diagnostic = purpose == FINANCIAL_DIAGNOSTIC_PURPOSE
+    if diagnostic:
+        receipt.update(passed=False, research_replay_passed=False,
+                       native_diagnostic_contract=candidate.get("native_diagnostic_contract"))
     if projected:
         receipt.update(passed=False, research_replay_passed=False,
                        native_evaluation_contract=candidate.get("native_evaluation_contract"),
                        fixture_format="trusted_reader_descriptor" if fixture_reader is not None else "parquet")
     try:
+        if diagnostic:
+            contract = candidate.get("native_diagnostic_contract")
+            _financial_diagnostic_contract(contract, window, cycle, groups)
+            if _artifact(contract["source_manifest"]["path"]) not in receipt["source_evidence"]:
+                raise NativePreflightError("Financial diagnostic source manifest must be bound in source evidence")
         if fixture_reader is not None and not projected:
             raise NativePreflightError("Descriptor readers are only supported for explicit projection research")
         if projected:
@@ -512,8 +628,11 @@ def build_native_preflight(candidate: dict, window: dict, cycle: int, groups: in
                 if binding not in receipt["source_evidence"]:
                     raise NativePreflightError(f"Projection {label} must be bound in source evidence")
         receipt["proof"] = _replay(code, receipt["fixture"]["path"], fields, window, cycle, groups,
-                                   receipt["policy"], purpose, candidate.get("native_evaluation_contract"), fixture_reader)
-        receipt["research_replay_passed" if projected else "passed"] = True
+                                   receipt["policy"], purpose, candidate.get("native_evaluation_contract"), fixture_reader,
+                                   candidate.get("native_diagnostic_contract"))
+        receipt["research_replay_passed" if projected or diagnostic else "passed"] = True
+        if diagnostic:
+            receipt["status"] = "financial_source_diagnostic_research_replay_validated"
         if projected:
             receipt["status"] = "source_limited_projection_replay_validated"
     except Exception as exc:
@@ -536,9 +655,10 @@ def verify_native_preflight(candidate: dict, window: dict, cycle: int, groups: i
     except (OSError, ValueError) as exc:
         raise NativePreflightError("Native preflight receipt is missing or invalid") from exc
     projected = purpose == PROJECTION_RESEARCH_PURPOSE
+    diagnostic = purpose == FINANCIAL_DIAGNOSTIC_PURPOSE
     success = (isinstance(receipt, dict) and
                (receipt.get("research_replay_passed") is True and receipt.get("passed") is False
-                if projected else receipt.get("passed") is True))
+                if projected or diagnostic else receipt.get("passed") is True))
     if (not isinstance(receipt, dict) or receipt.get("schema") != SCHEMA
             or not success or not isinstance(receipt.get("proof"), dict)):
         raise NativePreflightError("Native preflight has no successful replay proof")
@@ -553,6 +673,11 @@ def verify_native_preflight(candidate: dict, window: dict, cycle: int, groups: i
     if (receipt.get("purpose", STRICT_PURPOSE) != purpose or
             receipt.get("scope", _scope(STRICT_PURPOSE)) != _scope(purpose)):
         raise NativePreflightError("Native preflight coverage purpose or research scope changed")
+    if diagnostic:
+        contract = candidate.get("native_diagnostic_contract")
+        if receipt.get("native_diagnostic_contract") != contract:
+            raise NativePreflightError("Native financial diagnostic contract changed")
+        _financial_diagnostic_contract(contract, window, cycle, groups)
     if projected:
         if any(key in candidate for key in ("fixture_reader", "native_fixture_reader")):
             raise NativePreflightError("Projection fixture reader must be an explicit keyword, never candidate data")
@@ -574,6 +699,8 @@ def verify_native_preflight(candidate: dict, window: dict, cycle: int, groups: i
         for artifact in artifacts:
             _check_artifact(artifact, label)
     _check_artifact(receipt.get("fixture"), "fixture")
+    if diagnostic and _artifact(contract["source_manifest"]["path"]) not in receipt["source_evidence"]:
+        raise NativePreflightError("Financial diagnostic source manifest is not bound in source evidence")
     if projected:
         for label in ("input_calendar", "source_qualification"):
             if _artifact(contract[label]["path"]) not in receipt["source_evidence"]:
@@ -584,7 +711,8 @@ def verify_native_preflight(candidate: dict, window: dict, cycle: int, groups: i
     try:
         proof = _replay(candidate["code"], receipt["fixture"]["path"], receipt.get("fields"),
                         window, cycle, groups, fixed_policy, purpose,
-                        candidate.get("native_evaluation_contract"), fixture_reader)
+                        candidate.get("native_evaluation_contract"), fixture_reader,
+                        candidate.get("native_diagnostic_contract"))
     except Exception as exc:
         raise NativePreflightError("Native preflight replay failed; no official job was dispatched") from exc
     if proof != receipt["proof"]:
@@ -592,6 +720,8 @@ def verify_native_preflight(candidate: dict, window: dict, cycle: int, groups: i
     return {"receipt_path": str(Path(path).resolve()), "receipt_sha256": _sha(path),
             "definition_fingerprint": definition, "proof": proof, "purpose": purpose,
             "scope": _scope(purpose), "limitation": LIMITATION,
+            **({"research_replay_passed": True, "passed": False,
+                "native_diagnostic_contract": contract} if diagnostic else {}),
             **({"research_replay_passed": True, "passed": False,
                 "native_evaluation_contract": contract,
                 "fixture_format": receipt["fixture_format"],

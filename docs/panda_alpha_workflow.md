@@ -121,6 +121,8 @@ review = assess_research_quality(result, diversity_evidence)
 
 新标签和官网派发前执行人工/登记约束检查。官网真正派发前先登记策略；模糊服务响应不会因缺Run ID而遗漏计数，也不会重复启动任务。预算、预检和用户授权条件仍独立保留。
 
+稀疏财务字段的研究诊断与广覆盖输出检查分别标记。目前`financial_source_diagnostic_research`仅支持已声明的预计负债／总资产输入合同：完整固定200身份、完整请求日期、每日期至少20个有限值及10个不同值，全部10组在无随机扰动的检查中可用。保留全部缺失行和真实覆盖分母，不按有效名单缩表或裁掉头部日期；manifest、代码、政策和实际重放证明均需校验。该入口成功为`research_replay_passed=true`且`passed=false`，只准许已授权、有信息价值的字段诊断，不认证全A、财报期间、PIT或入池。原80%广覆盖门槛、来源传输及价格投影政策不变。
+
 ## 验证
 
 ```powershell

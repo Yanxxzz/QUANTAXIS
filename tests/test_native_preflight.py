@@ -526,3 +526,172 @@ def test_projection_does_not_execute_a_reader_declared_in_untrusted_candidate(pr
     assert not receipt['research_replay_passed'] and receipt['fixture_format'] == 'parquet'
     assert 'explicit keyword' in receipt['failure']['message']
     assert 'fixture_reader' not in receipt
+
+
+FINANCIAL_DIAGNOSTIC_PURPOSE = 'financial_source_diagnostic_research'
+FINANCIAL_DIAGNOSTIC_CODE = '''import numpy as np
+import pandas as pd
+class ReportedProvision(Factor):
+    def calculate(self, factors):
+        index = factors['close'].index
+        provision = pd.Series(factors['estimated_liabilities'].to_numpy(), index=index)
+        assets = pd.Series(factors['total_assets'].to_numpy(), index=index)
+        valid = np.isfinite(provision) & provision.ge(0) & np.isfinite(assets) & assets.gt(0)
+        result = provision.where(valid) / assets.where(valid)
+        result.name = 'value'
+        return result
+'''
+
+
+def _financial_diagnostic_fixture(tmp_path, finite=40):
+    dates = pd.bdate_range(WINDOW['start'], WINDOW['end'])
+    symbols = [f'SYN{n:03d}' for n in range(200)]
+    index = pd.MultiIndex.from_product([dates, symbols], names=['date', 'symbol'])
+    provision = np.tile(np.r_[np.arange(finite, dtype=float), np.full(200 - finite, np.nan)], len(dates))
+    frame = pd.DataFrame({'close': 1., 'estimated_liabilities': provision, 'total_assets': 100.}, index=index)
+    fixture = tmp_path / 'synthetic-sparse-financial.parquet'
+    frame.iloc[::-1].reset_index().to_parquet(fixture, index=False)
+    manifest = tmp_path / 'synthetic-source-manifest.json'
+    manifest.write_text(json.dumps({'synthetic_test_only': True, 'nominal_symbols': symbols,
+                                   'nominal_period': 'currentFY25_only_fixture',
+                                   'fixture_dates': dates.strftime('%Y-%m-%d').tolist()}))
+    observed = tmp_path / 'observed-interface.txt'
+    observed.write_text('Existing local date-first/to_numpy delegation; synthetic interfaces, no native source claim.')
+    path = tmp_path / 'sparse-preflight.json'
+    candidate = {'candidate_id': 'synthetic-financial-diagnostic', 'code': FINANCIAL_DIAGNOSTIC_CODE,
+                 'direction': 0, 'native_preflight_path': str(path),
+                 'native_preflight_purpose': FINANCIAL_DIAGNOSTIC_PURPOSE,
+                 'native_diagnostic_contract': {'nominal_symbols': symbols,
+                     'nominal_period': 'currentFY25_only_fixture',
+                     'source_manifest': {'path': str(manifest), 'sha256': hashlib.sha256(manifest.read_bytes()).hexdigest()}}}
+    return candidate, fixture, manifest, observed, path
+
+
+def _build_financial(case, source=None):
+    candidate, fixture, manifest, observed, path = case
+    return build_native_preflight(candidate, WINDOW, 5, 10, fixture,
+                                  [manifest] if source is None else source, [observed], path,
+                                  fields=['close', 'estimated_liabilities', 'total_assets'])
+
+
+def test_sparse_financial_diagnostic_keeps_200_denominator_without_strict_pass(tmp_path):
+    case = _financial_diagnostic_fixture(tmp_path)
+    receipt = _build_financial(case)
+    assert receipt['research_replay_passed'] is True and receipt['passed'] is False
+    verified = verify_native_preflight(case[0], WINDOW, 5, 10)
+    proof = verified['proof']
+    assert proof == receipt['proof']
+    assert proof['input_symbols'] == proof['nominal_symbols_per_date'] == 200
+    assert proof['minimum_valid_symbols_on_usable_dates'] == 40
+    assert proof['median_symbol_coverage'] == pytest.approx(.2)
+    assert proof['genuine_missing_rows'] == 30 * 160
+    assert proof['coverage_evaluation_dates'] == proof['usable_group_dates'] == 30
+    assert not verified['scope']['full_A_certified'] and not verified['scope']['full_PIT_certified']
+    assert not verified['scope']['admission_qualified']
+    strict = dict(case[0])
+    strict.pop('native_preflight_purpose')
+    receipt = build_native_preflight(strict, WINDOW, 5, 10, case[1], [case[2]], [case[3]], case[4],
+                                    fields=['close', 'estimated_liabilities', 'total_assets'])
+    assert not receipt['passed'] and 'cross-sectional source coverage' in receipt['failure']['message']
+
+
+@pytest.mark.parametrize('change', ['missing_nominal_row', 'shrink_roster', 'only_tail_dates',
+                                   'missing_interior_date', 'first_date_missing', 'constant', 'fewer_than_twenty',
+                                   'duplicate_quantile_edges', 'fill_missing'])
+def test_financial_diagnostic_rejects_sparse_source_shortcuts(tmp_path, change):
+    case = _financial_diagnostic_fixture(tmp_path, finite=19 if change == 'fewer_than_twenty' else 40)
+    candidate, fixture, manifest, _, _ = case
+    frame = pd.read_parquet(fixture)
+    if change == 'missing_nominal_row':
+        frame = frame.drop(frame.index[0])
+    elif change == 'shrink_roster':
+        data = json.loads(manifest.read_text())
+        data['nominal_symbols'] = data['nominal_symbols'][:40]
+        manifest.write_text(json.dumps(data))
+        candidate['native_diagnostic_contract']['nominal_symbols'] = data['nominal_symbols']
+        candidate['native_diagnostic_contract']['source_manifest']['sha256'] = hashlib.sha256(manifest.read_bytes()).hexdigest()
+        frame = frame[frame.symbol.isin(data['nominal_symbols'])]
+    elif change == 'only_tail_dates':
+        frame = frame[frame.date.ge(frame.date.max() - pd.Timedelta(days=7))]
+    elif change == 'missing_interior_date':
+        frame = frame[frame.date.ne(sorted(frame.date.unique())[10])]
+    elif change == 'first_date_missing':
+        frame.loc[frame.date.eq(frame.date.min()), 'estimated_liabilities'] = np.nan
+    elif change == 'constant':
+        frame.loc[frame.estimated_liabilities.notna(), 'estimated_liabilities'] = 1.
+    elif change == 'duplicate_quantile_edges':
+        frame.loc[frame.estimated_liabilities.lt(31), 'estimated_liabilities'] = 0.
+    elif change == 'fill_missing':
+        candidate['code'] = candidate['code'].replace("        result.name = 'value'",
+                                                     "        result = result.fillna(0.)\n        result.name = 'value'")
+    frame.to_parquet(fixture, index=False)
+    receipt = _build_financial(case)
+    assert receipt['passed'] is False and receipt['research_replay_passed'] is False
+    with pytest.raises(NativePreflightError, match='no successful replay proof'):
+        verify_native_preflight(candidate, WINDOW, 5, 10)
+
+
+def test_financial_diagnostic_twenty_finite_is_the_fixed_boundary_and_zero_is_observed(tmp_path):
+    case = _financial_diagnostic_fixture(tmp_path, finite=20)
+    receipt = _build_financial(case)
+    assert receipt['research_replay_passed'] and not receipt['passed']
+    assert receipt['proof']['minimum_valid_symbols_on_usable_dates'] == 20
+    assert receipt['proof']['median_symbol_coverage'] == pytest.approx(.1)
+    assert receipt['proof']['minimum_distinct_values_on_usable_dates'] == 20
+    assert verify_native_preflight(case[0], WINDOW, 5, 10)['proof'] == receipt['proof']
+
+
+@pytest.mark.parametrize('change', ['passed_flag', 'research_flag', 'policy', 'proof', 'scope',
+                                   'manifest_bytes', 'missing_manifest_binding', 'contract_period',
+                                   'contract_roster', 'purpose'])
+def test_financial_diagnostic_verification_recomputes_bound_proof_not_flags(tmp_path, change):
+    case = _financial_diagnostic_fixture(tmp_path)
+    candidate, _, manifest, _, path = case
+    receipt = _build_financial(case)
+    assert receipt['research_replay_passed'] and not receipt['passed']
+    if change == 'passed_flag':
+        receipt['passed'] = True
+    elif change == 'research_flag':
+        receipt['research_replay_passed'] = False
+    elif change == 'policy':
+        receipt['policy']['minimum_finite_outputs_every_requested_date'] = 19
+    elif change == 'proof':
+        receipt['proof']['median_symbol_coverage'] = 1.
+    elif change == 'scope':
+        receipt['scope']['full_PIT_certified'] = True
+    elif change == 'manifest_bytes':
+        manifest.write_bytes(manifest.read_bytes() + b'changed')
+    elif change == 'missing_manifest_binding':
+        substitute = tmp_path / 'unrelated-source.json'
+        substitute.write_text('{}')
+        receipt['source_evidence'] = [{'path': str(substitute), 'sha256': hashlib.sha256(substitute.read_bytes()).hexdigest()}]
+    elif change == 'contract_period':
+        candidate['native_diagnostic_contract']['nominal_period'] = 'mrq1_assumed_quarter'
+    elif change == 'contract_roster':
+        candidate['native_diagnostic_contract']['nominal_symbols'][0] = 'REPLACED'
+    else:
+        candidate.pop('native_preflight_purpose')
+    path.write_text(json.dumps(receipt))
+    with pytest.raises(NativePreflightError):
+        verify_native_preflight(candidate, WINDOW, 5, 10)
+
+
+def test_financial_diagnostic_manifest_must_be_source_evidence_at_build(tmp_path):
+    case = _financial_diagnostic_fixture(tmp_path)
+    unrelated = tmp_path / 'unrelated.json'
+    unrelated.write_text('{}')
+    receipt = _build_financial(case, source=[unrelated])
+    assert not receipt['research_replay_passed'] and not receipt['passed']
+    assert 'manifest must be bound in source evidence' in receipt['failure']['message']
+
+
+def test_financial_diagnostic_contract_fingerprint_matches_platform_without_changing_legacy(tmp_path):
+    from panda_alpha.native_preflight import _definition, _digest
+    from panda_alpha.platform import fingerprint
+    candidate = _financial_diagnostic_fixture(tmp_path)[0]
+    assert _digest(_definition(candidate, WINDOW, 5, 10)) == fingerprint(candidate, WINDOW, 5, 10)
+    legacy = dict(candidate)
+    legacy.pop('native_preflight_purpose')
+    definition = {key: legacy.get(key) for key in ('code', 'formula', 'direction')}
+    definition.update(window=WINDOW, cycle=5, groups=10)
+    assert _digest(_definition(legacy, WINDOW, 5, 10)) == fingerprint(legacy, WINDOW, 5, 10) == _digest(definition)

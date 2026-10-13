@@ -71,6 +71,14 @@ def fingerprint(candidate: dict, window: dict, cycle: int, groups: int) -> str:
             raise ValueError("Native projection must bind the actual creation window")
         definition["native_preflight_purpose"] = candidate["native_preflight_purpose"]
         definition["native_evaluation_contract"] = contract
+    if candidate.get("native_preflight_purpose") == "financial_source_diagnostic_research":
+        if candidate.get("formula") or not isinstance(candidate.get("code"), str) or not candidate["code"].strip():
+            raise ValueError("Native financial diagnostic requires an exact Python code definition")
+        contract = candidate.get("native_diagnostic_contract")
+        if not isinstance(contract, dict):
+            raise ValueError("Native financial diagnostic requires its nominal source contract")
+        definition["native_preflight_purpose"] = candidate["native_preflight_purpose"]
+        definition["native_diagnostic_contract"] = contract
     return hashlib.sha256(json.dumps(definition, sort_keys=True).encode()).hexdigest()
 
 

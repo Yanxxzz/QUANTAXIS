@@ -51,6 +51,23 @@ def test_old_fingerprints_stay_byte_identical():
     assert fingerprint(dict(C, native_preflight_purpose="source_qualified_transfer_research"), W, 5, 10) == expected
 
 
+def test_financial_diagnostic_fingerprint_binds_nominal_scope_period_and_manifest():
+    from copy import deepcopy
+    candidate = {'code': 'exact Python source', 'direction': 0,
+                 'native_preflight_purpose': 'financial_source_diagnostic_research',
+                 'native_diagnostic_contract': {'nominal_symbols': [f'SYN{i:03d}' for i in range(200)],
+                    'nominal_period': 'currentFY25_only_fixture',
+                    'source_manifest': {'path': 'fixed-source.json', 'sha256': 'a' * 64}}}
+    original = fingerprint(candidate, W, 5, 10)
+    for field in ('nominal_symbols', 'nominal_period', 'source_manifest'):
+        changed = deepcopy(candidate)
+        changed['native_diagnostic_contract'][field] = 'changed'
+        assert fingerprint(changed, W, 5, 10) != original
+    assert fingerprint(dict(candidate, native_preflight_purpose='full_universe_strict'), W, 5, 10) != original
+    with pytest.raises(ValueError, match='exact Python'):
+        fingerprint(dict(candidate, formula='RANK(close)'), W, 5, 10)
+
+
 def test_projection_create_sends_input_dates_and_rejects_changed_loading_window():
     candidate = {"code": "frozen code", "direction": 1,
                  "native_preflight_purpose": "source_qualified_projection_research",
