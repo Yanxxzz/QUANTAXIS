@@ -131,6 +131,26 @@ class FakeClient:
     def result(self, run_id): return {"test": True}
 
 
+def test_mismatched_python_file_dispatch_never_reserves_or_accesses_account(tmp_path):
+    code = "class Native(Factor):\n    pass\n"
+    path = tmp_path / "factor.py"
+    path.write_bytes(code.replace("\n", "\r\n").encode("utf-8"))
+    candidate = {"candidate_id": "native-file", "code": code,
+                 "code_path": str(path), "direction": 1}
+    ledger = ExperimentLedger(tmp_path / "jobs.sqlite3")
+    attempted = []
+    def forbidden(*args, **kwargs):
+        attempted.append(True)
+        raise AssertionError("Invalid local bytes must not reserve or access the account")
+    ledger.reserve = forbidden
+    client = FakeClient()
+    client.balance = client.create = client.start = forbidden
+    with pytest.raises(ValueError, match="frozen code"):
+        dispatch(candidate, W, config(), ledger, client)
+    assert attempted == []
+    assert ledger.jobs() == []
+
+
 def test_gift_only_without_server_cap_is_pending():
     compute = config()["compute"]
     compute["server_enforced_cap"] = False
@@ -396,6 +416,9 @@ def test_code_dispatch_saves_verified_local_proof_before_account_mutation(tmp_pa
     receipt_path = tmp_path / "preflight.json"
     candidate = {"candidate_id": "native", "direction": 1, "native_preflight_path": str(receipt_path),
                  "code": "class Native(Factor):\n    def calculate(self,factors):\n        r=factors['close'].groupby(level='date').rank(pct=True)\n        r.name='value'\n        return r\n"}
+    code_path = tmp_path / "native.py"
+    code_path.write_bytes(candidate["code"].encode("utf-8"))
+    candidate["code_path"] = str(code_path)
     receipt = build_native_preflight(candidate, W, 5, 10, fixture, [evidence], [contract], receipt_path)
     assert receipt["passed"]
     ledger, client = ExperimentLedger(tmp_path / "native-proof.sqlite3"), FakeClient()

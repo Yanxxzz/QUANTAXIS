@@ -82,6 +82,15 @@ def fingerprint(candidate: dict, window: dict, cycle: int, groups: int) -> str:
     return hashlib.sha256(json.dumps(definition, sort_keys=True).encode()).hexdigest()
 
 
+def _frozen_code_path(candidate: dict) -> Path | None:
+    if candidate.get("formula") or not candidate.get("code_path"):
+        return None
+    path = Path(candidate["code_path"]).resolve()
+    if not path.is_file() or path.read_bytes().decode("utf-8") != candidate.get("code"):
+        raise ValueError("Candidate file differs from the frozen code definition")
+    return path
+
+
 class PandaClient:
     def __init__(self, config: dict):
         self.config = config
@@ -129,10 +138,8 @@ class PandaClient:
         source = candidate.get("formula") or candidate.get("code")
         if not source:
             raise ValueError("Candidate has no executable definition")
-        if mode == "--code" and candidate.get("code_path"):
-            path = Path(candidate["code_path"]).resolve()
-            if not path.is_file() or path.read_bytes().decode("utf-8") != source:
-                raise ValueError("Candidate file differs from the frozen code definition")
+        path = _frozen_code_path(candidate)
+        if path is not None:
             # Documented file mode keeps large financial-source literals out
             # of the Windows command line without changing the definition.
             mode, source = "--file", str(path)
@@ -523,6 +530,9 @@ def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedg
     key = fingerprint(candidate, window, cycle, groups)
     if ledger.get(key):
         return ledger.get(key)  # Zero duplicate dispatches on resume.
+    # Reject local loading errors before reserving funds or touching the account.
+    # create also rechecks the bytes immediately before its service request.
+    _frozen_code_path(candidate)
     research_policy = load_policy(compute)
     research_meta = research_request(research_policy, candidate, category)
     study_check = research_guard(research_policy, research_meta, ledger.jobs(), ledger.research_state(),
