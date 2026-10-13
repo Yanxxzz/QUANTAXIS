@@ -35,3 +35,20 @@ def test_grant_cannot_expand_one_run_or_fingerprint():
          'accept_estimated_charge_risk': True}}
     with pytest.raises(ValueError, match='scope'):
         module.approved_grant(a, plan)
+
+
+def test_later_approval_is_only_one_bounded_action():
+    plan = {'batch_id': 'NIGHT', 'fingerprint': 'a' * 64,
+            'cutoff_utc': '2026-10-12T23:00:00+00:00'}
+    a = {'status': 'APPROVED_BY_HUMAN', 'source': 'direct_user_reply_in_current_chat',
+         'human_answer': 'approve one', 'confirmed_at_utc': '2026-10-13T03:50:00+00:00',
+         'grant': {'batch_id': 'NIGHT', 'fingerprints': ['a' * 64], 'max_runs': 1,
+                   'max_recharge_credits': 8, 'max_total_credits': 8,
+                   'accept_estimated_charge_risk': True},
+         'single_action_execution': {'original_plan_sha256': 'b' * 64,
+             'fingerprint': 'a' * 64, 'scope': 'only_this_approved_single_run_now',
+             'night_automation_resumed': False, 'dispatch_not_after_utc': '2026-10-13T04:20:00+00:00'}}
+    assert module.action_deadline(a, plan, 'b' * 64).isoformat() == '2026-10-13T04:20:00+00:00'
+    a['single_action_execution']['night_automation_resumed'] = True
+    with pytest.raises(ValueError, match='permission'):
+        module.action_deadline(a, plan, 'b' * 64)

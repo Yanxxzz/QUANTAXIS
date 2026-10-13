@@ -1,6 +1,6 @@
 """Explicitly approved single diagnostic, with a cutoff at each mutation."""
 import argparse
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 import hashlib
 import json
 from pathlib import Path
@@ -64,6 +64,25 @@ def approved_grant(authority, plan):
     return grant
 
 
+def action_deadline(authority, plan, plan_sha):
+    """A later direct approval can permit this one action without reopening a night."""
+    approved_grant(authority, plan)
+    action = authority.get('single_action_execution')
+    if action is None:
+        return datetime.fromisoformat(plan['cutoff_utc'])
+    if (action.get('original_plan_sha256') != plan_sha
+            or action.get('fingerprint') != plan['fingerprint']
+            or action.get('scope') != 'only_this_approved_single_run_now'
+            or action.get('night_automation_resumed') is not False):
+        raise ValueError('Later single-action permission does not match this plan')
+    confirmed = datetime.fromisoformat(authority['confirmed_at_utc'])
+    deadline = datetime.fromisoformat(action['dispatch_not_after_utc'])
+    if (confirmed.tzinfo is None or deadline.tzinfo is None
+            or not confirmed < deadline <= confirmed + timedelta(hours=1)):
+        raise ValueError('Single-action dispatch validity is not bounded')
+    return deadline
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('action', choices=['audit', 'dispatch', 'collect'])
@@ -107,9 +126,10 @@ def main():
                           'account_calls': 0, 'reservations': 0}))
         return
     if args.action == 'dispatch':
-        before_cutoff(deadline)
         authority = read(UNIT / 'authorization.json')
         grant = approved_grant(authority, plan)
+        deadline = action_deadline(authority, plan, args.plan_sha)
+        before_cutoff(deadline)
         compute.update(recharge_credit_limit=grant['max_recharge_credits'],
                        estimated_billing_batch_authorization=grant,
                        recharge_batch_authorization=grant,
