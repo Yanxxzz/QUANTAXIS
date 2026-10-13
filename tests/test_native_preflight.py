@@ -818,3 +818,228 @@ def test_minority_financial_diagnostic_retains_early_infinite_input_rejection(tm
     receipt = _build_minority_financial(case)
     assert not receipt['research_replay_passed'] and not receipt['passed']
     assert 'infinite input values' in receipt['failure']['message']
+
+
+DISPOSAL_DIAGNOSTIC_FIELDS = ['close', 'disposal_income_on_asset',
+                              'profit_from_operation', 'total_assets']
+DISPOSAL_DIAGNOSTIC_CODE = '''import numpy as np
+import pandas as pd
+class PositiveDisposalDiagnostic(Factor):
+    def calculate(self, factors):
+        index = factors['close'].index
+        disposal = pd.Series(factors['disposal_income_on_asset'].to_numpy(), index=index)
+        operating = pd.Series(factors['profit_from_operation'].to_numpy(), index=index)
+        assets = pd.Series(factors['total_assets'].to_numpy(), index=index)
+        valid = (np.isfinite(disposal) & np.isfinite(operating) & np.isfinite(assets)
+                 & disposal.gt(0) & operating.gt(0) & assets.gt(0))
+        with np.errstate(divide='ignore', invalid='ignore', over='ignore'):
+            disposal_fraction = disposal.where(valid) / operating.where(valid)
+            reported_operating_return = operating.where(valid) / assets.where(valid)
+        common = valid & np.isfinite(disposal_fraction) & np.isfinite(reported_operating_return)
+        result = SELECTED.where(common)
+        result.name = 'value'
+        return result
+'''
+
+
+def _disposal_financial_diagnostic_fixture(tmp_path, selected, finite=None):
+    # All numbers and identities here are invented; no financial source is read.
+    candidate, fixture, manifest, observed, path = _financial_diagnostic_fixture(tmp_path)
+    dates = pd.bdate_range(WINDOW['start'], WINDOW['end'])
+    symbols = candidate['native_diagnostic_contract']['nominal_symbols']
+    index = pd.MultiIndex.from_product([dates, symbols], names=['date', 'symbol'])
+    disposal, operating, assets = [np.full(200, np.nan) for _ in range(3)]
+    count = 60 if finite is None else finite
+    n = np.arange(count, dtype=float)
+    disposal[:count], operating[:count], assets[:count] = n + 1., n + 100., n ** 2 + 200.
+    if finite is None:
+        disposal[:3] = [-1., 0., np.nan]
+        operating[3:6] = [-1., 0., np.nan]
+        assets[6:9] = [-1., 0., np.nan]
+        disposal[9] = np.nan
+        disposal[10], operating[10] = 1e308, 1e-308  # only disposal/operating overflows
+        operating[11], assets[11] = 1e308, 1e-308  # only operating/assets overflows
+        # A raw ratio may underflow to a finite zero; no epsilon may rescue it.
+        disposal[12], operating[12], assets[12] = 1e-308, 1e308, 1e308
+    frame = pd.DataFrame({'close': 1., 'disposal_income_on_asset': np.tile(disposal, len(dates)),
+                          'profit_from_operation': np.tile(operating, len(dates)),
+                          'total_assets': np.tile(assets, len(dates))}, index=index)
+    frame.iloc[::-1].reset_index().to_parquet(fixture, index=False)
+    candidate['code'] = DISPOSAL_DIAGNOSTIC_CODE.replace('SELECTED', selected)
+    candidate['direction'] = 0 if selected == 'disposal_fraction' else 1
+    return candidate, fixture, manifest, observed, path
+
+
+def _build_disposal_financial(case, fields=None):
+    candidate, fixture, manifest, observed, path = case
+    return build_native_preflight(candidate, WINDOW, 5, 10, fixture, [manifest], [observed], path,
+                                  fields=DISPOSAL_DIAGNOSTIC_FIELDS if fields is None else fields)
+
+
+@pytest.mark.parametrize('selected', ['disposal_fraction', 'reported_operating_return'])
+def test_disposal_financial_diagnostic_preserves_raw_inputs_common_support_and_binding(tmp_path, selected):
+    case = _disposal_financial_diagnostic_fixture(tmp_path, selected)
+    receipt = _build_disposal_financial(case)
+    assert receipt['research_replay_passed'] is True and receipt['passed'] is False
+    proof = receipt['proof']
+    assert proof['input_symbols'] == proof['nominal_symbols_per_date'] == 200
+    assert proof['minimum_valid_symbols_on_usable_dates'] == 48
+    assert proof['finite_window_rows'] == 30 * 48
+    assert proof['genuine_missing_rows'] == 30 * 152
+    assert proof['usable_group_dates'] == proof['coverage_evaluation_dates'] == 30
+    assert proof['median_symbol_coverage'] == pytest.approx(.24)
+    assert proof['financial_field_graph']['matched_output_ratios'] == [selected]
+    assert not proof['full_A_certified'] and not proof['full_PIT_certified']
+    assert not proof['native_period_or_PIT_certified'] and not proof['admission_qualified']
+    assert verify_native_preflight(case[0], WINDOW, 5, 10)['proof'] == proof
+    # The source loader preserves negative/zero observations; domain masking is separate.
+    frame = pd.read_parquet(case[1])
+    first = frame[frame.date.eq(frame.date.min())].set_index('symbol')
+    assert first.loc['SYN000', 'disposal_income_on_asset'] == -1.
+    assert first.loc['SYN001', 'disposal_income_on_asset'] == 0.
+    case[0]['code'] += '\n# different exact source bytes\n'
+    with pytest.raises(NativePreflightError, match='source or dispatch parameters changed'):
+        verify_native_preflight(case[0], WINDOW, 5, 10)
+
+
+@pytest.mark.parametrize('selected,change', [
+    ('disposal_fraction', 'candidate_only_mask'),
+    ('reported_operating_return', 'control_only_mask'),
+    ('disposal_fraction', 'allow_zero_disposal'),
+    ('disposal_fraction', 'allow_negative_disposal'),
+    ('reported_operating_return', 'allow_negative_operating'),
+    ('disposal_fraction', 'allow_negative_assets'),
+    ('disposal_fraction', 'fill_missing')])
+def test_disposal_financial_diagnostic_rejects_domain_or_one_sided_ratio_rescue(tmp_path, selected, change):
+    case = _disposal_financial_diagnostic_fixture(tmp_path, selected)
+    replacements = {
+        'candidate_only_mask': (' & np.isfinite(reported_operating_return)', ''),
+        'control_only_mask': ('np.isfinite(disposal_fraction) & ', ''),
+        'allow_zero_disposal': ('disposal.gt(0)', 'disposal.ge(0)'),
+        'allow_negative_disposal': ('disposal.gt(0)', 'disposal.abs().gt(0)'),
+        'allow_negative_operating': ('operating.gt(0)', 'operating.abs().gt(0)'),
+        'allow_negative_assets': ('assets.gt(0)', 'assets.abs().gt(0)'),
+        'fill_missing': ('result.name', 'result = result.fillna(0.)\n        result.name')}
+    old, new = replacements[change]
+    case[0]['code'] = case[0]['code'].replace(old, new)
+    receipt = _build_disposal_financial(case)
+    assert not receipt['research_replay_passed'] and not receipt['passed']
+    assert 'invalid financial inputs as NaN' in receipt['failure']['message']
+
+
+@pytest.mark.parametrize('selected,transformation', [
+    ('disposal_fraction', 'result * 2.'),
+    ('disposal_fraction', 'result.clip(lower=.1)'),
+    ('reported_operating_return', 'result / (1. + 1e-6)')])
+def test_disposal_financial_diagnostic_rejects_changed_raw_ratio(tmp_path, selected, transformation):
+    case = _disposal_financial_diagnostic_fixture(tmp_path, selected)
+    case[0]['code'] = case[0]['code'].replace('result.name',
+                                             f'result = {transformation}\n        result.name')
+    receipt = _build_disposal_financial(case)
+    assert not receipt['research_replay_passed'] and not receipt['passed']
+    assert 'one exact raw ratio' in receipt['failure']['message']
+
+
+@pytest.mark.parametrize('field', DISPOSAL_DIAGNOSTIC_FIELDS[1:])
+@pytest.mark.parametrize('infinity', [np.inf, -np.inf])
+def test_disposal_financial_diagnostic_rejects_infinite_input_before_candidate_exec(tmp_path, field, infinity):
+    case = _disposal_financial_diagnostic_fixture(tmp_path, 'disposal_fraction')
+    frame = pd.read_parquet(case[1])
+    frame.loc[frame.symbol.eq('SYN000'), field] = infinity
+    frame.to_parquet(case[1], index=False)
+    case[0]['code'] = "raise RuntimeError('candidate must not execute')"
+    receipt = _build_disposal_financial(case)
+    assert not receipt['research_replay_passed'] and not receipt['passed']
+    assert 'infinite input values' in receipt['failure']['message']
+
+
+def test_disposal_financial_diagnostic_rejects_nonnumeric_input_early(tmp_path):
+    case = _disposal_financial_diagnostic_fixture(tmp_path, 'disposal_fraction')
+    frame = pd.read_parquet(case[1])
+    frame['profit_from_operation'] = 'unknown'
+    frame.to_parquet(case[1], index=False)
+    receipt = _build_disposal_financial(case)
+    assert not receipt['research_replay_passed'] and not receipt['passed']
+    assert 'real numeric input fields' in receipt['failure']['message']
+
+
+@pytest.mark.parametrize('finite,passed', [(19, False), (20, True)])
+def test_disposal_financial_diagnostic_enforces_twenty_finite_boundary(tmp_path, finite, passed):
+    case = _disposal_financial_diagnostic_fixture(tmp_path, 'disposal_fraction', finite=finite)
+    receipt = _build_disposal_financial(case)
+    assert receipt['research_replay_passed'] is passed and receipt['passed'] is False
+    if passed:
+        assert receipt['proof']['minimum_valid_symbols_on_usable_dates'] == 20
+        assert receipt['proof']['median_symbol_coverage'] == pytest.approx(.1)
+        assert receipt['proof']['grouping_smoke_test']['requested_groups'] == 10
+    else:
+        assert '20 finite and ten distinct' in receipt['failure']['message']
+
+
+def test_disposal_financial_diagnostic_accepts_exactly_ten_distinct_nonempty_groups(tmp_path):
+    case = _disposal_financial_diagnostic_fixture(tmp_path, 'disposal_fraction', finite=20)
+    frame = pd.read_parquet(case[1])
+    valid = frame.disposal_income_on_asset.notna()
+    frame.loc[valid, 'profit_from_operation'] = 100.
+    frame.loc[valid, 'disposal_income_on_asset'] = frame.loc[valid, 'symbol'].str[3:].astype(int) % 10 + 1.
+    frame.to_parquet(case[1], index=False)
+    receipt = _build_disposal_financial(case)
+    assert receipt['research_replay_passed'] and not receipt['passed']
+    assert receipt['proof']['minimum_distinct_values_on_usable_dates'] == 10
+    assert receipt['proof']['usable_group_dates'] == 30
+
+
+@pytest.mark.parametrize('change', ['nine_distinct', 'duplicate_quantile_edges', 'first_date_missing',
+                                   'missing_date', 'missing_identity', 'wrong_period'])
+def test_disposal_financial_diagnostic_retains_all_dates_identities_and_deterministic_groups(tmp_path, change):
+    case = _disposal_financial_diagnostic_fixture(tmp_path, 'disposal_fraction', finite=40)
+    frame = pd.read_parquet(case[1])
+    if change in ('nine_distinct', 'duplicate_quantile_edges'):
+        valid = frame.disposal_income_on_asset.notna()
+        frame.loc[valid, 'profit_from_operation'] = 100.
+        n = frame.loc[valid, 'symbol'].str[3:].astype(int)
+        frame.loc[valid, 'disposal_income_on_asset'] = (n % 9 + 1. if change == 'nine_distinct'
+                                                       else np.where(n < 31, 1., n - 29.))
+    elif change == 'first_date_missing':
+        frame.loc[frame.date.eq(frame.date.min()), 'disposal_income_on_asset'] = np.nan
+    elif change == 'missing_date':
+        frame = frame[frame.date.ne(sorted(frame.date.unique())[10])]
+    elif change == 'missing_identity':
+        frame = frame.drop(frame.index[0])
+    else:
+        case[0]['native_diagnostic_contract']['nominal_period'] = 'mrq1_assumed_quarter'
+    frame.to_parquet(case[1], index=False)
+    receipt = _build_disposal_financial(case)
+    assert not receipt['research_replay_passed'] and not receipt['passed']
+    expected = {'nine_distinct': 'ten distinct', 'duplicate_quantile_edges': 'deterministic groups',
+                'first_date_missing': '20 finite', 'missing_date': 'every manifest date',
+                'missing_identity': 'all nominal 200', 'wrong_period': 'currentFY25-only'}
+    assert expected[change] in receipt['failure']['message']
+
+
+@pytest.mark.parametrize('change', ['extra_field', 'substitute_field'])
+def test_disposal_financial_diagnostic_does_not_generalize_unknown_field_sets(tmp_path, change):
+    case = _disposal_financial_diagnostic_fixture(tmp_path, 'disposal_fraction')
+    frame = pd.read_parquet(case[1])
+    fields = list(DISPOSAL_DIAGNOSTIC_FIELDS)
+    if change == 'extra_field':
+        frame['operating_revenue'] = 100.
+        fields.append('operating_revenue')
+    else:
+        frame = frame.rename(columns={'profit_from_operation': 'net_profit'})
+        fields[2] = 'net_profit'
+        case[0]['code'] = case[0]['code'].replace("factors['profit_from_operation']", "factors['net_profit']")
+    frame.to_parquet(case[1], index=False)
+    receipt = _build_disposal_financial(case, fields=fields)
+    assert not receipt['research_replay_passed'] and not receipt['passed']
+    assert 'exact supported provision or minority inputs set' in receipt['failure']['message']
+
+
+def test_disposal_financial_diagnostic_verification_recomputes_field_graph(tmp_path):
+    case = _disposal_financial_diagnostic_fixture(tmp_path, 'disposal_fraction')
+    receipt = _build_disposal_financial(case)
+    assert receipt['research_replay_passed'] and not receipt['passed']
+    receipt['proof']['financial_field_graph']['reported_operating_return'] = 'net_profit / total_assets'
+    case[4].write_text(json.dumps(receipt))
+    with pytest.raises(NativePreflightError, match='replay evidence no longer matches'):
+        verify_native_preflight(case[0], WINDOW, 5, 10)

@@ -246,8 +246,9 @@ def _financial_diagnostic_proof(output, frame, fields, contract, window, cycle, 
     field_set = set(fields)
     provision_fields = {"close", "estimated_liabilities", "total_assets"}
     minority_fields = {"close", "net_profit", "minority_profit", "net_profit_parent_company", "total_assets"}
-    if field_set not in (provision_fields, minority_fields):
-        raise NativePreflightError("Financial diagnostic requires an exact supported provision or minority inputs set")
+    disposal_fields = {"close", "disposal_income_on_asset", "profit_from_operation", "total_assets"}
+    if field_set not in (provision_fields, minority_fields, disposal_fields):
+        raise NativePreflightError("Financial diagnostic requires an exact supported provision or minority inputs set, or the disposal inputs set")
     if not frame.index.get_level_values("date").unique().sort_values().equals(dates):
         raise NativePreflightError("Financial diagnostic fixture must retain every manifest date; no tail trimming")
     for day in dates:
@@ -260,7 +261,7 @@ def _financial_diagnostic_proof(output, frame, fields, contract, window, cycle, 
             provision = frame["estimated_liabilities"].to_numpy(float)
             expected_finite = (np.isfinite(provision) & (provision >= 0) & np.isfinite(assets)
                                & (assets > 0) & np.isfinite(provision / assets))
-        else:
+        elif field_set == minority_fields:
             profit = frame["net_profit"].to_numpy(float)
             minority = frame["minority_profit"].to_numpy(float)
             parent = frame["net_profit_parent_company"].to_numpy(float)
@@ -269,10 +270,33 @@ def _financial_diagnostic_proof(output, frame, fields, contract, window, cycle, 
             expected_finite = (np.isfinite(profit) & np.isfinite(minority) & np.isfinite(parent)
                                & np.isfinite(assets) & (profit > 0) & (assets > 0)
                                & np.isfinite(minority / profit) & np.isfinite(parent / assets))
+        else:
+            disposal = frame["disposal_income_on_asset"].to_numpy(float)
+            operating = frame["profit_from_operation"].to_numpy(float)
+            disposal_fraction = disposal / operating
+            reported_operating_return = operating / assets
+            # A positive disposal contribution and its reported-profitability
+            # control share all three inputs and either raw ratio's overflow.
+            expected_finite = (np.isfinite(disposal) & np.isfinite(operating) & np.isfinite(assets)
+                               & (disposal > 0) & (operating > 0) & (assets > 0)
+                               & np.isfinite(disposal_fraction) & np.isfinite(reported_operating_return))
     values = output.to_numpy(float)
     observed = np.isfinite(values)
     if not np.array_equal(observed, expected_finite) or not np.isnan(values[~observed]).all():
         raise NativePreflightError("Financial diagnostic must retain actual invalid financial inputs as NaN")
+    disposal_graph = {}
+    if field_set == disposal_fields:
+        ratios = {"disposal_fraction": disposal_fraction,
+                  "reported_operating_return": reported_operating_return}
+        matched = [name for name, raw in ratios.items()
+                   if np.array_equal(values[observed], raw[observed])]
+        if not matched:
+            raise NativePreflightError("Disposal diagnostic output must equal one exact raw ratio on the common domain")
+        disposal_graph = {"financial_field_graph": {
+            "disposal_fraction": "disposal_income_on_asset / profit_from_operation",
+            "reported_operating_return": "profit_from_operation / total_assets",
+            "common_domain": "all_three_financial_inputs_finite_and_strictly_positive_and_both_raw_ratios_finite",
+            "matched_output_ratios": matched}}
     finite = output[observed]
     count = finite.groupby(level="date").size().reindex(dates, fill_value=0)
     distinct = finite.groupby(level="date").nunique().reindex(dates, fill_value=0)
@@ -289,6 +313,7 @@ def _financial_diagnostic_proof(output, frame, fields, contract, window, cycle, 
             raise NativePreflightError("Financial diagnostic has an empty requested group")
     coverage = count / policy["nominal_symbols_per_requested_date"]
     return {"contract": "financial-source-diagnostic/full-nominal-index/no-first-finite-trimming",
+            **disposal_graph,
             "factor_class": factor_class, "input_rows": len(frame), "input_fields": fields,
             "input_index_names": list(frame.index.names), "input_symbols": 200,
             "input_frame_sha256": input_hash, "nominal_symbols_per_date": 200,
