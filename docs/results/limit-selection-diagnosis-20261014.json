@@ -1136,5 +1136,46 @@
     "volume_kurtosis": "PARK_EXACT_FIELD_SEMANTICS_AND_DELIVERY_UNVERIFIED",
     "official_runs_or_credits": 0,
     "not_service_wide_absence": true
+  },
+  "targeted_execution_and_structural_exit_reviews": {
+    "execution": {
+      "status": "PARK_SOURCE_ACQUISITION_UNTIL_MINUTE_VOLUME_AND_TIME_CONTRACT",
+      "fixed_actual_simulated_buys": 6,
+      "selection": "First6 completed filtered30 buy identities from2025-01-02 sorted date/code; no price/return selection",
+      "new_minute_requests": 0,
+      "old_attempted_code_days": 171,
+      "selected6_overlap_with_attempted": 0,
+      "quantity_role": "Entry raw-share quantity, not later TR-equivalent units; no broker-certified orders/fills",
+      "unknown": [
+        "minute volume-to-shares",
+        "interval-vs-cumulative",
+        "bar/auction placement-to-close clock",
+        "queue rank and active selling allocation"
+      ],
+      "conditional_bounds": "Flat OHLC at DL interval volume <= traded-at-DL volume <= all volume of bars touching DL, only after quantity/time roles are certified. Sufficient historical volume does not prove fill. Regular240 alone is not whole-day auction upper bound.",
+      "review": {
+        "path": "research_runs/night_limit_gate_20261015/execution_minute_capacity_feasibility_review.json",
+        "sha256": "716197bf0e8d981bdfc5d59531aea1204f4158f16d1c45060530bbaa630055c0"
+      }
+    },
+    "structural_exit": {
+      "status": "PARK_NEAR_EXISTING_PERCENT_STOP_WITHOUT_NEW_IDENTIFICATION",
+      "proposed_unrun_rule": "Close below t-3 economic anchor of latest two boards; next executable reference-open persistent exit; original filtered entry/TP/costs retained",
+      "ideal_buy_to_anchor_multiple": "1.089",
+      "ideal_loss_fraction": "0.0817263544536271808999081726354453627181",
+      "not_exact_duplicate": true,
+      "not_new_independent_input": true,
+      "old_unfiltered_stop_result_not_counterfactual": true,
+      "rule_implemented_or_backtested": false,
+      "review": {
+        "path": "research_runs/night_limit_gate_20261015/structural_invalidation_exit_mechanism_review.json",
+        "sha256": "ad3094be8666fdce15b3d4e37dd1eb201c26dded1b31cb22bda6e7f3fee369b1"
+      }
+    },
+    "new_contexts": 0,
+    "new_quotes_or_labels_or_accounts": 0,
+    "official_runs_or_fees": 0,
+    "pool_eligible": false,
+    "old_completed_units_replayed": false
   }
 }
