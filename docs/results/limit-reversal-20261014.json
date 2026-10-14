@@ -1,0 +1,99 @@
+{
+  "status": "ALL_FOUR_COMPLETE",
+  "window": {
+    "start": "2021-09-22",
+    "end": "2026-09-18"
+  },
+  "source_identity_count": 3489,
+  "reference_sessions": 1211,
+  "initial_cash_cny": 100000,
+  "execution_model": "daily-bar potential fills; queue unknown",
+  "corporate_actions": "total-return equivalent units; not actual shares/dividend cash",
+  "official_compute_spent": 0,
+  "formal_pool_candidate": false,
+  "not_fresh_unseen_OOS": true,
+  "paths": [
+    {
+      "path": "baseline_30bp",
+      "metrics": {
+        "days": 1211,
+        "compounded_return": 0.24317031999999728,
+        "cagr": 0.04633587128650096,
+        "sharpe": 0.31810990513522136,
+        "max_drawdown": 0.34633121668427236
+      },
+      "total_fees": 4612.968,
+      "buy_fills": 35,
+      "completed_round_trips": 30,
+      "terminal_nav": 124317.03199999998,
+      "terminal_exposure": 0.522985458661851,
+      "terminal_holdings_count": 5,
+      "source_pending": [],
+      "closed_trade_win_rate": 1.0,
+      "median_closed_holding_sessions": 5.5,
+      "max_closed_holding_sessions": 798,
+      "exit_reasons": {
+        "take_profit": 30
+      }
+    },
+    {
+      "path": "baseline_50bp",
+      "metrics": {
+        "days": 1211,
+        "compounded_return": 0.20846834999999997,
+        "cagr": 0.04018968776116316,
+        "sharpe": 0.2907199167546191,
+        "max_drawdown": 0.3473532256509507
+      },
+      "total_fees": 7578.165,
+      "buy_fills": 35,
+      "completed_round_trips": 30,
+      "terminal_nav": 120846.83500000005,
+      "terminal_exposure": 0.5259219242274733,
+      "terminal_holdings_count": 5,
+      "source_pending": []
+    },
+    {
+      "path": "risk_guard_30bp",
+      "metrics": {
+        "days": 1211,
+        "compounded_return": -0.9306709900000001,
+        "cagr": -0.42614374326226045,
+        "sharpe": -2.5715560667128434,
+        "max_drawdown": 0.9391547477732476
+      },
+      "total_fees": 18300.098999999984,
+      "buy_fills": 499,
+      "completed_round_trips": 498,
+      "terminal_nav": 6932.900999999994,
+      "terminal_exposure": 0.18001122473838888,
+      "terminal_holdings_count": 1,
+      "source_pending": [],
+      "closed_trade_win_rate": 0.3333333333333333,
+      "median_closed_holding_sessions": 2.0,
+      "max_closed_holding_sessions": 10,
+      "exit_reasons": {
+        "stop_loss": 320,
+        "take_profit": 163,
+        "max_holding_sessions": 15
+      }
+    },
+    {
+      "path": "risk_guard_50bp",
+      "metrics": {
+        "days": 1211,
+        "compounded_return": -0.9469012000000004,
+        "cagr": -0.45712516835069184,
+        "sharpe": -2.898922286725655,
+        "max_drawdown": 0.9517028901447577
+      },
+      "total_fees": 27212.12,
+      "buy_fills": 476,
+      "completed_round_trips": 475,
+      "terminal_nav": 5309.879999999956,
+      "terminal_exposure": 0.1762751700603418,
+      "terminal_holdings_count": 1,
+      "source_pending": []
+    }
+  ]
+}
