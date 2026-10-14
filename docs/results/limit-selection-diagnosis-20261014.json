@@ -1177,5 +1177,27 @@
     "official_runs_or_fees": 0,
     "pool_eligible": false,
     "old_completed_units_replayed": false
+  },
+  "night_closure": {
+    "status": "DEADLINE_CLOSED_NO_ELIGIBLE_CANDIDATE",
+    "deadline_utc": "2026-10-14T23:00:00Z",
+    "deadline_beijing": "2026-10-15 07:00:00 Asia/Shanghai",
+    "closed_observed_at_utc": "2026-10-14T23:02:20.796184+00:00",
+    "official_scope": "NIGHT_LIMIT_GATE30_20261015",
+    "scope": {
+      "total": 0.0,
+      "recharge": 0.0,
+      "runs": 0
+    },
+    "scope_max_credits": 30,
+    "unused_authorization_expired_not_rolled_forward": true,
+    "registry_total": 583,
+    "night_new_contexts": 9,
+    "not_independent_alpha_count": true,
+    "pool_eligible_candidate": false,
+    "formal_pool_operation": false,
+    "new_source_or_compute_or_contexts_in_closure": 0,
+    "automation_status": "PAUSED",
+    "no_automatic_next_night": true
   }
 }
