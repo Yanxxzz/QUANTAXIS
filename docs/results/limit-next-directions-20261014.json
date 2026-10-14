@@ -1,0 +1,1952 @@
+{
+  "status": "ALL_TWELVE_FIXED_LOCAL_PATHS_AND_FOUR_PAIRED_COMPARISONS_COMPLETE",
+  "start": "2024-01-02",
+  "end": "2026-09-18",
+  "days": 659,
+  "source_identities": 3489,
+  "accounts": [
+    {
+      "name": "recovery_parent_next_open",
+      "label": "触跌停后次开父样本",
+      "path": "recovery_parent_next_open_30bp",
+      "cost_single_side": 0.003,
+      "metrics": {
+        "days": 659,
+        "compounded_return": 0.048684799999999306,
+        "cagr": 0.01834418461051368,
+        "sharpe": 0.19978715477935796,
+        "max_drawdown": 0.3276022877922413
+      },
+      "buys": 31,
+      "sale_reasons": {
+        "take_profit": 26
+      },
+      "fees": 3791.52,
+      "terminal_cash": 31220.480000000018,
+      "terminal_market_value": 73648.0,
+      "terminal_holdings_count": 5,
+      "terminal_exposure": 0.7022891911849966,
+      "mean_exposure": 0.7256038171989323,
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 329,
+        "buy_blocked_open_limit_up": 1
+      },
+      "source_pending": []
+    },
+    {
+      "name": "recovery_parent_next_open",
+      "label": "触跌停后次开父样本",
+      "path": "recovery_parent_next_open_50bp",
+      "cost_single_side": 0.005,
+      "metrics": {
+        "days": 659,
+        "compounded_return": 0.026813449999996797,
+        "cagr": 0.010169706095172648,
+        "sharpe": 0.16878313225653127,
+        "max_drawdown": 0.3284072660648787
+      },
+      "buys": 31,
+      "sale_reasons": {
+        "take_profit": 26
+      },
+      "fees": 6243.655000000002,
+      "terminal_cash": 30313.345,
+      "terminal_market_value": 72368.0,
+      "terminal_holdings_count": 5,
+      "terminal_exposure": 0.7047823536008415,
+      "mean_exposure": 0.7273103795724968,
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 329,
+        "buy_blocked_open_limit_up": 1
+      },
+      "source_pending": []
+    },
+    {
+      "name": "recovery_next_open",
+      "label": "脱离跌停后次开",
+      "path": "recovery_next_open_30bp",
+      "cost_single_side": 0.003,
+      "metrics": {
+        "days": 659,
+        "compounded_return": 0.028884592127975894,
+        "cagr": 0.010948383407187734,
+        "sharpe": 0.16679333228355736,
+        "max_drawdown": 0.2946684912415183
+      },
+      "buys": 28,
+      "sale_reasons": {
+        "take_profit": 23
+      },
+      "fees": 3280.383,
+      "terminal_cash": 36418.617,
+      "terminal_market_value": 66469.84221279732,
+      "terminal_holdings_count": 5,
+      "terminal_exposure": 0.6460378814238261,
+      "mean_exposure": 0.6566339983691754,
+      "blocked_orders": {
+        "buy_blocked_open_limit_up": 2,
+        "buy_blocked_no_preopen_slot": 150
+      },
+      "source_pending": []
+    },
+    {
+      "name": "recovery_next_open",
+      "label": "脱离跌停后次开",
+      "path": "recovery_next_open_50bp",
+      "cost_single_side": 0.005,
+      "metrics": {
+        "days": 659,
+        "compounded_return": 0.0113401329826186,
+        "cagr": 0.004321345943528732,
+        "sharpe": 0.14017214051529633,
+        "max_drawdown": 0.29464220314242306
+      },
+      "buys": 28,
+      "sale_reasons": {
+        "take_profit": 23
+      },
+      "fees": 5430.250000000001,
+      "terminal_cash": 35915.75000000006,
+      "terminal_market_value": 65218.26329826207,
+      "terminal_holdings_count": 5,
+      "terminal_exposure": 0.6448697245497601,
+      "mean_exposure": 0.6592076929306319,
+      "blocked_orders": {
+        "buy_blocked_open_limit_up": 2,
+        "buy_blocked_no_preopen_slot": 150
+      },
+      "source_pending": []
+    },
+    {
+      "name": "time_after_5",
+      "label": "t+6时间退出",
+      "path": "time_after_5_30bp",
+      "cost_single_side": 0.003,
+      "metrics": {
+        "days": 659,
+        "compounded_return": -0.41723512389392936,
+        "cagr": -0.1865605451805954,
+        "sharpe": -0.8438698636854591,
+        "max_drawdown": 0.5266069900000006
+      },
+      "buys": 222,
+      "sale_reasons": {
+        "take_profit": 82,
+        "max_holding_sessions": 138
+      },
+      "fees": 17772.127846370935,
+      "terminal_cash": 35132.487610607044,
+      "terminal_market_value": 23144.0,
+      "terminal_holdings_count": 2,
+      "terminal_exposure": 0.39714129915728663,
+      "mean_exposure": 0.27886648699371813,
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 1230,
+        "buy_source_pending": 1,
+        "buy_blocked_cash_or_lot": 5
+      },
+      "source_pending": []
+    },
+    {
+      "name": "time_after_5",
+      "label": "t+6时间退出",
+      "path": "time_after_5_50bp",
+      "cost_single_side": 0.005,
+      "metrics": {
+        "days": 659,
+        "compounded_return": -0.48288812594121044,
+        "cagr": -0.222902678346658,
+        "sharpe": -1.073207588534161,
+        "max_drawdown": 0.5686268500000001
+      },
+      "buys": 222,
+      "sale_reasons": {
+        "take_profit": 82,
+        "max_holding_sessions": 138
+      },
+      "fees": 27499.603956813455,
+      "terminal_cash": 31143.18740587897,
+      "terminal_market_value": 20568.0,
+      "terminal_holdings_count": 2,
+      "terminal_exposure": 0.3977475867758096,
+      "mean_exposure": 0.2753235037301544,
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 1230,
+        "buy_source_pending": 1,
+        "buy_blocked_cash_or_lot": 5
+      },
+      "source_pending": []
+    },
+    {
+      "name": "market_gate",
+      "label": "前日退潮过滤",
+      "path": "market_gate_30bp",
+      "cost_single_side": 0.003,
+      "metrics": {
+        "days": 659,
+        "compounded_return": 0.5296074621343907,
+        "cagr": 0.1764756461631225,
+        "sharpe": 0.7500977168111769,
+        "max_drawdown": 0.39517249
+      },
+      "buys": 38,
+      "sale_reasons": {
+        "take_profit": 33
+      },
+      "fees": 4913.439557312253,
+      "terminal_cash": 45607.746213438746,
+      "terminal_market_value": 107353.0,
+      "terminal_holdings_count": 5,
+      "terminal_exposure": 0.7018336577032744,
+      "mean_exposure": 0.6281334783006383,
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 2471
+      },
+      "source_pending": []
+    },
+    {
+      "name": "market_gate",
+      "label": "前日退潮过滤",
+      "path": "market_gate_50bp",
+      "cost_single_side": 0.005,
+      "metrics": {
+        "days": 659,
+        "compounded_return": 0.48446359841897046,
+        "cagr": 0.1630751593727362,
+        "sharpe": 0.7053080360919959,
+        "max_drawdown": 0.4004730999999998
+      },
+      "buys": 38,
+      "sale_reasons": {
+        "take_profit": 33
+      },
+      "fees": 8027.825928853755,
+      "terminal_cash": 43961.35984189721,
+      "terminal_market_value": 104485.0,
+      "terminal_holdings_count": 5,
+      "terminal_exposure": 0.7038569360089513,
+      "mean_exposure": 0.6313870953427938,
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 2471
+      },
+      "source_pending": []
+    },
+    {
+      "name": "firstboard_parent_next_open",
+      "label": "首板分歧父样本",
+      "path": "firstboard_parent_next_open_30bp",
+      "cost_single_side": 0.003,
+      "metrics": {
+        "days": 659,
+        "compounded_return": 0.09364220864139572,
+        "cagr": 0.034822365002912026,
+        "sharpe": 0.2663295378346778,
+        "max_drawdown": 0.45524784558777986
+      },
+      "buys": 28,
+      "sale_reasons": {
+        "take_profit": 23
+      },
+      "fees": 3441.9119999999994,
+      "terminal_cash": 21968.087999999974,
+      "terminal_market_value": 87396.13286413939,
+      "terminal_holdings_count": 5,
+      "terminal_exposure": 0.7991291134667304,
+      "mean_exposure": 0.8303644045553049,
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 6460
+      },
+      "source_pending": []
+    },
+    {
+      "name": "firstboard_parent_next_open",
+      "label": "首板分歧父样本",
+      "path": "firstboard_parent_next_open_50bp",
+      "cost_single_side": 0.005,
+      "metrics": {
+        "days": 659,
+        "compounded_return": 0.06836659013051594,
+        "cagr": 0.025610769065176564,
+        "sharpe": 0.23785503185084203,
+        "max_drawdown": 0.45670081293800013
+      },
+      "buys": 28,
+      "sale_reasons": {
+        "take_profit": 23
+      },
+      "fees": 5673.620000000001,
+      "terminal_cash": 20294.37999999998,
+      "terminal_market_value": 86542.27901305142,
+      "terminal_holdings_count": 5,
+      "terminal_exposure": 0.8100429179695635,
+      "mean_exposure": 0.835459714750886,
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 6460
+      },
+      "source_pending": []
+    },
+    {
+      "name": "firstboard_repair_next_open",
+      "label": "首板分歧修复",
+      "path": "firstboard_repair_next_open_30bp",
+      "cost_single_side": 0.003,
+      "metrics": {
+        "days": 659,
+        "compounded_return": 0.09364220864139572,
+        "cagr": 0.034822365002912026,
+        "sharpe": 0.2663295378346778,
+        "max_drawdown": 0.45524784558777986
+      },
+      "buys": 28,
+      "sale_reasons": {
+        "take_profit": 23
+      },
+      "fees": 3441.9119999999994,
+      "terminal_cash": 21968.087999999974,
+      "terminal_market_value": 87396.13286413939,
+      "terminal_holdings_count": 5,
+      "terminal_exposure": 0.7991291134667304,
+      "mean_exposure": 0.8303644045553049,
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 6301
+      },
+      "source_pending": []
+    },
+    {
+      "name": "firstboard_repair_next_open",
+      "label": "首板分歧修复",
+      "path": "firstboard_repair_next_open_50bp",
+      "cost_single_side": 0.005,
+      "metrics": {
+        "days": 659,
+        "compounded_return": 0.06836659013051594,
+        "cagr": 0.025610769065176564,
+        "sharpe": 0.23785503185084203,
+        "max_drawdown": 0.45670081293800013
+      },
+      "buys": 28,
+      "sale_reasons": {
+        "take_profit": 23
+      },
+      "fees": 5673.620000000001,
+      "terminal_cash": 20294.37999999998,
+      "terminal_market_value": 86542.27901305142,
+      "terminal_holdings_count": 5,
+      "terminal_exposure": 0.8100429179695635,
+      "mean_exposure": 0.835459714750886,
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 6301
+      },
+      "source_pending": []
+    },
+    {
+      "name": "existing_filtered",
+      "label": "原18.60%筛选版",
+      "path": "existing_filtered_30bp",
+      "cost_single_side": 0.003,
+      "metrics": {
+        "days": 659,
+        "compounded_return": 0.5363753121343873,
+        "cagr": 0.1784634632746569,
+        "sharpe": 0.7495503507860154,
+        "max_drawdown": 0.38484844000000007
+      },
+      "buys": 39,
+      "fees": 5013.654557312253,
+      "terminal_holdings_count": 5,
+      "terminal_exposure": 0.6737351165595002,
+      "old_result_not_replayed": true
+    },
+    {
+      "name": "existing_filtered",
+      "label": "原18.60%筛选版",
+      "path": "existing_filtered_50bp",
+      "cost_single_side": 0.005,
+      "metrics": {
+        "days": 659,
+        "compounded_return": 0.4896024986166012,
+        "cagr": 0.16461317196703695,
+        "sharpe": 0.7032027323331875,
+        "max_drawdown": 0.3894463500000005
+      },
+      "buys": 39,
+      "fees": 8200.287687747035,
+      "terminal_holdings_count": 5,
+      "terminal_exposure": 0.6842966502450522,
+      "old_result_not_replayed": true
+    }
+  ],
+  "comparisons": [
+    {
+      "candidate": "recovery_next_open",
+      "control": "recovery_parent_next_open",
+      "full_economic_upgrade_at_both_costs": false,
+      "positive_paired_interval_at_both_costs": false,
+      "cost_results": [
+        {
+          "cost": "30bp",
+          "candidate": "recovery_next_open_30bp",
+          "control": "recovery_parent_next_open_30bp",
+          "metric_differences": {
+            "compounded_return": -0.019800207872023412,
+            "cagr": -0.007395801203325947,
+            "sharpe": -0.0329938224958006,
+            "max_drawdown": -0.03293379655072304
+          },
+          "economic": {
+            "net_return_higher": false,
+            "sharpe_higher": false,
+            "drawdown_lower": true
+          },
+          "all_three_economic_improve": false,
+          "paired_inference": {
+            "schema": "complete-nav-paired-month-block-bootstrap-v1",
+            "annualized_mean_difference": -0.010819498272385788,
+            "confidence_interval_95": [
+              -0.16713093564346232,
+              0.1585624705488514
+            ],
+            "ci_contains_zero": true,
+            "mean_daily_return_difference": -4.293451695391185e-05,
+            "day_count": 659,
+            "block_count": 33,
+            "month_blocks": [
+              {
+                "month": "2024-01",
+                "days": 22
+              },
+              {
+                "month": "2024-02",
+                "days": 15
+              },
+              {
+                "month": "2024-03",
+                "days": 21
+              },
+              {
+                "month": "2024-04",
+                "days": 20
+              },
+              {
+                "month": "2024-05",
+                "days": 20
+              },
+              {
+                "month": "2024-06",
+                "days": 19
+              },
+              {
+                "month": "2024-07",
+                "days": 23
+              },
+              {
+                "month": "2024-08",
+                "days": 22
+              },
+              {
+                "month": "2024-09",
+                "days": 19
+              },
+              {
+                "month": "2024-10",
+                "days": 18
+              },
+              {
+                "month": "2024-11",
+                "days": 21
+              },
+              {
+                "month": "2024-12",
+                "days": 22
+              },
+              {
+                "month": "2025-01",
+                "days": 18
+              },
+              {
+                "month": "2025-02",
+                "days": 18
+              },
+              {
+                "month": "2025-03",
+                "days": 21
+              },
+              {
+                "month": "2025-04",
+                "days": 21
+              },
+              {
+                "month": "2025-05",
+                "days": 19
+              },
+              {
+                "month": "2025-06",
+                "days": 20
+              },
+              {
+                "month": "2025-07",
+                "days": 23
+              },
+              {
+                "month": "2025-08",
+                "days": 21
+              },
+              {
+                "month": "2025-09",
+                "days": 22
+              },
+              {
+                "month": "2025-10",
+                "days": 17
+              },
+              {
+                "month": "2025-11",
+                "days": 20
+              },
+              {
+                "month": "2025-12",
+                "days": 23
+              },
+              {
+                "month": "2026-01",
+                "days": 20
+              },
+              {
+                "month": "2026-02",
+                "days": 14
+              },
+              {
+                "month": "2026-03",
+                "days": 22
+              },
+              {
+                "month": "2026-04",
+                "days": 21
+              },
+              {
+                "month": "2026-05",
+                "days": 18
+              },
+              {
+                "month": "2026-06",
+                "days": 21
+              },
+              {
+                "month": "2026-07",
+                "days": 23
+              },
+              {
+                "month": "2026-08",
+                "days": 21
+              },
+              {
+                "month": "2026-09",
+                "days": 14
+              }
+            ],
+            "first_date": "2024-01-02",
+            "last_date": "2026-09-18",
+            "paired_daily_return_correlation": 0.8130110227986271,
+            "expected_calendar_verified": true,
+            "fewer_than_two_month_blocks": false,
+            "initial_cash_per_leg": 100000.0,
+            "bootstrap_seed": 20261014,
+            "bootstrap_samples": 2000,
+            "annual_reference_days": 252,
+            "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+            "sampling": "Paired entire calendar months, replacement; repeated blocks weighted by actual day counts",
+            "net_input_role": "Caller-supplied already-after-cost NAV; no extra fee deduction or fee inference",
+            "economic_upgrade_decision": null,
+            "limitations": [
+              "The arithmetic annualized mean difference is not a compounded return/CAGR or Sharpe difference.",
+              "Highly correlated strategies share daily shocks; paired blocks preserve this dependence but do not establish independent alpha.",
+              "One calendar-month block method does not capture every longer cross-month dependence or regime change; partial boundary months remain partial blocks.",
+              "An already-exposed or strategy-selected sample remains exposed; bootstrap does not create untouched OOS evidence.",
+              "The95% interval is not adjusted for multiple strategy/parameter comparisons or selection.",
+              "A CI containing0 means this procedure does not resolve the effect's sign, not proof that the strategies are equivalent.",
+              "Statistical return differences are separate from cost, Sharpe, drawdown and risk-budget tradeoffs; this helper does not decide economic upgrading.",
+              "A single-month sample cannot estimate between-month variation; calendar completeness beyond exact paired dates requires expected_dates."
+            ]
+          }
+        },
+        {
+          "cost": "50bp",
+          "candidate": "recovery_next_open_50bp",
+          "control": "recovery_parent_next_open_50bp",
+          "metric_differences": {
+            "compounded_return": -0.015473317017378196,
+            "cagr": -0.0058483601516439165,
+            "sharpe": -0.028610991741234937,
+            "max_drawdown": -0.033765062922455624
+          },
+          "economic": {
+            "net_return_higher": false,
+            "sharpe_higher": false,
+            "drawdown_lower": true
+          },
+          "all_three_economic_improve": false,
+          "paired_inference": {
+            "schema": "complete-nav-paired-month-block-bootstrap-v1",
+            "annualized_mean_difference": -0.009342445080364168,
+            "confidence_interval_95": [
+              -0.1652492019104854,
+              0.15946706173446754
+            ],
+            "ci_contains_zero": true,
+            "mean_daily_return_difference": -3.707319476334987e-05,
+            "day_count": 659,
+            "block_count": 33,
+            "month_blocks": [
+              {
+                "month": "2024-01",
+                "days": 22
+              },
+              {
+                "month": "2024-02",
+                "days": 15
+              },
+              {
+                "month": "2024-03",
+                "days": 21
+              },
+              {
+                "month": "2024-04",
+                "days": 20
+              },
+              {
+                "month": "2024-05",
+                "days": 20
+              },
+              {
+                "month": "2024-06",
+                "days": 19
+              },
+              {
+                "month": "2024-07",
+                "days": 23
+              },
+              {
+                "month": "2024-08",
+                "days": 22
+              },
+              {
+                "month": "2024-09",
+                "days": 19
+              },
+              {
+                "month": "2024-10",
+                "days": 18
+              },
+              {
+                "month": "2024-11",
+                "days": 21
+              },
+              {
+                "month": "2024-12",
+                "days": 22
+              },
+              {
+                "month": "2025-01",
+                "days": 18
+              },
+              {
+                "month": "2025-02",
+                "days": 18
+              },
+              {
+                "month": "2025-03",
+                "days": 21
+              },
+              {
+                "month": "2025-04",
+                "days": 21
+              },
+              {
+                "month": "2025-05",
+                "days": 19
+              },
+              {
+                "month": "2025-06",
+                "days": 20
+              },
+              {
+                "month": "2025-07",
+                "days": 23
+              },
+              {
+                "month": "2025-08",
+                "days": 21
+              },
+              {
+                "month": "2025-09",
+                "days": 22
+              },
+              {
+                "month": "2025-10",
+                "days": 17
+              },
+              {
+                "month": "2025-11",
+                "days": 20
+              },
+              {
+                "month": "2025-12",
+                "days": 23
+              },
+              {
+                "month": "2026-01",
+                "days": 20
+              },
+              {
+                "month": "2026-02",
+                "days": 14
+              },
+              {
+                "month": "2026-03",
+                "days": 22
+              },
+              {
+                "month": "2026-04",
+                "days": 21
+              },
+              {
+                "month": "2026-05",
+                "days": 18
+              },
+              {
+                "month": "2026-06",
+                "days": 21
+              },
+              {
+                "month": "2026-07",
+                "days": 23
+              },
+              {
+                "month": "2026-08",
+                "days": 21
+              },
+              {
+                "month": "2026-09",
+                "days": 14
+              }
+            ],
+            "first_date": "2024-01-02",
+            "last_date": "2026-09-18",
+            "paired_daily_return_correlation": 0.8125124529171973,
+            "expected_calendar_verified": true,
+            "fewer_than_two_month_blocks": false,
+            "initial_cash_per_leg": 100000.0,
+            "bootstrap_seed": 20261014,
+            "bootstrap_samples": 2000,
+            "annual_reference_days": 252,
+            "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+            "sampling": "Paired entire calendar months, replacement; repeated blocks weighted by actual day counts",
+            "net_input_role": "Caller-supplied already-after-cost NAV; no extra fee deduction or fee inference",
+            "economic_upgrade_decision": null,
+            "limitations": [
+              "The arithmetic annualized mean difference is not a compounded return/CAGR or Sharpe difference.",
+              "Highly correlated strategies share daily shocks; paired blocks preserve this dependence but do not establish independent alpha.",
+              "One calendar-month block method does not capture every longer cross-month dependence or regime change; partial boundary months remain partial blocks.",
+              "An already-exposed or strategy-selected sample remains exposed; bootstrap does not create untouched OOS evidence.",
+              "The95% interval is not adjusted for multiple strategy/parameter comparisons or selection.",
+              "A CI containing0 means this procedure does not resolve the effect's sign, not proof that the strategies are equivalent.",
+              "Statistical return differences are separate from cost, Sharpe, drawdown and risk-budget tradeoffs; this helper does not decide economic upgrading.",
+              "A single-month sample cannot estimate between-month variation; calendar completeness beyond exact paired dates requires expected_dates."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "candidate": "time_after_5",
+      "control": "existing_filtered",
+      "full_economic_upgrade_at_both_costs": false,
+      "positive_paired_interval_at_both_costs": false,
+      "cost_results": [
+        {
+          "cost": "30bp",
+          "candidate": "time_after_5_30bp",
+          "control": "existing_filtered_30bp",
+          "metric_differences": {
+            "compounded_return": -0.9536104360283166,
+            "cagr": -0.3650240084552523,
+            "sharpe": -1.5934202144714744,
+            "max_drawdown": 0.14175855000000048
+          },
+          "economic": {
+            "net_return_higher": false,
+            "sharpe_higher": false,
+            "drawdown_lower": false
+          },
+          "all_three_economic_improve": false,
+          "paired_inference": {
+            "schema": "complete-nav-paired-month-block-bootstrap-v1",
+            "annualized_mean_difference": -0.38303778466521243,
+            "confidence_interval_95": [
+              -0.7245108472536519,
+              -0.047908340579208564
+            ],
+            "ci_contains_zero": false,
+            "mean_daily_return_difference": -0.0015199912089889382,
+            "day_count": 659,
+            "block_count": 33,
+            "month_blocks": [
+              {
+                "month": "2024-01",
+                "days": 22
+              },
+              {
+                "month": "2024-02",
+                "days": 15
+              },
+              {
+                "month": "2024-03",
+                "days": 21
+              },
+              {
+                "month": "2024-04",
+                "days": 20
+              },
+              {
+                "month": "2024-05",
+                "days": 20
+              },
+              {
+                "month": "2024-06",
+                "days": 19
+              },
+              {
+                "month": "2024-07",
+                "days": 23
+              },
+              {
+                "month": "2024-08",
+                "days": 22
+              },
+              {
+                "month": "2024-09",
+                "days": 19
+              },
+              {
+                "month": "2024-10",
+                "days": 18
+              },
+              {
+                "month": "2024-11",
+                "days": 21
+              },
+              {
+                "month": "2024-12",
+                "days": 22
+              },
+              {
+                "month": "2025-01",
+                "days": 18
+              },
+              {
+                "month": "2025-02",
+                "days": 18
+              },
+              {
+                "month": "2025-03",
+                "days": 21
+              },
+              {
+                "month": "2025-04",
+                "days": 21
+              },
+              {
+                "month": "2025-05",
+                "days": 19
+              },
+              {
+                "month": "2025-06",
+                "days": 20
+              },
+              {
+                "month": "2025-07",
+                "days": 23
+              },
+              {
+                "month": "2025-08",
+                "days": 21
+              },
+              {
+                "month": "2025-09",
+                "days": 22
+              },
+              {
+                "month": "2025-10",
+                "days": 17
+              },
+              {
+                "month": "2025-11",
+                "days": 20
+              },
+              {
+                "month": "2025-12",
+                "days": 23
+              },
+              {
+                "month": "2026-01",
+                "days": 20
+              },
+              {
+                "month": "2026-02",
+                "days": 14
+              },
+              {
+                "month": "2026-03",
+                "days": 22
+              },
+              {
+                "month": "2026-04",
+                "days": 21
+              },
+              {
+                "month": "2026-05",
+                "days": 18
+              },
+              {
+                "month": "2026-06",
+                "days": 21
+              },
+              {
+                "month": "2026-07",
+                "days": 23
+              },
+              {
+                "month": "2026-08",
+                "days": 21
+              },
+              {
+                "month": "2026-09",
+                "days": 14
+              }
+            ],
+            "first_date": "2024-01-02",
+            "last_date": "2026-09-18",
+            "paired_daily_return_correlation": 0.34352570110273023,
+            "expected_calendar_verified": true,
+            "fewer_than_two_month_blocks": false,
+            "initial_cash_per_leg": 100000.0,
+            "bootstrap_seed": 20261014,
+            "bootstrap_samples": 2000,
+            "annual_reference_days": 252,
+            "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+            "sampling": "Paired entire calendar months, replacement; repeated blocks weighted by actual day counts",
+            "net_input_role": "Caller-supplied already-after-cost NAV; no extra fee deduction or fee inference",
+            "economic_upgrade_decision": null,
+            "limitations": [
+              "The arithmetic annualized mean difference is not a compounded return/CAGR or Sharpe difference.",
+              "Highly correlated strategies share daily shocks; paired blocks preserve this dependence but do not establish independent alpha.",
+              "One calendar-month block method does not capture every longer cross-month dependence or regime change; partial boundary months remain partial blocks.",
+              "An already-exposed or strategy-selected sample remains exposed; bootstrap does not create untouched OOS evidence.",
+              "The95% interval is not adjusted for multiple strategy/parameter comparisons or selection.",
+              "A CI containing0 means this procedure does not resolve the effect's sign, not proof that the strategies are equivalent.",
+              "Statistical return differences are separate from cost, Sharpe, drawdown and risk-budget tradeoffs; this helper does not decide economic upgrading.",
+              "A single-month sample cannot estimate between-month variation; calendar completeness beyond exact paired dates requires expected_dates."
+            ]
+          }
+        },
+        {
+          "cost": "50bp",
+          "candidate": "time_after_5_50bp",
+          "control": "existing_filtered_50bp",
+          "metric_differences": {
+            "compounded_return": -0.9724906245578117,
+            "cagr": -0.38751585031369495,
+            "sharpe": -1.7764103208673485,
+            "max_drawdown": 0.17918049999999963
+          },
+          "economic": {
+            "net_return_higher": false,
+            "sharpe_higher": false,
+            "drawdown_lower": false
+          },
+          "all_three_economic_improve": false,
+          "paired_inference": {
+            "schema": "complete-nav-paired-month-block-bootstrap-v1",
+            "annualized_mean_difference": -0.4178811133255866,
+            "confidence_interval_95": [
+              -0.755869175330972,
+              -0.08186511832336653
+            ],
+            "ci_contains_zero": false,
+            "mean_daily_return_difference": -0.0016582583862126451,
+            "day_count": 659,
+            "block_count": 33,
+            "month_blocks": [
+              {
+                "month": "2024-01",
+                "days": 22
+              },
+              {
+                "month": "2024-02",
+                "days": 15
+              },
+              {
+                "month": "2024-03",
+                "days": 21
+              },
+              {
+                "month": "2024-04",
+                "days": 20
+              },
+              {
+                "month": "2024-05",
+                "days": 20
+              },
+              {
+                "month": "2024-06",
+                "days": 19
+              },
+              {
+                "month": "2024-07",
+                "days": 23
+              },
+              {
+                "month": "2024-08",
+                "days": 22
+              },
+              {
+                "month": "2024-09",
+                "days": 19
+              },
+              {
+                "month": "2024-10",
+                "days": 18
+              },
+              {
+                "month": "2024-11",
+                "days": 21
+              },
+              {
+                "month": "2024-12",
+                "days": 22
+              },
+              {
+                "month": "2025-01",
+                "days": 18
+              },
+              {
+                "month": "2025-02",
+                "days": 18
+              },
+              {
+                "month": "2025-03",
+                "days": 21
+              },
+              {
+                "month": "2025-04",
+                "days": 21
+              },
+              {
+                "month": "2025-05",
+                "days": 19
+              },
+              {
+                "month": "2025-06",
+                "days": 20
+              },
+              {
+                "month": "2025-07",
+                "days": 23
+              },
+              {
+                "month": "2025-08",
+                "days": 21
+              },
+              {
+                "month": "2025-09",
+                "days": 22
+              },
+              {
+                "month": "2025-10",
+                "days": 17
+              },
+              {
+                "month": "2025-11",
+                "days": 20
+              },
+              {
+                "month": "2025-12",
+                "days": 23
+              },
+              {
+                "month": "2026-01",
+                "days": 20
+              },
+              {
+                "month": "2026-02",
+                "days": 14
+              },
+              {
+                "month": "2026-03",
+                "days": 22
+              },
+              {
+                "month": "2026-04",
+                "days": 21
+              },
+              {
+                "month": "2026-05",
+                "days": 18
+              },
+              {
+                "month": "2026-06",
+                "days": 21
+              },
+              {
+                "month": "2026-07",
+                "days": 23
+              },
+              {
+                "month": "2026-08",
+                "days": 21
+              },
+              {
+                "month": "2026-09",
+                "days": 14
+              }
+            ],
+            "first_date": "2024-01-02",
+            "last_date": "2026-09-18",
+            "paired_daily_return_correlation": 0.3445873387983951,
+            "expected_calendar_verified": true,
+            "fewer_than_two_month_blocks": false,
+            "initial_cash_per_leg": 100000.0,
+            "bootstrap_seed": 20261014,
+            "bootstrap_samples": 2000,
+            "annual_reference_days": 252,
+            "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+            "sampling": "Paired entire calendar months, replacement; repeated blocks weighted by actual day counts",
+            "net_input_role": "Caller-supplied already-after-cost NAV; no extra fee deduction or fee inference",
+            "economic_upgrade_decision": null,
+            "limitations": [
+              "The arithmetic annualized mean difference is not a compounded return/CAGR or Sharpe difference.",
+              "Highly correlated strategies share daily shocks; paired blocks preserve this dependence but do not establish independent alpha.",
+              "One calendar-month block method does not capture every longer cross-month dependence or regime change; partial boundary months remain partial blocks.",
+              "An already-exposed or strategy-selected sample remains exposed; bootstrap does not create untouched OOS evidence.",
+              "The95% interval is not adjusted for multiple strategy/parameter comparisons or selection.",
+              "A CI containing0 means this procedure does not resolve the effect's sign, not proof that the strategies are equivalent.",
+              "Statistical return differences are separate from cost, Sharpe, drawdown and risk-budget tradeoffs; this helper does not decide economic upgrading.",
+              "A single-month sample cannot estimate between-month variation; calendar completeness beyond exact paired dates requires expected_dates."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "candidate": "market_gate",
+      "control": "existing_filtered",
+      "full_economic_upgrade_at_both_costs": false,
+      "positive_paired_interval_at_both_costs": false,
+      "cost_results": [
+        {
+          "cost": "30bp",
+          "candidate": "market_gate_30bp",
+          "control": "existing_filtered_30bp",
+          "metric_differences": {
+            "compounded_return": -0.006767849999996578,
+            "cagr": -0.0019878171115343957,
+            "sharpe": 0.0005473660251614776,
+            "max_drawdown": 0.010324049999999918
+          },
+          "economic": {
+            "net_return_higher": false,
+            "sharpe_higher": true,
+            "drawdown_lower": false
+          },
+          "all_three_economic_improve": false,
+          "paired_inference": {
+            "schema": "complete-nav-paired-month-block-bootstrap-v1",
+            "annualized_mean_difference": -0.0027848716819973167,
+            "confidence_interval_95": [
+              -0.10189683325255962,
+              0.09932580515420833
+            ],
+            "ci_contains_zero": true,
+            "mean_daily_return_difference": -1.1051078103163956e-05,
+            "day_count": 659,
+            "block_count": 33,
+            "month_blocks": [
+              {
+                "month": "2024-01",
+                "days": 22
+              },
+              {
+                "month": "2024-02",
+                "days": 15
+              },
+              {
+                "month": "2024-03",
+                "days": 21
+              },
+              {
+                "month": "2024-04",
+                "days": 20
+              },
+              {
+                "month": "2024-05",
+                "days": 20
+              },
+              {
+                "month": "2024-06",
+                "days": 19
+              },
+              {
+                "month": "2024-07",
+                "days": 23
+              },
+              {
+                "month": "2024-08",
+                "days": 22
+              },
+              {
+                "month": "2024-09",
+                "days": 19
+              },
+              {
+                "month": "2024-10",
+                "days": 18
+              },
+              {
+                "month": "2024-11",
+                "days": 21
+              },
+              {
+                "month": "2024-12",
+                "days": 22
+              },
+              {
+                "month": "2025-01",
+                "days": 18
+              },
+              {
+                "month": "2025-02",
+                "days": 18
+              },
+              {
+                "month": "2025-03",
+                "days": 21
+              },
+              {
+                "month": "2025-04",
+                "days": 21
+              },
+              {
+                "month": "2025-05",
+                "days": 19
+              },
+              {
+                "month": "2025-06",
+                "days": 20
+              },
+              {
+                "month": "2025-07",
+                "days": 23
+              },
+              {
+                "month": "2025-08",
+                "days": 21
+              },
+              {
+                "month": "2025-09",
+                "days": 22
+              },
+              {
+                "month": "2025-10",
+                "days": 17
+              },
+              {
+                "month": "2025-11",
+                "days": 20
+              },
+              {
+                "month": "2025-12",
+                "days": 23
+              },
+              {
+                "month": "2026-01",
+                "days": 20
+              },
+              {
+                "month": "2026-02",
+                "days": 14
+              },
+              {
+                "month": "2026-03",
+                "days": 22
+              },
+              {
+                "month": "2026-04",
+                "days": 21
+              },
+              {
+                "month": "2026-05",
+                "days": 18
+              },
+              {
+                "month": "2026-06",
+                "days": 21
+              },
+              {
+                "month": "2026-07",
+                "days": 23
+              },
+              {
+                "month": "2026-08",
+                "days": 21
+              },
+              {
+                "month": "2026-09",
+                "days": 14
+              }
+            ],
+            "first_date": "2024-01-02",
+            "last_date": "2026-09-18",
+            "paired_daily_return_correlation": 0.942945664254419,
+            "expected_calendar_verified": true,
+            "fewer_than_two_month_blocks": false,
+            "initial_cash_per_leg": 100000.0,
+            "bootstrap_seed": 20261014,
+            "bootstrap_samples": 2000,
+            "annual_reference_days": 252,
+            "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+            "sampling": "Paired entire calendar months, replacement; repeated blocks weighted by actual day counts",
+            "net_input_role": "Caller-supplied already-after-cost NAV; no extra fee deduction or fee inference",
+            "economic_upgrade_decision": null,
+            "limitations": [
+              "The arithmetic annualized mean difference is not a compounded return/CAGR or Sharpe difference.",
+              "Highly correlated strategies share daily shocks; paired blocks preserve this dependence but do not establish independent alpha.",
+              "One calendar-month block method does not capture every longer cross-month dependence or regime change; partial boundary months remain partial blocks.",
+              "An already-exposed or strategy-selected sample remains exposed; bootstrap does not create untouched OOS evidence.",
+              "The95% interval is not adjusted for multiple strategy/parameter comparisons or selection.",
+              "A CI containing0 means this procedure does not resolve the effect's sign, not proof that the strategies are equivalent.",
+              "Statistical return differences are separate from cost, Sharpe, drawdown and risk-budget tradeoffs; this helper does not decide economic upgrading.",
+              "A single-month sample cannot estimate between-month variation; calendar completeness beyond exact paired dates requires expected_dates."
+            ]
+          }
+        },
+        {
+          "cost": "50bp",
+          "candidate": "market_gate_50bp",
+          "control": "existing_filtered_50bp",
+          "metric_differences": {
+            "compounded_return": -0.005138900197630747,
+            "cagr": -0.0015380125943007528,
+            "sharpe": 0.0021053037588083523,
+            "max_drawdown": 0.011026749999999308
+          },
+          "economic": {
+            "net_return_higher": false,
+            "sharpe_higher": true,
+            "drawdown_lower": false
+          },
+          "all_three_economic_improve": false,
+          "paired_inference": {
+            "schema": "complete-nav-paired-month-block-bootstrap-v1",
+            "annualized_mean_difference": -0.0025573543054531107,
+            "confidence_interval_95": [
+              -0.10172559765067135,
+              0.0996296826635078
+            ],
+            "ci_contains_zero": true,
+            "mean_daily_return_difference": -1.0148231370845677e-05,
+            "day_count": 659,
+            "block_count": 33,
+            "month_blocks": [
+              {
+                "month": "2024-01",
+                "days": 22
+              },
+              {
+                "month": "2024-02",
+                "days": 15
+              },
+              {
+                "month": "2024-03",
+                "days": 21
+              },
+              {
+                "month": "2024-04",
+                "days": 20
+              },
+              {
+                "month": "2024-05",
+                "days": 20
+              },
+              {
+                "month": "2024-06",
+                "days": 19
+              },
+              {
+                "month": "2024-07",
+                "days": 23
+              },
+              {
+                "month": "2024-08",
+                "days": 22
+              },
+              {
+                "month": "2024-09",
+                "days": 19
+              },
+              {
+                "month": "2024-10",
+                "days": 18
+              },
+              {
+                "month": "2024-11",
+                "days": 21
+              },
+              {
+                "month": "2024-12",
+                "days": 22
+              },
+              {
+                "month": "2025-01",
+                "days": 18
+              },
+              {
+                "month": "2025-02",
+                "days": 18
+              },
+              {
+                "month": "2025-03",
+                "days": 21
+              },
+              {
+                "month": "2025-04",
+                "days": 21
+              },
+              {
+                "month": "2025-05",
+                "days": 19
+              },
+              {
+                "month": "2025-06",
+                "days": 20
+              },
+              {
+                "month": "2025-07",
+                "days": 23
+              },
+              {
+                "month": "2025-08",
+                "days": 21
+              },
+              {
+                "month": "2025-09",
+                "days": 22
+              },
+              {
+                "month": "2025-10",
+                "days": 17
+              },
+              {
+                "month": "2025-11",
+                "days": 20
+              },
+              {
+                "month": "2025-12",
+                "days": 23
+              },
+              {
+                "month": "2026-01",
+                "days": 20
+              },
+              {
+                "month": "2026-02",
+                "days": 14
+              },
+              {
+                "month": "2026-03",
+                "days": 22
+              },
+              {
+                "month": "2026-04",
+                "days": 21
+              },
+              {
+                "month": "2026-05",
+                "days": 18
+              },
+              {
+                "month": "2026-06",
+                "days": 21
+              },
+              {
+                "month": "2026-07",
+                "days": 23
+              },
+              {
+                "month": "2026-08",
+                "days": 21
+              },
+              {
+                "month": "2026-09",
+                "days": 14
+              }
+            ],
+            "first_date": "2024-01-02",
+            "last_date": "2026-09-18",
+            "paired_daily_return_correlation": 0.9433933977623277,
+            "expected_calendar_verified": true,
+            "fewer_than_two_month_blocks": false,
+            "initial_cash_per_leg": 100000.0,
+            "bootstrap_seed": 20261014,
+            "bootstrap_samples": 2000,
+            "annual_reference_days": 252,
+            "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+            "sampling": "Paired entire calendar months, replacement; repeated blocks weighted by actual day counts",
+            "net_input_role": "Caller-supplied already-after-cost NAV; no extra fee deduction or fee inference",
+            "economic_upgrade_decision": null,
+            "limitations": [
+              "The arithmetic annualized mean difference is not a compounded return/CAGR or Sharpe difference.",
+              "Highly correlated strategies share daily shocks; paired blocks preserve this dependence but do not establish independent alpha.",
+              "One calendar-month block method does not capture every longer cross-month dependence or regime change; partial boundary months remain partial blocks.",
+              "An already-exposed or strategy-selected sample remains exposed; bootstrap does not create untouched OOS evidence.",
+              "The95% interval is not adjusted for multiple strategy/parameter comparisons or selection.",
+              "A CI containing0 means this procedure does not resolve the effect's sign, not proof that the strategies are equivalent.",
+              "Statistical return differences are separate from cost, Sharpe, drawdown and risk-budget tradeoffs; this helper does not decide economic upgrading.",
+              "A single-month sample cannot estimate between-month variation; calendar completeness beyond exact paired dates requires expected_dates."
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "candidate": "firstboard_repair_next_open",
+      "control": "firstboard_parent_next_open",
+      "full_economic_upgrade_at_both_costs": false,
+      "positive_paired_interval_at_both_costs": false,
+      "cost_results": [
+        {
+          "cost": "30bp",
+          "candidate": "firstboard_repair_next_open_30bp",
+          "control": "firstboard_parent_next_open_30bp",
+          "metric_differences": {
+            "compounded_return": 0.0,
+            "cagr": 0.0,
+            "sharpe": 0.0,
+            "max_drawdown": 0.0
+          },
+          "economic": {
+            "net_return_higher": false,
+            "sharpe_higher": false,
+            "drawdown_lower": false
+          },
+          "all_three_economic_improve": false,
+          "paired_inference": {
+            "schema": "complete-nav-paired-month-block-bootstrap-v1",
+            "annualized_mean_difference": 0.0,
+            "confidence_interval_95": [
+              0.0,
+              0.0
+            ],
+            "ci_contains_zero": true,
+            "mean_daily_return_difference": 0.0,
+            "day_count": 659,
+            "block_count": 33,
+            "month_blocks": [
+              {
+                "month": "2024-01",
+                "days": 22
+              },
+              {
+                "month": "2024-02",
+                "days": 15
+              },
+              {
+                "month": "2024-03",
+                "days": 21
+              },
+              {
+                "month": "2024-04",
+                "days": 20
+              },
+              {
+                "month": "2024-05",
+                "days": 20
+              },
+              {
+                "month": "2024-06",
+                "days": 19
+              },
+              {
+                "month": "2024-07",
+                "days": 23
+              },
+              {
+                "month": "2024-08",
+                "days": 22
+              },
+              {
+                "month": "2024-09",
+                "days": 19
+              },
+              {
+                "month": "2024-10",
+                "days": 18
+              },
+              {
+                "month": "2024-11",
+                "days": 21
+              },
+              {
+                "month": "2024-12",
+                "days": 22
+              },
+              {
+                "month": "2025-01",
+                "days": 18
+              },
+              {
+                "month": "2025-02",
+                "days": 18
+              },
+              {
+                "month": "2025-03",
+                "days": 21
+              },
+              {
+                "month": "2025-04",
+                "days": 21
+              },
+              {
+                "month": "2025-05",
+                "days": 19
+              },
+              {
+                "month": "2025-06",
+                "days": 20
+              },
+              {
+                "month": "2025-07",
+                "days": 23
+              },
+              {
+                "month": "2025-08",
+                "days": 21
+              },
+              {
+                "month": "2025-09",
+                "days": 22
+              },
+              {
+                "month": "2025-10",
+                "days": 17
+              },
+              {
+                "month": "2025-11",
+                "days": 20
+              },
+              {
+                "month": "2025-12",
+                "days": 23
+              },
+              {
+                "month": "2026-01",
+                "days": 20
+              },
+              {
+                "month": "2026-02",
+                "days": 14
+              },
+              {
+                "month": "2026-03",
+                "days": 22
+              },
+              {
+                "month": "2026-04",
+                "days": 21
+              },
+              {
+                "month": "2026-05",
+                "days": 18
+              },
+              {
+                "month": "2026-06",
+                "days": 21
+              },
+              {
+                "month": "2026-07",
+                "days": 23
+              },
+              {
+                "month": "2026-08",
+                "days": 21
+              },
+              {
+                "month": "2026-09",
+                "days": 14
+              }
+            ],
+            "first_date": "2024-01-02",
+            "last_date": "2026-09-18",
+            "paired_daily_return_correlation": 0.9999999999999998,
+            "expected_calendar_verified": true,
+            "fewer_than_two_month_blocks": false,
+            "initial_cash_per_leg": 100000.0,
+            "bootstrap_seed": 20261014,
+            "bootstrap_samples": 2000,
+            "annual_reference_days": 252,
+            "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+            "sampling": "Paired entire calendar months, replacement; repeated blocks weighted by actual day counts",
+            "net_input_role": "Caller-supplied already-after-cost NAV; no extra fee deduction or fee inference",
+            "economic_upgrade_decision": null,
+            "limitations": [
+              "The arithmetic annualized mean difference is not a compounded return/CAGR or Sharpe difference.",
+              "Highly correlated strategies share daily shocks; paired blocks preserve this dependence but do not establish independent alpha.",
+              "One calendar-month block method does not capture every longer cross-month dependence or regime change; partial boundary months remain partial blocks.",
+              "An already-exposed or strategy-selected sample remains exposed; bootstrap does not create untouched OOS evidence.",
+              "The95% interval is not adjusted for multiple strategy/parameter comparisons or selection.",
+              "A CI containing0 means this procedure does not resolve the effect's sign, not proof that the strategies are equivalent.",
+              "Statistical return differences are separate from cost, Sharpe, drawdown and risk-budget tradeoffs; this helper does not decide economic upgrading.",
+              "A single-month sample cannot estimate between-month variation; calendar completeness beyond exact paired dates requires expected_dates."
+            ]
+          }
+        },
+        {
+          "cost": "50bp",
+          "candidate": "firstboard_repair_next_open_50bp",
+          "control": "firstboard_parent_next_open_50bp",
+          "metric_differences": {
+            "compounded_return": 0.0,
+            "cagr": 0.0,
+            "sharpe": 0.0,
+            "max_drawdown": 0.0
+          },
+          "economic": {
+            "net_return_higher": false,
+            "sharpe_higher": false,
+            "drawdown_lower": false
+          },
+          "all_three_economic_improve": false,
+          "paired_inference": {
+            "schema": "complete-nav-paired-month-block-bootstrap-v1",
+            "annualized_mean_difference": 0.0,
+            "confidence_interval_95": [
+              0.0,
+              0.0
+            ],
+            "ci_contains_zero": true,
+            "mean_daily_return_difference": 0.0,
+            "day_count": 659,
+            "block_count": 33,
+            "month_blocks": [
+              {
+                "month": "2024-01",
+                "days": 22
+              },
+              {
+                "month": "2024-02",
+                "days": 15
+              },
+              {
+                "month": "2024-03",
+                "days": 21
+              },
+              {
+                "month": "2024-04",
+                "days": 20
+              },
+              {
+                "month": "2024-05",
+                "days": 20
+              },
+              {
+                "month": "2024-06",
+                "days": 19
+              },
+              {
+                "month": "2024-07",
+                "days": 23
+              },
+              {
+                "month": "2024-08",
+                "days": 22
+              },
+              {
+                "month": "2024-09",
+                "days": 19
+              },
+              {
+                "month": "2024-10",
+                "days": 18
+              },
+              {
+                "month": "2024-11",
+                "days": 21
+              },
+              {
+                "month": "2024-12",
+                "days": 22
+              },
+              {
+                "month": "2025-01",
+                "days": 18
+              },
+              {
+                "month": "2025-02",
+                "days": 18
+              },
+              {
+                "month": "2025-03",
+                "days": 21
+              },
+              {
+                "month": "2025-04",
+                "days": 21
+              },
+              {
+                "month": "2025-05",
+                "days": 19
+              },
+              {
+                "month": "2025-06",
+                "days": 20
+              },
+              {
+                "month": "2025-07",
+                "days": 23
+              },
+              {
+                "month": "2025-08",
+                "days": 21
+              },
+              {
+                "month": "2025-09",
+                "days": 22
+              },
+              {
+                "month": "2025-10",
+                "days": 17
+              },
+              {
+                "month": "2025-11",
+                "days": 20
+              },
+              {
+                "month": "2025-12",
+                "days": 23
+              },
+              {
+                "month": "2026-01",
+                "days": 20
+              },
+              {
+                "month": "2026-02",
+                "days": 14
+              },
+              {
+                "month": "2026-03",
+                "days": 22
+              },
+              {
+                "month": "2026-04",
+                "days": 21
+              },
+              {
+                "month": "2026-05",
+                "days": 18
+              },
+              {
+                "month": "2026-06",
+                "days": 21
+              },
+              {
+                "month": "2026-07",
+                "days": 23
+              },
+              {
+                "month": "2026-08",
+                "days": 21
+              },
+              {
+                "month": "2026-09",
+                "days": 14
+              }
+            ],
+            "first_date": "2024-01-02",
+            "last_date": "2026-09-18",
+            "paired_daily_return_correlation": 1.0,
+            "expected_calendar_verified": true,
+            "fewer_than_two_month_blocks": false,
+            "initial_cash_per_leg": 100000.0,
+            "bootstrap_seed": 20261014,
+            "bootstrap_samples": 2000,
+            "annual_reference_days": 252,
+            "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+            "sampling": "Paired entire calendar months, replacement; repeated blocks weighted by actual day counts",
+            "net_input_role": "Caller-supplied already-after-cost NAV; no extra fee deduction or fee inference",
+            "economic_upgrade_decision": null,
+            "limitations": [
+              "The arithmetic annualized mean difference is not a compounded return/CAGR or Sharpe difference.",
+              "Highly correlated strategies share daily shocks; paired blocks preserve this dependence but do not establish independent alpha.",
+              "One calendar-month block method does not capture every longer cross-month dependence or regime change; partial boundary months remain partial blocks.",
+              "An already-exposed or strategy-selected sample remains exposed; bootstrap does not create untouched OOS evidence.",
+              "The95% interval is not adjusted for multiple strategy/parameter comparisons or selection.",
+              "A CI containing0 means this procedure does not resolve the effect's sign, not proof that the strategies are equivalent.",
+              "Statistical return differences are separate from cost, Sharpe, drawdown and risk-budget tradeoffs; this helper does not decide economic upgrading.",
+              "A single-month sample cannot estimate between-month variation; calendar completeness beyond exact paired dates requires expected_dates."
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "source_masks": {
+    "source_identity_count": 3489,
+    "reference_sessions": 1211,
+    "base_true_candidates": 3970,
+    "recovery_parent_entries": 497,
+    "recovery_target_entries": 248,
+    "market_base_entries": 3809,
+    "first_board_formations": 10781,
+    "first_board_parent_entries": 8383,
+    "first_board_target_entries": 8191,
+    "eligible_upper_closes_with_unknown_prior20": 2132,
+    "eligible_upper_closes_with_invalid_current_shares": 0,
+    "first_board_parent_economic_pair_unknown": 301,
+    "eligible_upper_closes_with_known_prior_up": 17330
+  },
+  "evaluation_mask_counts": {
+    "base_mask": 2990,
+    "first_board_mask": 6352,
+    "first_board_parent_mask": 6511,
+    "market_mask": 2855,
+    "recovery_mask": 183,
+    "recovery_parent_mask": 366
+  },
+  "account_audit": {
+    "status": "ALL_TWELVE_ACCOUNT_IDENTITIES_AND_METRICS_PASS",
+    "errors": [],
+    "artifact": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\limit_next_directions_20261014\\completed_account_audit.json",
+      "sha256": "b83755d805a6ab22a638ce0ba1705c002fe27f87d29ab0c162d5e3fc4a12a6d6"
+    }
+  },
+  "protocol": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\limit_next_directions_20261014\\protocol.json",
+    "sha256": "9953a90c1bed42bfb7048f6d836a18f0c98a0ff9d81ed0e117341d0995ba0119"
+  },
+  "clock_repair": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\limit_next_directions_20261014\\clock_repair_protocol.json",
+    "sha256": "8094f14ccf1750007e77fa0afbbcb55f56a681802a009c702021fe3f18a7e650"
+  },
+  "statistics_runtime": {
+    "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\limit_next_directions_20261014\\comparison_runtime.json",
+    "sha256": "fc0e684aa42d840356957d1dc20a7eade12d2639cb4b8596535f826e63d1b70c"
+  },
+  "registry_total": 574,
+  "new_unique_contexts": 6,
+  "official_compute_spent": 0,
+  "old_baseline_replayed": false,
+  "not_untouched_OOS": true,
+  "formal_candidate": false,
+  "execution": "Daily-bar potential fills; opening auction and limit queue uncertified; total-return equivalent units, not actual CA inventory",
+  "statistical_limit": "Month-block descriptive CI; previously exposed sample; multiple comparisons unadjusted; not CAGR interval or proof of independent alpha"
+}

@@ -8,6 +8,7 @@ this module neither derives exchange rules nor fetches or repairs prices.
 from __future__ import annotations
 
 from collections import Counter
+from collections.abc import Mapping
 from copy import deepcopy
 from dataclasses import asdict, dataclass
 from decimal import Decimal, ROUND_FLOOR
@@ -44,6 +45,7 @@ STOP_T1_LIMIT_DOWN = Policy("stop_t1_limit_down", limit_down_stop_offset=1)
 STOP_T2_LIMIT_DOWN = Policy("stop_t2_limit_down", limit_down_stop_offset=2)
 STOP_T2_CLOSE_LOSS15 = Policy("stop_t2_close_loss15", close_loss_check_offset=2,
                               close_loss_threshold=.15)
+TIME_AFTER_5 = Policy("time_after_5", max_holding_sessions=7)
 
 
 def _number(value, *, positive=False):
@@ -198,7 +200,9 @@ def _normalize(bars, calendar):
 
 def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=100000.,
              max_slots=5, slot_fraction=.20, lot_size=100, tick=.01,
-             evaluation_start=None, adjustment_factor_role=None, max_daily_participation=.01, resume_state=None, preopen_signal_filter=None):
+             evaluation_start=None, adjustment_factor_role=None, max_daily_participation=.01,
+             resume_state=None, preopen_signal_filter=None, entry_mode="lower_limit",
+             preopen_signal_candidates=None):
     """Return frozen signals, potential executions, daily cash/NAV and terminal claims.
 
     Orders are chosen before the open from the preceding TWO independent
@@ -207,7 +211,20 @@ def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=10000
     before same-day exits: no intraday sale proceeds fund new bids, no recycling
     an unfilled slot into a later-code candidate. Fees are single-side fractions.
 
+    The default lower_limit entry and optional preopen_signal_filter retain the
+    two-board/lower-limit-bid behavior. next_open instead requires an explicit
+    preopen_signal_candidates mapping of (execution reference day, code) to
+    booleans, already formed by the caller before that open; it does not infer
+    two prior boards or use a later low as an entry trigger. The two interfaces
+    cannot be mixed. next_open uses the raw opening price only, blocks every
+    open at the upper limit even if it later opens the board, and retains the
+    same pre-open code/slot/cash reservation and ex-post daily volume guard.
+    Signal publication history, opening auction fills and capacity remain
+    uncertified. Current missing/illegal execution inputs are recorded unknown.
+
     The 10-session guard counts entry as session 1 and exits at session 10 open.
+    time_after_5 has no percentage stop: it allows t+1..t+5 and exits t+6 open
+    (entry age1, exit age7), with the same retry behavior if execution is blocked.
     T+1 forbids entry-day exits. Stop gaps use the worse opening price, and a bar
     hitting both stop and profit is assigned to the stop. A one-price lower-limit
     bar blocks selling even with reported volume. Stop/time exits retry daily.
@@ -245,7 +262,8 @@ def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=10000
             policy = {"baseline": BASELINE, "risk_guard": RISK_GUARD,
                       "stop_t1_limit_down": STOP_T1_LIMIT_DOWN,
                       "stop_t2_limit_down": STOP_T2_LIMIT_DOWN,
-                      "stop_t2_close_loss15": STOP_T2_CLOSE_LOSS15}[policy]
+                      "stop_t2_close_loss15": STOP_T2_CLOSE_LOSS15,
+                      "time_after_5": TIME_AFTER_5}[policy]
         except KeyError as error:
             raise LimitStrategyInputError("Unknown fixed policy") from error
     if not isinstance(policy, Policy) or not 0 < policy.take_profit < 1:
@@ -276,6 +294,28 @@ def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=10000
         raise LimitStrategyInputError("Invalid daily volume participation bound")
     equivalent_units = adjustment_factor_role == "total_return_factor"
     rows, days, symbols = _normalize(bars, calendar)
+    if entry_mode not in {"lower_limit", "next_open"}:
+        raise LimitStrategyInputError("Unknown entry mode")
+    external_candidates = {}
+    if entry_mode == "lower_limit":
+        if preopen_signal_candidates is not None:
+            raise LimitStrategyInputError("Lower-limit mode cannot receive external candidate signals")
+    else:
+        if preopen_signal_filter is not None or not isinstance(preopen_signal_candidates, Mapping):
+            raise LimitStrategyInputError("Next-open mode requires candidates and cannot mix lower-limit filter")
+        seen, reference_days = set(), set(days)
+        for key, flag in preopen_signal_candidates.items():
+            if not isinstance(key, tuple) or len(key) != 2 or not isinstance(flag, (bool, np.bool_)):
+                raise LimitStrategyInputError("External candidates need (date, code) boolean identities")
+            day, code = _day(key[0]), key[1]
+            if code is None or pd.isna(code) or str(code) == "" or day not in reference_days:
+                raise LimitStrategyInputError("External candidate identity is outside the reference contract")
+            identity = (day, str(code))
+            if identity in seen:
+                raise LimitStrategyInputError("Duplicate normalized external candidate identity")
+            seen.add(identity)
+            if bool(flag):
+                external_candidates.setdefault(day, set()).add(str(code))
     first = _day(evaluation_start) if evaluation_start is not None else days[0]
     if first not in days:
         raise LimitStrategyInputError("Evaluation start is outside the reference calendar")
@@ -362,15 +402,25 @@ def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=10000
             break
 
         # Reserve candidates/budgets before seeing current OHLC or trade volume.
-        prior_up = set() if index < 2 else rows.up_by_date.get(days[index - 2], set()) & rows.up_by_date.get(days[index - 1], set())
-        candidates = [] if index < 2 else [code for code in sorted(prior_up) if code not in holdings
-            and _up_close(rows.get((days[index - 2], code))) and _up_close(rows.get((days[index - 1], code)))
-            and all(rows.get((prior, code), {}).get("entry_eligible", True) is True for prior in days[index - 2:index + 1])]
-        if preopen_signal_filter is not None:
-            candidates = [code for code in candidates
-                          if preopen_signal_filter.get((day, code), False) is True]
-        signals.extend({"date": day, "symbol": code, "signal": "two_reference_limit_up_closes",
-                        "evidence_dates": days[index - 2:index], "formed_before_open": True} for code in candidates)
+        if entry_mode == "lower_limit":
+            prior_up = set() if index < 2 else rows.up_by_date.get(days[index - 2], set()) & rows.up_by_date.get(days[index - 1], set())
+            candidates = [] if index < 2 else [code for code in sorted(prior_up) if code not in holdings
+                and _up_close(rows.get((days[index - 2], code))) and _up_close(rows.get((days[index - 1], code)))
+                and all(rows.get((prior, code), {}).get("entry_eligible", True) is True for prior in days[index - 2:index + 1])]
+            if preopen_signal_filter is not None:
+                candidates = [code for code in candidates
+                              if preopen_signal_filter.get((day, code), False) is True]
+            signals.extend({"date": day, "symbol": code, "signal": "two_reference_limit_up_closes",
+                            "evidence_dates": days[index - 2:index], "formed_before_open": True} for code in candidates)
+        else:
+            # Only the caller's pre-existing signals determine reservations. Do
+            # not use today's eligibility, volume or later board opening to
+            # promote a higher-code order after a lower-code execution fails.
+            candidates = [code for code in sorted(external_candidates.get(day, set())) if code not in holdings]
+            signals.extend({"date": day, "symbol": code, "signal": "external_close_formed_next_open",
+                            "evidence_dates": days[max(0, index - 1):index],
+                            "formed_before_open": True, "source_clock_certified_by_engine": False}
+                           for code in candidates)
         selected = candidates[:max(0, max_slots - len(holdings))]
         reservations, available_cash = [], cash
         for code in selected:
@@ -467,25 +517,48 @@ def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=10000
             del holdings[code]
         for code, budget in reservations:
             row, limits = rows.get((day, code)), _limits(rows.get((day, code)))
-            if limits is None:
-                order(day, code, "buy", "source_pending", reason="preopen_limit_unknown", reserved_budget=budget)
-                continue
-            bid = limits[1]
+            if entry_mode == "next_open":
+                eligible = row.get("entry_eligible") if row is not None else None
+                if eligible is False:
+                    order(day, code, "buy", "blocked_entry_ineligible", reserved_budget=budget)
+                    continue
+                if eligible is not True:
+                    order(day, code, "buy", "source_pending", reason="opening_eligibility_unknown", reserved_budget=budget)
+                    continue
+                status, value, volume = _status(row), _ohlc(row), _volume(row)
+                if status != "trading" or volume is None or volume <= 0:
+                    state = "source_pending" if status in {"unknown", "delisted"} or volume is None else "blocked_no_trade"
+                    order(day, code, "buy", state, reserved_budget=budget)
+                    continue
+                if value is None or limits is None:
+                    order(day, code, "buy", "source_pending", reason="opening_raw_quote_or_limits_unknown", reserved_budget=budget)
+                    continue
+                if _at(value["open"], limits[0]):
+                    order(day, code, "buy", "blocked_open_limit_up", opening_price=value["open"],
+                          reserved_budget=budget, later_board_opening_does_not_certify_open_fill=True)
+                    continue
+                bid = value["open"]
+            else:
+                if limits is None:
+                    order(day, code, "buy", "source_pending", reason="preopen_limit_unknown", reserved_budget=budget)
+                    continue
+                bid = limits[1]
             quantity = int(math.floor((budget + 1e-9) / (bid * (1 + cost) * lot_size))) * lot_size
             if quantity <= 0:
                 order(day, code, "buy", "blocked_cash_or_lot", limit_price=bid, reserved_budget=budget)
                 continue
-            status, value, volume = _status(row), _ohlc(row), _volume(row)
-            if status != "trading" or volume is None or volume <= 0:
-                state = "source_pending" if status in {"unknown", "delisted"} or volume is None else "blocked_no_trade"
-                order(day, code, "buy", state, limit_price=bid, quantity=quantity, reserved_budget=budget)
-                continue
-            if value is None:
-                order(day, code, "buy", "source_pending", reason="raw_ohlc_unknown", limit_price=bid, quantity=quantity)
-                continue
-            if value["low"] > bid + 1e-7:
-                order(day, code, "buy", "not_touched", limit_price=bid, quantity=quantity, reserved_budget=budget)
-                continue
+            if entry_mode == "lower_limit":
+                status, value, volume = _status(row), _ohlc(row), _volume(row)
+                if status != "trading" or volume is None or volume <= 0:
+                    state = "source_pending" if status in {"unknown", "delisted"} or volume is None else "blocked_no_trade"
+                    order(day, code, "buy", state, limit_price=bid, quantity=quantity, reserved_budget=budget)
+                    continue
+                if value is None:
+                    order(day, code, "buy", "source_pending", reason="raw_ohlc_unknown", limit_price=bid, quantity=quantity)
+                    continue
+                if value["low"] > bid + 1e-7:
+                    order(day, code, "buy", "not_touched", limit_price=bid, quantity=quantity, reserved_budget=budget)
+                    continue
             if quantity > volume * max_daily_participation + 1e-7:
                 order(day, code, "buy", "blocked_daily_volume_bound", limit_price=bid,
                       requested_quantity=quantity, reserved_budget=budget,
@@ -512,9 +585,10 @@ def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=10000
             marks[code] = value["close"]
             trade = {"date": day, "symbol": code, "side": "buy", "quantity": quantity,
                      "price": bid, "notional": notional, "fee": fee,
-                     "state": "potential_limit_fill", "fill_certified": False}
+                      "state": "potential_limit_fill" if entry_mode == "lower_limit" else "potential_open_fill",
+                      "fill_certified": False}
             trades.append(trade)
-            order(day, code, "buy", "potential_limit_fill", quantity=quantity, price=bid,
+            order(day, code, "buy", trade["state"], quantity=quantity, price=bid,
                   reserved_budget=budget, fill_certified=False)
             day_fee += fee
             day_traded += notional
@@ -575,6 +649,9 @@ def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=10000
                "corporate_action_inventory_complete_certified": False,
                "source_pending": pending, "blocked_orders": dict(blocked),
                "completed_round_trips": sum(trade["side"] == "sell" for trade in trades)}
+    if entry_mode == "next_open":
+        summary.update(entry_mode="next_open", signal_clock_certified_by_engine=False,
+                       open_limit_up_buy_blocked_even_if_later_opened=True)
     return {"summary": summary, "daily": daily, "signals": signals, "orders": orders,
             "trades": trades, "blocked": dict(blocked), "terminal": deepcopy(holdings),
             "stop_events": stop_events}

@@ -442,3 +442,152 @@ def test_new_stop_variants_cannot_be_combined_with_each_other_or_risk_guard():
             pass
         else:
             raise AssertionError("Independent frozen stop policies required")
+
+
+def _next_open_run(rows, candidates=None, n=7, **kwargs):
+    return simulate(rows, DAYS[:n], entry_mode="next_open",
+                    preopen_signal_candidates={(DAYS[2], "A"): True} if candidates is None else candidates,
+                    **kwargs)
+
+
+def test_new_entry_next_open_does_not_require_two_boards_or_lower_touch():
+    rows = setup(n=7)
+    for day in DAYS[:2]:
+        put(rows, day, up=20.)
+    put(rows, DAYS[2], open=10.5, high=11., low=10.4, close=10.5, down=10.)
+    result = _next_open_run(rows)
+    assert result["trades"][0]["price"] == 10.5
+    assert result["trades"][0]["state"] == "potential_open_fill"
+    assert result["signals"][0]["signal"] == "external_close_formed_next_open"
+    assert result["signals"][0]["formed_before_open"] is True
+    assert simulate(rows, DAYS[:7])["trades"] == []
+    modified = [dict(row) for row in rows]
+    put(modified, DAYS[2], low=10.5)
+    changed = _next_open_run(modified)
+    assert changed["trades"][0] == result["trades"][0]
+    assert changed["daily"][2]["cash"] == result["daily"][2]["cash"]
+
+
+def test_new_entry_open_upper_limit_blocked_even_if_later_board_opens():
+    for low, close in [(13., 13.), (11., 12.)]:
+        rows = setup(n=7)
+        put(rows, DAYS[2], open=13., high=13., low=low, close=close, up=13.)
+        result = _next_open_run(rows)
+        assert result["trades"] == []
+        assert result["blocked"]["buy_blocked_open_limit_up"] == 1
+        blocked = [o for o in result["orders"] if o["state"] == "blocked_open_limit_up"][0]
+        assert blocked["later_board_opening_does_not_certify_open_fill"] is True
+
+
+def test_new_entry_code_slot_cash_fixed_before_current_volume_and_unknown_roles():
+    rows = setup(codes=("F", "E", "D", "C", "B", "A"), n=7)
+    put(rows, DAYS[2], "A", volume=1000.)
+    put(rows, DAYS[2], "F", volume=1e10)
+    candidates = {(DAYS[2], code): True for code in "FEDCBA"}
+    result = _next_open_run(rows, candidates)
+    assert [t["symbol"] for t in result["trades"] if t["side"] == "buy"] == list("BCDE")
+    assert result["blocked"]["buy_blocked_daily_volume_bound"] == 1
+    assert result["blocked"]["buy_blocked_no_preopen_slot"] == 1
+    # An unknown selected lower-code quote cannot promote an unreserved code.
+    put(rows, DAYS[2], "A", entry_eligible=None)
+    unknown = _next_open_run(rows, candidates)
+    assert [t["symbol"] for t in unknown["trades"] if t["side"] == "buy"] == list("BCDE")
+    assert unknown["blocked"]["buy_source_pending"] == 1
+
+
+def test_new_entry_unknown_and_nontrade_inputs_never_fill():
+    for changes, expected in [
+        (dict(volume=0.), "blocked_no_trade"),
+        (dict(status="suspended", volume=0.), "blocked_no_trade"),
+        (dict(status="unknown"), "source_pending"),
+        (dict(raw_open=float("nan")), "source_pending"),
+        (dict(up=float("nan")), "source_pending"),
+        (dict(entry_eligible=False), "blocked_entry_ineligible"),
+    ]:
+        rows = setup(n=7)
+        put(rows, DAYS[2], **changes)
+        result = _next_open_run(rows)
+        assert result["trades"] == []
+        assert result["orders"][0]["state"] == expected
+
+
+def test_new_entry_T1_and_same_day_exit_proceeds_cannot_replace_preopen_slot():
+    rows = setup(codes=("A", "B"), n=7)
+    put(rows, DAYS[2], "A", high=12., close=11.7)
+    put(rows, DAYS[3], "A", open=11.8, high=12., low=11.5, close=11.7)
+    candidates = {(DAYS[2], "A"): True, (DAYS[3], "B"): True}
+    result = _next_open_run(rows, candidates, max_slots=1, slot_fraction=1.)
+    assert [(t["side"], t["date"], t["symbol"]) for t in result["trades"]] == [
+        ("buy", DAYS[2], "A"), ("sell", DAYS[3], "A")]
+    assert result["blocked"]["buy_blocked_no_preopen_slot"] == 1
+    assert not any(t["side"] == "sell" and t["date"] == DAYS[2] for t in result["trades"])
+
+
+def test_new_entry_prefix_stable_and_future_ohlc_cannot_change_prior_cash():
+    rows = setup(n=9)
+    original = _next_open_run(rows, n=9)
+    altered = [dict(row) for row in rows]
+    for day in DAYS[6:9]:
+        put(altered, day, open=1., high=20., low=1., close=15., volume=1e9)
+    changed = _next_open_run(altered, n=9)
+    for key in ["signals", "orders", "trades", "daily"]:
+        assert [r for r in original[key] if r["date"] < DAYS[6]] == [
+            r for r in changed[key] if r["date"] < DAYS[6]]
+    prefix = _next_open_run([r for r in rows if r["date"] <= DAYS[5]], n=6)
+    assert prefix["daily"] == original["daily"][:6]
+
+
+def test_new_entry_interfaces_cannot_be_mixed_or_pass_truthy_strings():
+    bad_arguments = [
+        dict(entry_mode="next_open"),
+        dict(preopen_signal_candidates={(DAYS[2], "A"): True}),
+        dict(entry_mode="next_open", preopen_signal_candidates={}, preopen_signal_filter={}),
+        dict(entry_mode="next_open", preopen_signal_candidates={(DAYS[2], "A"): "True"}),
+        dict(entry_mode="next_open", preopen_signal_candidates={(DAYS[2], "A"): True,
+                                                                (pd.Timestamp(DAYS[2]), "A"): True}),
+    ]
+    for kwargs in bad_arguments:
+        try:
+            simulate(setup(n=7), DAYS[:7], **kwargs)
+        except LimitStrategyInputError:
+            pass
+        else:
+            raise AssertionError("Explicit separate candidate/entry contracts required")
+
+
+def test_new_entry_default_lower_limit_keeps_existing_order_and_cash_behavior():
+    rows = setup(n=7)
+    default = simulate(rows, DAYS[:7], preopen_signal_filter={(DAYS[2], "A"): True})
+    explicit = simulate(rows, DAYS[:7], entry_mode="lower_limit",
+                        preopen_signal_filter={(DAYS[2], "A"): True})
+    assert default == explicit
+    assert default["trades"][0]["price"] == 10.
+    assert default["trades"][0]["state"] == "potential_limit_fill"
+
+
+def test_new_time_after_5_exits_t_plus6_not_t_plus5_without_percentage_stop():
+    rows = setup(n=10)
+    put(rows, DAYS[3], open=8.6, high=9., low=8.5, close=8.7, down=8.)
+    put(rows, DAYS[8], open=9.8, high=10., low=9.5, close=9.8)
+    result = simulate(rows, DAYS[:10], policy="time_after_5")
+    sell = [t for t in result["trades"] if t["side"] == "sell"][0]
+    assert sell["date"] == DAYS[8] and sell["holding_sessions"] == 7
+    assert sell["reason"] == "max_holding_sessions" and sell["price"] == 9.8
+    assert result["summary"]["policy"]["stop_loss"] is None
+    assert not any(o["side"] == "sell" and o["date"] == DAYS[7] for o in result["orders"])
+
+
+def test_new_time_after_5_reference_clock_and_retry_through_blocks():
+    rows = setup(n=12)
+    put(rows, DAYS[5], status="suspended", raw_open=float("nan"), raw_high=float("nan"),
+        raw_low=float("nan"), raw_close=float("nan"), prevclose=10.5, volume=0.)
+    put(rows, DAYS[8], open=9., high=9., low=9., close=9., down=9.)
+    put(rows, DAYS[9], status="suspended", raw_open=float("nan"), raw_high=float("nan"),
+        raw_low=float("nan"), raw_close=float("nan"), prevclose=9., volume=0.)
+    put(rows, DAYS[10], open=8.5, high=9., low=8., close=8.8, down=8.)
+    result = simulate(rows, DAYS[:12], policy="time_after_5")
+    sell = [t for t in result["trades"] if t["side"] == "sell"][0]
+    assert sell["date"] == DAYS[10] and sell["holding_sessions"] == 9
+    assert sell["reason"] == "max_holding_sessions" and sell["price"] == 8.5
+    assert result["blocked"]["sell_blocked_one_price_limit_down"] == 1
+    assert result["blocked"]["sell_blocked_suspension"] == 1
