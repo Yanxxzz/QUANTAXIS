@@ -1,0 +1,572 @@
+{
+  "status": "ALL_EVENT_FACTOR_AND_FOUR_STRATEGY_PATHS_COMPLETE",
+  "validation_window": {
+    "start": "2024-01-02",
+    "end": "2026-09-18",
+    "sessions": 659
+  },
+  "discovery_window": {
+    "start": "2021-09-22",
+    "end": "2023-12-29"
+  },
+  "not_untouched_OOS": true,
+  "selection": {
+    "feature": "prior_extension_20",
+    "cutoff": 0.18595041322314065,
+    "trained_only_until": "2023-12-29",
+    "training_support": true
+  },
+  "training_descriptors": [
+    {
+      "feature": "prior_extension_20",
+      "cutoff": 0.18595041322314065,
+      "known_events": 254,
+      "raw_pooled_spearman": -0.17485810383926828,
+      "direction_aligned_pooled_spearman": 0.17485810383926828,
+      "low_half": {
+        "n": 127,
+        "mean_return5": -0.031461133986029864,
+        "median_return5": -0.04255319148936165,
+        "crash_mae10_fraction": 0.49606299212598426,
+        "two_down_closes_fraction": 0.031496062992125984
+      },
+      "high_half": {
+        "n": 127,
+        "mean_return5": -0.051952205976433505,
+        "median_return5": -0.10299625468164786,
+        "crash_mae10_fraction": 0.6929133858267716,
+        "two_down_closes_fraction": 0.1968503937007874
+      },
+      "low_minus_high_mean_return5": 0.02049107199040364,
+      "month_block_95_interval": [
+        -0.015967209132579246,
+        0.062335895491736217
+      ],
+      "bootstrap_caveat": "single month block, not independent stock/event samples; selection and3comparisons unadjusted",
+      "not_standard_daily_RankIC": true,
+      "year_strata": [
+        {
+          "year": "2021",
+          "low_n": 4,
+          "high_n": 14,
+          "low_mean5": -0.06204436107670347,
+          "high_mean5": -0.059027963434737325
+        },
+        {
+          "year": "2022",
+          "low_n": 88,
+          "high_n": 81,
+          "low_mean5": -0.034606459789442746,
+          "high_mean5": -0.050143337375243964
+        },
+        {
+          "year": "2023",
+          "low_n": 35,
+          "high_n": 32,
+          "low_mean5": -0.020057660298514773,
+          "high_mean5": -0.053435260735186604
+        }
+      ]
+    },
+    {
+      "feature": "locked_board_fraction",
+      "cutoff": 0.0,
+      "known_events": 273,
+      "raw_pooled_spearman": 0.010775004400631717,
+      "direction_aligned_pooled_spearman": -0.010775004400631717,
+      "low_half": {
+        "n": 206,
+        "mean_return5": -0.043778324656548975,
+        "median_return5": -0.0737565217391305,
+        "crash_mae10_fraction": 0.6019417475728155,
+        "two_down_closes_fraction": 0.10194174757281553
+      },
+      "high_half": {
+        "n": 67,
+        "mean_return5": -0.037078424013208724,
+        "median_return5": -0.05932686822589872,
+        "crash_mae10_fraction": 0.582089552238806,
+        "two_down_closes_fraction": 0.13432835820895522
+      },
+      "low_minus_high_mean_return5": -0.006699900643340251,
+      "month_block_95_interval": [
+        -0.03650147793083788,
+        0.027303696723171733
+      ],
+      "bootstrap_caveat": "single month block, not independent stock/event samples; selection and3comparisons unadjusted",
+      "not_standard_daily_RankIC": true,
+      "year_strata": [
+        {
+          "year": "2021",
+          "low_n": 14,
+          "high_n": 9,
+          "low_mean5": -0.10081650488127725,
+          "high_mean5": -0.026667381490139846
+        },
+        {
+          "year": "2022",
+          "low_n": 146,
+          "high_n": 35,
+          "low_mean5": -0.04423673181652837,
+          "high_mean5": -0.028819450161293694
+        },
+        {
+          "year": "2023",
+          "low_n": 46,
+          "high_n": 23,
+          "low_mean5": -0.02496393403691447,
+          "high_mean5": -0.05372031390558465
+        }
+      ]
+    },
+    {
+      "feature": "board_amount_surge",
+      "cutoff": 2.0529754883859965,
+      "known_events": 255,
+      "raw_pooled_spearman": -0.15365912923719444,
+      "direction_aligned_pooled_spearman": 0.15365912923719444,
+      "low_half": {
+        "n": 127,
+        "mean_return5": -0.030851482332183097,
+        "median_return5": -0.05944055944055948,
+        "crash_mae10_fraction": 0.6299212598425197,
+        "two_down_closes_fraction": 0.10236220472440945
+      },
+      "high_half": {
+        "n": 128,
+        "mean_return5": -0.05113219637841328,
+        "median_return5": -0.07948292682926833,
+        "crash_mae10_fraction": 0.5546875,
+        "two_down_closes_fraction": 0.125
+      },
+      "low_minus_high_mean_return5": 0.02028071404623018,
+      "month_block_95_interval": [
+        -0.01684302526456031,
+        0.058022412096122696
+      ],
+      "bootstrap_caveat": "single month block, not independent stock/event samples; selection and3comparisons unadjusted",
+      "not_standard_daily_RankIC": true,
+      "year_strata": [
+        {
+          "year": "2021",
+          "low_n": 2,
+          "high_n": 16,
+          "low_mean5": 0.06623093681917214,
+          "high_mean5": -0.07543942537696754
+        },
+        {
+          "year": "2022",
+          "low_n": 90,
+          "high_n": 79,
+          "low_mean5": -0.03343254591151109,
+          "high_mean5": -0.051874046288983865
+        },
+        {
+          "year": "2023",
+          "low_n": 35,
+          "high_n": 33,
+          "low_mean5": -0.029762028508274252,
+          "high_mean5": -0.03757092950229375
+        }
+      ]
+    }
+  ],
+  "original_five_year_drawdown": {
+    "peak_date": "2023-12-13",
+    "trough_date": "2024-07-24",
+    "drawdown": 0.3463312166842728,
+    "loss_CNY": 51244.19300000003,
+    "contributors": [
+      {
+        "code": "000820",
+        "net_loss_CNY": 16068.193,
+        "drawdown_percentage_points": 10.859604778257921
+      },
+      {
+        "code": "000518",
+        "net_loss_CNY": 12006.0,
+        "drawdown_percentage_points": 8.11419273889507
+      },
+      {
+        "code": "000608",
+        "net_loss_CNY": 10230.0,
+        "drawdown_percentage_points": 6.913892363726185
+      },
+      {
+        "code": "000639",
+        "net_loss_CNY": 8260.0,
+        "drawdown_percentage_points": 5.582478096224662
+      },
+      {
+        "code": "002607",
+        "net_loss_CNY": 4680.0,
+        "drawdown_percentage_points": 3.162953691323416
+      }
+    ],
+    "reconciliation_error": 2.9103830456733704e-11,
+    "source": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\limit_reversal_20261014\\drawdown_attribution.json",
+      "sha256": "936a6f7eb3a47ac9d536be495b13457039e7995eb7356c3dcb740dd0a7df33bf"
+    },
+    "fee_share_of_max_drawdown_loss": 0.001682005217644855,
+    "price_contribution_sum": -51158.0,
+    "terminal_unrealized_mark_minus_entry_outlay_sum": -54090.25
+  },
+  "validation_event_diagnostic": {
+    "feature": "prior_extension_20",
+    "cutoff": 0.18595041322314065,
+    "known_events": 736,
+    "raw_pooled_spearman": -0.2364940616706607,
+    "direction_aligned_pooled_spearman": 0.2364940616706607,
+    "low_half": {
+      "n": 364,
+      "mean_return5": -0.01000883192419253,
+      "median_return5": -0.03364435802182497,
+      "crash_mae10_fraction": 0.4010989010989011,
+      "two_down_closes_fraction": 0.054945054945054944
+    },
+    "high_half": {
+      "n": 372,
+      "mean_return5": -0.06035016983616888,
+      "median_return5": -0.0980452259360286,
+      "crash_mae10_fraction": 0.6801075268817204,
+      "two_down_closes_fraction": 0.1639784946236559
+    },
+    "low_minus_high_mean_return5": 0.05034133791197635,
+    "month_block_95_interval": [
+      0.02050935134809098,
+      0.08012973683341859
+    ],
+    "bootstrap_caveat": "single month block, not independent stock/event samples; selection and3comparisons unadjusted",
+    "not_standard_daily_RankIC": true,
+    "year_strata": [
+      {
+        "year": "2024",
+        "low_n": 131,
+        "high_n": 169,
+        "low_mean5": -0.008378084801951317,
+        "high_mean5": -0.06708864934734135
+      },
+      {
+        "year": "2025",
+        "low_n": 130,
+        "high_n": 128,
+        "low_mean5": -0.02114028173272758,
+        "high_mean5": -0.06593931220369081
+      },
+      {
+        "year": "2026",
+        "low_n": 103,
+        "high_n": 75,
+        "low_mean5": 0.0019665137272245367,
+        "high_mean5": -0.035627326363756116
+      }
+    ]
+  },
+  "accounts": [
+    {
+      "path": "common_control_30bp",
+      "single_side_cost": 0.003,
+      "metrics": {
+        "days": 659,
+        "compounded_return": -0.0551573800000017,
+        "cagr": -0.02146238827014124,
+        "sharpe": 0.07431028693292205,
+        "max_drawdown": 0.4411205400000008
+      },
+      "annual_returns": [
+        {
+          "year": "2024",
+          "compounded_return": -0.1881772400000018
+        },
+        {
+          "year": "2025",
+          "compounded_return": 0.15203824785597275
+        },
+        {
+          "year": "2026",
+          "compounded_return": 0.01025580441320706
+        }
+      ],
+      "buys": 16,
+      "sells": 11,
+      "total_fees_CNY": 1545.738,
+      "terminal_holdings_count": 5,
+      "terminal_cash_CNY": 27710.261999999995,
+      "metrics_reconciliation_error": 2.636779683484747e-16
+    },
+    {
+      "path": "common_control_50bp",
+      "single_side_cost": 0.005,
+      "metrics": {
+        "days": 659,
+        "compounded_return": -0.06681729999999853,
+        "cagr": -0.026097835748238762,
+        "sharpe": 0.05907157311106462,
+        "max_drawdown": 0.44458089999999995
+      },
+      "annual_returns": [
+        {
+          "year": "2024",
+          "compounded_return": -0.1937029999999984
+        },
+        {
+          "year": "2025",
+          "compounded_return": 0.14743878496385343
+        },
+        {
+          "year": "2026",
+          "compounded_return": 0.008653754643235034
+        }
+      ],
+      "buys": 16,
+      "sells": 11,
+      "total_fees_CNY": 2563.7300000000005,
+      "terminal_holdings_count": 5,
+      "terminal_cash_CNY": 26544.27000000001,
+      "metrics_reconciliation_error": 1.457167719820518e-16
+    },
+    {
+      "path": "filtered_30bp",
+      "single_side_cost": 0.003,
+      "metrics": {
+        "days": 659,
+        "compounded_return": 0.5363753121343864,
+        "cagr": 0.17846346327465668,
+        "sharpe": 0.7495503507860152,
+        "max_drawdown": 0.38484844000000007
+      },
+      "annual_returns": [
+        {
+          "year": "2024",
+          "compounded_return": -0.04772359999999931
+        },
+        {
+          "year": "2025",
+          "compounded_return": 0.10789500821399933
+        },
+        {
+          "year": "2026",
+          "compounded_return": 0.4562491767442842
+        }
+      ],
+      "buys": 39,
+      "sells": 34,
+      "total_fees_CNY": 5013.654557312253,
+      "terminal_holdings_count": 5,
+      "terminal_cash_CNY": 50126.53121343872,
+      "metrics_reconciliation_error": 8.881784197001252e-16
+    },
+    {
+      "path": "filtered_50bp",
+      "single_side_cost": 0.005,
+      "metrics": {
+        "days": 659,
+        "compounded_return": 0.48960249861660166,
+        "cagr": 0.16461317196703718,
+        "sharpe": 0.7032027323331879,
+        "max_drawdown": 0.3894463500000005
+      },
+      "annual_returns": [
+        {
+          "year": "2024",
+          "compounded_return": -0.05847980000000064
+        },
+        {
+          "year": "2025",
+          "compounded_return": 0.10130850086912702
+        },
+        {
+          "year": "2026",
+          "compounded_return": 0.4365864258401131
+        }
+      ],
+      "buys": 39,
+      "sells": 34,
+      "total_fees_CNY": 8200.287687747035,
+      "terminal_holdings_count": 5,
+      "terminal_cash_CNY": 47027.24986166009,
+      "metrics_reconciliation_error": 4.440892098500626e-16
+    }
+  ],
+  "factor": {
+    "feature": "prior_extension_20",
+    "direction": 1,
+    "cycle": 5,
+    "groups": 2,
+    "formation": "tclose->t+1open",
+    "valid_event_labels": 736,
+    "mean_next_open_return5": -0.016602158634785254,
+    "coverage": {
+      "output_identities": 3840482,
+      "preopen_two_board_candidates": 7418,
+      "candidate_touch_unknown": 0,
+      "known_touch_events": 1138,
+      "touch_events_feature_unknown": 139,
+      "finite_factor_values": 999,
+      "structural_non_candidates": 3833064,
+      "nan_factor_values": 3839483
+    },
+    "aligned_valid_IC_periods": 6,
+    "RankIC": 0.03971861471861473,
+    "IC_mean": 0.1232398620066281,
+    "ICIR": 0.2235655277732373,
+    "pooled_event_Spearman_not_dailyRankIC": 0.19741945897077567,
+    "period_counts": [
+      {
+        "date": "2024-02-28",
+        "n": 7
+      },
+      {
+        "date": "2024-11-04",
+        "n": 11
+      },
+      {
+        "date": "2024-12-09",
+        "n": 4
+      },
+      {
+        "date": "2025-11-27",
+        "n": 5
+      },
+      {
+        "date": "2025-12-11",
+        "n": 4
+      },
+      {
+        "date": "2026-07-21",
+        "n": 5
+      }
+    ],
+    "native_default_price_basis_or_inputs_verified": false,
+    "formal_10_groups_or_pool_eligible": false,
+    "unconditional_factor_values_not_zero_filled": true
+  },
+  "source_receipt": {
+    "raw_rows": 3835371,
+    "raw_identity_row_hash": "5c2be1f080ff93ad16aeb2bde537878ca93249f73054d0e99aa8bb853782f0a2",
+    "factor_record_hash": "3ab130addc5f4ca8502d5979de06322e178ac44e155aed4ea216dd7d958a5467",
+    "factor_rows": 43595,
+    "calendar_sessions": 1211,
+    "codes": 3489,
+    "missing_raw_days_not_compressed": true,
+    "amount_role": "canonical same-source CNY turnover cash, not share turnover ratio",
+    "ST_lifecycle_PIT_complete": false,
+    "000518_execution_limit_override": "publication-bound 2026-05-20 10%; original ST entry exclusion unchanged",
+    "raw_panel_saved": false
+  },
+  "official_compute_spent": 0,
+  "new_unique_contexts": 6,
+  "registry_total": 565,
+  "formal_candidate": false,
+  "conditions": [
+    "Daily limit touch is a potential fill, not a queue certificate.",
+    "Only-profit exits still retain terminal losing positions.",
+    "Same-source total-return equivalent units are not actual dividend/share ledgers.",
+    "Historical member, ST, IPO exceptions and formation-time availability are not fully PIT certified.",
+    "Three discovery descriptors, overlapping events and month bootstrap do not establish causality.",
+    "Close-formed sparse factor is not the same-day bid account or a ten-decile portfolio."
+  ],
+  "bindings": {
+    "protocol.json": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\limit_reversal_optimization_20261014\\protocol.json",
+      "sha256": "fac0f27e8a707c43c158e40fd601ad7a4a87f415672a40881f523eb73033e9b0"
+    },
+    "validation_protocol.json": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\limit_reversal_optimization_20261014\\validation_protocol.json",
+      "sha256": "7bb906f85ca0f787e756f392acb855d99f0aafa32fddd710562ad5954386d2fd"
+    },
+    "training_summary.json": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\limit_reversal_optimization_20261014\\training_summary.json",
+      "sha256": "de469ef492dd18fe700ed55965a858c5c1b779f6bb5c5274d3dbf82546072d2c"
+    },
+    "resumed_summary3.json": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\limit_reversal_optimization_20261014\\resumed_summary3.json",
+      "sha256": "70ca6f610f04daca601e66ab5484a73c47514d6f3b87fe156614674cad55711f"
+    },
+    "source_repair_resume_protocol.json": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\limit_reversal_optimization_20261014\\source_repair_resume_protocol.json",
+      "sha256": "db648b7aceaf101cdebe4bd36812ac9879b4b48aff4250c185b3a9a0c819bc40"
+    },
+    "source_repair_resume_protocol2.json": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\limit_reversal_optimization_20261014\\source_repair_resume_protocol2.json",
+      "sha256": "0a7e568fb4e717115325e06e97c68c2a24681e481dc1af16935767cfa08427c3"
+    },
+    "source_repair_resume_protocol3.json": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\limit_reversal_optimization_20261014\\source_repair_resume_protocol3.json",
+      "sha256": "ff301efe0ab0e5c547bbd8fcc95b3afa170b81838ed3fc94ff15516835b62a3b"
+    }
+  },
+  "readonly_account_audit": {
+    "source": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\limit_reversal_optimization_20261014\\completed_results_readonly_audit.json",
+      "sha256": "ddd41adaad3a15f089a7059c2657789e1f10d1ee8d3947279fb1b226f1a9a91e"
+    },
+    "paths": [
+      {
+        "path": "common_control_30bp",
+        "closed_net_pnl_sum": 21050.445000000003,
+        "terminal_unrealized_mark_minus_entry_outlay_sum": -26566.183,
+        "closed_plus_unrealized_reconciliation_error": 1.4551915228366852e-11,
+        "maxdrawdown": {
+          "peak_date": "2024-01-02",
+          "peak_nav": 100000.0,
+          "trough_date": "2024-07-25",
+          "trough_nav": 55887.94599999998,
+          "sessions_between": 135,
+          "loss": -44112.05400000002,
+          "fees_in_interval": 519.054,
+          "interval_fee_loss_ratio": 0.011766715737154288
+        }
+      },
+      {
+        "path": "common_control_50bp",
+        "closed_net_pnl_sum": 20070.575000000008,
+        "terminal_unrealized_mark_minus_entry_outlay_sum": -26752.305,
+        "closed_plus_unrealized_reconciliation_error": -1.0913936421275139e-11,
+        "maxdrawdown": {
+          "peak_date": "2024-01-02",
+          "peak_nav": 100000.0,
+          "trough_date": "2024-07-25",
+          "trough_nav": 55541.91,
+          "sessions_between": 135,
+          "loss": -44458.09,
+          "fees_in_interval": 865.09,
+          "interval_fee_loss_ratio": 0.019458550738459528
+        }
+      },
+      {
+        "path": "filtered_30bp",
+        "closed_net_pnl_sum": 76745.25121343872,
+        "terminal_unrealized_mark_minus_entry_outlay_sum": -23107.719999999994,
+        "closed_plus_unrealized_reconciliation_error": 7.275957614183426e-12,
+        "maxdrawdown": {
+          "peak_date": "2024-01-02",
+          "peak_nav": 100000.0,
+          "trough_date": "2024-07-25",
+          "trough_nav": 61515.15599999999,
+          "sessions_between": 135,
+          "loss": -38484.84400000001,
+          "fees_in_interval": 623.844,
+          "interval_fee_loss_ratio": 0.016210121574092903
+        }
+      },
+      {
+        "path": "filtered_50bp",
+        "closed_net_pnl_sum": 72272.3598616601,
+        "terminal_unrealized_mark_minus_entry_outlay_sum": -23312.11,
+        "closed_plus_unrealized_reconciliation_error": 0.0,
+        "maxdrawdown": {
+          "peak_date": "2024-01-02",
+          "peak_nav": 100000.0,
+          "trough_date": "2024-07-25",
+          "trough_nav": 61055.365000000005,
+          "sessions_between": 135,
+          "loss": -38944.634999999995,
+          "fees_in_interval": 1034.635,
+          "interval_fee_loss_ratio": 0.026566817226557654
+        }
+      }
+    ]
+  }
+}

@@ -135,7 +135,7 @@ schedule免费读取余额；compute-status与compute-review完全离线。dispa
 
 [research_storage.md](docs/research_storage.md)规定共享数据、保留来源网址/哈希、公式、精简指标、淘汰原因和恢复位置。公开PDF缓存、重复快照和不必要的逐股逐日输出可按审核清单释放；独有输入、原始提取文本和有效研究证据保留。research_runs默认忽略，少量明确审核的协议、代码及结果会随提交公开。
 
-近期研究记录：[WC03与F141反思](docs/wc03-night-continuation-20261011.md)、[现金投入与研发验证](docs/cash-investment-research-20261012.md)。实时实验累计来自research_trials.sqlite3，主页不维护会过时的手写累计值。
+近期研究记录：[WC03与F141反思](docs/wc03-night-continuation-20261011.md)、[现金投入与研发验证](docs/cash-investment-research-20261012.md)、[两连板急跌策略与事件因子](docs/limit-event-factor-20261014.md)。实时实验累计来自research_trials.sqlite3，主页不维护会过时的手写累计值。
 
 ```powershell
 & $Python -B scripts/verify_public_research.py

@@ -171,7 +171,7 @@ def _normalize(bars, calendar):
 
 def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=100000.,
              max_slots=5, slot_fraction=.20, lot_size=100, tick=.01,
-             evaluation_start=None, adjustment_factor_role=None, max_daily_participation=.01, resume_state=None):
+             evaluation_start=None, adjustment_factor_role=None, max_daily_participation=.01, resume_state=None, preopen_signal_filter=None):
     """Return frozen signals, potential executions, daily cash/NAV and terminal claims.
 
     Orders are chosen before the open from the preceding TWO independent
@@ -277,7 +277,7 @@ def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=10000
                 value = _ohlc(row)
                 if status == "suspended":
                     mark = _number(row.get("prevclose"), positive=True) or position["last_close"] / multiplier
-                    if changed and row.get("prevclose") is None:
+                    if changed and _number(row.get("prevclose"), positive=True) is None:
                         raise _SourcePending(f"suspension_corporate_mark_pending:{code}:{day}")
                     suspension_marks.append(code)
                 elif value is not None:
@@ -297,6 +297,9 @@ def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=10000
         candidates = [] if index < 2 else [code for code in sorted(prior_up) if code not in holdings
             and _up_close(rows.get((days[index - 2], code))) and _up_close(rows.get((days[index - 1], code)))
             and all(rows.get((prior, code), {}).get("entry_eligible", True) is True for prior in days[index - 2:index + 1])]
+        if preopen_signal_filter is not None:
+            candidates = [code for code in candidates
+                          if preopen_signal_filter.get((day, code), False) is True]
         signals.extend({"date": day, "symbol": code, "signal": "two_reference_limit_up_closes",
                         "evidence_dates": days[index - 2:index], "formed_before_open": True} for code in candidates)
         selected = candidates[:max(0, max_slots - len(holdings))]

@@ -229,3 +229,19 @@ def test_checkpoint_resume_preserves_account_and_calendar_indices():
     tail=simulate(rows,DAYS[:6],cost=.003,evaluation_start=DAYS[3],resume_state={"cash":prefix["summary"]["terminal_cash"],"nav":prefix["summary"]["last_completed_nav"],"holdings":prefix["terminal"]})
     assert tail["daily"] == full["daily"][3:]
     assert tail["terminal"] == full["terminal"]
+
+
+def test_preopen_filter_does_not_require_preceding_days_to_pass_filter():
+    rows=setup(n=6)
+    yes=simulate(rows,DAYS[:6],preopen_signal_filter={(DAYS[2],"A"):True})
+    no=simulate(rows,DAYS[:6],preopen_signal_filter={(DAYS[2],"A"):False})
+    assert yes["trades"][0]["date"] == DAYS[2]
+    assert no["trades"] == []
+
+
+def test_suspension_nan_reference_with_changed_factor_stays_pending():
+    rows=setup(n=6)
+    put(rows,DAYS[3],status="suspended",volume=0.,factor=2.,prevclose=float("nan"))
+    result=simulate(rows,DAYS[:6],adjustment_factor_role="total_return_factor")
+    assert result["summary"]["status"] == "SOURCE_PENDING"
+    assert "suspension_corporate_mark_pending" in result["summary"]["source_pending"][0]["reason"]
