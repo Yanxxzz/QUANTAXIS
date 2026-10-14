@@ -245,3 +245,200 @@ def test_suspension_nan_reference_with_changed_factor_stays_pending():
     result=simulate(rows,DAYS[:6],adjustment_factor_role="total_return_factor")
     assert result["summary"]["status"] == "SOURCE_PENDING"
     assert "suspension_corporate_mark_pending" in result["summary"]["source_pending"][0]["reason"]
+
+
+def _new_stop_run(rows, policy, n=7, **kwargs):
+    return simulate(rows, DAYS[:n], policy=policy, **kwargs)
+
+
+def test_new_stop_t1_lower_limit_wins_daily_profit_ambiguity():
+    rows = setup(n=7)
+    put(rows, DAYS[3], open=10., high=12., low=9., close=10., down=9.)
+    result = _new_stop_run(rows, "stop_t1_limit_down")
+    sell = result["trades"][-1]
+    assert sell["side"] == "sell" and sell["date"] == DAYS[3]
+    assert sell["price"] == 9. and sell["reason"] == "t1_limit_down_stop"
+    event = result["stop_events"][0]
+    assert event["date"] == DAYS[3] and event["entry_date"] == DAYS[2] and event["offset"] == 1
+    assert event["same_bar_profit_stop_ambiguous"] is True
+    assert sell["stop_trigger_index"] == 3 and sell["stop_execution_delay_sessions"] == 0
+    assert sell["same_bar_profit_stop_ambiguous"] is True
+    assert abs(sell["economic_price_return"] - (-.1)) < 1e-12
+
+
+def test_new_stop_t2_ignores_t1_touch_and_uses_only_t2_limit():
+    rows = setup(n=7)
+    put(rows, DAYS[3], open=9.5, high=10., low=9., close=9.5, down=9.)
+    put(rows, DAYS[4], open=9., high=9.5, low=8., close=9., down=8.)
+    result = _new_stop_run(rows, "stop_t2_limit_down")
+    sells = [t for t in result["trades"] if t["side"] == "sell"]
+    assert len(sells) == 1 and sells[0]["date"] == DAYS[4]
+    assert sells[0]["price"] == 8. and sells[0]["reason"] == "t2_limit_down_stop"
+
+
+def test_new_stop_designated_day_not_triggered_does_not_extend_check_window():
+    for policy, appointed, later in [("stop_t1_limit_down", 3, 4), ("stop_t2_limit_down", 4, 5)]:
+        rows = setup(n=7)
+        put(rows, DAYS[appointed], open=10., high=10.5, low=9.1, close=10., down=9.)
+        put(rows, DAYS[later], open=9., high=10., low=8., close=9., down=8.)
+        result = _new_stop_run(rows, policy)
+        assert not any(t["side"] == "sell" for t in result["trades"])
+        assert "pending_exit" not in result["terminal"]["A"]
+
+
+def test_new_stop_trigger_persists_through_one_price_then_suspension_at_next_open():
+    rows = setup(n=7)
+    put(rows, DAYS[3], open=9., high=9., low=9., close=9., down=9.)
+    put(rows, DAYS[4], status="suspended", raw_open=float("nan"), raw_high=float("nan"),
+        raw_low=float("nan"), raw_close=float("nan"), prevclose=9., volume=0.)
+    put(rows, DAYS[5], open=7.5, high=8.5, low=7.2, close=8., down=7.)
+    result = _new_stop_run(rows, "stop_t1_limit_down")
+    sell = [t for t in result["trades"] if t["side"] == "sell"][0]
+    assert sell["date"] == DAYS[5] and sell["price"] == 7.5
+    assert sell["reason"] == "t1_limit_down_stop"
+    assert result["blocked"]["sell_blocked_one_price_limit_down"] == 1
+    assert result["blocked"]["sell_blocked_suspension"] == 1
+    assert len(result["stop_events"]) == 1
+    assert sell["stop_trigger_date"] == DAYS[3] and sell["stop_execution_delay_sessions"] == 2
+    assert abs(sell["economic_price_return"] - (-.25)) < 1e-12
+
+
+def test_new_stop_capacity_block_is_sticky_without_later_limit_touch():
+    rows = setup(n=7)
+    put(rows, DAYS[3], open=9.5, high=10., low=9., close=9.5, down=9., volume=1000.)
+    put(rows, DAYS[4], open=8.2, high=8.6, low=8., close=8.3, down=7.)
+    result = _new_stop_run(rows, "stop_t1_limit_down")
+    sell = [t for t in result["trades"] if t["side"] == "sell"][0]
+    assert sell["date"] == DAYS[4] and sell["price"] == 8.2
+    assert result["blocked"]["sell_blocked_daily_volume_bound"] == 1
+
+
+def test_new_stop_reference_clock_not_compressed_by_known_suspension():
+    rows = setup(n=7)
+    put(rows, DAYS[3], status="suspended", raw_open=float("nan"), raw_high=float("nan"),
+        raw_low=float("nan"), raw_close=float("nan"), prevclose=10.5, volume=0.)
+    put(rows, DAYS[4], open=9.5, high=10., low=9., close=9.5, down=9.)
+    t1 = _new_stop_run(rows, "stop_t1_limit_down")
+    t2 = _new_stop_run(rows, "stop_t2_limit_down")
+    assert not any(t["side"] == "sell" for t in t1["trades"])
+    assert [t for t in t2["trades"] if t["side"] == "sell"][0]["date"] == DAYS[4]
+
+
+def test_new_stop_unknown_designated_price_stays_pending_before_accounting():
+    for changes in [dict(raw_low=float("nan")), dict(down=float("nan"))]:
+        rows = setup(n=7)
+        put(rows, DAYS[3], **changes)
+        result = _new_stop_run(rows, "stop_t1_limit_down")
+        assert result["summary"]["status"] == "SOURCE_PENDING"
+        assert len(result["daily"]) == 3
+        assert result["summary"]["terminal_cash"] == result["daily"][-1]["cash"]
+
+
+def test_new_stop_close15_strict_boundary_and_no_same_day_close_execution():
+    for closing, triggered in [(8.5, False), (8.49, True)]:
+        rows = setup(n=7)
+        put(rows, DAYS[4], open=9., high=10., low=8.3, close=closing, down=8.)
+        put(rows, DAYS[5], open=8.2, high=9., low=8., close=8.5, down=7.)
+        result = _new_stop_run(rows, "stop_t2_close_loss15")
+        sells = [t for t in result["trades"] if t["side"] == "sell"]
+        if triggered:
+            assert len(sells) == 1 and sells[0]["date"] == DAYS[5]
+            assert sells[0]["price"] == 8.2 and sells[0]["reason"] == "t2_close_loss15_stop"
+            confirms = [o for o in result["orders"] if o["state"] == "stop_confirmed_after_close"]
+            assert confirms[0]["date"] == DAYS[4]
+            assert confirms[0]["same_session_execution_forbidden"] is True
+        else:
+            assert sells == [] and "pending_exit" not in result["terminal"]["A"]
+
+
+def test_new_stop_close15_ignores_t1_loss_and_does_not_rewrite_t2_profit_sale():
+    rows = setup(n=7)
+    put(rows, DAYS[3], open=8.3, high=9., low=8., close=8.2, down=7.)
+    put(rows, DAYS[4], open=9., high=10., low=8.5, close=9., down=8.)
+    result = _new_stop_run(rows, "stop_t2_close_loss15")
+    assert not any(t["side"] == "sell" for t in result["trades"])
+    put(rows, DAYS[4], open=10., high=11.2, low=8., close=8.1, down=7.)
+    result = _new_stop_run(rows, "stop_t2_close_loss15")
+    sell = [t for t in result["trades"] if t["side"] == "sell"][0]
+    assert sell["date"] == DAYS[4] and sell["reason"] == "take_profit"
+    assert not any(o["state"] == "stop_confirmed_after_close" for o in result["orders"])
+
+
+def test_new_stop_close15_total_return_exact_decimal_boundary_with_factor_change():
+    for closing, triggered in [(3.52, False), (3.51, True)]:
+        rows = setup(n=7)
+        put(rows, DAYS[2], open=6.5, high=6.7, low=6.08, close=6.3, down=6.08, factor=1.1)
+        for day in DAYS[3:7]:
+            put(rows, day, open=3.8, high=4.3, low=3.5, close=4., down=3., factor=1.615)
+        put(rows, DAYS[4], close=closing)
+        result = _new_stop_run(rows, "stop_t2_close_loss15", adjustment_factor_role="total_return_factor")
+        sells = [t for t in result["trades"] if t["side"] == "sell"]
+        # 6.08*1.1*0.85 == 3.52*1.615 in source decimals, even though the
+        # floating point entry-economic product is 6.688000000000001.
+        assert bool(sells) is triggered
+        if triggered:
+            assert sells[0]["date"] == DAYS[5] and sells[0]["price"] == 3.8
+        else:
+            assert result["terminal"]["A"]["close_loss_basis_decimal"] == "6.688"
+
+
+def test_new_stop_close15_pending_survives_capacity_then_one_price_limit_down():
+    rows = setup(n=9)
+    put(rows, DAYS[4], open=9., high=10., low=8.2, close=8.4, down=8.)
+    put(rows, DAYS[5], open=8.2, high=8.6, low=8., close=8.3, down=7., volume=1000.)
+    put(rows, DAYS[6], open=7., high=7., low=7., close=7., down=7.)
+    put(rows, DAYS[7], open=6.5, high=7.5, low=6.2, close=7., down=6.)
+    result = _new_stop_run(rows, "stop_t2_close_loss15", n=9)
+    sell = [t for t in result["trades"] if t["side"] == "sell"][0]
+    assert sell["date"] == DAYS[7] and sell["price"] == 6.5
+    assert sell["reason"] == "t2_close_loss15_stop"
+    assert result["blocked"]["sell_blocked_daily_volume_bound"] == 1
+    assert result["blocked"]["sell_blocked_one_price_limit_down"] == 1
+
+
+def test_new_stop_close15_known_suspension_mark_and_next_open_gap():
+    rows = setup(n=7)
+    put(rows, DAYS[3], open=9., high=10., low=8.3, close=8.4, down=8.)
+    put(rows, DAYS[4], status="suspended", raw_open=float("nan"), raw_high=float("nan"),
+        raw_low=float("nan"), raw_close=float("nan"), prevclose=8.4, volume=0.)
+    put(rows, DAYS[5], open=8.7, high=9., low=8.3, close=8.8, down=8.)
+    result = _new_stop_run(rows, "stop_t2_close_loss15")
+    sell = [t for t in result["trades"] if t["side"] == "sell"][0]
+    assert sell["date"] == DAYS[5] and sell["price"] == 8.7
+    assert result["daily"][4]["known_suspension_marks"] == ["A"]
+    assert result["stop_events"][0]["mark_role"] == "source_explicit_suspension_carry"
+    assert sell["stop_mark_role"] == "source_explicit_suspension_carry"
+    assert sell["stop_trigger_date"] == DAYS[4] and sell["stop_execution_delay_sessions"] == 1
+    confirm = [o for o in result["orders"] if o["state"] == "stop_confirmed_after_close"][0]
+    assert confirm["close_stop_mark_role"] == "source_explicit_suspension_carry"
+
+
+def test_new_stop_close15_checkpoint_preserves_trigger_and_does_not_duplicate_event():
+    rows = setup(n=7)
+    put(rows, DAYS[4], open=9., high=10., low=8.2, close=8.4, down=8.)
+    put(rows, DAYS[5], open=8.7, high=9., low=8.3, close=8.8, down=8.)
+    full = _new_stop_run(rows, "stop_t2_close_loss15")
+    prefix = simulate([r for r in rows if r["date"] <= DAYS[4]], DAYS[:5],
+                      policy="stop_t2_close_loss15")
+    position = prefix["terminal"]["A"]
+    assert position["stop_trigger_date"] == DAYS[4] and position["stop_trigger_index"] == 4
+    tail = simulate(rows, DAYS[:7], policy="stop_t2_close_loss15", evaluation_start=DAYS[5],
+                    resume_state={"cash": prefix["summary"]["terminal_cash"],
+                                  "nav": prefix["summary"]["last_completed_nav"],
+                                  "holdings": prefix["terminal"]})
+    assert tail["stop_events"] == []
+    assert tail["trades"] == [t for t in full["trades"] if t["date"] >= DAYS[5]]
+    assert tail["daily"] == full["daily"][5:]
+
+
+def test_new_stop_variants_cannot_be_combined_with_each_other_or_risk_guard():
+    for policy in [Policy("mixed", stop_loss=.08, limit_down_stop_offset=1),
+                   Policy("mixed", limit_down_stop_offset=1, close_loss_check_offset=2,
+                          close_loss_threshold=.15),
+                   Policy("wrong_clock", limit_down_stop_offset=3)]:
+        try:
+            _new_stop_run(setup(n=7), policy)
+        except LimitStrategyInputError:
+            pass
+        else:
+            raise AssertionError("Independent frozen stop policies required")

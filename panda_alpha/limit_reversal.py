@@ -33,10 +33,17 @@ class Policy:
     take_profit: float = .10
     stop_loss: float | None = None
     max_holding_sessions: int | None = None
+    limit_down_stop_offset: int | None = None
+    close_loss_check_offset: int | None = None
+    close_loss_threshold: float | None = None
 
 
 BASELINE = Policy("baseline")
 RISK_GUARD = Policy("risk_guard", stop_loss=.08, max_holding_sessions=10)
+STOP_T1_LIMIT_DOWN = Policy("stop_t1_limit_down", limit_down_stop_offset=1)
+STOP_T2_LIMIT_DOWN = Policy("stop_t2_limit_down", limit_down_stop_offset=2)
+STOP_T2_CLOSE_LOSS15 = Policy("stop_t2_close_loss15", close_loss_check_offset=2,
+                              close_loss_threshold=.15)
 
 
 def _number(value, *, positive=False):
@@ -128,6 +135,26 @@ def _strict_profit_tick(entry, take_profit, tick):
     return float((threshold / quantum).to_integral_value(rounding=ROUND_FLOOR) * quantum + quantum)
 
 
+def _strict_close_loss(mark, factor, position, policy, equivalent_units):
+    # Preserve the source decimals before their product: 6.08 * 1.1 in binary
+    # floats is 6.688000000000001, which must not turn exact -15% into a stop.
+    basis = Decimal(position["close_loss_basis_decimal"])
+    price = Decimal(str(mark))
+    if equivalent_units:
+        price *= Decimal(str(factor))
+    return price < basis * (Decimal(1) - Decimal(str(policy.close_loss_threshold)))
+
+
+def _economic_price_return(price, factor, position, equivalent_units):
+    value = Decimal(str(price))
+    if equivalent_units:
+        value *= Decimal(str(factor))
+        basis = Decimal(position.get("close_loss_basis_decimal", str(position["entry_economic_price"])))
+    else:
+        basis = Decimal(position.get("close_loss_basis_decimal", str(position["entry_price"])))
+    return float(value / basis - Decimal(1))
+
+
 class _RowBook:
     """Keep column arrays and an index, not millions of Python quote dicts."""
     def __init__(self, frame):
@@ -187,6 +214,17 @@ def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=10000
     Baseline profit bids remain contingent on prices strictly > 10%; failed profit
     attempts do not authorize later selling below the threshold.
 
+    Three separate fixed stop policies retain the original entry/profit rules:
+    stop_t1_limit_down and stop_t2_limit_down inspect only t+1 or t+2's actual
+    lower-limit touch and attempt selling at that raw limit. A same-day profit
+    touch is assigned to the stop because daily bars cannot establish order.
+    Explicit suspension has no trading touch and does not compress the reference
+    clock. stop_t2_close_loss15 tests a strictly greater-than-15% economic price
+    loss only if the position survives to t+2 close, using a legal suspension
+    mark when supplied; its first exit attempt is t+3 open. Every triggered stop
+    persists through suspension, one-price lower limits and capacity blocks,
+    retrying at a subsequent opening price without a guaranteed loss ceiling.
+
     Raw-price cash accounting permits only EXPLICIT supplied corporate actions:
     ``share_multiplier`` and ``cash_dividend_per_share`` (per previous-day share),
     with ``corporate_action_confirmed=True``. A held adjustment-factor change
@@ -204,7 +242,10 @@ def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=10000
     """
     if isinstance(policy, str):
         try:
-            policy = {"baseline": BASELINE, "risk_guard": RISK_GUARD}[policy]
+            policy = {"baseline": BASELINE, "risk_guard": RISK_GUARD,
+                      "stop_t1_limit_down": STOP_T1_LIMIT_DOWN,
+                      "stop_t2_limit_down": STOP_T2_LIMIT_DOWN,
+                      "stop_t2_close_loss15": STOP_T2_CLOSE_LOSS15}[policy]
         except KeyError as error:
             raise LimitStrategyInputError("Unknown fixed policy") from error
     if not isinstance(policy, Policy) or not 0 < policy.take_profit < 1:
@@ -213,6 +254,18 @@ def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=10000
         raise LimitStrategyInputError("Invalid stop loss")
     if policy.max_holding_sessions is not None and policy.max_holding_sessions < 2:
         raise LimitStrategyInputError("Holding guard must respect T+1")
+    if (policy.limit_down_stop_offset is not None and
+            (type(policy.limit_down_stop_offset) is not int or policy.limit_down_stop_offset not in (1, 2))):
+        raise LimitStrategyInputError("Limit-down stop must inspect exactly reference t+1 or t+2")
+    close_stop = policy.close_loss_check_offset is not None or policy.close_loss_threshold is not None
+    if close_stop and (policy.close_loss_check_offset != 2 or
+                       type(policy.close_loss_check_offset) is not int or
+                       policy.close_loss_threshold != .15):
+        raise LimitStrategyInputError("Close-loss stop is fixed at t+2 close and strictly greater than15%")
+    if ((policy.limit_down_stop_offset is not None or close_stop) and
+            (policy.stop_loss is not None or policy.max_holding_sessions is not None or
+             (policy.limit_down_stop_offset is not None and close_stop))):
+        raise LimitStrategyInputError("Fixed stop variants must be compared independently")
     if not (math.isfinite(cost) and 0 <= cost < 1 and math.isfinite(initial_cash) and initial_cash > 0
             and isinstance(max_slots, int) and max_slots > 0 and 0 < slot_fraction <= 1
             and isinstance(lot_size, int) and lot_size > 0 and math.isfinite(tick) and tick > 0):
@@ -227,7 +280,7 @@ def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=10000
     if first not in days:
         raise LimitStrategyInputError("Evaluation start is outside the reference calendar")
     cash, previous_nav, holdings = float(initial_cash), float(initial_cash), {}
-    daily, trades, orders, signals, pending = [], [], [], [], []
+    daily, trades, orders, signals, pending, stop_events = [], [], [], [], [], []
     blocked, fees = Counter(), 0.
     if resume_state is not None:
         if evaluation_start is None:
@@ -247,6 +300,19 @@ def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=10000
         if state.startswith("blocked_") or state == "source_pending":
             blocked[f"{side}_{state}"] += 1
         return item
+
+    def record_stop(day, code, position, index, reason, mark_role, ambiguity, price):
+        position["stop_trigger_date"] = day
+        position["stop_trigger_index"] = index
+        position["stop_trigger_offset"] = index - position["entry_index"]
+        position["stop_mark_role"] = mark_role
+        position["same_bar_profit_stop_ambiguous"] = ambiguity
+        stop_events.append({"date": day, "symbol": code, "entry_date": position["entry_date"],
+                            "entry_index": position["entry_index"], "trigger_index": index,
+                            "offset": index - position["entry_index"], "reason": reason,
+                            "mark_role": mark_role, "same_bar_profit_stop_ambiguous": ambiguity,
+                            "economic_price_return": _economic_price_return(
+                                price, position["adjustment_factor"], position, equivalent_units)})
 
     for index, day in enumerate(days):
         if day < first:
@@ -286,6 +352,9 @@ def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=10000
                         raise _SourcePending(f"held_execution_contract_unknown:{code}:{day}")
                 else:
                     raise _SourcePending(f"held_price_unknown:{code}:{day}")
+                if (close_stop and index - position["entry_index"] == policy.close_loss_check_offset
+                        and "close_loss_basis_decimal" not in position):
+                    raise _SourcePending(f"close_loss_entry_basis_unknown:{code}:{day}")
                 marks[code], prices[code] = mark, value
                 actions.append((code, quantity if equivalent_units else int(round(quantity)), multiplier, dividend, current_factor))
         except _SourcePending as error:
@@ -318,6 +387,9 @@ def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=10000
             position["quantity"] = quantity
             if not equivalent_units:
                 position["entry_price"] /= multiplier
+                if close_stop:
+                    position["close_loss_basis_decimal"] = str(
+                        Decimal(position["close_loss_basis_decimal"]) / Decimal(str(multiplier)))
             position["adjustment_factor"] = factor
         cash += dividend_cash
 
@@ -344,6 +416,12 @@ def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=10000
             reason, price = position.get("pending_exit"), value["open"]
             if reason is None and policy.max_holding_sessions is not None and age >= policy.max_holding_sessions:
                 reason = "max_holding_sessions"
+            if (reason is None and policy.limit_down_stop_offset is not None and
+                    index - position["entry_index"] == policy.limit_down_stop_offset and
+                    value["low"] <= limits[1] + 1e-7):
+                reason, price = f"t{policy.limit_down_stop_offset}_limit_down_stop", limits[1]
+                record_stop(day, code, position, index, reason, "observed_raw_low_lower_limit_touch",
+                            value["high"] >= target - 1e-9, price)
             if reason is None and stop is not None and value["low"] <= stop + 1e-9:
                 reason, price = "stop_loss", min(value["open"], stop)
             if reason is None and value["high"] >= target - 1e-9:
@@ -372,6 +450,16 @@ def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=10000
                      "holding_sessions": age, "entry_date": position["entry_date"],
                      "realized_net_pnl": notional - fee - entry_cost,
                      "state": "potential_sell_fill", "fill_certified": False}
+            if policy.limit_down_stop_offset is not None or close_stop:
+                trade.update(stop_trigger_date=position.get("stop_trigger_date"),
+                             stop_trigger_index=position.get("stop_trigger_index"),
+                             stop_trigger_offset=position.get("stop_trigger_offset"),
+                             stop_mark_role=position.get("stop_mark_role"),
+                             same_bar_profit_stop_ambiguous=position.get("same_bar_profit_stop_ambiguous", False),
+                             stop_execution_delay_sessions=(index - position["stop_trigger_index"]
+                                                           if "stop_trigger_index" in position else None),
+                             economic_price_return=_economic_price_return(
+                                 price, position["adjustment_factor"], position, equivalent_units))
             trades.append(trade)
             order(day, code, "sell", "potential_sell_fill", quantity=quantity, price=price, reason=reason)
             day_fee += fee
@@ -416,6 +504,11 @@ def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=10000
                               "last_close": value["close"], "adjustment_factor": factor,
                               "equivalent_units": quantity / factor, "entry_economic_price": bid * factor,
                               "entry_raw_quantity": quantity}
+            if close_stop:
+                basis = Decimal(str(bid))
+                if equivalent_units:
+                    basis *= Decimal(str(factor))
+                holdings[code]["close_loss_basis_decimal"] = str(basis)
             marks[code] = value["close"]
             trade = {"date": day, "symbol": code, "side": "buy", "quantity": quantity,
                      "price": bid, "notional": notional, "fee": fee,
@@ -435,6 +528,20 @@ def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=10000
         positions = []
         for code, position in sorted(holdings.items()):
             position["last_close"] = marks[code]
+            if (close_stop and index - position["entry_index"] == policy.close_loss_check_offset
+                    and position.get("pending_exit") is None and
+                    _strict_close_loss(marks[code], position["adjustment_factor"], position,
+                                       policy, equivalent_units)):
+                position["pending_exit"] = "t2_close_loss15_stop"
+                mark_role = ("source_explicit_suspension_carry" if code in suspension_marks
+                             else "observed_raw_close")
+                position["close_stop_mark_role"] = mark_role
+                record_stop(day, code, position, index, "t2_close_loss15_stop", mark_role,
+                            False, marks[code])
+                order(day, code, "sell", "stop_confirmed_after_close", reason="t2_close_loss15_stop",
+                      earliest_attempt_date=days[index + 1] if index + 1 < len(days) else None,
+                      close_stop_mark_role=mark_role,
+                      same_session_execution_forbidden=True)
             positions.append({"symbol": code, "quantity": position["quantity"], "close": marks[code],
                               "value": position["quantity"] * marks[code], "entry_date": position["entry_date"]})
         daily.append({"date": day, "nav": nav, "cash": cash, "market_value": market_value,
@@ -469,4 +576,5 @@ def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=10000
                "source_pending": pending, "blocked_orders": dict(blocked),
                "completed_round_trips": sum(trade["side"] == "sell" for trade in trades)}
     return {"summary": summary, "daily": daily, "signals": signals, "orders": orders,
-            "trades": trades, "blocked": dict(blocked), "terminal": deepcopy(holdings)}
+            "trades": trades, "blocked": dict(blocked), "terminal": deepcopy(holdings),
+            "stop_events": stop_events}

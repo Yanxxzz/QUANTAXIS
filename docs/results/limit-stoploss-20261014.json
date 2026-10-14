@@ -1,0 +1,417 @@
+{
+  "status": "ALL_SIX_FIXED_STOP_PATHS_COMPLETE",
+  "window": {
+    "start": "2024-01-02",
+    "end": "2026-09-18",
+    "sessions": 659
+  },
+  "filter": {
+    "feature": "prior_extension_20",
+    "cutoff": 0.18595041322314065
+  },
+  "rules": {
+    "t_role": "actual buy reference day; offsets1/2 not counting buy as1",
+    "intraday_stops": "specified day touches actual lower limit; sell at lower limit if potential execution; simultaneous profit/stop uses stop first",
+    "close_stop": "only still-held t+2 day-end economic mark loss strictly>15%; earliest t+3 open; fee excluded from trigger",
+    "suspension_close_role": "explicit legal held mark proxy separately logged, not observed traded close",
+    "triggered_exit": "persistent pending; blocked one-price lower limits, suspension or daily capacity retry at later open",
+    "take_profit": "strict economic price gain>10%, T+1, unchanged"
+  },
+  "accounts": [
+    {
+      "path": "stop_t1_limit_down_30bp",
+      "metrics": {
+        "days": 659,
+        "compounded_return": 0.41760955244851394,
+        "cagr": 0.14275962465398861,
+        "sharpe": 0.6660539725228507,
+        "max_drawdown": 0.302365110000001
+      },
+      "annual_returns": [
+        {
+          "year": "2024",
+          "compounded_return": 0.1996447047815959
+        },
+        {
+          "year": "2025",
+          "compounded_return": 0.14214384419013792
+        },
+        {
+          "year": "2026",
+          "compounded_return": 0.03462551942953307
+        }
+      ],
+      "buys": 85,
+      "sells": 80,
+      "sale_reasons": {
+        "t1_limit_down_stop": 29,
+        "take_profit": 51
+      },
+      "stop_triggers": 29,
+      "ambiguous_same_bar_profit_and_stop": 3,
+      "suspension_mark_triggers": 0,
+      "executed_stops": 29,
+      "stop_execution_delay_median_sessions": 0.0,
+      "stop_execution_delay_max_sessions": 1,
+      "stops_executed_later_than_trigger": 1,
+      "stops_with_economic_loss_over15percent": 1,
+      "worst_stop_economic_return": -0.1904761904761904,
+      "total_fees_CNY": 11221.627383224477,
+      "closed_net_pnl_CNY": 71385.86169159842,
+      "terminal_unrealized_pnl_CNY": -29624.906446746638,
+      "terminal_holdings_count": 5,
+      "terminal_pending_stops": 0,
+      "terminal_cash_CNY": 33296.83369159844,
+      "terminal_exposure": 0.7651198552232692,
+      "sell_blocks": {
+        "sell_blocked_one_price_limit_down": 1
+      },
+      "mean_exposure": 0.6267836243416659,
+      "completed_holding_median_sessions": 2.0,
+      "max_drawdown_peak_date": "2024-01-02",
+      "max_drawdown_trough_date": "2024-07-24",
+      "max_drawdown_loss_CNY": 30236.511000000028,
+      "metrics_reconciliation_error": 1.1102230246251565e-15,
+      "PnL_reconciliation_error_CNY": 4.3655745685100555e-11,
+      "queue_fills_certified": false
+    },
+    {
+      "path": "stop_t1_limit_down_50bp",
+      "metrics": {
+        "days": 659,
+        "compounded_return": 0.32994499894914164,
+        "cagr": 0.11520240886972899,
+        "sharpe": 0.5647221670190132,
+        "max_drawdown": 0.31572849999999975
+      },
+      "annual_returns": [
+        {
+          "year": "2024",
+          "compounded_return": 0.1575021477577998
+        },
+        {
+          "year": "2025",
+          "compounded_return": 0.11723338938322003
+        },
+        {
+          "year": "2026",
+          "compounded_return": 0.02841397296191639
+        }
+      ],
+      "buys": 85,
+      "sells": 80,
+      "sale_reasons": {
+        "t1_limit_down_stop": 29,
+        "take_profit": 51
+      },
+      "stop_triggers": 29,
+      "ambiguous_same_bar_profit_and_stop": 3,
+      "suspension_mark_triggers": 0,
+      "executed_stops": 29,
+      "stop_execution_delay_median_sessions": 0.0,
+      "stop_execution_delay_max_sessions": 1,
+      "stops_executed_later_than_trigger": 1,
+      "stops_with_economic_loss_over15percent": 1,
+      "worst_stop_economic_return": -0.1904761904761904,
+      "total_fees_CNY": 18019.75494792683,
+      "closed_net_pnl_CNY": 61313.94463744011,
+      "terminal_unrealized_pnl_CNY": -28319.444742526197,
+      "terminal_holdings_count": 5,
+      "terminal_pending_stops": 0,
+      "terminal_cash_CNY": 30521.23463744016,
+      "terminal_exposure": 0.7705075423302723,
+      "sell_blocks": {
+        "sell_blocked_one_price_limit_down": 1
+      },
+      "mean_exposure": 0.6307029648696747,
+      "completed_holding_median_sessions": 2.0,
+      "max_drawdown_peak_date": "2024-01-02",
+      "max_drawdown_trough_date": "2024-07-24",
+      "max_drawdown_loss_CNY": 31572.84999999999,
+      "metrics_reconciliation_error": 9.992007221626409e-16,
+      "PnL_reconciliation_error_CNY": 4.3655745685100555e-11,
+      "queue_fills_certified": false
+    },
+    {
+      "path": "stop_t2_limit_down_30bp",
+      "metrics": {
+        "days": 659,
+        "compounded_return": 0.202959943399309,
+        "cagr": 0.07321776054411289,
+        "sharpe": 0.40166236948329775,
+        "max_drawdown": 0.41607658999999997
+      },
+      "annual_returns": [
+        {
+          "year": "2024",
+          "compounded_return": -0.07094903320148005
+        },
+        {
+          "year": "2025",
+          "compounded_return": 0.13567786322247777
+        },
+        {
+          "year": "2026",
+          "compounded_return": 0.14013549416589588
+        }
+      ],
+      "buys": 34,
+      "sells": 29,
+      "sale_reasons": {
+        "take_profit": 26,
+        "t2_limit_down_stop": 3
+      },
+      "stop_triggers": 3,
+      "ambiguous_same_bar_profit_and_stop": 0,
+      "suspension_mark_triggers": 0,
+      "executed_stops": 3,
+      "stop_execution_delay_median_sessions": 0.0,
+      "stop_execution_delay_max_sessions": 1,
+      "stops_executed_later_than_trigger": 1,
+      "stops_with_economic_loss_over15percent": 2,
+      "worst_stop_economic_return": -0.191358024691358,
+      "total_fees_CNY": 3779.3470240920697,
+      "closed_net_pnl_CNY": 45658.32833993099,
+      "terminal_unrealized_pnl_CNY": -25362.334000000003,
+      "terminal_holdings_count": 5,
+      "terminal_pending_stops": 0,
+      "terminal_cash_CNY": 37556.994339930956,
+      "terminal_exposure": 0.6877951377682381,
+      "sell_blocks": {
+        "sell_blocked_one_price_limit_down": 1
+      },
+      "mean_exposure": 0.657861475517991,
+      "completed_holding_median_sessions": 4.0,
+      "max_drawdown_peak_date": "2024-01-02",
+      "max_drawdown_trough_date": "2024-06-06",
+      "max_drawdown_loss_CNY": 41607.65900000001,
+      "metrics_reconciliation_error": 2.220446049250313e-16,
+      "PnL_reconciliation_error_CNY": 2.9103830456733704e-11,
+      "queue_fills_certified": false
+    },
+    {
+      "path": "stop_t2_limit_down_50bp",
+      "metrics": {
+        "days": 659,
+        "compounded_return": 0.1700383050543144,
+        "cagr": 0.06189003429822648,
+        "sharpe": 0.36079785217747584,
+        "max_drawdown": 0.4176809
+      },
+      "annual_returns": [
+        {
+          "year": "2024",
+          "compounded_return": -0.08433559375991484
+        },
+        {
+          "year": "2025",
+          "compounded_return": 0.1250306872472038
+        },
+        {
+          "year": "2026",
+          "compounded_return": 0.13579349927723294
+        }
+      ],
+      "buys": 34,
+      "sells": 29,
+      "sale_reasons": {
+        "take_profit": 26,
+        "t2_limit_down_stop": 3
+      },
+      "stop_triggers": 3,
+      "ambiguous_same_bar_profit_and_stop": 0,
+      "suspension_mark_triggers": 0,
+      "executed_stops": 3,
+      "stop_execution_delay_median_sessions": 0.0,
+      "stop_execution_delay_max_sessions": 1,
+      "stops_executed_later_than_trigger": 1,
+      "stops_with_economic_loss_over15percent": 2,
+      "worst_stop_economic_return": -0.191358024691358,
+      "total_fees_CNY": 6190.687590479555,
+      "closed_net_pnl_CNY": 42473.22050543139,
+      "terminal_unrealized_pnl_CNY": -25469.39,
+      "terminal_holdings_count": 5,
+      "terminal_pending_stops": 0,
+      "terminal_cash_CNY": 34658.83050543138,
+      "terminal_exposure": 0.7037803774824064,
+      "sell_blocks": {
+        "sell_blocked_one_price_limit_down": 1
+      },
+      "mean_exposure": 0.6614624268326025,
+      "completed_holding_median_sessions": 4.0,
+      "max_drawdown_peak_date": "2024-01-02",
+      "max_drawdown_trough_date": "2024-06-06",
+      "max_drawdown_loss_CNY": 41768.09,
+      "metrics_reconciliation_error": 1.1102230246251565e-16,
+      "PnL_reconciliation_error_CNY": 7.275957614183426e-12,
+      "queue_fills_certified": false
+    },
+    {
+      "path": "stop_t2_close_loss15_30bp",
+      "metrics": {
+        "days": 659,
+        "compounded_return": 0.4196226642337948,
+        "cagr": 0.1433799091569976,
+        "sharpe": 0.6182846010270239,
+        "max_drawdown": 0.42997756000000076
+      },
+      "annual_returns": [
+        {
+          "year": "2024",
+          "compounded_return": -0.02190412513379214
+        },
+        {
+          "year": "2025",
+          "compounded_return": 0.04550548790126241
+        },
+        {
+          "year": "2026",
+          "compounded_return": 0.3882420023128439
+        }
+      ],
+      "buys": 42,
+      "sells": 37,
+      "sale_reasons": {
+        "t2_close_loss15_stop": 2,
+        "take_profit": 35
+      },
+      "stop_triggers": 2,
+      "ambiguous_same_bar_profit_and_stop": 0,
+      "suspension_mark_triggers": 0,
+      "executed_stops": 2,
+      "stop_execution_delay_median_sessions": 1.0,
+      "stop_execution_delay_max_sessions": 1,
+      "stops_executed_later_than_trigger": 2,
+      "stops_with_economic_loss_over15percent": 2,
+      "worst_stop_economic_return": -0.2469135802469135,
+      "total_fees_CNY": 5161.430089538755,
+      "closed_net_pnl_CNY": 69288.42242337976,
+      "terminal_unrealized_pnl_CNY": -27326.156,
+      "terminal_holdings_count": 5,
+      "terminal_pending_stops": 0,
+      "terminal_cash_CNY": 53891.26642337974,
+      "terminal_exposure": 0.6203831639130242,
+      "sell_blocks": {},
+      "mean_exposure": 0.6783743991016583,
+      "completed_holding_median_sessions": 4.0,
+      "max_drawdown_peak_date": "2024-01-02",
+      "max_drawdown_trough_date": "2024-07-24",
+      "max_drawdown_loss_CNY": 42997.75600000001,
+      "metrics_reconciliation_error": 1.5543122344752192e-15,
+      "PnL_reconciliation_error_CNY": 1.4551915228366852e-11,
+      "queue_fills_certified": false
+    },
+    {
+      "path": "stop_t2_close_loss15_50bp",
+      "metrics": {
+        "days": 659,
+        "compounded_return": 0.37553633030354217,
+        "cagr": 0.1296694433297696,
+        "sharpe": 0.5745992891011831,
+        "max_drawdown": 0.4334799999999994
+      },
+      "annual_returns": [
+        {
+          "year": "2024",
+          "compounded_return": -0.0348700183130618
+        },
+        {
+          "year": "2025",
+          "compounded_return": 0.03686539707098224
+        },
+        {
+          "year": "2026",
+          "compounded_return": 0.37456055493800466
+        }
+      ],
+      "buys": 42,
+      "sells": 37,
+      "sale_reasons": {
+        "t2_close_loss15_stop": 2,
+        "take_profit": 35
+      },
+      "stop_triggers": 2,
+      "ambiguous_same_bar_profit_and_stop": 0,
+      "suspension_mark_triggers": 0,
+      "executed_stops": 2,
+      "stop_execution_delay_median_sessions": 1.0,
+      "stop_execution_delay_max_sessions": 1,
+      "stops_executed_later_than_trigger": 2,
+      "stops_with_economic_loss_over15percent": 2,
+      "worst_stop_economic_return": -0.2469135802469135,
+      "total_fees_CNY": 8470.063482564592,
+      "closed_net_pnl_CNY": 64899.8230303539,
+      "terminal_unrealized_pnl_CNY": -27346.190000000002,
+      "terminal_holdings_count": 5,
+      "terminal_pending_stops": 0,
+      "terminal_cash_CNY": 50894.63303035391,
+      "terminal_exposure": 0.630001535334781,
+      "sell_blocks": {},
+      "mean_exposure": 0.6813288173137988,
+      "completed_holding_median_sessions": 4.0,
+      "max_drawdown_peak_date": "2024-01-02",
+      "max_drawdown_trough_date": "2024-07-24",
+      "max_drawdown_loss_CNY": 43347.999999999985,
+      "metrics_reconciliation_error": 1.1102230246251565e-15,
+      "PnL_reconciliation_error_CNY": 0.0,
+      "queue_fills_certified": false
+    }
+  ],
+  "existing_no_stop": [
+    {
+      "path": "filtered_30bp",
+      "metrics": {
+        "days": 659,
+        "compounded_return": 0.5363753121343873,
+        "cagr": 0.1784634632746569,
+        "sharpe": 0.7495503507860154,
+        "max_drawdown": 0.38484844000000007
+      },
+      "buys": 39,
+      "sells": 34,
+      "terminal_holdings_count": 5
+    },
+    {
+      "path": "filtered_50bp",
+      "metrics": {
+        "days": 659,
+        "compounded_return": 0.4896024986166012,
+        "cagr": 0.16461317196703695,
+        "sharpe": 0.7032027323331875,
+        "max_drawdown": 0.3894463500000005
+      },
+      "buys": 39,
+      "sells": 34,
+      "terminal_holdings_count": 5
+    }
+  ],
+  "bindings": {
+    "protocol": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\limit_stoploss_20261014\\protocol.json",
+      "sha256": "5e2b790d4f3bb09cc65baf1e2581e047ce1a799b11abe8c0f403581711bc3b15"
+    },
+    "source": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\limit_stoploss_20261014\\source_receipt.json",
+      "sha256": "cdd134cc5155468226152cddd5348da3cff66c572f30a02afe851f746e436441"
+    },
+    "complete_accounts": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\limit_stoploss_20261014\\summary_complete.json",
+      "sha256": "5db5102f56d630fce0b96fcf985835fc4a208242bc4e68f7560e78791f5ae7f4"
+    },
+    "publisher": {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\scripts\\summarize_limit_stoploss.py",
+      "sha256": "e6685cd77467be1361cc4d8a16f60f2ec8dfd828670de04431df7b4415f676f6"
+    }
+  },
+  "official_compute_spent": 0,
+  "new_contexts": 3,
+  "registry_total": 568,
+  "not_untouched_OOS": true,
+  "formal_candidate": false,
+  "execution_conditions": [
+    "Daily touch is only potential execution; lower-limit queue and intraday order are uncertified.",
+    "Stops are not guaranteed loss caps; blocked exits continue at later openings.",
+    "Original same-source corporate-action equivalent-unit model and historical eligibility limitations remain.",
+    "Only three user-fixed rules were tested; no additional sign/window/threshold selection."
+  ]
+}
