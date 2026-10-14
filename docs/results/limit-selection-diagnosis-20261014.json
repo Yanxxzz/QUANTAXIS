@@ -1,0 +1,777 @@
+{
+  "schema": "completed-limit-selection-diagnosis-v1",
+  "status": "COMPLETED_ACCOUNT_ATTRIBUTION_AND_THREE_ENTRY_DIAGNOSTICS_COLLECTED",
+  "research_date": "2026-10-14",
+  "account_identity": {
+    "fixed_gate": "prior_extension_20<=0.18595041322314065",
+    "window_start": "2024-01-02",
+    "window_end": "2026-09-18",
+    "reference_sessions": 659,
+    "initial_cash": 100000,
+    "max_positions": 5,
+    "profit_exit": "economic return strictly above10% after T+1",
+    "stop_loss": null,
+    "time_exit": null,
+    "unit_model": "same-source total-return equivalent units, not certified actual action-adjusted shares"
+  },
+  "drawdown_paths": [
+    {
+      "path": "filtered_30bp",
+      "cost_single_side": 0.003,
+      "metrics_from_completed_account": {
+        "days": 659,
+        "compounded_return": 0.5363753121343873,
+        "cagr": 0.1784634632746569,
+        "sharpe": 0.7495503507860154,
+        "max_drawdown": 0.38484844000000007
+      },
+      "maximum_drawdown": {
+        "peak_date": "2024-01-02",
+        "peak_nav": 100000.0,
+        "trough_date": "2024-07-25",
+        "trough_nav": 61515.15599999999,
+        "sessions_between": 135,
+        "loss": -38484.84400000001,
+        "fees_in_interval": 623.844,
+        "interval_fee_loss_ratio": 0.016210121574092903
+      },
+      "trough_cash": 14512.155999999988,
+      "trough_market_value": 47003.0,
+      "trough_exposure": 0.7640881216329843,
+      "trough_holdings": [
+        {
+          "code": "605178",
+          "entry_date": "2024-01-03",
+          "mark_minus_original_buy_outlay": -11012.645,
+          "TR_gross_return_from_entry": -0.5701275045537341,
+          "holding_reference_sessions_inclusive": 135
+        },
+        {
+          "code": "000820",
+          "entry_date": "2024-01-05",
+          "mark_minus_original_buy_outlay": -10799.933,
+          "TR_gross_return_from_entry": -0.5562632696390658,
+          "holding_reference_sessions_inclusive": 133
+        },
+        {
+          "code": "600239",
+          "entry_date": "2024-01-09",
+          "mark_minus_original_buy_outlay": -6711.6799999999985,
+          "TR_gross_return_from_entry": -0.35862068965517235,
+          "holding_reference_sessions_inclusive": 131
+        },
+        {
+          "code": "000151",
+          "entry_date": "2024-01-30",
+          "mark_minus_original_buy_outlay": -5093.53,
+          "TR_gross_return_from_entry": -0.305511811023622,
+          "holding_reference_sessions_inclusive": 116
+        },
+        {
+          "code": "600234",
+          "entry_date": "2024-03-25",
+          "mark_minus_original_buy_outlay": -10148.706,
+          "TR_gross_return_from_entry": -0.597444089456869,
+          "holding_reference_sessions_inclusive": 83
+        }
+      ],
+      "closed_during_drawdown": [
+        {
+          "code": "600844",
+          "entry_date": "2024-01-05",
+          "exit_date": "2024-01-10",
+          "net_pnl": 1849.155999999996
+        },
+        {
+          "code": "000020",
+          "entry_date": "2024-01-18",
+          "exit_date": "2024-01-23",
+          "net_pnl": 1686.887999999999
+        },
+        {
+          "code": "002211",
+          "entry_date": "2024-01-18",
+          "exit_date": "2024-03-21",
+          "net_pnl": 1745.6059999999998
+        }
+      ],
+      "accounting": {
+        "buy_fills": 8,
+        "sell_fills": 3,
+        "closed_net_pnl": 5281.649999999995,
+        "held_mark_minus_original_buy_outlay": -43766.494,
+        "closed_plus_held_pnl": -38484.844000000005,
+        "NAV_change": -38484.84400000001,
+        "reconciliation_error": 7.275957614183426e-12,
+        "fee_drag": 623.844,
+        "fee_share_of_net_loss": 0.016210121574092903,
+        "marked_TR_price_component_before_booked_fees": -37861.000000000015,
+        "adding_fees_back_is_not_zero_cost_counterfactual": true,
+        "last_trade_before_trough": "2024-03-25"
+      },
+      "no_assumed_exit_fee_or_forced_liquidation": true
+    },
+    {
+      "path": "filtered_50bp",
+      "cost_single_side": 0.005,
+      "metrics_from_completed_account": {
+        "days": 659,
+        "compounded_return": 0.4896024986166012,
+        "cagr": 0.16461317196703695,
+        "sharpe": 0.7032027323331875,
+        "max_drawdown": 0.3894463500000005
+      },
+      "maximum_drawdown": {
+        "peak_date": "2024-01-02",
+        "peak_nav": 100000.0,
+        "trough_date": "2024-07-25",
+        "trough_nav": 61055.365000000005,
+        "sessions_between": 135,
+        "loss": -38944.634999999995,
+        "fees_in_interval": 1034.635,
+        "interval_fee_loss_ratio": 0.026566817226557654
+      },
+      "trough_cash": 14052.365000000009,
+      "trough_market_value": 47003.0,
+      "trough_exposure": 0.7698422571054976,
+      "trough_holdings": [
+        {
+          "code": "605178",
+          "entry_date": "2024-01-03",
+          "mark_minus_original_buy_outlay": -11051.075,
+          "TR_gross_return_from_entry": -0.5701275045537341,
+          "holding_reference_sessions_inclusive": 135
+        },
+        {
+          "code": "000820",
+          "entry_date": "2024-01-05",
+          "mark_minus_original_buy_outlay": -10838.555,
+          "TR_gross_return_from_entry": -0.5562632696390658,
+          "holding_reference_sessions_inclusive": 133
+        },
+        {
+          "code": "600239",
+          "entry_date": "2024-01-09",
+          "mark_minus_original_buy_outlay": -6748.799999999998,
+          "TR_gross_return_from_entry": -0.35862068965517235,
+          "holding_reference_sessions_inclusive": 131
+        },
+        {
+          "code": "000151",
+          "entry_date": "2024-01-30",
+          "mark_minus_original_buy_outlay": -5126.55,
+          "TR_gross_return_from_entry": -0.305511811023622,
+          "holding_reference_sessions_inclusive": 116
+        },
+        {
+          "code": "600234",
+          "entry_date": "2024-03-25",
+          "mark_minus_original_buy_outlay": -10182.51,
+          "TR_gross_return_from_entry": -0.597444089456869,
+          "holding_reference_sessions_inclusive": 83
+        }
+      ],
+      "closed_during_drawdown": [
+        {
+          "code": "600844",
+          "entry_date": "2024-01-05",
+          "exit_date": "2024-01-10",
+          "net_pnl": 1767.2599999999984
+        },
+        {
+          "code": "000020",
+          "entry_date": "2024-01-18",
+          "exit_date": "2024-01-23",
+          "net_pnl": 1611.4800000000032
+        },
+        {
+          "code": "002211",
+          "entry_date": "2024-01-18",
+          "exit_date": "2024-03-21",
+          "net_pnl": 1624.1150000000016
+        }
+      ],
+      "accounting": {
+        "buy_fills": 8,
+        "sell_fills": 3,
+        "closed_net_pnl": 5002.855000000003,
+        "held_mark_minus_original_buy_outlay": -43947.490000000005,
+        "closed_plus_held_pnl": -38944.635,
+        "NAV_change": -38944.634999999995,
+        "reconciliation_error": -7.275957614183426e-12,
+        "fee_drag": 1034.635,
+        "fee_share_of_net_loss": 0.026566817226557654,
+        "marked_TR_price_component_before_booked_fees": -37909.99999999999,
+        "adding_fees_back_is_not_zero_cost_counterfactual": true,
+        "last_trade_before_trough": "2024-03-25"
+      },
+      "no_assumed_exit_fee_or_forced_liquidation": true
+    }
+  ],
+  "three_fixed_entry_diagnostics": {
+    "actual_entry_count": 39,
+    "clock": "t-23..t-3 prices; t-22..t-3 amounts/volume; mandatory2boards excluded",
+    "trend_domain": "0<=same prior_extension20<=old0.18595041322314065; zero logical boundary not selected from losses",
+    "risk_descriptor": "sqrt(mean(min(simpleTRreturn,0)^2))*sqrt252 on same20 changes; no empirical threshold",
+    "capacity_diagnostic": "recorded old raw reserved buy quantity<=1% of minimum received positive volume in the20 preboard sessions; not future queue capacity",
+    "groups": {
+      "all39_actual_entries": {
+        "n": 39,
+        "finite_trend": 39,
+        "negative_pretrend": 8,
+        "nonnegative_pretrend": 31,
+        "median_trend": 0.08549874266554891,
+        "median_downside_semi": 0.3007728642409619,
+        "median_amount_CNY": 100895520.0,
+        "median_slot_cash_to_amount": 0.00021927676273436126,
+        "known_capacity": 39,
+        "capacity_pass": 39
+      },
+      "maxDD5_held_entries": {
+        "n": 5,
+        "finite_trend": 5,
+        "negative_pretrend": 1,
+        "nonnegative_pretrend": 4,
+        "median_trend": 0.05520361990950229,
+        "median_downside_semi": 0.28724920280640476,
+        "median_amount_CNY": 64620698.0,
+        "median_slot_cash_to_amount": 0.00029021407147618517,
+        "known_capacity": 5,
+        "capacity_pass": 5
+      },
+      "maxDD3_closed_entries": {
+        "n": 3,
+        "finite_trend": 3,
+        "negative_pretrend": 1,
+        "nonnegative_pretrend": 2,
+        "median_trend": 0.0810385523210071,
+        "median_downside_semi": 0.15463725060668018,
+        "median_amount_CNY": 26535564.0,
+        "median_slot_cash_to_amount": 0.000700334826122407,
+        "known_capacity": 3,
+        "capacity_pass": 3
+      },
+      "remaining_actual_entries": {
+        "n": 31,
+        "finite_trend": 31,
+        "negative_pretrend": 6,
+        "nonnegative_pretrend": 25,
+        "median_trend": 0.09302325581395343,
+        "median_downside_semi": 0.3235942202955221,
+        "median_amount_CNY": 129707240.0,
+        "median_slot_cash_to_amount": 0.0001778334395165315,
+        "known_capacity": 31,
+        "capacity_pass": 31
+      }
+    },
+    "existing_source_identity": {
+      "requested_identity_keys": 819,
+      "raw_identity_sha256": "e5ba7c94bdf813420796802f4f5f25ab2d075ac6c0da052ac9e44dbbcefa1f0a",
+      "factor_sha256": "db0c95201a43a425056a5ddd05aae82437b896c5536e5a6b675c00589d06a04f"
+    },
+    "registration_identities": [
+      "LIMIT_GATE_DIAG_NONNEGATIVE_PREBOARD_DOMAIN_20261014",
+      "LIMIT_GATE_DIAG_PREBOARD_DOWNSIDE_RISK_20261014",
+      "LIMIT_GATE_DIAG_PREBOARD_LIQUIDITY_SUPPORT_20261014"
+    ],
+    "no_new_strategy_counterfactual_or_IC": true,
+    "negative_trend_gate_not_effective_proof": "8/39连板前负收益，5套牢中仅1负；不能由剔除这些已知身份推算完整账户收益。",
+    "capacity_result": "39/39及5/5通过旧1%政策的历史容量约束；总量通过不认证跌停价队列、未来退出深度或fillable规模。",
+    "semideviation_result": "尾部5中位0.287249、此前盈利退出3中位0.154637，其余31中位0.323594。样本小且事后分组，没有拟合波动门槛/分类器或因果结论。"
+  },
+  "financial_source_feasibility": {
+    "fixed_posthoc_entries": 5,
+    "qualified_redflag_or_clean_decisions": 0,
+    "FY22_original_metadata_found": 5,
+    "Q3_original_metadata_found": 5,
+    "audit_or_going_concern_bound_cases": 0,
+    "parent_equity_bound_cases": 0,
+    "status": "SOURCE_ENTRY_METADATA_AVAILABLE_RED_FLAG_BINDINGS_AND_PIT_PENDING",
+    "unknown_is_not_clean_or_bad": true,
+    "source_entry_is_not_PIT_evidence": true
+  },
+  "sparse_event_factor_contract": {
+    "feature": "prior_extension_20",
+    "score": "negative prior_extension_20; direction1",
+    "formation": "tclose->next_reference_open",
+    "coverage_counter_scope": {
+      "coverage_counters": "全提供历史bars经本地Factor计算的计数，未按验证窗截断",
+      "source_start": "2021-09-22",
+      "source_end": "2026-09-18",
+      "source_reference_sessions": 1211,
+      "IC_scope": "仅冻结validation_window，659参考日、6有效IC；不把全源999除以验证659作为验证覆盖"
+    },
+    "finite_values": 999,
+    "provided_output_identities": 3840482,
+    "finite_output_density": 0.0002601235990690752,
+    "validation_window": {
+      "start": "2024-01-02",
+      "end": "2026-09-18"
+    },
+    "validation_reference_sessions": 659,
+    "valid_5day_IC_periods": 6,
+    "actual_diagnostic_groups": 2,
+    "maximum_aligned_5day_formation_dates": 132,
+    "formal_policy_identity": "pool_admission_v2_20261010_balanced",
+    "formal_minimums": {
+      "cycle": 5,
+      "groups": 10,
+      "periods": 200,
+      "quality_common_coverage": 0.85,
+      "standalone_30bp_absolute_net_daily_Sharpe": 0.5
+    },
+    "requirements_are_repository_policy_not_universal_official_platform_rule": true,
+    "native_cal_limit_up_down_role": "catalog double price, not bool; actual delivery/same raw basis/calendar/adjustment remains pending",
+    "native_default_inputs_and_production_verified": false,
+    "no_fill_zero_decay_or_event_extension_for_coverage": true,
+    "formal_eligible": false
+  },
+  "limits": [
+    "39次买入是旧代码顺序、槽位、现金和退出规则共同产生的内生实际样本，不是全事件总体。",
+    "最大回撤5个持仓与此前3个盈利退出是事后定位的小组；不能据此断言下跌原因或验证新门槛。",
+    "只设盈利退出使亏损留在未实现持仓；平仓胜率不能当选股准确率。",
+    "添加回费用仅是账面贡献分解，不是零费用反事实；旧账户没有假设终端平仓。",
+    "日线触跌停只支持潜在触价，队列/实际成交和当时完整金融PIT来源未知。",
+    "全窗已暴露，诊断不是新未暴露OOS，未重算任何新收益或账户路径。"
+  ],
+  "prepared_next_mechanism": {
+    "name": "historical_two_upper_episode_full_giveback_risk",
+    "status": "DRAFT_AND_SOURCE_CLOCK_PREPARATION_ONLY_IN_BOUND_REVIEW",
+    "economic_hypothesis": "历史两连板后五参考日内回落穿越连板前经济价格锚的重复状态，可能识别同股票的持续脆弱性。",
+    "real_values_computed_in_this_result": 0,
+    "future_labels": 0,
+    "new_alpha_evidence": 0,
+    "no_prior_episode_is_nan_not_zero": true,
+    "not_authorized_to_presume_coverage_or_profitability": true
+  },
+  "new_night_runtime_boundary": {
+    "official_scope": "NIGHT_LIMIT_GATE30_20261015",
+    "max_new_scope_credits": 30,
+    "gift_and_recharge_allowed": true,
+    "deadline_utc": "2026-10-14T23:00:00Z",
+    "deadline_beijing": "2026-10-15 07:00:00 Asia/Shanghai",
+    "historical_completed_results_official_compute_spent": 0,
+    "this_document_compilation_official_compute_spent": 0,
+    "not_extension_or_rewrite_of_old_experiment_protocols": true,
+    "formal_pool_operations_authorized": false
+  },
+  "bindings": [
+    {
+      "path": "research_runs/limit_gate_diagnosis_20261014/filtered_drawdown_review.json",
+      "sha256": "7d507706bfeb71ad92f5fe2e99ef260fdc025f11cf8dc252cd0037d9f39fc3b6",
+      "result_identity": "FILTERED_TWO_COST_DRAWDOWN_READONLY_ATTRIBUTION_COMPLETE",
+      "role": "已完成两费用路径峰谷对账"
+    },
+    {
+      "path": "research_runs/limit_gate_diagnosis_20261014/summary.json",
+      "sha256": "136ea186558ffbfafea409d8af3629045e2f354705dd33fdfa64b426986abfd3",
+      "result_identity": "THREE_FIXED_ENTRY_DIAGNOSTICS_COMPLETE",
+      "role": "已完成39入场诊断"
+    },
+    {
+      "path": "research_runs/limit_gate_diagnosis_20261014/protocol.json",
+      "sha256": "277b7495f6bea24cc7c4318149fb524f67cb63caa1361aea2666bf5372eba6c7",
+      "result_identity": "THREE_FIXED_DIAGNOSTICS_REGISTERED",
+      "role": "三诊断定义、时钟和原39名单身份；不复制名单"
+    },
+    {
+      "path": "research_runs/night_limit_gate_20261015/financial_redflag_pit_inventory_review.json",
+      "sha256": "8332ebd396138d3c0b4d1d8471d03883314f2223b5535b359a00958bb350031b",
+      "result_identity": "SOURCE_ENTRY_METADATA_AVAILABLE_RED_FLAG_BINDINGS_AND_PIT_PENDING",
+      "role": "5个事后尾部身份的财务来源可行性"
+    },
+    {
+      "path": "research_runs/night_limit_gate_20261015/event_factor_native_admission_contract_review.json",
+      "sha256": "23675ec0a36107e95099a86d4ecdca045fddd94a3d6091c030344d7a8f23a0e0",
+      "result_identity": "EXACT_SPARSE_FACTOR_NOT_FORMAL_ELIGIBLE_NATIVE_INPUT_CONTRACT_PENDING",
+      "role": "当前稀疏因子与本仓库正式准入合同"
+    },
+    {
+      "path": "research_runs/night_limit_gate_20261015/new_supported_gate_factor_paths_review.json",
+      "sha256": "4833afec16f5cff68cf43b79c2500c503ff941800bb960c47ee57791465068e1",
+      "result_identity": "ONE_CONDITIONALLY_DISTINCT_LOCAL_MECHANISM_NO_NATIVE_FEE_READY_FACTOR",
+      "role": "历史回吐机制只是准备，无新值/alpha"
+    },
+    {
+      "path": "research_runs/night_limit_gate_20261015/authorization.json",
+      "sha256": "440fbaee2563830cf40d5aa85103fb8ad2f0dc446e5d465684b214affa364d06",
+      "result_identity": "NIGHT_LIMIT_GATE30_20261015",
+      "role": "新夜间运行边界；非历史实验费用"
+    }
+  ],
+  "compilation": {
+    "read_only_completed_summaries": true,
+    "prices_accounts_returns_tests_recomputed": false,
+    "network_calls": 0,
+    "fees": 0,
+    "root_state_registry_budget_modified": false,
+    "commit_created": false
+  },
+  "completed_historical_episode_diagnostic": {
+    "registry_total": 579,
+    "new_contexts": 2,
+    "source": {
+      "raw_rows": 3835371,
+      "raw_identity_sha256": "5c2be1f080ff93ad16aeb2bde537878ca93249f73054d0e99aa8bb853782f0a2",
+      "factor_rows": 43595,
+      "factor_record_sha256": "3ab130addc5f4ca8502d5979de06322e178ac44e155aed4ea216dd7d958a5467",
+      "source_codes": 3489,
+      "independent_reference_days": 1211,
+      "is_st_lifecycle_PIT_certified": false,
+      "official_native_value_or_calendar_or_factor_parity": false,
+      "original_raw_quotes_or_market_panel_saved": false,
+      "new_external_requests": 0,
+      "measurement_only_new_past_state_not_old_factor_labels_or_cost_replay": true
+    },
+    "evaluation": {
+      "start": "2024-01-02",
+      "end": "2026-09-18",
+      "reference_days": 659,
+      "fixed_codes": 3489,
+      "full_fixed_roster_keys": 2299251,
+      "finite_history_risk_keys": 461717,
+      "full_fixed_roster_output_density": 0.20081191657631114,
+      "known_active_received_source_keys": 1821306,
+      "finite_active_received_source_keys": 426101,
+      "known_active_received_source_density": 0.23395354761912607,
+      "denominator_source_PIT_or_formal_coverage_certified": false,
+      "finite_daily_min": 397,
+      "finite_daily_max": 1243,
+      "distinct_risk_daily_min": 12,
+      "distinct_risk_daily_max": 24,
+      "honest10_tie_groups_all_days": false,
+      "honest10_tie_groups_min": 3,
+      "median_supported_prior_episode_N": 2.0,
+      "historical_risk_count_signal_rho_median": 0.27553884961342956,
+      "risk_is_not_current_future_Return_or_RankIC": true
+    },
+    "episode_receipt": {
+      "mode": "values",
+      "formation_end_completed_close": "2026-09-18",
+      "prefix_reference_sessions": 1211,
+      "fixed_symbol_count": 3489,
+      "horizon_reference_sessions": 5,
+      "episode_identity_count": 4191,
+      "mature_supported_count": 3914,
+      "mature_unknown_count": 247,
+      "not_yet_mature_count": 30,
+      "known_continued_upper_pairs_not_new_episodes": 3131,
+      "possible_pair_start_unknown_count": 126,
+      "pair_start_known_ST_outside_normal_domain_count": 0,
+      "raw_normal_board_role_known_sessions": 2931680,
+      "ordinary_board_role_unusable_sessions": 1293499,
+      "known_nontrading_sessions": 0,
+      "known_ST_sessions": 142603,
+      "mature_support_unknown_role_counts": {
+        "ST_role_unknown": 89,
+        "factor_effective_date_unknown": 1399,
+        "factor_missing_or_invalid": 1399,
+        "factor_source_unknown_or_mismatched": 89,
+        "legal_price_role_unknown": 89,
+        "raw_close_missing_or_invalid": 89,
+        "raw_price_not_legal": 7,
+        "trading_unknown": 89
+      },
+      "overlapping_mature_post_window_pairs": 128,
+      "overlap_examples_at_most20": [
+        {
+          "earlier_episode": "002667:2021-11-23",
+          "later_episode": "002667:2021-11-26"
+        },
+        {
+          "earlier_episode": "000595:2021-12-09",
+          "later_episode": "000595:2021-12-15"
+        },
+        {
+          "earlier_episode": "000056:2021-12-30",
+          "later_episode": "000056:2022-01-05"
+        },
+        {
+          "earlier_episode": "000665:2022-01-05",
+          "later_episode": "000665:2022-01-10"
+        },
+        {
+          "earlier_episode": "002629:2022-02-25",
+          "later_episode": "002629:2022-03-03"
+        },
+        {
+          "earlier_episode": "600340:2022-03-22",
+          "later_episode": "600340:2022-03-28"
+        },
+        {
+          "earlier_episode": "000839:2022-04-22",
+          "later_episode": "000839:2022-04-27"
+        },
+        {
+          "earlier_episode": "600624:2022-05-06",
+          "later_episode": "600624:2022-05-12"
+        },
+        {
+          "earlier_episode": "000632:2022-05-09",
+          "later_episode": "000632:2022-05-13"
+        },
+        {
+          "earlier_episode": "002160:2022-06-13",
+          "later_episode": "002160:2022-06-17"
+        },
+        {
+          "earlier_episode": "000619:2022-07-13",
+          "later_episode": "000619:2022-07-19"
+        },
+        {
+          "earlier_episode": "002115:2022-08-31",
+          "later_episode": "002115:2022-09-05"
+        },
+        {
+          "earlier_episode": "002875:2022-11-21",
+          "later_episode": "002875:2022-11-25"
+        },
+        {
+          "earlier_episode": "002527:2023-06-16",
+          "later_episode": "002527:2023-06-21"
+        },
+        {
+          "earlier_episode": "002316:2023-07-20",
+          "later_episode": "002316:2023-07-25"
+        },
+        {
+          "earlier_episode": "002146:2023-07-20",
+          "later_episode": "002146:2023-07-26"
+        },
+        {
+          "earlier_episode": "002146:2023-07-26",
+          "later_episode": "002146:2023-07-31"
+        },
+        {
+          "earlier_episode": "601099:2023-07-26",
+          "later_episode": "601099:2023-07-31"
+        },
+        {
+          "earlier_episode": "000890:2023-07-27",
+          "later_episode": "000890:2023-08-02"
+        },
+        {
+          "earlier_episode": "002855:2023-09-11",
+          "later_episode": "002855:2023-09-14"
+        }
+      ],
+      "failure_comparison_computed": true,
+      "risk_ratio_computed": true,
+      "giveback_comparison": "strict Decimal(str(rawclose))*Decimal(str(asof_factor)); no epsilon",
+      "frequency_control_role": "same_support_mature_episode_count_not_a_rate_or_fitted_score",
+      "no_history_risk_or_frequency_zero_imputation": true,
+      "any_mature_unknown_outcome_blocks_risk_and_frequency_scores": true,
+      "history_effective_date_check_is_not_full_publication_PIT_certification": true,
+      "native_price_limit_input_or_production_update_certified": false,
+      "market_or_account_source_calls": 0,
+      "algorithm": "O(reference_sessions*symbols+5*episodes); maturity-index cumulative events"
+    },
+    "old_actual_entry_diagnostic": {
+      "n": 39,
+      "finite_past_risk": 28,
+      "posthoc_not_signal_accuracy_or_strategy_comparison": true,
+      "maxDD5_tail_states": [
+        {
+          "old_entry_date": "2024-01-03",
+          "symbol": "605178",
+          "formation_close": "2024-01-02",
+          "past_complete_count": 1,
+          "past_mature_unknown_count": 0,
+          "current_immature_known_episodes": 1,
+          "historical_giveback_risk": 0.0,
+          "previously_exposed_maxDD_tail_identity": true
+        },
+        {
+          "old_entry_date": "2024-01-05",
+          "symbol": "000820",
+          "formation_close": "2024-01-04",
+          "past_complete_count": 0,
+          "past_mature_unknown_count": 0,
+          "current_immature_known_episodes": 1,
+          "historical_giveback_risk": null,
+          "previously_exposed_maxDD_tail_identity": true
+        },
+        {
+          "old_entry_date": "2024-01-09",
+          "symbol": "600239",
+          "formation_close": "2024-01-08",
+          "past_complete_count": 2,
+          "past_mature_unknown_count": 0,
+          "current_immature_known_episodes": 1,
+          "historical_giveback_risk": 0.0,
+          "previously_exposed_maxDD_tail_identity": true
+        },
+        {
+          "old_entry_date": "2024-01-30",
+          "symbol": "000151",
+          "formation_close": "2024-01-29",
+          "past_complete_count": 5,
+          "past_mature_unknown_count": 0,
+          "current_immature_known_episodes": 1,
+          "historical_giveback_risk": 0.0,
+          "previously_exposed_maxDD_tail_identity": true
+        },
+        {
+          "old_entry_date": "2024-03-25",
+          "symbol": "600234",
+          "formation_close": "2024-03-22",
+          "past_complete_count": 3,
+          "past_mature_unknown_count": 0,
+          "current_immature_known_episodes": 1,
+          "historical_giveback_risk": 0.0,
+          "previously_exposed_maxDD_tail_identity": true
+        }
+      ]
+    },
+    "current_future_returns_or_account_paths": 0,
+    "official_spent": 0,
+    "decision": "PARK_THIS_FIXED_SPARSE_FIVE_DAY_HISTORY_VALUE; no official fee, no formal eligibility, no sign/horizon rescue; not global retirement",
+    "identification_limit": "126 possible-pair-start-unknown cases reported in source receipt but not identified-event daily unknown blocking. Risk denominator covers identified episodes, not complete true history."
+  },
+  "additional_financial_source_facts": {
+    "current_FY22_standard_unqualified_audit_opinions": 2,
+    "FY22_positive_parent_equity": 2,
+    "Q3_positive_parent_equity": 2,
+    "Q3_original_GETs": 2,
+    "Q3_physical_pages": 22,
+    "full_vintage_PIT_native_or_gate_certified": false,
+    "new_contexts": 0,
+    "official_spent": 0
+  },
+  "night_completed_bindings": [
+    {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_limit_gate_20261015\\historical_episode_support\\protocol.json",
+      "sha256": "ca51080966cde310b74bc21c5a84bcf0757198dcebb1769faad890e08b480e62"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_limit_gate_20261015\\historical_episode_support\\summary.json",
+      "sha256": "e90955acb4243efd64a2ccf019f67db296528da68e3c6c9caf5cfa3fcd0c1cfa"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_limit_gate_20261015\\financial_redflag_retained2\\manual_field_review.json",
+      "sha256": "250cbfff8ff545d1710f69628ab83f080bea2f2cf1516ff7346d49cf9e4b6c1e"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_limit_gate_20261015\\financial_redflag_q3_source2\\manual_field_review.json",
+      "sha256": "07b3628bb9b7100f713997dc225285732ae77b8a41f5e2cb4595a2c19a3f1b27"
+    },
+    {
+      "path": "D:\\PandaAI-Alpha\\QUANTAXIS\\research_runs\\night_limit_gate_20261015\\episode_history_software\\completion_decimal_receipt.json",
+      "sha256": "a8459d1f01b75993165b5df8dabcb099a471dabfac3dcf2273ae326468273e9f"
+    }
+  ],
+  "completed_minute_input_measurement4": {
+    "status": "ALL_FOUR_FIXED_MINUTE_PRICE_POINT_INPUT_VALUES_COMPLETE",
+    "fixed_events": 4,
+    "formation_dates": 1,
+    "source_code_days": 8,
+    "rows_each": 241,
+    "regular_points_each": 240,
+    "actual_synthetic_tests_passed": 26,
+    "examples": {
+      "000882": {
+        "entry_date": "2025-01-06",
+        "earlier": {
+          "source_date": "2025-01-02",
+          "ratio": 0.925,
+          "upper_close_points": 222,
+          "regular_points": 240
+        },
+        "latest": {
+          "source_date": "2025-01-03",
+          "ratio": 0.35833333333333334,
+          "upper_close_points": 86,
+          "regular_points": 240
+        }
+      },
+      "000981": {
+        "entry_date": "2025-01-06",
+        "earlier": {
+          "source_date": "2025-01-02",
+          "ratio": 1.0,
+          "upper_close_points": 240,
+          "regular_points": 240
+        },
+        "latest": {
+          "source_date": "2025-01-03",
+          "ratio": 1.0,
+          "upper_close_points": 240,
+          "regular_points": 240
+        }
+      },
+      "002184": {
+        "entry_date": "2025-01-06",
+        "earlier": {
+          "source_date": "2025-01-02",
+          "ratio": 0.725,
+          "upper_close_points": 174,
+          "regular_points": 240
+        },
+        "latest": {
+          "source_date": "2025-01-03",
+          "ratio": 0.675,
+          "upper_close_points": 162,
+          "regular_points": 240
+        }
+      },
+      "002269": {
+        "entry_date": "2025-01-06",
+        "earlier": {
+          "source_date": "2025-01-02",
+          "ratio": 0.5875,
+          "upper_close_points": 141,
+          "regular_points": 240
+        },
+        "latest": {
+          "source_date": "2025-01-03",
+          "ratio": 0.8041666666666667,
+          "upper_close_points": 193,
+          "regular_points": 240
+        }
+      }
+    },
+    "new_return_or_RankIC_calculations": 0,
+    "official_credits": 0,
+    "meaning": "Exact recorded minute-close price fraction; earlier prior-board same-field control. No queue, duration, active flow, execution or independent alpha certification.",
+    "source_time_publication_and_native_production_certified": false,
+    "threshold_fitted": false,
+    "bindings": [
+      {
+        "path": "research_runs/night_limit_gate_20261015/minute_quality_source4/protocol.json",
+        "sha256": "2faede3a9048dbff698d2adb30b0daeb32405a882b24426b28a1df6464010795"
+      },
+      {
+        "path": "research_runs/night_limit_gate_20261015/minute_quality_source4/receipt.json",
+        "sha256": "1f12d3840e4748bf1467496ff59b30f8abf76fddb4cdb0d9744d18e9946f8d40"
+      },
+      {
+        "path": "research_runs/night_limit_gate_20261015/minute_board_quality_software/software_receipt.json",
+        "sha256": "bdb69a23791d0756149193292c02af1d34679db40bb609b4c2947c4721b9f496"
+      },
+      {
+        "path": "research_runs/night_limit_gate_20261015/minute_board_quality_software/independent_review.json",
+        "sha256": "143ddd76656db2e929bafbe7c76f7358eafc47493c735ceb25911efc193d76f5"
+      },
+      {
+        "path": "research_runs/night_limit_gate_20261015/minute_board_value4/protocol.json",
+        "sha256": "f134752091cd41256fc35062db31f2c06efed545b29aa696199982f5bd34c127"
+      },
+      {
+        "path": "research_runs/night_limit_gate_20261015/minute_board_value4/summary.json",
+        "sha256": "10f3a991940875786ca2d5c61fa9d934d0337f46d10e49da3769d88ee7cd9df9"
+      }
+    ],
+    "price_checks": "Positive raw OHLC geometry and known upper bound; no input lower-bound or complete legal qualification certification."
+  },
+  "registered_minute_scope100": {
+    "scope": "Old fixed base-mask first100 by date/code;2025-01-06..2025-02-12",
+    "new_unique_source_code_days": 163,
+    "old4_and_shared_old8_reused": true,
+    "registered_contexts": 2,
+    "stage": "Input collection only, no outcomes yet",
+    "protocol": {
+      "path": "research_runs/night_limit_gate_20261015/minute_scope100/protocol.json",
+      "sha256": "bd6ba143933011ffaaf39c6522dd8f9e558ce6d7c2b8536bf36227f36220ca7b"
+    }
+  }
+}
