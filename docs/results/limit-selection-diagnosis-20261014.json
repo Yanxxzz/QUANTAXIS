@@ -1,6 +1,6 @@
 {
   "schema": "completed-limit-selection-diagnosis-v1",
-  "status": "COMPLETED_ACCOUNT_ATTRIBUTION_AND_THREE_ENTRY_DIAGNOSTICS_COLLECTED",
+  "status": "COMPLETED_DIAGNOSIS_AND_LOCAL_MINUTE100_PILOT_PROCESSED_NATIVE_PENDING",
   "research_date": "2026-10-14",
   "account_identity": {
     "fixed_gate": "prior_extension_20<=0.18595041322314065",
@@ -768,10 +768,373 @@
     "new_unique_source_code_days": 163,
     "old4_and_shared_old8_reused": true,
     "registered_contexts": 2,
-    "stage": "Input collection only, no outcomes yet",
+    "stage": "ALL_FIXED100_CASES_AND163_NEW_SOURCE_DAYS_SINGLE_PASS_VALUES_COMPLETE",
     "protocol": {
       "path": "research_runs/night_limit_gate_20261015/minute_scope100/protocol.json",
       "sha256": "bd6ba143933011ffaaf39c6522dd8f9e558ce6d7c2b8536bf36227f36220ca7b"
+    },
+    "complete_metrics": {
+      "fixed_cases": 100,
+      "new_unique_days_requested": 163,
+      "old_days_reused": 8,
+      "old4_events_reused": 4,
+      "common_supported_cases": 73,
+      "unknown_cases": 27,
+      "control": {
+        "n": 73,
+        "distinct": 45,
+        "minimum": 0.020833333333333332,
+        "median": 0.9125,
+        "maximum": 1.0,
+        "exact_one_count": 19
+      },
+      "target": {
+        "n": 73,
+        "distinct": 41,
+        "minimum": 0.004166666666666667,
+        "median": 0.9583333333333334,
+        "maximum": 1.0,
+        "exact_one_count": 22
+      },
+      "target_control_Spearman_descriptive": 0.32465308522626257,
+      "per_entry_date_support": [
+        {
+          "date": "2025-01-06",
+          "common": 5,
+          "control_distinct": 4,
+          "target_distinct": 4
+        },
+        {
+          "date": "2025-01-07",
+          "common": 4,
+          "control_distinct": 4,
+          "target_distinct": 4
+        },
+        {
+          "date": "2025-01-08",
+          "common": 3,
+          "control_distinct": 3,
+          "target_distinct": 3
+        },
+        {
+          "date": "2025-01-09",
+          "common": 4,
+          "control_distinct": 4,
+          "target_distinct": 4
+        },
+        {
+          "date": "2025-01-10",
+          "common": 6,
+          "control_distinct": 6,
+          "target_distinct": 4
+        },
+        {
+          "date": "2025-01-13",
+          "common": 5,
+          "control_distinct": 2,
+          "target_distinct": 5
+        },
+        {
+          "date": "2025-01-15",
+          "common": 4,
+          "control_distinct": 4,
+          "target_distinct": 4
+        },
+        {
+          "date": "2025-01-16",
+          "common": 13,
+          "control_distinct": 10,
+          "target_distinct": 7
+        },
+        {
+          "date": "2025-01-17",
+          "common": 9,
+          "control_distinct": 4,
+          "target_distinct": 6
+        },
+        {
+          "date": "2025-02-10",
+          "common": 7,
+          "control_distinct": 6,
+          "target_distinct": 5
+        },
+        {
+          "date": "2025-02-11",
+          "common": 13,
+          "control_distinct": 11,
+          "target_distinct": 11
+        }
+      ]
+    },
+    "new_days_complete241": 126,
+    "new_days_source_unknown": 37,
+    "future_labels_or_PnL_calculated": false,
+    "summary": {
+      "path": "research_runs/night_limit_gate_20261015/minute_scope100/summary.json",
+      "sha256": "5d201e5502af35295be36b9fc15f0b9ba034bd696295d52340c27c968df3cecd"
+    },
+    "source_receipt": {
+      "path": "research_runs/night_limit_gate_20261015/minute_scope100/receipt.json",
+      "sha256": "2fa2d2c3dc028744b8c861dfb46cadaace41982c178c0dace08fb4bfb3030d91"
     }
+  },
+  "completed_minute100_event_outcomes": {
+    "status": "ALL_FOUR_PRESET_MINUTE100_EVENT_ASSOCIATIONS_PROCESSED",
+    "statistics": {
+      "fixed_event_denominator": 100,
+      "common_supported_events": 18,
+      "support_counts_on_full100": {
+        "recent_score_finite": 78,
+        "earlier_score_finite": 80,
+        "both_scores_finite": 73,
+        "both_labels_and_fee_proxies_finite": 22,
+        "postevent_touch_true": 22,
+        "postevent_touch_false": 78,
+        "postevent_touch_unknown": 0
+      },
+      "common_support_unknown_reasons": {
+        "outcome_unknown_or_outside_postevent_touch_domain": 55,
+        "minute_target_or_control_unknown": 27
+      },
+      "associations": {
+        "recent_board_fraction__label_return5": {
+          "pooled_event": {
+            "n": 18,
+            "Spearman": 0.13036774083892297,
+            "Pearson": 0.22084509247301648,
+            "reason": "finite_same_support"
+          },
+          "daily_valid_dates": 4,
+          "daily_periods": [
+            {
+              "date": "2025-01-06",
+              "n": 4,
+              "Spearman": 0.632455532033676,
+              "Pearson": 0.5175331921833717,
+              "reason": "finite_same_support"
+            },
+            {
+              "date": "2025-01-10",
+              "n": 4,
+              "Spearman": 0.10540925533894598,
+              "Pearson": 0.24177127662744863,
+              "reason": "finite_same_support"
+            },
+            {
+              "date": "2025-01-13",
+              "n": 4,
+              "Spearman": -0.39999999999999997,
+              "Pearson": -0.23141209910907776,
+              "reason": "finite_same_support"
+            },
+            {
+              "date": "2025-01-17",
+              "n": 4,
+              "Spearman": 0.39999999999999997,
+              "Pearson": 0.3397903853127994,
+              "reason": "finite_same_support"
+            }
+          ],
+          "mean_daily_RankIC": 0.1844661968431555,
+          "mean_daily_PearsonIC": 0.21692068875363552
+        },
+        "recent_board_fraction__label_mae5": {
+          "pooled_event": {
+            "n": 18,
+            "Spearman": 0.14071438693725016,
+            "Pearson": 0.22228802686229798,
+            "reason": "finite_same_support"
+          },
+          "daily_valid_dates": 4,
+          "daily_periods": [
+            {
+              "date": "2025-01-06",
+              "n": 4,
+              "Spearman": 0.632455532033676,
+              "Pearson": 0.9096360139369504,
+              "reason": "finite_same_support"
+            },
+            {
+              "date": "2025-01-10",
+              "n": 4,
+              "Spearman": 0.10540925533894598,
+              "Pearson": -0.13793802269298477,
+              "reason": "finite_same_support"
+            },
+            {
+              "date": "2025-01-13",
+              "n": 4,
+              "Spearman": -0.19999999999999998,
+              "Pearson": 0.19206857659627072,
+              "reason": "finite_same_support"
+            },
+            {
+              "date": "2025-01-17",
+              "n": 4,
+              "Spearman": 0.0,
+              "Pearson": 0.04536693501109207,
+              "reason": "finite_same_support"
+            }
+          ],
+          "mean_daily_RankIC": 0.1344661968431555,
+          "mean_daily_PearsonIC": 0.2522833757128321
+        },
+        "earlier_board_fraction__label_return5": {
+          "pooled_event": {
+            "n": 18,
+            "Spearman": 0.1556535409983309,
+            "Pearson": 0.1345201086574103,
+            "reason": "finite_same_support"
+          },
+          "daily_valid_dates": 4,
+          "daily_periods": [
+            {
+              "date": "2025-01-06",
+              "n": 4,
+              "Spearman": 0.21081851067789195,
+              "Pearson": -0.1395915668808341,
+              "reason": "finite_same_support"
+            },
+            {
+              "date": "2025-01-10",
+              "n": 4,
+              "Spearman": -0.39999999999999997,
+              "Pearson": -0.5807159266301862,
+              "reason": "finite_same_support"
+            },
+            {
+              "date": "2025-01-13",
+              "n": 4,
+              "Spearman": 0.0,
+              "Pearson": 0.1496232826252874,
+              "reason": "finite_same_support"
+            },
+            {
+              "date": "2025-01-17",
+              "n": 4,
+              "Spearman": 0.10540925533894598,
+              "Pearson": 0.3313845892329291,
+              "reason": "finite_same_support"
+            }
+          ],
+          "mean_daily_RankIC": -0.02094305849579051,
+          "mean_daily_PearsonIC": -0.05982490541320093
+        },
+        "earlier_board_fraction__label_mae5": {
+          "pooled_event": {
+            "n": 18,
+            "Spearman": 0.2723936967470791,
+            "Pearson": 0.17076693229158102,
+            "reason": "finite_same_support"
+          },
+          "daily_valid_dates": 4,
+          "daily_periods": [
+            {
+              "date": "2025-01-06",
+              "n": 4,
+              "Spearman": 0.21081851067789195,
+              "Pearson": -0.11738190085532814,
+              "reason": "finite_same_support"
+            },
+            {
+              "date": "2025-01-10",
+              "n": 4,
+              "Spearman": -0.39999999999999997,
+              "Pearson": -0.22408378255903733,
+              "reason": "finite_same_support"
+            },
+            {
+              "date": "2025-01-13",
+              "n": 4,
+              "Spearman": 0.0,
+              "Pearson": -0.2903806539273728,
+              "reason": "finite_same_support"
+            },
+            {
+              "date": "2025-01-17",
+              "n": 4,
+              "Spearman": -0.21081851067789195,
+              "Pearson": 0.17356517575050343,
+              "reason": "finite_same_support"
+            }
+          ],
+          "mean_daily_RankIC": -0.09999999999999999,
+          "mean_daily_PearsonIC": -0.1145702903978087
+        }
+      },
+      "score_cross_correlation": {
+        "n": 18,
+        "Spearman": 0.1634377441616205,
+        "Pearson": -0.1944554318809018,
+        "reason": "finite_same_support"
+      },
+      "label_cross_correlation": {
+        "n": 18,
+        "Spearman": 0.7358101135190918,
+        "Pearson": 0.8381030745247198,
+        "reason": "finite_same_support"
+      },
+      "two_sided_event_return_proxy_means": {
+        "30": 0.03378232191593379,
+        "50": 0.029655384598844474
+      },
+      "not_account_NAV_or_annual_Sharpe_or_formal_factor": true,
+      "no_threshold_sign_window_or_group_search": true
+    },
+    "source_counts_and_roles": {
+      "status": "EXACT_REQUEST_UNIT_COMPLETE_NO_SOURCE_GAP",
+      "processed_all100": true,
+      "all_planned_requests_finished": true,
+      "all_requests_finished_before_deadline": true,
+      "source_or_label_pending": false,
+      "complete_conditional_event_labels": 22,
+      "known_no_t_touch_events": 78,
+      "fixed_event_denominator": 100,
+      "requested_unique_raw_keys": 449,
+      "received_raw_rows": 449,
+      "requested_factor_asof_keys": 449,
+      "received_factor_bindings": 449,
+      "mongo_read_calls": 513,
+      "raw_projected_rows_sha256": "06f561ffa6896bc80009efbdaef0a5f5bd9a7e67398a7f37246f4f6ffcd1c414",
+      "factor_asof_bindings_sha256": "d92e6ac4b26eeb7e6d3698bede4cb62622c80f551f46f7ed4eb88db6ec64ca36",
+      "label_rows_sha256": "da73b3cbce39ec699c396255232b7377a508416bb789a4ed92fb05f1d134f9be",
+      "reason_counts": {
+        "postevent_touch_and_complete_five_reference_source": 22,
+        "known_no_t_lower_touch_not_in_postevent_condition": 78
+      },
+      "factor_role": "same_source_asof_total_return_factor_supplied_contract_not_PIT_certification",
+      "raw_rows_saved": false,
+      "new_minute_source_calls": 0,
+      "old_full_event_labels_replayed": false,
+      "official_fees": 0
+    },
+    "original_two_registrations_reused": true,
+    "new_unique_contexts": 0,
+    "formal_eligible": false,
+    "decision": "Park fixed100 paid/blind extension;18common,4valid_dates_n4. Pooled target correlations do not beat earlier-board control;better daily means not enough. Native minute production pending,not global retirement.",
+    "bindings": [
+      {
+        "path": "research_runs/night_limit_gate_20261015/minute_scope100_outcome/protocol.json",
+        "sha256": "45e8d0801ec86a5c561482bc5e43ffd4ee04debea920cd11193f553adc0e7d81"
+      },
+      {
+        "path": "research_runs/night_limit_gate_20261015/minute_scope100_outcome/summary.json",
+        "sha256": "11b10b6af794adb85b8991b169ebbaa9c79ce1898793aca6f541de233c095118"
+      },
+      {
+        "path": "research_runs/night_limit_gate_20261015/minute_scope100_outcome/source_receipt.json",
+        "sha256": "4a426c7f31b89efc45a8ac017a95d0266a4b51d086759d19a30dfeee05207864"
+      },
+      {
+        "path": "research_runs/night_limit_gate_20261015/minute_scope100_outcome/completed_outcome_review.json",
+        "sha256": "374213ba4f47aa802dc5a140696e7154a8c27117ac45a90c0a644c6bf901e274"
+      }
+    ]
+  },
+  "native_minute_production_and_volume_summary": {
+    "native_raw_minute": "NO_VERIFIED_NATIVE_PATH",
+    "volume_kurtosis": "PARK_EXACT_FIELD_SEMANTICS_AND_DELIVERY_UNVERIFIED",
+    "official_runs_or_credits": 0,
+    "not_service_wide_absence": true
   }
 }
