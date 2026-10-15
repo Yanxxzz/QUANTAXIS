@@ -1,0 +1,1245 @@
+{
+  "scope": "FINANCE_EXIT_OPTIMIZATION_20261015",
+  "completed_at": "2026-10-15T10:42:24.522373+00:00",
+  "window": {
+    "start": "2024-01-02",
+    "end": "2026-09-18"
+  },
+  "sessions": 659,
+  "opportunities": 1444,
+  "decisions": {
+    "profit5": {
+      "economic_reference_pass_both_costs": false,
+      "formal_eligible": false
+    },
+    "stop8": {
+      "economic_reference_pass_both_costs": false,
+      "formal_eligible": false
+    },
+    "time20": {
+      "economic_reference_pass_both_costs": false,
+      "formal_eligible": false
+    },
+    "combined": {
+      "economic_reference_pass_both_costs": false,
+      "formal_eligible": false
+    }
+  },
+  "new_contexts": 4,
+  "new_cost_paths": 8,
+  "old_control_paths_reused": 2,
+  "old_account_replays": 0,
+  "new_external_sources": 0,
+  "official_runs": 0,
+  "official_spent": 0,
+  "formal_eligible": false,
+  "limitations": [
+    "Same exposed history, not untouched OOS. No parameter sweep; all four variants fixed before new results.",
+    "Daily-bar potential fills do not certify queue execution or intraday order. Stop/time exit can be delayed and stop loss can exceed8%.",
+    "Source/PIT revision/publication and actual corporate-action inventory limitations inherited from financing control. All8new paths preserve one unfilled600008/2025-06-05 input-gap order; baseline recorded one and its same reserved identity is reconstructed from frozen masks and recorded prior trades. No quote/limit repair or unknown fill was made.",
+    "Released slots change subsequent realized purchases despite identical opportunity mask. Account effect is joint exit/capital-allocation effect, not same-trade matched liquidation.",
+    "TP-only closed-trade win rate is mechanically selected; terminal losses remain included in daily NAV.",
+    "Paired bootstrap is descriptive without multiple-testing correction; no formal factor IC/group/coverage or real-pool increment certification."
+  ],
+  "account_rows": [
+    {
+      "path": "profit5_30bp",
+      "days": 659,
+      "compounded_return": 0.501907654062179,
+      "cagr": 0.16828269141439933,
+      "sharpe": 0.9774262115809016,
+      "max_drawdown": 0.17053872825494054,
+      "reused_completed_control": false,
+      "cost_single_side": 0.003,
+      "buys": 73,
+      "closed": 68,
+      "closed_wins": 68,
+      "mean_exposure": 0.4657735948512818,
+      "terminal_exposure": 0.7225465616657597,
+      "terminal_holdings": 5,
+      "terminal_oldest_age": 390,
+      "realized_net_pnl": 95192.13026800635,
+      "terminal_unrealized_net_pnl": -45001.36486178862,
+      "dividend_cash": 0.0,
+      "total_fees": 11025.270644738235,
+      "pnl_reconciliation_error": -4.3655745685100555e-11,
+      "nav_reconciliation_max_error": 1.1102230246251565e-16,
+      "closed_holding_sessions_median": 2.0,
+      "closed_holding_sessions_max": 310,
+      "closed_net_pnl_by_exit_reason": {
+        "take_profit": {
+          "count": 68,
+          "net_pnl": 95192.13026800635
+        }
+      },
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 754,
+        "buy_source_pending": 1
+      },
+      "occupation": {
+        "slot_days": 1985,
+        "available_slot_days": 3295,
+        "occupied_slot_fraction": 0.6024279210925645,
+        "mean_positions": 3.0121396054628224,
+        "full_slots_days": 86,
+        "t20_or_older_slot_days": 1446,
+        "t60_or_older_slot_days": 960,
+        "days_with_t60_or_older_position": 579,
+        "clock": "End-of-day held claims; entry offset0; sold positions absent after sale; threshold offset>=20/60; no day-by-stock detail retained."
+      },
+      "yearly": [
+        {
+          "year": "2024",
+          "days": 242,
+          "return": 0.2820146426800634,
+          "within_year_drawdown": 0.12955098186847636,
+          "mean_exposure": 0.3506684519309828
+        },
+        {
+          "year": "2025",
+          "days": 243,
+          "return": 0.22811694988805598,
+          "within_year_drawdown": 0.10735950536869376,
+          "mean_exposure": 0.502919922774834
+        },
+        {
+          "year": "2026",
+          "days": 174,
+          "return": -0.04608315124503537,
+          "within_year_drawdown": 0.1705387282549402,
+          "mean_exposure": 0.5739855885368517
+        }
+      ]
+    },
+    {
+      "path": "profit5_50bp",
+      "days": 659,
+      "compounded_return": 0.42325671900511486,
+      "cagr": 0.14449826821241518,
+      "sharpe": 0.8623433830861202,
+      "max_drawdown": 0.17739632027462982,
+      "reused_completed_control": false,
+      "cost_single_side": 0.005,
+      "buys": 73,
+      "closed": 68,
+      "closed_wins": 68,
+      "mean_exposure": 0.46594338221022946,
+      "terminal_exposure": 0.7240017326906452,
+      "terminal_holdings": 5,
+      "terminal_oldest_age": 390,
+      "realized_net_pnl": 85770.43883818087,
+      "terminal_unrealized_net_pnl": -43444.76693766938,
+      "dividend_cash": 0.0,
+      "total_fees": 17827.576074563724,
+      "pnl_reconciliation_error": -5.820766091346741e-11,
+      "nav_reconciliation_max_error": 5.551115123125783e-16,
+      "closed_holding_sessions_median": 2.0,
+      "closed_holding_sessions_max": 310,
+      "closed_net_pnl_by_exit_reason": {
+        "take_profit": {
+          "count": 68,
+          "net_pnl": 85770.43883818087
+        }
+      },
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 754,
+        "buy_source_pending": 1
+      },
+      "occupation": {
+        "slot_days": 1985,
+        "available_slot_days": 3295,
+        "occupied_slot_fraction": 0.6024279210925645,
+        "mean_positions": 3.0121396054628224,
+        "full_slots_days": 86,
+        "t20_or_older_slot_days": 1446,
+        "t60_or_older_slot_days": 960,
+        "days_with_t60_or_older_position": 579,
+        "clock": "End-of-day held claims; entry offset0; sold positions absent after sale; threshold offset>=20/60; no day-by-stock detail retained."
+      },
+      "yearly": [
+        {
+          "year": "2024",
+          "days": 242,
+          "return": 0.2529511883818063,
+          "within_year_drawdown": 0.13666169030637554,
+          "mean_exposure": 0.34793389183590556
+        },
+        {
+          "year": "2025",
+          "days": 243,
+          "return": 0.20455070586668778,
+          "within_year_drawdown": 0.10925842361326799,
+          "mean_exposure": 0.5037186010138529
+        },
+        {
+          "year": "2026",
+          "days": 174,
+          "return": -0.056973267919944615,
+          "within_year_drawdown": 0.17739632027462948,
+          "mean_exposure": 0.5773164770453204
+        }
+      ]
+    },
+    {
+      "path": "stop8_30bp",
+      "days": 659,
+      "compounded_return": -0.08990066616600667,
+      "cagr": -0.035381348318751726,
+      "sharpe": -0.1793573121065789,
+      "max_drawdown": 0.21233535999999897,
+      "reused_completed_control": false,
+      "cost_single_side": 0.003,
+      "buys": 117,
+      "closed": 117,
+      "closed_wins": 53,
+      "mean_exposure": 0.1320331063611805,
+      "terminal_exposure": 0.0,
+      "terminal_holdings": 0,
+      "terminal_oldest_age": 0,
+      "realized_net_pnl": -8990.066616600787,
+      "terminal_unrealized_net_pnl": 0,
+      "dividend_cash": 0.0,
+      "total_fees": 12215.307723320162,
+      "pnl_reconciliation_error": -1.4551915228366852e-11,
+      "nav_reconciliation_max_error": 2.220446049250313e-16,
+      "closed_holding_sessions_median": 2.0,
+      "closed_holding_sessions_max": 37,
+      "closed_net_pnl_by_exit_reason": {
+        "stop_loss": {
+          "count": 64,
+          "net_pnl": -103254.98
+        },
+        "take_profit": {
+          "count": 53,
+          "net_pnl": 94264.91338339922
+        }
+      },
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 196,
+        "buy_source_pending": 1,
+        "buy_blocked_cash_or_lot": 2
+      },
+      "occupation": {
+        "slot_days": 448,
+        "available_slot_days": 3295,
+        "occupied_slot_fraction": 0.13596358118361154,
+        "mean_positions": 0.6798179059180577,
+        "full_slots_days": 0,
+        "t20_or_older_slot_days": 37,
+        "t60_or_older_slot_days": 0,
+        "days_with_t60_or_older_position": 0,
+        "clock": "End-of-day held claims; entry offset0; sold positions absent after sale; threshold offset>=20/60; no day-by-stock detail retained."
+      },
+      "yearly": [
+        {
+          "year": "2024",
+          "days": 242,
+          "return": -0.09353547999999878,
+          "within_year_drawdown": 0.21233535999999897,
+          "mean_exposure": 0.09595886978280009
+        },
+        {
+          "year": "2025",
+          "days": 243,
+          "return": -0.03626569962164705,
+          "within_year_drawdown": 0.1882568013100231,
+          "mean_exposure": 0.16429195407398897
+        },
+        {
+          "year": "2026",
+          "days": 174,
+          "return": 0.04179116534345062,
+          "within_year_drawdown": 0.06805861407491653,
+          "mean_exposure": 0.13715417106092537
+        }
+      ]
+    },
+    {
+      "path": "stop8_50bp",
+      "days": 659,
+      "compounded_return": -0.17112055098814183,
+      "cagr": -0.06925374262817374,
+      "sharpe": -0.4314884679362793,
+      "max_drawdown": 0.24796854999999973,
+      "reused_completed_control": false,
+      "cost_single_side": 0.005,
+      "buys": 117,
+      "closed": 117,
+      "closed_wins": 53,
+      "mean_exposure": 0.13176749849436747,
+      "terminal_exposure": 0.0,
+      "terminal_holdings": 0,
+      "terminal_oldest_age": 0,
+      "realized_net_pnl": -17112.055098814264,
+      "terminal_unrealized_net_pnl": 0,
+      "dividend_cash": 0.0,
+      "total_fees": 19373.2962055336,
+      "pnl_reconciliation_error": -1.4551915228366852e-11,
+      "nav_reconciliation_max_error": 2.220446049250313e-16,
+      "closed_holding_sessions_median": 2.0,
+      "closed_holding_sessions_max": 37,
+      "closed_net_pnl_by_exit_reason": {
+        "stop_loss": {
+          "count": 64,
+          "net_pnl": -102756.92000000003
+        },
+        "take_profit": {
+          "count": 53,
+          "net_pnl": 85644.86490118576
+        }
+      },
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 196,
+        "buy_source_pending": 1,
+        "buy_blocked_cash_or_lot": 2
+      },
+      "occupation": {
+        "slot_days": 448,
+        "available_slot_days": 3295,
+        "occupied_slot_fraction": 0.13596358118361154,
+        "mean_positions": 0.6798179059180577,
+        "full_slots_days": 0,
+        "t20_or_older_slot_days": 37,
+        "t60_or_older_slot_days": 0,
+        "days_with_t60_or_older_position": 0,
+        "clock": "End-of-day held claims; entry offset0; sold positions absent after sale; threshold offset>=20/60; no day-by-stock detail retained."
+      },
+      "yearly": [
+        {
+          "year": "2024",
+          "days": 242,
+          "return": -0.12474189999999974,
+          "within_year_drawdown": 0.2270086999999995,
+          "mean_exposure": 0.09529069021063365
+        },
+        {
+          "year": "2025",
+          "days": 243,
+          "return": -0.06413993769380777,
+          "within_year_drawdown": 0.19895360233980974,
+          "mean_exposure": 0.16341944531110922
+        },
+        {
+          "year": "2026",
+          "days": 174,
+          "return": 0.011915665269992992,
+          "within_year_drawdown": 0.06902110843596687,
+          "mean_exposure": 0.13829603026560516
+        }
+      ]
+    },
+    {
+      "path": "time20_30bp",
+      "days": 659,
+      "compounded_return": 0.03445069850816318,
+      "cagr": 0.013036260526165577,
+      "sharpe": 0.16152629391350304,
+      "max_drawdown": 0.23090163874332648,
+      "reused_completed_control": false,
+      "cost_single_side": 0.003,
+      "buys": 101,
+      "closed": 99,
+      "closed_wins": 59,
+      "mean_exposure": 0.315085826976273,
+      "terminal_exposure": 0.3717721884229222,
+      "terminal_holdings": 2,
+      "terminal_oldest_age": 6,
+      "realized_net_pnl": 8003.733850816283,
+      "terminal_unrealized_net_pnl": -4558.664,
+      "dividend_cash": 0.0,
+      "total_fees": 11758.793590323425,
+      "pnl_reconciliation_error": 5.184119800105691e-11,
+      "nav_reconciliation_max_error": 8.881784197001252e-16,
+      "closed_holding_sessions_median": 14.0,
+      "closed_holding_sessions_max": 21,
+      "closed_net_pnl_by_exit_reason": {
+        "max_holding_sessions": {
+          "count": 45,
+          "net_pnl": -101057.42804677189
+        },
+        "take_profit": {
+          "count": 54,
+          "net_pnl": 109061.16189758816
+        }
+      },
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 379,
+        "buy_source_pending": 1
+      },
+      "occupation": {
+        "slot_days": 1123,
+        "available_slot_days": 3295,
+        "occupied_slot_fraction": 0.3408194233687405,
+        "mean_positions": 1.7040971168437027,
+        "full_slots_days": 9,
+        "t20_or_older_slot_days": 0,
+        "t60_or_older_slot_days": 0,
+        "days_with_t60_or_older_position": 0,
+        "clock": "End-of-day held claims; entry offset0; sold positions absent after sale; threshold offset>=20/60; no day-by-stock detail retained."
+      },
+      "yearly": [
+        {
+          "year": "2024",
+          "days": 242,
+          "return": 0.006991680000000056,
+          "within_year_drawdown": 0.23090163874332648,
+          "mean_exposure": 0.2750379634390379
+        },
+        {
+          "year": "2025",
+          "days": 243,
+          "return": -0.02589091897958984,
+          "within_year_drawdown": 0.2046755050142517,
+          "mean_exposure": 0.3497501891385161
+        },
+        {
+          "year": "2026",
+          "days": 174,
+          "return": 0.05457221047275862,
+          "within_year_drawdown": 0.07515457881264886,
+          "mean_exposure": 0.32237400496814556
+        }
+      ]
+    },
+    {
+      "path": "time20_50bp",
+      "days": 659,
+      "compounded_return": -0.04580309100574498,
+      "cagr": -0.017769031663411372,
+      "sharpe": -0.01320046634672878,
+      "max_drawdown": 0.24234848615041882,
+      "reused_completed_control": false,
+      "cost_single_side": 0.005,
+      "buys": 101,
+      "closed": 99,
+      "closed_wins": 58,
+      "mean_exposure": 0.3136533599885098,
+      "terminal_exposure": 0.369493965738809,
+      "terminal_holdings": 2,
+      "terminal_oldest_age": 6,
+      "realized_net_pnl": -292.56910057461573,
+      "terminal_unrealized_net_pnl": -4287.74,
+      "dividend_cash": 0.0,
+      "total_fees": 18717.782366328767,
+      "pnl_reconciliation_error": 6.730260793119669e-11,
+      "nav_reconciliation_max_error": 9.679756995950584e-16,
+      "closed_holding_sessions_median": 14.0,
+      "closed_holding_sessions_max": 21,
+      "closed_net_pnl_by_exit_reason": {
+        "max_holding_sessions": {
+          "count": 45,
+          "net_pnl": -100561.71874250547
+        },
+        "take_profit": {
+          "count": 54,
+          "net_pnl": 100269.14964193085
+        }
+      },
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 379,
+        "buy_source_pending": 1,
+        "buy_blocked_cash_or_lot": 1
+      },
+      "occupation": {
+        "slot_days": 1123,
+        "available_slot_days": 3295,
+        "occupied_slot_fraction": 0.3408194233687405,
+        "mean_positions": 1.7040971168437027,
+        "full_slots_days": 9,
+        "t20_or_older_slot_days": 0,
+        "t60_or_older_slot_days": 0,
+        "days_with_t60_or_older_position": 0,
+        "clock": "End-of-day held claims; entry offset0; sold positions absent after sale; threshold offset>=20/60; no day-by-stock detail retained."
+      },
+      "yearly": [
+        {
+          "year": "2024",
+          "days": 242,
+          "return": -0.01949110000000054,
+          "within_year_drawdown": 0.24234848615041882,
+          "mean_exposure": 0.275461173750703
+        },
+        {
+          "year": "2025",
+          "days": 243,
+          "return": -0.05461235487000571,
+          "within_year_drawdown": 0.21785981488124784,
+          "mean_exposure": 0.3474658678544804
+        },
+        {
+          "year": "2026",
+          "days": 174,
+          "return": 0.029381936234916584,
+          "within_year_drawdown": 0.07685167200712673,
+          "mean_exposure": 0.3195503120466613
+        }
+      ]
+    },
+    {
+      "path": "combined_30bp",
+      "days": 659,
+      "compounded_return": -0.11010519256916917,
+      "cagr": -0.04362716590199056,
+      "sharpe": -0.35092613921098625,
+      "max_drawdown": 0.1818917599999994,
+      "reused_completed_control": false,
+      "cost_single_side": 0.003,
+      "buys": 119,
+      "closed": 119,
+      "closed_wins": 71,
+      "mean_exposure": 0.07194315064478679,
+      "terminal_exposure": 0.0,
+      "terminal_holdings": 0,
+      "terminal_oldest_age": 0,
+      "realized_net_pnl": -11010.519256916998,
+      "terminal_unrealized_net_pnl": 0,
+      "dividend_cash": 0.0,
+      "total_fees": 12450.203051383398,
+      "pnl_reconciliation_error": 2.000888343900442e-11,
+      "nav_reconciliation_max_error": 3.3306690738754696e-16,
+      "closed_holding_sessions_median": 2.0,
+      "closed_holding_sessions_max": 21,
+      "closed_net_pnl_by_exit_reason": {
+        "max_holding_sessions": {
+          "count": 1,
+          "net_pnl": 453.8240000000005
+        },
+        "stop_loss": {
+          "count": 48,
+          "net_pnl": -77999.001
+        },
+        "take_profit": {
+          "count": 70,
+          "net_pnl": 66534.657743083
+        }
+      },
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 154,
+        "buy_source_pending": 1,
+        "buy_blocked_cash_or_lot": 2
+      },
+      "occupation": {
+        "slot_days": 243,
+        "available_slot_days": 3295,
+        "occupied_slot_fraction": 0.07374810318664643,
+        "mean_positions": 0.36874051593323215,
+        "full_slots_days": 0,
+        "t20_or_older_slot_days": 0,
+        "t60_or_older_slot_days": 0,
+        "days_with_t60_or_older_position": 0,
+        "clock": "End-of-day held claims; entry offset0; sold positions absent after sale; threshold offset>=20/60; no day-by-stock detail retained."
+      },
+      "yearly": [
+        {
+          "year": "2024",
+          "days": 242,
+          "return": -0.07195801000000046,
+          "within_year_drawdown": 0.16546728000000022,
+          "mean_exposure": 0.06904470273621986
+        },
+        {
+          "year": "2025",
+          "days": 243,
+          "return": -0.0646680114118543,
+          "within_year_drawdown": 0.14061557460791396,
+          "mean_exposure": 0.08638448601082085
+        },
+        {
+          "year": "2026",
+          "days": 174,
+          "return": 0.025192117712544926,
+          "within_year_drawdown": 0.06564400885917254,
+          "mean_exposure": 0.05580625351793002
+        }
+      ]
+    },
+    {
+      "path": "combined_50bp",
+      "days": 659,
+      "compounded_return": -0.1858038169960481,
+      "cagr": -0.07559345850390298,
+      "sharpe": -0.6641754282911062,
+      "max_drawdown": 0.2416647000000004,
+      "reused_completed_control": false,
+      "cost_single_side": 0.005,
+      "buys": 119,
+      "closed": 119,
+      "closed_wins": 71,
+      "mean_exposure": 0.07168770746912413,
+      "terminal_exposure": 0.0,
+      "terminal_holdings": 0,
+      "terminal_oldest_age": 0,
+      "realized_net_pnl": -18580.381699604754,
+      "terminal_unrealized_net_pnl": 0,
+      "dividend_cash": 0.0,
+      "total_fees": 19770.128735177856,
+      "pnl_reconciliation_error": 1.4551915228366852e-11,
+      "nav_reconciliation_max_error": 5.551115123125783e-16,
+      "closed_holding_sessions_median": 2.0,
+      "closed_holding_sessions_max": 21,
+      "closed_net_pnl_by_exit_reason": {
+        "max_holding_sessions": {
+          "count": 1,
+          "net_pnl": 355.6800000000003
+        },
+        "stop_loss": {
+          "count": 48,
+          "net_pnl": -77625.85
+        },
+        "take_profit": {
+          "count": 70,
+          "net_pnl": 58689.78830039526
+        }
+      },
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 154,
+        "buy_source_pending": 1,
+        "buy_blocked_cash_or_lot": 2
+      },
+      "occupation": {
+        "slot_days": 243,
+        "available_slot_days": 3295,
+        "occupied_slot_fraction": 0.07374810318664643,
+        "mean_positions": 0.36874051593323215,
+        "full_slots_days": 0,
+        "t20_or_older_slot_days": 0,
+        "t60_or_older_slot_days": 0,
+        "days_with_t60_or_older_position": 0,
+        "clock": "End-of-day held claims; entry offset0; sold positions absent after sale; threshold offset>=20/60; no day-by-stock detail retained."
+      },
+      "yearly": [
+        {
+          "year": "2024",
+          "days": 242,
+          "return": -0.10015430000000003,
+          "within_year_drawdown": 0.18117114999999973,
+          "mean_exposure": 0.06921753805402109
+        },
+        {
+          "year": "2025",
+          "days": 243,
+          "return": -0.09451803792583657,
+          "within_year_drawdown": 0.15763825810058651,
+          "mean_exposure": 0.08557092463943683
+        },
+        {
+          "year": "2026",
+          "days": 174,
+          "return": -0.0007337645581082519,
+          "within_year_drawdown": 0.07668030457051767,
+          "mean_exposure": 0.0557345995729686
+        }
+      ]
+    },
+    {
+      "path": "control_30bp",
+      "days": 659,
+      "compounded_return": 0.9092868970974026,
+      "cagr": 0.28057335723002286,
+      "sharpe": 1.2681236373031417,
+      "max_drawdown": 0.19200723273820586,
+      "reused_completed_control": true,
+      "cost_single_side": 0.003,
+      "buys": 54,
+      "closed": 49,
+      "closed_wins": 49,
+      "mean_exposure": 0.5922679883237899,
+      "terminal_exposure": 0.7342582911706962,
+      "terminal_holdings": 5,
+      "terminal_oldest_age": 233,
+      "realized_net_pnl": 143390.9472680064,
+      "terminal_unrealized_net_pnl": -52462.257558265585,
+      "dividend_cash": 0.0,
+      "total_fees": 9378.498644738234,
+      "pnl_reconciliation_error": -5.820766091346741e-11,
+      "nav_reconciliation_max_error": 3.774758283725532e-15,
+      "closed_holding_sessions_median": 6.0,
+      "closed_holding_sessions_max": 311,
+      "closed_net_pnl_by_exit_reason": {
+        "take_profit": {
+          "count": 49,
+          "net_pnl": 143390.9472680064
+        }
+      },
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 932,
+        "buy_source_pending": 1
+      },
+      "occupation": {
+        "slot_days": 2425,
+        "available_slot_days": 3295,
+        "occupied_slot_fraction": 0.7359635811836115,
+        "mean_positions": 3.679817905918058,
+        "full_slots_days": 212,
+        "t20_or_older_slot_days": 1863,
+        "t60_or_older_slot_days": 1177,
+        "days_with_t60_or_older_position": 528,
+        "clock": "End-of-day held claims; entry offset0; sold positions absent after sale; threshold offset>=20/60; no day-by-stock detail retained."
+      },
+      "yearly": [
+        {
+          "year": "2024",
+          "days": 242,
+          "return": 0.30402141268006155,
+          "within_year_drawdown": 0.19200723273820586,
+          "mean_exposure": 0.5155494097258695
+        },
+        {
+          "year": "2025",
+          "days": 243,
+          "return": 0.5398244025404739,
+          "within_year_drawdown": 0.07983242128579482,
+          "mean_exposure": 0.6435849688241166
+        },
+        {
+          "year": "2026",
+          "days": 174,
+          "return": -0.04914286109829624,
+          "within_year_drawdown": 0.13980523438718495,
+          "mean_exposure": 0.6273017225715908
+        }
+      ]
+    },
+    {
+      "path": "control_50bp",
+      "days": 659,
+      "compounded_return": 0.842163492040348,
+      "cagr": 0.26316722450918073,
+      "sharpe": 1.2029926757414031,
+      "max_drawdown": 0.196779549536108,
+      "reused_completed_control": true,
+      "cost_single_side": 0.005,
+      "buys": 54,
+      "closed": 49,
+      "closed_wins": 49,
+      "mean_exposure": 0.5928779365665771,
+      "terminal_exposure": 0.7353700469647935,
+      "terminal_holdings": 5,
+      "terminal_oldest_age": 233,
+      "realized_net_pnl": 134844.00883818092,
+      "terminal_unrealized_net_pnl": -50627.659634146345,
+      "dividend_cash": 0.0,
+      "total_fees": 15305.051074563726,
+      "pnl_reconciliation_error": 5.820766091346741e-11,
+      "nav_reconciliation_max_error": 2.220446049250313e-15,
+      "closed_holding_sessions_median": 6.0,
+      "closed_holding_sessions_max": 311,
+      "closed_net_pnl_by_exit_reason": {
+        "take_profit": {
+          "count": 49,
+          "net_pnl": 134844.00883818092
+        }
+      },
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 932,
+        "buy_source_pending": 1
+      },
+      "occupation": {
+        "slot_days": 2425,
+        "available_slot_days": 3295,
+        "occupied_slot_fraction": 0.7359635811836115,
+        "mean_positions": 3.679817905918058,
+        "full_slots_days": 212,
+        "t20_or_older_slot_days": 1863,
+        "t60_or_older_slot_days": 1177,
+        "days_with_t60_or_older_position": 528,
+        "clock": "End-of-day held claims; entry offset0; sold positions absent after sale; threshold offset>=20/60; no day-by-stock detail retained."
+      },
+      "yearly": [
+        {
+          "year": "2024",
+          "days": 242,
+          "return": 0.28461458838180986,
+          "within_year_drawdown": 0.196779549536108,
+          "mean_exposure": 0.5185322508761528
+        },
+        {
+          "year": "2025",
+          "days": 243,
+          "return": 0.5181391415136007,
+          "within_year_drawdown": 0.0811708678456391,
+          "mean_exposure": 0.6450452028976
+        },
+        {
+          "year": "2026",
+          "days": 174,
+          "return": -0.05540912921180152,
+          "within_year_drawdown": 0.14275732969058863,
+          "mean_exposure": 0.6234239723059111
+        }
+      ]
+    }
+  ],
+  "paired_comparisons": [
+    {
+      "annualized_mean_difference": -0.0992457037221569,
+      "confidence_interval_95": [
+        -0.22987198949815996,
+        0.031838632488729486
+      ],
+      "ci_contains_zero": true,
+      "day_count": 659,
+      "block_count": 33,
+      "bootstrap_seed": 20261014,
+      "bootstrap_samples": 2000,
+      "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+      "target": "profit5_30bp",
+      "control": "control_30bp",
+      "gain_retention_fraction": 0.5519794199876331,
+      "drawdown_relative_reduction": 0.11181091554262834,
+      "economic_reference_pass": false,
+      "full_slot_days_change": -126,
+      "t60_slot_days_change": -217,
+      "yearly_candidate_minus_control": [
+        {
+          "year": "2024",
+          "difference": -0.022006769999998177
+        },
+        {
+          "year": "2025",
+          "difference": -0.31170745265241795
+        },
+        {
+          "year": "2026",
+          "difference": 0.0030597098532608724
+        }
+      ]
+    },
+    {
+      "annualized_mean_difference": -0.10628339909790752,
+      "confidence_interval_95": [
+        -0.23610608005209346,
+        0.02417242352893657
+      ],
+      "ci_contains_zero": true,
+      "day_count": 659,
+      "block_count": 33,
+      "bootstrap_seed": 20261014,
+      "bootstrap_samples": 2000,
+      "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+      "target": "profit5_50bp",
+      "control": "control_50bp",
+      "gain_retention_fraction": 0.5025826018409697,
+      "drawdown_relative_reduction": 0.09850225446278627,
+      "economic_reference_pass": false,
+      "full_slot_days_change": -126,
+      "t60_slot_days_change": -217,
+      "yearly_candidate_minus_control": [
+        {
+          "year": "2024",
+          "difference": -0.03166340000000356
+        },
+        {
+          "year": "2025",
+          "difference": -0.31358843564691297
+        },
+        {
+          "year": "2026",
+          "difference": -0.0015641387081430924
+        }
+      ]
+    },
+    {
+      "annualized_mean_difference": -0.2957448978236429,
+      "confidence_interval_95": [
+        -0.5562113113438246,
+        -0.04936875954459401
+      ],
+      "ci_contains_zero": false,
+      "day_count": 659,
+      "block_count": 33,
+      "bootstrap_seed": 20261014,
+      "bootstrap_samples": 2000,
+      "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+      "target": "stop8_30bp",
+      "control": "control_30bp",
+      "gain_retention_fraction": -0.09886941784049103,
+      "drawdown_relative_reduction": -0.10587167458170543,
+      "economic_reference_pass": false,
+      "full_slot_days_change": -212,
+      "t60_slot_days_change": -1177,
+      "yearly_candidate_minus_control": [
+        {
+          "year": "2024",
+          "difference": -0.39755689268006034
+        },
+        {
+          "year": "2025",
+          "difference": -0.576090102162121
+        },
+        {
+          "year": "2026",
+          "difference": 0.09093402644174686
+        }
+      ]
+    },
+    {
+      "annualized_mean_difference": -0.31792747880046673,
+      "confidence_interval_95": [
+        -0.5777657969144646,
+        -0.07325376174548169
+      ],
+      "ci_contains_zero": false,
+      "day_count": 659,
+      "block_count": 33,
+      "bootstrap_seed": 20261014,
+      "bootstrap_samples": 2000,
+      "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+      "target": "stop8_50bp",
+      "control": "control_50bp",
+      "gain_retention_fraction": -0.2031916042496217,
+      "drawdown_relative_reduction": -0.2601337414612732,
+      "economic_reference_pass": false,
+      "full_slot_days_change": -212,
+      "t60_slot_days_change": -1177,
+      "yearly_candidate_minus_control": [
+        {
+          "year": "2024",
+          "difference": -0.4093564883818096
+        },
+        {
+          "year": "2025",
+          "difference": -0.5822790792074085
+        },
+        {
+          "year": "2026",
+          "difference": 0.06732479448179451
+        }
+      ]
+    },
+    {
+      "annualized_mean_difference": -0.2412581542565771,
+      "confidence_interval_95": [
+        -0.49735558309093597,
+        -0.009420309338533522
+      ],
+      "ci_contains_zero": false,
+      "day_count": 659,
+      "block_count": 33,
+      "bootstrap_seed": 20261014,
+      "bootstrap_samples": 2000,
+      "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+      "target": "time20_30bp",
+      "control": "control_30bp",
+      "gain_retention_fraction": 0.03788760029220219,
+      "drawdown_relative_reduction": -0.2025674004590836,
+      "economic_reference_pass": false,
+      "full_slot_days_change": -203,
+      "t60_slot_days_change": -1177,
+      "yearly_candidate_minus_control": [
+        {
+          "year": "2024",
+          "difference": -0.2970297326800615
+        },
+        {
+          "year": "2025",
+          "difference": -0.5657153215200638
+        },
+        {
+          "year": "2026",
+          "difference": 0.10371507157105486
+        }
+      ]
+    },
+    {
+      "annualized_mean_difference": -0.25869102306917546,
+      "confidence_interval_95": [
+        -0.5173595069016271,
+        -0.02626617883606598
+      ],
+      "ci_contains_zero": false,
+      "day_count": 659,
+      "block_count": 33,
+      "bootstrap_seed": 20261014,
+      "bootstrap_samples": 2000,
+      "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+      "target": "time20_50bp",
+      "control": "control_50bp",
+      "gain_retention_fraction": -0.054387409854083954,
+      "drawdown_relative_reduction": -0.23157353862093877,
+      "economic_reference_pass": false,
+      "full_slot_days_change": -203,
+      "t60_slot_days_change": -1177,
+      "yearly_candidate_minus_control": [
+        {
+          "year": "2024",
+          "difference": -0.3041056883818104
+        },
+        {
+          "year": "2025",
+          "difference": -0.5727514963836065
+        },
+        {
+          "year": "2026",
+          "difference": 0.0847910654467181
+        }
+      ]
+    },
+    {
+      "annualized_mean_difference": -0.308582324935628,
+      "confidence_interval_95": [
+        -0.5979348542916807,
+        -0.05176228018239082
+      ],
+      "ci_contains_zero": false,
+      "day_count": 659,
+      "block_count": 33,
+      "bootstrap_seed": 20261014,
+      "bootstrap_samples": 2000,
+      "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+      "target": "combined_30bp",
+      "control": "control_30bp",
+      "gain_retention_fraction": -0.12108960650444162,
+      "drawdown_relative_reduction": 0.05268276925796067,
+      "economic_reference_pass": false,
+      "full_slot_days_change": -212,
+      "t60_slot_days_change": -1177,
+      "yearly_candidate_minus_control": [
+        {
+          "year": "2024",
+          "difference": -0.375979422680062
+        },
+        {
+          "year": "2025",
+          "difference": -0.6044924139523282
+        },
+        {
+          "year": "2026",
+          "difference": 0.07433497881084117
+        }
+      ]
+    },
+    {
+      "annualized_mean_difference": -0.3289702449183821,
+      "confidence_interval_95": [
+        -0.6196941483981663,
+        -0.07060905800146117
+      ],
+      "ci_contains_zero": false,
+      "day_count": 659,
+      "block_count": 33,
+      "bootstrap_seed": 20261014,
+      "bootstrap_samples": 2000,
+      "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+      "target": "combined_50bp",
+      "control": "control_50bp",
+      "gain_retention_fraction": -0.22062677704764033,
+      "drawdown_relative_reduction": -0.22809865440644383,
+      "economic_reference_pass": false,
+      "full_slot_days_change": -212,
+      "t60_slot_days_change": -1177,
+      "yearly_candidate_minus_control": [
+        {
+          "year": "2024",
+          "difference": -0.3847688883818099
+        },
+        {
+          "year": "2025",
+          "difference": -0.6126571794394373
+        },
+        {
+          "year": "2026",
+          "difference": 0.05467536465369327
+        }
+      ]
+    }
+  ],
+  "post_result_trade_attribution": {
+    "30": {
+      "baseline": {
+        "buys": 54,
+        "closed": 49,
+        "closed_over20_offset": 18,
+        "net_pnl_closed_over20_offset": 54867.89926800634,
+        "closed_over60_offset": 11,
+        "net_pnl_closed_over60_offset": 30998.993268006336
+      },
+      "variants": {
+        "profit5": {
+          "same_entry_identities": 52,
+          "new_realized_entries": 21,
+          "baseline_eventual_winners_closed_earlier_at_loss": 0,
+          "early_loss_exit_reasons": {},
+          "new_entries_closed": 18,
+          "new_entries_closed_net_pnl": 29546.582,
+          "new_entries_terminal": 3,
+          "new_entries_terminal_unrealized_net_pnl": -32868.753,
+          "worst_realized_stop_gross_price_return": null,
+          "interpretation": "Entry identities matched, position sizes and cash paths differ. New realized entries arise from released slots/cash, not a changed opportunity mask. These are descriptive accounts, not causal estimates."
+        },
+        "stop8": {
+          "same_entry_identities": 54,
+          "new_realized_entries": 63,
+          "baseline_eventual_winners_closed_earlier_at_loss": 23,
+          "early_loss_exit_reasons": {
+            "stop_loss": 23
+          },
+          "new_entries_closed": 63,
+          "new_entries_closed_net_pnl": -6853.619616600796,
+          "new_entries_terminal": 0,
+          "new_entries_terminal_unrealized_net_pnl": 0,
+          "worst_realized_stop_gross_price_return": -0.1543307086614173,
+          "interpretation": "Entry identities matched, position sizes and cash paths differ. New realized entries arise from released slots/cash, not a changed opportunity mask. These are descriptive accounts, not causal estimates."
+        },
+        "time20": {
+          "same_entry_identities": 54,
+          "new_realized_entries": 47,
+          "baseline_eventual_winners_closed_earlier_at_loss": 16,
+          "early_loss_exit_reasons": {
+            "max_holding_sessions": 16
+          },
+          "new_entries_closed": 45,
+          "new_entries_closed_net_pnl": 9838.403909352857,
+          "new_entries_terminal": 2,
+          "new_entries_terminal_unrealized_net_pnl": -4558.664,
+          "worst_realized_stop_gross_price_return": null,
+          "interpretation": "Entry identities matched, position sizes and cash paths differ. New realized entries arise from released slots/cash, not a changed opportunity mask. These are descriptive accounts, not causal estimates."
+        },
+        "combined": {
+          "same_entry_identities": 54,
+          "new_realized_entries": 65,
+          "baseline_eventual_winners_closed_earlier_at_loss": 18,
+          "early_loss_exit_reasons": {
+            "stop_loss": 18
+          },
+          "new_entries_closed": 65,
+          "new_entries_closed_net_pnl": -10018.01825691701,
+          "new_entries_terminal": 0,
+          "new_entries_terminal_unrealized_net_pnl": 0,
+          "worst_realized_stop_gross_price_return": -0.10486891385767794,
+          "interpretation": "Entry identities matched, position sizes and cash paths differ. New realized entries arise from released slots/cash, not a changed opportunity mask. These are descriptive accounts, not causal estimates."
+        }
+      }
+    },
+    "50": {
+      "baseline": {
+        "buys": 54,
+        "closed": 49,
+        "closed_over20_offset": 18,
+        "net_pnl_closed_over20_offset": 51721.75883818086,
+        "closed_over60_offset": 11,
+        "net_pnl_closed_over60_offset": 29366.093838180866
+      },
+      "variants": {
+        "profit5": {
+          "same_entry_identities": 52,
+          "new_realized_entries": 21,
+          "baseline_eventual_winners_closed_earlier_at_loss": 0,
+          "early_loss_exit_reasons": {},
+          "new_entries_closed": 18,
+          "new_entries_closed_net_pnl": 27164.755000000012,
+          "new_entries_terminal": 3,
+          "new_entries_terminal_unrealized_net_pnl": -31752.15,
+          "worst_realized_stop_gross_price_return": null,
+          "interpretation": "Entry identities matched, position sizes and cash paths differ. New realized entries arise from released slots/cash, not a changed opportunity mask. These are descriptive accounts, not causal estimates."
+        },
+        "stop8": {
+          "same_entry_identities": 54,
+          "new_realized_entries": 63,
+          "baseline_eventual_winners_closed_earlier_at_loss": 23,
+          "early_loss_exit_reasons": {
+            "stop_loss": 23
+          },
+          "new_entries_closed": 63,
+          "new_entries_closed_net_pnl": -11393.320098814254,
+          "new_entries_terminal": 0,
+          "new_entries_terminal_unrealized_net_pnl": 0,
+          "worst_realized_stop_gross_price_return": -0.1543307086614173,
+          "interpretation": "Entry identities matched, position sizes and cash paths differ. New realized entries arise from released slots/cash, not a changed opportunity mask. These are descriptive accounts, not causal estimates."
+        },
+        "time20": {
+          "same_entry_identities": 54,
+          "new_realized_entries": 47,
+          "baseline_eventual_winners_closed_earlier_at_loss": 16,
+          "early_loss_exit_reasons": {
+            "max_holding_sessions": 16
+          },
+          "new_entries_closed": 45,
+          "new_entries_closed_net_pnl": 5629.909533571723,
+          "new_entries_terminal": 2,
+          "new_entries_terminal_unrealized_net_pnl": -4287.74,
+          "worst_realized_stop_gross_price_return": null,
+          "interpretation": "Entry identities matched, position sizes and cash paths differ. New realized entries arise from released slots/cash, not a changed opportunity mask. These are descriptive accounts, not causal estimates."
+        },
+        "combined": {
+          "same_entry_identities": 54,
+          "new_realized_entries": 65,
+          "baseline_eventual_winners_closed_earlier_at_loss": 18,
+          "early_loss_exit_reasons": {
+            "stop_loss": 18
+          },
+          "new_entries_closed": 65,
+          "new_entries_closed_net_pnl": -13714.831699604754,
+          "new_entries_terminal": 0,
+          "new_entries_terminal_unrealized_net_pnl": 0,
+          "worst_realized_stop_gross_price_return": -0.10486891385767794,
+          "interpretation": "Entry identities matched, position sizes and cash paths differ. New realized entries arise from released slots/cash, not a changed opportunity mask. These are descriptive accounts, not causal estimates."
+        }
+      }
+    }
+  },
+  "unfilled_input_gap": {
+    "status": "COMMON_UNFILLED_INPUT_GAP_PRESERVED_NO_REPLAY",
+    "date": "2025-06-05",
+    "code": "600008",
+    "baseline_identity_evidence": "Readonly reconstruction from existing trades and frozen1444mask:4held claims at prior close,only unheld candidate600008,one available slot,both costs. No account replay. Prior order identity inferred from these exact records, not a newly retained original order log.",
+    "inconsistency": "Cached high3.21 exceeds the limit computed from supplied pre_close2.904. Underlying raw pre_close/limit-role cause is not certified. A finite cached low above the frozen bid is not a certification of the true exchange limit.",
+    "action": "Keep every original source value, eligibility mask and recorded no-fill unchanged; disclose gap in all comparisons. Do not fill unknown orders or claim source/PIT complete."
+  },
+  "budget": {
+    "global": {
+      "runs": 11,
+      "actual": 22.0,
+      "active_reserved": 0,
+      "unsettled": 0
+    },
+    "parent20": {
+      "runs": 1,
+      "actual": 2.0,
+      "active_reserved": 0,
+      "unsettled": 0,
+      "authorized": 20,
+      "remaining": 18.0
+    },
+    "this_local_followup": {
+      "official_runs": 0,
+      "official_actual": 0
+    }
+  },
+  "synthetic_tests_passed": 6,
+  "conclusion": "No fixed variant preserved80% of baseline cumulative gain while cutting drawdown20% at both costs. Stop/time policies release stale slots but sacrifice delayed recoveries; newly realized entries do not offset the lost gains. Profit5 only modestly lowers drawdown and leaves390-day terminal claims. No formal admission or changed pool.",
+  "artifacts": [
+    {
+      "path": "research_runs/finance_exit_optimization_20261015/protocol.json",
+      "sha256": "98b2beaf0924991be54a66dfc18c7282fe6ebeab08128ecac49afcccd88f977b"
+    },
+    {
+      "path": "research_runs/finance_exit_optimization_20261015/registration.json",
+      "sha256": "82647054b7329b642a4f5ebae645d484fddcab4b27246ec2387fda550bc633b0"
+    },
+    {
+      "path": "research_runs/finance_exit_optimization_20261015/account_source_receipt.json",
+      "sha256": "f5c3a637701c1d876def5dc3d519507e98ab132e68a26ed4859347bd3cef095b"
+    },
+    {
+      "path": "research_runs/finance_exit_optimization_20261015/completed_comparison.json",
+      "sha256": "54532d29621ad103e689c5ad27ef6819de4de1291ecd97d4126487a8aad75c19"
+    },
+    {
+      "path": "research_runs/finance_exit_optimization_20261015/completed_trade_attribution.json",
+      "sha256": "af072d61b8f3acbefa82ed8a1b9ea0e0d63f0f7cc3c3647d887a5261f70de1df"
+    },
+    {
+      "path": "research_runs/finance_exit_optimization_20261015/execution_input_review.json",
+      "sha256": "b51112a176c82e0ecf435dd6861acbc536290e2e0c96d08ca15dd9bc3638901a"
+    },
+    {
+      "path": "panda_alpha/limit_finance_exit_policies.py",
+      "sha256": "9efb78ebe41203764bffed964083e181cab440954d9b1e983f35436cb6b8a4f3"
+    },
+    {
+      "path": "tests/test_limit_finance_exit_policies.py",
+      "sha256": "11996a11cee9cce3654098e5adf87cb14308a80a32fe168f96cafa240774beef"
+    }
+  ]
+}
