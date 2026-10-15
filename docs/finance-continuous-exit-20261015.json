@@ -1,0 +1,1665 @@
+{
+  "completed_at": "2026-10-15T11:48:02.497893+00:00",
+  "scope": "FINANCE_CONTINUOUS_EXIT_20261015",
+  "window": {
+    "start": "2024-01-02",
+    "end": "2026-09-18"
+  },
+  "rows": [
+    {
+      "path": "finance_guard_no_cap_30bp",
+      "days": 659,
+      "compounded_return": 0.7040445999984588,
+      "cagr": 0.2260770296835235,
+      "sharpe": 1.2051601379628425,
+      "max_drawdown": 0.16123528693606592,
+      "buys": 83,
+      "closed": 80,
+      "mean_exposure": 0.3961786739285807,
+      "total_fees": 12174.079618856103,
+      "terminal_holdings": 3,
+      "terminal_oldest_age": 454,
+      "terminal_position_summary": [
+        {
+          "code": "002285",
+          "entry_date": "2024-11-08",
+          "age_sessions": 454,
+          "unrealized_net_pnl": -4324.8
+        },
+        {
+          "code": "000887",
+          "entry_date": "2026-08-14",
+          "age_sessions": 25,
+          "unrealized_net_pnl": -2765.94
+        },
+        {
+          "code": "000565",
+          "entry_date": "2026-09-11",
+          "age_sessions": 5,
+          "unrealized_net_pnl": -2406.528
+        }
+      ],
+      "terminal_unrealized_net_pnl": -9497.268,
+      "occupation": {
+        "slot_days": 1584,
+        "full_slots_days": 43,
+        "mean_positions": 2.4036418816388467,
+        "t20_or_older_slot_days": 870,
+        "t60_or_older_slot_days": 600
+      },
+      "reviews": {
+        "conditional_stale_loss": {
+          "reviews": 22,
+          "known": 22,
+          "triggered": 11
+        },
+        "conditional_stop_loss": {
+          "reviews": 43,
+          "known": 43,
+          "triggered": 11
+        }
+      },
+      "exit_reasons": {
+        "conditional_stale_loss": {
+          "count": 11,
+          "net_pnl": -40083.966
+        },
+        "conditional_stop_loss": {
+          "count": 11,
+          "net_pnl": -23607.335000000006
+        },
+        "take_profit": {
+          "count": 58,
+          "net_pnl": 143593.02899984535
+        }
+      },
+      "yearly": [
+        {
+          "year": "2024",
+          "return": 0.10966290000000001
+        },
+        {
+          "year": "2025",
+          "return": 0.24150988556975483
+        },
+        {
+          "year": "2026",
+          "return": 0.2369145810733364
+        }
+      ],
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 566,
+        "buy_source_pending": 1
+      },
+      "source_pending_unfilled_orders": [
+        {
+          "date": "2025-06-05",
+          "symbol": "600008",
+          "side": "buy",
+          "state": "source_pending",
+          "reason": "raw_ohlc_unknown",
+          "limit_price": 2.61,
+          "quantity": 9200
+        }
+      ],
+      "nav_recompute_max_error": 1.5543122344752192e-15,
+      "pnl_reconciliation_error": -7.275957614183426e-11
+    },
+    {
+      "path": "finance_guard_no_cap_50bp",
+      "days": 659,
+      "compounded_return": 0.6010920412836216,
+      "cagr": 0.19720437802149338,
+      "sharpe": 1.0764921004614718,
+      "max_drawdown": 0.16368955725831158,
+      "buys": 83,
+      "closed": 80,
+      "mean_exposure": 0.39714423230520085,
+      "total_fees": 19583.33770918775,
+      "terminal_holdings": 3,
+      "terminal_oldest_age": 454,
+      "terminal_position_summary": [
+        {
+          "code": "002285",
+          "entry_date": "2024-11-08",
+          "age_sessions": 454,
+          "unrealized_net_pnl": -4295.2
+        },
+        {
+          "code": "000887",
+          "entry_date": "2026-08-14",
+          "age_sessions": 25,
+          "unrealized_net_pnl": -2641.239999999996
+        },
+        {
+          "code": "000565",
+          "entry_date": "2026-09-11",
+          "age_sessions": 5,
+          "unrealized_net_pnl": -2320.2
+        }
+      ],
+      "terminal_unrealized_net_pnl": -9256.639999999996,
+      "occupation": {
+        "slot_days": 1584,
+        "full_slots_days": 43,
+        "mean_positions": 2.4036418816388467,
+        "t20_or_older_slot_days": 870,
+        "t60_or_older_slot_days": 600
+      },
+      "reviews": {
+        "conditional_stale_loss": {
+          "reviews": 22,
+          "known": 22,
+          "triggered": 11
+        },
+        "conditional_stop_loss": {
+          "reviews": 43,
+          "known": 43,
+          "triggered": 11
+        }
+      },
+      "exit_reasons": {
+        "conditional_stale_loss": {
+          "count": 11,
+          "net_pnl": -39749.259999999995
+        },
+        "conditional_stop_loss": {
+          "count": 11,
+          "net_pnl": -23801.639999999996
+        },
+        "take_profit": {
+          "count": 58,
+          "net_pnl": 132916.74412836228
+        }
+      },
+      "yearly": [
+        {
+          "year": "2024",
+          "return": 0.07903294999999844
+        },
+        {
+          "year": "2025",
+          "return": 0.22198867977108705
+        },
+        {
+          "year": "2026",
+          "return": 0.2142676063012705
+        }
+      ],
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 566,
+        "buy_source_pending": 1
+      },
+      "source_pending_unfilled_orders": [
+        {
+          "date": "2025-06-05",
+          "symbol": "600008",
+          "side": "buy",
+          "state": "source_pending",
+          "reason": "raw_ohlc_unknown",
+          "limit_price": 2.61,
+          "quantity": 8900
+        }
+      ],
+      "nav_recompute_max_error": 4.440892098500626e-16,
+      "pnl_reconciliation_error": 4.3655745685100555e-11
+    },
+    {
+      "path": "continuous_finance_30bp",
+      "days": 659,
+      "compounded_return": -0.01948066805541726,
+      "cagr": -0.007494649739335335,
+      "sharpe": 0.02882056557881823,
+      "max_drawdown": 0.20913420268905103,
+      "buys": 112,
+      "closed": 110,
+      "mean_exposure": 0.18625037675043365,
+      "total_fees": 12916.585556252136,
+      "terminal_holdings": 2,
+      "terminal_oldest_age": 25,
+      "terminal_position_summary": [
+        {
+          "code": "000887",
+          "entry_date": "2026-08-14",
+          "age_sessions": 25,
+          "unrealized_net_pnl": -1659.564
+        },
+        {
+          "code": "000565",
+          "entry_date": "2026-09-11",
+          "age_sessions": 5,
+          "unrealized_net_pnl": -1403.808
+        }
+      ],
+      "terminal_unrealized_net_pnl": -3063.3720000000003,
+      "occupation": {
+        "slot_days": 652,
+        "full_slots_days": 1,
+        "mean_positions": 0.9893778452200304,
+        "t20_or_older_slot_days": 9,
+        "t60_or_older_slot_days": 0
+      },
+      "closed_age_median": 5.0,
+      "closed_age_max": 23,
+      "reviews": {
+        "conditional_stale_loss": {
+          "reviews": 1,
+          "known": 1,
+          "triggered": 0
+        },
+        "conditional_stop_loss": {
+          "reviews": 55,
+          "known": 55,
+          "triggered": 13
+        },
+        "continuous_finance_loss": {
+          "reviews": 109,
+          "known": 109,
+          "triggered": 42
+        }
+      },
+      "exit_reasons": {
+        "conditional_stop_loss": {
+          "count": 13,
+          "net_pnl": -22875.461999999996
+        },
+        "continuous_finance_loss": {
+          "count": 42,
+          "net_pnl": -85953.17918894086
+        },
+        "take_profit": {
+          "count": 55,
+          "net_pnl": 109943.9463833992
+        }
+      },
+      "yearly": [
+        {
+          "year": "2024",
+          "return": -0.006944960000000888
+        },
+        {
+          "year": "2025",
+          "return": 0.009745441702808
+        },
+        {
+          "year": "2026",
+          "return": -0.022152928532323757
+        }
+      ],
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 253,
+        "buy_source_pending": 1,
+        "buy_blocked_cash_or_lot": 1
+      },
+      "source_pending_unfilled_orders": [
+        {
+          "date": "2025-06-05",
+          "symbol": "600008",
+          "side": "buy",
+          "state": "source_pending",
+          "reason": "raw_ohlc_unknown",
+          "limit_price": 2.61,
+          "quantity": 8100
+        }
+      ],
+      "nav_recompute_max_error": 5.412337245047638e-16,
+      "pnl_reconciliation_error": -3.456079866737127e-11
+    },
+    {
+      "path": "continuous_finance_50bp",
+      "days": 659,
+      "compounded_return": -0.09494311887630014,
+      "cagr": -0.03742858688865103,
+      "sharpe": -0.1715190884219902,
+      "max_drawdown": 0.22084028198580408,
+      "buys": 112,
+      "closed": 110,
+      "mean_exposure": 0.18568904775320783,
+      "total_fees": 20623.83762870538,
+      "terminal_holdings": 2,
+      "terminal_oldest_age": 25,
+      "terminal_position_summary": [
+        {
+          "code": "000887",
+          "entry_date": "2026-08-14",
+          "age_sessions": 25,
+          "unrealized_net_pnl": -1509.28
+        },
+        {
+          "code": "000565",
+          "entry_date": "2026-09-11",
+          "age_sessions": 5,
+          "unrealized_net_pnl": -1340.56
+        }
+      ],
+      "terminal_unrealized_net_pnl": -2849.84,
+      "occupation": {
+        "slot_days": 652,
+        "full_slots_days": 1,
+        "mean_positions": 0.9893778452200304,
+        "t20_or_older_slot_days": 9,
+        "t60_or_older_slot_days": 0
+      },
+      "closed_age_median": 5.0,
+      "closed_age_max": 23,
+      "reviews": {
+        "conditional_stale_loss": {
+          "reviews": 1,
+          "known": 1,
+          "triggered": 0
+        },
+        "conditional_stop_loss": {
+          "reviews": 55,
+          "known": 55,
+          "triggered": 13
+        },
+        "continuous_finance_loss": {
+          "reviews": 109,
+          "known": 109,
+          "triggered": 42
+        }
+      },
+      "exit_reasons": {
+        "conditional_stop_loss": {
+          "count": 13,
+          "net_pnl": -22809.369999999995
+        },
+        "continuous_finance_loss": {
+          "count": 42,
+          "net_pnl": -85160.53678881573
+        },
+        "take_profit": {
+          "count": 55,
+          "net_pnl": 101325.4349011858
+        }
+      },
+      "yearly": [
+        {
+          "year": "2024",
+          "return": -0.03715975000000016
+        },
+        {
+          "year": "2025",
+          "return": -0.017842056353585933
+        },
+        {
+          "year": "2026",
+          "return": -0.04293749058996821
+        }
+      ],
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 253,
+        "buy_source_pending": 1,
+        "buy_blocked_cash_or_lot": 2
+      },
+      "source_pending_unfilled_orders": [
+        {
+          "date": "2025-06-05",
+          "symbol": "600008",
+          "side": "buy",
+          "state": "source_pending",
+          "reason": "raw_ohlc_unknown",
+          "limit_price": 2.61,
+          "quantity": 7800
+        }
+      ],
+      "nav_recompute_max_error": 7.771561172376096e-16,
+      "pnl_reconciliation_error": 4.001776687800884e-11
+    },
+    {
+      "path": "continuous_confirmed_30bp",
+      "days": 659,
+      "compounded_return": 0.04768046124885217,
+      "cagr": 0.01797112911057086,
+      "sharpe": 0.19144251845289317,
+      "max_drawdown": 0.16179110881026404,
+      "buys": 107,
+      "closed": 105,
+      "mean_exposure": 0.20920416118962737,
+      "total_fees": 12800.720299272472,
+      "terminal_holdings": 2,
+      "terminal_oldest_age": 25,
+      "terminal_position_summary": [
+        {
+          "code": "000887",
+          "entry_date": "2026-08-14",
+          "age_sessions": 25,
+          "unrealized_net_pnl": -1843.96
+        },
+        {
+          "code": "000565",
+          "entry_date": "2026-09-11",
+          "age_sessions": 5,
+          "unrealized_net_pnl": -1504.08
+        }
+      ],
+      "terminal_unrealized_net_pnl": -3348.04,
+      "occupation": {
+        "slot_days": 732,
+        "full_slots_days": 1,
+        "mean_positions": 1.110773899848255,
+        "t20_or_older_slot_days": 11,
+        "t60_or_older_slot_days": 0
+      },
+      "closed_age_median": 6.0,
+      "closed_age_max": 23,
+      "reviews": {
+        "conditional_stale_loss": {
+          "reviews": 1,
+          "known": 1,
+          "triggered": 0
+        },
+        "conditional_stop_loss": {
+          "reviews": 52,
+          "known": 52,
+          "triggered": 11
+        },
+        "continuous_confirmed_loss": {
+          "reviews": 126,
+          "known": 126,
+          "triggered": 39
+        }
+      },
+      "exit_reasons": {
+        "conditional_stop_loss": {
+          "count": 11,
+          "net_pnl": -20200.555999999997
+        },
+        "continuous_confirmed_loss": {
+          "count": 39,
+          "net_pnl": -85388.01232206784
+        },
+        "take_profit": {
+          "count": 55,
+          "net_pnl": 113704.65444695282
+        }
+      },
+      "yearly": [
+        {
+          "year": "2024",
+          "return": 0.006273809999999713
+        },
+        {
+          "year": "2025",
+          "return": 0.019159308140993314
+        },
+        {
+          "year": "2026",
+          "return": 0.0215758077296746
+        }
+      ],
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 274,
+        "buy_source_pending": 1,
+        "buy_blocked_cash_or_lot": 1
+      },
+      "source_pending_unfilled_orders": [
+        {
+          "date": "2025-06-05",
+          "symbol": "600008",
+          "side": "buy",
+          "state": "source_pending",
+          "reason": "raw_ohlc_unknown",
+          "limit_price": 2.61,
+          "quantity": 8300
+        }
+      ],
+      "nav_recompute_max_error": 2.498001805406602e-16,
+      "pnl_reconciliation_error": -5.911715561524034e-11
+    },
+    {
+      "path": "continuous_confirmed_50bp",
+      "days": 659,
+      "compounded_return": -0.03606078225033238,
+      "cagr": -0.013946168814371496,
+      "sharpe": -0.010859014933363853,
+      "max_drawdown": 0.17255344723044452,
+      "buys": 107,
+      "closed": 105,
+      "mean_exposure": 0.20797895002353928,
+      "total_fees": 20351.205637060117,
+      "terminal_holdings": 2,
+      "terminal_oldest_age": 25,
+      "terminal_position_summary": [
+        {
+          "code": "000887",
+          "entry_date": "2026-08-14",
+          "age_sessions": 25,
+          "unrealized_net_pnl": -1697.94
+        },
+        {
+          "code": "000565",
+          "entry_date": "2026-09-11",
+          "age_sessions": 5,
+          "unrealized_net_pnl": -1392.12
+        }
+      ],
+      "terminal_unrealized_net_pnl": -3090.06,
+      "occupation": {
+        "slot_days": 732,
+        "full_slots_days": 1,
+        "mean_positions": 1.110773899848255,
+        "t20_or_older_slot_days": 11,
+        "t60_or_older_slot_days": 0
+      },
+      "closed_age_median": 6.0,
+      "closed_age_max": 23,
+      "reviews": {
+        "conditional_stale_loss": {
+          "reviews": 1,
+          "known": 1,
+          "triggered": 0
+        },
+        "conditional_stop_loss": {
+          "reviews": 52,
+          "known": 52,
+          "triggered": 11
+        },
+        "continuous_confirmed_loss": {
+          "reviews": 126,
+          "known": 126,
+          "triggered": 39
+        }
+      },
+      "exit_reasons": {
+        "conditional_stop_loss": {
+          "count": 11,
+          "net_pnl": -20136.74499999999
+        },
+        "continuous_confirmed_loss": {
+          "count": 39,
+          "net_pnl": -84497.23598386219
+        },
+        "take_profit": {
+          "count": 55,
+          "net_pnl": 104117.96275882912
+        }
+      },
+      "yearly": [
+        {
+          "year": "2024",
+          "return": -0.021247250000000606
+        },
+        {
+          "year": "2025",
+          "return": -0.0067399044344960135
+        },
+        {
+          "year": "2026",
+          "return": -0.008452174165177961
+        }
+      ],
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 274,
+        "buy_source_pending": 1,
+        "buy_blocked_cash_or_lot": 1
+      },
+      "source_pending_unfilled_orders": [
+        {
+          "date": "2025-06-05",
+          "symbol": "600008",
+          "side": "buy",
+          "state": "source_pending",
+          "reason": "raw_ohlc_unknown",
+          "limit_price": 2.61,
+          "quantity": 8000
+        }
+      ],
+      "nav_recompute_max_error": 2.4338170367954604e-15,
+      "pnl_reconciliation_error": -3.865352482534945e-11
+    },
+    {
+      "path": "late_finance_30bp",
+      "days": 659,
+      "compounded_return": 0.30718923092270534,
+      "cagr": 0.10786679313468306,
+      "sharpe": 0.6757190981458394,
+      "max_drawdown": 0.16123528693606592,
+      "buys": 103,
+      "closed": 100,
+      "mean_exposure": 0.2927719278819751,
+      "total_fees": 14414.024843808236,
+      "terminal_holdings": 3,
+      "terminal_oldest_age": 25,
+      "terminal_position_summary": [
+        {
+          "code": "000887",
+          "entry_date": "2026-08-14",
+          "age_sessions": 25,
+          "unrealized_net_pnl": -2212.752
+        },
+        {
+          "code": "002038",
+          "entry_date": "2026-08-24",
+          "age_sessions": 19,
+          "unrealized_net_pnl": -3230.262
+        },
+        {
+          "code": "000565",
+          "entry_date": "2026-09-11",
+          "age_sessions": 5,
+          "unrealized_net_pnl": -1905.1680000000038
+        }
+      ],
+      "terminal_unrealized_net_pnl": -7348.182000000004,
+      "occupation": {
+        "slot_days": 1039,
+        "full_slots_days": 3,
+        "mean_positions": 1.5766312594840668,
+        "t20_or_older_slot_days": 95,
+        "t60_or_older_slot_days": 0
+      },
+      "closed_age_median": 5.0,
+      "closed_age_max": 35,
+      "reviews": {
+        "conditional_stale_loss": {
+          "reviews": 27,
+          "known": 27,
+          "triggered": 16
+        },
+        "conditional_stop_loss": {
+          "reviews": 54,
+          "known": 54,
+          "triggered": 14
+        },
+        "continuous_finance_loss": {
+          "reviews": 17,
+          "known": 17,
+          "triggered": 9
+        }
+      },
+      "exit_reasons": {
+        "conditional_stale_loss": {
+          "count": 16,
+          "net_pnl": -56398.05202503259
+        },
+        "conditional_stop_loss": {
+          "count": 14,
+          "net_pnl": -29766.147000000004
+        },
+        "continuous_finance_loss": {
+          "count": 9,
+          "net_pnl": -23728.19099999999
+        },
+        "take_profit": {
+          "count": 61,
+          "net_pnl": 147959.49511730307
+        }
+      },
+      "yearly": [
+        {
+          "year": "2024",
+          "return": 0.13910669999999992
+        },
+        {
+          "year": "2025",
+          "return": 0.10788225545508423
+        },
+        {
+          "year": "2026",
+          "return": 0.035810832476190546
+        }
+      ],
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 349,
+        "buy_source_pending": 1
+      },
+      "source_pending_unfilled_orders": [
+        {
+          "date": "2025-06-05",
+          "symbol": "600008",
+          "side": "buy",
+          "state": "source_pending",
+          "reason": "raw_ohlc_unknown",
+          "limit_price": 2.61,
+          "quantity": 10100
+        }
+      ],
+      "nav_recompute_max_error": 3.3306690738754696e-16,
+      "pnl_reconciliation_error": -1.0913936421275139e-11
+    },
+    {
+      "path": "late_finance_50bp",
+      "days": 659,
+      "compounded_return": 0.20475376553225488,
+      "cagr": 0.07382945046100842,
+      "sharpe": 0.4989914945222538,
+      "max_drawdown": 0.16368955725831158,
+      "buys": 103,
+      "closed": 100,
+      "mean_exposure": 0.29218975949751075,
+      "total_fees": 22983.333550518728,
+      "terminal_holdings": 3,
+      "terminal_oldest_age": 25,
+      "terminal_position_summary": [
+        {
+          "code": "000887",
+          "entry_date": "2026-08-14",
+          "age_sessions": 25,
+          "unrealized_net_pnl": -2075.26
+        },
+        {
+          "code": "002038",
+          "entry_date": "2026-08-24",
+          "age_sessions": 19,
+          "unrealized_net_pnl": -3049.215
+        },
+        {
+          "code": "000565",
+          "entry_date": "2026-09-11",
+          "age_sessions": 5,
+          "unrealized_net_pnl": -1804.6000000000035
+        }
+      ],
+      "terminal_unrealized_net_pnl": -6929.075000000004,
+      "occupation": {
+        "slot_days": 1039,
+        "full_slots_days": 3,
+        "mean_positions": 1.5766312594840668,
+        "t20_or_older_slot_days": 95,
+        "t60_or_older_slot_days": 0
+      },
+      "closed_age_median": 5.0,
+      "closed_age_max": 35,
+      "reviews": {
+        "conditional_stale_loss": {
+          "reviews": 27,
+          "known": 27,
+          "triggered": 16
+        },
+        "conditional_stop_loss": {
+          "reviews": 54,
+          "known": 54,
+          "triggered": 14
+        },
+        "continuous_finance_loss": {
+          "reviews": 17,
+          "known": 17,
+          "triggered": 9
+        }
+      },
+      "exit_reasons": {
+        "conditional_stale_loss": {
+          "count": 16,
+          "net_pnl": -55224.08765971316
+        },
+        "conditional_stop_loss": {
+          "count": 14,
+          "net_pnl": -29856.039999999997
+        },
+        "continuous_finance_loss": {
+          "count": 9,
+          "net_pnl": -23501.05499999999
+        },
+        "take_profit": {
+          "count": 61,
+          "net_pnl": 135985.63421293886
+        }
+      },
+      "yearly": [
+        {
+          "year": "2024",
+          "return": 0.1076213999999982
+        },
+        {
+          "year": "2025",
+          "return": 0.07758373032518118
+        },
+        {
+          "year": "2026",
+          "return": 0.009382866653677047
+        }
+      ],
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 349,
+        "buy_source_pending": 1
+      },
+      "source_pending_unfilled_orders": [
+        {
+          "date": "2025-06-05",
+          "symbol": "600008",
+          "side": "buy",
+          "state": "source_pending",
+          "reason": "raw_ohlc_unknown",
+          "limit_price": 2.61,
+          "quantity": 9700
+        }
+      ],
+      "nav_recompute_max_error": 2.55351295663786e-15,
+      "pnl_reconciliation_error": 4.729372449219227e-11
+    },
+    {
+      "path": "late_confirmed_30bp",
+      "days": 659,
+      "compounded_return": 0.3377645460739356,
+      "cagr": 0.1177052311150577,
+      "sharpe": 0.7218689692038636,
+      "max_drawdown": 0.16123528693606592,
+      "buys": 103,
+      "closed": 100,
+      "mean_exposure": 0.3015198585891787,
+      "total_fees": 14557.692441145613,
+      "terminal_holdings": 3,
+      "terminal_oldest_age": 25,
+      "terminal_position_summary": [
+        {
+          "code": "000887",
+          "entry_date": "2026-08-14",
+          "age_sessions": 25,
+          "unrealized_net_pnl": -2397.148
+        },
+        {
+          "code": "002038",
+          "entry_date": "2026-08-24",
+          "age_sessions": 19,
+          "unrealized_net_pnl": -3307.173
+        },
+        {
+          "code": "000565",
+          "entry_date": "2026-09-11",
+          "age_sessions": 5,
+          "unrealized_net_pnl": -1905.1680000000038
+        }
+      ],
+      "terminal_unrealized_net_pnl": -7609.489000000003,
+      "occupation": {
+        "slot_days": 1075,
+        "full_slots_days": 9,
+        "mean_positions": 1.6312594840667678,
+        "t20_or_older_slot_days": 131,
+        "t60_or_older_slot_days": 0
+      },
+      "closed_age_median": 5.0,
+      "closed_age_max": 60,
+      "reviews": {
+        "conditional_stale_loss": {
+          "reviews": 27,
+          "known": 27,
+          "triggered": 16
+        },
+        "conditional_stop_loss": {
+          "reviews": 54,
+          "known": 54,
+          "triggered": 14
+        },
+        "continuous_confirmed_loss": {
+          "reviews": 24,
+          "known": 24,
+          "triggered": 8
+        }
+      },
+      "exit_reasons": {
+        "conditional_stale_loss": {
+          "count": 16,
+          "net_pnl": -56804.61502503259
+        },
+        "conditional_stop_loss": {
+          "count": 14,
+          "net_pnl": -30245.245
+        },
+        "continuous_confirmed_loss": {
+          "count": 8,
+          "net_pnl": -22894.218999999994
+        },
+        "take_profit": {
+          "count": 62,
+          "net_pnl": 151330.02263242632
+        }
+      },
+      "yearly": [
+        {
+          "year": "2024",
+          "return": 0.13910669999999992
+        },
+        {
+          "year": "2025",
+          "return": 0.1369710932259467
+        },
+        {
+          "year": "2026",
+          "return": 0.032918016197519995
+        }
+      ],
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 358,
+        "buy_source_pending": 1
+      },
+      "source_pending_unfilled_orders": [
+        {
+          "date": "2025-06-05",
+          "symbol": "600008",
+          "side": "buy",
+          "state": "source_pending",
+          "reason": "raw_ohlc_unknown",
+          "limit_price": 2.61,
+          "quantity": 10200
+        }
+      ],
+      "nav_recompute_max_error": 6.661338147750939e-16,
+      "pnl_reconciliation_error": -7.275957614183426e-11
+    },
+    {
+      "path": "late_confirmed_50bp",
+      "days": 659,
+      "compounded_return": 0.24194166962601682,
+      "cagr": 0.08638577391376767,
+      "sharpe": 0.5610433564245677,
+      "max_drawdown": 0.16368955725831158,
+      "buys": 103,
+      "closed": 100,
+      "mean_exposure": 0.3016587356133917,
+      "total_fees": 23340.38274855579,
+      "terminal_holdings": 3,
+      "terminal_oldest_age": 25,
+      "terminal_position_summary": [
+        {
+          "code": "000887",
+          "entry_date": "2026-08-14",
+          "age_sessions": 25,
+          "unrealized_net_pnl": -2263.92
+        },
+        {
+          "code": "002038",
+          "entry_date": "2026-08-24",
+          "age_sessions": 19,
+          "unrealized_net_pnl": -3127.4
+        },
+        {
+          "code": "000565",
+          "entry_date": "2026-09-11",
+          "age_sessions": 5,
+          "unrealized_net_pnl": -1856.16
+        }
+      ],
+      "terminal_unrealized_net_pnl": -7247.48,
+      "occupation": {
+        "slot_days": 1075,
+        "full_slots_days": 9,
+        "mean_positions": 1.6312594840667678,
+        "t20_or_older_slot_days": 131,
+        "t60_or_older_slot_days": 0
+      },
+      "closed_age_median": 5.0,
+      "closed_age_max": 60,
+      "reviews": {
+        "conditional_stale_loss": {
+          "reviews": 27,
+          "known": 27,
+          "triggered": 16
+        },
+        "conditional_stop_loss": {
+          "reviews": 54,
+          "known": 54,
+          "triggered": 14
+        },
+        "continuous_confirmed_loss": {
+          "reviews": 24,
+          "known": 24,
+          "triggered": 8
+        }
+      },
+      "exit_reasons": {
+        "conditional_stale_loss": {
+          "count": 16,
+          "net_pnl": -56029.40692568447
+        },
+        "conditional_stop_loss": {
+          "count": 14,
+          "net_pnl": -30196.82
+        },
+        "continuous_confirmed_loss": {
+          "count": 8,
+          "net_pnl": -22541.38499999999
+        },
+        "take_profit": {
+          "count": 62,
+          "net_pnl": 140209.25888828625
+        }
+      },
+      "yearly": [
+        {
+          "year": "2024",
+          "return": 0.1076213999999982
+        },
+        {
+          "year": "2025",
+          "return": 0.11025211322208261
+        },
+        {
+          "year": "2026",
+          "return": 0.009922975221587249
+        }
+      ],
+      "blocked_orders": {
+        "buy_blocked_no_preopen_slot": 358,
+        "buy_source_pending": 1
+      },
+      "source_pending_unfilled_orders": [
+        {
+          "date": "2025-06-05",
+          "symbol": "600008",
+          "side": "buy",
+          "state": "source_pending",
+          "reason": "raw_ohlc_unknown",
+          "limit_price": 2.61,
+          "quantity": 9800
+        }
+      ],
+      "nav_recompute_max_error": 1.4432899320127035e-15,
+      "pnl_reconciliation_error": 5.093170329928398e-11
+    }
+  ],
+  "comparisons": [
+    {
+      "target": "continuous_finance_30bp",
+      "control": "finance_guard_no_cap_30bp",
+      "gain_retention": -0.027669650552621106,
+      "drawdown_reduction": -0.29707464577514164,
+      "economic_reference_pass": false,
+      "annualized_mean_difference": -0.2161326330047966,
+      "confidence_interval_95": [
+        -0.41155520350498587,
+        -0.02858217551206774
+      ],
+      "ci_contains_zero": false,
+      "t60_slot_reduction": 1.0
+    },
+    {
+      "target": "continuous_finance_50bp",
+      "control": "finance_guard_no_cap_50bp",
+      "gain_retention": -0.1579510496820932,
+      "drawdown_reduction": -0.3491409329020625,
+      "economic_reference_pass": false,
+      "annualized_mean_difference": -0.22305358531244418,
+      "confidence_interval_95": [
+        -0.4166664092617232,
+        -0.03612806786802699
+      ],
+      "ci_contains_zero": false,
+      "t60_slot_reduction": 1.0
+    },
+    {
+      "target": "continuous_confirmed_30bp",
+      "control": "finance_guard_no_cap_30bp",
+      "gain_retention": 0.06772363746409893,
+      "drawdown_reduction": -0.00344727190158145,
+      "economic_reference_pass": false,
+      "annualized_mean_difference": -0.19021331225896249,
+      "confidence_interval_95": [
+        -0.35330740478811146,
+        -0.03322434176911164
+      ],
+      "ci_contains_zero": false,
+      "t60_slot_reduction": 1.0
+    },
+    {
+      "target": "continuous_confirmed_50bp",
+      "control": "finance_guard_no_cap_50bp",
+      "gain_retention": -0.05999211397529937,
+      "drawdown_reduction": -0.054150613640827405,
+      "economic_reference_pass": false,
+      "annualized_mean_difference": -0.19840437448228568,
+      "confidence_interval_95": [
+        -0.36511771703665946,
+        -0.0399602355628037
+      ],
+      "ci_contains_zero": false,
+      "t60_slot_reduction": 1.0
+    },
+    {
+      "target": "late_finance_30bp",
+      "control": "finance_guard_no_cap_30bp",
+      "gain_retention": 0.4363206974719752,
+      "drawdown_reduction": 0.0,
+      "economic_reference_pass": false,
+      "annualized_mean_difference": -0.10305891294196667,
+      "confidence_interval_95": [
+        -0.23225456790174545,
+        0.03143744449811162
+      ],
+      "ci_contains_zero": true,
+      "t60_slot_reduction": 1.0
+    },
+    {
+      "target": "late_finance_50bp",
+      "control": "finance_guard_no_cap_50bp",
+      "gain_retention": 0.3406362943934622,
+      "drawdown_reduction": 0.0,
+      "economic_reference_pass": false,
+      "annualized_mean_difference": -0.11061046484311048,
+      "confidence_interval_95": [
+        -0.23978580015922737,
+        0.024058978693914965
+      ],
+      "ci_contains_zero": true,
+      "t60_slot_reduction": 1.0
+    },
+    {
+      "target": "late_confirmed_30bp",
+      "control": "finance_guard_no_cap_30bp",
+      "gain_retention": 0.479748791588878,
+      "drawdown_reduction": 0.0,
+      "economic_reference_pass": false,
+      "annualized_mean_difference": -0.09395438738119335,
+      "confidence_interval_95": [
+        -0.2173277749650155,
+        0.03676539493636705
+      ],
+      "ci_contains_zero": true,
+      "t60_slot_reduction": 1.0
+    },
+    {
+      "target": "late_confirmed_50bp",
+      "control": "finance_guard_no_cap_50bp",
+      "gain_retention": 0.4025035319205934,
+      "drawdown_reduction": 0.0,
+      "economic_reference_pass": false,
+      "annualized_mean_difference": -0.09857267125527425,
+      "confidence_interval_95": [
+        -0.22489636862944146,
+        0.03184512621226702
+      ],
+      "ci_contains_zero": true,
+      "t60_slot_reduction": 1.0
+    }
+  ],
+  "attribution": {
+    "continuous_finance_30bp": {
+      "shared_baseline_entries": 83,
+      "baseline_eventual_winners_sold_earlier_at_loss": 16,
+      "new_entries": 29,
+      "missed_baseline_entries": 0,
+      "new_entry_closed_net_pnl": -3411.2811889408804,
+      "baseline_terminal_transitions": [
+        {
+          "code": "002285",
+          "entry_date": "2024-11-08",
+          "baseline_terminal_age": 454,
+          "same_entry_taken": true,
+          "new_exit_date": "2024-11-29",
+          "new_exit_age": 15,
+          "new_exit_reason": "continuous_finance_loss",
+          "new_realized_net_pnl": -3015.5840000000007
+        },
+        {
+          "code": "000887",
+          "entry_date": "2026-08-14",
+          "baseline_terminal_age": 25,
+          "same_entry_taken": true,
+          "new_exit_date": null,
+          "new_exit_age": null,
+          "new_exit_reason": null,
+          "new_realized_net_pnl": null
+        },
+        {
+          "code": "000565",
+          "entry_date": "2026-09-11",
+          "baseline_terminal_age": 5,
+          "same_entry_taken": true,
+          "new_exit_date": null,
+          "new_exit_age": null,
+          "new_exit_reason": null,
+          "new_realized_net_pnl": null
+        }
+      ]
+    },
+    "continuous_finance_50bp": {
+      "shared_baseline_entries": 83,
+      "baseline_eventual_winners_sold_earlier_at_loss": 16,
+      "new_entries": 29,
+      "missed_baseline_entries": 0,
+      "new_entry_closed_net_pnl": -4270.646788815742,
+      "baseline_terminal_transitions": [
+        {
+          "code": "002285",
+          "entry_date": "2024-11-08",
+          "baseline_terminal_age": 454,
+          "same_entry_taken": true,
+          "new_exit_date": "2024-11-29",
+          "new_exit_age": 15,
+          "new_exit_reason": "continuous_finance_loss",
+          "new_realized_net_pnl": -3025.32
+        },
+        {
+          "code": "000887",
+          "entry_date": "2026-08-14",
+          "baseline_terminal_age": 25,
+          "same_entry_taken": true,
+          "new_exit_date": null,
+          "new_exit_age": null,
+          "new_exit_reason": null,
+          "new_realized_net_pnl": null
+        },
+        {
+          "code": "000565",
+          "entry_date": "2026-09-11",
+          "baseline_terminal_age": 5,
+          "same_entry_taken": true,
+          "new_exit_date": null,
+          "new_exit_age": null,
+          "new_exit_reason": null,
+          "new_realized_net_pnl": null
+        }
+      ]
+    },
+    "continuous_confirmed_30bp": {
+      "shared_baseline_entries": 83,
+      "baseline_eventual_winners_sold_earlier_at_loss": 13,
+      "new_entries": 24,
+      "missed_baseline_entries": 0,
+      "new_entry_closed_net_pnl": -3321.2683220678223,
+      "baseline_terminal_transitions": [
+        {
+          "code": "002285",
+          "entry_date": "2024-11-08",
+          "baseline_terminal_age": 454,
+          "same_entry_taken": true,
+          "new_exit_date": "2024-11-29",
+          "new_exit_age": 15,
+          "new_exit_reason": "continuous_confirmed_loss",
+          "new_realized_net_pnl": -3073.576000000001
+        },
+        {
+          "code": "000887",
+          "entry_date": "2026-08-14",
+          "baseline_terminal_age": 25,
+          "same_entry_taken": true,
+          "new_exit_date": null,
+          "new_exit_age": null,
+          "new_exit_reason": null,
+          "new_realized_net_pnl": null
+        },
+        {
+          "code": "000565",
+          "entry_date": "2026-09-11",
+          "baseline_terminal_age": 5,
+          "same_entry_taken": true,
+          "new_exit_date": null,
+          "new_exit_age": null,
+          "new_exit_reason": null,
+          "new_realized_net_pnl": null
+        }
+      ]
+    },
+    "continuous_confirmed_50bp": {
+      "shared_baseline_entries": 83,
+      "baseline_eventual_winners_sold_earlier_at_loss": 13,
+      "new_entries": 24,
+      "missed_baseline_entries": 0,
+      "new_entry_closed_net_pnl": -4138.645983862189,
+      "baseline_terminal_transitions": [
+        {
+          "code": "002285",
+          "entry_date": "2024-11-08",
+          "baseline_terminal_age": 454,
+          "same_entry_taken": true,
+          "new_exit_date": "2024-11-29",
+          "new_exit_age": 15,
+          "new_exit_reason": "continuous_confirmed_loss",
+          "new_realized_net_pnl": -3084.6399999999994
+        },
+        {
+          "code": "000887",
+          "entry_date": "2026-08-14",
+          "baseline_terminal_age": 25,
+          "same_entry_taken": true,
+          "new_exit_date": null,
+          "new_exit_age": null,
+          "new_exit_reason": null,
+          "new_realized_net_pnl": null
+        },
+        {
+          "code": "000565",
+          "entry_date": "2026-09-11",
+          "baseline_terminal_age": 5,
+          "same_entry_taken": true,
+          "new_exit_date": null,
+          "new_exit_age": null,
+          "new_exit_reason": null,
+          "new_realized_net_pnl": null
+        }
+      ]
+    },
+    "late_finance_30bp": {
+      "shared_baseline_entries": 83,
+      "baseline_eventual_winners_sold_earlier_at_loss": 7,
+      "new_entries": 20,
+      "missed_baseline_entries": 0,
+      "new_entry_closed_net_pnl": 1288.2979749674123,
+      "baseline_terminal_transitions": [
+        {
+          "code": "002285",
+          "entry_date": "2024-11-08",
+          "baseline_terminal_age": 454,
+          "same_entry_taken": true,
+          "new_exit_date": "2024-12-20",
+          "new_exit_age": 30,
+          "new_exit_reason": "continuous_finance_loss",
+          "new_realized_net_pnl": -3180.4199999999983
+        },
+        {
+          "code": "000887",
+          "entry_date": "2026-08-14",
+          "baseline_terminal_age": 25,
+          "same_entry_taken": true,
+          "new_exit_date": null,
+          "new_exit_age": null,
+          "new_exit_reason": null,
+          "new_realized_net_pnl": null
+        },
+        {
+          "code": "000565",
+          "entry_date": "2026-09-11",
+          "baseline_terminal_age": 5,
+          "same_entry_taken": true,
+          "new_exit_date": null,
+          "new_exit_age": null,
+          "new_exit_reason": null,
+          "new_realized_net_pnl": null
+        }
+      ]
+    },
+    "late_finance_50bp": {
+      "shared_baseline_entries": 83,
+      "baseline_eventual_winners_sold_earlier_at_loss": 7,
+      "new_entries": 20,
+      "missed_baseline_entries": 0,
+      "new_entry_closed_net_pnl": -191.29765971316374,
+      "baseline_terminal_transitions": [
+        {
+          "code": "002285",
+          "entry_date": "2024-11-08",
+          "baseline_terminal_age": 454,
+          "same_entry_taken": true,
+          "new_exit_date": "2024-12-20",
+          "new_exit_age": 30,
+          "new_exit_reason": "continuous_finance_loss",
+          "new_realized_net_pnl": -3206.355
+        },
+        {
+          "code": "000887",
+          "entry_date": "2026-08-14",
+          "baseline_terminal_age": 25,
+          "same_entry_taken": true,
+          "new_exit_date": null,
+          "new_exit_age": null,
+          "new_exit_reason": null,
+          "new_realized_net_pnl": null
+        },
+        {
+          "code": "000565",
+          "entry_date": "2026-09-11",
+          "baseline_terminal_age": 5,
+          "same_entry_taken": true,
+          "new_exit_date": null,
+          "new_exit_age": null,
+          "new_exit_reason": null,
+          "new_realized_net_pnl": null
+        }
+      ]
+    },
+    "late_confirmed_30bp": {
+      "shared_baseline_entries": 83,
+      "baseline_eventual_winners_sold_earlier_at_loss": 6,
+      "new_entries": 20,
+      "missed_baseline_entries": 0,
+      "new_entry_closed_net_pnl": 1251.4319749674069,
+      "baseline_terminal_transitions": [
+        {
+          "code": "002285",
+          "entry_date": "2024-11-08",
+          "baseline_terminal_age": 454,
+          "same_entry_taken": true,
+          "new_exit_date": "2024-12-20",
+          "new_exit_age": 30,
+          "new_exit_reason": "continuous_confirmed_loss",
+          "new_realized_net_pnl": -3180.4199999999983
+        },
+        {
+          "code": "000887",
+          "entry_date": "2026-08-14",
+          "baseline_terminal_age": 25,
+          "same_entry_taken": true,
+          "new_exit_date": null,
+          "new_exit_age": null,
+          "new_exit_reason": null,
+          "new_realized_net_pnl": null
+        },
+        {
+          "code": "000565",
+          "entry_date": "2026-09-11",
+          "baseline_terminal_age": 5,
+          "same_entry_taken": true,
+          "new_exit_date": null,
+          "new_exit_age": null,
+          "new_exit_reason": null,
+          "new_realized_net_pnl": null
+        }
+      ]
+    },
+    "late_confirmed_50bp": {
+      "shared_baseline_entries": 83,
+      "baseline_eventual_winners_sold_earlier_at_loss": 6,
+      "new_entries": 20,
+      "missed_baseline_entries": 0,
+      "new_entry_closed_net_pnl": -516.0569256844738,
+      "baseline_terminal_transitions": [
+        {
+          "code": "002285",
+          "entry_date": "2024-11-08",
+          "baseline_terminal_age": 454,
+          "same_entry_taken": true,
+          "new_exit_date": "2024-12-20",
+          "new_exit_age": 30,
+          "new_exit_reason": "continuous_confirmed_loss",
+          "new_realized_net_pnl": -3206.355
+        },
+        {
+          "code": "000887",
+          "entry_date": "2026-08-14",
+          "baseline_terminal_age": 25,
+          "same_entry_taken": true,
+          "new_exit_date": null,
+          "new_exit_age": null,
+          "new_exit_reason": null,
+          "new_realized_net_pnl": null
+        },
+        {
+          "code": "000565",
+          "entry_date": "2026-09-11",
+          "baseline_terminal_age": 5,
+          "same_entry_taken": true,
+          "new_exit_date": null,
+          "new_exit_age": null,
+          "new_exit_reason": null,
+          "new_realized_net_pnl": null
+        }
+      ]
+    }
+  },
+  "cash_pnl_decomposition": {
+    "continuous_finance_30bp": {
+      "shared_entry_closed_pnl_difference": -75375.14161644614,
+      "new_entry_closed_net_pnl": -3411.2811889408804,
+      "terminal_unrealized_difference": 6433.896,
+      "dividend_cash_difference": 0.0,
+      "terminal_nav_difference": -72352.5268053876,
+      "total_fee_difference": 742.5059373960321,
+      "reconciliation_error": 5.820766091346741e-10,
+      "meaning": "Account cash-PnL decomposition, not fixed-quantity causal effect; sizes and compounding differ."
+    },
+    "continuous_finance_50bp": {
+      "shared_entry_closed_pnl_difference": -71739.6692271765,
+      "new_entry_closed_net_pnl": -4270.646788815742,
+      "terminal_unrealized_difference": 6406.799999999996,
+      "dividend_cash_difference": 0.0,
+      "terminal_nav_difference": -69603.51601599218,
+      "total_fee_difference": 1040.4999195176315,
+      "reconciliation_error": -8.731149137020111e-11,
+      "meaning": "Account cash-PnL decomposition, not fixed-quantity causal effect; sizes and compounding differ."
+    },
+    "continuous_confirmed_30bp": {
+      "shared_entry_closed_pnl_difference": -68464.37355289256,
+      "new_entry_closed_net_pnl": -3321.2683220678223,
+      "terminal_unrealized_difference": 6149.228,
+      "dividend_cash_difference": 0.0,
+      "terminal_nav_difference": -65636.41387496066,
+      "total_fee_difference": 626.6406804163689,
+      "reconciliation_error": 2.9103830456733704e-10,
+      "meaning": "Account cash-PnL decomposition, not fixed-quantity causal effect; sizes and compounding differ."
+    },
+    "continuous_confirmed_50bp": {
+      "shared_entry_closed_pnl_difference": -65743.21636953315,
+      "new_entry_closed_net_pnl": -4138.645983862189,
+      "terminal_unrealized_difference": 6166.579999999996,
+      "dividend_cash_difference": 0.0,
+      "terminal_nav_difference": -63715.2823533954,
+      "total_fee_difference": 767.8679278723685,
+      "reconciliation_error": 4.3655745685100555e-11,
+      "meaning": "Account cash-PnL decomposition, not fixed-quantity causal effect; sizes and compounding differ."
+    },
+    "late_finance_30bp": {
+      "shared_entry_closed_pnl_difference": -43122.92088254229,
+      "new_entry_closed_net_pnl": 1288.2979749674123,
+      "terminal_unrealized_difference": 2149.0859999999957,
+      "dividend_cash_difference": 0.0,
+      "terminal_nav_difference": -39685.53690757535,
+      "total_fee_difference": 2239.945224952133,
+      "reconciliation_error": 4.656612873077393e-10,
+      "meaning": "Account cash-PnL decomposition, not fixed-quantity causal effect; sizes and compounding differ."
+    },
+    "late_finance_50bp": {
+      "shared_entry_closed_pnl_difference": -41770.09491542341,
+      "new_entry_closed_net_pnl": -191.29765971316374,
+      "terminal_unrealized_difference": 2327.5649999999914,
+      "dividend_cash_difference": 0.0,
+      "terminal_nav_difference": -39633.82757513667,
+      "total_fee_difference": 3399.9958413309796,
+      "reconciliation_error": 8.003553375601768e-11,
+      "meaning": "Account cash-PnL decomposition, not fixed-quantity causal effect; sizes and compounding differ."
+    },
+    "late_confirmed_30bp": {
+      "shared_entry_closed_pnl_difference": -39767.21636741905,
+      "new_entry_closed_net_pnl": 1251.4319749674069,
+      "terminal_unrealized_difference": 1887.7789999999968,
+      "dividend_cash_difference": 0.0,
+      "terminal_nav_difference": -36628.00539245232,
+      "total_fee_difference": 2383.6128222895095,
+      "reconciliation_error": 6.693881005048752e-10,
+      "meaning": "Account cash-PnL decomposition, not fixed-quantity causal effect; sizes and compounding differ."
+    },
+    "late_confirmed_50bp": {
+      "shared_entry_closed_pnl_difference": -37408.14024007598,
+      "new_entry_closed_net_pnl": -516.0569256844738,
+      "terminal_unrealized_difference": 2009.1599999999962,
+      "dividend_cash_difference": 0.0,
+      "terminal_nav_difference": -35915.03716576048,
+      "total_fee_difference": 3757.0450393680403,
+      "reconciliation_error": 1.4551915228366852e-11,
+      "meaning": "Account cash-PnL decomposition, not fixed-quantity causal effect; sizes and compounding differ."
+    }
+  },
+  "drawdown_locations_30bp": {
+    "finance_guard_no_cap": {
+      "peak_date": "2024-08-06",
+      "trough_date": "2024-09-18",
+      "trough_nav": 88426.71200000001,
+      "drawdown": 0.16123528693606626,
+      "first_nav_difference_from_baseline": null
+    },
+    "continuous_finance": {
+      "peak_date": "2025-04-21",
+      "trough_date": "2025-11-21",
+      "trough_nav": 87824.65900000007,
+      "drawdown": 0.20913420268905103,
+      "first_nav_difference_from_baseline": "2024-02-28"
+    },
+    "continuous_confirmed": {
+      "peak_date": "2025-04-21",
+      "trough_date": "2025-11-21",
+      "trough_nav": 94748.372,
+      "drawdown": 0.1617911088102656,
+      "first_nav_difference_from_baseline": "2024-03-13"
+    },
+    "late_finance": {
+      "peak_date": "2024-08-06",
+      "trough_date": "2024-09-18",
+      "trough_nav": 88426.71200000001,
+      "drawdown": 0.16123528693606626,
+      "first_nav_difference_from_baseline": "2024-12-20"
+    },
+    "late_confirmed": {
+      "peak_date": "2024-08-06",
+      "trough_date": "2024-09-18",
+      "trough_nav": 88426.71200000001,
+      "drawdown": 0.16123528693606626,
+      "first_nav_difference_from_baseline": "2024-12-20"
+    }
+  },
+  "source": {
+    "new_financing_code_dates": 649,
+    "initial_new": 523,
+    "late_new": 126,
+    "successful_requests": 152,
+    "failed_requests": 0,
+    "initial_feature_identities_used": 183,
+    "late_feature_identities_used": 105,
+    "all_consumed_features_lag_audited": true,
+    "all_sources_disjoint_delta": true,
+    "endpoint": "https://datacenter-web.eastmoney.com/api/data/v1/get",
+    "report": "RPTA_WEB_RZRQ_GGMX",
+    "fields": [
+      "RZYE",
+      "RZMRE",
+      "RZCHE"
+    ],
+    "historical_publication_revision_PIT_certified": false,
+    "official_cost": 0
+  },
+  "budget": {
+    "global": {
+      "runs": 11,
+      "actual": 22.0,
+      "unsettled": 0,
+      "active_reserved": 0
+    },
+    "parent20": {
+      "runs": 1,
+      "actual": 2.0,
+      "unsettled": 0,
+      "active_reserved": 0,
+      "authorized": 20,
+      "remaining": 18.0
+    },
+    "this_task": {
+      "official_runs": 0,
+      "official_spent": 0
+    }
+  },
+  "new_contexts": 4,
+  "registry_total": 615,
+  "historical": 415,
+  "unique": 200,
+  "new_cost_paths": 8,
+  "old_controls_reused": 2,
+  "formal_eligible": false,
+  "onset_ablation_post_selection": true,
+  "all_history_exposed": true,
+  "limitations": [
+    "All oldwindow exposed and postselection; no newOOS.",
+    "Two-session lag is conservative clock, not certified historicalpublication/versionPIT.",
+    "Dailybar potentialfills notqueueproof;totalreturn units notactual corporate-action inventory.",
+    "No formal factor admission or platform continuousproduction evidence.",
+    "Late25 onset ablation followed complete first5 onset results; not an independent confirmation."
+  ],
+  "protocols": [
+    {
+      "name": "protocol.json",
+      "sha256": "131cde89b865f7fb5b3f97cdd1a5062dfb793c9b932087ac67806bee91edef70"
+    },
+    {
+      "name": "late_protocol.json",
+      "sha256": "fd0b9821b2dc62d555dfc5ed41deb044c929b06402de366b3a8cc80ae36e0e77"
+    }
+  ]
+}
