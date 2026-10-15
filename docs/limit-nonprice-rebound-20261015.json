@@ -1,0 +1,123 @@
+{
+  "scope": "LIMIT_NONPRICE_REBOUND_20261015",
+  "window": {
+    "start": "2025-01-06",
+    "end": "2025-02-12"
+  },
+  "fixed_opportunities": 100,
+  "complete_touched_event_labels": 22,
+  "comparison_dates": 9,
+  "industry_support": {
+    "source_supported": 99,
+    "positive": {
+      "n": 12,
+      "dates": 6,
+      "mean_label_return5": 0.012804144255426036,
+      "mean_label_mae5": -0.08763302432089526,
+      "mean_return_30bp_two_sided_event_proxy": 0.006745495336649807,
+      "mean_return_50bp_two_sided_event_proxy": 0.0027264910787551297
+    },
+    "nonpositive": {
+      "n": 10,
+      "dates": 6,
+      "mean_label_return5": 0.03896109204095437,
+      "mean_label_mae5": -0.04796728041045512,
+      "mean_return_30bp_two_sided_event_proxy": 0.03274597085227469,
+      "mean_return_50bp_two_sided_event_proxy": 0.028623170727114032
+    },
+    "same_support_benchmark": {
+      "n": 22,
+      "dates": 9,
+      "mean_label_return5": 0.024693665976120726,
+      "mean_label_mae5": -0.06960314072524065,
+      "mean_return_30bp_two_sided_event_proxy": 0.018563893298297482,
+      "mean_return_50bp_two_sided_event_proxy": 0.01449770910073645
+    },
+    "return_correlation": {
+      "pooled_event_spearman": -0.25826513941677576,
+      "daily": [
+        {
+          "date": "2025-01-06",
+          "n": 4,
+          "rho": 0.0
+        },
+        {
+          "date": "2025-01-07",
+          "n": 1,
+          "rho": null
+        },
+        {
+          "date": "2025-01-10",
+          "n": 4,
+          "rho": -0.39999999999999997
+        },
+        {
+          "date": "2025-01-13",
+          "n": 4,
+          "rho": -0.9486832980505139
+        },
+        {
+          "date": "2025-01-16",
+          "n": 1,
+          "rho": null
+        },
+        {
+          "date": "2025-01-17",
+          "n": 4,
+          "rho": 0.21081851067789195
+        },
+        {
+          "date": "2025-01-20",
+          "n": 1,
+          "rho": null
+        },
+        {
+          "date": "2025-01-23",
+          "n": 1,
+          "rho": null
+        },
+        {
+          "date": "2025-01-24",
+          "n": 2,
+          "rho": null
+        }
+      ],
+      "valid_daily_IC_dates": 4,
+      "mean_daily_rank_correlation": -0.2844661968431555,
+      "not_formal_independent_five_day_RankIC": true
+    },
+    "protocol_sha256": "79e2389021a529dc7b56aefab31fe5b2a89bd0617a86adf1f0ab1c877a9c655a",
+    "summary_sha256": "3bb3e4367415eed00eada2b056e2278b0c8a53f6d54829714151ef9ebd161126",
+    "decision": "Prespecified higher-is-better direction not supported in this small pilot; no reverse-sign rescue."
+  },
+  "announcement_receipt_title": {
+    "known_exposures": 100,
+    "flag_counts": {
+      "0": 98,
+      "1": 2
+    },
+    "touched_complete_no_observed_match": 22,
+    "touched_complete_observed_receipt": 0,
+    "protocol_sha256": "4595671f497c41ee76547f91439690ca68a43c17bb944b432a10fe8f94c4adec",
+    "summary_sha256": "0e18ec9462eca7930ae5f74499aa223d8688d25c285ac34357a51d9b2c775dc7",
+    "decision": "No realized selection contrast; receipt-title absence is not clean-company or active-case clearance."
+  },
+  "new_contexts_including_controls": 4,
+  "registry_total": 587,
+  "historical_baseline": 415,
+  "unique_contexts": 172,
+  "new_official_runs": 0,
+  "official_cost": 0,
+  "new_public_metadata_posts": 5,
+  "new_forward_labels_or_account_replays": 0,
+  "formal_eligible": false,
+  "untouched_OOS": false,
+  "not_NAV_annual_Sharpe_or_execution_certification": true,
+  "old_automation": "PAUSED",
+  "old_night_funding_reused": false,
+  "test_results": {
+    "sector_pure_cases": 34,
+    "announcement_pure_cases": 8,
+    "scope": "Actual completed synthetic tool runs; no repeated tests or native/PIT certification."
+  }
+}
