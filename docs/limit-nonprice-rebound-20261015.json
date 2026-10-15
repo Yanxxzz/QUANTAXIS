@@ -119,5 +119,6 @@
     "sector_pure_cases": 34,
     "announcement_pure_cases": 8,
     "scope": "Actual completed synthetic tool runs; no repeated tests or native/PIT certification."
-  }
+  },
+  "base_mask_semantics": "Archivedbase_mask inherits finite prior20dayextension<=0.18595041322314065 and old eligibility; not all unfiltered two-board opportunities. Original100 IDs/values/labels unchanged."
 }
