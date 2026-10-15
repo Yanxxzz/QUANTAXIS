@@ -1,0 +1,649 @@
+{
+  "scope": "FINANCE_DOMAIN_VALIDATION20_20261015",
+  "completed_at": "2026-10-15T10:11:57.315220+00:00",
+  "window": [
+    "2024-01-02",
+    "2026-09-18"
+  ],
+  "sessions": 659,
+  "initial_cash": 100000,
+  "sources": {
+    "status": "ALL_FIXED_NEW_VALUES_COMPLETE",
+    "nominal": 2990,
+    "parent_known": 1451,
+    "common": 1444,
+    "stock_pass": 1114,
+    "buy_pass": 954,
+    "missing": {
+      "parent_financing_unknown": 1539,
+      "float_share_turnover_identity_pending": 7
+    },
+    "external_requests": 0
+  },
+  "new_contexts": 3,
+  "economic_targets": 2,
+  "common_source_controls": 1,
+  "new_accounts": 6,
+  "old_account_replays": 0,
+  "formal_eligible": false,
+  "limitations": [
+    "Previously exposed window and thresholds exploratory; no untouched OOS or multiplicity adjustment.",
+    "Both thresholds fixed before values/results; one threshold each, no sweep, blend, flip or post-result update.",
+    "Common support is1444/2990, not the prior1451 finance domain;7 new source identity mismatches remain pending.",
+    "Unknown financing is not zero/non-margin. Ratios are not forced-liquidation pressure or informed-owner identification.",
+    "Potential daily-bar limit-down touch is not queue execution certification. Historical publication/revision timing and actual corporate-action inventory remain uncertified.",
+    "Account Sharpe is net daily annualized; no full native factor IC/group/coverage or real-pool increment certification."
+  ],
+  "new_account_rows": [
+    {
+      "path": "control_30bp",
+      "days": 659,
+      "compounded_return": 0.9092868970974026,
+      "cagr": 0.28057335723002286,
+      "sharpe": 1.2681236373031417,
+      "max_drawdown": 0.19200723273820586,
+      "cost_single_side": 0.003,
+      "buys": 54,
+      "closed": 49,
+      "mean_exposure": 0.5922679883237899,
+      "terminal_exposure": 0.7342582911706962,
+      "terminal_holdings": 5,
+      "terminal_oldest_age": 233,
+      "realized_net_pnl": 143390.9472680064,
+      "terminal_unrealized_net_pnl": -52462.257558265585,
+      "dividend_cash": 0.0,
+      "total_fees": 9378.498644738234,
+      "pnl_reconciliation_error": -5.820766091346741e-11,
+      "nav_reconciliation_max_error": 3.774758283725532e-15,
+      "closed_holding_sessions_median": 6.0,
+      "closed_holding_sessions_max": 311,
+      "yearly": [
+        {
+          "year": "2024",
+          "days": 242,
+          "return": 0.30402141268006155,
+          "within_year_drawdown": 0.19200723273820586,
+          "mean_exposure": 0.5155494097258695
+        },
+        {
+          "year": "2025",
+          "days": 243,
+          "return": 0.5398244025404739,
+          "within_year_drawdown": 0.07983242128579482,
+          "mean_exposure": 0.6435849688241166
+        },
+        {
+          "year": "2026",
+          "days": 174,
+          "return": -0.04914286109829624,
+          "within_year_drawdown": 0.13980523438718495,
+          "mean_exposure": 0.6273017225715908
+        }
+      ]
+    },
+    {
+      "path": "control_50bp",
+      "days": 659,
+      "compounded_return": 0.842163492040348,
+      "cagr": 0.26316722450918073,
+      "sharpe": 1.2029926757414031,
+      "max_drawdown": 0.196779549536108,
+      "cost_single_side": 0.005,
+      "buys": 54,
+      "closed": 49,
+      "mean_exposure": 0.5928779365665771,
+      "terminal_exposure": 0.7353700469647935,
+      "terminal_holdings": 5,
+      "terminal_oldest_age": 233,
+      "realized_net_pnl": 134844.00883818092,
+      "terminal_unrealized_net_pnl": -50627.659634146345,
+      "dividend_cash": 0.0,
+      "total_fees": 15305.051074563726,
+      "pnl_reconciliation_error": 5.820766091346741e-11,
+      "nav_reconciliation_max_error": 2.220446049250313e-15,
+      "closed_holding_sessions_median": 6.0,
+      "closed_holding_sessions_max": 311,
+      "yearly": [
+        {
+          "year": "2024",
+          "days": 242,
+          "return": 0.28461458838180986,
+          "within_year_drawdown": 0.196779549536108,
+          "mean_exposure": 0.5185322508761528
+        },
+        {
+          "year": "2025",
+          "days": 243,
+          "return": 0.5181391415136007,
+          "within_year_drawdown": 0.0811708678456391,
+          "mean_exposure": 0.6450452028976
+        },
+        {
+          "year": "2026",
+          "days": 174,
+          "return": -0.05540912921180152,
+          "within_year_drawdown": 0.14275732969058863,
+          "mean_exposure": 0.6234239723059111
+        }
+      ]
+    },
+    {
+      "path": "stock_30bp",
+      "days": 659,
+      "compounded_return": 0.8995594463385987,
+      "cagr": 0.278074554057957,
+      "sharpe": 1.318726995364147,
+      "max_drawdown": 0.21098457728109588,
+      "cost_single_side": 0.003,
+      "buys": 52,
+      "closed": 47,
+      "mean_exposure": 0.5418818094984968,
+      "terminal_exposure": 0.7217367460129259,
+      "terminal_holdings": 5,
+      "terminal_oldest_age": 290,
+      "realized_net_pnl": 135723.71626800636,
+      "terminal_unrealized_net_pnl": -45767.77163414634,
+      "dividend_cash": 0.0,
+      "total_fees": 8863.455644738235,
+      "pnl_reconciliation_error": 0.0,
+      "nav_reconciliation_max_error": 6.661338147750939e-16,
+      "closed_holding_sessions_median": 7.0,
+      "closed_holding_sessions_max": 311,
+      "yearly": [
+        {
+          "year": "2024",
+          "days": 242,
+          "return": 0.3092847526800637,
+          "within_year_drawdown": 0.21098457728109588,
+          "mean_exposure": 0.4941331430200776
+        },
+        {
+          "year": "2025",
+          "days": 243,
+          "return": 0.4495084425258069,
+          "within_year_drawdown": 0.08048996332587821,
+          "mean_exposure": 0.5439954075306854
+        },
+        {
+          "year": "2026",
+          "days": 174,
+          "return": 0.0009169174620995424,
+          "within_year_drawdown": 0.1254119868200385,
+          "mean_exposure": 0.6053391253947936
+        }
+      ]
+    },
+    {
+      "path": "stock_50bp",
+      "days": 659,
+      "compounded_return": 0.8325167420403454,
+      "cagr": 0.2606336566786678,
+      "sharpe": 1.2504272526127636,
+      "max_drawdown": 0.2156104721988078,
+      "cost_single_side": 0.005,
+      "buys": 52,
+      "closed": 47,
+      "mean_exposure": 0.542892750429102,
+      "terminal_exposure": 0.727917962797618,
+      "terminal_holdings": 5,
+      "terminal_oldest_age": 290,
+      "realized_net_pnl": 127698.2588381809,
+      "terminal_unrealized_net_pnl": -44446.58463414635,
+      "dividend_cash": 0.0,
+      "total_fees": 14471.726074563725,
+      "pnl_reconciliation_error": -2.9103830456733704e-11,
+      "nav_reconciliation_max_error": 1.9984014443252818e-15,
+      "closed_holding_sessions_median": 7.0,
+      "closed_holding_sessions_max": 311,
+      "yearly": [
+        {
+          "year": "2024",
+          "days": 242,
+          "return": 0.29009393838180686,
+          "within_year_drawdown": 0.2156104721988078,
+          "mean_exposure": 0.49694687336265464
+        },
+        {
+          "year": "2025",
+          "days": 243,
+          "return": 0.4278239619452071,
+          "within_year_drawdown": 0.08215340558607953,
+          "mean_exposure": 0.5432255864564506
+        },
+        {
+          "year": "2026",
+          "days": 174,
+          "return": -0.005162951543759342,
+          "within_year_drawdown": 0.12887441580967918,
+          "mean_exposure": 0.6063296647706797
+        }
+      ]
+    },
+    {
+      "path": "buy_30bp",
+      "days": 659,
+      "compounded_return": 0.24985587100181883,
+      "cagr": 0.08902789410284884,
+      "sharpe": 0.4982739939744929,
+      "max_drawdown": 0.31668244876918217,
+      "cost_single_side": 0.003,
+      "buys": 36,
+      "closed": 31,
+      "mean_exposure": 0.610429898122682,
+      "terminal_exposure": 0.7259608242624588,
+      "terminal_holdings": 5,
+      "terminal_oldest_age": 454,
+      "realized_net_pnl": 76241.64526800635,
+      "terminal_unrealized_net_pnl": -51256.05816782484,
+      "dividend_cash": 0.0,
+      "total_fees": 4962.267644738234,
+      "pnl_reconciliation_error": -7.275957614183426e-11,
+      "nav_reconciliation_max_error": 1.1102230246251565e-15,
+      "closed_holding_sessions_median": 7.0,
+      "closed_holding_sessions_max": 311,
+      "yearly": [
+        {
+          "year": "2024",
+          "days": 242,
+          "return": 0.1692530426800647,
+          "within_year_drawdown": 0.2121038503068774,
+          "mean_exposure": 0.5498319575279145
+        },
+        {
+          "year": "2025",
+          "days": 243,
+          "return": 0.35620405917041964,
+          "within_year_drawdown": 0.08834325328915016,
+          "mean_exposure": 0.5892678926349599
+        },
+        {
+          "year": "2026",
+          "days": 174,
+          "return": -0.21181822966582686,
+          "within_year_drawdown": 0.3166824487691827,
+          "mean_exposure": 0.7242636277632004
+        }
+      ]
+    },
+    {
+      "path": "buy_50bp",
+      "days": 659,
+      "compounded_return": 0.221602906344313,
+      "cagr": 0.07954771585425635,
+      "sharpe": 0.45804090736206976,
+      "max_drawdown": 0.3169336395962955,
+      "cost_single_side": 0.005,
+      "buys": 36,
+      "closed": 31,
+      "mean_exposure": 0.6114327630976921,
+      "terminal_exposure": 0.7250547730056381,
+      "terminal_holdings": 5,
+      "terminal_oldest_age": 454,
+      "realized_net_pnl": 72491.45383818088,
+      "terminal_unrealized_net_pnl": -50331.16320374985,
+      "dividend_cash": 0.0,
+      "total_fees": 8175.826074563723,
+      "pnl_reconciliation_error": 1.4551915228366852e-11,
+      "nav_reconciliation_max_error": 3.1086244689504383e-15,
+      "closed_holding_sessions_median": 7.0,
+      "closed_holding_sessions_max": 311,
+      "yearly": [
+        {
+          "year": "2024",
+          "days": 242,
+          "return": 0.15449198838180922,
+          "within_year_drawdown": 0.2161872852800546,
+          "mean_exposure": 0.5521218682716941
+        },
+        {
+          "year": "2025",
+          "days": 243,
+          "return": 0.34272996606464656,
+          "within_year_drawdown": 0.0885779555357642,
+          "mean_exposure": 0.5903243069888608
+        },
+        {
+          "year": "2026",
+          "days": 174,
+          "return": -0.21195602581911543,
+          "within_year_drawdown": 0.3169336395962955,
+          "mean_exposure": 0.7234016790881377
+        }
+      ]
+    }
+  ],
+  "paired_comparisons": [
+    {
+      "schema": "complete-nav-paired-month-block-bootstrap-v1",
+      "annualized_mean_difference": -0.004370993364781038,
+      "confidence_interval_95": [
+        -0.09504262694047712,
+        0.0902658296501562
+      ],
+      "ci_contains_zero": true,
+      "mean_daily_return_difference": -1.734521176500412e-05,
+      "day_count": 659,
+      "block_count": 33,
+      "first_date": "2024-01-02",
+      "last_date": "2026-09-18",
+      "paired_daily_return_correlation": 0.8528734503102569,
+      "expected_calendar_verified": true,
+      "fewer_than_two_month_blocks": false,
+      "initial_cash_per_leg": 100000.0,
+      "bootstrap_seed": 20261014,
+      "bootstrap_samples": 2000,
+      "annual_reference_days": 252,
+      "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+      "sampling": "Paired entire calendar months, replacement; repeated blocks weighted by actual day counts",
+      "net_input_role": "Caller-supplied already-after-cost NAV; no extra fee deduction or fee inference",
+      "economic_upgrade_decision": null,
+      "target": "stock_30bp",
+      "control": "control_30bp",
+      "higher_total_return": false,
+      "higher_sharpe": true,
+      "lower_drawdown": false,
+      "yearly_candidate_minus_control": [
+        {
+          "year": "2024",
+          "difference": 0.00526334000000217
+        },
+        {
+          "year": "2025",
+          "difference": -0.09031596001466702
+        },
+        {
+          "year": "2026",
+          "difference": 0.050059778560395785
+        }
+      ],
+      "all_year_returns_nonnegative": true,
+      "net_pnl_difference_decomposition": {
+        "terminal_nav_difference": -972.745075880388,
+        "realized_difference": -7667.231000000029,
+        "unrealized_difference": 6694.485924119246,
+        "dividend_difference": 0.0,
+        "fees_difference_already_in_net": -515.0429999999997
+      }
+    },
+    {
+      "schema": "complete-nav-paired-month-block-bootstrap-v1",
+      "annualized_mean_difference": -0.004462153291941776,
+      "confidence_interval_95": [
+        -0.09435091388906025,
+        0.09027058023707211
+      ],
+      "ci_contains_zero": true,
+      "mean_daily_return_difference": -1.770695750770546e-05,
+      "day_count": 659,
+      "block_count": 33,
+      "first_date": "2024-01-02",
+      "last_date": "2026-09-18",
+      "paired_daily_return_correlation": 0.8529384440187451,
+      "expected_calendar_verified": true,
+      "fewer_than_two_month_blocks": false,
+      "initial_cash_per_leg": 100000.0,
+      "bootstrap_seed": 20261014,
+      "bootstrap_samples": 2000,
+      "annual_reference_days": 252,
+      "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+      "sampling": "Paired entire calendar months, replacement; repeated blocks weighted by actual day counts",
+      "net_input_role": "Caller-supplied already-after-cost NAV; no extra fee deduction or fee inference",
+      "economic_upgrade_decision": null,
+      "target": "stock_50bp",
+      "control": "control_50bp",
+      "higher_total_return": false,
+      "higher_sharpe": true,
+      "lower_drawdown": false,
+      "yearly_candidate_minus_control": [
+        {
+          "year": "2024",
+          "difference": 0.005479349999996996
+        },
+        {
+          "year": "2025",
+          "difference": -0.09031517956839363
+        },
+        {
+          "year": "2026",
+          "difference": 0.05024617766804218
+        }
+      ],
+      "all_year_returns_nonnegative": false,
+      "net_pnl_difference_decomposition": {
+        "terminal_nav_difference": -964.675000000259,
+        "realized_difference": -7145.750000000015,
+        "unrealized_difference": 6181.074999999997,
+        "dividend_difference": 0.0,
+        "fees_difference_already_in_net": -833.3250000000007
+      }
+    },
+    {
+      "schema": "complete-nav-paired-month-block-bootstrap-v1",
+      "annualized_mean_difference": -0.16072178786302369,
+      "confidence_interval_95": [
+        -0.3484607041519406,
+        0.007256473020738527
+      ],
+      "ci_contains_zero": true,
+      "mean_daily_return_difference": -0.0006377848724723163,
+      "day_count": 659,
+      "block_count": 33,
+      "first_date": "2024-01-02",
+      "last_date": "2026-09-18",
+      "paired_daily_return_correlation": 0.8406665943552797,
+      "expected_calendar_verified": true,
+      "fewer_than_two_month_blocks": false,
+      "initial_cash_per_leg": 100000.0,
+      "bootstrap_seed": 20261014,
+      "bootstrap_samples": 2000,
+      "annual_reference_days": 252,
+      "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+      "sampling": "Paired entire calendar months, replacement; repeated blocks weighted by actual day counts",
+      "net_input_role": "Caller-supplied already-after-cost NAV; no extra fee deduction or fee inference",
+      "economic_upgrade_decision": null,
+      "target": "buy_30bp",
+      "control": "control_30bp",
+      "higher_total_return": false,
+      "higher_sharpe": false,
+      "lower_drawdown": false,
+      "yearly_candidate_minus_control": [
+        {
+          "year": "2024",
+          "difference": -0.13476836999999686
+        },
+        {
+          "year": "2025",
+          "difference": -0.18362034337005428
+        },
+        {
+          "year": "2026",
+          "difference": -0.16267536856753062
+        }
+      ],
+      "all_year_returns_nonnegative": false,
+      "net_pnl_difference_decomposition": {
+        "terminal_nav_difference": -65943.10260955838,
+        "realized_difference": -67149.30200000004,
+        "unrealized_difference": 1206.1993904407427,
+        "dividend_difference": 0.0,
+        "fees_difference_already_in_net": -4416.231000000001
+      }
+    },
+    {
+      "schema": "complete-nav-paired-month-block-bootstrap-v1",
+      "annualized_mean_difference": -0.15573228694061064,
+      "confidence_interval_95": [
+        -0.342306104404934,
+        0.011290542147972024
+      ],
+      "ci_contains_zero": true,
+      "mean_daily_return_difference": -0.0006179852656373439,
+      "day_count": 659,
+      "block_count": 33,
+      "first_date": "2024-01-02",
+      "last_date": "2026-09-18",
+      "paired_daily_return_correlation": 0.8416984239233435,
+      "expected_calendar_verified": true,
+      "fewer_than_two_month_blocks": false,
+      "initial_cash_per_leg": 100000.0,
+      "bootstrap_seed": 20261014,
+      "bootstrap_samples": 2000,
+      "annual_reference_days": 252,
+      "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+      "sampling": "Paired entire calendar months, replacement; repeated blocks weighted by actual day counts",
+      "net_input_role": "Caller-supplied already-after-cost NAV; no extra fee deduction or fee inference",
+      "economic_upgrade_decision": null,
+      "target": "buy_50bp",
+      "control": "control_50bp",
+      "higher_total_return": false,
+      "higher_sharpe": false,
+      "lower_drawdown": false,
+      "yearly_candidate_minus_control": [
+        {
+          "year": "2024",
+          "difference": -0.13012260000000064
+        },
+        {
+          "year": "2025",
+          "difference": -0.17540917544895418
+        },
+        {
+          "year": "2026",
+          "difference": -0.1565468966073139
+        }
+      ],
+      "all_year_returns_nonnegative": false,
+      "net_pnl_difference_decomposition": {
+        "terminal_nav_difference": -62056.0585696035,
+        "realized_difference": -62352.55500000004,
+        "unrealized_difference": 296.49643039649527,
+        "dividend_difference": 0.0,
+        "fees_difference_already_in_net": -7129.225000000003
+      }
+    }
+  ],
+  "official_field_verification": {
+    "status": "COMPLETE_SINGLE_FORMULA_INPUT_ATTEMPT_FAILED_SETTLED",
+    "formula": "margin_balance",
+    "window": [
+      "2025-01-02",
+      "2025-01-27"
+    ],
+    "cycle": 5,
+    "groups": 10,
+    "fingerprint": "77a429b346e83596f01929f71000c2dc9353233c83a9adbc60524dc464a94bb5",
+    "factor_id": "6ad0a3d6b8f0d75493c8755a",
+    "run_id": "6ad0a3d7b8f0d75493c8755b",
+    "service_status": 3,
+    "error": "Missing required base factors",
+    "log_record_count": 5,
+    "logs_complete": true,
+    "logs_sha256": "58c91b7de4ebf472fb65571df2ba273dc6388584559640e2ec6f052416281c27",
+    "actual_credits": 2.0,
+    "new_economic_contexts": 0,
+    "document": {
+      "url": "https://www.pandaaiquant.com/docs/api?id=37",
+      "observed_via": "actual rendered official browser page",
+      "checked_at_utc": "2026-10-15T09:56:58.288394+00:00",
+      "method": "panda_data.get_margin",
+      "confirmed_field_names": {
+        "margin_balance": "融资余额",
+        "buy_on_margin_value": "融资买入额"
+      },
+      "repayment_not_used": "margin_repayment is described as 融券偿还额; semantic ambiguity retained",
+      "api_parameters": [
+        "symbol",
+        "start_date",
+        "end_date",
+        "fields",
+        "margin_type"
+      ],
+      "worker_mapping": "UNVERIFIED; this one minimal official formula attempt tests exactly this gap",
+      "data_sdk_entitlement": "Official SDK guide requires purchased PandaData permission; compute credits are not silently treated as a data subscription",
+      "no_credential_bridge": true
+    },
+    "conclusion": "Exact current stock formula worker attempt could not resolve margin_balance. Separate data API exists; other adapter/entitlement paths remain unverified. No economic return evidence.",
+    "automatic_retry": false
+  },
+  "budget": {
+    "scope": "FINANCE_DOMAIN_VALIDATION20_20261015",
+    "authorized": 20,
+    "runs": 1,
+    "actual": 2.0,
+    "active_reserved": 0,
+    "remaining": 18.0,
+    "unsettled": 0,
+    "attribution": "serial wallet delta, provisional, not a service invoice"
+  },
+  "global_budget_after": {
+    "study_id": "pool_candidate_search_20261012",
+    "runs": 11,
+    "actual": 22.0,
+    "unsettled": 0,
+    "active_reserved": 0,
+    "all_ledger_state_counts": {
+      "SETTLED": 19
+    },
+    "read_only": true
+  },
+  "thresholds": {
+    "financing_balance_over_float_market_value_max": 0.05,
+    "two_board_financing_buys_over_total_amount_max": 0.1,
+    "separate_not_combined": true,
+    "frozen_before_values_and_returns": true,
+    "sweep": false
+  },
+  "decisions": {
+    "stock": "CLOSED_FIXED_GATE_NO_JOINT_RETURN_DRAWDOWN_IMPROVEMENT",
+    "buy": "CLOSED_FIXED_GATE_WORSE_RETURN_SHARPE_DRAWDOWN",
+    "official": "EXACT_FAILED_RUN_LOCKED_NO_AUTOMATIC_RETRY",
+    "formal_pool_changed": false,
+    "all_financing_information_rejected": false
+  },
+  "synthetic_tests": {
+    "new_helper_passed": 6,
+    "completed_old_suites_repeated": 0
+  },
+  "artifacts": [
+    {
+      "path": "research_runs/finance_domain_validation_20261015/credit_crowding/protocol.json",
+      "sha256": "6a8a3cf4685ec5dd4d5548976344f71b283e62844a715f0223a4cb6d0659be8c"
+    },
+    {
+      "path": "research_runs/finance_domain_validation_20261015/credit_crowding/registration.json",
+      "sha256": "c2b5a05323fad1b630fbb7c646bc7c0549a77add0e21d174961bfe1e0532eacb"
+    },
+    {
+      "path": "research_runs/finance_domain_validation_20261015/credit_crowding/source_receipt.json",
+      "sha256": "0c7baee23d0ddae1e541520ba2b653f6e8e63360229be5c9b8bc17bf10a7f248"
+    },
+    {
+      "path": "research_runs/finance_domain_validation_20261015/credit_crowding/account_source_receipt.json",
+      "sha256": "f5c3a637701c1d876def5dc3d519507e98ab132e68a26ed4859347bd3cef095b"
+    },
+    {
+      "path": "research_runs/finance_domain_validation_20261015/credit_crowding/completed_comparison.json",
+      "sha256": "53ba31fb449bc49bd0ec263096b77b55c731f856af2347b1cef333546dec8627"
+    },
+    {
+      "path": "panda_alpha/limit_credit_crowding.py",
+      "sha256": "078872ff2a4c4640c8162352adeca60123f92a5bcb3ab93a151b2474c97ec7fe"
+    },
+    {
+      "path": "tests/test_limit_credit_crowding.py",
+      "sha256": "7e46b202b8399896941b8a9a903e0358d21d9fbf441e03bdfdae0202b8ed055e"
+    },
+    {
+      "path": "research_runs/finance_domain_validation_20261015/official_field_probe/plan.json",
+      "sha256": "4573a27c93b00a811eb781da59e8d6b2d7c41fc198ddfac911462adc5a09f31d"
+    },
+    {
+      "path": "research_runs/finance_domain_validation_20261015/official_field_probe/local_compatibility.json",
+      "sha256": "45459ca338c81a07cf8a7744c1b515542de18a44319c4f3572d12a7c294ef7e1"
+    },
+    {
+      "path": "research_runs/finance_domain_validation_20261015/official_field_probe/completed_review.json",
+      "sha256": "2c4ab6443efdb336e6157abb58bfb6977bd947d04be24b7d5741301c8cfa8ddf"
+    }
+  ]
+}
