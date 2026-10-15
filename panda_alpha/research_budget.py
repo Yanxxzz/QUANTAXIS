@@ -12,7 +12,7 @@ from .registry import verify_artifact
 LIMITS = ("study_id", "max_total_credits", "max_runs", "review_interval_credits",
           "max_initial_runs_per_mechanism", "max_runs_per_mechanism")
 TASKS = {"native_screen": "exploration", "source_diagnostic": "source_probe",
-         "key_confirmation": "validation"}
+         "key_confirmation": "validation", "stateful_strategy": "exploration"}
 LOCAL_TASKS = {"syntax_check", "cost_sensitivity", "attribution", "correlation",
                "pool_increment", "stability_replay"}
 

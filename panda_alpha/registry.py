@@ -38,17 +38,25 @@ def verify_artifact(artifact: Mapping[str, Any]) -> dict[str, str]:
 def strategy_definition(candidate: Mapping[str, Any], window: Mapping[str, Any],
                         cycle: int, groups: int) -> dict[str, Any]:
     from .diversity import canonical_signature
+    evaluation_type = candidate.get("economic_evaluation_type", "factor")
+    if evaluation_type not in ("factor", "stateful_account"):
+        raise ValueError("Unknown economic evaluation type")
     expression = candidate.get("formula") or candidate.get("code")
     specification = candidate.get("strategy_spec")
     if not expression and not isinstance(specification, Mapping):
         raise ValueError("A strategy registration needs its formula, code or frozen structured strategy_spec")
     signature = canonical_signature(str(expression)) if expression else _digest(specification)
-    return normalize_definition({"signature": signature,
-                                 "direction": candidate["direction"], "window": window,
-                                 "cycle": cycle, "groups": groups})
+    definition = {"signature": signature, "direction": candidate["direction"],
+                  "window": window, "cycle": cycle, "groups": groups}
+    if evaluation_type == "stateful_account":
+        definition["evaluation_type"] = evaluation_type
+    return normalize_definition(definition)
 
 
 def normalize_definition(definition: Mapping[str, Any]) -> dict[str, Any]:
+    evaluation_type = definition.get("evaluation_type", "factor")
+    if evaluation_type not in ("factor", "stateful_account"):
+        raise ValueError("Unknown economic evaluation type")
     signature = str(definition.get("signature", ""))
     if len(signature) != 64 or any(c not in "0123456789abcdef" for c in signature):
         raise ValueError("Definition needs a canonical SHA256 signature")
@@ -59,6 +67,11 @@ def normalize_definition(definition: Mapping[str, Any]) -> dict[str, Any]:
     if not isinstance(window, Mapping) or not window.get("start") or not window.get("end"):
         raise ValueError("Definition needs the frozen start and end window")
     cycle, groups = definition.get("cycle"), definition.get("groups")
+    if evaluation_type == "stateful_account":
+        if type(cycle) is not int or cycle != 1 or type(groups) is not int or groups != 1:
+            raise ValueError("Stateful account definitions require cycle 1 and groups 1")
+        return {"signature": signature, "direction": direction, "window": dict(window),
+                "cycle": cycle, "groups": groups, "evaluation_type": evaluation_type}
     if (isinstance(cycle, bool) or not isinstance(cycle, int) or cycle < 1 or
             isinstance(groups, bool) or not isinstance(groups, int) or groups < 2):
         raise ValueError("Definition needs positive cycle and at least two groups")

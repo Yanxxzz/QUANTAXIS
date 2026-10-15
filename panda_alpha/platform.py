@@ -130,6 +130,8 @@ class PandaClient:
         return balance
 
     def create(self, candidate: dict, window: dict, cycle: int, groups: int, name: str) -> str:
+        if candidate.get("official_task") == "stateful_strategy" or candidate.get("economic_evaluation_type") == "stateful_account":
+            raise ValueError("Stateful strategies require the dedicated account workflow, never factor_create")
         # Validate the actual CLI loading dates even when create is called
         # directly. The separate evaluation contract must never silently
         # replace these dates after authorization or preflight.
