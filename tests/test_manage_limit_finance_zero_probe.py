@@ -77,10 +77,11 @@ def observation(prepared):
     authority = MODULE.read(old.unit / "authorization.json")
     authority.update(short_window_retry_explicitly_approved=True,
         continuation_experiments_explicitly_approved=True, continuation_scope="close_phase_ready",
-        max_run_reservation=2, no_order_execution_observation_approved=True, only_unit=str(unit))
-    authority["human_instructions"].append("Investigate native zero trades within original twenty points")
+        max_total_credits=22, max_run_reservation=4, no_order_execution_observation_approved=True,
+        approved_additional_credits=2, prior_total_limit=20, new_total_limit=22, only_unit=str(unit))
+    authority["human_instructions"].append("追加2点，仅用于本次诊断，接受估算风险")
     MODULE.save(unit / "authorization.json", authority)
-    ledger.db.execute("UPDATE jobs SET actual=18 WHERE fingerprint=?", ("0" * 64,))
+    ledger.db.execute("UPDATE jobs SET actual=14 WHERE fingerprint=?", ("0" * 64,))
     controller = MODULE.ZeroGateProbeController(MODULE.bind(folder / "batch_plan.json")["sha256"],
         root=old.root, ledger=ledger, client=fake)
     _, policy = controller.config()
@@ -91,12 +92,16 @@ def observation(prepared):
             "VALUES (?,?,?,?,?,?,?,?)", (str(i + 1) * 64, "previous-" + str(i),
             "exploration" if i < 2 else "validation", "2026-10-14", "SETTLED", 8., 0.,
             json.dumps({"research_budget": previous})))
+    old_definition = json.loads(ledger.get("0" * 64)["definition"])
+    recent = json.loads(ledger.get("3" * 64)["definition"])
+    recent.update(cost_basis="authorized_estimate", billing_authorization=old_definition["billing_authorization"])
+    ledger.db.execute("UPDATE jobs SET actual=4,definition=? WHERE fingerprint=?",
+                      (json.dumps(recent), "3" * 64))
+    assert old.total_limit == 20
     return controller, fake, folder, ledger
 
 
-def test_remaining_two_uses_original_fourth_mechanism_attempt_without_new_economic_identity(observation):
-    # This is the no-observed-estimated-charge branch, not a forecast for a
-    # production ledger whose recent authorized-estimate actual charge was four.
+def test_explicit_two_point_addition_reserves_adaptive_four_without_new_economic_identity(observation):
     c, fake, folder, ledger = observation
     registry = ResearchRegistry(c.root / "research_runs/research_trials.sqlite3")
     before = registry.total
@@ -104,12 +109,16 @@ def test_remaining_two_uses_original_fourth_mechanism_attempt_without_new_econom
     c.process("reserve")
     job = ledger.get(c.key)
     definition = json.loads(job["definition"])
-    assert job["reserved"] == 2 and job["category"] == "validation"
+    assert job["reserved"] == 4 and job["category"] == "validation"
     assert definition["research_budget"]["mechanism_id"] == MODULE.STATEFUL_MECHANISM
     assert definition["research_budget"]["limits"]["max_initial_runs_per_mechanism"] == 2
     assert definition["research_budget"]["limits"]["max_runs_per_mechanism"] == 4
     grant = MODULE.read(folder / "funding_subgrant.json")["grant"]
-    assert grant["max_total_credits"] == 20 and grant["max_new_runs"] == 1
+    assert grant["max_total_credits"] == 22 and grant["max_new_runs"] == 1
+    assert grant["max_recharge_credits"] == 22 and grant["new_run_credit_budget"] == 4
+    funds = MODULE.read(folder / "latest_budget_plan.json")
+    assert funds["budget"] == 4 and funds["reservation_credit_estimate"] == 4
+    assert definition["daily_credit_limit"] == 22
     registry = ResearchRegistry(c.root / "research_runs/research_trials.sqlite3")
     assert registry.total == before
     event = registry.events()[-1]
@@ -138,22 +147,14 @@ def test_order_or_data_reload_attempt_is_rejected_before_wallet_and_reservation(
     assert fake.calls == 0 and ledger.get(plan["fingerprint"]) is None
 
 
-def test_recent_authorized_estimate_four_blocks_remaining_two_without_reservation(observation):
+def test_missing_addition_or_old_twenty_cap_rejects_before_wallet_or_reservation(observation):
     c, fake, folder, ledger = observation
-    # Preserve mother actual18 while representing its most recent four-point
-    # estimated-billing settlement, rather than omitting cost_basis as above.
-    old = json.loads(ledger.get("0" * 64)["definition"])
-    ledger.db.execute("UPDATE jobs SET actual=14 WHERE fingerprint=?", ("0" * 64,))
-    recent = json.loads(ledger.get("3" * 64)["definition"])
-    recent.update(cost_basis="authorized_estimate", billing_authorization=old["billing_authorization"])
-    ledger.db.execute("UPDATE jobs SET actual=4,definition=? WHERE fingerprint=?",
-                      (json.dumps(recent), "3" * 64))
+    approved = MODULE.read(c.unit / "authorization.json")
     before = ledger.jobs()
-    with pytest.raises(ValueError, match="No exact stateful budget slot"):
-        c.process("reserve")
-    funds = MODULE.read(folder / "latest_budget_plan.json")
-    assert funds["budget"] == 2 and funds["reservation_credit_estimate"] == 4
-    assert funds["selected"] == []
-    assert fake.calls == 1  # A free wallet read does not authorize UI save/start.
+    for patch in ({"approved_additional_credits": 0}, {"max_total_credits": 20}):
+        MODULE.save(c.unit / "authorization.json", dict(approved, **patch))
+        with pytest.raises(ValueError, match="approval|authority"):
+            c.process("reserve")
+    assert fake.calls == 0
     assert ledger.get(c.key) is None and ledger.jobs() == before
     assert not (folder / "funding_subgrant.json").exists()

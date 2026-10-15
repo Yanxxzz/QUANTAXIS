@@ -1,6 +1,7 @@
 """Manual UI accounting for one exact, read-only zero-trade gate observation.
 
-Uses the existing twenty-point mother scope and original stateful mechanism.
+Uses the existing mother scope with its exact human-approved diagnostic-only
+two-credit extension (cumulative limit22), and the original stateful mechanism.
 No remote save/start method, new alpha registration or financing loader exists
 here. The only account read inherited from the controller is a free wallet read.
 """
@@ -117,7 +118,10 @@ class ZeroGateProbeController(ManualStrategyController):
     def __init__(self, plan_sha, *, root=ROOT, ledger=None, client=None):
         unit = Path(root).resolve() / RELATIVE_UNIT
         super().__init__("target", plan_sha, root=root, unit=unit, ledger=ledger,
-                         client=client, reservation=2)
+                         client=client, reservation=4)
+        # The explicit two-point addition applies only to this fixed no-order
+        # diagnostic. Account controllers and the shared study keep old limits.
+        self.total_limit = 22.0
         # Reuse the existing narrow continued-close authority checks, not a new
         # mechanism, config-probe allowance or twenty-point scope.
         self.close_phase = True
@@ -191,10 +195,17 @@ class ZeroGateProbeController(ManualStrategyController):
 
     def authority(self, **kwargs):
         authority, artifact, deadline = super().authority(**kwargs)
+        addition = authority.get("approved_additional_credits")
+        explicit_addition = ((type(addition) in (int, float) and addition == 2)
+                             or authority.get("approved_additional_credits2") is True)
+        quotes = authority.get("human_instructions", authority.get("human_quotes", []))
         if (authority.get("no_order_execution_observation_approved") is not True
-                or authority.get("max_run_reservation") != 2
+                or authority.get("max_run_reservation") != 4
+                or not explicit_addition or authority.get("prior_total_limit") != 20
+                or authority.get("new_total_limit") != 22
+                or "追加2点，仅用于本次诊断，接受估算风险" not in quotes
                 or Path(authority.get("only_unit", "")).resolve() != self.unit):
-            raise ValueError("Exact new human no-order observation approval and two-point estimate are required")
+            raise ValueError("Exact human additional-two diagnostic-only approval and four-point estimate are required")
         return authority, artifact, deadline
 
     def registered(self, *, append=False):

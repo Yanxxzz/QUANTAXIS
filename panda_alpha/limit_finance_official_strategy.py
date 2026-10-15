@@ -39,6 +39,49 @@ def _lf_quantity(value, name):
     return int(result)
 
 
+def _lf_price(value, name):
+    value = _lf_number(value, name, positive=True)
+    # A raw legal cent tick may have crossed a float32 transport. Only remove
+    # at most half its float32 ULP; genuine off-tick/qfq prices remain unknown.
+    half_ulp = math.ldexp(1.0, math.frexp(value)[1] - 25)
+    if half_ulp >= .005:
+        raise RuntimeError('Native price precision cannot distinguish legal cent ticks')
+    nearest = math.floor(value * 100 + .5) / 100
+    if nearest <= 0 or abs(value - nearest) > max(1e-12, half_ulp + 1e-12):
+        raise RuntimeError('Native price is not a legal cent tick within float32 representation error')
+    return nearest
+
+
+def _lf_order_price(raw_reference, economic_limit):
+    # raw_reference is the SAME snapshot already accepted by _lf_bar, never a
+    # new quote. An economic limit is not an avg_price and is never rounded here.
+    economic_limit = _lf_number(economic_limit, 'economic limit', positive=True)
+    raw_reference = _lf_number(raw_reference, 'raw reference', positive=True)
+    if _lf_price(raw_reference, 'raw reference') == economic_limit:
+        return raw_reference
+    return economic_limit  # In particular, never chase a TP quote one tick higher.
+
+
+def _lf_count(context, name):
+    counters = context._lf['daily_gates']
+    counters[name] = counters.get(name, 0) + 1
+
+
+def _lf_source_reject(context, symbol, reason, raw=None):
+    if context is not None:
+        state = context._lf
+        state['source_contract_valid'] = False
+        counts = state['source_rejections']
+        counts[reason] = counts.get(reason, 0) + 1
+        _lf_count(context, 'rejected_bars')
+        if reason not in state['source_rejection_samples']:
+            sample = {'date': state['day'], 'minute': state['minute'], 'symbol': symbol,
+                      'reason': reason, 'raw_repr': str(raw), 'no_price_or_band_imputation': True}
+            state['source_rejection_samples'][reason] = sample
+            print('LF_SOURCE_REJECT ' + json.dumps(sample, ensure_ascii=False, sort_keys=True))
+    return None
+
+
 def _lf_account(context):
     account = context.stock_account_dict.get(context.account)
     if account is None:
@@ -165,6 +208,8 @@ def before_trading(context):
                  preopen_nav=nav, preopen_cash=cash, preopen_position_count=len(positions),
                  features={}, liquidity={}, traded_today={}, last_submit={},
                  daily_buy_debits=0.0, daily_trade_cost=0.0, daily_trade_count=0)
+    state.update(daily_gates={}, source_contract_valid=True,
+                 source_rejections={}, source_rejection_samples={})
     # Freeze candidate identities and budgets before any same-day exit. A failed
     # earlier candidate never hands its reserved slot/cash to a later stock.
     candidates = [s for s in FROZEN_ENTRY_ROSTER.get(day, []) if s not in positions]
@@ -194,6 +239,7 @@ def _lf_order_terminal(context, order):
         token = state['by_remark'].get(order.remark)
     if token is None:
         return  # Another account/strategy's order is not ours to reinterpret.
+    _lf_count(context, 'owned_order_callback_events')
     if symbol != token['symbol']:
         raise RuntimeError('Order callback symbol differs from submission')
     status = order.status
@@ -248,25 +294,41 @@ def _lf_pending_buy_estimate(context, symbol=None):
     return total
 
 
-def _lf_submit(context, symbol, quantity, price, reason):
+def _lf_submit(context, symbol, quantity, price, reason, economic_price=None):
     state = context._lf
+    _lf_count(context, 'submit_attempts')
     if (symbol in state['submitting'] or state['active'].get(symbol)
             or state['last_submit'].get(symbol) == state['minute']):
+        _lf_count(context, 'submit_blocked_reentrant_active_or_same_minute')
         return
+    economic_price = price if economic_price is None else economic_price
+    if _lf_price(price, 'IOC limit') != economic_price:
+        raise RuntimeError('IOC limit representation differs from its original legal economic tick')
+    if price != economic_price:
+        _lf_count(context, 'same_tick_native_limit_representations')
     state['order_sequence'] += 1
     remark = 'LF:' + state['day'] + ':' + str(state['order_sequence']) + ':' + reason
     token = {'symbol': symbol, 'side': 0 if quantity > 0 else 1,
-             'quantity': abs(quantity), 'price': price, 'actual_traded': 0,
+             'quantity': abs(quantity), 'price': price, 'economic_price': economic_price, 'actual_traded': 0,
              'order_ids': set(), 'returning': True, 'remark': remark, 'day': state['day']}
     state['tokens'].append(token)
     state['by_remark'][remark] = token
     state['submitting'][symbol] = token
     state['last_submit'][symbol] = state['minute']
     try:
+        _lf_count(context, 'order_api_calls')
         orders = order_shares(context.account, symbol, int(quantity),
                               style=LimitOrderStyle(float(price)), remark=remark)
+        returned = 0
         for order in orders or []:
+            returned += 1
+            _lf_count(context, 'returned_order_objects')
             _lf_order_terminal(context, order)
+        if returned == 0:
+            _lf_count(context, 'empty_order_api_returns')
+    except Exception:
+        _lf_count(context, 'order_api_exceptions')
+        raise
     finally:
         token['returning'] = False
         state['submitting'].pop(symbol, None)
@@ -317,6 +379,7 @@ def on_stock_trade_rtn(context, trade):
     state['traded_today'][symbol] = state['traded_today'].get(symbol, 0) + quantity
     state['daily_trade_cost'] += cost
     state['daily_trade_count'] += 1
+    _lf_count(context, 'unique_actual_trade_callbacks')
     if side == 0:
         reservation = state['reservations'].get(symbol)
         if reservation is None:
@@ -337,23 +400,31 @@ def on_stock_trade_rtn(context, trade):
             del state['position_state'][symbol]
 
 
-def _lf_bar(data, symbol):
+def _lf_bar(data, symbol, context=None):
     # Documented data.get accepts ONE argument, never dict-style default.
     bar = data.get(symbol)
     if bar is None:
-        return None
+        return _lf_source_reject(context, symbol, 'missing_bar')
     try:
         reference = bar.open if FROZEN_MATCHING_TYPE == 1 else bar.close
         values = (reference, bar.limit_up, bar.limit_down)
     except AttributeError as exc:
+        _lf_source_reject(context, symbol, 'missing_price_or_band_attribute')
         raise RuntimeError('Native Bar lacks documented ' + FROZEN_REFERENCE_PHASE + '/limit_up/limit_down fields') from exc
     try:
         reference, upper, lower = [_lf_number(v, 'bar price/limits', positive=True) for v in values]
     except RuntimeError:
-        return None
+        return _lf_source_reject(context, symbol, 'nonpositive_or_missing_price_or_band', values)
+    raw_reference = reference
+    try:
+        reference, upper, lower = [_lf_price(v, 'bar price/limits') for v in (reference, upper, lower)]
+    except RuntimeError:
+        return _lf_source_reject(context, symbol, 'off_tick_or_ambiguous_price_precision', values)
     if lower > upper or not lower - 1e-9 <= reference <= upper + 1e-9:
-        return None
-    return bar, reference, upper, lower
+        return _lf_source_reject(context, symbol, 'inconsistent_price_or_band_range', values)
+    if context is not None:
+        _lf_count(context, 'valid_price_and_band_bars')
+    return bar, reference, upper, lower, raw_reference
 
 
 def _lf_capacity(context, symbol):
@@ -366,6 +437,7 @@ def handle_data(context, data):
     state = context._lf
     if not state.get('ready') or state['day'] != _lf_day(context):
         raise RuntimeError('Validated before_trading must precede every trading day')
+    _lf_count(context, 'minute_callback_events')
     minute = _lf_minute(context)
     if state['minute'] is not None and minute < state['minute']:
         raise RuntimeError('Native minute clock moved backward')
@@ -380,13 +452,18 @@ def handle_data(context, data):
     symbols = sorted(set(positions) | set(state['reservations']))
     observed = {}
     for symbol in symbols:
+        _lf_count(context, 'observed_symbol_events')
         bar = data.get(symbol)
         if bar is not None:
-            volume = _lf_number(bar.volume, 'bar.volume')
+            try:
+                volume = _lf_number(bar.volume, 'bar.volume')
+            except (RuntimeError, AttributeError):
+                _lf_source_reject(context, symbol, 'invalid_or_missing_volume')
+                raise
             record = state['liquidity'].setdefault(symbol, {'completed_volume': 0})
             if record.get('cached_minute') != minute:
                 record.update(cached_minute=minute, cached_volume=volume)
-        observed[symbol] = _lf_bar(data, symbol)
+        observed[symbol] = _lf_bar(data, symbol, context)
     # Current bar volume is cached, never part of this minute's sizing budget.
     # Price decisions use ONLY the explicitly frozen open/close phase that
     # matches the native engine. This does not add current-bar volume to sizing.
@@ -394,24 +471,29 @@ def handle_data(context, data):
         available = observed[symbol]
         if available is None:
             continue
-        _, reference, upper, lower = available
+        _, reference, upper, lower, raw_reference = available
         position = _lf_account(context).positions.get(symbol)
         if position is None or _lf_quantity(position.quantity, 'position.quantity') == 0:
             continue
         intent = _lf_exit(context, symbol, position, reference_price=reference)
+        _lf_count(context, 'held_position_evaluations')
         capacity = _lf_capacity(context, symbol)
         sellable = _lf_quantity(position.sellable, 'position.sellable')
         if intent and capacity > 0 and sellable > 0 and reference > lower + 1e-9:
             quantity = sellable if capacity >= sellable else capacity // 100 * 100
             if quantity <= 0:
                 continue
-            limit = intent['trigger_price'] if intent['reason'] == 'take_profit' else reference
-            _lf_submit(context, symbol, -quantity, limit, intent['reason'])
+            economic_limit = intent['trigger_price'] if intent['reason'] == 'take_profit' else reference
+            limit = _lf_order_price(raw_reference, economic_limit)
+            _lf_submit(context, symbol, -quantity, limit, intent['reason'], economic_price=economic_limit)
+        elif intent:
+            _lf_count(context, 'sell_intent_blocked_capacity_t1_or_down_limit')
     for symbol, reservation in state['reservations'].items():
         available = observed[symbol]
         if available is None:
             continue
-        _, reference, upper, lower = available
+        _, reference, upper, lower, raw_reference = available
+        _lf_count(context, 'entry_valid_quote_evaluations')
         if reservation['limit_down'] is None:
             reservation['limit_down'] = lower
             reservation['target_quantity'] = int(reservation['budget'] / (lower * 1.003) / 100) * 100
@@ -419,17 +501,30 @@ def handle_data(context, data):
             raise RuntimeError('Native lower limit changed within the frozen trading day')
         remaining = reservation['target_quantity'] - reservation['actual_bought']
         if remaining < 100 or reference > lower + 1e-9:
+            _lf_count(context, 'entry_target_complete' if remaining < 100 else 'entry_reference_above_down_limit')
             continue
+        _lf_count(context, 'entry_at_down_limit')
         native_positions = _lf_positions(context)
         if symbol not in native_positions and len(native_positions) >= 5:
+            _lf_count(context, 'entry_five_slots_full')
             continue
         cash = min(reservation['budget'] - reservation['actual_buy_debits'] - _lf_pending_buy_estimate(context, symbol),
                    state['preopen_cash'] - state['daily_buy_debits'] - _lf_pending_buy_estimate(context),
                    _lf_number(_lf_account(context).cash, 'cash'))
-        budget_quantity = max(0, int(max(0, cash) / (lower * 1.003) / 100) * 100)
-        quantity = min(remaining, budget_quantity, _lf_capacity(context, symbol) // 100 * 100)
+        limit = _lf_order_price(raw_reference, lower)
+        # A downward transport residual must not increase the frozen quantity;
+        # upward residuals still need to fit the actual native cash reservation.
+        budget_price = max(lower, limit)
+        budget_quantity = max(0, int(max(0, cash) / (budget_price * 1.003) / 100) * 100)
+        capacity_quantity = _lf_capacity(context, symbol) // 100 * 100
+        if budget_quantity < 100:
+            _lf_count(context, 'entry_cash_below_one_lot')
+        if capacity_quantity < 100:
+            _lf_count(context, 'entry_prior_volume_capacity_below_one_lot')
+        quantity = min(remaining, budget_quantity, capacity_quantity)
         if quantity >= 100:
-            _lf_submit(context, symbol, quantity, lower, 'frozen_entry')
+            _lf_count(context, 'entry_all_intent_gates_pass')
+            _lf_submit(context, symbol, quantity, limit, 'frozen_entry', economic_price=lower)
 
 
 def after_trading(context):
@@ -447,6 +542,10 @@ def after_trading(context):
         'native_cumulative_fees': _lf_number(account.transaction_cost, 'transaction_cost'),
         'actual_trade_callback_cost_today': state['daily_trade_cost'],
         'actual_trade_callbacks_today': state['daily_trade_count'],
+        'source_contract_valid': state['source_contract_valid'],
+        'source_rejection_counts': state['source_rejections'],
+        'source_rejection_first_examples': state['source_rejection_samples'],
+        'gate_and_order_counts': state['daily_gates'],
         'frozen_preopen_NAV': state['preopen_nav'], 'frozen_preopen_cash': state['preopen_cash'],
         'holdings': holdings}, ensure_ascii=False, sort_keys=True))
 '''
@@ -514,6 +613,14 @@ def render_official_strategy(mode, entry_roster, reference_calendar, validation_
         "same_explicit_reference_phase_for_both_comparison_roles": True,
         "no_same_day_sale_cash_or_slot_reuse": True, "native_assets_never_assigned": True,
         "native_financing_role_requires_three_examples_before_orders": True,
+        "source_rejections_and_daily_gate_order_counts": True,
+        "legal_cent_tick_transport_normalization": "At most half float32 ULP plus1e-12; strictly below half tick; true off-tick rejected",
+        "backend_raw_price_comparison_equivalence_certified": False,
+        "same_tick_raw_reference_limit_mapping": "Only canonical(raw snapshot)==original economic cent limit; never chase another tick",
+        "native_weighted_average_cost_never_tick_normalized": True,
+        "IOC_representation_cash_guard": "max(original economic limit,actual same-tick submitted representation); no quantity increase from residual",
+        "raw_reference_limit_acceptance_by_current_service_certified": False,
+        "minute_volume_delivery_unit_certified": False,
         "same_frozen_roster_source_contract_and_engine_settings_for_both_modes": True,
         "rule_input_module_sha256": bindings,
     }

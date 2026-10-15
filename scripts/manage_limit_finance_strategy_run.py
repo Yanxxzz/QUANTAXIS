@@ -74,6 +74,7 @@ class ManualStrategyController:
                 or not 2 <= reservation <= RESERVATION):
             raise ValueError("A per-Run client reservation estimate between two and eight is required")
         self.reservation = float(reservation)
+        self.total_limit = TOTAL_LIMIT  # Existing account routes remain fixed at twenty.
         self.close_phase = self.unit == self.root / "research_runs/finance_full_strategy_short_official_20261015/close_phase_ready"
 
     def frozen(self):
@@ -130,7 +131,7 @@ class ManualStrategyController:
             raise ValueError("Authority changed after the exact reservation")
         authority = read(path)
         if (authority.get("parent_batch_id") != PARENT
-                or authority.get("max_total_credits") != TOTAL_LIMIT
+                or authority.get("max_total_credits") != self.total_limit
                 or authority.get("accept_estimated_charge_risk") is not True
                 or authority.get("minute_ioc_migration_accepted") is not True):
             raise ValueError("Current twenty-point authority and minute-IOC acceptance are required")
@@ -219,7 +220,7 @@ class ManualStrategyController:
         self.registered()
         self.active(allow_self=True)
         used = _batch_usage(self.ledger.jobs(), PARENT)
-        if used["total"] > TOTAL_LIMIT or used["recharge"] > TOTAL_LIMIT:
+        if used["total"] > self.total_limit or used["recharge"] > self.total_limit:
             raise ValueError("Mother cumulative twenty-point budget is exceeded")
         for grant in definition["billing_authorization"].values():
             if (used["total"] > grant["max_total_credits"]
@@ -257,11 +258,11 @@ class ManualStrategyController:
             "max_recharge_credits": used["recharge"] + self.reservation,
             "new_run_credit_budget": self.reservation, "accept_estimated_charge_risk": True,
         }
-        if any(not math.isfinite(grant[name]) or grant[name] > TOTAL_LIMIT for name in
+        if any(not math.isfinite(grant[name]) or grant[name] > self.total_limit for name in
                ("max_runs", "max_total_credits", "max_recharge_credits")):
             raise ValueError("Mother remaining budget cannot cover the requested client reservation estimate")
         compute = config["compute"]
-        compute.update(daily_credit_limit=TOTAL_LIMIT,
+        compute.update(daily_credit_limit=self.total_limit,
             recharge_credit_limit=grant["max_recharge_credits"],
             planning_credit_estimate=self.reservation, cost_ceiling=None,
             cost_ceiling_verified_at=None, cost_ceiling_source=None,
@@ -301,7 +302,7 @@ class ManualStrategyController:
                     "candidate": self.candidate, "window": self.plan["window"], "cycle": 1, "groups": 1,
                     "billing_authorization": permissions, "cost_basis": "authorized_estimate",
                     "cost_ceiling": None, "reservation_credit_estimate": self.reservation,
-                    "daily_credit_limit": TOTAL_LIMIT, "official_test_not_pool_admission": True,
+                    "daily_credit_limit": self.total_limit, "official_test_not_pool_admission": True,
                     "research_budget": research_request(policy, self.candidate, self.category),
                     "manual_strategy_ui": {"batch_plan": bind(self.folder / "batch_plan.json"),
                         "mother_authority": authority_binding,
@@ -312,7 +313,7 @@ class ManualStrategyController:
                     "mother_authority": authority_binding, "scope_usage_before": used,
                     "grant": grant, "manual_UI_only": True, "no_automatic_retry": True})
                 self.ledger.reserve(self.key, self.candidate, definition, self.category,
-                                    self.reservation, TOTAL_LIMIT, wallet)
+                                    self.reservation, self.total_limit, wallet)
             result = {"action": action, "fingerprint": self.key,
                 "state": self.ledger.get(self.key)["state"] if self.ledger.get(self.key) else None,
                 "scope_before": used, "ready": funds["dispatch_ready"], "selected": funds["selected"],
