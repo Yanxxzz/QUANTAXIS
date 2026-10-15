@@ -1,11 +1,13 @@
 """Synthetic callback contracts only; no source API, real account or backtest."""
 import ast
 from datetime import datetime, timedelta
+from enum import IntEnum
 from pathlib import Path
 import sys
 from types import ModuleType, SimpleNamespace
 
 import pandas as pd
+import numpy as np
 import pytest
 
 from panda_alpha.limit_finance_official_strategy import render_official_strategy
@@ -345,3 +347,38 @@ def test_partial_sticky_sale_preserves_state_until_actual_native_flat(monkeypatc
     assert [row["quantity"] for row in ns["calls"]] == [-1000, -600]
     assert "000001.SZ" not in ns["account"].positions
     assert "000001.SZ" not in context._lf["position_state"]
+
+
+def test_guard_diagnostics_include_both_values_and_all_nonsecret_settings(monkeypatch):
+    ns, context, inputs, _ = worker(monkeypatch, frequency="1m", matching_type=0)
+    with pytest.raises(RuntimeError) as captured:
+        ns["initialize"](context)
+    message = str(captured.value)
+    for text in ('"frequency": "1m"', '"matching_type": "0"', '"stock_starting_cash": "100000.0"',
+                 '"commission_multiplier": "3.75"', '"slippage": "0.0"',
+                 '"start_date": "' + WINDOW["start"], '"end_date": "' + WINDOW["end"]):
+        assert text in message
+    assert "synthetic" not in message and "stock_account" not in message
+    assert ns["calls"] == []
+
+
+def test_unknown_runtime_representations_remain_rejected_until_actual_evidence(monkeypatch):
+    class Matching(IntEnum):
+        OPEN = 1
+    for settings in ({"frequency": "1m"}, {"matching_type": np.int64(1)},
+                     {"matching_type": Matching.OPEN}):
+        ns, context, inputs, _ = worker(monkeypatch, **settings)
+        with pytest.raises(RuntimeError, match="observed_settings"):
+            ns["initialize"](context)
+        assert ns["calls"] == []
+
+
+def test_fee_and_window_mismatches_also_report_actual_settings_without_relaxation(monkeypatch):
+    for settings in ({"commission_multiplier": 1}, {"slippage": .001},
+                     {"end_date": CAL[64]}):
+        ns, context, inputs, _ = worker(monkeypatch, **settings)
+        with pytest.raises(RuntimeError, match="observed_settings") as captured:
+            ns["initialize"](context)
+        assert '"frequency": "1M"' in str(captured.value)
+        assert '"matching_type": "1"' in str(captured.value)
+        assert ns["calls"] == []

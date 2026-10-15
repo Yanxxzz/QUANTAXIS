@@ -70,17 +70,29 @@ def _lf_day(context):
 
 def initialize(context):
     info = context.run_info
+    observed_settings = json.dumps({
+        'frequency': str(info.frequency), 'frequency_type': str(type(info.frequency)),
+        'matching_type': str(info.matching_type), 'matching_value_type': str(type(info.matching_type)),
+        'stock_starting_cash': str(info.stock_starting_cash),
+        'commission_multiplier': str(info.commission_multiplier), 'slippage': str(info.slippage),
+        'start_date': str(info.start_date), 'end_date': str(info.end_date),
+    }, ensure_ascii=False, sort_keys=True)
     if info.frequency != '1M' or type(info.matching_type) is not int or info.matching_type != 1:
-        raise RuntimeError('Frozen migration requires frequency1M and matching_type1; no orders permitted')
+        raise RuntimeError('Frozen migration requires frequency1M and matching_type1; no orders permitted; '
+                           'observed_settings=' + observed_settings)
     checks = ((info.stock_starting_cash, 100000.0, 'stock_starting_cash'),
               (info.commission_multiplier, FROZEN_COMMISSION_MULTIPLIER, 'commission_multiplier'),
               (info.slippage, FROZEN_SLIPPAGE, 'slippage'))
     for observed, required, name in checks:
-        if not math.isclose(_lf_number(observed, name), required, rel_tol=0, abs_tol=1e-9):
-            raise RuntimeError('Native setting differs from frozen ' + name)
+        try:
+            actual = _lf_number(observed, name)
+        except RuntimeError as exc:
+            raise RuntimeError(str(exc) + '; observed_settings=' + observed_settings) from exc
+        if not math.isclose(actual, required, rel_tol=0, abs_tol=1e-9):
+            raise RuntimeError('Native setting differs from frozen ' + name + '; observed_settings=' + observed_settings)
     if (_date(info.start_date) != FROZEN_WINDOW['start']
             or _date(info.end_date) != FROZEN_WINDOW['end']):
-        raise RuntimeError('Native dates differ from frozen strategy window')
+        raise RuntimeError('Native dates differ from frozen strategy window; observed_settings=' + observed_settings)
     context.account = info.stock_account
     account = _lf_account(context)
     if list(account.positions.keys()) or not math.isclose(

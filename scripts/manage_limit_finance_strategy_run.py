@@ -32,6 +32,7 @@ UNIT = ROOT / "research_runs/finance_full_strategy_official_20261015"
 PARENT = "FINANCE_DOMAIN_VALIDATION20_20261015"
 RESERVATION = 8.0
 TOTAL_LIMIT = 20.0
+STATEFUL_MECHANISM = "two_board_financing_stateful_minute_account_migration"
 ACTIONS = ("audit", "reserve", "before-save", "created", "before-start", "started", "settle")
 
 
@@ -67,6 +68,7 @@ class ManualStrategyController:
         self.ledger = ledger
         self.client = client
         self.plan = self.candidate = self.key = None
+        self.category = "exploration"
 
     def frozen(self):
         path = self.folder / "batch_plan.json"
@@ -84,9 +86,14 @@ class ManualStrategyController:
         if Path(plan["protocol"]["path"]).resolve() != (self.unit / "protocol.json").resolve():
             raise ValueError("Shared strategy protocol path differs")
         candidate = read(plan["candidate"]["path"])
+        task = candidate.get("official_task")
+        short = self.unit == self.root / "research_runs/finance_full_strategy_short_official_20261015"
+        if (task == "key_confirmation" and
+                (not short or candidate.get("budget_mechanism_id") != STATEFUL_MECHANISM)):
+            raise ValueError("Reviewed stateful confirmation is limited to the approved short unit and original mechanism")
         if (plan.get("cycle") != 1 or plan.get("groups") != 1
                 or plan.get("max_new_runs") != 1
-                or candidate.get("official_task") != "stateful_strategy"
+                or task not in {"stateful_strategy", "key_confirmation"}
                 or candidate.get("economic_evaluation_type") != "stateful_account"
                 or candidate.get("formula")):
             raise ValueError("Expected one stateful account, cycle1/groups1, never a factor group replay")
@@ -106,6 +113,7 @@ class ManualStrategyController:
             if name in proof and proof[name] != plan[name]:
                 raise ValueError("Stateful preflight artifact binding differs: " + name)
         self.plan, self.candidate, self.key = plan, candidate, key
+        self.category = "validation" if task == "key_confirmation" else "exploration"
         return plan
 
     def authority(self, *, enforce_time=True, expected=None):
@@ -123,6 +131,9 @@ class ManualStrategyController:
         if (not isinstance(quotes, list) or len(quotes) < 2
                 or not all(isinstance(q, str) and q.strip() for q in quotes)):
             raise ValueError("The new request and explicit migration acceptance must remain bound")
+        if (self.category == "validation"
+                and authority.get("short_window_retry_explicitly_approved") is not True):
+            raise ValueError("Reviewed short-window confirmation requires the explicit new human retry approval")
         deadline = utc(authority["execution_valid_until_utc"])
         recorded = utc(authority["recorded_at_utc"])
         if deadline <= recorded or deadline - recorded > timedelta(hours=2, minutes=1):
@@ -200,7 +211,7 @@ class ManualStrategyController:
                 raise ValueError("The exact child cumulative grant is exhausted")
         if enforce_time:
             other_jobs = [j for j in self.ledger.jobs() if j["fingerprint"] != self.key]
-            check = research_guard(policy, research_request(policy, self.candidate, "exploration"),
+            check = research_guard(policy, research_request(policy, self.candidate, self.category),
                                    other_jobs, self.ledger.research_state(), job["reserved"])
             if check["blocker"]:
                 raise ValueError(check["blocker"])
@@ -215,6 +226,8 @@ class ManualStrategyController:
         if (self.folder / "failure_lock.json").exists():
             raise ValueError("Role is failure-locked; no automatic retry")
         config, policy = self.config()
+        # Verify every reviewed artifact before even the free account read.
+        research_request(policy, self.candidate, self.category)
         used = _batch_usage(self.ledger.jobs(), PARENT)
         grant = {
             "batch_id": PARENT, "fingerprints": [self.key],
@@ -241,7 +254,7 @@ class ManualStrategyController:
         client = self.client or PandaClient(config["platform"])
         wallet = client.balance()  # The only permitted account read in this controller.
         save(self.folder / "latest_wallet.json", wallet)
-        funds = budget_plan([dict(self.candidate, experiment_category="exploration")], compute,
+        funds = budget_plan([dict(self.candidate, experiment_category=self.category)], compute,
             wallet, jobs=self.ledger.jobs(), study_state=self.ledger.research_state())
         save(self.folder / "latest_budget_plan.json", funds)
         return config, policy, used, grant, wallet, funds, authority_binding
@@ -270,7 +283,7 @@ class ManualStrategyController:
                     "billing_authorization": permissions, "cost_basis": "authorized_estimate",
                     "cost_ceiling": None, "reservation_credit_estimate": RESERVATION,
                     "daily_credit_limit": TOTAL_LIMIT, "official_test_not_pool_admission": True,
-                    "research_budget": research_request(policy, self.candidate, "exploration"),
+                    "research_budget": research_request(policy, self.candidate, self.category),
                     "manual_strategy_ui": {"batch_plan": bind(self.folder / "batch_plan.json"),
                         "mother_authority": authority_binding,
                         "workflow_export": self.plan["workflow_export"],
@@ -279,7 +292,7 @@ class ManualStrategyController:
                 save(self.folder / "funding_subgrant.json", {
                     "mother_authority": authority_binding, "scope_usage_before": used,
                     "grant": grant, "manual_UI_only": True, "no_automatic_retry": True})
-                self.ledger.reserve(self.key, self.candidate, definition, "exploration",
+                self.ledger.reserve(self.key, self.candidate, definition, self.category,
                                     RESERVATION, TOTAL_LIMIT, wallet)
             result = {"action": action, "fingerprint": self.key,
                 "state": self.ledger.get(self.key)["state"] if self.ledger.get(self.key) else None,
@@ -335,9 +348,13 @@ def main():
     parser.add_argument("--plan-sha", required=True)
     parser.add_argument("--object-id")
     parser.add_argument("--receipt")
+    parser.add_argument("--unit", choices=("full", "short"), default="full",
+                        help="Original full window or explicitly approved three-month comparison")
     args = parser.parse_args()
     ledger = ExperimentLedger(ROOT / "research_runs/experiments.sqlite3")
-    controller = ManualStrategyController(args.role, args.plan_sha, ledger=ledger)
+    unit = (UNIT if args.unit == "full" else
+            ROOT / "research_runs/finance_full_strategy_short_official_20261015")
+    controller = ManualStrategyController(args.role, args.plan_sha, unit=unit, ledger=ledger)
     try:
         result = controller.process(args.action, object_id=args.object_id, receipt_path=args.receipt)
         print(json.dumps(result, ensure_ascii=False))
