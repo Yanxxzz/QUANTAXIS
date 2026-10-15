@@ -208,8 +208,31 @@ class ResearchRegistry:
 
     def aliases(self) -> dict[str, str]:
         aliases = {key: key for key in self.registrations()}
-        for event in self.events():
+        events = self.events()
+        by_id = {event["event_id"]: event for event in events}
+        corrected = set()
+        for event in events:
+            if event["kind"] != "reconciliation" or "alias_event_kind_corrections" not in event["payload"]:
+                continue
+            corrections = event["payload"]["alias_event_kind_corrections"]
+            if not isinstance(corrections, list):
+                raise ValueError("Alias event corrections must be an explicit list")
+            for correction in corrections:
+                target = by_id.get(correction.get("event_id")) if isinstance(correction, Mapping) else None
+                if (not target or target["kind"] != "identity_alias"
+                        or "trial_key" in target["payload"]
+                        or target["sequence"] >= event["sequence"]
+                        or correction.get("event_hash") != target["event_hash"]
+                        or correction.get("replacement_kind") != "execution_repair"
+                        or correction.get("reason") != "source_literal_materialization_not_identity_alias"):
+                    raise ValueError("Alias event correction does not exactly bind a malformed materialization event")
+                corrected.add(target["event_id"])
+        for event in events:
             if event["kind"] == "identity_alias":
+                if "trial_key" not in event["payload"]:
+                    if event["event_id"] in corrected:
+                        continue
+                    raise ValueError("Identity alias lacks trial_key; exact append-only reconciliation required")
                 aliases[event["subject"]] = event["payload"]["trial_key"]
         return aliases
 

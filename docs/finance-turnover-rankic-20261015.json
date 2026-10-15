@@ -1,0 +1,182 @@
+{
+  "status": "COMPLETE_FIXED_POSITIVE_RANKIC_NOT_SUPPORTED",
+  "as_of_utc": "2026-10-15T12:49:05.068295+00:00",
+  "evaluation_window": {
+    "start": "2026-05-06",
+    "end": "2026-08-28"
+  },
+  "cycle": 5,
+  "groups": 10,
+  "formations": 16,
+  "fixed_archival_symbols": 60,
+  "local_finite_keys": 4296,
+  "formal_eligible": false,
+  "selected_score": "融资＋换手变化的新评分",
+  "definitions": {
+    "target": "0.5*(average_percentile_rank(net_flow_5)+average_percentile_rank(turnover_ratio_5_20))",
+    "control": "average_percentile_rank(turnover_ratio_5_20)"
+  },
+  "clock": "Score date t uses only finance/turnover through t-2. Official normal holding labels start no earlier than t+1. No holding-state/exit-age/realized-return input.",
+  "source_scope": "Public external financing and retained turnover literals executed on official stock-factor interface; not native finance production.",
+  "roles": {
+    "target": {
+      "run_id": "6ad0c9ad9e9d797cfb2d4116",
+      "factor_id": "6ad0c9ac9e9d797cfb2d4115",
+      "raw_RankIC_mean": -0.037742717133127886,
+      "report_RankIC_headline": "-0.0376",
+      "raw_PearsonIC_mean": 0.02706526653952409,
+      "report_Pearson_ICIR": "0.1647",
+      "report_IC_pvalue": "0.5200",
+      "fixed_group10": {
+        "group": 10,
+        "cumulative_return": 0.14589190483093262,
+        "cumulative_excess": 0.1794828623533249,
+        "annualized_return": 0.4596,
+        "annualized_excess": 0.5654,
+        "report_Sharpe": 0.971,
+        "maximum_drawdown": 0.278,
+        "turnover": 0.8122,
+        "report_metrics_raw": {
+          "annualizedReturn": "45.96%",
+          "excessAnnualized": "56.54%",
+          "sharpeRatio": "0.9710",
+          "maxDrawdown": "27.80%",
+          "turnoverRate": "81.22%"
+        }
+      },
+      "actual_observed_credits": 2.0,
+      "report_monotonicity": 0.22,
+      "code_echo_exact": true,
+      "report_sha256": "50b4d7d327fefca4b8e99298497cba04528bbb4b91304b9cf6a72e16f3e020e9"
+    },
+    "control": {
+      "run_id": "6ad0ca162d2f6998fc1c3534",
+      "factor_id": "6ad0ca152d2f6998fc1c3533",
+      "raw_RankIC_mean": -0.0400289984356194,
+      "report_RankIC_headline": "-0.0399",
+      "raw_PearsonIC_mean": 0.016378666681530825,
+      "report_Pearson_ICIR": "0.1003",
+      "report_IC_pvalue": "0.6939",
+      "fixed_group10": {
+        "group": 10,
+        "cumulative_return": -0.11008329689502716,
+        "cumulative_excess": -0.0764923095703125,
+        "annualized_return": -0.3467,
+        "annualized_excess": -0.2409,
+        "report_Sharpe": -0.8381,
+        "maximum_drawdown": 0.3797,
+        "turnover": 0.7042,
+        "report_metrics_raw": {
+          "annualizedReturn": "-34.67%",
+          "excessAnnualized": "-24.09%",
+          "sharpeRatio": "-0.8381",
+          "maxDrawdown": "37.97%",
+          "turnoverRate": "70.42%"
+        }
+      },
+      "actual_observed_credits": 2.0,
+      "report_monotonicity": 0.0,
+      "code_echo_exact": true,
+      "report_sha256": "4c1aa17bcf42492b0cb98835bd1c4f3439b51656cb9bc04a17dda3ca39431c01"
+    }
+  },
+  "all_groups_cumulative_returns": {
+    "target": [
+      -0.12759579718112946,
+      0.059086717665195465,
+      -0.016491655260324478,
+      -0.14003470540046692,
+      -0.02207493782043457,
+      0.08415735512971878,
+      -0.10011985152959824,
+      -0.1287684589624405,
+      -0.07228842377662659,
+      0.14589190483093262
+    ],
+    "control": [
+      -0.07261091470718384,
+      -0.14764389395713806,
+      0.17157311737537384,
+      -0.17351430654525757,
+      -0.1238396018743515,
+      0.2018609344959259,
+      0.17052800953388214,
+      -0.21651794016361237,
+      -0.011601336300373077,
+      -0.11008329689502716
+    ]
+  },
+  "old_account_context_not_new_score_RankIC": [
+    {
+      "name": "原融资共同支持版",
+      "artifact_sha256": "607e66fb0e33442026ae12adf839971f0f72f032830df3a8ed2e08c2eff00f05",
+      "metrics": {
+        "days": 659,
+        "compounded_return": 0.9092868970974064,
+        "cagr": 0.28057335723002375,
+        "sharpe": 1.268123637303143,
+        "max_drawdown": 0.1920072327382054
+      }
+    },
+    {
+      "name": "融资条件退出、无硬期限",
+      "artifact_sha256": "3500e7b18e5959700e0a489b6c0089c48a5e8f26617e47ff21de90104b998875",
+      "metrics": {
+        "days": 659,
+        "compounded_return": 0.7040445999984588,
+        "cagr": 0.2260770296835235,
+        "sharpe": 1.205160137962844,
+        "max_drawdown": 0.16123528693606626
+      }
+    },
+    {
+      "name": "第25日起持续确认复核",
+      "artifact_sha256": "7a197d738def9584bc7c5b4bab6dbab9041021e2cc23ab93e3d7cd6938ca5854",
+      "metrics": {
+        "days": 659,
+        "compounded_return": 0.3377645460739356,
+        "cagr": 0.1177052311150577,
+        "sharpe": 0.7218689692038629,
+        "max_drawdown": 0.16123528693606626
+      }
+    }
+  ],
+  "budget": {
+    "this_task": {
+      "runs": 2,
+      "actual": 4.0,
+      "unsettled": 0,
+      "active_reserved": 0
+    },
+    "parent20": {
+      "runs": 3,
+      "actual": 6.0,
+      "remaining": 14.0,
+      "authorized": 20,
+      "unsettled": 0,
+      "active_reserved": 0
+    },
+    "global": {
+      "runs": 13,
+      "actual": 26.0,
+      "unsettled": 0,
+      "active_reserved": 0
+    }
+  },
+  "review_sha256": "9425ac00140d36651fc0620fd774b6b8d27fcf89c17f2e557fe36e66efef3ef8",
+  "protocol_sha256": "0f1d37256ae8625070b5654e76888227d88f2dcacc3ba0daf8b1da5a4e08343c",
+  "source_literal_sha256": "a996facbac9502a093110ba8e7650eeb80dcd5b2c52e17188ac9ede45338752e",
+  "limitations": [
+    "New finance-plus-turnover continuous score; not the old entry/10%take-profit/holding-exit account.",
+    "Literal replay of public external inputs; close only carries the received official index.",
+    "4296 common finite keys are local replay proof; remote membership, cleaning and coverage are unexported.",
+    "Worker code equality/similar inferred market curves do not prove native finance, common raw members, PIT or production.",
+    "Service Sharpe/returns are not certified 30bp net daily admission statistics; sixteen observations are not200 periods.",
+    "IC table p-value is not a separate RankIC significance test or multiplicity-adjusted claim.",
+    "Previously exposed history; no OOS or causal incremental alpha claim follows."
+  ],
+  "old_accounts_replayed": false,
+  "new_contexts": 2,
+  "registry_total": 617,
+  "decision": "Do not promote fixed positive score: negative RankIC and nonmonotonic groups. No automatic sign/window/weight/group selection or paid repeat."
+}
