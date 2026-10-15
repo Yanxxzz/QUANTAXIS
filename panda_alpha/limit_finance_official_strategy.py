@@ -77,8 +77,8 @@ def initialize(context):
         'commission_multiplier': str(info.commission_multiplier), 'slippage': str(info.slippage),
         'start_date': str(info.start_date), 'end_date': str(info.end_date),
     }, ensure_ascii=False, sort_keys=True)
-    if info.frequency != '1M' or type(info.matching_type) is not int or info.matching_type != 1:
-        raise RuntimeError('Frozen migration requires frequency1M and matching_type1; no orders permitted; '
+    if info.frequency != '1M' or type(info.matching_type) is not int or info.matching_type != FROZEN_MATCHING_TYPE:
+        raise RuntimeError('Frozen migration requires frequency1M and matching_type' + str(FROZEN_MATCHING_TYPE) + '; no orders permitted; '
                            'observed_settings=' + observed_settings)
     checks = ((info.stock_starting_cash, 100000.0, 'stock_starting_cash'),
               (info.commission_multiplier, FROZEN_COMMISSION_MULTIPLIER, 'commission_multiplier'),
@@ -343,9 +343,10 @@ def _lf_bar(data, symbol):
     if bar is None:
         return None
     try:
-        values = (bar.open, bar.limit_up, bar.limit_down)
+        reference = bar.open if FROZEN_MATCHING_TYPE == 1 else bar.close
+        values = (reference, bar.limit_up, bar.limit_down)
     except AttributeError as exc:
-        raise RuntimeError('Native Bar lacks documented open/limit_up/limit_down fields') from exc
+        raise RuntimeError('Native Bar lacks documented ' + FROZEN_REFERENCE_PHASE + '/limit_up/limit_down fields') from exc
     try:
         reference, upper, lower = [_lf_number(v, 'bar price/limits', positive=True) for v in values]
     except RuntimeError:
@@ -387,7 +388,8 @@ def handle_data(context, data):
                 record.update(cached_minute=minute, cached_volume=volume)
         observed[symbol] = _lf_bar(data, symbol)
     # Current bar volume is cached, never part of this minute's sizing budget.
-    # Price decisions use ONLY current open under asserted matching_type1.
+    # Price decisions use ONLY the explicitly frozen open/close phase that
+    # matches the native engine. This does not add current-bar volume to sizing.
     for symbol in sorted(positions):
         available = observed[symbol]
         if available is None:
@@ -439,6 +441,7 @@ def after_trading(context):
                  'entry_date': state['position_state'].get(symbol, {}).get('entry_date')}
                 for symbol, p in sorted(positions.items())]
     print('LF_DAILY ' + json.dumps({'date': state['day'], 'mode': FROZEN_MODE,
+        'matching_type': FROZEN_MATCHING_TYPE, 'reference_phase': FROZEN_REFERENCE_PHASE,
         'native_NAV': _lf_number(account.total_value, 'total_value', positive=True),
         'native_cash': _lf_number(account.cash, 'cash'),
         'native_cumulative_fees': _lf_number(account.transaction_cost, 'transaction_cost'),
@@ -458,10 +461,12 @@ def _inline(path):
 
 
 def render_official_strategy(mode, entry_roster, reference_calendar, validation_examples,
-                             window, commission_multiplier=3.75, slippage=0):
+                             window, commission_multiplier=3.75, slippage=0, matching_type=1):
     """Return one self-contained worker script; never load actual data or accounts."""
     if mode not in {"control", "late_confirmed"}:
         raise ValueError("Unknown frozen strategy mode")
+    if type(matching_type) is not int or matching_type not in (0, 1):
+        raise ValueError("Explicit matching_type integer0 close or integer1 open required")
     if (isinstance(commission_multiplier, bool) or not isinstance(commission_multiplier, (int, float))
             or not math.isfinite(commission_multiplier) or commission_multiplier != 3.75
             or isinstance(slippage, bool) or not isinstance(slippage, (int, float)) or slippage != 0):
@@ -501,7 +506,12 @@ def render_official_strategy(mode, entry_roster, reference_calendar, validation_
         "capacity": "At most1%previous-completed-observed-bar volume less actual same-day buy+sell shares",
         "first_minute_no_orders": True,
         "no_current_bar_volume_for_sizing": True, "no_daily_future_volume": True,
-        "minute_open_reference_IOC_not_touch_or_queue_proof": True,
+        "matching_type": matching_type,
+        "reference_phase": "open" if matching_type == 1 else "close",
+        "minute_open_reference_IOC_not_touch_or_queue_proof": matching_type == 1,
+        "minute_reference_IOC_not_touch_or_queue_proof": True,
+        "close_phase_is_actual_decision_clock_change_not_dtype_alias": matching_type == 0,
+        "same_explicit_reference_phase_for_both_comparison_roles": True,
         "no_same_day_sale_cash_or_slot_reuse": True, "native_assets_never_assigned": True,
         "native_financing_role_requires_three_examples_before_orders": True,
         "same_frozen_roster_source_contract_and_engine_settings_for_both_modes": True,
@@ -510,6 +520,8 @@ def render_official_strategy(mode, entry_roster, reference_calendar, validation_
     header = ("from panda_backtest.api.api import *\nimport panda_data\nimport json\n\n"
               + "\n".join(_inline(p) for p in modules))
     constants = {"FROZEN_MODE": mode, "FROZEN_WINDOW": window,
+                 "FROZEN_MATCHING_TYPE": matching_type,
+                 "FROZEN_REFERENCE_PHASE": "open" if matching_type == 1 else "close",
                  "FROZEN_REFERENCE_CALENDAR": calendar, "FROZEN_ENTRY_ROSTER": roster,
                  "FROZEN_SYMBOLS": symbols, "FROZEN_VALIDATION_EXAMPLES": examples,
                  "FROZEN_COMMISSION_MULTIPLIER": float(commission_multiplier),

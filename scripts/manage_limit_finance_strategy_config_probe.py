@@ -10,6 +10,7 @@ import ast
 from datetime import date, datetime, timezone
 import json
 from pathlib import Path
+import re
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -27,6 +28,8 @@ PURPOSE = "stateful_runtime_configuration_echo"
 MECHANISM = "stateful_strategy_runtime_configuration_diagnostic"
 MARKER = "LF_CONFIG_DIAGNOSTIC_ONLY_NO_ORDERS "
 FIELDS = {"frequency", "frequency_type", "matching_type", "matching_type_type"}
+_REPR_TYPE_QUOTES = re.compile(
+    r'''("(?:frequency_type|matching_type_type)"\s*:\s*"<class )\\'([A-Za-z_][A-Za-z0-9_.]*)\\'(>")''')
 
 
 def no_order_code(code):
@@ -60,11 +63,11 @@ def observed_configuration(receipt):
     if not isinstance(artifact, dict) or bind(artifact["path"]) != artifact:
         raise ValueError("Exact diagnostic error artifact and SHA256 are required")
     text = Path(artifact["path"]).read_text(encoding="utf-8-sig")
-    texts = [text]
+    texts = [(text, False)]
 
     def strings(value):
         if isinstance(value, str):
-            texts.append(value)
+            texts.append((value, True))
         elif isinstance(value, dict):
             for item in value.values():
                 strings(item)
@@ -77,12 +80,25 @@ def observed_configuration(receipt):
     except json.JSONDecodeError:
         pass
     observations = {}
-    for value in texts:
+    for value, decoded_string in texts:
         for suffix in value.split(MARKER)[1:]:
             try:
                 observed, _ = json.JSONDecoder().raw_decode(suffix.lstrip())
             except json.JSONDecodeError:
-                continue
+                if not decoded_string:
+                    continue
+                # The service embeds exception repr inside an already decoded
+                # JSON string.  JSON forbids \\' while Python repr escapes its
+                # surrounding single quotes.  Repair only these two type-value
+                # patterns, never arbitrary escapes, ordinary fields or raw bytes.
+                normalized = _REPR_TYPE_QUOTES.sub(
+                    lambda m: m.group(1) + "'" + m.group(2) + "'" + m.group(3), suffix)
+                if normalized == suffix:
+                    continue
+                try:
+                    observed, _ = json.JSONDecoder().raw_decode(normalized.lstrip())
+                except json.JSONDecodeError:
+                    continue
             if (isinstance(observed, dict) and set(observed) == FIELDS
                     and all(isinstance(v, str) and v.strip() for v in observed.values())):
                 observations[json.dumps(observed, sort_keys=True)] = observed

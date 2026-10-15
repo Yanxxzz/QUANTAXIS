@@ -151,3 +151,30 @@ def test_two_day_window_and_proposal_match_are_accepted_offline(diagnostic):
     c.frozen()
     assert c.plan["window"] == {"start": "2026-09-17", "end": "2026-09-18"}
     assert fake.calls == 0 and ledger.get(c.key) is None
+
+
+def test_service_decoded_exception_repr_type_quotes_are_narrowly_normalized(tmp_path):
+    # Shape retained from the actual saved error_detail: a repr-wrapped RuntimeError
+    # inside JSON, followed by a source excerpt containing a second bare marker.
+    detail = r'''策略运行异常,异常类型：<class \'RuntimeError\'>\n异常信息：LF_CONFIG_DIAGNOSTIC_ONLY_NO_ORDERS {"frequency": "1M", "frequency_type": "<class \'str\'>", "matching_type": "0", "matching_type_type": "<class \'int\'>"}', '00001')
+错误定位：第13行
+->13: raise RuntimeError('LF_CONFIG_DIAGNOSTIC_ONLY_NO_ORDERS ' + json.dumps(observed))'''
+    log = tmp_path / "service-error.json"
+    MODULE.save(log, {"logs": [{"error_detail": detail}], "errors": [{"error_detail": detail}]})
+    original = log.read_bytes()
+    observed = MODULE.observed_configuration({"diagnostic_error_artifact": MODULE.bind(log)})
+    assert observed == {"frequency": "1M", "frequency_type": "<class 'str'>",
+                        "matching_type": "0", "matching_type_type": "<class 'int'>"}
+    assert log.read_bytes() == original
+
+
+def test_repr_repair_does_not_accept_raw_plaintext_or_extra_fields(tmp_path):
+    payload = r'''{"frequency": "1M", "frequency_type": "<class \'str\'>", "matching_type": "0", "matching_type_type": "<class \'int\'>"}'''
+    raw = tmp_path / "undecoded-error.txt"
+    raw.write_bytes((MODULE.MARKER + payload).encode("utf-8"))
+    with pytest.raises(ValueError, match="unique actual four-field"):
+        MODULE.observed_configuration({"diagnostic_error_artifact": MODULE.bind(raw)})
+    raw_json = tmp_path / "extra-field.json"
+    MODULE.save(raw_json, {"error_detail": MODULE.MARKER + payload[:-1] + ', "fake": "not_config"}'})
+    with pytest.raises(ValueError, match="unique actual four-field"):
+        MODULE.observed_configuration({"diagnostic_error_artifact": MODULE.bind(raw_json)})

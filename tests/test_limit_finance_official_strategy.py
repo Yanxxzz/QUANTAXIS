@@ -38,6 +38,17 @@ class Bar:
     low = close = high
 
 
+class ClosingBar:
+    def __init__(self, price=10., volume=100000., lower=10., upper=20.):
+        self.close, self.volume, self.limit_down, self.limit_up = price, volume, lower, upper
+
+    @property
+    def open(self):
+        raise AssertionError("A close-phase strategy must not read the current open")
+
+    high = low = open
+
+
 class Inputs:
     def __init__(self, symbols):
         self.calendar = list(CAL)
@@ -55,9 +66,10 @@ class Inputs:
                     latest_report_date=CAL[index - 2], execution_date=CAL[index])
 
 
-def worker(monkeypatch, mode="late_confirmed", roster=None, **settings):
+def worker(monkeypatch, mode="late_confirmed", roster=None, render_matching_type=1, **settings):
     roster = roster or [(WINDOW["start"], "000001")]
-    code = render_official_strategy(mode, roster, CAL, EXAMPLES, WINDOW)
+    code = render_official_strategy(mode, roster, CAL, EXAMPLES, WINDOW,
+                                   matching_type=render_matching_type)
     modules = {name: ModuleType(name) for name in
                ("panda_backtest", "panda_backtest.api", "panda_backtest.api.api", "panda_data")}
     calls, behavior = [], {"action": "fill"}
@@ -93,7 +105,7 @@ def worker(monkeypatch, mode="late_confirmed", roster=None, **settings):
 
     modules["panda_backtest.api.api"].order_shares = order_shares
     exec(compile(code, "synthetic_official_strategy.py", "exec"), ns)
-    info = SimpleNamespace(frequency="1M", matching_type=1, stock_starting_cash=100000.,
+    info = SimpleNamespace(frequency="1M", matching_type=render_matching_type, stock_starting_cash=100000.,
                            commission_multiplier=3.75, slippage=0., start_date=WINDOW["start"],
                            end_date=WINDOW["end"], stock_account="synthetic")
     for k, v in settings.items():
@@ -382,3 +394,63 @@ def test_fee_and_window_mismatches_also_report_actual_settings_without_relaxatio
         assert '"frequency": "1M"' in str(captured.value)
         assert '"matching_type": "1"' in str(captured.value)
         assert ns["calls"] == []
+
+
+def test_explicit_close_phase_guard_and_metadata_do_not_guess_frequency_or_dtype(monkeypatch):
+    ns, context, inputs, code = worker(monkeypatch, render_matching_type=0)
+    ns["initialize"](context)
+    assert ns["FROZEN_MATCHING_TYPE"] == 0
+    assert ns["MIGRATION_METADATA"]["reference_phase"] == "close"
+    assert ns["MIGRATION_METADATA"]["close_phase_is_actual_decision_clock_change_not_dtype_alias"]
+    assert ns["MIGRATION_METADATA"]["same_explicit_reference_phase_for_both_comparison_roles"]
+    assert ns["MIGRATION_METADATA"]["no_current_bar_volume_for_sizing"]
+    for settings in ({"matching_type": 1}, {"matching_type": "0"}, {"frequency": "1m"}):
+        ns, context, inputs, _ = worker(monkeypatch, render_matching_type=0, **settings)
+        with pytest.raises(RuntimeError, match="observed_settings"):
+            ns["initialize"](context)
+    for wrong in (False, True, "0", np.int64(0), 2):
+        with pytest.raises(ValueError, match="matching_type"):
+            render_official_strategy("control", [(WINDOW["start"], "000001")], CAL,
+                                     EXAMPLES, WINDOW, matching_type=wrong)
+
+
+def test_close_phase_entry_uses_close_and_only_previous_bar_volume(monkeypatch):
+    ns, context, inputs, _ = worker(monkeypatch, render_matching_type=0)
+    ns["initialize"](context)
+    day(ns, context)
+    minute(ns, context, 0, {"000001.SZ": ClosingBar(volume=100000.)})
+    assert ns["calls"] == []
+    minute(ns, context, 1, {"000001.SZ": ClosingBar(volume=1e9)})
+    assert ns["calls"][0]["quantity"] == 1000
+    assert ns["calls"][0]["price"] == 10.
+    # Prior volume may now be ample, but a close aboveDL cannot fill aDL bid.
+    minute(ns, context, 2, {"000001.SZ": ClosingBar(price=10.5)})
+    assert len(ns["calls"]) == 1
+
+
+def test_close_phase_strict_takeprofit_does_not_use_open_high_or_low(monkeypatch):
+    ns, context, inputs, _ = worker(monkeypatch, mode="control", render_matching_type=0)
+    ns["initialize"](context)
+    holding(ns, "000001.SZ")
+    day(ns, context)
+    minute(ns, context, 0, {"000001.SZ": ClosingBar(price=11., lower=8.)})
+    minute(ns, context, 1, {"000001.SZ": ClosingBar(price=11., lower=8.)})
+    assert ns["calls"] == []
+    minute(ns, context, 2, {"000001.SZ": ClosingBar(price=11.01, lower=8.)})
+    assert ns["calls"][0]["quantity"] == -1000 and ns["calls"][0]["price"] == 11.01
+
+
+def test_close_phase_first_loss_touch_retains_sticky_exit_and_lagged_features(monkeypatch):
+    ns, context, inputs, _ = worker(monkeypatch, render_matching_type=0)
+    ns["initialize"](context)
+    holding(ns, "000001.SZ")
+    inputs.features["000001.SZ"] = {"net_flow": -.1, "turnover_relative": 1.5}
+    day(ns, context)
+    minute(ns, context, 0, {"000001.SZ": ClosingBar(price=9.19, lower=8.)})
+    pending = context._lf["position_state"]["000001.SZ"]["flags"]["pending_exit"]
+    assert pending["reason"] == "conditional_stop_loss"
+    assert pending["trigger_price"] == 9.2
+    assert ns["calls"] == []  # Even confirmed exit cannot spend current-bar volume.
+    assert inputs.calls == [("000001.SZ", 25)]
+    minute(ns, context, 1, {"000001.SZ": ClosingBar(price=9.3, lower=8.)})
+    assert ns["calls"][0]["quantity"] == -1000 and ns["calls"][0]["price"] == 9.3
