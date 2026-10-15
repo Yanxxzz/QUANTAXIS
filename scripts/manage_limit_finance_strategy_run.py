@@ -60,7 +60,8 @@ def utc(value):
 
 
 class ManualStrategyController:
-    def __init__(self, role, plan_sha, *, root=ROOT, unit=UNIT, ledger=None, client=None):
+    def __init__(self, role, plan_sha, *, root=ROOT, unit=UNIT, ledger=None, client=None,
+                 reservation=RESERVATION):
         self.root, self.unit = Path(root).resolve(), Path(unit).resolve()
         if role not in ("target", "control"):
             raise ValueError("Unknown frozen role")
@@ -69,6 +70,11 @@ class ManualStrategyController:
         self.client = client
         self.plan = self.candidate = self.key = None
         self.category = "exploration"
+        if (type(reservation) not in (int, float) or not math.isfinite(reservation)
+                or not 2 <= reservation <= RESERVATION):
+            raise ValueError("A per-Run client reservation estimate between two and eight is required")
+        self.reservation = float(reservation)
+        self.close_phase = self.unit == self.root / "research_runs/finance_full_strategy_short_official_20261015/close_phase_ready"
 
     def frozen(self):
         path = self.folder / "batch_plan.json"
@@ -87,7 +93,8 @@ class ManualStrategyController:
             raise ValueError("Shared strategy protocol path differs")
         candidate = read(plan["candidate"]["path"])
         task = candidate.get("official_task")
-        short = self.unit == self.root / "research_runs/finance_full_strategy_short_official_20261015"
+        short = (self.unit == self.root / "research_runs/finance_full_strategy_short_official_20261015"
+                 or self.close_phase)
         if (task == "key_confirmation" and
                 (not short or candidate.get("budget_mechanism_id") != STATEFUL_MECHANISM)):
             raise ValueError("Reviewed stateful confirmation is limited to the approved short unit and original mechanism")
@@ -134,6 +141,16 @@ class ManualStrategyController:
         if (self.category == "validation"
                 and authority.get("short_window_retry_explicitly_approved") is not True):
             raise ValueError("Reviewed short-window confirmation requires the explicit new human retry approval")
+        if self.close_phase or self.reservation != RESERVATION:
+            if (not self.close_phase
+                    or authority.get("continuation_experiments_explicitly_approved") is not True
+                    or authority.get("continuation_scope") != "close_phase_ready"):
+                raise ValueError("Reduced estimate is limited to the explicitly continued close-phase comparison")
+            maximum = authority.get("max_run_reservation")
+            if (type(maximum) not in (int, float) or not math.isfinite(maximum)
+                    or not 2 <= maximum <= RESERVATION
+                    or (enforce_time and self.reservation > maximum)):
+                raise ValueError("Per-Run estimate exceeds the current human continuation scope")
         deadline = utc(authority["execution_valid_until_utc"])
         recorded = utc(authority["recorded_at_utc"])
         if deadline <= recorded or deadline - recorded > timedelta(hours=2, minutes=1):
@@ -210,6 +227,8 @@ class ManualStrategyController:
                     or used["runs"] > grant["max_runs"]):
                 raise ValueError("The exact child cumulative grant is exhausted")
         if enforce_time:
+            if job["reserved"] != self.reservation:
+                raise ValueError("Continue with the exact original per-Run reservation estimate")
             other_jobs = [j for j in self.ledger.jobs() if j["fingerprint"] != self.key]
             check = research_guard(policy, research_request(policy, self.candidate, self.category),
                                    other_jobs, self.ledger.research_state(), job["reserved"])
@@ -234,22 +253,22 @@ class ManualStrategyController:
             "valid_from": datetime.now(timezone(timedelta(hours=8))).date().isoformat(),
             "valid_until": deadline.astimezone(timezone(timedelta(hours=8))).date().isoformat(),
             "max_runs": used["runs"] + 1, "max_new_runs": 1,
-            "max_total_credits": used["total"] + RESERVATION,
-            "max_recharge_credits": used["recharge"] + RESERVATION,
-            "new_run_credit_budget": RESERVATION, "accept_estimated_charge_risk": True,
+            "max_total_credits": used["total"] + self.reservation,
+            "max_recharge_credits": used["recharge"] + self.reservation,
+            "new_run_credit_budget": self.reservation, "accept_estimated_charge_risk": True,
         }
         if any(not math.isfinite(grant[name]) or grant[name] > TOTAL_LIMIT for name in
                ("max_runs", "max_total_credits", "max_recharge_credits")):
-            raise ValueError("Existing mother scope lacks an eight-point reservation")
+            raise ValueError("Mother remaining budget cannot cover the requested client reservation estimate")
         compute = config["compute"]
         compute.update(daily_credit_limit=TOTAL_LIMIT,
             recharge_credit_limit=grant["max_recharge_credits"],
-            planning_credit_estimate=RESERVATION, cost_ceiling=None,
+            planning_credit_estimate=self.reservation, cost_ceiling=None,
             cost_ceiling_verified_at=None, cost_ceiling_source=None,
             server_enforced_cap=False, billing_mode="gift_priority",
             allow_estimated_billing=True, estimated_billing_batch_authorization=grant,
             recharge_batch_authorization=grant, allocation_mode="shared_priority",
-            planning_cost_source="Manual UI exact one-run eight-point estimate, not server cap",
+            planning_cost_source=f"Manual UI exact one-run {self.reservation:g}-point client estimate, not server cap",
             estimate_verified_at=datetime.now(timezone.utc).date().isoformat())
         client = self.client or PandaClient(config["platform"])
         wallet = client.balance()  # The only permitted account read in this controller.
@@ -268,7 +287,7 @@ class ManualStrategyController:
             if action == "reserve":
                 if (not funds["dispatch_ready"] or len(funds["selected"]) != 1
                         or funds["selected"][0]["candidate_id"] != self.candidate["candidate_id"]
-                        or funds["reservation_credit_estimate"] != RESERVATION):
+                        or funds["reservation_credit_estimate"] != self.reservation):
                     raise ValueError(funds["blocker"] or "No exact stateful budget slot")
                 # Refresh all local guards after the wallet read, before reservation.
                 self.frozen()
@@ -281,7 +300,7 @@ class ManualStrategyController:
                 definition = {
                     "candidate": self.candidate, "window": self.plan["window"], "cycle": 1, "groups": 1,
                     "billing_authorization": permissions, "cost_basis": "authorized_estimate",
-                    "cost_ceiling": None, "reservation_credit_estimate": RESERVATION,
+                    "cost_ceiling": None, "reservation_credit_estimate": self.reservation,
                     "daily_credit_limit": TOTAL_LIMIT, "official_test_not_pool_admission": True,
                     "research_budget": research_request(policy, self.candidate, self.category),
                     "manual_strategy_ui": {"batch_plan": bind(self.folder / "batch_plan.json"),
@@ -293,7 +312,7 @@ class ManualStrategyController:
                     "mother_authority": authority_binding, "scope_usage_before": used,
                     "grant": grant, "manual_UI_only": True, "no_automatic_retry": True})
                 self.ledger.reserve(self.key, self.candidate, definition, self.category,
-                                    RESERVATION, TOTAL_LIMIT, wallet)
+                                    self.reservation, TOTAL_LIMIT, wallet)
             result = {"action": action, "fingerprint": self.key,
                 "state": self.ledger.get(self.key)["state"] if self.ledger.get(self.key) else None,
                 "scope_before": used, "ready": funds["dispatch_ready"], "selected": funds["selected"],
@@ -348,13 +367,17 @@ def main():
     parser.add_argument("--plan-sha", required=True)
     parser.add_argument("--object-id")
     parser.add_argument("--receipt")
-    parser.add_argument("--unit", choices=("full", "short"), default="full",
+    parser.add_argument("--unit", choices=("full", "short", "close"), default="full",
                         help="Original full window or explicitly approved three-month comparison")
+    parser.add_argument("--reservation", type=float, default=RESERVATION,
+                        help="Client estimate only; reduced values require the exact close-phase continuation authority")
     args = parser.parse_args()
     ledger = ExperimentLedger(ROOT / "research_runs/experiments.sqlite3")
     unit = (UNIT if args.unit == "full" else
-            ROOT / "research_runs/finance_full_strategy_short_official_20261015")
-    controller = ManualStrategyController(args.role, args.plan_sha, unit=unit, ledger=ledger)
+            ROOT / "research_runs/finance_full_strategy_short_official_20261015" /
+            ("close_phase_ready" if args.unit == "close" else ""))
+    controller = ManualStrategyController(args.role, args.plan_sha, unit=unit, ledger=ledger,
+                                          reservation=args.reservation)
     try:
         result = controller.process(args.action, object_id=args.object_id, receipt_path=args.receipt)
         print(json.dumps(result, ensure_ascii=False))

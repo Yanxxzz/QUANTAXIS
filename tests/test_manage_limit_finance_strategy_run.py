@@ -253,3 +253,52 @@ def test_short_confirmation_needs_new_human_retry_approval_before_wallet(prepare
     with pytest.raises(ValueError, match="explicit new human retry approval"):
         c.process("reserve")
     assert fake.calls == 0 and ledger.get(c.key) is None
+
+
+def close_phase_continuation(prepared, *, previous_actual):
+    original, fake, ledger = reviewed_short(prepared)
+    unit = original.unit / "close_phase_ready"
+    folder = unit / "target"
+    folder.mkdir(parents=True)
+    for name in ("authorization.json", "protocol.json", "review.json"):
+        (unit / name).write_bytes((original.unit / name).read_bytes())
+    for name in ("candidate.json", "strategy.py", "workflow_export.json", "preflight.json", "batch_plan.json"):
+        (folder / name).write_bytes((original.folder / name).read_bytes())
+    candidate = MODULE.read(folder / "candidate.json")
+    candidate["code_path"] = str((folder / "strategy.py").resolve())
+    candidate["local_review_evidence"] = [MODULE.bind(unit / "review.json")]
+    MODULE.save(folder / "candidate.json", candidate)
+    authority = MODULE.read(unit / "authorization.json")
+    authority.update(max_run_reservation=6, continuation_experiments_explicitly_approved=True,
+                     continuation_scope="close_phase_ready")
+    authority["human_instructions"].append("可以继续进行官网实验，优先使用官网算力")
+    MODULE.save(unit / "authorization.json", authority)
+    plan = MODULE.read(folder / "batch_plan.json")
+    for field, path in {"candidate": folder / "candidate.json", "code_file": folder / "strategy.py",
+                        "protocol": unit / "protocol.json", "preflight": folder / "preflight.json",
+                        "workflow_export": folder / "workflow_export.json"}.items():
+        plan[field] = MODULE.bind(path)
+    MODULE.save(folder / "batch_plan.json", plan)
+    ledger.db.execute("UPDATE jobs SET actual=? WHERE fingerprint=?", (previous_actual, "0" * 64))
+    controller = MODULE.ManualStrategyController("target", MODULE.bind(folder / "batch_plan.json")["sha256"],
+        root=original.root, unit=unit, ledger=ledger, client=fake, reservation=6)
+    return controller, fake, ledger
+
+
+def test_close_phase_remaining_six_can_reserve_six_without_adding_mother_budget(prepared):
+    c, fake, ledger = close_phase_continuation(prepared, previous_actual=14)
+    c.process("reserve")
+    job = ledger.get(c.key)
+    assert job["state"] == "RESERVED" and job["reserved"] == 6
+    permission = json.loads(job["definition"])["billing_authorization"]["estimated_billing"]
+    assert permission["max_total_credits"] == 20
+    assert permission["max_recharge_credits"] == 20
+    assert permission["new_run_credit_budget"] == 6 and permission["max_new_runs"] == 1
+    assert fake.calls == 1
+
+
+def test_close_phase_estimate_exceeding_remaining_rejects_before_wallet(prepared):
+    c, fake, ledger = close_phase_continuation(prepared, previous_actual=15)
+    with pytest.raises(ValueError, match="Mother remaining budget"):
+        c.process("reserve")
+    assert ledger.get(c.key) is None and fake.calls == 0
