@@ -202,7 +202,7 @@ def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=10000
              max_slots=5, slot_fraction=.20, lot_size=100, tick=.01,
              evaluation_start=None, adjustment_factor_role=None, max_daily_participation=.01,
              resume_state=None, preopen_signal_filter=None, entry_mode="lower_limit",
-             preopen_signal_candidates=None):
+             preopen_signal_candidates=None, conditional_exit_controller=None):
     """Return frozen signals, potential executions, daily cash/NAV and terminal claims.
 
     Orders are chosen before the open from the preceding TWO independent
@@ -230,6 +230,11 @@ def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=10000
     bar blocks selling even with reported volume. Stop/time exits retry daily.
     Baseline profit bids remain contingent on prices strictly > 10%; failed profit
     attempts do not authorize later selling below the threshold.
+
+    An optional conditional exit controller may inspect a loss touch and a
+    prior-close return. Its external features must already be available before
+    the open. It returns a reason/price or None and may retain review flags in
+    the position. This does not change pending-exit, T+1 or execution guards.
 
     Three separate fixed stop policies retain the original entry/profit rules:
     stop_t1_limit_down and stop_t2_limit_down inspect only t+1 or t+2's actual
@@ -430,6 +435,9 @@ def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=10000
         for code in candidates[len(selected):]:
             order(day, code, "buy", "blocked_no_preopen_slot")
 
+        previous_returns = {code: _economic_price_return(
+            p["last_close"], p["adjustment_factor"], p, equivalent_units)
+            for code, p in holdings.items()} if conditional_exit_controller is not None else {}
         day_fee, dividend_cash, day_traded = 0., 0., 0.
         for code, quantity, multiplier, dividend, factor in actions:
             position = holdings[code]
@@ -448,11 +456,23 @@ def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=10000
             if index <= position["entry_index"]:
                 continue
             value, limits = prices[code], _limits(row)
+            basis = position["entry_economic_price"] / position["adjustment_factor"] if equivalent_units else position["entry_price"]
+            age = index - position["entry_index"] + 1
+            conditional = None
+            if (conditional_exit_controller is not None and position.get("pending_exit") is None
+                    and (policy.max_holding_sessions is None or age < policy.max_holding_sessions)):
+                conditional = conditional_exit_controller.evaluate(
+                    day=day, index=index, code=code, position=position,
+                    ohlc=None if _status(row) == "suspended" else value,
+                    basis=basis, previous_return=previous_returns[code], tick=tick)
             if _status(row) == "suspended":
                 reason = position.get("pending_exit")
                 age = index - position["entry_index"] + 1
                 if reason is None and policy.max_holding_sessions is not None and age >= policy.max_holding_sessions:
                     reason = "max_holding_sessions"
+                    position["pending_exit"] = reason
+                if reason is None and conditional is not None:
+                    reason = conditional["reason"]
                     position["pending_exit"] = reason
                 if reason is not None:
                     order(day, code, "sell", "blocked_suspension", reason=reason)
@@ -466,6 +486,8 @@ def simulate(bars, calendar, *, policy="baseline", cost=.003, initial_cash=10000
             reason, price = position.get("pending_exit"), value["open"]
             if reason is None and policy.max_holding_sessions is not None and age >= policy.max_holding_sessions:
                 reason = "max_holding_sessions"
+            if reason is None and conditional is not None:
+                reason, price = conditional["reason"], conditional["price"]
             if (reason is None and policy.limit_down_stop_offset is not None and
                     index - position["entry_index"] == policy.limit_down_stop_offset and
                     value["low"] <= limits[1] + 1e-7):
