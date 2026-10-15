@@ -1,0 +1,889 @@
+{
+  "scope": "LIMIT_TURNOVER_MARGIN_20261015",
+  "completed_at": "2026-10-15T07:53:38.592226+00:00",
+  "status": "COMPLETE_FIXED_GATES_NOT_PROMOTED_FINANCE_DOMAIN_LEAD_PENDING_VALIDATION",
+  "window": [
+    "2024-01-02",
+    "2026-09-18"
+  ],
+  "sessions": 659,
+  "account_rows": [
+    {
+      "path": "filtered_30bp",
+      "days": 659,
+      "compounded_return": 0.5363753121343864,
+      "cagr": 0.17846346327465668,
+      "sharpe": 0.7495503507860152,
+      "max_drawdown": 0.38484844000000007,
+      "cost_single_side": 0.003,
+      "buys": 39,
+      "closed": 34,
+      "mean_exposure": 0.6302442935919089,
+      "terminal_exposure": 0.6737351165595002,
+      "terminal_holdings": 5,
+      "terminal_oldest_age": 655,
+      "total_fees": 5013.654557312253,
+      "nav_reconciliation_max_error": 8.881784197001252e-16,
+      "maxdd_peak_date": "INITIAL_CASH",
+      "maxdd_trough_date": "2024-07-25",
+      "yearly": [
+        {
+          "year": "2024",
+          "days": 242,
+          "return": -0.04772359999999931,
+          "within_year_drawdown": 0.38484844000000007,
+          "mean_exposure": 0.7315556494120143
+        },
+        {
+          "year": "2025",
+          "days": 243,
+          "return": 0.10789500821399933,
+          "within_year_drawdown": 0.20408133568869669,
+          "mean_exposure": 0.62555159115362
+        },
+        {
+          "year": "2026",
+          "days": 174,
+          "return": 0.4562491767442842,
+          "within_year_drawdown": 0.07593897067593791,
+          "mean_exposure": 0.4958935957990279
+        }
+      ]
+    },
+    {
+      "path": "filtered_50bp",
+      "days": 659,
+      "compounded_return": 0.48960249861660166,
+      "cagr": 0.16461317196703718,
+      "sharpe": 0.7032027323331879,
+      "max_drawdown": 0.3894463500000005,
+      "cost_single_side": 0.005,
+      "buys": 39,
+      "closed": 34,
+      "mean_exposure": 0.6359402859118751,
+      "terminal_exposure": 0.6842966502450522,
+      "terminal_holdings": 5,
+      "terminal_oldest_age": 655,
+      "total_fees": 8200.287687747035,
+      "nav_reconciliation_max_error": 4.440892098500626e-16,
+      "maxdd_peak_date": "INITIAL_CASH",
+      "maxdd_trough_date": "2024-07-25",
+      "yearly": [
+        {
+          "year": "2024",
+          "days": 242,
+          "return": -0.05847980000000064,
+          "within_year_drawdown": 0.3894463500000005,
+          "mean_exposure": 0.7352381778554955
+        },
+        {
+          "year": "2025",
+          "days": 243,
+          "return": 0.10130850086912702,
+          "within_year_drawdown": 0.20638870535050746,
+          "mean_exposure": 0.631506882857459
+        },
+        {
+          "year": "2026",
+          "days": 174,
+          "return": 0.4365864258401131,
+          "within_year_drawdown": 0.07723854654165574,
+          "mean_exposure": 0.5040277979340995
+        }
+      ]
+    },
+    {
+      "path": "turnover_30bp",
+      "days": 659,
+      "compounded_return": 0.03402368646669118,
+      "cagr": 0.012876332045939076,
+      "sharpe": 0.17002427041039261,
+      "max_drawdown": 0.28443305204969904,
+      "cost_single_side": 0.003,
+      "buys": 24,
+      "closed": 19,
+      "mean_exposure": 0.6538850672254763,
+      "terminal_exposure": 0.6564737301001444,
+      "terminal_holdings": 5,
+      "terminal_oldest_age": 454,
+      "total_fees": 2760.5699999999997,
+      "nav_reconciliation_max_error": 9.159339953157541e-16,
+      "maxdd_peak_date": "2024-03-21",
+      "maxdd_trough_date": "2024-07-24",
+      "yearly": [
+        {
+          "year": "2024",
+          "days": 242,
+          "return": 0.11585531999999987,
+          "within_year_drawdown": 0.28443305204969904,
+          "mean_exposure": 0.6672758847898971
+        },
+        {
+          "year": "2025",
+          "days": 243,
+          "return": -0.030597900451825533,
+          "within_year_drawdown": 0.18325852494927397,
+          "mean_exposure": 0.6446901230935452
+        },
+        {
+          "year": "2026",
+          "days": 174,
+          "return": -0.04408639446634188,
+          "within_year_drawdown": 0.2648905640554665,
+          "mean_exposure": 0.6481022716707032
+        }
+      ],
+      "realized_net_pnl": 44500.38899999998,
+      "terminal_unrealized_net_pnl": -41098.02035333101,
+      "dividend_cash": 0.0,
+      "pnl_reconciliation_error": 0.0,
+      "closed_holding_sessions_median": 7.0,
+      "closed_holding_sessions_max": 380,
+      "closed_profitable": 19,
+      "closed_profitability_not_predictive_winrate": true
+    },
+    {
+      "path": "turnover_50bp",
+      "days": 659,
+      "compounded_return": 0.023773461545167462,
+      "cagr": 0.009025017505536859,
+      "sharpe": 0.15329272897522803,
+      "max_drawdown": 0.2877322751228699,
+      "cost_single_side": 0.005,
+      "buys": 24,
+      "closed": 19,
+      "mean_exposure": 0.6518710970451402,
+      "terminal_exposure": 0.6399528178395382,
+      "terminal_holdings": 5,
+      "terminal_oldest_age": 454,
+      "total_fees": 4544.325000000001,
+      "nav_reconciliation_max_error": 1.3322676295501878e-15,
+      "maxdd_peak_date": "2024-01-10",
+      "maxdd_trough_date": "2024-07-24",
+      "yearly": [
+        {
+          "year": "2024",
+          "days": 242,
+          "return": 0.10220584999999893,
+          "within_year_drawdown": 0.2877322751228699,
+          "mean_exposure": 0.6724068110436401
+        },
+        {
+          "year": "2025",
+          "days": 243,
+          "return": -0.03237675612046498,
+          "within_year_drawdown": 0.18509246707409488,
+          "mean_exposure": 0.6450421112665878
+        },
+        {
+          "year": "2026",
+          "days": 174,
+          "return": -0.04008039085514503,
+          "within_year_drawdown": 0.2589267068302016,
+          "mean_exposure": 0.6328469634621009
+        }
+      ],
+      "realized_net_pnl": 42539.44000000002,
+      "terminal_unrealized_net_pnl": -40162.09384548309,
+      "dividend_cash": 0.0,
+      "pnl_reconciliation_error": 1.4551915228366852e-11,
+      "closed_holding_sessions_median": 7.0,
+      "closed_holding_sessions_max": 380,
+      "closed_profitable": 19,
+      "closed_profitability_not_predictive_winrate": true
+    },
+    {
+      "path": "finance_control_30bp",
+      "days": 659,
+      "compounded_return": 0.9110532270974085,
+      "cagr": 0.2810262508640262,
+      "sharpe": 1.2696010502537194,
+      "max_drawdown": 0.19189627320051728,
+      "cost_single_side": 0.003,
+      "buys": 54,
+      "closed": 49,
+      "mean_exposure": 0.5897808296962662,
+      "terminal_exposure": 0.7335796379395599,
+      "terminal_holdings": 5,
+      "terminal_oldest_age": 233,
+      "total_fees": 9386.865644738233,
+      "nav_reconciliation_max_error": 4.440892098500626e-16,
+      "maxdd_peak_date": "2024-05-10",
+      "maxdd_trough_date": "2024-07-24",
+      "yearly": [
+        {
+          "year": "2024",
+          "days": 242,
+          "return": 0.3037595026800639,
+          "within_year_drawdown": 0.19189627320051728,
+          "mean_exposure": 0.5055295041814843
+        },
+        {
+          "year": "2025",
+          "days": 243,
+          "return": 0.5413299604330428,
+          "within_year_drawdown": 0.08114713200192225,
+          "mean_exposure": 0.6469925632829356
+        },
+        {
+          "year": "2026",
+          "days": 174,
+          "return": -0.0490018412480272,
+          "within_year_drawdown": 0.13989556714093343,
+          "mean_exposure": 0.6270588154032574
+        }
+      ],
+      "realized_net_pnl": 143567.58026800636,
+      "terminal_unrealized_net_pnl": -52462.257558265585,
+      "dividend_cash": 0.0,
+      "pnl_reconciliation_error": -2.9103830456733704e-11,
+      "closed_holding_sessions_median": 6.0,
+      "closed_holding_sessions_max": 311,
+      "closed_profitable": 49,
+      "closed_profitability_not_predictive_winrate": true
+    },
+    {
+      "path": "finance_control_50bp",
+      "days": 659,
+      "compounded_return": 0.8442479920403447,
+      "cagr": 0.26371360856303516,
+      "sharpe": 1.2071628184460057,
+      "max_drawdown": 0.19621071837843618,
+      "cost_single_side": 0.005,
+      "buys": 54,
+      "closed": 49,
+      "mean_exposure": 0.5888467562649905,
+      "terminal_exposure": 0.7345388795352972,
+      "terminal_holdings": 5,
+      "terminal_oldest_age": 233,
+      "total_fees": 15322.601074563729,
+      "nav_reconciliation_max_error": 3.3306690738754696e-15,
+      "maxdd_peak_date": "2024-01-31",
+      "maxdd_trough_date": "2024-07-24",
+      "yearly": [
+        {
+          "year": "2024",
+          "days": 242,
+          "return": 0.2856183883818084,
+          "within_year_drawdown": 0.19621071837843618,
+          "mean_exposure": 0.5083400332066037
+        },
+        {
+          "year": "2025",
+          "days": 243,
+          "return": 0.5185751899824291,
+          "within_year_drawdown": 0.08105709323258092,
+          "mean_exposure": 0.644758674502975
+        },
+        {
+          "year": "2026",
+          "days": 174,
+          "return": -0.05534996830138206,
+          "within_year_drawdown": 0.14261018414386395,
+          "mean_exposure": 0.622731991025332
+        }
+      ],
+      "realized_net_pnl": 135052.45883818087,
+      "terminal_unrealized_net_pnl": -50627.659634146345,
+      "dividend_cash": 0.0,
+      "pnl_reconciliation_error": 2.9103830456733704e-11,
+      "closed_holding_sessions_median": 6.0,
+      "closed_holding_sessions_max": 311,
+      "closed_profitable": 49,
+      "closed_profitability_not_predictive_winrate": true
+    },
+    {
+      "path": "finance_target_30bp",
+      "days": 659,
+      "compounded_return": 0.2784851026800641,
+      "cagr": 0.09850026460274841,
+      "sharpe": 0.6288376622961156,
+      "max_drawdown": 0.2366294884762885,
+      "cost_single_side": 0.003,
+      "buys": 34,
+      "closed": 29,
+      "mean_exposure": 0.4256894374035926,
+      "terminal_exposure": 0.7450301908119785,
+      "terminal_holdings": 5,
+      "terminal_oldest_age": 289,
+      "total_fees": 4714.704644738233,
+      "nav_reconciliation_max_error": 5.551115123125783e-16,
+      "maxdd_peak_date": "2026-01-06",
+      "maxdd_trough_date": "2026-07-24",
+      "yearly": [
+        {
+          "year": "2024",
+          "days": 242,
+          "return": 0.21496541268006308,
+          "within_year_drawdown": 0.21017578042274299,
+          "mean_exposure": 0.43706758173040766
+        },
+        {
+          "year": "2025",
+          "days": 243,
+          "return": 0.23842780788384843,
+          "within_year_drawdown": 0.05381898034466526,
+          "mean_exposure": 0.26123149458157574
+        },
+        {
+          "year": "2026",
+          "days": 174,
+          "return": -0.15030891439161975,
+          "within_year_drawdown": 0.23662948847628862,
+          "mean_exposure": 0.6395386855568158
+        }
+      ],
+      "realized_net_pnl": 72187.02626800636,
+      "terminal_unrealized_net_pnl": -44338.515999999996,
+      "dividend_cash": 0.0,
+      "pnl_reconciliation_error": -3.637978807091713e-11,
+      "closed_holding_sessions_median": 6.0,
+      "closed_holding_sessions_max": 311,
+      "closed_profitable": 29,
+      "closed_profitability_not_predictive_winrate": true
+    },
+    {
+      "path": "finance_target_50bp",
+      "days": 659,
+      "compounded_return": 0.24540908838181386,
+      "cagr": 0.0875446320251112,
+      "sharpe": 0.5699098876237726,
+      "max_drawdown": 0.2398498513307793,
+      "cost_single_side": 0.005,
+      "buys": 34,
+      "closed": 29,
+      "mean_exposure": 0.4281098619058853,
+      "terminal_exposure": 0.750765357923381,
+      "terminal_holdings": 5,
+      "terminal_oldest_age": 289,
+      "total_fees": 7741.306074563723,
+      "nav_reconciliation_max_error": 2.220446049250313e-16,
+      "maxdd_peak_date": "2026-01-06",
+      "maxdd_trough_date": "2026-07-24",
+      "yearly": [
+        {
+          "year": "2024",
+          "days": 242,
+          "return": 0.20275413838181056,
+          "within_year_drawdown": 0.21399081467324976,
+          "mean_exposure": 0.43949018559495834
+        },
+        {
+          "year": "2025",
+          "days": 243,
+          "return": 0.224346099829708,
+          "within_year_drawdown": 0.054914356959947286,
+          "mean_exposure": 0.26264724695976466
+        },
+        {
+          "year": "2026",
+          "days": 174,
+          "return": -0.1542714948572359,
+          "within_year_drawdown": 0.23984985133077852,
+          "mean_exposure": 0.643359155579171
+        }
+      ],
+      "realized_net_pnl": 68399.28883818086,
+      "terminal_unrealized_net_pnl": -43858.38,
+      "dividend_cash": 0.0,
+      "pnl_reconciliation_error": 7.275957614183426e-12,
+      "closed_holding_sessions_median": 6.0,
+      "closed_holding_sessions_max": 311,
+      "closed_profitable": 29,
+      "closed_profitability_not_predictive_winrate": true
+    },
+    {
+      "path": "size_target_30bp",
+      "days": 659,
+      "compounded_return": 0.18367508178575664,
+      "cagr": 0.06660577837385762,
+      "sharpe": 0.4284871328485248,
+      "max_drawdown": 0.1726107734574014,
+      "cost_single_side": 0.003,
+      "buys": 32,
+      "closed": 27,
+      "mean_exposure": 0.5220395807269594,
+      "terminal_exposure": 0.5654630898336669,
+      "terminal_holdings": 5,
+      "terminal_oldest_age": 444,
+      "total_fees": 4178.163644738233,
+      "nav_reconciliation_max_error": 3.164135620181696e-15,
+      "maxdd_peak_date": "2024-12-17",
+      "maxdd_trough_date": "2025-01-13",
+      "yearly": [
+        {
+          "year": "2024",
+          "days": 242,
+          "return": 0.19489657268006555,
+          "within_year_drawdown": 0.16230338932310873,
+          "mean_exposure": 0.32523639350709305
+        },
+        {
+          "year": "2025",
+          "days": 243,
+          "return": 0.05883336818208629,
+          "within_year_drawdown": 0.16107979291239938,
+          "mean_exposure": 0.6825293438514638
+        },
+        {
+          "year": "2026",
+          "days": 174,
+          "return": -0.06443369843525426,
+          "within_year_drawdown": 0.10133947843679025,
+          "mean_exposure": 0.5716221029565753
+        }
+      ],
+      "realized_net_pnl": 70678.71226800635,
+      "terminal_unrealized_net_pnl": -52311.20408943089,
+      "dividend_cash": 0.0,
+      "pnl_reconciliation_error": 2.9103830456733704e-11,
+      "closed_holding_sessions_median": 26.0,
+      "closed_holding_sessions_max": 173,
+      "closed_profitable": 27,
+      "closed_profitability_not_predictive_winrate": true
+    },
+    {
+      "path": "size_target_50bp",
+      "days": 659,
+      "compounded_return": 0.16292440748750203,
+      "cagr": 0.05941649102094604,
+      "sharpe": 0.39438052840463456,
+      "max_drawdown": 0.17718794170183239,
+      "cost_single_side": 0.005,
+      "buys": 32,
+      "closed": 27,
+      "mean_exposure": 0.5205100521557998,
+      "terminal_exposure": 0.5635831227600544,
+      "terminal_holdings": 5,
+      "terminal_oldest_age": 444,
+      "total_fees": 6892.231074563721,
+      "nav_reconciliation_max_error": 6.661338147750939e-16,
+      "maxdd_peak_date": "2024-12-17",
+      "maxdd_trough_date": "2025-06-20",
+      "yearly": [
+        {
+          "year": "2024",
+          "days": 242,
+          "return": 0.1803151383818098,
+          "within_year_drawdown": 0.16628812932310844,
+          "mean_exposure": 0.32561770972882836
+        },
+        {
+          "year": "2025",
+          "days": 243,
+          "return": 0.05419349283928887,
+          "within_year_drawdown": 0.16277761003402613,
+          "mean_exposure": 0.6814907975045739
+        },
+        {
+          "year": "2026",
+          "days": 174,
+          "return": -0.06538407407714697,
+          "within_year_drawdown": 0.10133367138340943,
+          "mean_exposure": 0.5667492805901387
+        }
+      ],
+      "realized_net_pnl": 67527.95883818084,
+      "terminal_unrealized_net_pnl": -51235.51808943089,
+      "dividend_cash": 0.0,
+      "pnl_reconciliation_error": 0.0,
+      "closed_holding_sessions_median": 26.0,
+      "closed_holding_sessions_max": 173,
+      "closed_profitable": 27,
+      "closed_profitability_not_predictive_winrate": true
+    }
+  ],
+  "paired_comparisons": [
+    {
+      "schema": "complete-nav-paired-month-block-bootstrap-v1",
+      "annualized_mean_difference": -0.16153276700169256,
+      "confidence_interval_95": [
+        -0.40997218046681977,
+        0.09914536122764478
+      ],
+      "ci_contains_zero": true,
+      "mean_daily_return_difference": -0.0006410030436575101,
+      "day_count": 659,
+      "block_count": 33,
+      "first_date": "2024-01-02",
+      "last_date": "2026-09-18",
+      "paired_daily_return_correlation": 0.7271902367414754,
+      "expected_calendar_verified": true,
+      "fewer_than_two_month_blocks": false,
+      "initial_cash_per_leg": 100000.0,
+      "bootstrap_seed": 20261014,
+      "bootstrap_samples": 2000,
+      "annual_reference_days": 252,
+      "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+      "sampling": "Paired entire calendar months, replacement; repeated blocks weighted by actual day counts",
+      "net_input_role": "Caller-supplied already-after-cost NAV; no extra fee deduction or fee inference",
+      "economic_upgrade_decision": null,
+      "target": "turnover_30bp",
+      "control": "filtered_30bp"
+    },
+    {
+      "schema": "complete-nav-paired-month-block-bootstrap-v1",
+      "annualized_mean_difference": -0.16145082801642363,
+      "confidence_interval_95": [
+        -0.34210007663622594,
+        0.003407596024301578
+      ],
+      "ci_contains_zero": true,
+      "mean_daily_return_difference": -0.000640677888954062,
+      "day_count": 659,
+      "block_count": 33,
+      "first_date": "2024-01-02",
+      "last_date": "2026-09-18",
+      "paired_daily_return_correlation": 0.7296077610448282,
+      "expected_calendar_verified": true,
+      "fewer_than_two_month_blocks": false,
+      "initial_cash_per_leg": 100000.0,
+      "bootstrap_seed": 20261014,
+      "bootstrap_samples": 2000,
+      "annual_reference_days": 252,
+      "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+      "sampling": "Paired entire calendar months, replacement; repeated blocks weighted by actual day counts",
+      "net_input_role": "Caller-supplied already-after-cost NAV; no extra fee deduction or fee inference",
+      "economic_upgrade_decision": null,
+      "target": "finance_target_30bp",
+      "control": "finance_control_30bp"
+    },
+    {
+      "schema": "complete-nav-paired-month-block-bootstrap-v1",
+      "annualized_mean_difference": -0.0911491589712535,
+      "confidence_interval_95": [
+        -0.3809094343284979,
+        0.22030811697927352
+      ],
+      "ci_contains_zero": true,
+      "mean_daily_return_difference": -0.0003617030117906885,
+      "day_count": 659,
+      "block_count": 33,
+      "first_date": "2024-01-02",
+      "last_date": "2026-09-18",
+      "paired_daily_return_correlation": 0.520424822405447,
+      "expected_calendar_verified": true,
+      "fewer_than_two_month_blocks": false,
+      "initial_cash_per_leg": 100000.0,
+      "bootstrap_seed": 20261014,
+      "bootstrap_samples": 2000,
+      "annual_reference_days": 252,
+      "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+      "sampling": "Paired entire calendar months, replacement; repeated blocks weighted by actual day counts",
+      "net_input_role": "Caller-supplied already-after-cost NAV; no extra fee deduction or fee inference",
+      "economic_upgrade_decision": null,
+      "target": "finance_target_30bp",
+      "control": "filtered_30bp"
+    },
+    {
+      "schema": "complete-nav-paired-month-block-bootstrap-v1",
+      "annualized_mean_difference": 0.07030166904517011,
+      "confidence_interval_95": [
+        -0.22952422865705033,
+        0.40283149097622595
+      ],
+      "ci_contains_zero": true,
+      "mean_daily_return_difference": 0.0002789748771633735,
+      "day_count": 659,
+      "block_count": 33,
+      "first_date": "2024-01-02",
+      "last_date": "2026-09-18",
+      "paired_daily_return_correlation": 0.5196583373538618,
+      "expected_calendar_verified": true,
+      "fewer_than_two_month_blocks": false,
+      "initial_cash_per_leg": 100000.0,
+      "bootstrap_seed": 20261014,
+      "bootstrap_samples": 2000,
+      "annual_reference_days": 252,
+      "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+      "sampling": "Paired entire calendar months, replacement; repeated blocks weighted by actual day counts",
+      "net_input_role": "Caller-supplied already-after-cost NAV; no extra fee deduction or fee inference",
+      "economic_upgrade_decision": null,
+      "target": "finance_control_30bp",
+      "control": "filtered_30bp"
+    },
+    {
+      "schema": "complete-nav-paired-month-block-bootstrap-v1",
+      "annualized_mean_difference": -0.1167375415565249,
+      "confidence_interval_95": [
+        -0.4106267549573014,
+        0.20236622530618797
+      ],
+      "ci_contains_zero": true,
+      "mean_daily_return_difference": -0.0004632442125258924,
+      "day_count": 659,
+      "block_count": 33,
+      "first_date": "2024-01-02",
+      "last_date": "2026-09-18",
+      "paired_daily_return_correlation": 0.46038427613414334,
+      "expected_calendar_verified": true,
+      "fewer_than_two_month_blocks": false,
+      "initial_cash_per_leg": 100000.0,
+      "bootstrap_seed": 20261014,
+      "bootstrap_samples": 2000,
+      "annual_reference_days": 252,
+      "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+      "sampling": "Paired entire calendar months, replacement; repeated blocks weighted by actual day counts",
+      "net_input_role": "Caller-supplied already-after-cost NAV; no extra fee deduction or fee inference",
+      "economic_upgrade_decision": null,
+      "target": "size_target_30bp",
+      "control": "filtered_30bp"
+    },
+    {
+      "schema": "complete-nav-paired-month-block-bootstrap-v1",
+      "annualized_mean_difference": -0.15380000511617486,
+      "confidence_interval_95": [
+        -0.3987105958807846,
+        0.10340832348639148
+      ],
+      "ci_contains_zero": true,
+      "mean_daily_return_difference": -0.0006103174806197416,
+      "day_count": 659,
+      "block_count": 33,
+      "first_date": "2024-01-02",
+      "last_date": "2026-09-18",
+      "paired_daily_return_correlation": 0.732530723834971,
+      "expected_calendar_verified": true,
+      "fewer_than_two_month_blocks": false,
+      "initial_cash_per_leg": 100000.0,
+      "bootstrap_seed": 20261014,
+      "bootstrap_samples": 2000,
+      "annual_reference_days": 252,
+      "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+      "sampling": "Paired entire calendar months, replacement; repeated blocks weighted by actual day counts",
+      "net_input_role": "Caller-supplied already-after-cost NAV; no extra fee deduction or fee inference",
+      "economic_upgrade_decision": null,
+      "target": "turnover_50bp",
+      "control": "filtered_50bp"
+    },
+    {
+      "schema": "complete-nav-paired-month-block-bootstrap-v1",
+      "annualized_mean_difference": -0.15771309076237297,
+      "confidence_interval_95": [
+        -0.33623385223483127,
+        0.00697753814954191
+      ],
+      "ci_contains_zero": true,
+      "mean_daily_return_difference": -0.0006258455982633848,
+      "day_count": 659,
+      "block_count": 33,
+      "first_date": "2024-01-02",
+      "last_date": "2026-09-18",
+      "paired_daily_return_correlation": 0.7315601825841145,
+      "expected_calendar_verified": true,
+      "fewer_than_two_month_blocks": false,
+      "initial_cash_per_leg": 100000.0,
+      "bootstrap_seed": 20261014,
+      "bootstrap_samples": 2000,
+      "annual_reference_days": 252,
+      "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+      "sampling": "Paired entire calendar months, replacement; repeated blocks weighted by actual day counts",
+      "net_input_role": "Caller-supplied already-after-cost NAV; no extra fee deduction or fee inference",
+      "economic_upgrade_decision": null,
+      "target": "finance_target_50bp",
+      "control": "finance_control_50bp"
+    },
+    {
+      "schema": "complete-nav-paired-month-block-bootstrap-v1",
+      "annualized_mean_difference": -0.08960100627312553,
+      "confidence_interval_95": [
+        -0.3782793475513366,
+        0.22014968139158905
+      ],
+      "ci_contains_zero": true,
+      "mean_daily_return_difference": -0.0003555595487028791,
+      "day_count": 659,
+      "block_count": 33,
+      "first_date": "2024-01-02",
+      "last_date": "2026-09-18",
+      "paired_daily_return_correlation": 0.5243530138769977,
+      "expected_calendar_verified": true,
+      "fewer_than_two_month_blocks": false,
+      "initial_cash_per_leg": 100000.0,
+      "bootstrap_seed": 20261014,
+      "bootstrap_samples": 2000,
+      "annual_reference_days": 252,
+      "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+      "sampling": "Paired entire calendar months, replacement; repeated blocks weighted by actual day counts",
+      "net_input_role": "Caller-supplied already-after-cost NAV; no extra fee deduction or fee inference",
+      "economic_upgrade_decision": null,
+      "target": "finance_target_50bp",
+      "control": "filtered_50bp"
+    },
+    {
+      "schema": "complete-nav-paired-month-block-bootstrap-v1",
+      "annualized_mean_difference": 0.06811208448924741,
+      "confidence_interval_95": [
+        -0.22946286144756423,
+        0.4015344237485548
+      ],
+      "ci_contains_zero": true,
+      "mean_daily_return_difference": 0.0002702860495605056,
+      "day_count": 659,
+      "block_count": 33,
+      "first_date": "2024-01-02",
+      "last_date": "2026-09-18",
+      "paired_daily_return_correlation": 0.5233443118952028,
+      "expected_calendar_verified": true,
+      "fewer_than_two_month_blocks": false,
+      "initial_cash_per_leg": 100000.0,
+      "bootstrap_seed": 20261014,
+      "bootstrap_samples": 2000,
+      "annual_reference_days": 252,
+      "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+      "sampling": "Paired entire calendar months, replacement; repeated blocks weighted by actual day counts",
+      "net_input_role": "Caller-supplied already-after-cost NAV; no extra fee deduction or fee inference",
+      "economic_upgrade_decision": null,
+      "target": "finance_control_50bp",
+      "control": "filtered_50bp"
+    },
+    {
+      "schema": "complete-nav-paired-month-block-bootstrap-v1",
+      "annualized_mean_difference": -0.11212876747423534,
+      "confidence_interval_95": [
+        -0.40186599614730895,
+        0.20580239434677872
+      ],
+      "ci_contains_zero": true,
+      "mean_daily_return_difference": -0.00044495542648506083,
+      "day_count": 659,
+      "block_count": 33,
+      "first_date": "2024-01-02",
+      "last_date": "2026-09-18",
+      "paired_daily_return_correlation": 0.4639528073270463,
+      "expected_calendar_verified": true,
+      "fewer_than_two_month_blocks": false,
+      "initial_cash_per_leg": 100000.0,
+      "bootstrap_seed": 20261014,
+      "bootstrap_samples": 2000,
+      "annual_reference_days": 252,
+      "effect_unit": "decimal annualized arithmetic mean of candidate-minus-control net daily returns",
+      "sampling": "Paired entire calendar months, replacement; repeated blocks weighted by actual day counts",
+      "net_input_role": "Caller-supplied already-after-cost NAV; no extra fee deduction or fee inference",
+      "economic_upgrade_decision": null,
+      "target": "size_target_50bp",
+      "control": "filtered_50bp"
+    }
+  ],
+  "sources": {
+    "turnover": {
+      "status": "ALL_TURNOVER_VALUES_COMPLETE_BEFORE_ACCOUNT",
+      "opportunities": 2990,
+      "known": 2990,
+      "pass": 1920,
+      "unknown_reasons": {},
+      "source_keys": 5227,
+      "old8_reused": 8,
+      "network": 0
+    },
+    "finance": {
+      "status": "ALL_FIXED_PUBLIC_FINANCE_SOURCE_COMPLETE",
+      "requests": 63,
+      "selected_keys": 2555,
+      "requested_keys": 5227,
+      "missing_not_zero": 2672,
+      "old8_responses_reused": true,
+      "page_receipts_sha": "d3340c8e81a239be3011987c02438cb906912b7acd563025428e269d1864577f",
+      "official_cost": 0
+    },
+    "finance_opportunities": {
+      "count": 2990,
+      "known": 1451,
+      "pass": 522,
+      "unknown_reasons": {
+        "two_reports_required": 1539
+      }
+    },
+    "size": {
+      "count": 2990,
+      "known": 2990,
+      "pass": 1174,
+      "days": 621,
+      "minimum_day_coverage": 0.9828071272272585,
+      "new_network": 0
+    }
+  },
+  "new_contexts": 6,
+  "new_account_paths": 8,
+  "old_account_paths_reused": 2,
+  "old_account_replays": 0,
+  "official_runs": 0,
+  "official_spent": 0,
+  "synthetic_tests_passed": {
+    "participation": 11,
+    "public_financing": 5
+  },
+  "formal_eligible": false,
+  "conclusions": {
+    "turnover": "Fixed higher second-board turnover loses returns; no promotion.",
+    "finance_flow": "Fixed nonpositive net financing underperforms its proper common-source control; no sign reversal or threshold tuning.",
+    "size": "Median-size gate reduces drawdown but loses return and has30bp Sharpe below.5; no promotion.",
+    "finance_common_domain": "Promising whole-window account result;2026negative, paired CI includeszero, historic membership/arrival/revision unknown. Not independent alpha or formal pool candidate."
+  },
+  "limitations": [
+    "Previously exposed same window, no new OOS or corrected multiple-testing claim",
+    "Potential daily-bar fills do not certify limit-price queue or intraday sequence",
+    "Historical source revisions and actual preopen arrival not fully certified",
+    "Total-return equivalent inventory is not fully audited actual corporate-action inventory",
+    "Financing source absence excluded in target and common control, never treated as zero",
+    "Event-account comparisons do not establish five-day ten-group factor admission or actual pool increment"
+  ],
+  "artifacts": [
+    {
+      "path": "research_runs/limit_turnover_margin_20261015/authorization.json",
+      "sha256": "9b7fde05c0547eba3dcc166cf997ee7c6937392caaf5f75eb918672a9650183a"
+    },
+    {
+      "path": "research_runs/limit_turnover_margin_20261015/turnover_protocol.json",
+      "sha256": "5a61fecde0e118e6f7480ed9a5c349292401de036afcf648ea04f41ec3ac6b5e"
+    },
+    {
+      "path": "research_runs/limit_turnover_margin_20261015/turnover_source_receipt.json",
+      "sha256": "d237fe363049b95133171538355756a8bee5fd09a4f3adb0263da02ff0c3f56a"
+    },
+    {
+      "path": "research_runs/limit_turnover_margin_20261015/turnover_values.json",
+      "sha256": "674a868362cee7751ff3c83f51327c62a828438c9d9190863fb3ad4c0c7ba3b9"
+    },
+    {
+      "path": "research_runs/limit_turnover_margin_20261015/finance_protocol.json",
+      "sha256": "218c9be8aed8c5dae9e7f4405bb4099856005b8d9aa254adaf3a4ac9edc01774"
+    },
+    {
+      "path": "research_runs/limit_turnover_margin_20261015/finance_value_summary.json",
+      "sha256": "2be9ecade8019fb3e49b41e376d29379909d71bd770a546dcda36d6f77b84559"
+    },
+    {
+      "path": "research_runs/limit_turnover_margin_20261015/finance_values.json",
+      "sha256": "d2854d82b15b04271d74359a56bf803593e59decc3aaabb6dc19abf522e2e7c0"
+    },
+    {
+      "path": "research_runs/limit_turnover_margin_20261015/finance_source/receipt.json",
+      "sha256": "93e7898cc061a7f8b5a36ae86b16102e1479e1be0efd95f53752d717b1dfa84e"
+    },
+    {
+      "path": "research_runs/limit_turnover_margin_20261015/size_protocol.json",
+      "sha256": "e4326cc23ac681bbbbaa9d1c730eda36b3baa529da4f77f6a6ffc1f79ea65424"
+    },
+    {
+      "path": "research_runs/limit_turnover_margin_20261015/size_source_summary.json",
+      "sha256": "70d619267ae41bc0b87384a5716475cf501f14b9ea3449c346479e424d626273"
+    },
+    {
+      "path": "research_runs/limit_turnover_margin_20261015/size_values.json",
+      "sha256": "9c4c899b70afcc5a60bde8e78f15428b68ffa5a416706236024c009f5baef48e"
+    },
+    {
+      "path": "research_runs/limit_turnover_margin_20261015/account_protocol.json",
+      "sha256": "091fef8e907f0a04d58d1de75682e111d15ba749cb0423e8c168322bd3d66509"
+    },
+    {
+      "path": "research_runs/limit_turnover_margin_20261015/finance_size_account_protocol.json",
+      "sha256": "b79aa35f7a765bfc8bb590e185c4ab1cabb3860ef446e93031ce2bb38c9db03e"
+    },
+    {
+      "path": "research_runs/limit_turnover_margin_20261015/completed_comparison.json",
+      "sha256": "bbb874553dcfad827fb79c9f65c972ef234495cec39afbad9e68dc984393a1f1"
+    }
+  ]
+}
