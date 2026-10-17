@@ -186,3 +186,30 @@ caller tries to invoke the old dispatch function directly.
     permissions = definition.setdefault("billing_authorization", {})
     permissions["team"] = ticket(grant, task)
     connection.execute("UPDATE team_tasks SET state='submitted',version=version+1 WHERE task_id=?", (task["task_id"],))
+
+
+def guard_remote_mutation(connection, key, expected_state):
+    """Recheck persisted team authority immediately before create or start.
+
+    Reservation already checked scope and source evidence. Only current grant,
+    job and task bindings are checked here; read-only Run recovery never calls it.
+    A refusal must precede the ambiguous CREATING/DISPATCHING transition.
+    """
+    job = connection.execute("SELECT state,definition FROM jobs WHERE fingerprint=?", (key,)).fetchone()
+    if job is None or job["state"] != expected_state:
+        raise ValueError("Remote mutation requires its unchanged reserved job state")
+    permit = json.loads(job["definition"] or "{}").get("team_permit")
+    team_exists = connection.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name='team_control'").fetchone()
+    if not team_exists:
+        if permit is not None:
+            raise ValueError("Team permit requires the authoritative team ledger")
+        return  # Preserve non-team legacy dispatch behavior.
+    grant = active_grant(connection)
+    if (not isinstance(permit, dict) or permit.get("grant_id") != grant["grant_id"]
+            or permit.get("grant_hash") != digest(grant) or permit.get("environment") != grant["environment"]):
+        raise ValueError("Reserved experiment no longer matches the active team grant")
+    task = connection.execute("SELECT state,fingerprint,request_hash FROM team_tasks WHERE task_id=?",
+                              (permit.get("task_id"),)).fetchone()
+    if (task is None or task["state"] != "submitted" or task["fingerprint"] != key
+            or task["request_hash"] != permit.get("request_hash")):
+        raise ValueError("Reserved experiment no longer matches its submitted team task")

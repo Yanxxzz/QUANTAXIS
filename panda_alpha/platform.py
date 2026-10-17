@@ -603,10 +603,13 @@ def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedg
         # A failed registration must not reserve funds or create a service job.
         before_dispatch()
     ledger.reserve(key, candidate, definition, category, ceiling, float(compute["daily_credit_limit"]), balance)
+    from .team.budget import guard_remote_mutation
     # Unknown responses remain ambiguous; do not silently retry account mutations.
+    guard_remote_mutation(ledger.db, key, "RESERVED")
     ledger.transition(key, "RESERVED", "CREATING")
     factor_id = client.create(candidate, window, cycle, groups, "PA-" + key[:16])
     ledger.transition(key, "CREATING", "CREATED", factor_id=factor_id)
+    guard_remote_mutation(ledger.db, key, "CREATED")
     ledger.transition(key, "CREATED", "DISPATCHING")
     run_id = client.start(factor_id)
     ledger.transition(key, "DISPATCHING", "RUNNING", run_id=run_id)
