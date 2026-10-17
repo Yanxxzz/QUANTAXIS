@@ -10,7 +10,7 @@ from PIL import Image, ImageDraw, ImageFont
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from panda_alpha.evaluation import performance
-from scripts.backtest_limit_reversal import read, binding
+from scripts.research_io import read, binding
 
 OUT = ROOT / "research_runs/limit_reversal_optimization_20261014"
 

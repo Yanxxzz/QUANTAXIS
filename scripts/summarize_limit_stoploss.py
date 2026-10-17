@@ -10,8 +10,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from scripts.backtest_limit_reversal import read, binding
-from scripts.research_limit_event_factor import clean
+from scripts.research_io import read, binding, clean, write_clean_json
 from panda_alpha.evaluation import performance
 
 OUT = ROOT / "research_runs/limit_stoploss_20261014"
@@ -106,8 +105,8 @@ def build():
                                        "Stops are not guaranteed loss caps; blocked exits continue at later openings.",
                                        "Original same-source corporate-action equivalent-unit model and historical eligibility limitations remain.",
                                        "Only three user-fixed rules were tested; no additional sign/window/threshold selection."]}
-    (OUT / "completed_account_audit.json").write_text(json.dumps(clean(public), ensure_ascii=False, indent=2, allow_nan=False), encoding="utf-8")
-    (ROOT / "docs/results/limit-stoploss-20261014.json").write_text(json.dumps(clean(public), ensure_ascii=False, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+    write_clean_json(OUT / "completed_account_audit.json", public)
+    write_clean_json(ROOT / "docs/results/limit-stoploss-20261014.json", public, trailing_newline=True)
     plot(curves)
     print(json.dumps(clean({"status": public["status"], "paths": [{k: x[k] for k in ["path", "metrics", "stop_triggers", "executed_stops", "sell_blocks", "terminal_holdings_count", "PnL_reconciliation_error_CNY"]} for x in audits]}), ensure_ascii=False))
 
