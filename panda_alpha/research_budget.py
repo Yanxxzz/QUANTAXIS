@@ -4,6 +4,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+from datetime import datetime, timezone
 from pathlib import Path
 
 from .diversity import canonical_signature
@@ -143,6 +144,106 @@ def bind_policy(connection, policy: dict) -> None:
         raise ValueError("Active study budget is pinned; no automatic new study or increased cap")
     connection.execute("INSERT OR IGNORE INTO research_budget_control(singleton,policy) VALUES (1,?)",
                        (json.dumps(limits(policy), sort_keys=True),))
+
+
+def _digest(value) -> str:
+    return hashlib.sha256(json.dumps(value, sort_keys=True, ensure_ascii=False,
+                                    separators=(",", ":"), allow_nan=False).encode()).hexdigest()
+
+
+def amendment_snapshot(ledger) -> dict:
+    """Bind an amendment to the existing policy, every job and prior reviews."""
+    state = read_state(ledger.db)
+    if not state.get("policy"):
+        raise ValueError("Amendment requires an existing pinned study")
+    jobs = sorted(ledger.jobs(), key=lambda job: job["fingerprint"])
+    return {"policy": state["policy"], "policy_sha256": _digest(state["policy"]),
+            "usage": usage(jobs, state["policy"]["study_id"]),
+            "all_job_count": len(jobs), "all_jobs_sha256": _digest(jobs),
+            "reviews_sha256": _digest(state["reviews"])}
+
+
+def amend_policy(ledger, amendment: dict, *, execute: bool = False) -> dict:
+    """Explicit same-study cap increase; never funds or resumes a pilot.
+
+    The operator supplies the approval artifact. This is an audit mechanism in
+    a trusted local workspace, not an authentication boundary. Preview is safe
+    on a read-only connection and creates no tables. Existing job definitions
+    retain their old limits; usage continues to accumulate by study_id.
+    """
+    for name in ("amendment_id", "ledger_path", "reason"):
+        if not isinstance(amendment.get(name), str) or not amendment[name].strip():
+            raise ValueError(f"Amendment requires {name}")
+    if amendment.get("status") not in {"draft", "authorized"}:
+        raise ValueError("Amendment status must be draft or authorized")
+    if execute and amendment["status"] != "authorized":
+        raise ValueError("Applying an amendment requires explicit authorization")
+    actual_path = next(row[2] for row in ledger.db.execute("PRAGMA database_list") if row[1] == "main")
+    if Path(actual_path).resolve() != Path(amendment["ledger_path"]).resolve():
+        raise ValueError("Amendment is bound to a different ledger path")
+    request_hash = _digest(amendment)
+    ledger.db.execute("BEGIN IMMEDIATE" if execute else "BEGIN")
+    try:
+        tables = {row[0] for row in ledger.db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
+        if "research_budget_amendments" in tables:
+            prior = ledger.db.execute("SELECT request_hash,payload FROM research_budget_amendments WHERE amendment_id=?",
+                                      (amendment["amendment_id"],)).fetchone()
+            if prior:
+                if prior[0] != request_hash:
+                    raise ValueError("Amendment ID already has different content")
+                ledger.db.execute("ROLLBACK")
+                return dict(json.loads(prior[1]), recorded=True, idempotent=True)
+        before = amendment_snapshot(ledger)
+        if amendment.get("expected_snapshot") != before:
+            raise ValueError("Stale policy, usage or evidence snapshot; review a fresh amendment")
+        if any(job["state"] not in {"SETTLED", "CANCELLED"} for job in ledger.jobs()) or before["usage"]["unsettled"]:
+            raise ValueError("Reconcile all existing jobs before amending limits")
+        if "team_control" in tables:
+            control = ledger.db.execute("SELECT mode FROM team_control WHERE singleton=1").fetchone()
+            if not control or control[0] not in {"offline", "paused"}:
+                raise ValueError("Pause the team before amending limits")
+        old, new = before["policy"], amendment.get("new_policy")
+        if not isinstance(new, dict) or set(new) != set(LIMITS):
+            raise ValueError("Amendment needs the complete new policy")
+        load_policy({"official_research_policy": new})
+        caps = ("max_total_credits", "max_runs")
+        if any(new[key] != old[key] for key in LIMITS if key not in caps):
+            raise ValueError("Only cumulative credit/run caps may increase; keep study and review/mechanism rules")
+        if any(new[key] < old[key] for key in caps) or all(new[key] == old[key] for key in caps):
+            raise ValueError("Amendment must increase at least one cap without reducing another")
+        if new["max_runs"] < before["usage"]["runs"] or new["max_total_credits"] < before["usage"]["credits"]:
+            raise ValueError("New caps must cover all historical usage")
+        approval = verify_artifact(amendment.get("approval", {}))
+        payload = {"amendment_id": amendment["amendment_id"], "request_hash": request_hash,
+                   "ledger_path": str(Path(actual_path).resolve()), "reason": amendment["reason"],
+                   "approval": approval, "before": before, "new_policy": new,
+                   "recorded_at": datetime.now(timezone.utc).isoformat(),
+                   "funding_authorization": False, "official_calls": 0, "team_state_changed": False}
+        if execute:
+            # Individual statements keep DDL, policy update and audit append in
+            # one transaction; executescript would implicitly commit early.
+            ledger.db.execute("CREATE TABLE IF NOT EXISTS research_budget_amendments ("
+                              "amendment_id TEXT PRIMARY KEY, request_hash TEXT NOT NULL, payload TEXT NOT NULL)")
+            for action in ("UPDATE", "DELETE"):
+                ledger.db.execute(f"CREATE TRIGGER IF NOT EXISTS research_budget_amendments_no_{action.lower()} "
+                                  f"BEFORE {action} ON research_budget_amendments "
+                                  "BEGIN SELECT RAISE(ABORT, 'budget amendments are immutable'); END")
+            ledger.db.execute("UPDATE research_budget_control SET policy=? WHERE singleton=1",
+                              (json.dumps(new, sort_keys=True),))
+            after = amendment_snapshot(ledger)
+            if any(after[key] != before[key] for key in ("usage", "all_job_count", "all_jobs_sha256", "reviews_sha256")):
+                raise ValueError("Historical usage or evidence changed while amending limits")
+            payload["after"] = after
+            ledger.db.execute("INSERT INTO research_budget_amendments VALUES (?,?,?)",
+                              (amendment["amendment_id"], request_hash, json.dumps(payload, sort_keys=True)))
+            ledger.db.execute("COMMIT")
+        else:
+            ledger.db.execute("ROLLBACK")
+        return dict(payload, recorded=execute, idempotent=False)
+    except BaseException:
+        if ledger.db.in_transaction:
+            ledger.db.execute("ROLLBACK")
+        raise
 
 
 def record_review(ledger, policy: dict, evidence: dict, execute: bool = False) -> dict:

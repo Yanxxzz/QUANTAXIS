@@ -17,6 +17,10 @@ def main(argv=None):
     commands = parser.add_subparsers(dest="command", required=True)
     demo = commands.add_parser("demo", help="Offline synthetic end-to-end rehearsal; no account access")
     demo.add_argument("--output", type=Path, required=True)
+    amend = commands.add_parser("amend-budget", help="Preview an audited same-study cap increase; no account access")
+    amend.add_argument("--ledger", type=Path, required=True)
+    amend.add_argument("--input", type=Path, help="Amendment JSON; omit to read the current policy/usage snapshot")
+    amend.add_argument("--execute", action="store_true", help="Apply an explicitly authorized amendment; does not activate a grant")
     for name in ("init", "status", "packet", "submit", "message", "freeze", "decide", "plan", "activate", "dispatch", "resume", "pause"):
         p = commands.add_parser(name)
         p.add_argument("--ledger", type=Path, required=True)
@@ -48,6 +52,17 @@ def main(argv=None):
         result = run_demo(args.output)
     elif args.command != "init" and not args.ledger.is_file():
         parser.error("Ledger does not exist; use init to create an offline board")
+    elif args.command == "amend-budget":
+        if args.execute and args.input is None:
+            parser.error("--execute requires an amendment --input")
+        from ..platform import ExperimentLedger
+        from ..research_budget import amend_policy, amendment_snapshot
+        ledger = ExperimentLedger(args.ledger, read_only=not args.execute)
+        try:
+            result = (amend_policy(ledger, read(args.input), execute=args.execute)
+                      if args.input else amendment_snapshot(ledger))
+        finally:
+            ledger.db.close()
     else:
         from .coordinator import Coordinator
         c = Coordinator(args.ledger, read_only=args.command in {"status", "packet", "plan"})
