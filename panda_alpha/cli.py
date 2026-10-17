@@ -132,10 +132,7 @@ def engine(cfg, state_path=None, registry=None, research_context=None):
     if live and Path(live).exists():
         snapshot.update(read(live))
     if registry is not None:
-        snapshot = registry.export_hot_memory(snapshot)
-        alignment = snapshot["research_registry"].get("memory_reconciliation", {})
-        if alignment.get("status") == "UNRESOLVED":
-            raise ValueError("Research memory is ahead of registered facts; reconcile the registry before new research")
+        snapshot = registry.reconciled_memory(snapshot)
     context = research_context or {"window": {"start": cfg["research"]["probe_start"],
                                              "end": cfg["research"]["probe_end"]},
                                   "cycle": cfg["research"]["cycle"], "groups": cfg["research"]["groups"]}

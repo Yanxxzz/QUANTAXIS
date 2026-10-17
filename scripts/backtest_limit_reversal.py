@@ -24,17 +24,9 @@ import pandas as pd
 from pymongo import MongoClient
 from panda_alpha.evaluation import check_window, performance
 from panda_alpha.registry import ResearchRegistry
+from scripts.research_io import read, binding
 
 PREFIXES = ("000", "001", "002", "003", "600", "601", "603", "605")
-
-
-def read(path):
-    return json.loads(Path(path).read_text(encoding="utf-8-sig"))
-
-
-def binding(path):
-    path = Path(path).resolve()
-    return {"path": str(path), "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
 
 
 def save(path, value):

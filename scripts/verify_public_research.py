@@ -19,6 +19,7 @@ import shutil
 import socket
 import subprocess
 import sys
+import tempfile
 from unittest.mock import patch
 
 
@@ -30,6 +31,7 @@ PUBLIC_PATTERNS = (
     "docs/*.md", ".github/workflows/panda-alpha.yml", "requirements-panda-alpha.txt",
     "config/panda-alpha.example.json", "config/research-workflow.v1.json",
     "README*.md", "RESEARCH.md", "pyproject.toml",
+    ".codex/agents/panda-*.toml", "config/team-grant.example.json",
     "tests/fixtures/statement_layout_original.json", "tests/fixtures/statement_layout_continuation.json",
 )
 PRIVATE_PARTS = {"research_runs", ".runtime", ".venv", "data", "_data_", ".git", "__pycache__"}
@@ -134,11 +136,17 @@ def run_smoke(root=ROOT):
         if len(study["cost_reviews"]) != 2 or study["quality"]["formal_admission"]["eligible"]:
             raise AssertionError("Synthetic study altered formal admission")
         json.dumps(study, allow_nan=False)
+        from panda_alpha.team.demo import run_demo
+        with tempfile.TemporaryDirectory() as temporary:
+            team = run_demo(Path(temporary) / "team")
+        if team["status"] != "PILOT_READY" or team["official_runs"] != 0 or team["closed_tasks"] != 2:
+            raise AssertionError("Team offline rehearsal did not stop before the pilot")
     return {"status": "PUBLIC_SOURCE_SMOKE_PASSED", "source_root": str(root),
             "python": sys.executable, "public_module_imports": imports,
             "cli_help": "passed_without_config", "financial_schemas_readable": [1, 2],
             "annual_asset_restatement_guard": "passed_from_original_text",
             "study_runs": len(study["runs"]), "cost_cases": len(study["cost_reviews"]),
+            "team_offline_rehearsal": team["status"], "synthetic_team_tasks": team["closed_tasks"],
             "official_runs": 0, "llm_calls": 0, "market_files_read": 0,
             "dependency_installation": "not_performed; reuse interpreter with requirements-panda-alpha.txt",
             "clean_tree_scope": "public source and synthetic fixtures; full repository pytest remains a separate CI step"}

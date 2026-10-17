@@ -173,8 +173,12 @@ class PandaClient:
 
 
 class ExperimentLedger:
-    def __init__(self, path: str | Path):
+    def __init__(self, path: str | Path, *, read_only: bool = False):
         path = Path(path)
+        if read_only:
+            self.db = sqlite3.connect(path.resolve().as_uri() + "?mode=ro", uri=True, timeout=30, isolation_level=None)
+            self.db.row_factory = sqlite3.Row
+            return
         path.parent.mkdir(parents=True, exist_ok=True)
         self.db = sqlite3.connect(path, timeout=30, isolation_level=None)
         self.db.row_factory = sqlite3.Row
@@ -215,6 +219,8 @@ class ExperimentLedger:
                 raise ValueError("Daily experiment budget exhausted")
             if ceiling > balance["total"]:
                 raise ValueError("Account balance below reservation")
+            from .team.budget import guard_reservation
+            guard_reservation(self.db, key, candidate, definition, ceiling, balance)
             meta = definition.get("research_budget")
             if meta is None and self.research_state().get("policy"):
                 raise ValueError("Active study requires research_budget metadata")
@@ -513,6 +519,8 @@ def budget_plan(candidates: list[dict], compute: dict, balance: dict, *, jobs: l
 def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedger, client: PandaClient,
              category: str = "exploration", *, before_dispatch=None, native_fixture_reader=None) -> dict:
     research, compute = config["research"], config["compute"]
+    if compute.get("team_permit", {}).get("environment") == "synthetic" and getattr(client, "simulation", False) is not True:
+        raise ValueError("Synthetic permit cannot use an official client")
     cycle, groups = research["cycle"], research["groups"]
     if type(candidate.get("direction")) is not int or candidate.get("direction") not in (0, 1):
         raise ValueError("Direction must have frozen evidence before execution")
@@ -574,6 +582,8 @@ def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedg
     if compute["billing_mode"] == "gift_only" and balance["gift"] < ceiling:
         raise ValueError("Gift balance cannot fund the next reservation")
     definition = {"candidate": candidate, "window": window, "cycle": cycle, "groups": groups}
+    if compute.get("team_permit") is not None:
+        definition["team_permit"] = compute["team_permit"]
     permissions = {name: authorization for name, authorization in
                    (("estimated_billing", risk_authorization), ("recharge", recharge_authorization))
                    if authorization is not None}
@@ -630,6 +640,9 @@ def resume(key: str, ledger: ExperimentLedger, client: PandaClient, output_dir: 
     job = ledger.get(key)
     if not job:
         raise ValueError("Unknown job")
+    team_environment = json.loads(job.get("definition") or "{}").get("team_permit", {}).get("environment")
+    if team_environment and (team_environment == "synthetic") != (getattr(client, "simulation", False) is True):
+        raise ValueError("Resume client must match the persisted execution environment")
     if not job["run_id"]:
         return {"state": job["state"], "action": "Read factor_list/factor_info and reconcile ambiguous mutation before retrying"}
     if job["state"] == "SETTLED":

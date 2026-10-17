@@ -1,0 +1,33 @@
+{
+  "grant_id": "DRAFT-replace-with-authorized-batch-id",
+  "environment": "official",
+  "status": "draft",
+  "allow_dynamic_candidates": true,
+  "valid_from": "REQUIRED-ISO-timestamp-with-timezone",
+  "valid_until": "REQUIRED-finite-ISO-timestamp-with-timezone",
+  "approval": {"path": "REQUIRED-existing-operator-approval-artifact", "sha256": "REQUIRED-64-hex-sha256"},
+  "max_runs": 4,
+  "max_total_credits": 8,
+  "max_recharge_credits": 0,
+  "accept_estimated_charge_risk": false,
+  "study_policy": {
+    "study_id": "pool_candidate_search_20261012",
+    "max_total_credits": 60,
+    "max_runs": 20,
+    "review_interval_credits": 20,
+    "max_initial_runs_per_mechanism": 2,
+    "max_runs_per_mechanism": 4
+  },
+  "scope": {
+    "official_tasks": ["native_screen", "source_diagnostic", "key_confirmation"],
+    "window": {"start": "REQUIRED-approved-start", "end": "REQUIRED-approved-end"},
+    "sealed_windows": [],
+    "cycle": 5,
+    "groups": 10,
+    "lines": {
+      "market": {"sources": [], "primary_fields": []},
+      "fundamental": {"sources": [], "primary_fields": []}
+    }
+  },
+  "note": "Draft only, not funding permission or platform price. Bind the existing ledger and study; never copy into a fresh ledger to reset usage. Replace scopes, windows, estimate and limits with operator-approved facts."
+}
