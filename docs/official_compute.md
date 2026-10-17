@@ -51,6 +51,29 @@ python -m panda_alpha --config config/panda-alpha.local.json compute-review --ev
 
 实扣超预留但仍在批次总额、当日额和充值许可内，且各余额分类勾稽明确时，估算模型可以正常结算，记录`estimate_overrun`并上调下一次预留。合法的已授权充值兜底不再一律标为异常。未授权充值、超批额度或无法归因的余额变化仍停派。
 
+## 同研究轮额度扩展
+
+`python -m panda_alpha.team amend-budget` 管理已有研究轮的累计上限。它只允许增加 `max_runs`、`max_total_credits`；研究轮身份、每20点复核和单机制限制保持不变。旧作业中的原limits、Factor/Run ID、账单和失败记录均保留，用量继续按同一study累计。曾经用明确例外超过原次数上限的历史不能因此被删除。
+
+先只读取得权威账本快照（不会创建团队表或审计表）：
+
+```powershell
+python -m panda_alpha.team amend-budget --ledger research_runs/experiments.sqlite3
+```
+
+申请JSON使用以下字段：`amendment_id`（稳定且唯一）、`status`（draft或authorized）、`ledger_path`（该账本绝对路径）、`expected_snapshot`（完整复制上条命令输出）、`new_policy`（完整新limits）、`approval`（真实操作员批准材料的path/SHA256）及`reason`。例如原轮25次/54点、原上限20次/60点，计划新增最多4次、预留32点，可提出同轮29次/86点；这不是新的研究轮、服务报价或资金授权。
+
+```powershell
+# 默认只读预览；draft可以预览。
+python -m panda_alpha.team amend-budget --ledger research_runs/experiments.sqlite3 --input research_runs/amendment.json
+# 仅明确授权后：输入必须为authorized，并有可验证的批准材料。
+python -m panda_alpha.team amend-budget --ledger research_runs/experiments.sqlite3 --input research_runs/amendment.json --execute
+```
+
+写入使用同一SQLite事务核对原policy、全部作业摘要、累计用量和阶段复核摘要。账本路径不符、快照已变、有未结算作业或团队仍在pilot模式时拒绝修改。成功后原子更新上限并追加不可改删的审计记录；相同ID及相同内容重放返回原收据，不同内容不能复用该ID。失败会回滚上限和审计写入。
+
+扩展不改暂停状态、不安装或扩大已有grant、不解除local_only复核、不免除下一60点阶段复核，也不查询官网账户。原来绑定旧policy的执行配置和grant不会自动接受新上限；实际试点仍需另行明确授权并保持配置、grant与当前policy一致。批准材料由操作员提供，路径和哈希绑定用于审计，不是用户身份认证或强权限隔离。
+
 ## 使用入口
 
 预算预览会免费查询余额，并只读现有实验账本，不创建账本或启动回测：
