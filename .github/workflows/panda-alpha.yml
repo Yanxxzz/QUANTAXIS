@@ -1,5 +1,6 @@
 name: Panda Alpha harness
 on:
+  workflow_dispatch:
   push:
     paths: ['panda_alpha/**', 'tests/**', 'scripts/**', 'requirements-panda-alpha.txt', 'config/**', 'docs/**', 'examples/**', 'research_bootstrap/**', 'README*.md', 'RESEARCH.md', '.codex/agents/**', '.gitignore', '.github/workflows/panda-alpha.yml']
   pull_request:
