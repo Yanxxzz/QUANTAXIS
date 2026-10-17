@@ -12,8 +12,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from scripts.backtest_limit_reversal import read, binding
-from scripts.research_limit_event_factor import clean
+from scripts.research_io import read, binding, clean, write_clean_json
 from panda_alpha.limit_paired_comparison import compare_complete_nav
 
 OUT = ROOT / "research_runs/limit_next_directions_20261014"
@@ -27,7 +26,7 @@ PAIRS = {"recovery_next_open": "recovery_parent_next_open", "time_after_5": "exi
 
 
 def save(path, value):
-    path.write_text(json.dumps(clean(value), ensure_ascii=False, indent=2, allow_nan=False), encoding="utf-8")
+    write_clean_json(path, value)
 
 
 def run():

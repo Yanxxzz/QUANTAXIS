@@ -9,20 +9,12 @@ from panda_alpha.limit_event_source import load_retained_panel
 from panda_alpha.limit_event_features import build_event_features,future_labels,FEATURES
 from panda_alpha.limit_reversal import simulate
 from panda_alpha.registry import ResearchRegistry,strategy_definition,trial_key
-from scripts.backtest_limit_reversal import read,binding
+from scripts.research_io import read, binding, clean, write_clean_json
 OUT=ROOT/"research_runs/limit_reversal_optimization_20261014"
 ROLE="total_return_factor"
 
-def clean(value):
-    if isinstance(value,dict):return {str(k):clean(v) for k,v in value.items()}
-    if isinstance(value,(list,tuple)):return [clean(v) for v in value]
-    if isinstance(value,(np.integer,)):return int(value)
-    if isinstance(value,(float,np.floating)):return float(value) if np.isfinite(value) else None
-    if isinstance(value,np.bool_):return bool(value)
-    return value
-
 def save(name,value):
-    (OUT/name).write_text(json.dumps(clean(value),ensure_ascii=False,indent=2,allow_nan=False),encoding="utf-8")
+    write_clean_json(OUT / name, value)
 
 def register(name,spec,start,end,cycle=5,groups=2,direction=0):
     registry=ResearchRegistry(ROOT/"research_runs/research_trials.sqlite3")

@@ -15,8 +15,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from scripts.backtest_limit_reversal import read, binding
-from scripts.research_limit_event_factor import clean
+from scripts.research_io import read, binding, clean, write_clean_json
 from scripts.research_limit_stoploss import held_status_repairs
 from panda_alpha.limit_event_source import load_retained_panel
 from panda_alpha.limit_event_resume import extension_panel
@@ -38,8 +37,7 @@ UNITS = (
 
 
 def save(name, value):
-    (OUT / name).write_text(json.dumps(clean(value), ensure_ascii=False,
-                                     indent=2, allow_nan=False), encoding="utf-8")
+    write_clean_json(OUT / name, value)
 
 
 def reuse_002868_status(bars):

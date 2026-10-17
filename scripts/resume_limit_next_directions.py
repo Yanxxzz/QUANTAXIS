@@ -9,8 +9,8 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from scripts.backtest_limit_reversal import read, binding, limit_price
-from scripts.research_limit_event_factor import clean
+from scripts.backtest_limit_reversal import limit_price
+from scripts.research_io import read, binding, clean, write_clean_json
 from scripts.research_limit_next_directions import reuse_002868_status
 from scripts.research_limit_stoploss import held_status_repairs
 from panda_alpha.limit_event_source import load_retained_panel
@@ -22,8 +22,7 @@ OUT = ROOT / "research_runs/limit_next_directions_20261014"
 
 
 def save(name, value):
-    (OUT / name).write_text(json.dumps(clean(value), ensure_ascii=False, indent=2,
-                                     allow_nan=False), encoding="utf-8")
+    write_clean_json(OUT / name, value)
 
 
 def run():

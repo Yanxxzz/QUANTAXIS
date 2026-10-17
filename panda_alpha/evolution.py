@@ -418,6 +418,10 @@ class ResearchEngine:
         blocked = set(self.memory.get("abandoned_mechanisms", [])) | self.memory_blocked_mechanisms
         return candidate.mechanism not in blocked or candidate.family_id in self.reopened_families
 
+    def allows_research(self, candidate: Candidate) -> bool:
+        """Reuse retirement/failure constraints without invoking a planner or LLM."""
+        return self._admissible(candidate)
+
     @staticmethod
     def _fixed_record(candidate: Mapping[str, Any]) -> dict[str, Any]:
         expression = candidate.get("formula") or candidate.get("code")

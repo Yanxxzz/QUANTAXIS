@@ -451,5 +451,12 @@ class ResearchRegistry:
         memory["multiple_testing_denominator"] = self.historical
         return memory
 
+    def reconciled_memory(self, base: Mapping[str, Any] | None = None) -> dict[str, Any]:
+        """Shared gate for both research entry points before new experiments."""
+        memory = self.export_hot_memory(base)
+        if memory["research_registry"]["memory_reconciliation"].get("status") == "UNRESOLVED":
+            raise ValueError("Research memory is ahead of registered facts; reconcile the registry before new research")
+        return memory
+
     def close(self) -> None:
         self.db.close()
