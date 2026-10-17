@@ -54,6 +54,9 @@ def _ast_key(node: ast.AST, numeric_family: bool) -> Any:
          else _ast_key(value, numeric_family) if isinstance(value, ast.AST) else value)
         for name, value in ast.iter_fields(node)
         if name not in {"ctx", "type_comment"}
+        # Python 3.12 adds an empty type_params field to ordinary functions and
+        # classes. Preserve their stored 3.11 identities; retain real generics.
+        and not (name == "type_params" and value == [])
     ))
 
 

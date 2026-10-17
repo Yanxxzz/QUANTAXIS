@@ -1,3 +1,4 @@
+import sys
 import unittest
 
 import numpy as np
@@ -39,6 +40,29 @@ class DiversityTests(unittest.TestCase):
         result = assess_candidate(self.candidate, self.panel, {"existing": opposite}, self.policy)
         self.assertEqual(result.status, "reject")
         self.assertEqual(result.economic_status, "pending")
+
+    def test_python_definitions_keep_their_stored_python311_signatures(self):
+        cases = [
+            ("class Signal:\n    pass",
+             "1ab42ceddf473e6f9f267a4288e6c580ee57a8ed0315d897e4fb75244b2042bb"),
+            ('async def calculate(factors):\n    return factors["close"]',
+             "d8e4fb753e5cacac120ee1d912aa8596e3ce714a8e0ce8352d329a4b847653de"),
+            ('class Signal:\n    def calculate(self, factors):\n        return factors["close"]',
+             "da9a59856292e0913db91739b115e3c5f6d732ab4d60342a0641a1c16aa24673"),
+        ]
+        for source, stored_signature in cases:
+            with self.subTest(source=source):
+                self.assertEqual(canonical_signature(source), stored_signature)
+
+    @unittest.skipIf(sys.version_info < (3, 12), "PEP 695 syntax needs Python 3.12")
+    def test_real_type_parameters_remain_part_of_definition_identity(self):
+        for template in ("class Signal{params}:\n    pass",
+                         "def calculate{params}(value):\n    return value",
+                         "async def calculate{params}(value):\n    return value"):
+            with self.subTest(template=template):
+                signatures = {canonical_signature(template.format(params=params))
+                              for params in ("", "[T]", "[T: int]")}
+                self.assertEqual(len(signatures), 3)
 
     def test_constant_nan_and_insufficient_coverage_are_pending(self):
         constant = self.panel * 0 + 1
