@@ -31,7 +31,7 @@ def main(argv=None):
     retry = commands.add_parser("host-retry", help="Audit a repaired model login/quota issue without resetting limits")
     retry.add_argument("--output", type=Path, required=True)
     retry.add_argument("--reason", required=True)
-    deployment = commands.add_parser("service-prepare", help="Freeze an offline login-service deployment without installing or running it")
+    deployment = commands.add_parser("service-prepare", help="Freeze a chat deployment; default offline, no installation or execution")
     deployment.add_argument("--ledger", type=Path, required=True)
     deployment.add_argument("--registry", type=Path, required=True)
     deployment.add_argument("--session", required=True)
@@ -40,9 +40,12 @@ def main(argv=None):
     deployment.add_argument("--output", type=Path, required=True)
     deployment.add_argument("--name", required=True)
     deployment.add_argument("--max-starts", type=int, default=10)
+    deployment.add_argument("--execute", action="store_true")
+    deployment.add_argument("--config", type=Path)
     operator = commands.add_parser("host-control", help="Explicit chat start/stop or read-only live status; no OS scheduler")
     operator.add_argument("--deployment", type=Path, required=True)
     operator.add_argument("--action", choices=("start", "stop", "status"), required=True)
+    operator.add_argument("--execute", action="store_true", help="Explicitly start the already frozen website deployment")
     amend = commands.add_parser("amend-budget", help="Preview an audited same-study cap increase; no account access")
     amend.add_argument("--ledger", type=Path, required=True)
     amend.add_argument("--input", type=Path, help="Amendment JSON; omit to read the current policy/usage snapshot")
@@ -109,14 +112,16 @@ def main(argv=None):
     args = parser.parse_args(argv)
     if args.command == "host-control":
         from .operator import control
-        result = control(args.deployment, args.action)
+        result = control(args.deployment, args.action, execute=args.execute)
     elif args.command == "source-capture":
         from .public_docs import capture
         result = capture(args.url, args.output)
     elif args.command == "service-prepare":
+        if args.execute != (args.config is not None):
+            parser.error("Website execution requires both --execute and --config; omit both for offline research")
         from .service import prepare_service
         result = prepare_service(args.ledger, args.registry, args.session, args.workers, args.runtime,
-                                 args.output, args.name, args.max_starts)
+                                 args.output, args.name, args.max_starts, execution_config=args.config)
     elif args.command == "demo":
         from .demo import run_demo
         result = run_demo(args.output)

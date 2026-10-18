@@ -297,9 +297,11 @@ class Host:
         with self.c.board.transaction():
             self.db.execute("UPDATE team_host_work SET state='applied' WHERE work_id=?", (p["work_id"],))
 
-    def run(self, agents, executor=None):
+    def run(self, agents, executor=None, *, should_continue=None):
         """Run until bounded completion or a real wait. No polling/sleep loop."""
         while True:
+            if should_continue is not None and not should_continue():
+                return {"status": "paused", "reason": "operator_stop"}
             next_work = self.next(execution=executor is not None)
             if next_work["status"] != "work":
                 return next_work
@@ -309,6 +311,8 @@ class Host:
                     return {"status": "waiting", "reason": "execution_not_enabled"}
                 try:
                     result = executor(packet["action"], packet["task_id"])
+                except InterruptedError:
+                    return {"status": "paused", "reason": "operator_stop", "work_id": packet["work_id"]}
                 except (ValueError, RuntimeError, TimeoutError) as exc:
                     return {"status": "waiting", "reason": "execution_blocked", "work_id": packet["work_id"], "error": str(exc)}
                 task = self.c.board.task(packet["task_id"])
@@ -376,30 +380,34 @@ class MailboxAgents:
 
     def __call__(self, packet):
         root = self.directory / packet["role"]
+        from .runtime_io import read, write
         requests, responses = root / "requests", root / "responses"
         requests.mkdir(parents=True, exist_ok=True)
         responses.mkdir(parents=True, exist_ok=True)
         path = requests / (packet["work_id"] + ".json")
         encoded = canonical(packet)
-        if path.exists() and path.read_text(encoding="utf-8") != encoded:
+        previous = read(path)
+        if previous is not None and canonical(previous) != encoded:
             raise ValueError("Mailbox work identity already has different content")
-        if not path.exists():
-            temporary = path.with_suffix(".tmp")
-            temporary.write_text(encoded, encoding="utf-8")
-            temporary.replace(path)
+        if previous is None:
+            write(path, packet)
         response = responses / path.name
-        return json.loads(response.read_text(encoding="utf-8-sig")) if response.exists() else None
+        return read(response)
 
 
 class ExistingExecutor:
     """Only the existing coordinator can reach the platform/compute steward."""
 
-    def __init__(self, coordinator, registry, client, config, output):
+    def __init__(self, coordinator, registry, client, config, output, *, before_remote=None):
         self.c, self.registry, self.client, self.config, self.output = coordinator, registry, client, config, Path(output)
+        self.before_remote = before_remote
 
     def __call__(self, action, task_id):
+        if self.before_remote is not None:
+            self.before_remote()
         if action == "dispatch":
-            result = self.c.dispatch(task_id, self.config, self.client, self.registry, execute=True)
+            result = self.c.dispatch(task_id, self.config, self.client, self.registry, execute=True,
+                                     before_remote=self.before_remote)
         elif action == "resume":
             result = self.c.resume(task_id, self.client, self.output)
         else:

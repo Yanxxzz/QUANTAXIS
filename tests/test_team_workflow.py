@@ -97,6 +97,48 @@ def test_default_offline_rejects_even_execute_before_account_access(team):
     assert team[0].ledger.jobs() == []
 
 
+@pytest.mark.parametrize("boundary,expected", [("balance", None), ("reserved", "RESERVED"), ("create", "CREATED")])
+def test_chat_pause_between_calls_never_starts_a_new_run(team, monkeypatch, tmp_path, boundary, expected):
+    c, registry, config, grant, _ = team
+    task = ready(team)
+    activate(c.board, grant)
+    stopped = False
+
+    def check_active():
+        if stopped:
+            raise InterruptedError("Synthetic pause")
+
+    class PausingClient(SyntheticClient):
+        def balance(self):
+            nonlocal stopped
+            value = super().balance()
+            stopped = boundary == "balance"
+            return value
+
+        def create(self, *args):
+            nonlocal stopped
+            value = super().create(*args)
+            stopped = boundary == "create"
+            return value
+
+    original_reserve = c.ledger.reserve
+    def reserve(*args, **kwargs):
+        nonlocal stopped
+        value = original_reserve(*args, **kwargs)
+        stopped = boundary == "reserved"
+        return value
+    monkeypatch.setattr(c.ledger, "reserve", reserve)
+    client = PausingClient()
+    with pytest.raises(InterruptedError):
+        c.dispatch(task["task_id"], config, client, registry, execute=True, before_remote=check_active)
+    job = c.ledger.get(task["fingerprint"])
+    assert (job["state"] if job else None) == expected
+    assert client.starts == 0 and client.creates == int(boundary == "create")
+    if job:
+        assert c.resume(task["task_id"], client, tmp_path / "paused")["state"] == expected
+        assert client.starts == 0  # No Run ID requires explicit reconciliation, never re-dispatch.
+
+
 @pytest.mark.parametrize("change,expected", [
     (lambda g: g.update(status="draft"), "explicitly authorized"),
     (lambda g: g.update(allow_dynamic_candidates=False), "explicitly authorized"),

@@ -46,7 +46,7 @@ class Coordinator:
                           "role": role_action[t["state"]][0] or t["owner"], "action": role_action[t["state"]][1]}
                          for t in tasks if t["state"] in role_action]}
 
-    def dispatch(self, task_id, config, client, registry, *, execute=False, native_fixture_reader=None):
+    def dispatch(self, task_id, config, client, registry, *, execute=False, native_fixture_reader=None, before_remote=None):
         task = self.board.task(task_id)
         existing = self.ledger.get(task["fingerprint"])
         if existing:
@@ -69,6 +69,7 @@ class Coordinator:
             raise ValueError("Existing research memory blocks this definition or retired direction")
         return dispatch(candidate, request["window"], configured, self.ledger, client,
                         category=TASKS[candidate["official_task"]], native_fixture_reader=native_fixture_reader,
+                        before_remote=before_remote,
                         before_dispatch=lambda: registry.record(candidate, request["window"], request["cycle"], request["groups"]))
 
     def adopt_existing(self, task, job):

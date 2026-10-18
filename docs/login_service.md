@@ -12,7 +12,7 @@
 
 PowerShell 安装器提供 `Plan / Install / Start / Stop / Status / Uninstall`。Plan 展示具体操作；Install 注册当前用户的交互登录触发器、截止前每分钟的恢复触发器、Limited 权限、隐藏窗口和 IgnoreNew 单实例策略。Install 启用后台运行，当前已登录时下一分钟开始，也可 Start 立即开始。已有同名任务先核验账户 SID、命令和绑定，不覆盖无关任务。Uninstall 不删除任何 ledger、模型会话或审计记录。
 
-这是对既有 `host-serve` 的薄封装，没有第二套任务板、预算或决策引擎。服务入口使用绝对路径，不依赖 Task Scheduler 的默认工作目录或交互式终端环境。当前部署入口仅接受 `execution_config=null`；A/B 来源核验和剩余算力授权的限制继续有效。
+这是对既有 `host-serve` 的薄封装，没有第二套任务板、预算或决策引擎。服务入口使用绝对路径，不依赖 Task Scheduler 的默认工作目录或交互式终端环境。**本登录适配器**仅接受 `execution_config=null`；官网部署使用[聊天入口](chat_start.md)显式启动和恢复，Plan/Install/Start/Run 均拒绝官网配置。A/B 来源核验和剩余算力授权的限制继续有效。
 
 ## 停止与恢复
 
