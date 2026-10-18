@@ -148,6 +148,83 @@ def test_expired_paused_and_changed_evidence_fail_before_spend(team):
     assert c.ledger.jobs() == []
 
 
+@pytest.mark.parametrize("boundary", ["create", "start"])
+@pytest.mark.parametrize("change", ["expire", "pause", "replace"])
+def test_grant_changes_are_rechecked_at_each_remote_mutation(team, monkeypatch, tmp_path, boundary, change):
+    from panda_alpha.team import budget
+    c, _, _, grant, _ = team
+    task = ready(team)
+    activate(c.board, grant)
+    instant = [datetime.now(timezone.utc)]
+
+    class Clock(datetime):
+        @classmethod
+        def now(cls, tz=None):
+            return instant[0] if tz is not None else instant[0].replace(tzinfo=None)
+
+    monkeypatch.setattr(budget, "datetime", Clock)
+
+    def change_authority():
+        if change == "expire":
+            instant[0] = datetime.fromisoformat(grant["valid_until"])
+        elif change == "pause":
+            c.board.pause("operator stopped before next remote mutation")
+        else:
+            activate(c.board, dict(grant, grant_id=grant["grant_id"] + "-replacement"))
+
+    if boundary == "create":
+        original_reserve = c.ledger.reserve
+
+        def reserve_then_change(*args, **kwargs):
+            result = original_reserve(*args, **kwargs)
+            change_authority()
+            return result
+
+        monkeypatch.setattr(c.ledger, "reserve", reserve_then_change)
+
+    class Client(SyntheticClient):
+        def create(self, *args):
+            factor_id = super().create(*args)
+            if boundary == "start":
+                change_authority()
+            return factor_id
+
+    client = Client()
+    expected_error = {"expire": "not currently valid", "pause": "paused", "replace": "active team grant"}[change]
+    with pytest.raises(ValueError, match=expected_error):
+        execute(team, task, client)
+    job = c.ledger.get(task["fingerprint"])
+    expected_state = "RESERVED" if boundary == "create" else "CREATED"
+    assert job["state"] == expected_state and job["run_id"] is None
+    assert client.creates == (0 if boundary == "create" else 1) and client.starts == 0
+    assert c.board.task(task["task_id"])["state"] == "submitted"
+    # Retrying or querying this fingerprint must never create/start implicitly.
+    assert execute(team, task, client)["state"] == expected_state
+    assert c.resume(task["task_id"], client, tmp_path / "out")["state"] == expected_state
+    assert client.creates == (0 if boundary == "create" else 1) and client.starts == 0
+
+
+@pytest.mark.parametrize("change", ["expire", "replace"])
+def test_existing_run_can_be_resumed_after_grant_is_no_longer_current(team, monkeypatch, tmp_path, change):
+    from panda_alpha.team import budget
+    c, _, _, grant, _ = team
+    task = ready(team)
+    activate(c.board, grant)
+    client = SyntheticClient()
+    original = execute(team, task, client)
+    if change == "expire":
+        class ExpiredClock(datetime):
+            @classmethod
+            def now(cls, tz=None):
+                return datetime.fromisoformat(grant["valid_until"])
+        monkeypatch.setattr(budget, "datetime", ExpiredClock)
+    else:
+        activate(c.board, dict(grant, grant_id=grant["grant_id"] + "-replacement"))
+    result = c.resume(task["task_id"], client, tmp_path / "out")
+    assert result["state"] == "SETTLED" and c.ledger.get(task["fingerprint"])["run_id"] == original["run_id"]
+    assert client.creates == client.starts == 1
+
+
 @pytest.mark.parametrize("field,value", [("sources", ["undeclared_vendor"]), ("primary_fields", ["undeclared_field"])])
 def test_grant_rejects_new_source_or_field(team, field, value):
     request = synthetic_request("market", team[4])
