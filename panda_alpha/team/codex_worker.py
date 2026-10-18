@@ -80,9 +80,14 @@ def answer(folder, packet):
     return {"work_id": packet["work_id"], "output": output}
 
 
-def fatal_failure(items):
+def fatal_failure(items, folder):
     # Error text remains in local logs. Only a stable category enters status.
-    errors = " ".join(canonical(e) for e in items if e.get("type") in {"error", "turn.failed"}).lower()
+    errors = " ".join(canonical(e) for e in items if e.get("type") in {"error", "turn.failed"})
+    # CLI startup/auth failures can precede the JSON event stream.
+    stderr = folder / "stderr.log"
+    if stderr.exists():
+        errors += stderr.read_text(encoding="utf-8", errors="replace")[-8000:]
+    errors = errors.lower()
     if any(s in errors for s in ("usage limit", "quota", "insufficient_quota", "rate limit reached")):
         return "model_quota"
     if any(s in errors for s in ("unauthorized", "authentication", "please log in", "401", "403")):
@@ -186,7 +191,7 @@ def work(root, manifest, role, packet):
                 state["status"] = "done"
                 write(state_path, state)
                 return state
-        fatal = fatal_failure(items)
+        fatal = fatal_failure(items, folder)
         if fatal:
             state.update(status="attention", reason=fatal)
             attempt.update(status="failed", retry_at=time.time() + config["retry_backoff"])

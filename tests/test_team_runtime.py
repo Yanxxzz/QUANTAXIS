@@ -108,7 +108,8 @@ def test_disconnect_retries_same_work_and_same_role_thread(tmp_path):
     assert all(s["attempts"][1]["resume_thread"].startswith("fixture-") for s in states)
 
 
-@pytest.mark.parametrize("mode,reason,attempts", [("timeout", "model_attempt_limit", 2), ("quota", "model_quota", 1)])
+@pytest.mark.parametrize("mode,reason,attempts", [("timeout", "model_attempt_limit", 2), ("quota", "model_quota", 1),
+                                                ("auth_stderr", "model_authentication", 1)])
 def test_timeout_and_quota_stop_with_durable_limits(tmp_path, mode, reason, attempts):
     args = setup(tmp_path, mode)
     result = serve(*args)
