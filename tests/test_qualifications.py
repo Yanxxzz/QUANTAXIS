@@ -4,7 +4,7 @@ import json
 
 import pytest
 
-from panda_alpha.qualifications import (board_state, fixed_id, observe, replace, snapshot, texts)
+from panda_alpha.qualifications import (board_state, fixed_id, observe, replace, review_state, snapshot, texts)
 from panda_alpha.registry import ResearchRegistry
 from panda_alpha.team import qualification_migration as migration
 from panda_alpha.team.evidence import artifact
@@ -87,6 +87,74 @@ def test_mixed_claim_split_keeps_native_gate_and_cannot_cycle(tmp_path):
     bad["replacements"][0]["items"] = bad["replacements"][0]["items"][1:]
     with pytest.raises(ValueError, match="gate"):
         replace(state, bad, event_id="erased-gate", artifacts=[proof])
+
+
+def numbered_review_case(tmp_path):
+    path = tmp_path / "numbered-proof.txt"
+    path.write_text("Cached delivery complete; native PIT remains unknown")
+    proof = artifact(path)
+    state = source_state(proof)
+    task = {"task_id": "task-A", "request_hash": "frozen", "request": {"candidate": {}}}
+    events = [{"event_id": "numbered", "kind": "qualification_reconciliation", "payload": {"qualifications": state}}]
+    message = {"event_id": "new-review", "artifacts": [proof], "assessment": {
+        "source_status": "pending", "pending": ["Native PIT still needs verification"], "resolved": []}}
+    return task, events, message, state, proof
+
+
+def test_numbered_explanations_do_not_duplicate_explicit_items(tmp_path):
+    task, events, message, state, proof = numbered_review_case(tmp_path)
+    old = next(r for r in state["items"] if r["text"] == "cached logs missing")
+    gate = next(r for r in state["items"] if r["text"] == "native PIT")
+    message["qualification_changes"] = changes(state, [old], proof)
+    message["assessment"]["pending"] = [gate["id"] + ": native PIT remains unverified"]
+    message["assessment"]["resolved"] = ["delivery: full logs are available"]
+    result = review_state(task, events, message, {"unknown": []})
+    expected = replace(state, message["qualification_changes"], event_id=message["event_id"], artifacts=[proof])
+    assert result == expected and texts(result) == ["native PIT"]
+    assert len([r for r in result["items"] if r["status"] == "resolved"]) == 1
+
+
+def test_numbered_new_prose_requires_an_explicit_choice(tmp_path):
+    task, events, message, state, _ = numbered_review_case(tmp_path)
+    with pytest.raises(ValueError, match="Numbered reviews"):
+        review_state(task, events, message, {"unknown": []})
+    message["qualification_changes"] = {"base_head": state["head"], "replacements": [], "additions": []}
+    assert review_state(task, events, message, {"unknown": []}) == state
+    message["assessment"]["source_status"] = "verified"
+    with pytest.raises(ValueError, match="Unresolved historical"):
+        review_state(task, events, message, {"unknown": []})
+
+
+def test_new_numbered_observation_is_explicit_and_bound(tmp_path):
+    task, events, message, state, proof = numbered_review_case(tmp_path)
+    message["qualification_changes"] = {"base_head": state["head"], "additions": [{
+        "id": "native-revision-vintage", "text": "Native revision vintage is unknown", "status": "pending",
+        "reason": "The supplied cache does not identify a historical vintage", "evidence": [proof]}]}
+    result = review_state(task, events, message, {"unknown": []})
+    added = next(r for r in result["items"] if r["id"] == "native-revision-vintage")
+    assert added["status"] == "pending" and added["evidence"] == [proof]
+    assert len(result["items"]) == len(state["items"]) + 1
+    assert "Native PIT still needs verification" not in texts(result)
+
+
+@pytest.mark.parametrize("damage", ["existing_id", "duplicate_addition", "unbound", "missing_reason", "misspelled_field"])
+def test_new_observations_cannot_overwrite_or_lose_evidence(tmp_path, damage):
+    task, events, message, state, proof = numbered_review_case(tmp_path)
+    addition = {"id": "new-obligation", "text": "New source question", "status": "pending", "reason": "New evidence", "evidence": [proof]}
+    update = {"base_head": state["head"], "additions": [addition]}
+    if damage == "existing_id":
+        addition["id"] = state["items"][0]["id"]
+    elif damage == "duplicate_addition":
+        update["additions"].append(deepcopy(addition))
+    elif damage == "unbound":
+        addition["evidence"] = [dict(proof, sha256="0" * 64)]
+    elif damage == "missing_reason":
+        del addition["reason"]
+    else:
+        update["addition"] = update.pop("additions")
+    message["qualification_changes"] = update
+    with pytest.raises(ValueError):
+        review_state(task, events, message, {"unknown": []})
 
 
 def migration_case(env):

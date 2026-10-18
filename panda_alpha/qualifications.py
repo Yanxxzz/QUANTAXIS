@@ -72,23 +72,29 @@ def replace(state, changes, *, event_id, artifacts, verify=True, preserve_requir
     validate(state)
     if not isinstance(changes, dict) or changes.get("base_head") != state["head"]:
         raise ValueError("Stale qualification base; read the current IDs and revisions")
-    groups = changes.get("replacements")
-    if not isinstance(groups, list) or not groups:
-        raise ValueError("Qualification replacements must be a nonempty list")
-    rows = {r["id"]: deepcopy(r) for r in state["items"]}
-    consumed, produced = set(), set()
-    for group in groups:
-        targets, outputs = group.get("supersedes"), group.get("items")
-        proof = group.get("evidence")
-        if (not isinstance(targets, list) or not targets or not isinstance(outputs, list) or not outputs
-                or not isinstance(proof, list) or not proof or not str(group.get("reason", "")).strip()):
-            raise ValueError("Replacement needs exact supersedes, items, reason and bound evidence")
+    groups, additions = changes.get("replacements", []), changes.get("additions", [])
+    if (set(changes) - {"base_head", "replacements", "additions"}
+            or not isinstance(groups, list) or not isinstance(additions, list)):
+        raise ValueError("Qualification replacements and additions must be lists")
+    def evidence_for(item):
+        proof = item.get("evidence")
+        if (not isinstance(proof, list) or not proof
+                or not isinstance(item.get("reason"), str) or not item["reason"].strip()):
+            raise ValueError("Qualification change needs a reason and bound evidence")
         if any(a not in artifacts for a in proof):
             raise ValueError("Replacement evidence is not bound to the review")
         if verify:
             from .registry import verify_artifact
             for a in proof:
                 verify_artifact(a)
+        return proof
+    rows = {r["id"]: deepcopy(r) for r in state["items"]}
+    consumed, produced = set(), set()
+    for group in groups:
+        targets, outputs = group.get("supersedes"), group.get("items")
+        if not isinstance(targets, list) or not targets or not isinstance(outputs, list) or not outputs:
+            raise ValueError("Replacement needs exact supersedes, items, reason and bound evidence")
+        proof = evidence_for(group)
         bound = {}
         for ref in targets:
             old = rows.get(ref.get("id"))
@@ -117,6 +123,15 @@ def replace(state, changes, *, event_id, artifacts, verify=True, preserve_requir
                 rows[old["id"]] = _row(old["id"], old["text"], "superseded", event_id,
                     old["required"], superseded_by=[{"id": r["id"], "revision": r["revision"]} for r in fresh])
         rows.update({r["id"]: r for r in fresh})
+    for item in additions:
+        identity = item.get("id", "")
+        if (not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.:-]{0,127}", identity) or identity in rows
+                or item.get("status") not in {"pending", "resolved"}
+                or not isinstance(item.get("text"), str) or not item["text"].strip()):
+            raise ValueError("New qualification observations need a unique ID, text and status")
+        proof = evidence_for(item)
+        rows[identity] = _row(identity, item["text"], item["status"], event_id,
+                              evidence=deepcopy(proof), reason=item["reason"])
     return validate(snapshot(state["scope"], rows.values()))
 
 
@@ -168,7 +183,9 @@ def review_state(task, events, message, contract):
         x for x in task["request"]["candidate"].get("data_requirements", []) if x.endswith("_pending")}
     missing = [x for x in required if fixed_id(task["task_id"], x) not in {r["id"] for r in state["items"]}]
     state = observe(state, missing, event_id="requirements:" + message["event_id"], required=required)
-    if message.get("qualification_changes"):
+    explicit = "qualification_changes" in message
+    structured = explicit or any(e["payload"].get("qualifications") for e in events)
+    if explicit:
         state = replace(state, message["qualification_changes"], event_id=message["event_id"], artifacts=message["artifacts"])
     assessment = message["assessment"]
     # Free text remains explanatory. It cannot close an existing pending ID.
@@ -180,9 +197,16 @@ def review_state(task, events, message, contract):
         raise ValueError("Closing a pending qualification requires fixed IDs and evidence-bound supersession")
     if any(existing(x) and existing(x)["status"] == "resolved" for x in assessment["pending"]):
         raise ValueError("Reopening a qualification requires explicit supersession")
-    # A replacement's text must not get a second, auto-generated ID.
-    state = observe(state, [x for x in assessment["pending"] if not existing(x)],
-                    [x for x in assessment["resolved"] if not existing(x)], event_id=message["event_id"])
+    unknown = {key: [x for x in assessment[key] if not existing(x)] for key in ("pending", "resolved")}
+    if structured:
+        # In numbered reviews prose explains decisions; only explicit additions
+        # create new items. An ID plus a paraphrase is not a new qualification.
+        if not explicit and any(unknown.values()):
+            raise ValueError("Numbered reviews require qualification_changes: use evidence-bound additions for new "
+                             "items, or current base_head and empty replacements for explanation only")
+    else:
+        # Bootstrap old, unnumbered first reviews without changing their history.
+        state = observe(state, unknown["pending"], unknown["resolved"], event_id=message["event_id"])
     if assessment["source_status"] == "verified" and set(texts(state)) - SOFT_RESEARCH_PENDING:
         raise ValueError("Unresolved historical source qualifications cannot be silently cleared")
     return state
