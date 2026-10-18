@@ -67,10 +67,20 @@ def synthetic_grant(evidence, config):
 
 def send(board, task_id, actor, kind, *, decision="test", reply_to=None, artifacts=None):
     task = board.task(task_id)
-    return board.message({"event_id": f"{task_id}-{kind}-{task['version']}", "task_id": task_id,
+    message = {"event_id": f"{task_id}-{kind}-{task['version']}", "task_id": task_id,
                           "version": task["version"], "request_hash": task["request_hash"], "actor": actor,
                           "kind": kind, "reply_to": reply_to, "claim": "Synthetic protocol claim",
-                          "test": "Synthetic discriminating control", "decision": decision, "artifacts": artifacts or []})
+                          "test": "Synthetic discriminating control", "decision": decision, "artifacts": artifacts or []}
+    if kind == "result_review":
+        message["assessment"] = synthetic_assessment()
+    return board.message(message)
+
+
+def synthetic_assessment():
+    return {"scope": "capability", "source_status": "pending", "economic_status": "not_evaluated",
+            "claims": ["Synthetic protocol delivered; no native source or economic claim"],
+            "pending": ["native_input_and_clock", "native_eligible_support"], "resolved": [],
+            "limitations": ["Synthetic evidence only"], "pool_admission": False}
 
 
 def freeze_synthetic(board, request, priority=50):
@@ -110,6 +120,9 @@ class SyntheticClient:
     def result(self, run_id):
         return {"synthetic": True, "run_id": run_id, "economic_evidence": False}
 
+    def logs(self, run_id):
+        return {"synthetic": True, "run_id": run_id, "complete": True, "logs": [], "errors": []}
+
 
 def blocked(*args, **kwargs):
     raise AssertionError("Offline rehearsal forbids network and subprocess execution")
@@ -143,9 +156,12 @@ def run_demo(output):
                 result = c.resume(task_id, client, output / "results")
                 assert result["state"] == "SETTLED"
                 event = c.board.events(task_id)[-1]
-                task = send(c.board, task_id, "skeptic", "result_review", decision="reject",
+                task = send(c.board, task_id, "skeptic", "result_review", decision="confirm",
                             reply_to=event["event_id"], artifacts=event["payload"]["artifacts"])
-                c.board.decide(task_id, task["version"], {"decision": "close", "reason": "Synthetic rehearsal completed; no economic claim"})
+                review = c.board.events(task_id)[-1]
+                c.conclude(task_id, task["version"], {"operation_id": task_id + "-conclusion",
+                    "review_event_id": review["event_id"], "decision": "confirm",
+                    "reason": "Synthetic rehearsal completed; no economic claim"}, registry)
             c.board.pause("PILOT_READY: offline implementation rehearsal complete; real pilot requires separate authority")
             report = {"status": "PILOT_READY", "scope": "synthetic workflow rehearsal only",
                       "official_runs": 0, "paid_llm_calls": 0, "network_calls": 0, "economic_evidence": False,

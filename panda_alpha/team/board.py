@@ -33,6 +33,9 @@ class Board:
                 BEGIN SELECT RAISE(ABORT, 'team events are immutable'); END;
             CREATE TABLE IF NOT EXISTS team_grants (
                 grant_id TEXT PRIMARY KEY, grant_hash TEXT NOT NULL, payload TEXT NOT NULL);
+            CREATE TABLE IF NOT EXISTS team_finalizations (
+                operation_id TEXT PRIMARY KEY, task_id TEXT NOT NULL, registry_path TEXT NOT NULL,
+                payload TEXT NOT NULL, state TEXT NOT NULL);
         """)
 
     @contextmanager
@@ -102,7 +105,7 @@ class Board:
         """Retry is idempotent by event_id; every new reply binds a task version."""
         text_fields(message, ("event_id", "task_id", "actor", "kind", "request_hash", "claim", "test", "decision"))
         actor, kind = message["actor"], message["kind"]
-        if actor not in ROLES or kind not in {"challenge", "response", "review", "result_review", "note"}:
+        if actor not in ROLES or kind not in {"challenge", "response", "review", "result_review", "note", "cross_review"}:
             raise ValueError("Unknown role or message kind")
         verify_artifacts(message.get("artifacts", []), required=kind == "result_review")
         with self.transaction():
@@ -117,7 +120,8 @@ class Board:
             events = self.events(task["task_id"])
             parent = next((e for e in events if e["event_id"] == message.get("reply_to")), None)
             states = {"challenge": {"proposed"}, "response": {"challenged"}, "review": {"answered"},
-                      "result_review": {"result_ready"}, "note": {"proposed", "challenged", "answered", "reviewed"}}
+                      "result_review": {"result_ready"}, "note": {"proposed", "challenged", "answered", "reviewed"},
+                      "cross_review": {"reviewed"}}
             if task["state"] not in states[kind]:
                 raise ValueError("Message does not match current research stage")
             if kind in {"challenge", "review", "result_review"} and actor != "skeptic":
@@ -135,19 +139,37 @@ class Board:
                 raise ValueError("Review decision is approve or park")
             if kind == "result_review" and message["decision"] not in {"continue", "confirm", "source_pending", "reject"}:
                 raise ValueError("Result review requires an explicit next decision")
+            if kind == "result_review":
+                from .evidence import validate_assessment
+                job = self.db.execute("SELECT definition FROM jobs WHERE fingerprint=?", (task["fingerprint"],)).fetchone()
+                environment = json.loads(job[0] or "{}").get("team_permit", {}).get("environment", "unknown") if job else "unknown"
+                validate_assessment(message, task, parent, expected_environment=environment)
+            if kind == "cross_review":
+                if actor not in INFORMATION or actor == task["owner"]:
+                    raise ValueError("Cross review requires the other research line")
+                peer = self.task(message.get("peer_task_id"))
+                if peer["owner"] != actor or peer["request_hash"] != message.get("peer_request_hash"):
+                    raise ValueError("Cross review must bind the other line's frozen brief")
+            reopened = next((e for e in reversed(events) if e["kind"] == "evidence_review_requested"), None)
+            if reopened and kind in {"review", "result_review"}:
+                if message.get("reply_to") != reopened["payload"]["target_event_id"] or any(
+                        a not in message["artifacts"] for a in reopened["payload"]["artifacts"]):
+                    raise ValueError("Evidence re-review must bind its original target and new artifacts")
             self.event(task["task_id"], actor, kind, message, message["event_id"])
             state = {"challenge": "challenged", "response": "answered", "review": "reviewed",
-                     "result_review": "result_reviewed", "note": task["state"]}[kind]
+                     "result_review": "result_reviewed", "note": task["state"], "cross_review": task["state"]}[kind]
             if kind == "review" and message["decision"] == "park":
                 state = "parked"
             self.advance(task["task_id"], state)
         return self.task(task["task_id"])
 
-    def freeze(self, task_id, version, decision):
+    def freeze(self, task_id, version, decision, *, event_id=None):
         text_fields(decision, ("allocation_reason", "diversity_check"))
         if type(decision.get("priority")) is not int or not 0 <= decision["priority"] <= 100:
             raise ValueError("Priority must be an integer in [0,100]")
         with self.transaction():
+            if event_id and self._retry(event_id, task_id, "freeze", decision):
+                return self.task(task_id)
             task = self.expect(task_id, version, {"reviewed"})
             if validate_request(task["request"])["request_hash"] != task["request_hash"]:
                 raise ValueError("Request changed after review")
@@ -155,22 +177,83 @@ class Board:
                 raise ValueError("Freeze must bind the reviewed request hash")
             if any(t["owner"] == task["owner"] and t["state"] == "ready" for t in self.tasks()):
                 raise ValueError("One ready task per research line")
-            self.event(task_id, "lead", "freeze", decision)
+            cross = [e for e in self.events(task_id) if e["kind"] == "cross_review"]
+            dispositions = decision.get("cross_line_decisions", [])
+            if not isinstance(dispositions, list) or any(not isinstance(d, dict) for d in dispositions):
+                raise ValueError("Cross-line decisions must be a list of objects")
+            for e in cross:
+                row = next((d for d in dispositions if d.get("event_id") == e["event_id"]), None)
+                if not row or row.get("decision") not in {"accept", "reject"} or not isinstance(row.get("reason"), str) or not row["reason"].strip():
+                    raise ValueError("Freeze must resolve each cross-line control; pending controls require parking")
+            self.event(task_id, "lead", "freeze", decision, event_id)
             self.db.execute("UPDATE team_tasks SET freeze=? WHERE task_id=?", (canonical(decision), task_id))
             self.advance(task_id, "ready")
         return self.task(task_id)
 
-    def decide(self, task_id, version, decision):
+    def decide(self, task_id, version, decision, *, event_id=None):
         text_fields(decision, ("decision", "reason"))
         if decision["decision"] not in {"close", "park", "continue", "confirm", "source_pending"}:
             raise ValueError("Unknown lead decision")
         with self.transaction():
+            if event_id and self._retry(event_id, task_id, "decision", decision):
+                return self.task(task_id)
             task = self.expect(task_id, version, {"proposed", "challenged", "answered", "reviewed", "ready", "result_reviewed"})
+            if task["state"] == "result_reviewed":
+                raise ValueError("Use conclude with the scientific registry for result decisions")
             if task["state"] != "result_reviewed" and decision["decision"] != "park":
                 raise ValueError("Only park is available before independent result review")
-            self.event(task_id, "lead", "decision", decision)
+            self.event(task_id, "lead", "decision", decision, event_id)
             self.advance(task_id, "parked" if decision["decision"] in {"park", "source_pending"} else "closed")
         return self.task(task_id)
+
+    def _retry(self, event_id, task_id, kind, payload):
+        prior = self.db.execute("SELECT task_id,kind,payload FROM team_events WHERE event_id=?", (event_id,)).fetchone()
+        if prior and tuple(prior) != (task_id, kind, canonical(payload)):
+            raise ValueError("Event identity already has different content")
+        return prior is not None
+
+    def reopen_evidence(self, task_id, version, request):
+        """A source-only re-review never alters identity, execution or authority."""
+        text_fields(request, ("operation_id", "request_hash", "prior_decision_event_id", "target_event_id", "claim_delta"))
+        verify_artifacts(request.get("artifacts"))
+        with self.transaction():
+            if self._retry(request["operation_id"], task_id, "evidence_review_requested", request):
+                return self.task(task_id)
+            task = self.expect(task_id, version, {"parked", "closed"})
+            if task["request_hash"] != request["request_hash"]:
+                raise ValueError("Evidence cannot change the original request")
+            events = self.events(task_id)
+            decisions = [e for e in events if e["kind"] in {"decision", "review", "conclusion"}]
+            prior = next((e for e in decisions if e["event_id"] == request["prior_decision_event_id"]), None)
+            if not prior or prior != decisions[-1]:
+                raise ValueError("Re-review must reference the latest closure decision")
+            if any(e["kind"] == "result_review" and e["payload"].get("assessment", {}).get("economic_status") == "rejected"
+                   for e in events):
+                raise ValueError("Source-only review cannot reopen an economic rejection")
+            target = next((e for e in events if e["event_id"] == request["target_event_id"]), None)
+            results = [e for e in events if e["kind"] == "result"]
+            kind = "result" if results else "response"
+            targets = [e for e in events if e["kind"] == kind]
+            if not target or not targets or target != targets[-1]:
+                raise ValueError("Re-review requires the original result or latest author response")
+            known = {a["sha256"] for e in events for a in e["payload"].get("artifacts", [])}
+            known.update(a["sha256"] for a in task["request"]["artifacts"])
+            if not any(a["sha256"] not in known for a in request["artifacts"]):
+                raise ValueError("Re-review needs materially new evidence, not a renamed artifact")
+            if sum(t["owner"] == task["owner"] and t["state"] not in {"closed", "parked"} for t in self.tasks()) >= 2:
+                raise ValueError("Researcher WIP limit is two")
+            self.event(task_id, "lead", "evidence_review_requested", request, request["operation_id"])
+            self.advance(task_id, "result_ready" if kind == "result" else "answered")
+        return self.task(task_id)
+
+    def task_packet(self, task_id):
+        task = self.task(task_id)
+        events = self.events(task_id)
+        # Explicit targets survive a long append-only history; the eight-event
+        # reading window must not hide the original Run or reopened response.
+        targets = {kind: next((e for e in reversed(events) if e["kind"] == kind), None)
+                   for kind in ("challenge", "response", "result", "result_review", "evidence_review_requested")}
+        return dict(task, events=events[-8:], review_targets=targets)
 
     def pause(self, reason):
         if not reason.strip():
@@ -186,10 +269,16 @@ class Board:
         relevant = [t for t in all_tasks if role in {"lead", "skeptic"} or t["owner"] == role]
         finished = [t for t in relevant if t["state"] in {"closed", "parked"}]
         tasks = [t for t in relevant if t["state"] not in {"closed", "parked"}] + finished[-2:]
-        return {"role": role, "control": self.mode(), "tasks": [dict(t, events=self.events(t["task_id"])[-8:]) for t in tasks],
+        control = self.mode()
+        row = self.db.execute("SELECT payload FROM team_grants WHERE grant_id=?", (control["grant_id"],)).fetchone()
+        grant = json.loads(row[0]) if row else None
+        scope = ({k: grant[k] for k in ("grant_id", "environment", "valid_until", "scope")} if grant else None)
+        return {"role": role, "control": self.mode(), "tasks": [self.task_packet(t["task_id"]) for t in tasks],
+                "declared_grant_scope": scope, "funding_authorization": False,
                 "recent_history": [{"task_id": t["task_id"], "mechanism_id": t["request"]["mechanism_id"], "state": t["state"]}
                                    for t in finished[-20:]], "older_history_count": max(0, len(finished) - 20),
-                "other_line": [{"task_id": t["task_id"], "mechanism_id": t["request"]["mechanism_id"],
-                                "information_family": t["request"]["information_family"], "state": t["state"]}
+                "other_line": [{"task_id": t["task_id"], "request_hash": t["request_hash"], "state": t["state"],
+                                **{k: t["request"][k] for k in ("mechanism_id", "information_family", "hypothesis",
+                                    "primary_fields", "availability_clock", "risk_exposures", "control", "falsifier")}}
                                for t in all_tasks[-20:] if role in INFORMATION and t["owner"] != role],
                 "instruction": "Reply with version, request_hash and reply_to; propose changes as a new task. Do not write SQLite directly."}

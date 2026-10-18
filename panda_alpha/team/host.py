@@ -1,0 +1,384 @@
+"""Bounded host loop with durable role handoffs, not another experiment engine."""
+from __future__ import annotations
+
+from datetime import datetime, timezone
+import json
+from pathlib import Path
+import subprocess
+import tomllib
+
+from .contracts import INFORMATION, ROLES, canonical, digest, text_fields, timestamp
+
+
+class Host:
+    """One cooperative host writer. Agents only return JSON; they do not own DBs.
+
+    Delivery to an external agent can be repeated after a lost acknowledgement.
+    work_id is the backend idempotency key; board effects and recorded responses
+    are idempotent. No exactly-once external-model execution claim is made.
+    """
+
+    def __init__(self, coordinator, registry, session_id, spec=None):
+        self.c, self.registry, self.session_id = coordinator, registry, session_id
+        self.db = coordinator.board.db
+        self.db.executescript("""
+            CREATE TABLE IF NOT EXISTS team_host_sessions (
+                session_id TEXT PRIMARY KEY, spec TEXT NOT NULL, round INTEGER NOT NULL,
+                plan TEXT, actions INTEGER NOT NULL, stop_reason TEXT);
+            CREATE TABLE IF NOT EXISTS team_host_work (
+                work_id TEXT PRIMARY KEY, session_id TEXT NOT NULL, packet TEXT NOT NULL,
+                response TEXT, state TEXT NOT NULL);
+        """)
+        row = self.db.execute("SELECT spec FROM team_host_sessions WHERE session_id=?", (session_id,)).fetchone()
+        if spec is not None:
+            text_fields(spec, ("objective", "deadline"))
+            timestamp(spec["deadline"])
+            for key in ("max_rounds", "max_actions"):
+                if type(spec.get(key)) is not int or spec[key] <= 0:
+                    raise ValueError(f"Host {key} must be a positive integer")
+            if not isinstance(spec.get("seed_tasks", []), list):
+                raise ValueError("seed_tasks must be a list of existing task IDs")
+            for task_id in spec.get("seed_tasks", []):
+                self.c.board.task(task_id)
+            if row and row[0] != canonical(spec):
+                raise ValueError("Host session bounds are immutable; do not reset a session on resume")
+            with self.c.board.transaction():
+                self.db.execute("INSERT OR IGNORE INTO team_host_sessions VALUES(?,?,0,NULL,0,NULL)", (session_id, canonical(spec)))
+        elif row is None:
+            raise ValueError("Unknown host session; initialize with an explicit bounded spec")
+
+    def state(self):
+        row = dict(self.db.execute("SELECT * FROM team_host_sessions WHERE session_id=?", (self.session_id,)).fetchone())
+        row["spec"] = json.loads(row["spec"])
+        row["plan"] = json.loads(row["plan"]) if row["plan"] else None
+        return row
+
+    def owned_tasks(self):
+        packets = [json.loads(r[0]) for r in self.db.execute(
+            "SELECT packet FROM team_host_work WHERE session_id=?", (self.session_id,))]
+        return {p["task_id"] for p in packets if p["action"] == "propose"} | set(self.state()["spec"].get("seed_tasks", []))
+
+    def stop(self, reason):
+        with self.c.board.transaction():
+            self.db.execute("UPDATE team_host_sessions SET stop_reason=? WHERE session_id=?", (reason, self.session_id))
+        return {"status": "stopped", "reason": reason, "session_id": self.session_id}
+
+    def _issue(self, state, role, action, task_id=None, **extra):
+        task = self.c.board.task_packet(task_id) if task_id and action != "propose" else None
+        identity = {"session_id": self.session_id, "round": state["round"], "role": role, "action": action,
+                    "task_id": task_id, "version": task["version"] if task else None}
+        rejected = [json.loads(r[0]) for r in self.db.execute(
+            "SELECT packet FROM team_host_work WHERE session_id=? AND state IN ('rejected','stale')", (self.session_id,))]
+        prior = [p for p in rejected if all(p[k] == v for k, v in identity.items())]
+        identity["attempt"] = len(prior) + 1
+        work_id = "host-" + digest(identity)
+        packet = dict(identity, work_id=work_id, task=task, objective=state["spec"]["objective"],
+                      memory=self.registry.reconciled_memory(), **extra)
+        if prior:
+            packet["previous_response"] = json.loads(self.db.execute(
+                "SELECT response FROM team_host_work WHERE work_id=?", (prior[-1]["work_id"],)).fetchone()[0] or "null")
+            error = self.db.execute("SELECT payload FROM team_events WHERE event_id=?", (prior[-1]["work_id"] + ":invalid",)).fetchone()
+            packet["previous_error"] = json.loads(error[0])["error"] if error else "stale task version"
+        if role:
+            packet["role_packet"] = self.c.board.packet(role)
+            path = Path(__file__).resolve().parents[2] / ".codex" / "agents" / f"panda-{role}.toml"
+            packet["role_instructions"] = tomllib.loads(path.read_text(encoding="utf-8"))["developer_instructions"]
+        packet["reply_contract"] = {
+            "envelope": "{work_id: exact work_id, output: action-specific JSON}",
+            "plan_round": "decision=research|stop, reason; research supplies one brief per market/fundamental in assignments; optional reopen list binds existing seed tasks",
+            "propose": "request with the assigned task_id/owner, or decision=no_candidate and reason; never invent evidence",
+            "challenge_response_review": "claim/test/decision/artifacts; result_review adds scoped assessment and evidence_contract; host binds IDs/version/reply_to",
+            "cross_review": "claim/test/decision/artifacts; compare peer brief and propose a discriminating control",
+            "freeze": "priority/allocation_reason/diversity_check/cross_line_decisions, or decision=park with reason",
+            "conclude": "decision/reason agreeing with independent review; host supplies stable operation and review IDs"}
+        with self.c.board.transaction():
+            old = self.db.execute("SELECT state FROM team_host_work WHERE work_id=?", (work_id,)).fetchone()
+            if old:
+                raise ValueError("Completed host action cannot be reissued without a state change")
+            self.db.execute("INSERT INTO team_host_work VALUES(?,?,?,NULL,'pending')", (work_id, self.session_id, canonical(packet)))
+            self.db.execute("UPDATE team_host_sessions SET actions=actions+1 WHERE session_id=?", (self.session_id,))
+        return {"status": "work", "packet": packet}
+
+    def next(self, *, execution=False):
+        self.c.recover_conclusions(self.registry)
+        state = self.state()
+        if state["stop_reason"]:
+            return {"status": "stopped", "reason": state["stop_reason"], "session_id": self.session_id}
+        if datetime.now(timezone.utc) >= timestamp(state["spec"]["deadline"]):
+            return self.stop("deadline")
+        # Finish recorded answers before creating work or checking action count.
+        for row in self.db.execute("SELECT * FROM team_host_work WHERE session_id=? AND state IN ('pending','answered') ORDER BY rowid", (self.session_id,)).fetchall():
+            row = dict(row)
+            packet = json.loads(row["packet"])
+            if row["state"] == "answered":
+                self._apply_recorded(packet, json.loads(row["response"]))
+                return self.next(execution=execution)
+            if packet["action"] == "dispatch" and any(j["state"] not in {"SETTLED", "CANCELLED"} for j in self.c.ledger.jobs()):
+                # Another task may have obtained the single inflight slot since
+                # this work was issued. Do not pin a failing dispatch ahead of
+                # the original Run that must be reconciled to release it.
+                self.db.execute("UPDATE team_host_work SET state='stale' WHERE work_id=?", (row["work_id"],))
+                continue
+            if packet["action"] == "freeze" and any(t["owner"] == packet["task"]["owner"] and
+                    t["state"] == "ready" and t["task_id"] != packet["task_id"] for t in self.c.board.tasks()):
+                self.db.execute("UPDATE team_host_work SET state='stale' WHERE work_id=?", (row["work_id"],))
+                continue
+            if packet["task"] and self.c.board.task(packet["task_id"])["version"] != packet["version"]:
+                self.db.execute("UPDATE team_host_work SET state='stale' WHERE work_id=?", (row["work_id"],))
+                continue
+            return {"status": "work", "packet": packet}
+        state = self.state()
+        if state["actions"] >= state["spec"]["max_actions"]:
+            return self.stop("action_limit")
+        assignments = (state["plan"] or {}).get("assignments", [])
+        current_ids = [f"{self.session_id}.r{state['round']}.{a['owner']}" for a in assignments]
+        selected = set(current_ids) | self.owned_tasks()
+        tasks = {t["task_id"]: t for t in self.c.board.tasks()}
+        for assignment, task_id in zip(assignments, current_ids):
+            completed = any(json.loads(r[0])["task_id"] == task_id and json.loads(r[0])["action"] == "propose"
+                            for r in self.db.execute("SELECT packet FROM team_host_work WHERE session_id=? AND state='applied'", (self.session_id,)))
+            if task_id not in tasks and not completed:
+                return self._issue(state, assignment["owner"], "propose", task_id, brief=assignment["brief"])
+        work = [w for w in self.c.plan()["work"] if w["task_id"] in selected]
+        existing_work = sorted(work, key=lambda w: self.c.ledger.get(tasks[w["task_id"]]["fingerprint"]) is None)
+        inflight = [j for j in self.c.ledger.jobs() if j["state"] not in {"SETTLED", "CANCELLED"}]
+        selected_fingerprints = {tasks[w["task_id"]]["fingerprint"] for w in work}
+        for item in existing_work:
+            action, task_id = item["action"], item["task_id"]
+            if action in {"await_grant_or_dispatch", "resume_original_run"}:
+                continue
+            task = tasks[task_id]
+            if action == "freeze":
+                if any(t["owner"] == task["owner"] and t["state"] == "ready" for t in tasks.values()):
+                    continue  # Free the existing ready slot before asking for an impossible freeze.
+                peer = next((t for t in reversed(list(tasks.values())) if t["owner"] != task["owner"] and
+                             set(t["request"]["risk_exposures"]) & set(task["request"]["risk_exposures"])), None)
+                if peer and not any(e["kind"] == "cross_review" for e in self.c.board.events(task_id)):
+                    return self._issue(state, peer["owner"], "cross_review", task_id,
+                                       peer_task_id=peer["task_id"], peer_request_hash=peer["request_hash"])
+            return self._issue(state, item["role"], action, task_id)
+        if any(j["fingerprint"] not in selected_fingerprints for j in inflight):
+            return {"status": "waiting", "reason": "other_job_reconciliation", "fingerprints": [j["fingerprint"] for j in inflight]}
+        for item in existing_work:
+            if item["action"] not in {"await_grant_or_dispatch", "resume_original_run"}:
+                continue
+            task = tasks[item["task_id"]]
+            job = self.c.ledger.get(task["fingerprint"])
+            if job and not job["run_id"]:
+                return {"status": "waiting", "reason": "operator_reconciliation", "task_id": task["task_id"], "job_state": job["state"]}
+            if execution:
+                action = "resume" if job else "dispatch"
+                return self._issue(state, None, action, task["task_id"])
+        if work:
+            return {"status": "waiting", "reason": "execution_not_enabled", "tasks": [w["task_id"] for w in work]}
+        if state["round"] >= state["spec"]["max_rounds"]:
+            return self.stop("round_limit")
+        return self._issue(state, "lead", "plan_round", next_round=state["round"] + 1)
+
+    def respond(self, work_id, response):
+        if response.get("work_id") != work_id or not isinstance(response.get("output"), dict):
+            raise ValueError("Agent response must bind its work_id and JSON output")
+        row = self.db.execute("SELECT * FROM team_host_work WHERE work_id=? AND session_id=?", (work_id, self.session_id)).fetchone()
+        if row is None:
+            raise ValueError("Unknown host work")
+        row = dict(row)
+        if row["response"] and row["response"] != canonical(response):
+            raise ValueError("Host response identity already has different content")
+        if row["state"] == "applied":
+            return {"status": "applied", "work_id": work_id}
+        if row["state"] in {"stale", "rejected"}:
+            raise ValueError("Stale host work; request the current packet")
+        state = self.state()
+        if state["stop_reason"] or datetime.now(timezone.utc) >= timestamp(state["spec"]["deadline"]):
+            raise ValueError("Host session stopped or expired")
+        with self.c.board.transaction():
+            self.db.execute("UPDATE team_host_work SET response=?,state='answered' WHERE work_id=?", (canonical(response), work_id))
+        self._apply_recorded(json.loads(row["packet"]), response)
+        return {"status": "applied", "work_id": work_id}
+
+    def _apply_recorded(self, packet, response):
+        try:
+            self._apply(packet, response)
+        except (ValueError, KeyError, TypeError) as exc:
+            # Keep the invalid answer as evidence; a corrected response gets a
+            # fresh bounded delivery ID and sees the precise validation error.
+            # A partially committed conclusion must recover its original intent.
+            finalization = self.db.execute("SELECT 1 FROM team_finalizations WHERE operation_id=?", (packet["work_id"],)).fetchone()
+            if finalization:
+                raise
+            with self.c.board.transaction():
+                self.db.execute("UPDATE team_host_work SET state='rejected' WHERE work_id=?", (packet["work_id"],))
+                self.c.board.event(packet["task_id"] or "*", "host", "invalid_response",
+                    {"work_id": packet["work_id"], "error": str(exc)}, packet["work_id"] + ":invalid")
+            raise
+
+    def _apply(self, p, response):
+        out, action, task_id = response["output"], p["action"], p["task_id"]
+        if action == "plan_round":
+            text_fields(out, ("decision", "reason"))
+            if out["decision"] == "stop":
+                self.stop(out["reason"])
+            elif out["decision"] == "research":
+                assignments = out.get("assignments", [])
+                if not isinstance(assignments, list) or any(not isinstance(a, dict) for a in assignments):
+                    raise ValueError("Assignments must be a list of research brief objects")
+                if sorted(a.get("owner", "") for a in assignments) != sorted(INFORMATION):
+                    raise ValueError("A round assigns distinct market and fundamental briefs")
+                for a in assignments:
+                    text_fields(a, ("brief",))
+                reopens = out.get("reopen", [])
+                if not isinstance(reopens, list) or any(not isinstance(r, dict) for r in reopens):
+                    raise ValueError("Reopen must be a list of task evidence requests")
+                for r in reopens:
+                    if r["task_id"] not in self.owned_tasks():
+                        raise ValueError("Re-review must name an explicitly selected seed task")
+                    self.c.board.reopen_evidence(r["task_id"], r["version"], r["request"])
+                with self.c.board.transaction():
+                    self.db.execute("UPDATE team_host_sessions SET round=?,plan=? WHERE session_id=?",
+                                    (p["next_round"], canonical(out), self.session_id))
+            else:
+                raise ValueError("Plan decision is research or stop")
+        elif action == "propose":
+            if out.get("decision") == "no_candidate":
+                text_fields(out, ("reason",))
+            else:
+                request = out["request"]
+                if request["owner"] != p["role"] or request["task_id"] != task_id:
+                    raise ValueError("Proposal must use its assigned role and task identity")
+                from ..evolution import Candidate, ResearchEngine
+                engine = ResearchEngine(registry=self.registry, memory=self.registry.reconciled_memory(),
+                    research_context={k: request[k] for k in ("window", "cycle", "groups")})
+                candidate = Candidate.from_dict(dict(request["candidate"], hypothesis=request["hypothesis"], mechanism=request["mechanism_id"]))
+                if not engine.allows_research(candidate):
+                    raise ValueError("Scientific memory blocks this proposal; use a different mechanism or explicit evidence-reopening path")
+                self.c.board.submit(request)
+        elif action == "freeze":
+            if out.get("decision") == "park":
+                self.c.board.decide(task_id, p["version"], out, event_id=p["work_id"])
+            else:
+                self.c.board.freeze(task_id, p["version"], dict(out, request_hash=p["task"]["request_hash"]), event_id=p["work_id"])
+        elif action == "conclude":
+            review = p["task"]["review_targets"]["result_review"]
+            self.c.conclude(task_id, p["version"], dict(out, operation_id=p["work_id"], review_event_id=review["event_id"]), self.registry)
+        elif action in {"dispatch", "resume"}:
+            raise ValueError("Agent responses cannot execute or acknowledge platform work")
+        else:
+            message = dict(out, event_id=p["work_id"], task_id=task_id, actor=p["role"], kind=action,
+                           version=p["version"], request_hash=p["task"]["request_hash"])
+            parent_kind = {"response": "challenge", "review": "response", "result_review": "result"}.get(action)
+            if parent_kind:
+                message["reply_to"] = p["task"]["review_targets"][parent_kind]["event_id"]
+            if action == "cross_review":
+                message.update(peer_task_id=p["peer_task_id"], peer_request_hash=p["peer_request_hash"])
+            self.c.board.message(message)
+        with self.c.board.transaction():
+            self.db.execute("UPDATE team_host_work SET state='applied' WHERE work_id=?", (p["work_id"],))
+
+    def run(self, agents, executor=None):
+        """Run until bounded completion or a real wait. No polling/sleep loop."""
+        while True:
+            next_work = self.next(execution=executor is not None)
+            if next_work["status"] != "work":
+                return next_work
+            packet = next_work["packet"]
+            if packet["role"] is None:
+                if executor is None:
+                    return {"status": "waiting", "reason": "execution_not_enabled"}
+                try:
+                    result = executor(packet["action"], packet["task_id"])
+                except (ValueError, RuntimeError, TimeoutError) as exc:
+                    return {"status": "waiting", "reason": "execution_blocked", "work_id": packet["work_id"], "error": str(exc)}
+                task = self.c.board.task(packet["task_id"])
+                if task["version"] == packet["version"]:
+                    return {"status": "waiting", "reason": "original_run", "result": result}
+                self.db.execute("UPDATE team_host_work SET state='applied' WHERE work_id=?", (packet["work_id"],))
+                continue
+            response = agents(packet)
+            if response is None:
+                return {"status": "waiting", "reason": "role_response", "work_id": packet["work_id"]}
+            try:
+                self.respond(packet["work_id"], response)
+            except (ValueError, KeyError, TypeError):
+                row = self.db.execute("SELECT state FROM team_host_work WHERE work_id=?", (packet["work_id"],)).fetchone()
+                if row[0] != "rejected":
+                    raise  # A partial conclusion or transport failure needs its original recovery path.
+                # Validation recorded the bad answer. Give the role a new,
+                # bounded delivery with the specific error, without host repair.
+                continue
+
+
+class CommandAgents:
+    """Explicit trusted local transport. No model/provider or payment default.
+
+    Each argv receives one packet on stdin and returns an envelope on stdout.
+    Configure a host-owned role adapter, not arbitrary commands from agent text.
+    The backend should cache work_id before acknowledging; this cache avoids
+    repeat delivery once stdout has been recorded by this process.
+    """
+
+    def __init__(self, commands, output, timeout=300):
+        if set(commands) != set(ROLES) or any(not isinstance(a, list) or not a or
+                any(not isinstance(s, str) or not s for s in a) for a in commands.values()):
+            raise ValueError("Configure an explicit argv for each of the four roles")
+        self.commands, self.output, self.timeout = commands, Path(output), timeout
+        self.output.mkdir(parents=True, exist_ok=True)
+
+    def __call__(self, packet):
+        path = self.output / (packet["work_id"] + ".json")
+        if path.exists():
+            return json.loads(path.read_text(encoding="utf-8"))
+        result = subprocess.run(self.commands[packet["role"]], input=canonical(packet), capture_output=True,
+                                text=True, encoding="utf-8", timeout=self.timeout, shell=False)
+        if result.returncode:
+            raise RuntimeError("Role transport failed; retained work_id for backend reconciliation")
+        value = json.loads(result.stdout)
+        if value.get("work_id") != packet["work_id"] or not isinstance(value.get("output"), dict):
+            raise ValueError("Role transport returned an unbound response")
+        temporary = path.with_suffix(".tmp")
+        temporary.write_text(canonical(value), encoding="utf-8")
+        temporary.replace(path)
+        return value
+
+
+class MailboxAgents:
+    """File handoff for an already running tool host (e.g. Codex role agents).
+
+    The host starts/wakes the actual agents once. They consume their request
+    directory and atomically write envelopes to responses/. No model is faked
+    or implicitly purchased; absent agents leave an explicit role_response wait.
+    """
+
+    def __init__(self, directory):
+        self.directory = Path(directory)
+
+    def __call__(self, packet):
+        root = self.directory / packet["role"]
+        requests, responses = root / "requests", root / "responses"
+        requests.mkdir(parents=True, exist_ok=True)
+        responses.mkdir(parents=True, exist_ok=True)
+        path = requests / (packet["work_id"] + ".json")
+        encoded = canonical(packet)
+        if path.exists() and path.read_text(encoding="utf-8") != encoded:
+            raise ValueError("Mailbox work identity already has different content")
+        if not path.exists():
+            temporary = path.with_suffix(".tmp")
+            temporary.write_text(encoded, encoding="utf-8")
+            temporary.replace(path)
+        response = responses / path.name
+        return json.loads(response.read_text(encoding="utf-8-sig")) if response.exists() else None
+
+
+class ExistingExecutor:
+    """Only the existing coordinator can reach the platform/compute steward."""
+
+    def __init__(self, coordinator, registry, client, config, output):
+        self.c, self.registry, self.client, self.config, self.output = coordinator, registry, client, config, Path(output)
+
+    def __call__(self, action, task_id):
+        if action == "dispatch":
+            result = self.c.dispatch(task_id, self.config, self.client, self.registry, execute=True)
+        elif action == "resume":
+            result = self.c.resume(task_id, self.client, self.output)
+        else:
+            raise ValueError("Unknown execution action")
+        return {k: result.get(k) for k in ("state", "run_id", "factor_id", "action")}

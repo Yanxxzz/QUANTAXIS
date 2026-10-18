@@ -4,6 +4,7 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
+import subprocess
 
 from ..platform import ExperimentLedger, dispatch, resume
 from .board import Board
@@ -35,7 +36,8 @@ class Coordinator:
         role_action = {"proposed": ("skeptic", "challenge"), "challenged": (None, "response"),
                        "answered": ("skeptic", "review"), "reviewed": ("lead", "freeze"),
                        "ready": ("lead", "await_grant_or_dispatch"), "submitted": ("lead", "resume_original_run"),
-                       "result_ready": ("skeptic", "result_review"), "result_reviewed": ("lead", "decide")}
+                       "result_ready": ("skeptic", "result_review"), "result_reviewed": ("lead", "conclude"),
+                       "finalizing": ("lead", "recover_conclusion")}
         return {"control": self.board.mode(), "funding_authorization": False,
                 "queue": [t["task_id"] for t in ready], "attempts_by_line": counts,
                 "unsettled": [{"fingerprint": j["fingerprint"], "state": j["state"], "run_id": j["run_id"]}
@@ -90,6 +92,16 @@ class Coordinator:
         result = resume(task["fingerprint"], self.ledger, client, Path(output_dir))
         job = self.ledger.get(task["fingerprint"])
         if job and job["state"] in {"SETTLED", "CANCELLED"}:
+            # A successful run needs logs too. Failure to read them is a source
+            # limitation, never grounds for repeating or delaying settlement.
+            if job["run_id"] and self.board.task(task_id)["state"] == "submitted" and hasattr(client, "logs"):
+                path = Path(output_dir) / (str(job["run_id"]) + ".logs.json")
+                try:
+                    if not path.exists():
+                        path.parent.mkdir(parents=True, exist_ok=True)
+                        path.write_text(canonical(client.logs(job["run_id"])), encoding="utf-8")
+                except (RuntimeError, ValueError, OSError, subprocess.TimeoutExpired):
+                    pass
             with self.board.transaction():
                 current = self.board.task(task_id)
                 if current["state"] == "submitted":
@@ -100,12 +112,43 @@ class Coordinator:
                             artifacts.append({"path": str(path.resolve()), "sha256": hashlib.sha256(path.read_bytes()).hexdigest()})
                     payload = {"fingerprint": task["fingerprint"],
                                      "run_id": job["run_id"], "state": job["state"], "actual": job["actual"],
+                                     "environment": json.loads(job["definition"] or "{}").get("team_permit", {}).get("environment", "unknown"),
                                      "receipt": json.loads(job["receipt"]) if job["receipt"] else None,
                                      "artifacts": artifacts}
                     manifest = Path(output_dir) / (task["fingerprint"] + ".team-result.json")
                     manifest.parent.mkdir(parents=True, exist_ok=True)
                     manifest.write_text(canonical(payload), encoding="utf-8")
                     binding = {"path": str(manifest.resolve()), "sha256": hashlib.sha256(manifest.read_bytes()).hexdigest()}
-                    self.board.event(task_id, "steward", "result", dict(payload, artifacts=[binding] + artifacts))
+                    from .evidence import artifact, inspect_report
+                    contract_path = Path(output_dir) / (task["fingerprint"] + ".evidence.json")
+                    contract_path.write_text(canonical(inspect_report(task, payload)), encoding="utf-8")
+                    contract = artifact(contract_path)
+                    self.board.event(task_id, "steward", "result", dict(payload,
+                        evidence_contract=contract, artifacts=[binding] + artifacts + [contract]))
                     self.board.advance(task_id, "result_ready")
         return result
+
+    def conclude(self, task_id, version, decision, registry):
+        from .conclusions import conclude
+        return conclude(self, task_id, version, decision, registry)
+
+    def recover_conclusions(self, registry):
+        from .conclusions import recover
+        return recover(self, registry)
+
+    def evidence(self, task_id, output, extra_artifacts=()):
+        """Reinspect an existing owned Run from cache; never modify its manifest."""
+        from .evidence import artifact, inspect_report, read_artifact
+        task = self.board.task(task_id)
+        result = [e for e in self.board.events(task_id) if e["kind"] == "result"][-1]
+        original = read_artifact(result["payload"]["artifacts"][0])
+        job = self.ledger.get(task["fingerprint"])
+        environment = json.loads(job["definition"] or "{}").get("team_permit", {}).get("environment", "unknown") if job else "unknown"
+        value = inspect_report(task, dict(original, environment=environment, artifacts=original["artifacts"] + list(extra_artifacts)))
+        path = Path(output)
+        encoded = canonical(value)
+        if path.exists() and path.read_text(encoding="utf-8") != encoded:
+            raise ValueError("Evidence output already contains different facts; use a new path")
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(encoded, encoding="utf-8")
+        return artifact(path)

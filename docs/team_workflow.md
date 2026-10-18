@@ -27,13 +27,13 @@
 
 “已阅读”“建议继续”不构成一次有效交接。消息必须推进具体问题、改变实验设计或解决证据分歧。每轮通常完成一次挑战与一次答复；仅在事实或设计发生变化时继续讨论，避免重复互审。
 
-这些步骤由真实角色分别产出材料：skeptic 提出 challenge，作者通过 response 答复，skeptic 再 review，lead 才 freeze。结果结算后，skeptic 引用原结果 manifest 做 result_review，lead 最后 decide。lead 负责传递工作包与导入角色原始材料；合成演练中的角色消息不能代替实际研究交接。`plan` 只列出待办，角色唤起与交接由运行此工作流的宿主编排。
+这些步骤由真实角色分别产出材料：skeptic 提出 challenge，作者通过 response 答复，skeptic 再 review，lead 才 freeze。结果结算后，skeptic 引用原结果 manifest 和证据快照做 result_review，lead 最后 conclude。`host-run` 持续传递工作包、导入原始回复和推进状态；实际角色进程由宿主接入。`plan` 仍是待办视图，合成演练的脚本角色不能冒充实际研究交接。
 
 ## 两条方向如何合作
 
 lead 从经济预测、核心新增信息、信号构造和持仓差异判断重叠。共享收盘价、行业或市场控制不等于重复；因子名称、参数或代码不同也不能证明独立。
 
-同一机制只设一个主要负责人，另一研究员转向不同信息。两人可协作形成一个区分性控制，例如审查经营信号是否只是短期反转暴露，或审查交易信号是否依赖公告时点。合作必须产生明确问题与对照，不能直接拼接两个分数就称为新机制。
+同一机制只设一个主要负责人，另一研究员转向不同信息。工作包公开另一方向的机制、主张、字段、可用时点、风险和对照；共享风险触发另一研究员的 `cross_review`，绑定双方任务与 request hash。lead 冻结前逐项给出 `cross_line_decisions`（event_id、accept/reject、reason）；未解决就 park。两人可审查经营信号是否只是短期反转暴露，或交易信号是否依赖公告时点。合作必须产生明确问题与对照，不能直接拼接两个分数就称为新机制。
 
 研究员在第一次冻结前不传播事后筛选的赢家指标。skeptic 先写竞争解释和失败条件，再看新结果；独立角色不保证统计独立或免除共同模型偏见。
 
@@ -86,10 +86,13 @@ lead 优先考虑能改变研究决定、机制新颖、来源可执行且费用
 
 ```powershell
 python -m panda_alpha.team demo --output research_runs/team_demo
+python -m panda_alpha.team host-demo --output research_runs/team_host_demo
 python -m panda_alpha.team --help
 ```
 
 `demo` 使用合成输入和执行替身，演练两条方向的完整闭环，拦截网络和子进程调用。输出包括 `team.sqlite3`、两份 request JSON、合成结果和 `report.json`；目录必须尚不存在。最终状态 `PILOT_READY` 仅指离线实现验收通过，任务板会暂停，不代表真实候选已通过来源或经济验证。合成 grant/permit 与真实客户端不能混用。
+
+`host-demo` 用脚本角色完成三轮、四次合成执行、一次同任务补证再审和两次跨方向停派，并在两个持久化边界注入中断。关闭并重开数据库后恢复原动作，核对登记分母和模拟调用次数。它验证调度及恢复；不会证明模型能自主发现有效因子。
 
 其余命令的入口如下，具体 JSON 字段以各自 `--help` 和契约为准：
 
@@ -105,11 +108,61 @@ plan     --ledger DB
 pause    --ledger DB --reason TEXT
 ```
 
-`init` 创建默认 offline 的任务板；其他命令遇到不存在的账本直接失败。实际试点复用现有实验账本，不能用新建空库重置历史消费。`packet` 是指定角色的只读材料视图；写入由 lead 统一调用 `submit/message/freeze/decide`。研究员可以用 `note` 提出跨方向控制，但正式 challenge、review、result_review 由 skeptic 完成。
+`init` 创建默认 offline 的任务板；其他命令遇到不存在的账本直接失败。实际试点复用现有实验账本，不能用新建空库重置历史消费。`packet` 是指定角色的只读材料视图；写入由协调宿主统一调用。研究员用 `cross_review` 提出跨方向控制，正式 challenge、review、result_review 由 skeptic 完成。`decide` 只处理执行前决定；结果结论必须用 `conclude`，避免只关任务而漏写科学记忆。
 
-请求的核心字段为 `task_id/owner/mechanism_id/information_family`、`primary_fields/sources/availability_clock/risk_exposures`、`hypothesis/control/falsifier`、`candidate/window/cycle/groups` 和 `artifacts`。公式实际字段必须全部落在 `primary_fields` 与可选 `control_fields` 内；Python 请求须附带已哈希的原生预检 receipt，派发时重放并核对输入契约。主信息与控制字段分别受 grant 限制；Python 仍是受信任代码，字段检查不等于任意代码沙箱。
+请求的核心字段为 `task_id/owner/mechanism_id/information_family`、`primary_fields/sources/availability_clock/risk_exposures`、`hypothesis/control/falsifier`、`candidate/window/cycle/groups` 和 `artifacts`。`sources` 使用精确机器标识，解释放在时点和限制字段，不能改名为描述句；角色包提供已登记 grant scope 供核对，展示范围不授予消费权限。公式实际字段必须全部落在 `primary_fields` 与可选 `control_fields` 内；Python 请求须附带已哈希的原生预检 receipt，派发时重放并核对输入契约。主信息与控制字段分别受 grant 限制；Python 仍是受信任代码，字段检查不等于任意代码沙箱。
 
-消息必含 `event_id/task_id/actor/kind/version/request_hash/claim/test/decision`。答复通过 `reply_to` 指向 challenge，review 指向 response；review 选择 `approve/park`。冻结输入包含 `request_hash/priority/allocation_reason/diversity_check`。结果审查引用 result 事件，并附其结果 manifest 哈希，选择 `continue/confirm/source_pending/reject`。lead 最后 `decide`，用 `decision/reason` 说明关闭、待补或后续工作。修改定义须新 task，后续实验仍需重新挑战与冻结。
+消息必含 `event_id/task_id/actor/kind/version/request_hash/claim/test/decision`。答复通过 `reply_to` 指向 challenge，review 指向 response；review 选择 `approve/park`。冻结输入包含 `request_hash/priority/allocation_reason/diversity_check` 和每条跨线控制的处置。结果审查引用原 result 事件、manifest 哈希及证据快照，选择 `continue/confirm/source_pending/reject`。lead 的 conclude 绑定 `operation_id/review_event_id/decision/reason`，只能落实独立审查的决定（reject 映射为 close）。修改经济定义须新 task，后续实验仍需重新挑战与冻结。
+
+## 有限持续调度
+
+复制 [team-host.example.json](../config/team-host.example.json)，设置实际目标、轮数、动作上限和含时区的截止时间。模板截止时间故意过期，须按当前授权填写；它不包含资金许可。`seed_tasks` 可选择原任务以便恢复或补证。`host-init` 要求科学登记已存在，复用原历史；不能用新空库绕过消费和研究约束。
+
+```text
+host-init    --ledger DB --registry DB --session ID --input SPEC
+host-next    --ledger DB --registry DB --session ID
+host-respond --ledger DB --registry DB --session ID --input ENVELOPE
+host-run     --ledger DB --registry DB --session ID --mailbox DIR --output DIR --watch
+```
+
+每轮 lead 分配两条不同的研究 brief，作者可以提交完整 request 或 `no_candidate/reason`。宿主自动推进角色交接、证据审查和结论，再将更新后的 `reconciled_memory` 交给下一轮。新提案调用既有 `ResearchEngine.allows_research`，人工退休和固定经济失败不能靠改名绕过。无新增信息时应停止或不提候选。
+
+文件桥把不可变工作包写入 `<mailbox>/<role>/requests/<work_id>.json`。宿主需启动真实工作者，工作者按包内角色说明和 `reply_contract` 独立推理，并原子写入 `<role>/responses/<work_id>.json`：
+
+```json
+{"work_id":"包内的原值","output":{"decision":"no_candidate","reason":"没有新增来源证据，不重复原试验"}}
+```
+
+这个例子只适用于 propose。其他动作使用包内契约；host 自动绑定 task/version/actor/reply_to，工作者不写共享数据库。命令桥用 `--commands FILE`，文件是四角色到可信 argv 数组的映射；stdin 接收包，stdout 返回 envelope。代码没有默认模型、提供商、API key 或收费适配器。接入外部付费模型仍需要相应授权。
+
+工作先落盘再投递，回复先落盘再应用。非法业务回复保留并生成新 work_id，连同具体错误发回原角色修正，计入动作上限。重启使用原 session；已记录回复不重新询问模型。外部宿主在丢失确认时可能收到重复 work_id，需自行幂等处理；不保证外部模型调用恰好一次。
+
+默认不接执行器，准备完成后返回 `execution_not_enabled`。只有显式 `--execute --config FILE` 才接既有 dispatch/resume，并仍逐笔检查 grant、配额和暂停。先恢复既有 Run，再释放新派发；未知远端身份返回 `operator_reconciliation`，别自动重发。`--watch` 仅等待角色回复或原 Run，间隔 1–60 秒；预算或执行阻断会返回可审查的原因，不反复创建请求。截止、轮数、动作数或 lead 停止决定结束会话；会话上限不重置全局研究配额。
+
+## 分层证据验收
+
+`evidence` 只读取既有 Run 的缓存，生成新文件，不覆盖原 manifest，也不调用官网。验收终态、十组/约定组数及组表、有限数值、IC/RankIC 日期一致、日期顺序与请求窗口，以及完整日志。Python code echo 若缺失，交付本身仍可识别，但 `candidate_code_binding` 明确待核；回显匹配也不证明 worker 版本与原生输入已获证。
+
+result_review 的 `assessment` 必填 `scope`（capability/source/economic）、`source_status`（pending/verified）、`economic_status`（not_evaluated/supported/rejected）、`claims/pending/resolved/limitations` 和 `pool_admission:false`。证据绑定的 task、request hash、fingerprint、Run、持久化执行环境及文件哈希须一致；纯合成输出不能认证原生来源或经济效果。
+
+来源 verified 需要独立的 `source_evidence` 和 `source_verification`，明确解决冻结请求及观察到的全部核心资格；不能用“报告有数据”替代期间/PIT核验。经济结论还需 economic scope、verified source 及 `economic_verification`。证据文件及结论仍需独立研究判断，适配器不自动证明 PIT 或统计显著性。正式入池始终是后续独立审查。
+
+## 同任务补证与科学记忆
+
+只补来源、日志或已有结果的解释而不改经济定义时，调用：
+
+```text
+evidence             --ledger DB --task ID --output NEW_CONTRACT --input EXTRA_ARTIFACTS
+reopen-evidence      --ledger DB --task ID --version N --input REQUEST
+conclude             --ledger DB --registry DB --task ID --version N --input DECISION
+recover-conclusions  --ledger DB --registry DB
+```
+
+补证 REQUEST 含 `operation_id/request_hash/prior_decision_event_id/target_event_id/claim_delta/artifacts`。绑定当前关闭决定和原 result（未执行任务则原 response）；新证据必须有实际内容变化，重命名旧文件不算。保持原 task、request、fingerprint、Run、尝试及唯一策略分母。经济已拒绝的任务不走普通补证；人工退役和实质经济重开继续使用既有科学协议。
+
+重审显式绑定新 `evidence_contract`、原 manifest 和新附件；新快照重算观察结果，包含原 Run 的证据，不替换旧快照。缺失日志后来归档可经此路径重新验收。skeptic 必须回应新增材料，不能只重复旧结论。
+
+conclude 先在任务库记录意图，再幂等追加 registry 的 evaluation/source_pending/source_repair/economic_rejected，最后关闭或停放任务。跨库中断用原 operation_id 恢复，不重复登记策略或调用官网。历史 pending 与冻结要求累计保留，只有显式 resolved 才移除；来源修复不能删除既有经济失败或人工退役。下一轮读取更新后的科学记忆，以及每策略最新、最多八条的 `recent_evaluations`，同时带回正面、负面和待补结论的范围与证据；正面结论不自动创建新试验或授予入池。
 
 资金模板见 [team-grant.example.json](../config/team-grant.example.json)，默认 draft，不能执行。它绑定原研究轮政策、有限有效期、总点数/充值/次数、来源与主/控制字段、窗口和任务类型，以及实际授权证据路径与哈希。模板数字不是报价或授权。官网没有已核实的子账户算力划拨接口，此处控制同一账户的任务许可与预留，不模拟平台转账。
 

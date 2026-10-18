@@ -88,6 +88,8 @@ def validate_request(request: dict) -> dict:
         raise ValueError("Research line must match its distinct information family")
     for field in ("primary_fields", "sources", "risk_exposures"):
         strings(request.get(field), field)
+    if "source_requirements" in request:
+        strings(request["source_requirements"], "source_requirements")
     candidate = request.get("candidate", {})
     text_fields(candidate, ("candidate_id", "budget_mechanism_id", "official_task", "research_question",
                             "decision_if_pass", "decision_if_fail", "official_information_gap"))

@@ -367,10 +367,14 @@ def test_result_review_binds_reconciled_artifact_not_an_unrelated_file(team, tmp
     c.resume(task["task_id"], client, tmp_path / "out")
     event = c.board.events(task["task_id"])[-1]
     with pytest.raises(ValueError, match="original reconciled"):
-        send(c.board, task["task_id"], "skeptic", "result_review", decision="reject", reply_to=event["event_id"], artifacts=[proof])
-    task = send(c.board, task["task_id"], "skeptic", "result_review", decision="reject",
+        send(c.board, task["task_id"], "skeptic", "result_review", decision="confirm", reply_to=event["event_id"], artifacts=[proof])
+    task = send(c.board, task["task_id"], "skeptic", "result_review", decision="confirm",
                 reply_to=event["event_id"], artifacts=event["payload"]["artifacts"])
-    assert c.board.decide(task["task_id"], task["version"], {"decision": "close", "reason": "no economic claim"})["state"] == "closed"
+    with pytest.raises(ValueError, match="Use conclude"):
+        c.board.decide(task["task_id"], task["version"], {"decision": "close", "reason": "no economic claim"})
+    review = c.board.events(task["task_id"])[-1]
+    assert c.conclude(task["task_id"], task["version"], {"operation_id": "test-close",
+        "review_event_id": review["event_id"], "decision": "confirm", "reason": "no economic claim"}, team[1])["state"] == "closed"
 
 
 def test_existing_human_retirement_blocks_official_attempt(team):
