@@ -31,6 +31,15 @@ def main(argv=None):
     retry = commands.add_parser("host-retry", help="Audit a repaired model login/quota issue without resetting limits")
     retry.add_argument("--output", type=Path, required=True)
     retry.add_argument("--reason", required=True)
+    deployment = commands.add_parser("service-prepare", help="Freeze an offline login-service deployment without installing or running it")
+    deployment.add_argument("--ledger", type=Path, required=True)
+    deployment.add_argument("--registry", type=Path, required=True)
+    deployment.add_argument("--session", required=True)
+    deployment.add_argument("--workers", type=Path, required=True)
+    deployment.add_argument("--runtime", type=Path, required=True)
+    deployment.add_argument("--output", type=Path, required=True)
+    deployment.add_argument("--name", required=True)
+    deployment.add_argument("--max-starts", type=int, default=10)
     amend = commands.add_parser("amend-budget", help="Preview an audited same-study cap increase; no account access")
     amend.add_argument("--ledger", type=Path, required=True)
     amend.add_argument("--input", type=Path, help="Amendment JSON; omit to read the current policy/usage snapshot")
@@ -86,7 +95,11 @@ def main(argv=None):
         if name == "pause":
             p.add_argument("--reason", required=True)
     args = parser.parse_args(argv)
-    if args.command == "demo":
+    if args.command == "service-prepare":
+        from .service import prepare_service
+        result = prepare_service(args.ledger, args.registry, args.session, args.workers, args.runtime,
+                                 args.output, args.name, args.max_starts)
+    elif args.command == "demo":
         from .demo import run_demo
         result = run_demo(args.output)
     elif args.command == "host-demo":

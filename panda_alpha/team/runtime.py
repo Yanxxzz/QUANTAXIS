@@ -137,7 +137,7 @@ def component(root, name, launch):
         write(folder / "result.json", dict(result, launch=launch))
 
 
-def supervise(root, manifest):
+def supervise(root, manifest, stop_event=None):
     config = manifest["workers"]
     state_path = root / "supervisor.json"
     state = read(state_path, {"components": {name: {"launches": []} for name in COMPONENTS}})
@@ -149,6 +149,9 @@ def supervise(root, manifest):
         write(state_path, state)
     try:
         while time.time() < manifest["deadline_epoch"]:
+            if stop_event is not None and stop_event.is_set():
+                result = {"status": "paused", "reason": "service_stop"}
+                break
             write(root / "control.json", {"run": True, "heartbeat": time.time()})
             state.update(status="running", process=identity())
             persist()
@@ -191,7 +194,8 @@ def supervise(root, manifest):
             time.sleep(config["poll_interval"])
         if result is None:
             result = {"status": "stopped", "reason": "deadline"}
-        state.update(status="attention" if result.get("status") == "attention" else "complete", result=result)
+        status = result.get("status")
+        state.update(status=status if status in {"attention", "paused"} else "complete", result=result)
     except KeyboardInterrupt:
         state.update(status="paused", result={"status": "paused", "reason": "operator_interrupt"})
     finally:
@@ -218,14 +222,14 @@ def supervise(root, manifest):
     return state
 
 
-def serve(ledger, registry, session, workers, output, execution_config=None):
+def serve(ledger, registry, session, workers, output, execution_config=None, stop_event=None):
     root = Path(output).resolve()
     with ExitStack() as stack:
         stack.enter_context(lease(root / "supervisor.lock"))
         # Acquire a separate ledger admission lease before creating a second runtime.
         stack.enter_context(lease(str(Path(ledger).resolve()) + ".host-service.lock"))
         root, manifest = prepare(ledger, registry, session, workers, root, execution_config)
-        return supervise(root, manifest)
+        return supervise(root, manifest, stop_event)
 
 
 def retry_attention(output, reason):

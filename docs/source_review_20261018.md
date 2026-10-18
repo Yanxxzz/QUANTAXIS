@@ -34,3 +34,11 @@ A 的原始逐形成日有限值键、共同支持集与对照 S 的同快照导
 - B：确认三个裸字段与上述资产负债表字段的实际映射、单位和同报告期关系，取得有界公告/修订样本及历史可用时点，再绑定执行 worker。
 
 页面将三个数据接口标为未购。本轮没有尝试订阅或付费数据调用；已能免费确认的字段分类不升级成原生来源通过。A/B 均保留 source_pending，经济结论未评估。
+
+## 登录服务实现期间的免费补核
+
+继续只读[数据概述](https://www.pandaaiquant.com/docs/api?api=data_overview)、[常见问题](https://www.pandaaiquant.com/docs/api?api=data_faq)和[报告预披露接口](https://www.pandaaiquant.com/docs/api?id=145)，没有调用数据接口。概述列举可选指数股票池，但没有给出 A 原 Run 的逐形成日有限值键或快照导出承诺；常见问题主要是状态码，不能补足原生时钟证据。
+
+报告预披露接口把 `end_date` 定义为报告期，分别提供 `expected_disclosure_date`、`actual_disclosure_date`、三次变更日期、`first_publish_date` 和 `latest_predisclosure_date`。示例中同一股票 2024 年年报的报告期为 20241231、实际披露日为 20250315，而 `first_publish_date` 为 20241231。因此不能把预披露表的首次发布日期当成财务报表值的公告时间，更不能据此推导回测 worker 当时已经拿到数据。
+
+该页面也标为未购，更新区间 22:30–23:30；没有 B 原字段值、修订版本或 `available_at` 样本。下一步可把实际披露日作为交叉检查线索，但仍须取得 B 实际输入的同报告期、公告/修订和可用时点见证。A/B 保持 pending，46 点不动。

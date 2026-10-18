@@ -16,6 +16,8 @@ if mode == "auth_stderr":
     sys.exit(1)
 print(json.dumps({"type": "thread.started", "thread_id": thread}), flush=True)
 time.sleep(.1)
+if mode == "slow":
+    time.sleep(.6)
 if mode == "quota":
     print(json.dumps({"type": "turn.failed", "error": {"message": "Usage limit reached"}}), flush=True)
     sys.exit(1)

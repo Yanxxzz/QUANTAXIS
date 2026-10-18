@@ -49,9 +49,22 @@ python -m panda_alpha.team host-serve --ledger research_runs/experiments.sqlite3
 
 一条命令启动四角色进程和一个协调器；每个角色使用自己的持久 Codex 会话。按 `work_id` 保存请求、模型事件、原始回复与尝试记录。角色只能看到工作包和 `context_files` 显式附带的文本，不会凭文件路径自行读取证据。需要更多材料时保留缺口，交由操作者或受控证据入口补入。
 
-模型超时会终止本次进程；暂时断线按原 work_id 和会话有限重连。工作者或协调器崩溃会自动重启；宿主被终止后重跑同一命令可接管尚存子进程并恢复原待办。重试次数、轮数、动作数、截止时间都不会重置。无人值守需要此宿主进程持续运行；操作系统重启后的拉起由服务管理器负责，本命令不安装系统启动项。
+模型超时会终止本次进程；暂时断线按原 work_id 和会话有限重连。工作者或协调器崩溃会自动重启；宿主被终止后恢复同一运行目录可接管尚存子进程并恢复原待办。重试次数、轮数、动作数、截止时间都不会重置。
 
 登录或模型额度问题会停在 `attention`。修复后可用 `host-retry --output research_runs/host-review --reason "说明已修复的问题"` 记入审计，再重跑原命令；仅使用剩余重试次数。启动身份不明、额度耗尽或来源阻点均不会盲目重派。详细状态与恢复方法见[无人值守宿主](docs/unattended_host.md)。
+
+### Windows 登录自启
+
+Windows 任务计划程序可在**当前用户登录后**隐藏启动宿主，并在原会话截止前每分钟检查恢复；正在运行时忽略重复触发。未登录时不运行。使用当前账户和普通权限，不保存 Windows 密码、不切换到 SYSTEM，不拷贝 Codex 登录凭据。重启电脑后须先登录该账户。
+
+```powershell
+python -m panda_alpha.team service-prepare --ledger research_runs/experiments.sqlite3 --registry research_runs/research_trials.sqlite3 --session review-01 --workers workers.local.json --runtime research_runs/host-review --output research_runs/service-review --name PandaAlpha-Research
+.\scripts\team-service.ps1 -Action Plan -Config research_runs/service-review/service.json
+.\scripts\team-service.ps1 -Action Install -Config research_runs/service-review/service.json
+.\scripts\team-service.ps1 -Action Start -Config research_runs/service-review/service.json
+```
+
+准备和 Plan 不启动模型。**Install 会启用后台运行**：当前已登录时下一分钟开始，也可用 Start 立即开始。服务接入目前限定为离线研究与来源审查，不能启用官网执行器。`Stop` 正常停止全部子进程，并保持暂停直到显式 Start；`Status` 查看系统任务及业务停止原因，`Uninstall` 移除启动项并保留研究历史。会话完成、过期或需要处理时不会由系统触发自动放宽；实际宿主启动次数也持久累计（默认最多 10 次）。部署路径、账户和验收细节见[登录自启服务](docs/login_service.md)。
 
 校验失败的角色回复保留原件，携带具体错误重新交给该角色。既有 Run 的恢复先于新派发，模糊创建响应停在对账入口。会话限额不替代累计研究配额，也不会激活或扩大 grant。上面的命令未启用执行；官网执行仍需显式 `--execute --config FILE` 和有效授权。
 
