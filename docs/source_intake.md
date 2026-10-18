@@ -1,0 +1,89 @@
+# 免费来源补证与原任务重审
+
+角色仍不直接联网或读任意路径。协调器把明确提交的来源文本固化进私有证据目录和任务事件，再将正文放进新工作包。已有模型请求保持原文；新证据在当前回复落板后处理，不悄悄替换正在判断的材料。
+
+## 公开文档采集
+
+```powershell
+python -m panda_alpha.team source-capture --url https://www.pandaaiquant.com/docs/factor-development --output research_runs/capture-01
+```
+
+只对一个显式指定的官网公开指南执行无登录 GET，保留原 HTML、文章正文、网址、时间和哈希。仅接受 `https://www.pandaaiquant.com/docs/<guide>`，不跟随重定向或页面链接，不带 Cookie，不使用账户/API接口，不访问带参数的动态数据文档。响应最多 2 MB，传入模型的单份正文最多 64 KB。网页没有可提取正文时返回失败，不能把登录页或空壳当成有效证据。输出目录必须尚不存在。
+
+登录后数据文档、客服回函和既有 Run 的观察结果可由操作者整理成 UTF-8 文本，明确区分原文、摘要及推断，再走相同接收入口。财报、表格等原件继续留存；当前入口不是任意二进制文档解析器。
+
+## 接收明确的新材料
+
+`source-submit` 需要原任务处于 parked/closed，绑定原 request hash、最近关闭决定与原结果（未执行任务绑定作者答复）。JSON 示例：
+
+```json
+{
+  "source_id": "provider-reply-01",
+  "request_hash": "原任务的 SHA256",
+  "prior_decision_event_id": "最近关闭决定 ID",
+  "target_event_id": "原 result 或 response ID",
+  "kind": "provider_statement",
+  "origin": "官方回复的明确来源",
+  "observed_at": "2026-10-18T17:00:00+08:00",
+  "claim_delta": "新增哪项可核验信息，以及仍缺什么",
+  "limitations": ["通用说明尚未绑定原 Run"],
+  "artifact": {"path": "原件或明确标注的文本摘要路径", "sha256": "该文本 SHA256"}
+}
+```
+
+```powershell
+python -m panda_alpha.team source-submit --ledger research_runs/experiments.sqlite3 --task TASK --input source.json
+python -m panda_alpha.team readiness --ledger research_runs/experiments.sqlite3
+```
+
+接收只追加 `source_received`，不改变任务版本、账单、grant 或科学结论。文本按内容哈希复制到原账本旁的 `source-material/`，同 ID 重试返回原回执，换 ID 或文件名提交相同内容也不会重复触发。原文件之后被移动不会丢失已接受正文；归档副本被篡改会阻止重审。
+
+在**尚未停止、未过期且有剩余动作**的 Host 中，将任务放入 `seed_tasks`。协调器在下一个工作边界调用原 `reopen_evidence`，skeptic 独立重审，lead 通过原 `conclude` 更新科学记忆。重开提交本身就是持久回执，中断后不重复推进版本。新的来源材料不能改动经济定义、原 Run 或试验分母，也不能解除经济拒绝或人工退役。
+
+接收时正在执行的旧角色请求不会改变。若关闭决定已变化、目标错误或原件损坏，`readiness` 显示 blocked 及原因；核对后用新 source_id 绑定正确决定。多份相关附件应先合成一份有清晰来源说明的文本包，避免分别绑定同一个即将过期的关闭决定。
+
+新工作包最多携带 256 KB 来源正文；较旧材料若超出范围会报告 `omitted_count`，模型不能声称读过省略部分。旧 Run 没有新版证据契约时，Host 从原缓存生成补充观察文件，保留原事件与原 manifest。模型得到该确定性观察及新来源正文，但仍不能把交付通过等同于来源或经济通过。
+
+## 有限会话的自动检查
+
+在 `host-init` 输入中增加可选 `source_watches`：
+
+```json
+{
+  "objective": "检查指定文档变化，并重审原任务的来源缺口",
+  "deadline": "2026-10-19T10:00:00+08:00",
+  "max_rounds": 1,
+  "max_actions": 12,
+  "seed_tasks": ["TASK"],
+  "source_watches": [
+    {
+      "task_id": "TASK",
+      "url": "https://www.pandaaiquant.com/docs/factor-development",
+      "claim_delta": "检查公开说明是否新增了可用于原任务的来源口径；文本变化不等于资格通过"
+    }
+  ]
+}
+```
+
+每个会话至多四个任务/网址对，每个检查一次。正文已知则记录 unchanged；新正文进入相同接收与审查流程。超时、权限或解析失败留下 attention，既不循环请求，也不转用数据订阅。捕获成功但在落板前中断时复用原 capture；已接收材料不会再创建一份。这里是有限来源检查，不是搜索引擎、登录态爬虫或无限轮询。
+
+过期、完成或达到动作上限的会话不会被新文件自动复活。需要继续时创建新的有界会话，复用**同一个**原账本和科学登记，明确选择原任务；不能改旧 deadline、清空模型尝试或扩大资金授权。登录服务仍只负责它绑定的原会话，不自动部署新会话。
+
+## 读懂就绪状态
+
+`readiness` 以只读方式汇总原预算/用量、控制状态、逐任务来源与经济状态、剩余资格、接收阻点、文档检查和会话上限。它不是消费许可；实际派发仍经过原预算与来源网关。
+
+当前 A/B 等待的官方材料见[技术问题草稿](provider_evidence_request.md)，操作者选择自行通过已有官方客服联系。没有发送社区帖子或设置悬赏。公开指南不能补齐原生输入/快照/worker 绑定，财务字段字典也不能单独证明历史 PIT。来源未通过前，46 点继续冻结。
+
+## 完整可用的验收边界
+
+| 环节 | 当前能力与剩余条件 |
+| --- | --- |
+| 四角色、协作协议、恢复、登录自启 | 已实现并完成进程验收；整机重启后的登录触发仍按操作者选择留待办 |
+| 来源进入工作包、同任务重审、科学记忆 | 本入口补齐；需保留显式材料来源，模型判断仍须证据支持 |
+| 自主来源获取 | 仅指定公开文档的有限检查；登录后动态资料和官方回函由操作者提供 |
+| A/B 原生来源资格 | 等待官方输入时钟/支持集/worker 见证，以及财务别名、报告期与 PIT；保持 pending |
+| 来源通过后的经济确认 | 还需在有效有限授权内完成必要官网对照、成本与稳健性审查；不能预先宣称因子有效 |
+| 正式因子池 | 继续独立走组合增量与入池审查，本流程不自动入池 |
+
+单机当前账户运行是本次明确选择的部署范围。无需为了来源补证先建设未登录 Windows 服务、分布式集群或无限自主权限。

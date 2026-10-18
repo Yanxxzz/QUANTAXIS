@@ -13,6 +13,7 @@
 - `panda_alpha/team/host.py`：有轮数、动作数和截止时间的调度、持久化交接，以及文件邮箱/显式命令适配器。
 - `panda_alpha/team/runtime.py`、`codex_worker.py`、`runtime_io.py`：四角色进程与协调器监管、受限 Codex 会话、有限重连及跨进程恢复。
 - `panda_alpha/team/evidence.py`：缓存报告结构验收与带范围的独立审查，区分交付、来源和经济结论。
+- `panda_alpha/team/sources.py`、`public_docs.py`：显式文本接收、有限公开指南检查、原任务重审队列及只读就绪视图；复用原事件与重开协议，不创建新预算或试验引擎。
 - `panda_alpha/team/conclusions.py`：持久化结论意图、幂等科学事实和跨库恢复，保持原试验身份。
 - `panda_alpha/team/demo.py`、`panda_alpha/team/rehearsal.py`：基本演练与三轮中断恢复验收；脚本角色只用于测试。
 - `panda_alpha/team/__main__.py`：薄命令入口。

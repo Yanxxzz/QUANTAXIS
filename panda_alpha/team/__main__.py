@@ -44,6 +44,15 @@ def main(argv=None):
     amend.add_argument("--ledger", type=Path, required=True)
     amend.add_argument("--input", type=Path, help="Amendment JSON; omit to read the current policy/usage snapshot")
     amend.add_argument("--execute", action="store_true", help="Apply an explicitly authorized amendment; does not activate a grant")
+    source = commands.add_parser("source-submit", help="Snapshot explicit source text and queue same-task re-review; no network")
+    source.add_argument("--ledger", type=Path, required=True)
+    source.add_argument("--task", required=True)
+    source.add_argument("--input", type=Path, required=True)
+    readiness = commands.add_parser("readiness", help="Read source blockers, intake queue, original budget and host bounds")
+    readiness.add_argument("--ledger", type=Path, required=True)
+    capture = commands.add_parser("source-capture", help="One explicit public official guide GET; no login or account APIs")
+    capture.add_argument("--url", required=True)
+    capture.add_argument("--output", type=Path, required=True)
     for name in ("host-init", "host-next", "host-respond", "host-run", "conclude", "recover-conclusions", "reopen-evidence", "evidence"):
         p = commands.add_parser(name)
         p.add_argument("--ledger", type=Path, required=True)
@@ -95,7 +104,10 @@ def main(argv=None):
         if name == "pause":
             p.add_argument("--reason", required=True)
     args = parser.parse_args(argv)
-    if args.command == "service-prepare":
+    if args.command == "source-capture":
+        from .public_docs import capture
+        result = capture(args.url, args.output)
+    elif args.command == "service-prepare":
         from .service import prepare_service
         result = prepare_service(args.ledger, args.registry, args.session, args.workers, args.runtime,
                                  args.output, args.name, args.max_starts)
@@ -128,9 +140,16 @@ def main(argv=None):
             ledger.db.close()
     else:
         from .coordinator import Coordinator
-        c = Coordinator(args.ledger, read_only=args.command in {"status", "packet", "plan"})
+        c = Coordinator(args.ledger, read_only=args.command in {"status", "packet", "plan", "readiness"})
         try:
-            if args.command in {"init", "status", "plan"}:
+            if args.command == "readiness":
+                from .sources import readiness
+                result = readiness(c)
+            elif args.command == "source-submit":
+                from .sources import submit
+                receipt = submit(c.board, args.task, read(args.input))
+                result = {k: receipt[k] for k in ("event_id", "status", "reason", "artifact", "review")}
+            elif args.command in {"init", "status", "plan"}:
                 result = c.plan()
             elif args.command == "packet":
                 result = c.board.packet(args.role)

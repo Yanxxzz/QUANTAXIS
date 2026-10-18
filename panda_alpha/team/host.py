@@ -40,6 +40,8 @@ class Host:
                 raise ValueError("seed_tasks must be a list of existing task IDs")
             for task_id in spec.get("seed_tasks", []):
                 self.c.board.task(task_id)
+            from .sources import validate_watches
+            validate_watches(spec)
             if row and row[0] != canonical(spec):
                 raise ValueError("Host session bounds are immutable; do not reset a session on resume")
             with self.c.board.transaction():
@@ -74,6 +76,20 @@ class Host:
         work_id = "host-" + digest(identity)
         packet = dict(identity, work_id=work_id, task=task, objective=state["spec"]["objective"],
                       memory=self.registry.reconciled_memory(), **extra)
+        from .sources import material
+        packet["source_material"] = material(self.c.board, {task_id} if task else self.owned_tasks())
+        if task and action == "result_review":
+            from .evidence import read_artifact
+            result = task["review_targets"]["result"]
+            binding = result["payload"].get("evidence_contract") if result else None
+            if result and not binding:
+                # Older reconciled Runs predate typed report observations. Build
+                # a supplemental cache-only snapshot, never edit their event or
+                # repeat the website execution to obtain the newer schema.
+                root = Path(self.db.execute("PRAGMA database_list").fetchone()[2]).resolve().parent
+                binding = self.c.evidence(task_id, root / "source-material" / (digest(result["payload"]) + ".evidence.json"))
+            if binding:
+                packet["delivery_observation"] = {"artifact": binding, "observation": read_artifact(binding)}
         if prior:
             packet["previous_response"] = json.loads(self.db.execute(
                 "SELECT response FROM team_host_work WHERE work_id=?", (prior[-1]["work_id"],)).fetchone()[0] or "null")
@@ -130,6 +146,13 @@ class Host:
         state = self.state()
         if state["actions"] >= state["spec"]["max_actions"]:
             return self.stop("action_limit")
+        # External intake can append material while a role is running. Finish
+        # its immutable packet first, then reopen only explicitly owned tasks.
+        from .sources import apply_pending, refresh_watches
+        refresh_watches(self.c.board, self.session_id, state["spec"])
+        if datetime.now(timezone.utc) >= timestamp(state["spec"]["deadline"]):
+            return self.stop("deadline")
+        apply_pending(self.c.board, self.owned_tasks())
         assignments = (state["plan"] or {}).get("assignments", [])
         current_ids = [f"{self.session_id}.r{state['round']}.{a['owner']}" for a in assignments]
         selected = set(current_ids) | self.owned_tasks()

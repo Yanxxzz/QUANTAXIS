@@ -42,3 +42,11 @@ A 的原始逐形成日有限值键、共同支持集与对照 S 的同快照导
 报告预披露接口把 `end_date` 定义为报告期，分别提供 `expected_disclosure_date`、`actual_disclosure_date`、三次变更日期、`first_publish_date` 和 `latest_predisclosure_date`。示例中同一股票 2024 年年报的报告期为 20241231、实际披露日为 20250315，而 `first_publish_date` 为 20241231。因此不能把预披露表的首次发布日期当成财务报表值的公告时间，更不能据此推导回测 worker 当时已经拿到数据。
 
 该页面也标为未购，更新区间 22:30–23:30；没有 B 原字段值、修订版本或 `available_at` 样本。下一步可把实际披露日作为交叉检查线索，但仍须取得 B 实际输入的同报告期、公告/修订和可用时点见证。A/B 保持 pending，46 点不动。
+
+## PR #7 合并后的公开指南补核
+
+免费读取[因子开发](https://www.pandaaiquant.com/docs/factor-development)及[因子分析](https://www.pandaaiquant.com/docs/factor-analysis)，并用无登录 GET 将公开文章与哈希留存在私有目录。开发页给出 `Factor.calculate` 和 `factors['close']` 示例，但没有说明暖机输入起点、历史可用时间或原 worker 身份。分析页将“最新数据”限定为最近一期股票及因子值；它不等于原 Run 的完整历史支持集，也没有定义 A 报告日期标签与形成/持有日期的精确映射。
+
+这两份指南没有解决 B 三个裸字段的实际别名、同报告期选择或修订/PIT。财务口径仍以此前字典和公告日期文档的已证范围为限。不能由新的页面哈希推导出新的经济信息或来源资格。
+
+[官方帮助页](https://www.pandaaiquant.com/docs/support)指向官方小助理微信和社区问答；操作者选择自行通过已有客服渠道联系。已备好[不含账户、Run ID 或公式的技术问题草稿](provider_evidence_request.md)，尚未收到回函，也没有代发帖子或设置算力悬赏。后续回函通过受控接收入口进入原任务重审。

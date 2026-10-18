@@ -47,7 +47,7 @@ python -m panda_alpha.team host-init --ledger research_runs/experiments.sqlite3 
 python -m panda_alpha.team host-serve --ledger research_runs/experiments.sqlite3 --registry research_runs/research_trials.sqlite3 --session review-01 --workers workers.local.json --output research_runs/host-review
 ```
 
-一条命令启动四角色进程和一个协调器；每个角色使用自己的持久 Codex 会话。按 `work_id` 保存请求、模型事件、原始回复与尝试记录。角色只能看到工作包和 `context_files` 显式附带的文本，不会凭文件路径自行读取证据。需要更多材料时保留缺口，交由操作者或受控证据入口补入。
+一条命令启动四角色进程和一个协调器；每个角色使用自己的持久 Codex 会话。按 `work_id` 保存请求、模型事件、原始回复与尝试记录。角色读取工作包、显式 `context_files` 及受控来源接收的正文；路径本身不表示已读取原件。新材料在工作边界进入新请求，正在处理的请求保持原快照。
 
 模型超时会终止本次进程；暂时断线按原 work_id 和会话有限重连。工作者或协调器崩溃会自动重启；宿主被终止后恢复同一运行目录可接管尚存子进程并恢复原待办。重试次数、轮数、动作数、截止时间都不会重置。
 
@@ -69,6 +69,16 @@ python -m panda_alpha.team service-prepare --ledger research_runs/experiments.sq
 校验失败的角色回复保留原件，携带具体错误重新交给该角色。既有 Run 的恢复先于新派发，模糊创建响应停在对账入口。会话限额不替代累计研究配额，也不会激活或扩大 grant。上面的命令未启用执行；官网执行仍需显式 `--execute --config FILE` 和有效授权。
 
 `reopen-evidence` 允许同任务补充真实新增证据并重新审查，保留 request hash、Run、账单和策略分母；`evidence` 从缓存生成新快照，保留原 manifest。来源缺口只在明确解决后清除，经济失败进入后续提案约束，人工退役不由补证解除。完整契约见[补证与科学记忆](docs/team_workflow.md#同任务补证与科学记忆)。
+
+### 免费补证与就绪检查
+
+`source-capture` 只读抓取一个指定的公开官方指南；`source-submit` 固化明确提交的正文并排队；活跃的有限 Host 对 `seed_tasks` 中的原任务自动补证再审。可在会话中配置至多四个 `source_watches`，各检查一次，未变化跳过，失败留下阻点。登录后动态数据和客服回函仍需明确提供。旧 Run 的报告验收摘要由缓存补建，保留原结果。
+
+```powershell
+python -m panda_alpha.team readiness --ledger research_runs/experiments.sqlite3
+```
+
+这一只读命令汇总来源阻点、证据队列、原预算和宿主边界，不授予执行权限。接收格式、自动检查配置及完整可用的剩余条件见[来源补证](docs/source_intake.md)。
 
 ## 当前来源状态
 
