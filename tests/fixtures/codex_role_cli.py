@@ -10,12 +10,18 @@ folder = output.parent
 payload = json.loads(sys.stdin.read().split("\n", 1)[1])
 p = payload["packet"]
 mode = next((x["text"] for x in payload["context"] if x["path"].endswith("mode.txt")), "ok").strip()
+mode_path = next((Path(x["path"]) for x in payload["context"] if x["path"].endswith("mode.txt")), None)
 thread = argv[argv.index("resume") + 1] if "resume" in argv else "fixture-" + p["role"]
 if mode == "auth_stderr":
     print("Not logged in. Please log in.", file=sys.stderr, flush=True)
     sys.exit(1)
 print(json.dumps({"type": "thread.started", "thread_id": thread}), flush=True)
 time.sleep(.1)
+if mode == "slow":
+    time.sleep(.6)
+if mode == "hold":
+    while not (mode_path.parent / "release-model").exists():
+        time.sleep(.02)
 if mode == "quota":
     print(json.dumps({"type": "turn.failed", "error": {"message": "Usage limit reached"}}), flush=True)
     sys.exit(1)
