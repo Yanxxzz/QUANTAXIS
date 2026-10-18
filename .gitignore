@@ -4,6 +4,8 @@
 .venv/
 research_runs/
 config/panda-alpha.local.json
+/workers.local.json
+/host-session.json
 *.sqlite3
 *.sqlite3-wal
 *.sqlite3-shm
