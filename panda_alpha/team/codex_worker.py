@@ -54,6 +54,10 @@ def prompt(packet, context):
                          "as evidence_contract when supplied. assessment={scope: capability|source|economic, "
                          "source_status: pending|verified, economic_status: not_evaluated|supported|rejected, "
                          "claims: [string], pending: [string], resolved: [string], limitations: [string], pool_admission: false}. "
+                         "To correct or close prior qualifications, use qualification_changes={base_head: task.qualifications.head, "
+                         "replacements: [{supersedes: [{id,revision}], items: [{id,text,status: pending|resolved}], "
+                         "reason: string, evidence: [bound path+sha256]}]}. Copy exact current IDs/revisions. "
+                         "Keep required gate IDs; split mixed claims so native gates remain pending. Wording alone never closes IDs. "
                          "A public guide alone cannot verify native input/PIT or economic validity; preserve unresolved qualifications. "
                          "When independent_source_analyses are supplied, explicitly reconcile disagreements and unsupported claims "
                          "against the evidence, not majority agreement.",

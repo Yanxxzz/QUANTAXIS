@@ -89,10 +89,19 @@ class ResearchRegistry:
 
     _KINDS = {"baseline", "registration", "identity_alias", "source_pending", "source_repair",
               "execution_repair", "evaluation", "economic_rejected", "evidence_reopened", "human_retired",
-              "human_reopened", "reconciliation", "import_receipt"}
+              "human_reopened", "reconciliation", "import_receipt", "qualification_reconciliation"}
 
-    def __init__(self, path: str | Path, historical: int = 0) -> None:
+    def __init__(self, path: str | Path, historical: int = 0, *, read_only: bool = False) -> None:
         path = Path(path)
+        if read_only:
+            self.db = sqlite3.connect(path.resolve().as_uri() + "?mode=ro", uri=True, timeout=30)
+            try:
+                self.historical = int(next(e["payload"]["count"] for e in self.events() if e["kind"] == "baseline"))
+                self.verify_integrity()
+            except BaseException:
+                self.db.close()
+                raise
+            return
         path.parent.mkdir(parents=True, exist_ok=True)
         self.db = sqlite3.connect(path, timeout=30)
         self.db.execute("CREATE TABLE IF NOT EXISTS research_events (sequence INTEGER PRIMARY KEY AUTOINCREMENT, event_id TEXT UNIQUE NOT NULL, kind TEXT NOT NULL, subject TEXT NOT NULL, payload TEXT NOT NULL, observed_at TEXT NOT NULL, previous_hash TEXT NOT NULL, event_hash TEXT NOT NULL)")
@@ -178,6 +187,8 @@ class ResearchRegistry:
             if old != (kind, subject, _json(payload)):
                 raise ValueError("Event identity conflicts with an immutable fact")
             return False
+        if kind == "qualification_reconciliation":
+            self._verify_qualification_reconciliation(subject, payload, identity)
         observed = observed_at or datetime.now(timezone.utc).isoformat()
         previous = self.head
         fact = {"event_id": identity, "kind": kind, "subject": subject, "payload": payload,
@@ -185,6 +196,29 @@ class ResearchRegistry:
         self.db.execute("INSERT INTO research_events(event_id,kind,subject,payload,observed_at,previous_hash,event_hash) VALUES (?,?,?,?,?,?,?)",
                         (identity, kind, subject, _json(payload), observed, previous, _digest(fact)))
         return True
+
+    def _verify_qualification_reconciliation(self, subject, payload, identity):
+        from .qualifications import legacy_registry_state, replace, validate
+        events = [e for e in self.events() if e["subject"] == subject
+                  and e["kind"] in {"source_pending", "source_repair", "qualification_reconciliation", "evaluation"}]
+        base = events[-1] if events else None
+        if not base or payload.get("base_event") != {k: base[k] for k in ("event_id", "event_hash")}:
+            raise ValueError("Qualification migration must bind the latest registry fact")
+        prior = legacy_registry_state(base)
+        before = validate(payload["before"], prior["scope"])
+        rows = {r["id"]: r for r in before["items"]}
+        for old in prior["items"]:
+            row = rows.get(old["id"])
+            if not row or row["text"] != old["text"] or row["status"] != old["status"]:
+                raise ValueError("Qualification migration omitted or rewrote a prior qualification")
+        for proof in payload.get("artifacts", []):
+            verify_artifact(proof)
+        expected = (replace(before, payload["changes"], event_id=identity, artifacts=payload["artifacts"],
+                            preserve_required=True) if payload.get("changes") else before)
+        if payload["qualifications"] != expected:
+            raise ValueError("Qualification migration projection differs from its bound replacements")
+        if payload.get("source_status_changed") is not False or payload.get("pool_admission") is not False:
+            raise ValueError("Qualification migration cannot promote source/economic status or admission")
 
     @staticmethod
     def _verify_evidence_reopening(payload: Mapping[str, Any]) -> None:
@@ -345,7 +379,7 @@ class ResearchRegistry:
         event_rows = []
         for event in document.get("events", []):
             kind, subject = event["kind"], event["subject"]
-            if kind in {"baseline", "registration", "identity_alias", "import_receipt", "reconciliation"}:
+            if kind in {"baseline", "registration", "identity_alias", "import_receipt", "reconciliation", "qualification_reconciliation"}:
                 raise ValueError("Manifest evidence events cannot alter trial accounting")
             if kind not in self._KINDS:
                 raise ValueError("Unknown manifest event kind")
@@ -434,14 +468,24 @@ class ResearchRegistry:
                 rejected.pop(key, None)
                 reopened[key] = {**payload, **registered[key], "trial_key": key, "event_id": event["event_id"]}
             elif kind == "source_pending":
-                pending[key] = {**payload, **registered.get(key, {}), "trial_key": key}
+                from .qualifications import legacy_registry_state
+                pending[key] = {**payload, **registered.get(key, {}), "trial_key": key,
+                                "qualifications": legacy_registry_state(event)}
             elif kind == "source_repair":
                 pending.pop(key, None)
             if kind == "evaluation":
                 evaluations.pop(key, None)
                 evaluations[key] = {"trial_key": key, "event_id": event["event_id"], **{
                     name: payload[name] for name in ("task_id", "fingerprint", "run_id", "assessment", "decision",
-                        "pending", "resolved_qualifications", "artifacts", "evidence_contract", "pool_admission") if name in payload}}
+                        "pending", "resolved_qualifications", "artifacts", "evidence_contract", "pool_admission", "qualifications") if name in payload}}
+            if kind == "qualification_reconciliation":
+                from .qualifications import texts, validate
+                qualified = validate(payload["qualifications"])
+                for target in (pending.get(key), evaluations.get(key)):
+                    if target is not None:
+                        target.update(qualifications=qualified, pending=texts(qualified),
+                                      resolved_qualifications=texts(qualified, "resolved"),
+                                      qualification_reconciliation_event=event["event_id"])
         memory["registry_constraints"] = {"human_retired": list(retired.values()),
                     "fixed_rejected": list(rejected.values()), "source_pending": list(pending.values()),
                     "evidence_reopened": list(reopened.values()),

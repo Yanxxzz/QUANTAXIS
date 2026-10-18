@@ -421,6 +421,12 @@ def test_conclusion_repairs_source_and_returns_scoped_economics_to_next_round(li
         resolved=["native_input_and_clock", "native_eligible_support", "worker_deployment_binding"],
         source_evidence=repair["artifacts"], source_verification="Isolated fixture exercises typed source-review branch only",
         economic_verification="Isolated fixture exercises a predeclared criterion and scoped verdict; no investment conclusion")
+    state = c.board.task_packet(task["task_id"])["qualifications"]
+    message["qualification_changes"] = {"base_head": state["head"], "replacements": [{
+        "supersedes": [{"id": row["id"], "revision": row["revision"]}],
+        "items": [{"id": row["id"], "text": row["text"], "status": "resolved"}],
+        "reason": "Native-shaped test evidence; not real PIT verification", "evidence": repair["artifacts"]}
+        for row in state["items"] if row["status"] == "pending"]}
     reviewed = c.board.message(message)
     c.conclude(task["task_id"], reviewed["version"], {"operation_id": "economic-fixture-close",
         "review_event_id": message["event_id"], "decision": "close" if economic_status == "rejected" else "confirm", "reason": "Record explicit scoped fixture judgement"}, registry)

@@ -6,8 +6,9 @@ from pathlib import Path
 
 from ..platform import SOFT_RESEARCH_PENDING
 from ..registry import strategy_definition, trial_key
+from ..qualifications import board_state, fixed_id, observe, texts
 from .contracts import canonical, text_fields, verify_artifacts
-from .evidence import assessment_contract, read_artifact, required_qualifications, validate_assessment
+from .evidence import assessment_contract, validate_assessment
 
 
 def registry_path(registry):
@@ -41,18 +42,22 @@ def conclude(c, task_id, version, decision, registry):
                 raise ValueError("Conclusion requires the original registered experiment; it cannot register a new one")
             memory = registry.reconciled_memory()
             prior = next((r for r in memory["registry_constraints"]["source_pending"] if r["trial_key"] == subject), {})
-            earlier = [e for e in registry.events() if e["kind"] == "evaluation" and e["subject"] == subject]
-            resolved = set(earlier[-1]["payload"].get("resolved_qualifications", [])) if earlier else set()
-            resolved = (resolved | set(assessment["resolved"])) - set(assessment["pending"])
             binding = assessment_contract(review["payload"], result)
-            required = required_qualifications(task, read_artifact(binding))
-            remaining = ((set(prior.get("pending", [])) | required) - resolved) | set(assessment["pending"])
+            qualified = board_state(task, events)
+            # Preserve registry-only legacy qualifications until explicitly migrated.
+            known = {r["id"] for r in qualified["items"]}
+            prior_items = prior.get("qualifications", {}).get("items", [])
+            missing = ([r["text"] for r in prior_items if r["status"] == "pending" and r["id"] not in known]
+                       if prior_items else [x for x in prior.get("pending", []) if fixed_id(task_id, x) not in known])
+            qualified = observe(qualified, missing,
+                                event_id="registry-legacy:" + decision["operation_id"])
+            remaining, resolved = set(texts(qualified)), set(texts(qualified, "resolved"))
             if assessment["source_status"] == "verified" and remaining - SOFT_RESEARCH_PENDING:
                 raise ValueError("Unresolved historical source qualifications cannot be silently cleared")
             payload = {"task_id": task_id, "fingerprint": task["fingerprint"], "request_hash": task["request_hash"],
                        "run_id": result["payload"]["run_id"], "review_event_id": review["event_id"],
                        "decision": decision, "assessment": assessment, "pending": sorted(remaining), "resolved_qualifications": sorted(resolved),
-                       "artifacts": review["payload"]["artifacts"], "evidence_contract": binding,
+                       "artifacts": review["payload"]["artifacts"], "evidence_contract": binding, "qualifications": qualified,
                        "data_complete": assessment["source_status"] == "verified",
                        "pool_admission": False, "new_independent_oos": False, "attempt_preserved": True}
             facts = [{"kind": "evaluation", "subject": subject, "payload": payload}]
@@ -102,7 +107,10 @@ def _commit_board(c, row, value):
         current = c.board.db.execute("SELECT state FROM team_finalizations WHERE operation_id=?", (row["operation_id"],)).fetchone()
         if current[0] != "done":
             decision = value["decision"]
-            c.board.event(row["task_id"], "lead", "conclusion", decision, row["operation_id"])
+            payload = dict(decision)
+            if value["facts"][0]["payload"].get("qualifications"):
+                payload["qualifications"] = value["facts"][0]["payload"]["qualifications"]
+            c.board.event(row["task_id"], "lead", "conclusion", payload, row["operation_id"])
             c.board.advance(row["task_id"], "parked" if decision["decision"] == "source_pending" else "closed")
             c.board.db.execute("UPDATE team_finalizations SET state='done' WHERE operation_id=?", (row["operation_id"],))
     return c.board.task(row["task_id"])

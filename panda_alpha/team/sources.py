@@ -226,22 +226,17 @@ def material(board, task_ids):
 def readiness(c):
     """Read-only operational view; it deliberately grants no execution authority."""
     from ..research_budget import amendment_snapshot
+    from ..qualifications import board_state, texts
     tasks = []
     for task in c.board.tasks():
         events = c.board.events(task["task_id"])
         reviews = [e for e in events if e["kind"] == "result_review"]
         assessment = reviews[-1]["payload"].get("assessment", {}) if reviews else {}
-        pending = set(task["request"].get("source_requirements", []))
-        pending.update(x for x in task["request"]["candidate"].get("data_requirements", []) if x.endswith("_pending"))
-        # Legacy untyped decisions cannot silently become verified. Accumulate
-        # unresolved historical qualifications just as the scientific closure does.
-        for review in reviews:
-            a = review["payload"].get("assessment", {})
-            pending.difference_update(a.get("resolved", []))
-            pending.update(a.get("pending", []))
+        qualified = board_state(task, events)
         tasks.append({"task_id": task["task_id"], "owner": task["owner"], "state": task["state"],
                       "source_status": assessment.get("source_status", "pending"),
-                      "economic_status": assessment.get("economic_status", "not_evaluated"), "pending": sorted(pending),
+                      "economic_status": assessment.get("economic_status", "not_evaluated"), "pending": texts(qualified),
+                      "qualifications": qualified,
                       "sources": [{"receipt_id": r["event_id"], "status": r["status"], "reason": r["reason"], "outcome": r["outcome"]}
                                   for r in receipts(c.board, task["task_id"])]})
     tables = {r[0] for r in c.board.db.execute("SELECT name FROM sqlite_master WHERE type='table'")}

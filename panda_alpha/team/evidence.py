@@ -170,7 +170,11 @@ def validate_assessment(message, task, result_event, *, expected_environment=Non
         raise ValueError("Result evidence environment differs from the persisted execution")
     if any(a not in contract["artifacts"] for a in original["artifacts"]):
         raise ValueError("Result evidence contract omits original Run artifacts")
-    if value["source_status"] == "verified" and required_qualifications(task, contract) - set(value["resolved"]) - SOFT_RESEARCH_PENDING:
+    from ..qualifications import fixed_id
+    resolved_ids = {item.get("id") for change in message.get("qualification_changes", {}).get("replacements", [])
+                    for item in change.get("items", []) if item.get("status") == "resolved"}
+    resolved_keys = {key for key in required_qualifications(task, contract) if fixed_id(task["task_id"], key) in resolved_ids}
+    if value["source_status"] == "verified" and required_qualifications(task, contract) - set(value["resolved"]) - resolved_keys - SOFT_RESEARCH_PENDING:
         raise ValueError("Source verification must explicitly resolve all frozen and observed qualifications")
     if contract["synthetic"] and (value["source_status"] == "verified" or value["economic_status"] != "not_evaluated"):
         raise ValueError("Synthetic delivery cannot establish native source or economic truth")
