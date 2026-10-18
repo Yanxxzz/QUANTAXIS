@@ -92,10 +92,13 @@ def _frozen_code_path(candidate: dict) -> Path | None:
 
 
 class PandaClient:
-    def __init__(self, config: dict):
+    def __init__(self, config: dict, *, before_call=None):
         self.config = config
+        self.before_call = before_call
 
     def _invoke(self, command: list[str], timeout: int = 60) -> dict:
+        if self.before_call is not None:
+            self.before_call()
         env = dict(os.environ, PYTHONUTF8="1", PYTHONIOENCODING="utf-8")
         result = subprocess.run(command, capture_output=True, text=True, encoding="utf-8",
                                 errors="replace", timeout=timeout, env=env)
@@ -517,7 +520,7 @@ def budget_plan(candidates: list[dict], compute: dict, balance: dict, *, jobs: l
 
 
 def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedger, client: PandaClient,
-             category: str = "exploration", *, before_dispatch=None, native_fixture_reader=None) -> dict:
+             category: str = "exploration", *, before_dispatch=None, native_fixture_reader=None, before_remote=None) -> dict:
     research, compute = config["research"], config["compute"]
     if compute.get("team_permit", {}).get("environment") == "synthetic" and getattr(client, "simulation", False) is not True:
         raise ValueError("Synthetic permit cannot use an official client")
@@ -573,6 +576,8 @@ def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedg
             minimum_risk, key, estimated_risk=True)
         if recharge_authorization and recharge_authorization["batch_id"] != risk_authorization["batch_id"]:
             raise ValueError("Recharge and estimated-billing permissions must refer to the same confirmed batch")
+    if before_remote is not None:
+        before_remote()
     balance = client.balance()
     plan = budget_plan([dict(candidate, experiment_category=category)], compute, balance,
                        jobs=ledger.jobs(), study_state=ledger.research_state())
@@ -598,6 +603,8 @@ def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedg
         definition["research_budget"] = research_meta
     if native_preflight is not None:
         definition["native_preflight"] = native_preflight
+    if before_remote is not None:
+        before_remote()
     if before_dispatch is not None:
         # Definition registration precedes any account mutation or service run.
         # A failed registration must not reserve funds or create a service job.
@@ -605,10 +612,14 @@ def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedg
     ledger.reserve(key, candidate, definition, category, ceiling, float(compute["daily_credit_limit"]), balance)
     from .team.budget import guard_remote_mutation
     # Unknown responses remain ambiguous; do not silently retry account mutations.
+    if before_remote is not None:
+        before_remote()
     guard_remote_mutation(ledger.db, key, "RESERVED")
     ledger.transition(key, "RESERVED", "CREATING")
     factor_id = client.create(candidate, window, cycle, groups, "PA-" + key[:16])
     ledger.transition(key, "CREATING", "CREATED", factor_id=factor_id)
+    if before_remote is not None:
+        before_remote()
     guard_remote_mutation(ledger.db, key, "CREATED")
     ledger.transition(key, "CREATED", "DISPATCHING")
     run_id = client.start(factor_id)

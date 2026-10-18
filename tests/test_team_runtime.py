@@ -76,6 +76,23 @@ def cleanup(args, child):
     child.wait(timeout=10)
 
 
+def test_mailbox_retries_a_transient_windows_response_lock(tmp_path, monkeypatch):
+    packet = {"role": "lead", "work_id": "locked-response"}
+    response = tmp_path / "lead/responses/locked-response.json"
+    envelope = {"work_id": packet["work_id"], "output": {"decision": "stop"}}
+    write(response, envelope)
+    original = Path.read_text
+    locked = True
+    def read_once_locked(path, *args, **kwargs):
+        nonlocal locked
+        if path == response and locked:
+            locked = False
+            raise PermissionError("Temporary Windows sharing conflict")
+        return original(path, *args, **kwargs)
+    monkeypatch.setattr(Path, "read_text", read_once_locked)
+    assert MailboxAgents(tmp_path)(packet) == envelope
+
+
 def test_four_processes_three_rounds_and_tool_restrictions(tmp_path):
     args = setup(tmp_path)
     result = serve(*args)

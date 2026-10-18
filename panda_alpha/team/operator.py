@@ -18,8 +18,8 @@ def status(path):
     config = load_config(path)
     root = Path(config["runtime"])
     manifest = read(root / "manifest.json")
-    if digest(manifest) != config["manifest_hash"] or manifest["binding"]["execution_config"] is not None:
-        raise ValueError("Runtime manifest changed or website executor enabled")
+    if digest(manifest) != config["manifest_hash"]:
+        raise ValueError("Runtime manifest changed")
     state = read(path.parent / "service-state.json", {})
     if state.get("config_hash") not in {None, digest(config)}:
         raise ValueError("Service configuration changed")
@@ -42,6 +42,8 @@ def status(path):
     with sqlite3.connect(Path(binding["ledger"]).as_uri() + "?mode=ro", uri=True) as db:
         row = db.execute("SELECT round,actions,stop_reason FROM team_host_sessions WHERE session_id=?",
                          (binding["session"],)).fetchone()
+        unsettled = [{"fingerprint": j[0], "state": j[1], "run_id": j[2]} for j in db.execute(
+            "SELECT fingerprint,state,run_id FROM jobs WHERE state NOT IN ('SETTLED','CANCELLED') ORDER BY rowid")]
     if row is None:
         raise ValueError("Original host session is missing")
     blocked = None
@@ -76,15 +78,19 @@ def status(path):
             "can_start": blocked is None and current in {"ready", "paused", "interrupted"},
             "starts": len(starts), "max_starts": config["max_starts"],
             "round": row[0], "actions": row[1], "bounds": binding["spec"],
-            "website_execution": False}
+            "website_execution": binding["execution_config"] is not None,
+            "unsettled_jobs": unsettled, "remote_status": "not_queried",
+            "stop_scope": "local_dispatch_and_polling"}
 
 
-def control(path, action, wait_seconds=10):
+def control(path, action, wait_seconds=10, *, execute=False):
     """Explicit operation only; no scheduler, new session, grant or reset."""
     if action not in {"start", "stop", "status"}:
         raise ValueError("Expected start, stop or status")
     if not 0 <= wait_seconds <= 30:
         raise ValueError("wait_seconds must be between 0 and 30")
+    if execute and action != "start":
+        raise ValueError("--execute is only valid for an explicit start")
     if action == "status":
         return status(path)
     path = Path(path).resolve()
@@ -98,11 +104,16 @@ def control(path, action, wait_seconds=10):
         else:
             if not snapshot["can_start"]:
                 return snapshot
+            if snapshot["website_execution"] and not execute:
+                return dict(snapshot, can_start=False, reason="explicit_online_start_required")
+            if execute and not snapshot["website_execution"]:
+                raise ValueError("Offline deployment cannot be upgraded at start; prepare a new bounded deployment")
             config = load_config(path)
             # The child acknowledges itself before consuming work. An interrupted
             # parent cannot turn a missing Popen receipt into a second model run.
             launch = {"id": uuid.uuid4().hex, "config_hash": digest(config),
-                      "status": "launching", "time": time.time()}
+                      "status": "launching", "time": time.time(),
+                      "website_execution": snapshot["website_execution"]}
             write(path.parent / "manual-launch.json", launch)
             enable_service(path, True)
             try:

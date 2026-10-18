@@ -29,6 +29,10 @@ foreach ($argument in @($configPath, $PSCommandPath)) {
 $powershellPath = Join-Path ([Environment]::SystemDirectory) 'WindowsPowerShell\v1.0\powershell.exe'
 $taskArguments = '-NoProfile -NonInteractive -WindowStyle Hidden -File "{0}" -Action Run -Config "{1}"' -f $PSCommandPath, $configPath
 $description = 'Panda Alpha bounded offline service: ' + $configPath
+$runtimeManifest = Get-Content -LiteralPath (Join-Path $definition.runtime 'manifest.json') -Encoding UTF8 -Raw | ConvertFrom-Json
+if ($null -ne $runtimeManifest.binding.execution_config -and $Action -in @('Plan', 'Install', 'Run', 'Start')) {
+    throw 'Website deployments require explicit host-control start --execute; login/timer startup is not supported'
+}
 
 if ($Action -eq 'Plan') {
     [pscustomobject]@{Name=$serviceName; Account=$accountName; Trigger='Current user logon';

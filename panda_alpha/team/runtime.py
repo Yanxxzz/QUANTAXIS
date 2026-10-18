@@ -74,7 +74,11 @@ def prepare(ledger, registry, session, config, output, execution_config=None):
     if row is None:
         raise ValueError("Initialize an explicitly bounded host session first")
     spec = json.loads(row[0])
-    execution = read(execution_config) if execution_config else None
+    # Services resume the frozen value, never reload a mutable external file.
+    execution = read(execution_config) if isinstance(execution_config, (str, Path)) else execution_config
+    if execution_config is not None and (not isinstance(execution, dict)
+            or not isinstance(execution.get("research"), dict) or not isinstance(execution.get("compute"), dict)):
+        raise ValueError("Execution config must contain research and compute settings")
     binding = {"ledger": str(ledger), "registry": str(registry), "session": session,
                "spec": spec, "config_hash": digest(read(config)), "execution_config": execution}
     previous = read(root / "manifest.json")
@@ -99,15 +103,21 @@ def coordinator(root, manifest):
         c, registry = Coordinator(binding["ledger"]), ResearchRegistry(binding["registry"])
         try:
             executor = None
+            def check_active():
+                if not active(root, manifest):
+                    raise InterruptedError("Host paused or original deadline reached")
             if binding["execution_config"] is not None:
                 from ..platform import PandaClient
                 config = binding["execution_config"]
-                executor = ExistingExecutor(c, registry, PandaClient(config.get("platform", {})), config, root / "results")
+                executor = ExistingExecutor(c, registry, PandaClient(config.get("platform", {}), before_call=check_active),
+                                            config, root / "results", before_remote=check_active)
             host = Host(c, registry, binding["session"])
             agents = MailboxAgents(root / "mailbox")
             while active(root, manifest):
-                result = host.run(agents, executor)
+                result = host.run(agents, executor, should_continue=lambda: active(root, manifest))
                 write(root / "host-status.json", result)
+                if result.get("status") == "paused":
+                    return result
                 if result.get("reason") not in {"role_response", "original_run"}:
                     return dict(result, terminal=True)
                 time.sleep(manifest["workers"]["poll_interval"])

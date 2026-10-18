@@ -7,7 +7,7 @@
 1. 查看 `readiness`、当前 host/runtime 和进程记录，说明本轮目标、剩余边界及来源阻点。状态查询本身不启动模型。
 2. 有未完成且可恢复的会话时，沿用原 session、runtime、workers 和 deployment；不重置截止时间、尝试或启动次数。`attention` 必须先解决其实际原因。
 3. 会话已完成或过期时，根据当前已授权任务初始化新的有限会话，复用原实验账本和科学登记。明确轮数、动作数、截止时间及输入材料；不把已完成的验收会话当作真实研究入口。只有来源阻点且没有新增材料时，报告等待原因，不重复空跑。
-4. 使用 `service-prepare` 固定离线运行配置，然后直接启动同一个服务入口。准备配置不安装系统启动项；不执行 `team-service.ps1 -Action Install`。
+4. 使用 `service-prepare` 固定运行配置，默认离线。只有明确准备官网运行时才同时传 `--execute --config execution.json`；这只冻结原执行设置，不安装系统启动项、不启动模型或访问账户。不要执行 `team-service.ps1 -Action Install`。
 
 以下命令由 Codex 在明确的启动请求后执行，配置须来自本轮准备或原会话；使用该配置绑定的 checkout 和 Python：
 
@@ -40,7 +40,23 @@ python -m panda_alpha.team readiness --ledger research_runs/experiments.sqlite3
 
 `readiness.source_queue` 区分排队、重审中、待结论和重审完成。`review_completed` 可以与 `source_status=pending` 同时成立；没有新材料且来源仍待核时，`next_action=await_new_source`，无需再空跑模型。
 
-官网执行保持单独约束。普通聊天启动只开启离线宿主，`execution_config` 必须为 `null`；A/B 来源未通过前不消耗剩余 46 点，也不重新激活旧授权。
+## 官网运行的同一入口
+
+官网部署在准备时绑定非空 `execution_config`，值与原 session、ledger、registry 一起冻结。每次由聊天明确启动或恢复：
+
+```powershell
+python -m panda_alpha.team host-control --deployment research_runs/service-pilot/service.json --action start --execute
+```
+
+省略 `--execute` 返回 `explicit_online_start_required`，不会启动进程；不能用这个标志升级一个既有离线部署。旧部署、会话和配置不能被原地换绑。官网部署不接受登录/分钟任务或未带手动启动回执的服务直启。
+
+`--execute` 仅选择已冻结的执行入口。新派发仍检查原任务的来源、原生预检、有效 grant、研究次数、资金来源和预留。开始与恢复不会激活、延长或扩大 grant，也不清零用量。已有 Run 可以在 grant 过期或团队暂停时只读查询并结算；宿主自身原 deadline、动作和启动上限仍然有效，过期会话须另行明确安排有界接续。
+
+停止仍使用同一个 `host-control --action stop`。停止信号在协调动作之间、账户调用之前和创建/启动边界检查；已在途请求可能完成。Stop 关闭本机派发与轮询，不调用远端终止接口、不承诺撤销计费。返回状态的 `unsettled_jobs` 保留原 Run 或无 Run ID 的待核阶段，`remote_status=not_queried` 表示这是账本视图。查询状态不联网。
+
+恢复已知 Run 时只查该 Run 并结算，不重新 create/start。若暂停发生在预留后、创建后，或者创建/启动响应丢失而没有 Run ID，保留 `RESERVED/CREATED/CREATING/DISPATCHING` 记录和预算占用，进入人工核对；不能猜测成功或清除预留后重发。未知状态下停止服务也不结算或退款。
+
+当前真实研究保持停止，A/B 来源未通过前不消耗剩余 46 点，不重新激活旧授权。本轮只在隔离测试账本中使用本地模拟官网和合成角色验收官网控制链路。
 
 ## 本机迁移记录（2026-10-18）
 

@@ -19,7 +19,7 @@ from .runtime_io import identity, lease, owned, read, write
 REPO = Path(__file__).resolve().parents[2]
 
 
-def prepare_service(ledger, registry, session, workers, runtime, output, name, max_starts=10):
+def prepare_service(ledger, registry, session, workers, runtime, output, name, max_starts=10, *, execution_config=None):
     """Freeze a deployment without installing anything or starting a model."""
     if not re.fullmatch(r"PandaAlpha-[A-Za-z0-9-]{1,48}", name):
         raise ValueError("Service name must be PandaAlpha- followed by 1-48 letters, digits or hyphens")
@@ -28,9 +28,7 @@ def prepare_service(ledger, registry, session, workers, runtime, output, name, m
     root = Path(runtime).resolve()
     destination = Path(output).resolve()
     with lease(root / "supervisor.lock"), lease(str(Path(ledger).resolve()) + ".host-service.lock"):
-        root, manifest = prepare(ledger, registry, session, workers, root)
-    if manifest["binding"]["execution_config"] is not None:
-        raise ValueError("Service deployment currently permits offline/source review only")
+        root, manifest = prepare(ledger, registry, session, workers, root, execution_config)
     value = {"schema": 1, "name": name, "runtime": str(root), "workers": str(Path(workers).resolve()),
              "manifest_hash": digest(manifest), "python": str(Path(sys.executable).resolve()),
              "repo": str(REPO), "max_starts": max_starts}
@@ -42,7 +40,8 @@ def prepare_service(ledger, registry, session, workers, runtime, output, name, m
             raise ValueError("Deployment already exists with different bindings; do not reset its history")
         write(path, value)
     return {"config": str(path), "runtime": str(root), "name": name, "installed": False,
-            "website_execution": False, "deadline": manifest["binding"]["spec"]["deadline"]}
+            "website_execution": manifest["binding"]["execution_config"] is not None,
+            "deadline": manifest["binding"]["spec"]["deadline"]}
 
 
 def load_config(path):
@@ -83,6 +82,7 @@ def stop_service(path):
     if state.get("config_hash") not in {None, digest(config)}:
         raise ValueError("Service configuration changed")
     enable_service(path, False)
+    write(Path(config["runtime"]) / "control.json", {"run": False, "heartbeat": time.time()})
     starts = state.get("starts", [])
     if not starts or not owned(starts[-1].get("process")):
         return {"status": "stopped"}
@@ -102,8 +102,12 @@ def run_service(path, stop_event=None, launch_id=None):
         if state["config_hash"] != digest(config):
             raise ValueError("Service bindings changed; preserved history cannot be rebound")
         manifest = read(root / "manifest.json")
-        if digest(manifest) != config["manifest_hash"] or manifest["binding"]["execution_config"] is not None:
-            raise ValueError("Runtime manifest changed or website executor enabled")
+        if digest(manifest) != config["manifest_hash"]:
+            raise ValueError("Runtime manifest changed")
+        online = manifest["binding"]["execution_config"] is not None
+        launch = read(path.parent / "manual-launch.json", {})
+        if online and (launch_id is None or launch.get("website_execution") is not True):
+            raise ValueError("Website deployment requires an explicit chat start with --execute")
         if launch_id is not None:
             launch_path = path.parent / "manual-launch.json"
             launch = read(launch_path, {})
@@ -143,7 +147,8 @@ def run_service(path, stop_event=None, launch_id=None):
         binding = manifest["binding"]
         try:
             result = serve(binding["ledger"], binding["registry"], binding["session"], config["workers"],
-                           root, stop_event=StopRequest(path.parent, start["id"], stop_event))
+                           root, execution_config=binding["execution_config"],
+                           stop_event=StopRequest(path.parent, start["id"], stop_event))
             state.update(status=result["status"], reason=result.get("result", {}).get("reason"))
             start.update(status=state["status"], ended=time.time())
             return state
