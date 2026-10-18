@@ -14,8 +14,8 @@ from panda_alpha.team.service import enable_service, load_config, prepare_servic
 from test_team_runtime import REPO, setup, until
 
 
-def deployment(tmp_path, **kwargs):
-    args = setup(tmp_path, "slow", deadline=120, turn_timeout=10)
+def deployment(tmp_path, mode="ok", **kwargs):
+    args = setup(tmp_path, mode, deadline=120, turn_timeout=20)
     result = prepare_service(*args[:-1], args[-1], tmp_path / "service", "PandaAlpha-Test", **kwargs)
     return args, Path(result["config"])
 
@@ -32,7 +32,8 @@ def launch_service(config):
 
 def cleanup(args, child):
     if child.poll() is None:
-        terminate({"pid": child.pid, "created": __import__("psutil").Process(child.pid).create_time()})
+        # Stop the relauncher first; terminating children first races its restart loop.
+        child.kill()
     child.wait(timeout=10)
     root = args[-1]
     for path in (root / "components").glob("*/process.json"):
@@ -42,12 +43,21 @@ def cleanup(args, child):
 
 
 def running_attempt(root):
+    state = read(root / "supervisor.json", {})
+    if not state.get("components"):
+        return None
+    for name, component in state["components"].items():
+        receipt = read(root / "components" / name / "process.json", {})
+        if (not component["launches"] or receipt.get("launch") != component["launches"][-1]["id"]
+                or not owned(receipt.get("process"))):
+            return None
     return next((p for p in (root / "workers").glob("*/work/*/state.json")
-                 if read(p)["attempts"][-1]["status"] == "running"), None)
+                 if read(p)["attempts"][-1]["status"] == "running"
+                 and owned(read(p)["attempts"][-1].get("process"))), None)
 
 
 def test_prepare_is_offline_and_refuses_rebinding(tmp_path):
-    args, config = deployment(tmp_path)
+    args, config = deployment(tmp_path, "hold")
     assert not (args[-1] / "supervisor.json").exists()
     assert load_config(config)["manifest_hash"] == digest(read(args[-1] / "manifest.json"))
     with pytest.raises(ValueError, match="different bindings"):
@@ -57,7 +67,7 @@ def test_prepare_is_offline_and_refuses_rebinding(tmp_path):
 
 
 def test_graceful_stop_restarts_original_work_with_stale_stop_ignored(tmp_path):
-    args, config = deployment(tmp_path)
+    args, config = deployment(tmp_path, "hold")
     child = launch_service(config)
     try:
         pending = until(lambda: running_attempt(args[-1]))
@@ -69,6 +79,7 @@ def test_graceful_stop_restarts_original_work_with_stale_stop_ignored(tmp_path):
         assert run_service(config)["reason"] == "operator_stop"
         assert len(read(config.parent / "service-state.json")["starts"]) == 1
         enable_service(config, True)
+        (tmp_path / "release-model").touch()
         child = launch_service(config)
         child.wait(timeout=55)
         state = read(config.parent / "service-state.json")
@@ -81,7 +92,7 @@ def test_graceful_stop_restarts_original_work_with_stale_stop_ignored(tmp_path):
 
 
 def test_hard_service_restart_adopts_live_workers_without_second_model_attempt(tmp_path):
-    args, config = deployment(tmp_path)
+    args, config = deployment(tmp_path, "hold")
     child = launch_service(config)
     try:
         pending = until(lambda: running_attempt(args[-1]))
@@ -89,9 +100,11 @@ def test_hard_service_restart_adopts_live_workers_without_second_model_attempt(t
         child.kill()
         child.wait(timeout=5)
         child = launch_service(config)
+        until(lambda: len(read(config.parent / "service-state.json")["starts"]) == 2)
+        (tmp_path / "release-model").touch()
         child.wait(timeout=55)
         state = read(config.parent / "service-state.json")
-        assert state["status"] == "complete"
+        assert state["status"] == "complete", state
         assert state["starts"][0]["recovery"] == "process_restart"
         assert read(pending)["attempts"][0]["process"] == original
         assert len(read(pending)["attempts"]) == 1
@@ -100,7 +113,7 @@ def test_hard_service_restart_adopts_live_workers_without_second_model_attempt(t
 
 
 def test_all_processes_lost_resume_from_disk_with_original_bounds(tmp_path):
-    args, config = deployment(tmp_path)
+    args, config = deployment(tmp_path, "hold")
     child = launch_service(config)
     try:
         pending = until(lambda: running_attempt(args[-1]))
@@ -109,10 +122,11 @@ def test_all_processes_lost_resume_from_disk_with_original_bounds(tmp_path):
         session = until(lambda: read(session_file))
         manifest = read(args[-1] / "manifest.json")
         cleanup(args, child)  # A cold process tree, not a claim that the machine was rebooted.
+        (tmp_path / "release-model").touch()
         child = launch_service(config)
         child.wait(timeout=55)
         state = read(config.parent / "service-state.json")
-        assert state["status"] == "complete"
+        assert state["status"] == "complete", state
         assert read(session_file) == session
         assert read(args[-1] / "manifest.json") == manifest
         attempts = read(pending)["attempts"]
