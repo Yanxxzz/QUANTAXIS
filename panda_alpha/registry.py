@@ -419,6 +419,7 @@ class ResearchRegistry:
         rejected: dict[str, dict[str, Any]] = {}
         reopened: dict[str, dict[str, Any]] = {}
         pending: dict[str, dict[str, Any]] = {}
+        evaluations: dict[str, dict[str, Any]] = {}
         registered = self.registrations()
         for event in self.events():
             kind, key, payload = event["kind"], event["subject"], event["payload"]
@@ -436,11 +437,19 @@ class ResearchRegistry:
                 pending[key] = {**payload, **registered.get(key, {}), "trial_key": key}
             elif kind == "source_repair":
                 pending.pop(key, None)
+            if kind == "evaluation":
+                evaluations.pop(key, None)
+                evaluations[key] = {"trial_key": key, "event_id": event["event_id"], **{
+                    name: payload[name] for name in ("task_id", "fingerprint", "run_id", "assessment", "decision",
+                        "pending", "resolved_qualifications", "artifacts", "evidence_contract", "pool_admission") if name in payload}}
         memory["registry_constraints"] = {"human_retired": list(retired.values()),
                     "fixed_rejected": list(rejected.values()), "source_pending": list(pending.values()),
                     "evidence_reopened": list(reopened.values()),
                     "derived_from_registry_head": self.head}
         memory["human_retired_directions"] = list(retired.values())
+        # A qualified positive evaluation must also reach the next research
+        # packet. This bounded view is evidence, never automatic pool admission.
+        memory["recent_evaluations"] = list(evaluations.values())[-8:]
         memory["multiple_testing_total"] = self.total
         memory["research_registry"] = {"schema_version": 1, "historical_baseline": self.historical,
                                        "unique_registered": self.new_tested, "total": self.total,
