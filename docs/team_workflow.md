@@ -151,6 +151,8 @@ result_review 的 `assessment` 必填 `scope`（capability/source/economic）、
 
 ## 同任务补证与科学记忆
 
+新来源可先经 `source-capture` 或明确文本归档取得，再用 `source-submit` 固化并排队。活跃 Host 在原请求完成后的工作边界接收，复用下述重开与结论协议；`readiness` 以只读方式汇总缺口。有限公开文档检查和输入格式见[来源补证](source_intake.md)。
+
 只补来源、日志或已有结果的解释而不改经济定义时，调用：
 
 ```text

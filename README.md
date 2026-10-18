@@ -2,7 +2,7 @@
 
 本项目在 [QUANTAXIS](https://github.com/yutiansut/QUANTAXIS) 上构建 PandaAI 因子研究工作流。两个研究员探索不同经济机制，独立证伪员提出竞争解释，负责人统一冻结定义、分配算力和推进任务。
 
-**默认不执行官网回测。只有明确、有限的研究与资金授权和来源核验同时满足后，才安排官网试点。** `host-serve` 自动启动四个真实 Codex 角色及统一协调器，使用操作者已登录的模型账户和额度。合成演练、真实模型协作、官网报告交付、来源资格和经济有效性分别验收；不会自动改变正式因子池。
+**默认由操作者在 Codex 对话中启动研究，不随 Windows 登录或重启自动运行。默认不执行官网回测。** 只有明确、有限的研究与资金授权和来源核验同时满足后，才安排官网试点。`host-serve` 启动四个真实 Codex 角色及统一协调器，使用操作者已登录的模型账户和额度。合成演练、真实模型协作、官网报告交付、来源资格和经济有效性分别验收；不会自动改变正式因子池。
 
 ## 四个角色
 
@@ -47,15 +47,23 @@ python -m panda_alpha.team host-init --ledger research_runs/experiments.sqlite3 
 python -m panda_alpha.team host-serve --ledger research_runs/experiments.sqlite3 --registry research_runs/research_trials.sqlite3 --session review-01 --workers workers.local.json --output research_runs/host-review
 ```
 
-一条命令启动四角色进程和一个协调器；每个角色使用自己的持久 Codex 会话。按 `work_id` 保存请求、模型事件、原始回复与尝试记录。角色只能看到工作包和 `context_files` 显式附带的文本，不会凭文件路径自行读取证据。需要更多材料时保留缺口，交由操作者或受控证据入口补入。
+一条命令启动四角色进程和一个协调器；每个角色使用自己的持久 Codex 会话。按 `work_id` 保存请求、模型事件、原始回复与尝试记录。角色读取工作包、显式 `context_files` 及受控来源接收的正文；路径本身不表示已读取原件。新材料在工作边界进入新请求，正在处理的请求保持原快照。
 
 模型超时会终止本次进程；暂时断线按原 work_id 和会话有限重连。工作者或协调器崩溃会自动重启；宿主被终止后恢复同一运行目录可接管尚存子进程并恢复原待办。重试次数、轮数、动作数、截止时间都不会重置。
 
 登录或模型额度问题会停在 `attention`。修复后可用 `host-retry --output research_runs/host-review --reason "说明已修复的问题"` 记入审计，再重跑原命令；仅使用剩余重试次数。启动身份不明、额度耗尽或来源阻点均不会盲目重派。详细状态与恢复方法见[无人值守宿主](docs/unattended_host.md)。
 
-### Windows 登录自启
+### 从 Codex 对话启动（当前默认）
 
-Windows 任务计划程序可在**当前用户登录后**隐藏启动宿主，并在原会话截止前每分钟检查恢复；正在运行时忽略重复触发。未登录时不运行。使用当前账户和普通权限，不保存 Windows 密码、不切换到 SYSTEM，不拷贝 Codex 登录凭据。重启电脑后须先登录该账户。
+在聊天中说“启动四个 agent，继续免费核验 A/B”“暂停研究”或“查看研究状态”，由 Codex 调用现有宿主。启动前读取原任务和会话边界；可恢复则沿原状态继续，已结束则按当前授权准备新的有限会话。没有新增来源材料时不重复运行空审查。状态查询不会启动模型。
+
+统一操作入口是 `host-control --deployment FILE --action start|stop|status`；复用 `service-prepare` 固定的有限部署，隐藏启动原宿主，按进程身份报告实际状态。重复启动不会并发派发，完成或过期的会话不会复活；正常暂停保留原待办和累计次数。
+
+本机 `PandaAlpha-Research` 登录及分钟触发任务已卸载，原历史保留。直接启动的宿主仍处理角色超时、重连和中断状态；电脑重启后等待新的聊天指令恢复。普通启动继续限定离线研究与来源审查，剩余 46 点的来源约束不变。操作约定及启动、暂停命令见[聊天启动](docs/chat_start.md)。
+
+### Windows 登录自启（可选）
+
+仅在操作者重新明确选择后安装。Windows 任务计划程序可在**当前用户登录后**隐藏启动宿主，并在原会话截止前每分钟检查恢复；正在运行时忽略重复触发。未登录时不运行。使用当前账户和普通权限，不保存 Windows 密码、不切换到 SYSTEM，不拷贝 Codex 登录凭据。重启电脑后须先登录该账户。
 
 ```powershell
 python -m panda_alpha.team service-prepare --ledger research_runs/experiments.sqlite3 --registry research_runs/research_trials.sqlite3 --session review-01 --workers workers.local.json --runtime research_runs/host-review --output research_runs/service-review --name PandaAlpha-Research
@@ -69,6 +77,16 @@ python -m panda_alpha.team service-prepare --ledger research_runs/experiments.sq
 校验失败的角色回复保留原件，携带具体错误重新交给该角色。既有 Run 的恢复先于新派发，模糊创建响应停在对账入口。会话限额不替代累计研究配额，也不会激活或扩大 grant。上面的命令未启用执行；官网执行仍需显式 `--execute --config FILE` 和有效授权。
 
 `reopen-evidence` 允许同任务补充真实新增证据并重新审查，保留 request hash、Run、账单和策略分母；`evidence` 从缓存生成新快照，保留原 manifest。来源缺口只在明确解决后清除，经济失败进入后续提案约束，人工退役不由补证解除。完整契约见[补证与科学记忆](docs/team_workflow.md#同任务补证与科学记忆)。
+
+### 免费补证与就绪检查
+
+`source-capture` 只读抓取一个指定的公开官方指南；`source-submit` 固化明确提交的正文并排队；活跃的有限 Host 对 `seed_tasks` 中的原任务自动补证再审。可在会话中配置至多四个 `source_watches`，各检查一次，未变化跳过，失败留下阻点。登录后动态数据和客服回函仍需明确提供。旧 Run 的报告验收摘要由缓存补建，保留原结果。
+
+```powershell
+python -m panda_alpha.team readiness --ledger research_runs/experiments.sqlite3
+```
+
+这一只读命令汇总来源阻点、证据队列、原预算和宿主边界，不授予执行权限。队列区分重审中、待结论和已完成；“重审完成”不等于“来源通过”。无新证据时明确提示等待。接收格式、自动检查配置及完整可用的剩余条件见[来源补证](docs/source_intake.md)。
 
 ## 当前来源状态
 

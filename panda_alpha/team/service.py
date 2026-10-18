@@ -90,7 +90,7 @@ def stop_service(path):
     return {"status": "stop_requested", "start": starts[-1]["id"]}
 
 
-def run_service(path, stop_event=None):
+def run_service(path, stop_event=None, launch_id=None):
     """Task Scheduler and foreground recovery tests share exactly this entry point."""
     path = Path(path).resolve()
     config = load_config(path)
@@ -104,6 +104,12 @@ def run_service(path, stop_event=None):
         manifest = read(root / "manifest.json")
         if digest(manifest) != config["manifest_hash"] or manifest["binding"]["execution_config"] is not None:
             raise ValueError("Runtime manifest changed or website executor enabled")
+        if launch_id is not None:
+            launch_path = path.parent / "manual-launch.json"
+            launch = read(launch_path, {})
+            if launch.get("id") != launch_id or launch.get("config_hash") != digest(config):
+                raise ValueError("Manual launch identity changed")
+            write(launch_path, dict(launch, status="acknowledged", process=identity()))
         state["last_check"] = {"time": time.time(), "boot_time": psutil.boot_time(), "process": identity()}
         if not read(path.parent / "desired-state.json", {"enabled": True})["enabled"]:
             state.update(status="paused", reason="operator_stop")
@@ -155,6 +161,7 @@ def main(argv=None):
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--stop", action="store_true", help="Request a graceful stop of this exact service instance")
     parser.add_argument("--enable", action="store_true", help="Explicitly allow the stopped service to resume")
+    parser.add_argument("--launch", help=argparse.SUPPRESS)
     args = parser.parse_args(argv)
     args.config = args.config.resolve()
     if args.stop:
@@ -172,7 +179,7 @@ def main(argv=None):
         from contextlib import redirect_stderr, redirect_stdout
         with redirect_stderr(log), redirect_stdout(log):
             try:
-                run_service(args.config, event)
+                run_service(args.config, event, args.launch)
             except Exception:
                 import traceback
                 traceback.print_exc()

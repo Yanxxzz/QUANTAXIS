@@ -30,7 +30,7 @@ PUBLIC_PATTERNS = (
     "panda_alpha/**/*.py", "tests/**/*.py", "scripts/*.py", "scripts/*.ps1",
     "docs/*.md", ".github/workflows/panda-alpha.yml", "requirements-panda-alpha.txt",
     "config/panda-alpha.example.json", "config/research-workflow.v1.json",
-    "README*.md", "RESEARCH.md", "pyproject.toml",
+    "README*.md", "AGENTS.md", "RESEARCH.md", "pyproject.toml",
     ".codex/agents/panda-*.toml", "config/team-grant.example.json",
     "config/team-host.example.json", "config/team-workers.example.json",
     "tests/fixtures/statement_layout_original.json", "tests/fixtures/statement_layout_continuation.json",
