@@ -40,6 +40,9 @@ def main(argv=None):
     deployment.add_argument("--output", type=Path, required=True)
     deployment.add_argument("--name", required=True)
     deployment.add_argument("--max-starts", type=int, default=10)
+    operator = commands.add_parser("host-control", help="Explicit chat start/stop or read-only live status; no OS scheduler")
+    operator.add_argument("--deployment", type=Path, required=True)
+    operator.add_argument("--action", choices=("start", "stop", "status"), required=True)
     amend = commands.add_parser("amend-budget", help="Preview an audited same-study cap increase; no account access")
     amend.add_argument("--ledger", type=Path, required=True)
     amend.add_argument("--input", type=Path, help="Amendment JSON; omit to read the current policy/usage snapshot")
@@ -104,7 +107,10 @@ def main(argv=None):
         if name == "pause":
             p.add_argument("--reason", required=True)
     args = parser.parse_args(argv)
-    if args.command == "source-capture":
+    if args.command == "host-control":
+        from .operator import control
+        result = control(args.deployment, args.action)
+    elif args.command == "source-capture":
         from .public_docs import capture
         result = capture(args.url, args.output)
     elif args.command == "service-prepare":

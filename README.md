@@ -2,7 +2,7 @@
 
 本项目在 [QUANTAXIS](https://github.com/yutiansut/QUANTAXIS) 上构建 PandaAI 因子研究工作流。两个研究员探索不同经济机制，独立证伪员提出竞争解释，负责人统一冻结定义、分配算力和推进任务。
 
-**默认不执行官网回测。只有明确、有限的研究与资金授权和来源核验同时满足后，才安排官网试点。** `host-serve` 自动启动四个真实 Codex 角色及统一协调器，使用操作者已登录的模型账户和额度。合成演练、真实模型协作、官网报告交付、来源资格和经济有效性分别验收；不会自动改变正式因子池。
+**默认由操作者在 Codex 对话中启动研究，不随 Windows 登录或重启自动运行。默认不执行官网回测。** 只有明确、有限的研究与资金授权和来源核验同时满足后，才安排官网试点。`host-serve` 启动四个真实 Codex 角色及统一协调器，使用操作者已登录的模型账户和额度。合成演练、真实模型协作、官网报告交付、来源资格和经济有效性分别验收；不会自动改变正式因子池。
 
 ## 四个角色
 
@@ -53,9 +53,17 @@ python -m panda_alpha.team host-serve --ledger research_runs/experiments.sqlite3
 
 登录或模型额度问题会停在 `attention`。修复后可用 `host-retry --output research_runs/host-review --reason "说明已修复的问题"` 记入审计，再重跑原命令；仅使用剩余重试次数。启动身份不明、额度耗尽或来源阻点均不会盲目重派。详细状态与恢复方法见[无人值守宿主](docs/unattended_host.md)。
 
-### Windows 登录自启
+### 从 Codex 对话启动（当前默认）
 
-Windows 任务计划程序可在**当前用户登录后**隐藏启动宿主，并在原会话截止前每分钟检查恢复；正在运行时忽略重复触发。未登录时不运行。使用当前账户和普通权限，不保存 Windows 密码、不切换到 SYSTEM，不拷贝 Codex 登录凭据。重启电脑后须先登录该账户。
+在聊天中说“启动四个 agent，继续免费核验 A/B”“暂停研究”或“查看研究状态”，由 Codex 调用现有宿主。启动前读取原任务和会话边界；可恢复则沿原状态继续，已结束则按当前授权准备新的有限会话。没有新增来源材料时不重复运行空审查。状态查询不会启动模型。
+
+统一操作入口是 `host-control --deployment FILE --action start|stop|status`；复用 `service-prepare` 固定的有限部署，隐藏启动原宿主，按进程身份报告实际状态。重复启动不会并发派发，完成或过期的会话不会复活；正常暂停保留原待办和累计次数。
+
+本机 `PandaAlpha-Research` 登录及分钟触发任务已卸载，原历史保留。直接启动的宿主仍处理角色超时、重连和中断状态；电脑重启后等待新的聊天指令恢复。普通启动继续限定离线研究与来源审查，剩余 46 点的来源约束不变。操作约定及启动、暂停命令见[聊天启动](docs/chat_start.md)。
+
+### Windows 登录自启（可选）
+
+仅在操作者重新明确选择后安装。Windows 任务计划程序可在**当前用户登录后**隐藏启动宿主，并在原会话截止前每分钟检查恢复；正在运行时忽略重复触发。未登录时不运行。使用当前账户和普通权限，不保存 Windows 密码、不切换到 SYSTEM，不拷贝 Codex 登录凭据。重启电脑后须先登录该账户。
 
 ```powershell
 python -m panda_alpha.team service-prepare --ledger research_runs/experiments.sqlite3 --registry research_runs/research_trials.sqlite3 --session review-01 --workers workers.local.json --runtime research_runs/host-review --output research_runs/service-review --name PandaAlpha-Research
@@ -78,7 +86,7 @@ python -m panda_alpha.team service-prepare --ledger research_runs/experiments.sq
 python -m panda_alpha.team readiness --ledger research_runs/experiments.sqlite3
 ```
 
-这一只读命令汇总来源阻点、证据队列、原预算和宿主边界，不授予执行权限。接收格式、自动检查配置及完整可用的剩余条件见[来源补证](docs/source_intake.md)。
+这一只读命令汇总来源阻点、证据队列、原预算和宿主边界，不授予执行权限。队列区分重审中、待结论和已完成；“重审完成”不等于“来源通过”。无新证据时明确提示等待。接收格式、自动检查配置及完整可用的剩余条件见[来源补证](docs/source_intake.md)。
 
 ## 当前来源状态
 

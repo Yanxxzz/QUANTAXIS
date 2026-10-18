@@ -38,7 +38,7 @@
 | 单次模型超时 | 终止对应进程树，在原重试上限内恢复 |
 | 工作者崩溃 | 自动重启，接管已有模型进程和输出；先恢复原尝试再考虑重试 |
 | 协调器崩溃 | 自动重启；复用 SQLite 待办、已记录回复和既有 Run |
-| 宿主中断 | 重跑完全相同命令，或由已安装的登录服务恢复；接管仍存活组件。超过心跳宽限，子进程自行停下 |
+| 宿主中断 | 在聊天中明确继续，沿原部署恢复并接管仍存活组件。超过心跳宽限，子进程自行停下 |
 | Ctrl+C / 服务 Stop / 截止时间 | 停止派发，终止本宿主拥有的子进程；保留全部待办和账本 |
 | 登录或模型额度失败 | 停在 attention；修复后 `host-retry --output DIR --reason TEXT`，再重跑原命令 |
 | 启动记录缺少 PID 回执 | 停在 attention，先人工核对实际进程；不承诺外部模型恰好调用一次 |
@@ -46,6 +46,6 @@
 
 `max_attempts` 按 work_id 持久累计，`max_component_restarts` 按组件累计，均跨进程重启保留。人工重试仅适用于已修复的模型认证/额度问题，不能放宽原期限或耗尽的尝试预算，不能解除来源及官网派发阻点。CLI 内部可能重连同一次请求；应用层日志区分这种行为与新一次尝试。
 
-同一运行目录使用 supervisor 租约，同一 ledger 使用服务准入及协调写入租约。不要同时运行旧 `host-run` 或手工修改待办；人工 `pause` 仍通过原控制入口进行。此处为单机监管与恢复，不是分布式主节点切换。宿主整个进程被杀后，可由[Windows 登录服务](login_service.md)自动恢复，或由操作者重跑相同命令。
+同一运行目录使用 supervisor 租约，同一 ledger 使用服务准入及协调写入租约。不要同时运行旧 `host-run` 或手工修改待办；团队 `pause` 只暂停新派发，停止整个进程组应使用 `host-control --action stop`。此处为单机监管与恢复，不是分布式主节点切换。默认通过[聊天入口](chat_start.md)显式恢复原部署；只有操作者重新选择并安装[Windows 登录服务](login_service.md)后，系统触发才参与恢复。
 
 参考：[Codex 非交互模式](https://learn.chatgpt.com/docs/non-interactive-mode)、[结构化输出示例](https://developers.openai.com/cookbook/examples/codex/build_iterative_repair_loops_with_codex)。接口以部署机器的 `codex exec --help` / `codex exec resume --help` 实测为准。

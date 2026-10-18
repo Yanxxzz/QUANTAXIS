@@ -46,6 +46,7 @@ def test_source_snapshot_delivery_reopen_and_scientific_closure(lifecycle):
     message["artifacts"] = message["artifacts"] + [receipt["artifact"]]
     message["claim"] = "New period documentation does not resolve native inputs or clock"
     host.respond(packet["work_id"], {"work_id": packet["work_id"], "output": message})
+    assert sources.receipts(c.board, task["task_id"])[0]["status"] == "awaiting_conclusion"
     conclusion = host.next()["packet"]
     assert conclusion["action"] == "conclude"
     host.respond(conclusion["work_id"], {"work_id": conclusion["work_id"], "output": {
@@ -56,6 +57,25 @@ def test_source_snapshot_delivery_reopen_and_scientific_closure(lifecycle):
     report = sources.readiness(c)
     assert report["funding_authorization"] is False
     assert report["tasks"][0]["source_status"] == "pending"
+    receipt = report["tasks"][0]["sources"][0]
+    assert receipt["status"] == "review_completed"
+    assert receipt["outcome"]["source_status"] == "pending"
+    assert receipt["outcome"]["conclusion_event_id"]
+    assert report["next_action"] == "await_new_source"
+    assert report["source_queue"]["review_completed"] == 1 and report["source_queue"]["queued"] == 0
+    # A new source must not inherit the previous completed review.
+    current = c.board.task(task["task_id"])
+    later = intake(lifecycle, current, result, source_id="second-reply",
+                   prior_decision_event_id=receipt["outcome"]["conclusion_event_id"])
+    second_path = root / "second-source.txt"
+    second_path.write_text("Another partial statement, still no native historical input.", encoding="utf-8")
+    later["artifact"] = artifact(second_path)
+    sources.submit(c.board, task["task_id"], later)
+    sources.apply_pending(c.board, {task["task_id"]})
+    history = sources.receipts(c.board, task["task_id"])
+    assert [r["status"] for r in history] == ["review_completed", "review_requested"]
+    assert history[1]["outcome"] is None
+    assert sources.readiness(c)["next_action"] == "resume_source_review"
 
 
 def test_no_new_review_for_renamed_unchanged_content_and_mutated_ids(lifecycle):

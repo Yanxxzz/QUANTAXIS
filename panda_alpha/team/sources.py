@@ -15,6 +15,7 @@ MAX_PACKET_BYTES = 256_000
 def receipts(board, task_id):
     events = board.events(task_id)
     by_id = {e["event_id"]: e for e in events}
+    positions = {e["event_id"]: i for i, e in enumerate(events)}
     result = []
     for event in events:
         if event["kind"] != "source_received":
@@ -22,8 +23,31 @@ def receipts(board, task_id):
         value = event["payload"]
         review_id = value["review"]["operation_id"]
         failure = by_id.get(review_id + ":blocked")
+        status = "review_requested" if review_id in by_id else "blocked" if failure else "queued"
+        outcome = None
+        if review_id in positions:
+            # A later reopen is a separate review. Never use a later conclusion
+            # or a historical pre-intake review to close this source receipt.
+            following = []
+            for later in events[positions[review_id] + 1:]:
+                if later["kind"] == "evidence_review_requested":
+                    break
+                following.append(later)
+            reviews = [e for e in following if e["kind"] in {"review", "result_review"}
+                       and e["payload"].get("reply_to") == value["review"]["target_event_id"]]
+            if reviews:
+                review = reviews[-1]
+                conclusion = next((e for e in following if e["kind"] == "conclusion"
+                                   and e["payload"].get("review_event_id") == review["event_id"]), None)
+                status = "review_completed" if conclusion or review["kind"] == "review" else "awaiting_conclusion"
+                assessment = review["payload"].get("assessment", {})
+                outcome = {"review_event_id": review["event_id"],
+                           "conclusion_event_id": conclusion["event_id"] if conclusion else None,
+                           "decision": review["payload"]["decision"],
+                           "source_status": assessment.get("source_status", "pending"),
+                           "economic_status": assessment.get("economic_status", "not_evaluated")}
         result.append(dict(value, event_id=event["event_id"],
-                           status="review_requested" if review_id in by_id else "blocked" if failure else "queued",
+                           status=status, outcome=outcome,
                            reason=failure["payload"]["reason"] if failure else None))
     return result
 
@@ -218,7 +242,7 @@ def readiness(c):
         tasks.append({"task_id": task["task_id"], "owner": task["owner"], "state": task["state"],
                       "source_status": assessment.get("source_status", "pending"),
                       "economic_status": assessment.get("economic_status", "not_evaluated"), "pending": sorted(pending),
-                      "sources": [{"receipt_id": r["event_id"], "status": r["status"], "reason": r["reason"]}
+                      "sources": [{"receipt_id": r["event_id"], "status": r["status"], "reason": r["reason"], "outcome": r["outcome"]}
                                   for r in receipts(c.board, task["task_id"])]})
     tables = {r[0] for r in c.board.db.execute("SELECT name FROM sqlite_master WHERE type='table'")}
     sessions = [dict(r) for r in c.board.db.execute("SELECT session_id,spec,round,actions,stop_reason FROM team_host_sessions")] if "team_host_sessions" in tables else []
@@ -229,10 +253,17 @@ def readiness(c):
     remaining = ({"runs": max(0, budget["policy"]["max_runs"] - budget["usage"]["runs"]),
                   "credits": max(0, budget["policy"]["max_total_credits"] - budget["usage"]["credits"])}
                  if budget.get("policy") else None)
+    queue = {state: sum(r["status"] == state for task in tasks for r in task["sources"])
+             for state in ("queued", "review_requested", "awaiting_conclusion", "review_completed", "blocked")}
+    next_action = ("resume_source_review" if queue["review_requested"] or queue["awaiting_conclusion"] else
+                   "review_queued_sources" if queue["queued"] else "resolve_source_intake" if queue["blocked"] else
+                   "await_new_source" if any(t["source_status"] == "pending" for t in tasks) else "review_research_plan")
     return {"control": c.board.mode(), "budget": budget, "remaining_study_capacity": remaining,
-            "tasks": tasks, "sessions": sessions,
+            "tasks": tasks, "sessions": sessions, "source_queue": queue, "next_action": next_action,
             "source_watches": [dict(e["payload"], task_id=t["task_id"]) for t in c.board.tasks()
                                for e in c.board.events(t["task_id"]) if e["kind"] == "source_watch_checked"],
             "funding_authorization": False, "source_collection": "bounded_public_guides_and_explicit_cached_text",
-            "next_step": "Review queued sources in a bounded host with matching seed_tasks; "
-                         "stopped or expired sessions never restart themselves. Missing native evidence stays pending."}
+            "next_step": ("No new source awaits review. Keep unresolved qualifications and wait for new evidence."
+                          if next_action == "await_new_source" else
+                          "Use the matching tasks and original bounded runtime; finished/expired sessions need a new explicit session. "
+                          "Completed source review does not mean source verification or spending permission.")}
