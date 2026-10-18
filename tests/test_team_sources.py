@@ -91,6 +91,66 @@ def test_no_new_review_for_renamed_unchanged_content_and_mutated_ids(lifecycle):
     assert len(sources.receipts(c.board, task["task_id"])) == 1
 
 
+def test_blind_source_opinions_then_joint_review_and_scientific_closure(lifecycle):
+    c, registry, _, _ = lifecycle
+    task, result = settled(lifecycle)
+    task = close(lifecycle, task, result)
+    jobs, total, control = deepcopy(c.ledger.jobs()), registry.total, c.board.mode()
+    receipt = sources.submit(c.board, task["task_id"], intake(lifecycle, task, result))
+    host = Host(c, registry, "independent", spec(seed_tasks=[task["task_id"]], independent_source_review=True))
+    for role in ("market", "fundamental", "skeptic"):
+        p = host.next()["packet"]
+        assert (p["role"], p["action"]) == (role, "source_analysis")
+        assert p["memory"] == {} and p["role_packet"] == {"role": role, "funding_authorization": False}
+        assert "events" not in p["task"] and "review_targets" not in p["task"]
+        assert "independent_source_analyses" not in p
+        assert Host(c, registry, "independent").next()["packet"] == p
+        output = {"claim": role + " independent observation", "test": "Distinguish dictionary from native PIT",
+                  "decision": "analysis_only", "artifacts": [receipt["artifact"]],
+                  "resolved": [], "pending": ["native PIT"], "limitations": ["Fixture only"]}
+        host.respond(p["work_id"], {"work_id": p["work_id"], "output": output})
+        host.respond(p["work_id"], {"work_id": p["work_id"], "output": output})
+        assert c.board.task(task["task_id"])["version"] == task["version"] + 1
+        assert registry.total == total and c.ledger.jobs() == jobs and c.board.mode() == control
+    p = host.next()["packet"]
+    assert p["action"] == "result_review"
+    assert {e["actor"] for e in p["independent_source_analyses"]} == {"market", "fundamental", "skeptic"}
+    message = result_message(c.board.task(task["task_id"]), result)
+    message["artifacts"] = message["artifacts"] + [receipt["artifact"]]
+    host.respond(p["work_id"], {"work_id": p["work_id"], "output": message})
+    p = host.next()["packet"]
+    assert p["role"] == "lead" and p["action"] == "conclude"
+    assert len(p["independent_source_analyses"]) == 3
+    host.respond(p["work_id"], {"work_id": p["work_id"], "output": {
+        "decision": "confirm", "reason": "Capability only; independent notes preserve native PIT"}})
+    assert sources.receipts(c.board, task["task_id"])[0]["status"] == "review_completed"
+    assert registry.total == total and c.ledger.jobs() == jobs
+    assert registry.reconciled_memory()["registry_constraints"]["source_pending"]
+
+
+def test_blind_note_recovery_after_event_commit_is_idempotent(lifecycle, monkeypatch):
+    c, registry, _, _ = lifecycle
+    task, result = settled(lifecycle)
+    task = close(lifecycle, task, result)
+    receipt = sources.submit(c.board, task["task_id"], intake(lifecycle, task, result))
+    host = Host(c, registry, "note-recovery", spec(seed_tasks=[task["task_id"]], independent_source_review=True))
+    p = host.next()["packet"]
+    output = {"claim": "independent", "test": "native input remains absent", "decision": "analysis_only",
+              "artifacts": [receipt["artifact"]], "resolved": [], "pending": ["native PIT"], "limitations": []}
+    original = host._apply
+    def interrupt(packet, response):
+        original(packet, response)
+        # Simulate durable event with its work acknowledgement not yet retained.
+        c.board.db.execute("UPDATE team_host_work SET state='answered' WHERE work_id=?", (packet["work_id"],))
+        raise RuntimeError("lost acknowledgement")
+    monkeypatch.setattr(host, "_apply", interrupt)
+    with pytest.raises(RuntimeError, match="lost acknowledgement"):
+        host.respond(p["work_id"], {"work_id": p["work_id"], "output": output})
+    p2 = Host(c, registry, "note-recovery").next()["packet"]
+    assert p2["role"] == "fundamental"
+    assert len([e for e in c.board.events(task["task_id"]) if e["kind"] == "source_analysis"]) == 1
+
+
 def test_legacy_result_gains_cache_observation_without_changing_original(lifecycle, monkeypatch):
     c, registry, _, _ = lifecycle
     original_event = c.board.event
