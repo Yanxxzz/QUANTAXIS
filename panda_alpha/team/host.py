@@ -7,7 +7,7 @@ from pathlib import Path
 import subprocess
 import tomllib
 
-from .contracts import INFORMATION, ROLES, canonical, digest, text_fields, timestamp
+from .contracts import INFORMATION, ROLES, canonical, digest, text_fields, timestamp, strings, verify_artifacts
 
 
 class Host:
@@ -38,6 +38,8 @@ class Host:
                     raise ValueError(f"Host {key} must be a positive integer")
             if not isinstance(spec.get("seed_tasks", []), list):
                 raise ValueError("seed_tasks must be a list of existing task IDs")
+            if type(spec.get("independent_source_review", False)) is not bool:
+                raise ValueError("independent_source_review must be a boolean")
             for task_id in spec.get("seed_tasks", []):
                 self.c.board.task(task_id)
             from .sources import validate_watches
@@ -105,8 +107,21 @@ class Host:
             "propose": "request with the assigned task_id/owner, or decision=no_candidate and reason; never invent evidence",
             "challenge_response_review": "claim/test/decision/artifacts; result_review adds scoped assessment and evidence_contract; host binds IDs/version/reply_to",
             "cross_review": "claim/test/decision/artifacts; compare peer brief and propose a discriminating control",
+            "source_analysis": "claim/test, decision=analysis_only, artifacts, resolved/pending/limitations string lists; no qualification changes",
             "freeze": "priority/allocation_reason/diversity_check/cross_line_decisions, or decision=park with reason",
             "conclude": "decision/reason agreeing with independent review; host supplies stable operation and review IDs"}
+        if action == "source_analysis":
+            # First opinions contain evidence and frozen definitions, not earlier
+            # verdicts, peer notes, or reconciled scientific-memory conclusions.
+            packet["task"] = {k: task[k] for k in ("task_id", "owner", "request", "request_hash", "fingerprint", "version", "state")}
+            packet["memory"] = {}
+            packet["role_packet"] = {"role": role, "funding_authorization": False}
+        elif task and action in {"review", "result_review", "conclude"}:
+            from .sources import receipts
+            active_sources = {r["event_id"] for r in receipts(self.c.board, task_id)
+                              if r["status"] in {"review_requested", "awaiting_conclusion"}}
+            packet["independent_source_analyses"] = [e for e in self.c.board.events(task_id)
+                if e["kind"] == "source_analysis" and set(e["payload"]["source_receipt_ids"]) == active_sources]
         with self.c.board.transaction():
             old = self.db.execute("SELECT state FROM team_host_work WHERE work_id=?", (work_id,)).fetchone()
             if old:
@@ -153,6 +168,19 @@ class Host:
         if datetime.now(timezone.utc) >= timestamp(state["spec"]["deadline"]):
             return self.stop("deadline")
         apply_pending(self.c.board, self.owned_tasks())
+        if state["spec"].get("independent_source_review"):
+            # Finish all blind opinions before exposing any cross-role synthesis.
+            from .sources import receipts
+            for task_id in sorted(self.owned_tasks()):
+                active_sources = sorted(r["event_id"] for r in receipts(self.c.board, task_id)
+                                        if r["status"] == "review_requested")
+                if not active_sources:
+                    continue
+                notes = [e for e in self.c.board.events(task_id) if e["kind"] == "source_analysis"
+                         and e["payload"]["source_receipt_ids"] == active_sources]
+                for role in ("market", "fundamental", "skeptic"):
+                    if not any(e["actor"] == role for e in notes):
+                        return self._issue(state, role, "source_analysis", task_id, source_receipt_ids=active_sources)
         assignments = (state["plan"] or {}).get("assignments", [])
         current_ids = [f"{self.session_id}.r{state['round']}.{a['owner']}" for a in assignments]
         selected = set(current_ids) | self.owned_tasks()
@@ -283,6 +311,25 @@ class Host:
         elif action == "conclude":
             review = p["task"]["review_targets"]["result_review"]
             self.c.conclude(task_id, p["version"], dict(out, operation_id=p["work_id"], review_event_id=review["event_id"]), self.registry)
+        elif action == "source_analysis":
+            text_fields(out, ("claim", "test"))
+            if out.get("decision") != "analysis_only":
+                raise ValueError("Independent source notes are analysis_only, never qualification decisions")
+            for key in ("resolved", "pending", "limitations"):
+                if out.get(key) != []:
+                    strings(out.get(key), key)
+            verify_artifacts(out.get("artifacts"))
+            expected = {canonical(i["artifact"]) for i in p["source_material"]["items"]}
+            if not expected or not expected <= {canonical(a) for a in out["artifacts"]}:
+                raise ValueError("Independent source analysis must bind supplied new evidence")
+            payload = dict(out, source_receipt_ids=p["source_receipt_ids"], request_hash=p["task"]["request_hash"],
+                           version=p["version"], session_id=self.session_id)
+            with self.c.board.transaction():
+                current = self.c.board.task(task_id)
+                if current["version"] != p["version"] or current["request_hash"] != payload["request_hash"]:
+                    raise ValueError("Independent source analysis has a stale task binding")
+                if not self.c.board._retry(p["work_id"], task_id, "source_analysis", payload):
+                    self.c.board.event(task_id, p["role"], "source_analysis", payload, p["work_id"])
         elif action in {"dispatch", "resume"}:
             raise ValueError("Agent responses cannot execute or acknowledge platform work")
         else:

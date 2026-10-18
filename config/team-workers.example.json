@@ -1,5 +1,8 @@
 {
   "codex_command": ["codex"],
+  "model": "gpt-6.1-sol",
+  "reasoning_effort": "max",
+  "role_overrides": {"skeptic": {"reasoning_effort": "ultra"}},
   "turn_timeout": 600,
   "max_attempts": 3,
   "retry_backoff": 5,

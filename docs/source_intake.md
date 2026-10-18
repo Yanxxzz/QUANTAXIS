@@ -46,6 +46,10 @@ python -m panda_alpha.team readiness --ledger research_runs/experiments.sqlite3
 
 ## 有限会话的自动检查
 
+需要四角色共同补证时，可在新有限 session 中设置 `independent_source_review: true`。原任务重开后，Market、Fundamental、Skeptic 分别获得新来源正文和冻结定义；初审包不含历史结论、科学记忆、同伴意见或其他任务板内容。三份 `source_analysis` 只追加意见事件，不推进版本、不变更来源资格或预算。全部初审落板后，再按原 `review/result_review → conclude` 流程综合核验，显式解释分歧。未运行的对照仍走原作者答复的审查，不制造官网结果或试验登记。
+
+此模式仍使用原 work_id、尝试上限和截止时间，重启恢复不会重复初审或重开。默认关闭以兼容已有部署。独立初审减少工作包中的相互暗示，不能保证同一基础模型的统计独立性；显式附加上下文和模型自身会话也须避免放入其他角色尚未公开的判断。本轮部署使用空 `context_files` 和新的四个会话。
+
 在 `host-init` 输入中增加可选 `source_watches`：
 
 ```json

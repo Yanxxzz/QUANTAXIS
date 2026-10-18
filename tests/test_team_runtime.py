@@ -8,7 +8,7 @@ import time
 import pytest
 
 from panda_alpha.registry import ResearchRegistry
-from panda_alpha.team.codex_worker import command
+from panda_alpha.team.codex_worker import command, role_config
 from panda_alpha.team.coordinator import Coordinator
 from panda_alpha.team.demo import artifact, synthetic_request
 from panda_alpha.team.host import Host, MailboxAgents
@@ -175,6 +175,31 @@ def test_exclusive_runtime_and_immutable_binding(tmp_path):
     config["max_attempts"] = 3
     write(args[3], config)
     with pytest.raises(ValueError, match="binding changed"):
+        prepare(*args)
+
+
+def test_role_model_choices_are_frozen_and_used_on_resume(tmp_path):
+    args = setup(tmp_path, model="gpt-6.1-sol", reasoning_effort="max",
+                 role_overrides={"skeptic": {"reasoning_effort": "ultra"}})
+    _, manifest = prepare(*args)
+    for role, effort in (("lead", "max"), ("market", "max"), ("fundamental", "max"), ("skeptic", "ultra")):
+        for thread in (None, "existing-role-session"):
+            argv = command(role_config(manifest["workers"], role), tmp_path, thread)
+            assert argv[argv.index("-m") + 1] == "gpt-6.1-sol"
+            assert 'model_reasoning_effort="' + effort + '"' in argv
+            assert 'approval_policy="never"' in argv
+    changed = read(args[3])
+    changed["role_overrides"]["skeptic"]["reasoning_effort"] = "max"
+    write(args[3], changed)
+    with pytest.raises(ValueError, match="binding changed"):
+        prepare(*args)
+
+
+@pytest.mark.parametrize("overrides", [{"unknown": {}}, {"lead": {"turn_timeout": 3600}},
+                                       {"market": {"model": ""}}, {"skeptic": None}])
+def test_role_overrides_cannot_change_tools_or_runtime_limits(tmp_path, overrides):
+    args = setup(tmp_path, role_overrides=overrides)
+    with pytest.raises(ValueError, match="roles|overridden"):
         prepare(*args)
 
 

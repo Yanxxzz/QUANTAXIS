@@ -25,7 +25,7 @@ DEFAULTS = {"turn_timeout": 600, "max_attempts": 3, "retry_backoff": 5,
 
 def worker_config(path):
     config = read(path)
-    allowed = set(DEFAULTS) | {"codex_command", "model", "reasoning_effort", "context_files"}
+    allowed = set(DEFAULTS) | {"codex_command", "model", "reasoning_effort", "context_files", "role_overrides"}
     if not isinstance(config, dict) or set(config) - allowed:
         raise ValueError("Unknown worker configuration fields")
     value = dict(DEFAULTS, **config)
@@ -51,6 +51,13 @@ def worker_config(path):
         value.setdefault(key, inherited.get(source))
         if value[key] is not None and (not isinstance(value[key], str) or not value[key]):
             raise ValueError(f"Invalid {key}")
+    overrides = value.get("role_overrides", {})
+    if not isinstance(overrides, dict) or set(overrides) - set(ROLES):
+        raise ValueError("Model overrides must name existing roles")
+    for role, choices in overrides.items():
+        if (not isinstance(choices, dict) or set(choices) - {"model", "reasoning_effort"}
+                or any(not isinstance(v, str) or not v.strip() for v in choices.values())):
+            raise ValueError(f"Only nonempty model/reasoning choices may be overridden: {role}")
     context = []
     for name in value.pop("context_files", []):
         file = Path(name).resolve()

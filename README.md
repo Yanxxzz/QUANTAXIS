@@ -38,7 +38,7 @@ py -3.11 -m venv .venv
 
 ## 持续角色调度
 
-先安装并登录 Codex CLI，确认 `codex login status` 成功。复制[工作者配置](config/team-workers.example.json)，填写本机 `codex_command`；可显式选择 `model` 和 `reasoning_effort`，省略时在首次启动固定当前 Codex 配置中的选择。模型调用会使用该账户额度，官网算力另行核算。
+先安装并登录 Codex CLI，确认 `codex login status` 成功。复制[工作者配置](config/team-workers.example.json)，填写本机 `codex_command`。示例使用 `gpt-6.1-sol`：Lead、Market、Fundamental 为 `max`，Skeptic 为 `ultra`；`role_overrides` 可分别覆盖角色的模型或推理强度，不能覆盖工具和运行限额。省略默认选择时在首次部署固定当前 Codex 配置，恢复沿用原清单。模型调用使用该账户额度，官网算力另行核算。
 
 再填写[有限会话模板](config/team-host.example.json)的目标和截止时间，复用既有实验账本和科学登记：
 
@@ -91,6 +91,8 @@ python -m panda_alpha.team readiness --ledger research_runs/experiments.sqlite3
 ```
 
 这一只读命令汇总来源阻点、证据队列、原预算和宿主边界，不授予执行权限。队列区分重审中、待结论和已完成；“重审完成”不等于“来源通过”。无新证据时明确提示等待。接收格式、自动检查配置及完整可用的剩余条件见[来源补证](docs/source_intake.md)。
+
+有限补证会话可设置 `independent_source_review: true`：两位研究员和审查员先分别阅读新来源与冻结定义，提交不改变资格的独立意见；该步骤不提供任务历史结论、科学记忆或其他角色意见。所有初审完成后，Skeptic 对照原结果及三份意见解释分歧，Lead 通过原结论流程更新科学记忆。不同推理强度仍使用同一基础模型，不保证统计独立性；来源证据和可证伪检查优先于多数同意。
 
 ## 当前来源状态
 
