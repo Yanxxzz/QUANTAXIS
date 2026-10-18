@@ -57,14 +57,28 @@ A 的原始逐形成日有限值键、共同支持集与对照 S 的同快照导
 
 | 已看到的实现 | 对 A 的帮助与限制 |
 | --- | --- |
-| `get_base_factors_pro` 将输入起点减去 30 日历日，`process_result` 再按请求起点截断输出 | 给出可核对的暖机假设，不证明原 Run 实际输入起点 |
-| 工作流按股票构建复权开盘价，日期 t 的 n 日收益为 `open[t+n+1]/open[t+1]-1`；IC 和分组统计以该 date 建索引 | 该实现的图表日期对应因子日期，收益区间延伸到后续开盘；仍需确认旧 Run 适用性 |
+| Python 构建入口 `create_factor_from_class` 先减 3 个月，`get_base_factors_pro` 再减 30 日历日；`process_result` 按原请求起点截断输出 | 完整公开链路的查询起点为 2024-09-02，不证明原 Run 实际收到的首日 |
+| 日期 t 的 n 行收益为 `hfq_open[t+n+1]/hfq_open[t+1]-1`，IC 和分组统计以该 date 建索引；但 `hfq_open` 由首个 open 和 `close/pre_close` 累积构造 | 公开索引对应因子日期；不能由变量名推出真实开盘到开盘收益，也不能把按证券行移动直接等同于统一交易日历 |
 | 清除无穷值、截面去极值/标准化，与收益按日期证券合并后过滤缺失，再分组和按可用日期计数采样 | 本地候选/对照有限值掩码相同，不足以证明官网清洗后的共同样本和调仓日期相同 |
 
-源码：[输入处理](https://github.com/PandaAI-Tech/panda_factor/blob/a783e69732da1f9ffc93844dc522375a1f67c507/panda_factor/panda_factor/generate/factor_data_handler.py)、[分析工作流](https://github.com/PandaAI-Tech/panda_factor/blob/a783e69732da1f9ffc93844dc522375a1f67c507/panda_factor/panda_factor/analysis/factor_analysis_workflow.py)、[统计与图表](https://github.com/PandaAI-Tech/panda_factor/blob/a783e69732da1f9ffc93844dc522375a1f67c507/panda_factor/panda_factor/analysis/factor.py)。
+源码：[上层 Python 构建](https://github.com/PandaAI-Tech/panda_factor/blob/a783e69732da1f9ffc93844dc522375a1f67c507/panda_factor/panda_factor/generate/macro_factor.py#L707-L728)、[输入处理](https://github.com/PandaAI-Tech/panda_factor/blob/a783e69732da1f9ffc93844dc522375a1f67c507/panda_factor/panda_factor/generate/factor_data_handler.py)、[分析工作流](https://github.com/PandaAI-Tech/panda_factor/blob/a783e69732da1f9ffc93844dc522375a1f67c507/panda_factor/panda_factor/analysis/factor_analysis_workflow.py)、[统计与图表](https://github.com/PandaAI-Tech/panda_factor/blob/a783e69732da1f9ffc93844dc522375a1f67c507/panda_factor/panda_factor/analysis/factor.py)。
 
 已有回测缓存的代码字节与原冻结代码一致；完整日志接口记录含 17 条日志、无节点错误，但没有 `ACTIVITY_PRICE_INPUT` 记录，因子输出节点 `factor=null`，没有可复核的历史输入/因子矩阵。IC、RankIC 和分组收益首标签均为 2025-04-08。
 
-对原冻结计算做合成序列的代数检查，A 与对照最早都在第 **141 个日期观察**产生有限值，合成有限值掩码一致。这不是实际市场数据或经济检验。若将请求起点 2025-01-02 仅提前 30 日历日至 2024-12-03，截至首标签 2025-04-08，即使每天都有一个观察，也最多 **127 个日期**。因此，“仅提前 30 日”与上述形成日标签规则不能同时解释这次旧结果。可能涉及额外输入、不同部署或不同标签规则，不能据此猜定原因，更不能认定经济失败。
+对原冻结计算做合成序列的代数检查，A 与对照最早都在第 **141 个日期观察**产生有限值，合成有限值掩码一致。这不是实际市场数据或经济检验。PR #9 前的汇总只计入底层 30 天，从而得到“最多 127 个日期”的条件判断；该假设遗漏上层 3 个月预取，不代表完整公开实现，本次明确撤回其作为 A 阻点的用法。完整日期链为 2025-01-02 → 2024-10-02 → 2024-09-02。
 
 下一步所需证据已缩小为：原 Run 的真实最早输入/首个有限值日期及数量；其报告日期与收益端点规则；候选与对照在清洗分组后的共同有效键。可接受等价的官方说明、日志或只读记录，不强求某个名为 worker/snapshot 的导出字段。本轮不重开真实研究会话、不清除来源资格；A 继续 pending，B 的报告期及历史 PIT 门槛原样保留，剩余 46 点不动。
+
+## PR #9 合并后的完整调用链与支持集复核
+
+本轮保留已完成的旧核验，重新核对固定源码与原件哈希，没有调用账户或启动官网任务。双层预取在早前的私有来源审查中已记录，本次修复后续汇总遗漏，不把它计作新的原生证明。
+
+- 原固定 80 只股票的既有行情回放，在双层预取下最早有限值为 **2025-04-07**；官网首标签为 **2025-04-08**，一天差异仍未独立解释。已有 70 个图表标签的精确拟合以实收首日为条件，不能反过来证明首日。
+- 原冻结分析区间 2026-06-18 至 2026-09-18 已验证不依赖请求前额外历史：5,277 个日期—证券键中有 4,637 个共同有限值，额外预取与显式输入的有限值掩码、排名相同。该窄结论继续保留，不能升级成官网输入同一性。
+- 新增保守支持检查只读取同一固定样本的已有行情。A/S 的原始有限值掩码相同；经过收益标签非缺失和 `high != low` 的确定可交易条件后，各保留 **25,111 个相同键**。4 月 7 日仍有 75 只、4 月 8 日有 76 只不同分数，因此不能在该本地样本中用不足 10 组解释那一天差异。缓存缺少原生 `limit_up/limit_down` 与可用时点，这只是共同支持的本地下界，不是完整官网筛选结果。
+- 公共代码在去极值前和分组时添加随机扰动；常数分数可能经扰动后得到非空标准分和分组，不能只看 `z_score` 的零方差分支。比较需要实际共同键、调仓日及分组规则，不能只看原始非空数。扰动规则来自[清洗函数](https://github.com/PandaAI-Tech/panda_factor/blob/a783e69732da1f9ffc93844dc522375a1f67c507/panda_factor/panda_factor/analysis/factor_func.py#L470-L499)和上述分析工作流。
+- 对 `hfq_open` 表达式做纯合成代数检查，改变后续 open 不改变该序列；它只以首个 open 缩放由 close/pre_close 累积的路径。因此前文“后续开盘价收益”的简称已更正。此发现只约束固定公开版本，不能据此认定原 Run 使用了错误价格。
+
+原 A 缓存没有历史输入矩阵或自定义输入日志。免费路线仍是取得适用于原 Run 的最小输入/时间说明及历史共同键，或等价的稳定数据记录与过滤规则。当前没有证据表明再买一份相同形态的汇总报告就能补齐这些信息。B 的真实字段映射、同报告期及历史公告/修订 PIT 条件不变。
+
+操作者本轮允许在剩余 46 点内安排必要消费，优先活动算力；研究仍保持停止，不激活过期授权、不扩大剩余 2 次运行槽位。本次开销为 0。新核验原件保存在私有目录 `work/post_pr9_review_20261018/`；尚未启动四角色对这些材料的独立重审，不把文档更新当作来源放行。
