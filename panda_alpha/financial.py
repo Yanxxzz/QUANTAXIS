@@ -318,6 +318,9 @@ def migrate_legacy_financial(workspace: str | Path, db: Any, *, batch_size: int 
     db["stock_financial_revision"].create_index([("code", 1), ("available_date", 1)])
     hashes = {}; provenance_rows = []; counts = Counter(); failures = []
     def source(path: Path) -> tuple[dict, bytes]:
+        # Match the canonical workspace before deriving provenance. Windows
+        # TEMP/source_index can use 8.3 aliases (e.g. RUNNER~1) for the same file.
+        path = path.resolve()
         raw = path.read_bytes(); digest = _hash(raw)
         hashes[str(path.resolve())] = digest
         record = {"_id": digest, "source_path": path.relative_to(workspace).as_posix(),

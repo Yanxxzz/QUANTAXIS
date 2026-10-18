@@ -1,0 +1,10 @@
+{
+  "codex_command": ["codex"],
+  "turn_timeout": 600,
+  "max_attempts": 3,
+  "retry_backoff": 5,
+  "poll_interval": 1,
+  "orphan_timeout": 30,
+  "max_component_restarts": 3,
+  "context_files": []
+}

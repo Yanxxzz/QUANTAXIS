@@ -2,7 +2,7 @@
 
 本项目在 [QUANTAXIS](https://github.com/yutiansut/QUANTAXIS) 上构建 PandaAI 因子研究工作流。两个研究员探索不同经济机制，独立证伪员提出竞争解释，负责人统一冻结定义、分配算力和推进任务。
 
-**默认离线。只有明确、有限的研究与资金授权和来源核验同时满足后，才安排官网试点。** 调度器通过显式配置的角色宿主取得真实回复，没有默认模型或付费 LLM 服务。合成演练、官网报告交付、来源资格和经济有效性分别验收；不会自动改变正式因子池。
+**默认不执行官网回测。只有明确、有限的研究与资金授权和来源核验同时满足后，才安排官网试点。** `host-serve` 自动启动四个真实 Codex 角色及统一协调器，使用操作者已登录的模型账户和额度。合成演练、真实模型协作、官网报告交付、来源资格和经济有效性分别验收；不会自动改变正式因子池。
 
 ## 四个角色
 
@@ -11,9 +11,9 @@
 - **fundamental：经营变化与资本配置研究员。** 探索经营信息、盈利质量和资本配置机制。
 - **skeptic：独立证伪员。** 先登记替代解释和失败条件，再审查结果及其证据范围。
 
-角色配置位于 [.codex/agents/](.codex/agents/)。角色提示词用于分工；它们不构成进程、文件系统或账号权限的强隔离。
+角色配置位于 [.codex/agents/](.codex/agents/)。无人值守宿主为四角色分别保留模型会话，禁用 shell、插件、应用、浏览器及子 agent 工具，并显式使用只读沙箱。角色只返回 JSON；协调器拥有任务板及官网执行入口。
 
-两个研究方向并行准备，官网任务统一串行执行。官网原生回测承担主要经济验证；本地负责免费兼容性检查、既有结果复用、成本归因与证据复核。协作必须形成“假设 → 挑战 → 答复 → 冻结 → 实验 → 复核 → 决定”的闭环。
+两个研究方向分别准备，当前调度按依赖顺序交接，官网任务统一串行执行。官网原生回测承担主要经济验证；本地负责免费兼容性检查、既有结果复用、成本归因与证据复核。协作必须形成“假设 → 挑战 → 答复 → 冻结 → 实验 → 复核 → 决定”的闭环。
 
 ## 离线运行
 
@@ -34,26 +34,32 @@ py -3.11 -m venv .venv
 .\.venv\Scripts\python.exe -m panda_alpha.team --help
 ```
 
-任务板使用 SQLite；`status`、`packet`、`plan` 查看任务、角色材料与待办。真实角色通过 `host-run` 交接；也保留 `submit/message/freeze` 手动导入入口。结算后必须经过带范围和证据绑定的 `result_review`，再由 `conclude` 同步科学登记及任务结论。`pause` 停止新增派发。参数与恢复流程见[协作说明](docs/team_workflow.md)。
+任务板使用 SQLite；`status`、`packet`、`plan` 查看任务、角色材料与待办。真实角色通过 `host-serve` 自动运行；`host-run` 保留外部宿主接入，`submit/message/freeze` 保留手动导入。结算后必须经过带范围和证据绑定的 `result_review`，再由 `conclude` 同步科学登记及任务结论。`pause` 停止新增派发。
 
 ## 持续角色调度
 
-宿主提供四个实际角色，使用文件邮箱或显式本地命令适配器。任务板只有一个协调写入者；研究员和证伪员提交原始回复。先复制并填写[有限会话模板](config/team-host.example.json)的截止时间，复用既有实验账本和科学登记：
+先安装并登录 Codex CLI，确认 `codex login status` 成功。复制[工作者配置](config/team-workers.example.json)，填写本机 `codex_command`；可显式选择 `model` 和 `reasoning_effort`，省略时在首次启动固定当前 Codex 配置中的选择。模型调用会使用该账户额度，官网算力另行核算。
+
+再填写[有限会话模板](config/team-host.example.json)的目标和截止时间，复用既有实验账本和科学登记：
 
 ```powershell
 python -m panda_alpha.team host-init --ledger research_runs/experiments.sqlite3 --registry research_runs/research_trials.sqlite3 --session review-01 --input host-session.json
-python -m panda_alpha.team host-run --ledger research_runs/experiments.sqlite3 --registry research_runs/research_trials.sqlite3 --session review-01 --mailbox research_runs/role-mailbox --output research_runs/host-review --watch
+python -m panda_alpha.team host-serve --ledger research_runs/experiments.sqlite3 --registry research_runs/research_trials.sqlite3 --session review-01 --workers workers.local.json --output research_runs/host-review
 ```
 
-角色宿主读取 `role-mailbox/<role>/requests/<work_id>.json`，独立产出 `{work_id, output}`，原子写入同角色的 `responses/`。没有工作者时明确等待，不生成假回复。命令适配器用 `--commands FILE` 替换 `--mailbox`，配置四角色各自的 argv，JSON 从 stdin 输入、stdout 输出。后端需按 `work_id` 去重。
+一条命令启动四角色进程和一个协调器；每个角色使用自己的持久 Codex 会话。按 `work_id` 保存请求、模型事件、原始回复与尝试记录。角色只能看到工作包和 `context_files` 显式附带的文本，不会凭文件路径自行读取证据。需要更多材料时保留缺口，交由操作者或受控证据入口补入。
 
-会话持久化轮数、动作数、截止时间和待办。重启复用相同 session 和数据库；校验失败的角色回复保留原件，携带具体错误重新交给该角色。既有 Run 的恢复先于新派发，模糊创建响应停在对账入口。会话限额不替代累计研究配额，也不会激活或扩大 grant。上面的命令未启用执行；官网执行仍需显式 `--execute --config FILE` 和有效授权。
+模型超时会终止本次进程；暂时断线按原 work_id 和会话有限重连。工作者或协调器崩溃会自动重启；宿主被终止后重跑同一命令可接管尚存子进程并恢复原待办。重试次数、轮数、动作数、截止时间都不会重置。无人值守需要此宿主进程持续运行；操作系统重启后的拉起由服务管理器负责，本命令不安装系统启动项。
+
+登录或模型额度问题会停在 `attention`。修复后可用 `host-retry --output research_runs/host-review --reason "说明已修复的问题"` 记入审计，再重跑原命令；仅使用剩余重试次数。启动身份不明、额度耗尽或来源阻点均不会盲目重派。详细状态与恢复方法见[无人值守宿主](docs/unattended_host.md)。
+
+校验失败的角色回复保留原件，携带具体错误重新交给该角色。既有 Run 的恢复先于新派发，模糊创建响应停在对账入口。会话限额不替代累计研究配额，也不会激活或扩大 grant。上面的命令未启用执行；官网执行仍需显式 `--execute --config FILE` 和有效授权。
 
 `reopen-evidence` 允许同任务补充真实新增证据并重新审查，保留 request hash、Run、账单和策略分母；`evidence` 从缓存生成新快照，保留原 manifest。来源缺口只在明确解决后清除，经济失败进入后续提案约束，人工退役不由补证解除。完整契约见[补证与科学记忆](docs/team_workflow.md#同任务补证与科学记忆)。
 
 ## 当前来源状态
 
-已有 A/B 小型官网试点的缓存报告可用于免费复核。A 的局部暖机对照和报告日期解释已有支持，但原生时钟、共同支持集及 worker 绑定尚未完全确认；B 的字段映射、报告期及 PIT 仍待核验。报告交付通过不授予这些来源资格。本阶段不消耗剩余 46 点，授权及余额以原账本为准。
+已有 A/B 小型官网试点的缓存报告可用于免费复核。登录后的免费文档确认财务字段区分净额/合计，并提供季度和公告日期参数；尚未证明旧回测裸字段映射及历史 PIT。A 的原生时钟、共同支持集及 worker 绑定也仍待核验，详见[本次来源核验](docs/source_review_20261018.md)。本阶段不消耗剩余 46 点，授权及余额以原账本为准。
 
 ## 维护入口
 

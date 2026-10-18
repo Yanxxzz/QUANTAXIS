@@ -116,6 +116,8 @@ pause    --ledger DB --reason TEXT
 
 ## 有限持续调度
 
+无人值守部署使用 `host-serve`，自动监管四角色 Codex 进程和协调器。启动、权限、超时、重连及中断恢复见[宿主说明](unattended_host.md)。下面的 `host-run` 邮箱/命令协议继续用于已有外部宿主。
+
 复制 [team-host.example.json](../config/team-host.example.json)，设置实际目标、轮数、动作上限和含时区的截止时间。模板截止时间故意过期，须按当前授权填写；它不包含资金许可。`seed_tasks` 可选择原任务以便恢复或补证。`host-init` 要求科学登记已存在，复用原历史；不能用新空库绕过消费和研究约束。
 
 ```text
@@ -133,7 +135,7 @@ host-run     --ledger DB --registry DB --session ID --mailbox DIR --output DIR -
 {"work_id":"包内的原值","output":{"decision":"no_candidate","reason":"没有新增来源证据，不重复原试验"}}
 ```
 
-这个例子只适用于 propose。其他动作使用包内契约；host 自动绑定 task/version/actor/reply_to，工作者不写共享数据库。命令桥用 `--commands FILE`，文件是四角色到可信 argv 数组的映射；stdin 接收包，stdout 返回 envelope。代码没有默认模型、提供商、API key 或收费适配器。接入外部付费模型仍需要相应授权。
+这个例子只适用于 propose。其他动作使用包内契约；host 自动绑定 task/version/actor/reply_to，工作者不写共享数据库。命令桥用 `--commands FILE`，文件是四角色到可信 argv 数组的映射；stdin 接收包，stdout 返回 envelope。`host-run` 不替外部宿主启动模型；`host-serve` 显式选择 Codex CLI 并使用操作者现有登录和模型额度，账号与配置由操作者提供。
 
 工作先落盘再投递，回复先落盘再应用。非法业务回复保留并生成新 work_id，连同具体错误发回原角色修正，计入动作上限。重启使用原 session；已记录回复不重新询问模型。外部宿主在丢失确认时可能收到重复 work_id，需自行幂等处理；不保证外部模型调用恰好一次。
 

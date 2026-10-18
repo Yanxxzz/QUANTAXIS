@@ -1,6 +1,7 @@
 from copy import deepcopy
 import hashlib
 import json
+import os
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
@@ -82,7 +83,13 @@ class FinancialTests(unittest.TestCase):
             for row in rows:database[name].rows[row["_id"]]=deepcopy(row)
             return len(rows)
         with TemporaryDirectory() as temporary:
-            workspace=Path(temporary);base=workspace/"factor_workflow"/"filing_market_index"
+            workspace=Path(temporary)
+            if os.name == "nt":
+                import ctypes
+                buffer = ctypes.create_unicode_buffer(32768)
+                if ctypes.windll.kernel32.GetShortPathNameW(str(workspace), buffer, len(buffer)):
+                    workspace = Path(buffer.value)
+            base=workspace/"factor_workflow"/"filing_market_index"
             base.mkdir(parents=True)
             index=base/"original_index.json";index.write_bytes(b'{"original":true}')
             parent=correction_notice()

@@ -20,6 +20,17 @@ def main(argv=None):
     demo.add_argument("--output", type=Path, required=True)
     rehearsal = commands.add_parser("host-demo", help="Three bounded offline rounds including restart and same-task evidence review")
     rehearsal.add_argument("--output", type=Path, required=True)
+    service = commands.add_parser("host-serve", help="Supervise four real Codex workers; default has no website execution")
+    service.add_argument("--ledger", type=Path, required=True)
+    service.add_argument("--registry", type=Path, required=True)
+    service.add_argument("--session", required=True)
+    service.add_argument("--workers", type=Path, required=True)
+    service.add_argument("--output", type=Path, required=True)
+    service.add_argument("--execute", action="store_true")
+    service.add_argument("--config", type=Path)
+    retry = commands.add_parser("host-retry", help="Audit a repaired model login/quota issue without resetting limits")
+    retry.add_argument("--output", type=Path, required=True)
+    retry.add_argument("--reason", required=True)
     amend = commands.add_parser("amend-budget", help="Preview an audited same-study cap increase; no account access")
     amend.add_argument("--ledger", type=Path, required=True)
     amend.add_argument("--input", type=Path, help="Amendment JSON; omit to read the current policy/usage snapshot")
@@ -81,6 +92,14 @@ def main(argv=None):
     elif args.command == "host-demo":
         from .rehearsal import run_rehearsal
         result = run_rehearsal(args.output)
+    elif args.command == "host-serve":
+        if args.execute != (args.config is not None):
+            parser.error("Website execution requires both --execute and --config; omit both for offline research")
+        from .runtime import serve
+        result = serve(args.ledger, args.registry, args.session, args.workers, args.output, args.config)
+    elif args.command == "host-retry":
+        from .runtime import retry_attention
+        result = retry_attention(args.output, args.reason)
     elif args.command != "init" and not args.ledger.is_file():
         parser.error("Ledger does not exist; use init to create an offline board")
     elif args.command == "amend-budget":
