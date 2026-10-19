@@ -7,6 +7,7 @@ the risk of an estimated charge. This distinction is visible in every plan.
 """
 from __future__ import annotations
 
+from contextlib import closing
 from datetime import date, datetime, timezone, timedelta
 import hashlib
 import json
@@ -267,7 +268,7 @@ def read_experiment_jobs(path: str | Path) -> list[dict]:
     path = Path(path).resolve()
     if not path.is_file():
         return []
-    with sqlite3.connect(path.as_uri() + "?mode=ro", uri=True) as connection:
+    with closing(sqlite3.connect(path.as_uri() + "?mode=ro", uri=True)) as connection:
         connection.row_factory = sqlite3.Row
         return [dict(row) for row in connection.execute("SELECT * FROM jobs ORDER BY rowid")]
 
@@ -276,7 +277,7 @@ def read_research_state(path: str | Path) -> dict:
     path = Path(path).resolve()
     if not path.is_file():
         return {}
-    with sqlite3.connect(path.as_uri() + "?mode=ro", uri=True) as connection:
+    with closing(sqlite3.connect(path.as_uri() + "?mode=ro", uri=True)) as connection:
         return research_state(connection)
 
 

@@ -46,7 +46,7 @@ def _numeric(value):
         return False
 
 
-def inspect_report(task, payload):
+def inspect_report(task, payload, *, include_reported_metrics=True):
     """Pure cached-file adapter. Absence of an export remains an explicit unknown."""
     verified = [verify_artifact(a) for a in payload["artifacts"]]
     report, logs, seen = {}, {}, {}
@@ -91,7 +91,7 @@ def inspect_report(task, payload):
         all(k in row and _numeric(row[k]) for k in columns) for row in table)
     logs_complete = logs.get("success", True) is True and logs.get("complete") is True and logs.get("run_id") == payload["run_id"]
     terminal_success = report.get("success") is True and report.get("status") == 2
-    return {"schema": "team-result-evidence-v1", "task_id": task["task_id"],
+    observation = {"schema": "team-result-evidence-v2" if include_reported_metrics else "team-result-evidence-v1", "task_id": task["task_id"],
             "request_hash": task["request_hash"], "fingerprint": task["fingerprint"],
             "run_id": payload["run_id"], "environment": environment, "synthetic": synthetic,
             "frozen_config": {k: task["request"][k] for k in ("window", "cycle", "groups")},
@@ -103,10 +103,18 @@ def inspect_report(task, payload):
                          "log_errors": len(logs.get("errors", []))},
             "report_delivery_verified": bool(terminal_success and dates_in_window and table_complete and groups_complete and logs_complete and not logs.get("errors")
                 and all(s["dates_match"] and s["finite"] for s in sequences.values()) and code_matches is not False),
+            "reported_metrics": {
+                "scope": "Raw cached provider observations, not source certification, net-cost proof or pool admission",
+                "factor_summary": analysis.get("query_factor_analysis_data", []),
+                "group_returns": analysis.get("query_group_return_analysis", []),
+                "rank_ic_chart": analysis.get("query_rank_ic_sequence_chart", {})},
             "source_status": "pending", "economic_status": "not_evaluated", "pool_admission": False,
             "unknown": ["native_input_and_clock", "native_eligible_support", "worker_deployment_binding"]
                        + (["candidate_code_binding"] if code and code_matches is None else []),
             "artifacts": verified}
+    if not include_reported_metrics:
+        observation.pop("reported_metrics")
+    return observation
 
 
 def assessment_contract(message, result_event):
@@ -158,7 +166,8 @@ def validate_assessment(message, task, result_event, *, expected_environment=Non
             raise ValueError("Result evidence contract identity differs")
     if contract.get("run_id") != result_event["payload"]["run_id"]:
         raise ValueError("Result evidence contract refers to another Run")
-    reconstructed = inspect_report(task, {"run_id": contract["run_id"], "environment": contract["environment"], "artifacts": contract["artifacts"]})
+    reconstructed = inspect_report(task, {"run_id": contract["run_id"], "environment": contract["environment"], "artifacts": contract["artifacts"]},
+                                   include_reported_metrics=contract.get("schema") != "team-result-evidence-v1")
     if reconstructed != contract:
         raise ValueError("Result evidence contract observations changed")
     original = read_artifact(result_event["payload"]["artifacts"][0])

@@ -153,6 +153,10 @@ host-run     --ledger DB --registry DB --session ID --mailbox DIR --output DIR -
 
 result_review 的 `assessment` 必填 `scope`（capability/source/economic）、`source_status`（pending/verified）、`economic_status`（not_evaluated/supported/rejected）、`claims/pending/resolved/limitations` 和 `pool_admission:false`。证据绑定的 task、request hash、fingerprint、Run、持久化执行环境及文件哈希须一致；纯合成输出不能认证原生来源或经济效果。
 
+结果观察快照v2在原验收信息之外，直接交付缓存报告中的因子指标表、全部分组统计和RankIC序列，保留原字段、单位及累计序列标签。只读角色无需打开文件即可审查实际表现；报告数据本身不授予来源、净成本或入池资格。旧v1快照继续按原结构严格重建，补充快照使用新路径，不改写旧证据。
+
+公式字段按既有公式求值器及原生提供方的大小写语义核对，冻结请求、声明拼写和哈希保持原样，额外未声明字段仍拒绝；Python输入继续按原生预检回执核对。跨方向审查优先匹配共同风险标签，没有相同标签时仍使用真实的另一方向任务brief，避免自由文本写法差异让第四角色缺席；不能把标签相同或完成跨审冒充经验独立。
+
 来源 verified 需要独立的 `source_evidence` 和 `source_verification`，明确解决冻结请求及观察到的全部核心资格；不能用“报告有数据”替代期间/PIT核验。经济结论还需 economic scope、verified source 及 `economic_verification`。证据文件及结论仍需独立研究判断，适配器不自动证明 PIT 或统计显著性。正式入池始终是后续独立审查。
 
 ## 同任务补证与科学记忆

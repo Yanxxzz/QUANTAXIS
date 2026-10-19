@@ -250,3 +250,58 @@ def test_cli_resolves_artifacts_at_evidence_directory_without_network_or_trials(
     assert not trials.exists()
     assert not result["official_total_points_gain_verified"]
     assert result["pool_operations"] == result["paid_runs"] == 0
+
+
+def prospective(case):
+    case.policy = json.loads((REPO / "config/pool-admission.v3.json").read_text(encoding="utf-8"))
+    return case
+
+
+def test_prospective_shorter_evidence_and_three_positive_folds_can_enter_shadow(case):
+    prospective(case)
+    case.bodies["quality"]["metrics"].update(periods=60, folds_positive=3)
+    case.save("quality")
+    result = case.assess()
+    assert result["status"] == "ready_for_shadow_validation", result
+    assert result["manual_review_required"]
+    assert result["pool_operations"] == 0
+    case.policy = json.loads((REPO / "config/pool-admission.v2.json").read_text(encoding="utf-8"))
+    assert {"common:periods", "common:folds_positive"} <= set(case.assess()["failed"])
+
+
+@pytest.mark.parametrize("metric,value", [("net50", -.01), ("p25_fold_net", -.01),
+    ("turnover", .3), ("size_direction_rank_ic", 0), ("size_net30", 0),
+    ("size_net50", -.01), ("max_abs_corr_existing_pool", .9)])
+def test_prospective_pressure_tests_are_explicit_candidate_bound_review_items(case, metric, value):
+    prospective(case)
+    case.bodies["quality"]["metrics"][metric] = value
+    case.save("quality")
+    result = case.assess()
+    assert result["status"] == "ready_for_shadow_validation", result
+    assert result["tier"] == "tradeoff_review"
+    assert f"common:NEW:{metric}" in result["review_items"]
+    assert result["manual_review_required"]
+    assert not result["economic_rejected"]
+    case.policy = json.loads((REPO / "config/pool-admission.v2.json").read_text(encoding="utf-8"))
+    assert f"common:{metric}" in case.assess()["failed"]
+
+
+@pytest.mark.parametrize("metric,value", [("coverage", .5), ("periods", 59),
+    ("folds_positive", 2), ("direction_rank_ic", 0), ("bh_q", .5), ("net30", 0)])
+def test_prospective_retains_core_quality_floors(case, metric, value):
+    prospective(case)
+    case.bodies["quality"]["metrics"][metric] = value
+    case.save("quality")
+    assert f"common:{metric}" in case.assess()["failed"]
+
+
+def test_prospective_cannot_admit_missing_source_or_replace_costed_ledger_with_summary(case):
+    prospective(case)
+    case.bodies["contracts"]["checks"]["source_coverage"]["status"] = "pending"
+    case.save("contracts")
+    assert case.assess()["status"] == "pending"
+    case.bodies["contracts"]["checks"]["source_coverage"]["status"] = "verified"
+    case.save("contracts")
+    case.bodies["ledger"]["type"] = "website_summary_only"
+    case.save("ledger")
+    assert case.assess()["status"] == "pending"
