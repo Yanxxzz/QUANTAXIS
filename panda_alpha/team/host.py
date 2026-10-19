@@ -80,6 +80,27 @@ class Host:
         work_id = "host-" + digest(identity)
         packet = dict(identity, work_id=work_id, task=task, objective=state["spec"]["objective"],
                       memory=self.registry.reconciled_memory(), **extra)
+        if action == "plan_round":
+            # Unexecuted controls have no scientific result/conclusion event.
+            # Their completed design review must still reach the lead's summary.
+            outcomes = []
+            for selected in self.c.board.tasks():
+                if selected["task_id"] not in self.owned_tasks():
+                    continue
+                events = self.c.board.events(selected["task_id"])
+                reviews = [e for e in events if e["kind"] in {"review", "result_review"}]
+                decisions = [e for e in events if e["kind"] in {"decision", "conclusion"}]
+                def summary(event):
+                    payload = event["payload"]
+                    return {"event_id": event["event_id"], "kind": event["kind"],
+                            **{k: payload[k] for k in ("decision", "claim", "reason", "artifacts") if k in payload},
+                            "assessment": {k: payload.get("assessment", {}).get(k)
+                                           for k in ("scope", "source_status", "economic_status")}}
+                outcomes.append({"task_id": selected["task_id"], "state": selected["state"],
+                                 "version": selected["version"], "request_hash": selected["request_hash"],
+                                 "latest_review": summary(reviews[-1]) if reviews else None,
+                                 "latest_decision": summary(decisions[-1]) if decisions else None})
+            packet["task_outcomes"] = outcomes
         from .sources import material
         packet["source_material"] = material(self.c.board, {task_id} if task else self.owned_tasks())
         if state["spec"].get("data_requests"):

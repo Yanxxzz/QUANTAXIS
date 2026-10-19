@@ -10,7 +10,31 @@ from panda_alpha.team import public_docs, sources
 from panda_alpha.team.contracts import canonical
 from panda_alpha.team.evidence import artifact
 from panda_alpha.team.host import Host
+from panda_alpha.team.demo import synthetic_request
 from test_team_lifecycle import lifecycle, settled, close, result_message, spec
+
+
+def test_lead_closeout_sees_unexecuted_control_review(lifecycle):
+    c, registry, proof, _ = lifecycle
+    task = c.board.submit(synthetic_request("market", proof))
+    for event_id, actor, kind, decision, parent in [
+        ("challenge-control", "skeptic", "challenge", "challenge", None),
+        ("response-control", "market", "response", "respond", "challenge-control"),
+        ("review-control", "skeptic", "review", "park", "response-control"),
+    ]:
+        c.board.message({"event_id": event_id, "task_id": task["task_id"], "actor": actor,
+            "kind": kind, "version": task["version"], "request_hash": task["request_hash"],
+            "reply_to": parent, "decision": decision, "claim": "Control source remains pending",
+            "test": "No website result was produced", "artifacts": [proof]})
+        task = c.board.task(task["task_id"])
+    host = Host(c, registry, "control-closeout", spec(seed_tasks=[task["task_id"]]))
+    packet = host.next()["packet"]
+    assert packet["action"] == "plan_round"
+    outcome, = packet["task_outcomes"]
+    assert outcome["state"] == "parked" and outcome["latest_decision"] is None
+    assert outcome["latest_review"]["event_id"] == "review-control"
+    assert outcome["latest_review"]["decision"] == "park"
+    assert not c.ledger.jobs() and registry.total == 0
 
 
 def intake(env, task, result, **changes):
