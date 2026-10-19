@@ -125,8 +125,21 @@ def test_disconnect_retries_same_work_and_same_role_thread(tmp_path):
     assert all(s["attempts"][1]["resume_thread"].startswith("fixture-") for s in states)
 
 
+def test_completed_string_encoding_recovery_avoids_new_model_attempts(tmp_path):
+    args = setup(tmp_path, "literal_string_controls")
+    result = serve(*args)
+    assert result['result']['reason'] == 'round_limit'
+    states = [read(p) for p in (args[-1] / 'workers').glob('*/work/*/state.json')]
+    assert states and all(len(s['attempts']) == 1 for s in states)
+    assert all(s['status'] == 'done' for s in states)
+    repairs = list((args[-1] / 'workers').glob('*/work/*/1/output-json-repair.json'))
+    assert len(repairs) == len(states)
+    assert all(read(p)['changed_control_characters'] == 3 for p in repairs)
+
+
 @pytest.mark.parametrize("mode,reason,attempts", [("timeout", "model_attempt_limit", 2), ("quota", "model_quota", 1),
-                                                ("auth_stderr", "model_authentication", 1)])
+                                                ("auth_stderr", "model_authentication", 1),
+                                                ("invalid_completed", "model_attempt_limit", 2)])
 def test_timeout_and_quota_stop_with_durable_limits(tmp_path, mode, reason, attempts):
     args = setup(tmp_path, mode)
     result = serve(*args)
@@ -134,6 +147,8 @@ def test_timeout_and_quota_stop_with_durable_limits(tmp_path, mode, reason, atte
     states = list((args[-1] / "workers").glob("*/work/*/state.json"))
     before = [p.read_bytes() for p in states]
     assert all(len(read(p)["attempts"]) == attempts for p in states)
+    if mode == 'invalid_completed':
+        assert all(a['reason'] == 'invalid_model_reply' for p in states for a in read(p)['attempts'])
     assert serve(*args)["status"] == "attention"
     assert before == [p.read_bytes() for p in states]
 

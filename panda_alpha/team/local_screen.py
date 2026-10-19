@@ -39,6 +39,10 @@ def local_first(board, task, config, registry):
     if not manifest.get('artifacts'):
         raise LocalScreenBlocked('Local source manifest requires evidence artifacts')
     verify_artifacts(manifest.get('artifacts', []))
+    semantics = manifest.get('definition_semantics', {})
+    if semantics.get('status') == 'mismatch':
+        verify_artifacts(semantics.get('artifacts', []))
+        raise LocalScreenBlocked('Definition/native semantics mismatch requires repair, not paid fallback')
     request = task['request']
     options = {'costs': config['admission']['one_way_costs'],
                'minimum_assets': config['diversity']['minimum_assets'],

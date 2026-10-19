@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 from pathlib import Path
 import subprocess
 import time
@@ -68,6 +69,7 @@ def prompt(packet, context, prompt_format="full"):
     }.get(action, "claim (nonempty string), test (nonempty string), decision (string), artifacts (list)")
     payload = {"packet": packet, "context": context, "output_keys": shape,
                "format_note": "These keys belong directly inside output_json, with no nested output or action wrapper. "
+               "Escape newline, carriage-return and tab characters within inner JSON strings. "
                "claim/test/reason/brief are strings, not objects. artifacts contains only supplied existing path+sha256 "
                "pairs, never event references; discuss event IDs in claim/test instead. assignments is a list, not a role-keyed object."}
     encoding_note = ""
@@ -110,9 +112,39 @@ def answer(folder, packet):
     value = read(folder / "answer.json")
     if not isinstance(value, dict) or value.get("work_id") != packet["work_id"]:
         raise ValueError("Unbound model response")
-    output = json.loads(value["output_json"])
+    serialized = value["output_json"]
+    recovery = None
+    try:
+        output = json.loads(serialized)
+    except json.JSONDecodeError:
+        # A completed model turn sometimes serializes a literal line break in
+        # an inner string. Escape only LF/CR/TAB inside quoted strings; never
+        # repair structure, identities, missing fields or model decisions.
+        normalized, changed = [], 0
+        quoted = escaped = False
+        for char in serialized:
+            if quoted and not escaped and char in "\n\r\t":
+                normalized.append({"\n": "\\n", "\r": "\\r", "\t": "\\t"}[char])
+                changed += 1
+                continue
+            normalized.append(char)
+            if escaped:
+                escaped = False
+            elif quoted and char == "\\":
+                escaped = True
+            elif char == '"':
+                quoted = not quoted
+        if not changed:
+            raise
+        output = json.loads("".join(normalized))  # Still strict JSON.
+        recovery = {"schema": "json-string-escape-repair-v1", "work_id": packet["work_id"],
+                    "changed_control_characters": changed,
+                    "raw_answer_sha256": hashlib.sha256((folder / "answer.json").read_bytes()).hexdigest(),
+                    "output_digest": digest(output), "scope": "LF/CR/TAB escaping within strings only"}
     if not isinstance(output, dict):
         raise ValueError("Model output must be an object")
+    if recovery:
+        write(folder / "output-json-repair.json", recovery)
     return {"work_id": packet["work_id"], "output": output}
 
 
@@ -216,11 +248,13 @@ def work(root, manifest, role, packet):
             return state
         # A valid completed receipt is usable even if the worker lost the exit code.
         complete = any(e.get("type") == "turn.completed" for e in items)
+        invalid_reply = False
         if complete:
             try:
                 value = answer(folder, packet)
             except (ValueError, KeyError, TypeError):
                 complete = False
+                invalid_reply = True
             else:
                 write(response_path, value)
                 attempt["status"] = "done"
@@ -233,7 +267,7 @@ def work(root, manifest, role, packet):
             attempt.update(status="failed", retry_at=time.time() + config["retry_backoff"])
             write(state_path, state)
             return state
-        attempt.update(status="failed", reason="turn_timeout" if expired else "incomplete_turn",
+        attempt.update(status="failed", reason="invalid_model_reply" if invalid_reply else "turn_timeout" if expired else "incomplete_turn",
                        retry_at=time.time() + min(config["retry_backoff"] * 2 ** (attempt["number"] - 1), 60))
         write(state_path, state)
     # Stop/deadline/orphaned supervisor: no new attempt; preserve its identity.
