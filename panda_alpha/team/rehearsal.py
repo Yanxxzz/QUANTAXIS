@@ -96,6 +96,12 @@ class ScriptedRoles:
                     out["artifacts"] += reopened["payload"]["artifacts"]
                     out["decision"] = "source_pending"
                     out["assessment"]["resolved"] = ["local_receipt_missing"]
+                    state = p["task"]["qualifications"]
+                    old = next(r for r in state["items"] if r["text"] == "local_receipt_missing")
+                    out["qualification_changes"] = {"base_head": state["head"], "replacements": [{
+                        "supersedes": [{"id": old["id"], "revision": old["revision"]}],
+                        "items": [{"id": old["id"], "text": old["text"], "status": "resolved"}],
+                        "reason": "Fixture receipt was archived; native qualifications stay pending", "evidence": [self.repair]}]}
                 else:
                     out["assessment"]["pending"].append("local_receipt_missing")
         return {"work_id": p["work_id"], "output": out}

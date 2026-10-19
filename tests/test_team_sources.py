@@ -103,6 +103,7 @@ def test_blind_source_opinions_then_joint_review_and_scientific_closure(lifecycl
         assert (p["role"], p["action"]) == (role, "source_analysis")
         assert p["memory"] == {} and p["role_packet"] == {"role": role, "funding_authorization": False}
         assert "events" not in p["task"] and "review_targets" not in p["task"]
+        assert "qualifications" not in p["task"]
         assert "independent_source_analyses" not in p
         assert Host(c, registry, "independent").next()["packet"] == p
         output = {"claim": role + " independent observation", "test": "Distinguish dictionary from native PIT",

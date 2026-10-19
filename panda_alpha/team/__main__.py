@@ -54,6 +54,11 @@ def main(argv=None):
     source.add_argument("--ledger", type=Path, required=True)
     source.add_argument("--task", required=True)
     source.add_argument("--input", type=Path, required=True)
+    qualifications = commands.add_parser("qualifications", help="Offline fixed-ID inventory or evidence-bound migration preview")
+    qualifications.add_argument("--ledger", type=Path, required=True)
+    qualifications.add_argument("--registry", type=Path, required=True)
+    qualifications.add_argument("--input", type=Path)
+    qualifications.add_argument("--execute", action="store_true", help="Append the reviewed migration; never start research")
     readiness = commands.add_parser("readiness", help="Read source blockers, intake queue, original budget and host bounds")
     readiness.add_argument("--ledger", type=Path, required=True)
     capture = commands.add_parser("source-capture", help="One explicit public official guide GET; no login or account APIs")
@@ -151,9 +156,20 @@ def main(argv=None):
             ledger.db.close()
     else:
         from .coordinator import Coordinator
-        c = Coordinator(args.ledger, read_only=args.command in {"status", "packet", "plan", "readiness"})
+        c = Coordinator(args.ledger, read_only=args.command in {"status", "packet", "plan", "readiness"}
+                        or (args.command == "qualifications" and not args.execute))
         try:
-            if args.command == "readiness":
+            if args.command == "qualifications":
+                from ..registry import ResearchRegistry
+                from .qualification_migration import inventory, migrate
+                if not args.registry.is_file() or (args.execute and not args.input):
+                    parser.error("Existing registry and an explicit migration input are required for apply")
+                registry = ResearchRegistry(args.registry, read_only=not args.execute)
+                try:
+                    result = migrate(c, registry, read(args.input), execute=args.execute) if args.input else inventory(c, registry)
+                finally:
+                    registry.close()
+            elif args.command == "readiness":
                 from .sources import readiness
                 result = readiness(c)
             elif args.command == "source-submit":

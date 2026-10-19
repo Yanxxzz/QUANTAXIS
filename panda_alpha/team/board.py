@@ -103,6 +103,8 @@ class Board:
 
     def message(self, message):
         """Retry is idempotent by event_id; every new reply binds a task version."""
+        if "qualifications" in message:
+            raise ValueError("Qualification snapshots are computed by the coordinator")
         text_fields(message, ("event_id", "task_id", "actor", "kind", "request_hash", "claim", "test", "decision"))
         actor, kind = message["actor"], message["kind"]
         if actor not in ROLES or kind not in {"challenge", "response", "review", "result_review", "note", "cross_review"}:
@@ -111,7 +113,9 @@ class Board:
         with self.transaction():
             prior = self.db.execute("SELECT payload FROM team_events WHERE event_id=?", (message["event_id"],)).fetchone()
             if prior:
-                if prior[0] != canonical(message):
+                original = json.loads(prior[0])
+                original.pop("qualifications", None)
+                if canonical(original) != canonical(message):
                     raise ValueError("Event identity already has different content")
                 return self.task(message["task_id"])
             task = self.task(message["task_id"])
@@ -140,10 +144,12 @@ class Board:
             if kind == "result_review" and message["decision"] not in {"continue", "confirm", "source_pending", "reject"}:
                 raise ValueError("Result review requires an explicit next decision")
             if kind == "result_review":
-                from .evidence import validate_assessment
+                from .evidence import validate_assessment, assessment_contract, read_artifact
+                from ..qualifications import review_state
                 job = self.db.execute("SELECT definition FROM jobs WHERE fingerprint=?", (task["fingerprint"],)).fetchone()
                 environment = json.loads(job[0] or "{}").get("team_permit", {}).get("environment", "unknown") if job else "unknown"
                 validate_assessment(message, task, parent, expected_environment=environment)
+                qualified = review_state(task, events, message, read_artifact(assessment_contract(message, parent)))
             if kind == "cross_review":
                 if actor not in INFORMATION or actor == task["owner"]:
                     raise ValueError("Cross review requires the other research line")
@@ -155,7 +161,8 @@ class Board:
                 if message.get("reply_to") != reopened["payload"]["target_event_id"] or any(
                         a not in message["artifacts"] for a in reopened["payload"]["artifacts"]):
                     raise ValueError("Evidence re-review must bind its original target and new artifacts")
-            self.event(task["task_id"], actor, kind, message, message["event_id"])
+            recorded = dict(message, qualifications=qualified) if kind == "result_review" else message
+            self.event(task["task_id"], actor, kind, recorded, message["event_id"])
             state = {"challenge": "challenged", "response": "answered", "review": "reviewed",
                      "result_review": "result_reviewed", "note": task["state"], "cross_review": task["state"]}[kind]
             if kind == "review" and message["decision"] == "park":
@@ -247,13 +254,14 @@ class Board:
         return self.task(task_id)
 
     def task_packet(self, task_id):
+        from ..qualifications import board_state
         task = self.task(task_id)
         events = self.events(task_id)
         # Explicit targets survive a long append-only history; the eight-event
         # reading window must not hide the original Run or reopened response.
         targets = {kind: next((e for e in reversed(events) if e["kind"] == kind), None)
                    for kind in ("challenge", "response", "result", "result_review", "evidence_review_requested")}
-        return dict(task, events=events[-8:], review_targets=targets)
+        return dict(task, events=events[-8:], review_targets=targets, qualifications=board_state(task, events))
 
     def pause(self, reason):
         if not reason.strip():
