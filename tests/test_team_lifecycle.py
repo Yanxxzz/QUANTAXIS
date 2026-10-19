@@ -273,7 +273,7 @@ def test_frozen_source_requirement_cannot_disappear_from_first_review(lifecycle)
 
 
 def test_cross_line_brief_and_required_lead_disposition(lifecycle):
-    c, _, proof, _ = lifecycle
+    c, registry, proof, _ = lifecycle
     first = synthetic_request("market", proof)
     c.board.submit(first)
     peer = c.board.submit(synthetic_request("fundamental", proof))
@@ -291,8 +291,53 @@ def test_cross_line_brief_and_required_lead_disposition(lifecycle):
     decision = {"request_hash": task["request_hash"], "priority": 50, "allocation_reason": "fixture", "diversity_check": "fixture"}
     with pytest.raises(ValueError, match="cross-line"):
         c.board.freeze(task_id, task["version"], decision)
-    decision["cross_line_decisions"] = [{"event_id": "cross", "decision": "accept", "reason": "Retain the fixed size control"}]
-    assert c.board.freeze(task_id, task["version"], decision)["state"] == "ready"
+    # Later notes must not hide a still-required control from the lead. Use
+    # only the delivered packet to build the response the validator accepts.
+    for _ in range(12):
+        send(c.board, task_id, "lead", "note")
+    host = Host(c, registry, "aged-cross-control", spec(seed_tasks=[task_id]))
+    packet = host.next()["packet"]
+    assert packet["action"] == "freeze"
+    assert all(e["event_id"] != "cross" for e in packet["task"]["events"])
+    decision["cross_line_decisions"] = [{"event_id": e["event_id"], "decision": "accept",
+        "reason": "Retain the fixed size control"} for e in packet["cross_line_reviews"]]
+    host.respond(packet["work_id"], {"work_id": packet["work_id"], "output": decision})
+    assert c.board.task(task_id)["state"] == "ready"
+
+
+def test_completed_design_reopen_does_not_hijack_first_run_result_review(lifecycle):
+    c, registry, proof, root = lifecycle
+    request = synthetic_request("market", proof)
+    task_id = c.board.submit(request)["task_id"]
+    send(c.board, task_id, "skeptic", "challenge")
+    challenge = c.board.events(task_id)[-1]["event_id"]
+    send(c.board, task_id, "market", "response", reply_to=challenge)
+    response = c.board.events(task_id)[-1]["event_id"]
+    task = send(c.board, task_id, "skeptic", "review", reply_to=response, decision="park")
+    parked = c.board.events(task_id)[-1]["event_id"]
+    new_design = root / "new-design.txt"
+    new_design.write_text("New design evidence, not a result artifact", encoding="utf-8")
+    new_proof = artifact(new_design)
+    task = c.board.reopen_evidence(task_id, task["version"], {
+        "operation_id": "design-source-reopen", "request_hash": task["request_hash"],
+        "prior_decision_event_id": parked, "target_event_id": response,
+        "claim_delta": "Bound new design evidence", "artifacts": [new_proof]})
+    with pytest.raises(ValueError, match="original target and new artifacts"):
+        send(c.board, task_id, "skeptic", "review", reply_to=response, decision="approve")
+    task = send(c.board, task_id, "skeptic", "review", reply_to=response, decision="approve", artifacts=[new_proof])
+    task = c.board.freeze(task_id, task["version"], {"request_hash": task["request_hash"],
+        "priority": 50, "allocation_reason": "fixture", "diversity_check": "fixture"})
+    config = synthetic_config()
+    activate(c.board, synthetic_grant(proof, config))
+    client = SyntheticClient()
+    c.dispatch(task_id, config, client, registry, execute=True)
+    c.resume(task_id, client, root / "first-run-results")
+    task = c.board.task(task_id)
+    result = c.board.events(task_id)[-1]
+    message = result_message(task, result)
+    assert new_proof not in message["artifacts"]
+    assert message["reply_to"] != response
+    assert c.board.message(message)["state"] == "result_reviewed"
 
 
 def native_report_fixture(env):

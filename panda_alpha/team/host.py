@@ -80,6 +80,12 @@ class Host:
         work_id = "host-" + digest(identity)
         packet = dict(identity, work_id=work_id, task=task, objective=state["spec"]["objective"],
                       memory=self.registry.reconciled_memory(), **extra)
+        if action == "freeze":
+            # A source reopen or rejected reply can move required controls
+            # outside task_packet's recent-event window. Every old control
+            # still requires an explicit disposition on this same request.
+            packet["cross_line_reviews"] = [e for e in self.c.board.events(task_id)
+                                             if e["kind"] == "cross_review"]
         if action == "plan_round":
             # Unexecuted controls have no scientific result/conclusion event.
             # Their completed design review must still reach the lead's summary.
@@ -125,6 +131,14 @@ class Host:
             packet["previous_error"] = json.loads(error[0])["error"] if error else "stale task version"
         if role:
             packet["role_packet"] = self.c.board.packet(role)
+            if action == "propose":
+                # Sequential delivery must not expose the first author's idea
+                # to the second author before their own proposal is committed.
+                peers = {f"{self.session_id}.r{state['round']}.{a['owner']}"
+                         for a in (state["plan"] or {}).get("assignments", []) if a["owner"] != role}
+                packet["role_packet"]["other_line"] = [p for p in packet["role_packet"]["other_line"]
+                                                       if p["task_id"] not in peers]
+                packet["role_packet"]["withheld_current_round_peer_tasks"] = sorted(peers)
             path = Path(__file__).resolve().parents[2] / ".codex" / "agents" / f"panda-{role}.toml"
             packet["role_instructions"] = tomllib.loads(path.read_text(encoding="utf-8"))["developer_instructions"]
         packet["reply_contract"] = {
@@ -134,7 +148,7 @@ class Host:
             "challenge_response_review": "claim/test/decision/artifacts; result_review adds scoped assessment and evidence_contract; host binds IDs/version/reply_to",
             "cross_review": "claim/test/decision/artifacts; compare peer brief and propose a discriminating control",
             "source_analysis": "claim/test, decision=analysis_only, artifacts, resolved/pending/limitations string lists; no qualification changes",
-            "freeze": "priority/allocation_reason/diversity_check/cross_line_decisions, or decision=park with reason",
+            "freeze": "priority/allocation_reason/diversity_check/cross_line_decisions; each cross_line_decisions row requires event_id=exact task cross_review event ID, decision=accept|reject, and nonempty reason; resolve every cross_review, or decision=park with reason",
             "conclude": "decision/reason agreeing with independent review; host supplies stable operation and review IDs"}
         if action == "source_analysis":
             # First opinions contain evidence and frozen definitions, not earlier
@@ -221,6 +235,21 @@ class Host:
         current_ids = [f"{self.session_id}.r{state['round']}.{a['owner']}" for a in assignments]
         selected = set(current_ids) | self.owned_tasks()
         tasks = {t["task_id"]: t for t in self.c.board.tasks()}
+        # A frozen local configuration can run the existing study engine even
+        # in an offline host. It never enables a remote executor or a grant.
+        if state["spec"].get("local_screen_config"):
+            from .evidence import read_artifact
+            from .local_screen import local_first
+            local_config = read_artifact(state["spec"]["local_screen_config"])
+            if local_config.get("local_screen", {}).get("enabled") is not True:
+                raise ValueError("Bound local-screen configuration must enable local-first routing")
+            for task_id in sorted(selected):
+                if task_id in tasks and tasks[task_id]["state"] == "ready" and self.c.ledger.get(tasks[task_id]["fingerprint"]) is None:
+                    try:
+                        self.c.check_research(tasks[task_id], local_config, self.registry)
+                        local_first(self.c.board, tasks[task_id], local_config, self.registry)
+                    except ValueError as error:
+                        return {"status": "waiting", "reason": "local_screen_blocked", "task_id": task_id, "error": str(error)}
         for assignment, task_id in zip(assignments, current_ids):
             completed = any(json.loads(r[0])["task_id"] == task_id and json.loads(r[0])["action"] == "propose"
                             for r in self.db.execute("SELECT packet FROM team_host_work WHERE session_id=? AND state='applied'", (self.session_id,)))

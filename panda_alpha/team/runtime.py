@@ -25,10 +25,12 @@ DEFAULTS = {"turn_timeout": 600, "max_attempts": 3, "retry_backoff": 5,
 
 def worker_config(path):
     config = read(path)
-    allowed = set(DEFAULTS) | {"codex_command", "model", "reasoning_effort", "context_files", "role_overrides"}
+    allowed = set(DEFAULTS) | {"codex_command", "model", "reasoning_effort", "context_files", "role_overrides", "prompt_format"}
     if not isinstance(config, dict) or set(config) - allowed:
         raise ValueError("Unknown worker configuration fields")
     value = dict(DEFAULTS, **config)
+    if value.get("prompt_format", "full") not in {"full", "lossless_refs_v1"}:
+        raise ValueError("Unknown prompt_format")
     argv = value.get("codex_command")
     if not isinstance(argv, list) or not argv or any(not isinstance(a, str) or not a for a in argv):
         raise ValueError("An explicit trusted codex_command argv is required")
