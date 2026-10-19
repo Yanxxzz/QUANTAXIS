@@ -117,5 +117,12 @@ def terminate(receipt):
 
 def active(root, manifest):
     control = read(Path(root) / "control.json", {})
-    return (control.get("run") is True and time.time() < manifest["deadline_epoch"]
-            and time.time() - control.get("heartbeat", 0) < manifest["workers"]["orphan_timeout"])
+    if control.get("run") is not True or time.time() >= manifest["deadline_epoch"]:
+        return False
+    if time.time() - control.get("heartbeat", 0) < manifest["workers"]["orphan_timeout"]:
+        return True
+    # A machine/VM scheduling pause ages every heartbeat together. Do not kill
+    # healthy workers and exhaust restart budgets while their original owner
+    # is still alive. PID birth identity, the stop flag and deadline still bind.
+    supervisor = read(Path(root) / "supervisor.json", {})
+    return supervisor.get("status") == "running" and owned(supervisor.get("process")) is not None
