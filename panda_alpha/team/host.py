@@ -125,6 +125,14 @@ class Host:
             packet["previous_error"] = json.loads(error[0])["error"] if error else "stale task version"
         if role:
             packet["role_packet"] = self.c.board.packet(role)
+            if action == "propose":
+                # Sequential delivery must not expose the first author's idea
+                # to the second author before their own proposal is committed.
+                peers = {f"{self.session_id}.r{state['round']}.{a['owner']}"
+                         for a in (state["plan"] or {}).get("assignments", []) if a["owner"] != role}
+                packet["role_packet"]["other_line"] = [p for p in packet["role_packet"]["other_line"]
+                                                       if p["task_id"] not in peers]
+                packet["role_packet"]["withheld_current_round_peer_tasks"] = sorted(peers)
             path = Path(__file__).resolve().parents[2] / ".codex" / "agents" / f"panda-{role}.toml"
             packet["role_instructions"] = tomllib.loads(path.read_text(encoding="utf-8"))["developer_instructions"]
         packet["reply_contract"] = {
