@@ -8,6 +8,13 @@
 结果直接对齐 `[date, symbol]` 输入会使全部数值变成 NaN。旧文档中的顺序示例
 不能替代实际输入核验。`native_commonality_code()` 和对应测试覆盖两个顺序及包装器。
 
+2026-10-20 的免费下游回放还确认，固定公开版本的
+[`MarketDataReader._chunk_date_range`](https://github.com/PandaAI-Tech/panda_factor/blob/a783e69732da1f9ffc93844dc522375a1f67c507/panda_data/panda_data/market_data/market_data_reader.py)
+要求 `YYYYMMDD`。新日线实现可以在内部用 Timestamp 计算，输出时序列化为八位日期；
+预检只在解析后日期、证券、行顺序与完整输入逐键相同时接纳该表示，不排序、不补键、
+不截断时间，也不修复含糊日期。构建入口与分析日期消费者分别检查。
+这项公开接口兼容证据不认证生产部署，也不证明某次官网 `date` 错误具有同一原因。
+
 日志接口 `/quantflow/api/workflow/run/log` 返回 `data.logs` 列表，默认仅有5条，
 `has_more` 和 `next_sequence` 指示后续页面。查询下一页使用包含起点的
 `last_sequence=next_sequence`。当前 CLI 0.1.7 的旧节点字典解析没有覆盖该格式，

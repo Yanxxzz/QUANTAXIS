@@ -46,6 +46,35 @@ def test_real_date_first_wrapper_and_exact_input_order_are_replayed(prepared):
     assert 'not remote all-A' in receipt['limitation']
 
 
+@pytest.mark.parametrize('mutation', ['valid', 'reversed', 'shifted', 'symbol', 'ambiguous', 'invalid'])
+def test_compact_wire_dates_preserve_exact_daily_keys_before_account(prepared, mutation):
+    candidate, fixture, source, contract, path, _ = prepared
+    change = {
+        'valid': '',
+        'reversed': "result = result.iloc[::-1]\n        ",
+        'shifted': "days = days + pd.Timedelta(days=1)\n        ",
+        'symbol': "symbols = ['OTHER'] * len(symbols)\n        ",
+        'ambiguous': '',
+        'invalid': '',
+    }[mutation]
+    before = change if mutation == 'reversed' else ''
+    after = change if mutation not in ('reversed', 'valid', 'ambiguous', 'invalid') else ''
+    fmt = '%Y-%m-%d' if mutation == 'ambiguous' else '%Y%m%d'
+    wire = "['20240231'] * len(days)" if mutation == 'invalid' else f"days.strftime('{fmt}')"
+    candidate['code'] = 'import pandas as pd\n' + CODE.replace(
+        "result.name = 'value'",
+        before + "days = result.index.get_level_values('date')\n        "
+        "symbols = result.index.get_level_values('symbol')\n        " + after +
+        f"result.index = pd.MultiIndex.from_arrays([{wire}, symbols], names=['date','symbol'])\n        "
+        "result.name = 'value'")
+    receipt = build_native_preflight(candidate, WINDOW, 5, 10, fixture, [source], [contract], path)
+    assert receipt['passed'] is (mutation == 'valid')
+    if mutation == 'valid':
+        assert verify_native_preflight(candidate, WINDOW, 5, 10)['proof']['finite_window_rows'] == 600
+    else:
+        assert 'exact date-first' in receipt['failure']['message']
+
+
 @pytest.mark.parametrize('change', ['code', 'direction', 'window', 'cycle', 'groups'])
 def test_receipt_cannot_be_reused_for_a_changed_definition_or_dispatch(prepared, change):
     candidate, *_ = prepared
