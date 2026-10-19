@@ -10,7 +10,31 @@ from panda_alpha.team import public_docs, sources
 from panda_alpha.team.contracts import canonical
 from panda_alpha.team.evidence import artifact
 from panda_alpha.team.host import Host
+from panda_alpha.team.demo import synthetic_request
 from test_team_lifecycle import lifecycle, settled, close, result_message, spec
+
+
+def test_lead_closeout_sees_unexecuted_control_review(lifecycle):
+    c, registry, proof, _ = lifecycle
+    task = c.board.submit(synthetic_request("market", proof))
+    for event_id, actor, kind, decision, parent in [
+        ("challenge-control", "skeptic", "challenge", "challenge", None),
+        ("response-control", "market", "response", "respond", "challenge-control"),
+        ("review-control", "skeptic", "review", "park", "response-control"),
+    ]:
+        c.board.message({"event_id": event_id, "task_id": task["task_id"], "actor": actor,
+            "kind": kind, "version": task["version"], "request_hash": task["request_hash"],
+            "reply_to": parent, "decision": decision, "claim": "Control source remains pending",
+            "test": "No website result was produced", "artifacts": [proof]})
+        task = c.board.task(task["task_id"])
+    host = Host(c, registry, "control-closeout", spec(seed_tasks=[task["task_id"]]))
+    packet = host.next()["packet"]
+    assert packet["action"] == "plan_round"
+    outcome, = packet["task_outcomes"]
+    assert outcome["state"] == "parked" and outcome["latest_decision"] is None
+    assert outcome["latest_review"]["event_id"] == "review-control"
+    assert outcome["latest_review"]["decision"] == "park"
+    assert not c.ledger.jobs() and registry.total == 0
 
 
 def intake(env, task, result, **changes):
@@ -89,6 +113,67 @@ def test_no_new_review_for_renamed_unchanged_content_and_mutated_ids(lifecycle):
     with pytest.raises(ValueError, match="Unchanged source"):
         sources.submit(c.board, task["task_id"], dict(value, source_id="another-name"))
     assert len(sources.receipts(c.board, task["task_id"])) == 1
+
+
+def test_multiple_queued_sources_share_blind_review_and_closure(lifecycle):
+    c, registry, _, root = lifecycle
+    task, result = settled(lifecycle)
+    task = close(lifecycle, task, result)
+    original_events = deepcopy(c.board.events(task["task_id"]))
+    saved = []
+    for i in range(3):
+        path = root / f"evidence-{i}.txt"
+        path.write_text(f"Independent new material {i}; native PIT unresolved", encoding="utf-8")
+        value = intake(lifecycle, task, result, source_id=f"batch-{i}", artifact=artifact(path))
+        saved.append(sources.submit(c.board, task["task_id"], value))
+    host = Host(c, registry, "batch", spec(seed_tasks=[task["task_id"]], independent_source_review=True))
+    for role in ("market", "fundamental", "skeptic"):
+        packet = host.next()["packet"]
+        assert (packet["action"], packet["role"]) == ("source_analysis", role)
+        assert len(packet["source_material"]["items"]) == 3
+        assert packet["source_receipt_ids"] == sorted(r["event_id"] for r in saved)
+        assert packet["memory"] == {} and "independent_source_analyses" not in packet
+        assert Host(c, registry, "batch").next()["packet"] == packet
+        host.respond(packet["work_id"], {"work_id": packet["work_id"], "output": {
+            "claim": "All three observations read independently", "test": "Native PIT not shown",
+            "decision": "analysis_only", "artifacts": [r["artifact"] for r in saved],
+            "resolved": [], "pending": ["native PIT"], "limitations": ["Synthetic acceptance"]}})
+    assert c.board.task(task["task_id"])["version"] == task["version"] + 1
+    packet = host.next()["packet"]
+    message = result_message(c.board.task(task["task_id"]), result)
+    message["artifacts"] += [r["artifact"] for r in saved]
+    host.respond(packet["work_id"], {"work_id": packet["work_id"], "output": message})
+    assert {r["status"] for r in sources.receipts(c.board, task["task_id"])} == {"awaiting_conclusion"}
+    packet = host.next()["packet"]
+    host.respond(packet["work_id"], {"work_id": packet["work_id"], "output": {
+        "decision": "confirm", "reason": "Capability only, all material considered"}})
+    before = deepcopy(c.board.task(task["task_id"]))
+    sources.apply_pending(c.board, {task["task_id"]})
+    assert c.board.task(task["task_id"]) == before
+    assert {r["status"] for r in sources.receipts(c.board, task["task_id"])} == {"review_completed"}
+    assert c.board.events(task["task_id"])[:len(original_events)] == original_events
+    assert len([e for e in c.board.events(task["task_id"]) if e["kind"] == "evidence_review_requested"]) == 1
+
+
+def test_full_researcher_capacity_defers_sources_without_blocking_them(lifecycle, monkeypatch):
+    c, _, _, _ = lifecycle
+    task, result = settled(lifecycle)
+    task = close(lifecycle, task, result)
+    sources.submit(c.board, task["task_id"], intake(lifecycle, task, result))
+    tasks = c.board.tasks
+    monkeypatch.setattr(c.board, "tasks", lambda: tasks() + [dict(task, state="answered")] * 2)
+    sources.apply_pending(c.board, {task["task_id"]})
+    assert sources.receipts(c.board, task["task_id"])[0]["status"] == "queued"
+    assert c.board.task(task["task_id"]) == task
+    monkeypatch.setattr(c.board, "tasks", tasks)
+    sources.apply_pending(c.board, {task["task_id"]})
+    assert sources.receipts(c.board, task["task_id"])[0]["status"] == "review_requested"
+
+
+def test_no_candidate_proposal_id_has_no_source_work(lifecycle):
+    c, _, _, _ = lifecycle
+    sources.apply_pending(c.board, {"proposal-declined-without-task"})
+    assert sources.receipts(c.board, "proposal-declined-without-task") == []
 
 
 def test_blind_source_opinions_then_joint_review_and_scientific_closure(lifecycle):
