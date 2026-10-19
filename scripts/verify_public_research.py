@@ -29,6 +29,7 @@ if str(ROOT) not in sys.path:
 PUBLIC_PATTERNS = (
     "panda_alpha/**/*.py", "tests/**/*.py", "scripts/*.py", "scripts/*.ps1",
     "docs/*.md", ".github/workflows/panda-alpha.yml", "requirements-panda-alpha.txt",
+    "requirements-panda-alpha-akshare.txt",
     "config/panda-alpha.example.json", "config/research-workflow.v1.json",
     "README*.md", "AGENTS.md", "RESEARCH.md", "pyproject.toml",
     ".codex/agents/panda-*.toml", "config/team-grant.example.json",

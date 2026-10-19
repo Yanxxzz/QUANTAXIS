@@ -44,6 +44,8 @@ class Host:
                 self.c.board.task(task_id)
             from .sources import validate_watches
             validate_watches(spec)
+            from .data_sources import validate
+            validate(spec)
             if row and row[0] != canonical(spec):
                 raise ValueError("Host session bounds are immutable; do not reset a session on resume")
             with self.c.board.transaction():
@@ -80,6 +82,9 @@ class Host:
                       memory=self.registry.reconciled_memory(), **extra)
         from .sources import material
         packet["source_material"] = material(self.c.board, {task_id} if task else self.owned_tasks())
+        if state["spec"].get("data_requests"):
+            from .data_sources import material as data_material
+            packet["data_material"] = data_material(self.c.board, self.session_id, state["spec"])
         if task and action == "result_review":
             from .evidence import read_artifact
             result = task["review_targets"]["result"]
@@ -130,20 +135,30 @@ class Host:
             self.db.execute("UPDATE team_host_sessions SET actions=actions+1 WHERE session_id=?", (self.session_id,))
         return {"status": "work", "packet": packet}
 
-    def next(self, *, execution=False):
+    def next(self, *, execution=False, should_continue=None):
         self.c.recover_conclusions(self.registry)
         state = self.state()
         if state["stop_reason"]:
             return {"status": "stopped", "reason": state["stop_reason"], "session_id": self.session_id}
         if datetime.now(timezone.utc) >= timestamp(state["spec"]["deadline"]):
             return self.stop("deadline")
+        if state["spec"].get("data_requests"):
+            from .data_sources import refresh
+            try:
+                captures = refresh(self.c.board, self.session_id, state["spec"], should_continue)
+            except InterruptedError:
+                return {"status": "paused", "reason": "operator_stop", "session_id": self.session_id}
+            if any(value["status"] != "captured" for value in captures):
+                return {"status": "waiting", "reason": "data_source_failed",
+                        "session_id": self.session_id,
+                        "errors": [value.get("error") for value in captures if value["status"] != "captured"]}
         # Finish recorded answers before creating work or checking action count.
         for row in self.db.execute("SELECT * FROM team_host_work WHERE session_id=? AND state IN ('pending','answered') ORDER BY rowid", (self.session_id,)).fetchall():
             row = dict(row)
             packet = json.loads(row["packet"])
             if row["state"] == "answered":
                 self._apply_recorded(packet, json.loads(row["response"]))
-                return self.next(execution=execution)
+                return self.next(execution=execution, should_continue=should_continue)
             if packet["action"] == "dispatch" and any(j["state"] not in {"SETTLED", "CANCELLED"} for j in self.c.ledger.jobs()):
                 # Another task may have obtained the single inflight slot since
                 # this work was issued. Do not pin a failing dispatch ahead of
@@ -349,7 +364,7 @@ class Host:
         while True:
             if should_continue is not None and not should_continue():
                 return {"status": "paused", "reason": "operator_stop"}
-            next_work = self.next(execution=executor is not None)
+            next_work = self.next(execution=executor is not None, should_continue=should_continue)
             if next_work["status"] != "work":
                 return next_work
             packet = next_work["packet"]

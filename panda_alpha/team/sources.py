@@ -22,6 +22,18 @@ def receipts(board, task_id):
             continue
         value = event["payload"]
         review_id = value["review"]["operation_id"]
+        # Several separately delivered sources can share one immutable review
+        # target. A batch reopen binds each original receipt without rewriting it.
+        if review_id not in by_id:
+            for batch in events:
+                payload = batch["payload"]
+                if (batch["kind"] == "evidence_review_requested"
+                        and event["event_id"] in payload.get("source_receipt_ids", [])
+                        and all(payload.get(k) == value["review"][k]
+                                for k in ("request_hash", "prior_decision_event_id", "target_event_id"))
+                        and value["artifact"] in payload.get("artifacts", [])):
+                    review_id = batch["event_id"]
+                    break
         failure = by_id.get(review_id + ":blocked")
         status = "review_requested" if review_id in by_id else "blocked" if failure else "queued"
         outcome = None
@@ -123,20 +135,40 @@ def apply_pending(board, selected):
     A crash there cannot request a second review or increment the version twice.
     """
     for task_id in sorted(selected):
-        for item in receipts(board, task_id):
-            if item["status"] != "queued":
-                continue
+        queued = [r for r in receipts(board, task_id) if r["status"] == "queued"]
+        if not queued:
+            continue  # A no-candidate proposal owns an ID without a board row.
+        task = board.task(task_id)
+        if task["state"] not in {"parked", "closed"}:
+            continue
+        # Capacity is transient, not a bad evidence binding. Leave the inbox
+        # intact until another owned task closes and frees a researcher slot.
+        if sum(t["owner"] == task["owner"] and t["state"] not in {"parked", "closed"}
+               for t in board.tasks()) >= 2:
+            continue
+        bindings = ("request_hash", "prior_decision_event_id", "target_event_id")
+        groups = {}
+        for item in queued:
+            key = tuple(item["review"][k] for k in bindings)
+            groups.setdefault(key, []).append(item)
+        for items in groups.values():
             task = board.task(task_id)
-            # A previous source is already under review: preserve this item for
-            # a later decision rather than discarding it or interrupting a reply.
             if task["state"] not in {"parked", "closed"}:
-                continue
+                break
+            request = dict(items[0]["review"])
+            if len(items) > 1:
+                ids = sorted(i["event_id"] for i in items)
+                request.update(operation_id="source-batch:" + digest({"task_id": task_id, "receipts": ids}),
+                               source_receipt_ids=ids,
+                               artifacts=[i["artifact"] for i in items],
+                               claim_delta="\n".join(i["review"]["claim_delta"] for i in items))
             try:
-                board.reopen_evidence(task_id, task["version"], item["review"])
+                board.reopen_evidence(task_id, task["version"], request)
             except (ValueError, OSError) as exc:
                 with board.transaction():
-                    board.event(task_id, "host", "source_intake_blocked", {"reason": str(exc)},
-                                item["review"]["operation_id"] + ":blocked")
+                    for item in items:
+                        board.event(task_id, "host", "source_intake_blocked", {"reason": str(exc)},
+                                    item["review"]["operation_id"] + ":blocked")
 
 
 def validate_watches(spec):
