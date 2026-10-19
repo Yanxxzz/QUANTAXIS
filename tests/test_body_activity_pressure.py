@@ -1,4 +1,5 @@
 from decimal import Decimal, localcontext
+from fractions import Fraction
 import math
 
 import numpy as np
@@ -36,6 +37,32 @@ def test_small_genuine_effect_is_retained_without_zero_threshold():
     got = mean_weighted_gap(e, t)
     assert got < 0
     assert got == pytest.approx(oracle(e, t), rel=1e-12, abs=0)
+
+
+def test_nonconstant_exact_zero_covariance_preserves_native_ties():
+    e, t = [-1., -.5, 0., .5, 1.], [1., 3., 2., 1., 2.]
+    assert mean_weighted_gap(e, t) == 0
+    index = pd.MultiIndex.from_product([pd.bdate_range('2024-01-02', periods=5), ['a', 'b']], names=['date', 'symbol'])
+    frame = pd.DataFrame({'open': [3,2,2,2,2,2,2,2,1,2],
+        'close': [1,2,1,2,2,2,3,2,3,2], 'high': 3., 'low': 1.,
+        'turnover': [1,1,3,1,2,1,1,1,2,1]}, index=index)
+    scope = {'Factor': type('Factor', (), {})}
+    exec(compile(native_code(), '<native-nonconstant-null>', 'exec'), scope)
+    got = scope['MarketBodyActivityPressureStable']().calculate(frame)
+    assert got.loc[index.get_level_values('date').max()].to_dict() == {'a': .75, 'b': .75}
+
+
+def test_nonconstant_null_family_and_exact_fraction_reference():
+    rng = np.random.default_rng(42)
+    for _ in range(100):
+        a, b, c, d = rng.integers(1, 100, 4)
+        final = float(a + b/2 - d/2)
+        if final > 0:
+            assert mean_weighted_gap([-1., -.5, 0., .5, 1.], [a,b,c,d,final]) == 0
+        e, t = rng.uniform(-1, 1, 5), np.exp(rng.uniform(-100, 100, 5))
+        fe, ft = [Fraction.from_float(float(x)) for x in e], [Fraction.from_float(float(x)) for x in t]
+        expected = sum(fe)/5 - sum(x*y for x,y in zip(fe,ft))/sum(ft)
+        assert mean_weighted_gap(e, t) == float(expected)
 
 
 def test_high_precision_reference_unit_scaling_and_permutation():

@@ -12,20 +12,27 @@ import pandas as pd
 
 
 def mean_weighted_gap(values, weights):
-    """Arithmetic mean minus positive-weight mean for one complete window."""
+    """Mean gap with exact arithmetic on the supplied binary float inputs.
+
+    Body values are bounded by the caller's price validation. Conversion of
+    OHLC to body and the final returned float retain their usual rounding.
+    """
     values, weights = tuple(map(float, values)), tuple(map(float, weights))
     if not values or len(values) != len(weights):
         raise ValueError('A nonempty paired window is required')
     if any(not math.isfinite(x) for x in values + weights) or any(w <= 0 for w in weights):
         return math.nan
-    # n*sum(e*t) - sum(e)*sum(t) = sum_{i<j}(e_i-e_j)*(t_i-t_j).
-    # Subtract before scaling so close, representable weights stay distinct.
-    # Scaling bounds the sums; exact constant inputs produce exact zero.
-    scale = max(weights)
-    numerator = math.fsum((values[i] - values[j]) * ((weights[i] - weights[j]) / scale)
-                          for i in range(len(values)) for j in range(i+1, len(values)))
-    denominator = len(values) * math.fsum(w / scale for w in weights)
-    return -numerator / denominator
+    # Every finite float is a dyadic rational. Align denominators (powers of
+    # two), perform the cancellation with integers, then round only once.
+    # Unlike scaled floating products, this also preserves nonconstant nulls.
+    er = [x.as_integer_ratio() for x in values]
+    tr = [x.as_integer_ratio() for x in weights]
+    ed, td = max(d for _, d in er), max(d for _, d in tr)
+    en = [n * (ed // d) for n, d in er]
+    tn = [n * (td // d) for n, d in tr]
+    count, total_weight = len(en), sum(tn)
+    numerator = sum(en) * total_weight - count * sum(e*t for e, t in zip(en, tn))
+    return numerator / (count * ed * total_weight)
 
 
 def calculate_fields(factors):
