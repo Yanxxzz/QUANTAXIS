@@ -19,6 +19,8 @@ python -m panda_alpha.team host-control --deployment research_runs/service-revie
 
 `running` 表示宿主进程存活，四角色是否就绪须看 `components`。四角色继续使用原宿主的独占锁、超时和组件重连。整台电脑重启或最外层启动器退出后，等待下一次聊天指令恢复；不会由 Windows 自动拉起。聊天结束不会自动暂停已启动的有限运行。
 
+进程状态查询须与启动使用同一个可见进程环境。本机已实测：沙箱内的查询看不到沙箱外宿主，会误报 `service_process_exited`；在能读取原进程出生身份的环境中查询，宿主和四角色实际正常。遇到这类可见性差异先核对原进程，不能凭沙箱内的假阴性重启、终结或复制运行。
+
 如果同一 runtime 正由旧 `host-serve` 命令直接运行，返回 `runtime_outside_deployment`，保持原进程且拒绝另启一个部署。先通过原终端正常停止，再由聊天入口接管；不能把一个缺少 service 记录的活跃宿主当成已退出。
 
 ## 有限授权与无人值守接续
@@ -68,7 +70,7 @@ python -m panda_alpha.team host-control --deployment research_runs/service-pilot
 
 恢复已知 Run 时只查该 Run 并结算，不重新 create/start。若暂停发生在预留后、创建后，或者创建/启动响应丢失而没有 Run ID，保留 `RESERVED/CREATED/CREATING/DISPATCHING` 记录和预算占用，进入人工核对；不能猜测成功或清除预留后重发。未知状态下停止服务也不结算或退款。
 
-当前真实研究保持停止，A/B 来源未通过前不消耗剩余 46 点，不重新激活旧授权。本轮只在隔离测试账本中使用本地模拟官网和合成角色验收官网控制链路。
+当前真实运行状态与剩余预算见[README](../README.md)，不能使用本文历史演练的额度发起研究。新会话按“本地初筛，必要时官网”准备，绑定`local_screen_config`后无官网执行器也能运行本地阶段；数据不足可按授权转官网，原A/B和财务PIT门槛保持。完成后停用部署，不重新激活旧授权。
 
 ## 本机迁移记录（2026-10-18）
 

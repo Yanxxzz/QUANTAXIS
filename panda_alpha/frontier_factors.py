@@ -158,9 +158,14 @@ def native_code(kind, calendar=None):
               + '\n\n'.join(inspect.getsource(f) for f in helpers))
     if kind in ('gap','base'):
         assert calendar
-        body = 'return market_scores(factors, '+repr(list(calendar))+', '+repr(kind)+')'
+        fields = ('open', 'close') if kind == 'gap' else ('volume', 'turnover')
+        # The provider discovers dependencies through literal factors['field']
+        # AST subscripts, before calculate runs. Dynamic helper access alone
+        # executes locally but leaves that discovery set empty.
+        supplied = '{' + ', '.join(repr(name) + ': factors[' + repr(name) + ']' for name in fields) + '}'
+        body = 'return market_scores('+supplied+', '+repr(list(calendar))+', '+repr(kind)+')'
     elif kind == 'fixed':
-        body = 'return fixed_capital_scores(factors)'
+        body = "return fixed_capital_scores({'bs_net_fix_assets': factors['bs_net_fix_assets'], 'bs_total_assets': factors['bs_total_assets']})"
     else:
         raise ValueError('No native PERIOD_ASOF metadata adapter is verified; offline state evaluator only')
     return prefix+'\n\nclass FrontierFactor(Factor):\n    def calculate(self, factors):\n        '+body+'\n'

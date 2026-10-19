@@ -157,7 +157,13 @@ class Board:
                 if peer["owner"] != actor or peer["request_hash"] != message.get("peer_request_hash"):
                     raise ValueError("Cross review must bind the other line's frozen brief")
             reopened = next((e for e in reversed(events) if e["kind"] == "evidence_review_requested"), None)
-            if reopened and kind in {"review", "result_review"}:
+            # A completed design-source review must not constrain the first
+            # later Run's result review to its old author-response target.
+            reopen_done = reopened and any(
+                e["kind"] in {"review", "result_review"}
+                and e["payload"].get("reply_to") == reopened["payload"]["target_event_id"]
+                for e in events[events.index(reopened) + 1:])
+            if reopened and not reopen_done and kind in {"review", "result_review"}:
                 if message.get("reply_to") != reopened["payload"]["target_event_id"] or any(
                         a not in message["artifacts"] for a in reopened["payload"]["artifacts"]):
                     raise ValueError("Evidence re-review must bind its original target and new artifacts")
@@ -191,7 +197,8 @@ class Board:
             for e in cross:
                 row = next((d for d in dispositions if d.get("event_id") == e["event_id"]), None)
                 if not row or row.get("decision") not in {"accept", "reject"} or not isinstance(row.get("reason"), str) or not row["reason"].strip():
-                    raise ValueError("Freeze must resolve each cross-line control; pending controls require parking")
+                    raise ValueError(f"Freeze must resolve cross-line control {e['event_id']}: expected event_id, "
+                                     "decision=accept|reject and nonempty reason; pending controls require parking")
             self.event(task_id, "lead", "freeze", decision, event_id)
             self.db.execute("UPDATE team_tasks SET freeze=? WHERE task_id=?", (canonical(decision), task_id))
             self.advance(task_id, "ready")

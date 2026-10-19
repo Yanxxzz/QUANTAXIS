@@ -56,6 +56,17 @@ class Coordinator:
             raise ValueError("Explicit execute is required; plan remains offline")
         configured = prepare(self.board, task, config, simulation=getattr(client, "simulation", False) is True)
         request, candidate = task["request"], task["request"]["candidate"]
+        self.check_research(task, config, registry)
+        from .local_screen import local_first
+        local_first(self.board, task, config, registry)
+        return dispatch(candidate, request["window"], configured, self.ledger, client,
+                        category=TASKS[candidate["official_task"]], native_fixture_reader=native_fixture_reader,
+                        before_remote=before_remote,
+                        before_dispatch=lambda: registry.record(candidate, request["window"], request["cycle"], request["groups"]))
+
+    def check_research(self, task, config, registry):
+        """Use the same historical constraints before local or remote labels."""
+        request, candidate = task["request"], task["request"]["candidate"]
         from ..evolution import Candidate, ResearchEngine
         memory = {}
         for name in ("memory", "live_memory"):
@@ -67,10 +78,6 @@ class Coordinator:
         view = Candidate.from_dict(dict(candidate, hypothesis=request["hypothesis"], mechanism=request["mechanism_id"]))
         if not engine.allows_research(view):
             raise ValueError("Existing research memory blocks this definition or retired direction")
-        return dispatch(candidate, request["window"], configured, self.ledger, client,
-                        category=TASKS[candidate["official_task"]], native_fixture_reader=native_fixture_reader,
-                        before_remote=before_remote,
-                        before_dispatch=lambda: registry.record(candidate, request["window"], request["cycle"], request["groups"]))
 
     def adopt_existing(self, task, job):
         """Reuse old evidence without registering, charging, or claiming fresh OOS."""

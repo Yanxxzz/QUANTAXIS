@@ -107,3 +107,19 @@ def test_asset_acceleration_exact_zero_ties_and_contraction():
     assert out.iloc[3:].isna().all()
     with pytest.raises(ValueError,match='PERIOD_ASOF'):
         native_code('acceleration')
+
+
+@pytest.mark.parametrize('kind,expected', [
+    ('gap', {'open', 'close'}), ('base', {'volume', 'turnover'}),
+    ('fixed', {'bs_net_fix_assets', 'bs_total_assets'}),
+])
+def test_native_adapters_expose_dependencies_to_provider_ast_parser(kind, expected):
+    import ast
+    dates, _ = sample()
+    # Mirror the public provider's dependency discovery, which runs before
+    # calculate: dynamic helper lookup alone cannot request any input fields.
+    tree = ast.parse(native_code(kind, list(dates)))
+    discovered = {node.slice.value for node in ast.walk(tree)
+        if isinstance(node, ast.Subscript) and isinstance(node.value, ast.Name)
+        and node.value.id == 'factors' and isinstance(node.slice, ast.Constant)}
+    assert discovered == expected
