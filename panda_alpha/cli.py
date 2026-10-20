@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import argparse
 import ast
+from contextlib import closing
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -315,7 +316,7 @@ def main(argv=None):
             path = Path(args.ledger).resolve()
             if not path.is_file():
                 raise ValueError("No executed study to review; preview does not create a ledger")
-            with sqlite3.connect(path.as_uri() + "?mode=ro", uri=True) as connection:
+            with closing(sqlite3.connect(path.as_uri() + "?mode=ro", uri=True)) as connection:
                 ledger = SimpleNamespace(db=connection, jobs=lambda: read_experiment_jobs(path))
                 print_compact(record_review(ledger, policy, read(args.evidence)))
         return

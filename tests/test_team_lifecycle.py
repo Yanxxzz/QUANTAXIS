@@ -305,6 +305,64 @@ def test_cross_line_brief_and_required_lead_disposition(lifecycle):
     assert c.board.task(task_id)["state"] == "ready"
 
 
+def test_cross_review_does_not_depend_on_matching_free_text_risk_labels(lifecycle):
+    c, registry, proof, _ = lifecycle
+    request = synthetic_request("market", proof)
+    request["risk_exposures"] = ["size_and_industry"]
+    task = c.board.submit(request)
+    peer_request = synthetic_request("fundamental", proof)
+    peer_request["risk_exposures"] = ["capital_intensity"]
+    peer = c.board.submit(peer_request)
+    send(c.board, task["task_id"], "skeptic", "challenge")
+    send(c.board, task["task_id"], "market", "response", reply_to=c.board.events(task["task_id"])[-1]["event_id"])
+    send(c.board, task["task_id"], "skeptic", "review", decision="approve", reply_to=c.board.events(task["task_id"])[-1]["event_id"])
+    host = Host(c, registry, "distinct-risk-cross-review", spec(seed_tasks=[task["task_id"]]))
+    packet = host.next()["packet"]
+    assert packet["action"] == "cross_review" and packet["role"] == "fundamental"
+    assert packet["peer_task_id"] == peer["task_id"]
+    assert packet["peer_request_hash"] == peer["request_hash"]
+    assert c.board.task(task["task_id"])["request"] == request
+
+
+def test_result_packet_contains_actual_provider_metrics_without_certifying_them(lifecycle):
+    c, _, proof, root = lifecycle
+    task = c.board.submit(synthetic_request("market", proof))
+    analysis = {"query_factor_analysis_data": [{"indicator": "Rank_IC", "factor1": "0.04"}],
+                "query_group_return_analysis": [{"group": "分组10", "sharpeRatio": "1.2", "excessAnnualized": "8.0%"}],
+                "query_rank_ic_sequence_chart": {"x": [{"data": ["2020-01-02"]}],
+                    "y": [{"name": "Rank_IC", "data": [.04]}, {"name": "Cum_Rank_IC", "data": [.04]}]}}
+    report = root / "captured-run.json"
+    report.write_text(json.dumps({"success": True, "status": 2, "factor_analysis": analysis}), encoding="utf-8")
+    observation = inspect_report(task, {"run_id": "captured-run", "environment": "official", "artifacts": [artifact(report)]})
+    assert observation["reported_metrics"]["factor_summary"] == analysis["query_factor_analysis_data"]
+    assert observation["reported_metrics"]["group_returns"] == analysis["query_group_return_analysis"]
+    assert observation["reported_metrics"]["rank_ic_chart"] == analysis["query_rank_ic_sequence_chart"]
+    assert not observation["report_delivery_verified"]
+    assert observation["source_status"] == "pending" and not observation["pool_admission"]
+
+
+def test_legacy_v1_observation_reconstructs_without_mutating_frozen_evidence(lifecycle):
+    task, result = settled(lifecycle)
+    old = read_artifact(result["payload"]["evidence_contract"])
+    old["schema"] = "team-result-evidence-v1"
+    old.pop("reported_metrics")
+    path = lifecycle[3] / "legacy-observation.json"
+    path.write_text(json.dumps(old), encoding="utf-8")
+    binding = artifact(path)
+    message = result_message(task, result)
+    message["evidence_contract"] = binding
+    message["artifacts"] = message["artifacts"] + [binding]
+    before = path.read_bytes()
+    validate_assessment(message, task, result, expected_environment="synthetic")
+    assert path.read_bytes() == before
+    old["observed"]["group_count"] = 999
+    path.write_text(json.dumps(old), encoding="utf-8")
+    message["evidence_contract"] = artifact(path)
+    message["artifacts"].append(message["evidence_contract"])
+    with pytest.raises(ValueError, match="observations changed"):
+        validate_assessment(message, task, result, expected_environment="synthetic")
+
+
 def test_completed_design_reopen_does_not_hijack_first_run_result_review(lifecycle):
     c, registry, proof, root = lifecycle
     request = synthetic_request("market", proof)

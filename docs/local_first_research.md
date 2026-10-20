@@ -15,6 +15,8 @@
 
 公式实现错误、输入哈希变化、身份错误和损坏的行情不会转换成付费回测理由。转官网不会豁免财务报告期/PIT、冻结定义、授权、累计预算或次数；已知 Run 恢复不重新进行本地选优或创建另一个 Run。
 
+本地 `FormulaEvaluator` 是按证券、完整日历计算的研究代理，不能仅凭算子同名就当作原生DSL的等价实现。公开SDK已出现居中秩/缺失填零、按行滞后和滚动及部分窗口等反例；公开版本也不等于生产部署证明。准备阶段须记录具体语义、缺失处理与排序敏感性；已有反例时，输入清单的 `definition_semantics.status=mismatch` 及其哈希证据会在读收益或派发之前阻断，不能借“缺数据”付费绕过。必要时登记明确按证券/日历计算的Python后继，保留原公式、反例与费用，并独立重审。
+
 ## 配置与恢复
 
 研究配置的 `local_screen` 包含 `enabled=true`、`allow_official_fallback`、`output_dir` 和 `inputs`。`inputs` 以冻结任务的 fingerprint 为键，值是输入清单 `{path, sha256}`。清单绑定 `fingerprint`、`request_hash`、`availability=ready|unavailable` 及实际来源证据 `artifacts`。

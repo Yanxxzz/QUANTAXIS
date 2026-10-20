@@ -454,6 +454,33 @@ def _projection_proof(output, frame, fields, contract, window, cycle, groups,
             "output_sha256": hashlib.sha256(pd.util.hash_pandas_object(output, index=True).values.tobytes()).hexdigest()}
 
 
+def _daily_output_index(output: pd.Series, expected_index: pd.MultiIndex) -> pd.Series:
+    """Compare compact wire dates without reordering or repairing any keys."""
+    index = output.index
+    if (not isinstance(index, pd.MultiIndex) or list(index.names) != ["date", "symbol"]
+            or not index.is_unique):
+        return output
+    if index.equals(expected_index):
+        return output
+    dates = index.get_level_values("date")
+    # The public analysis reader requires YYYYMMDD. Do not accept ambiguous
+    # date strings, truncate intraday timestamps, or change symbol identities.
+    if not all(isinstance(day, str) and len(day) == 8 and day.isascii() and day.isdigit()
+               for day in dates):
+        return output
+    try:
+        parsed = pd.to_datetime(dates, format="%Y%m%d", errors="raise")
+    except (ValueError, TypeError):
+        return output
+    canonical = pd.MultiIndex.from_arrays([parsed, index.get_level_values("symbol")],
+                                          names=["date", "symbol"])
+    if not canonical.equals(expected_index):
+        return output
+    result = output.copy()
+    result.index = canonical
+    return result
+
+
 def _replay(code: str, fixture: str, fields: list[str], window: dict,
             cycle: int, groups: int, policy: dict, purpose: str = STRICT_PURPOSE,
             evaluation_contract: dict | None = None, fixture_reader=None,
@@ -521,6 +548,7 @@ def _replay(code: str, fixture: str, fields: list[str], window: dict,
     if not isinstance(output, pd.Series) or output.name != "value":
         raise NativePreflightError("Native output must be a Series named value")
     expected_index = frame.index[in_window] if projected else frame.index
+    output = _daily_output_index(output, expected_index)
     if (not isinstance(output.index, pd.MultiIndex) or list(output.index.names) != ["date", "symbol"]
             or not output.index.is_unique or not output.index.equals(expected_index)):
         message = ("Native output must restore the exact evaluation projection of the full input index"

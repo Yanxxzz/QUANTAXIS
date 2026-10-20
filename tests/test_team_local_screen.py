@@ -42,6 +42,16 @@ def test_unavailable_routes_official_once_without_spending(local_env):
     assert len(c.board.events('LOCAL')) == 1 and c.ledger.jobs() == [] and r.total == 0
 
 
+def test_known_operator_mismatch_is_not_a_missing_data_paid_fallback(local_env):
+    c, r, task, config, manifest, _ = local_env
+    manifest['definition_semantics'] = {'status': 'mismatch', 'artifacts': manifest['artifacts'],
+        'reason': 'Actual operator replay differs in shift axis and missing-value behavior'}
+    bind(local_env, manifest)
+    with pytest.raises(LocalScreenBlocked, match='semantics mismatch'):
+        local_first(c.board, task, config, r)
+    assert not c.ledger.jobs() and r.total == 0 and not c.board.events('LOCAL')
+
+
 def test_no_manifest_or_fallback_permission_blocks(local_env):
     c, r, task, config, manifest, _ = local_env
     with pytest.raises(LocalScreenBlocked, match='bound input'):

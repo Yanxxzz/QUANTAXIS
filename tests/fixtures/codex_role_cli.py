@@ -40,5 +40,11 @@ elif p["action"] == "freeze":
 else:
     out = {"claim": "Fixture evidence only", "test": "No scientific conclusion", "artifacts": [],
            "decision": "approve" if p["action"] == "review" else "test"}
-output.write_text(json.dumps({"work_id": p["work_id"], "output_json": json.dumps(out)}), encoding="utf-8")
+serialized = json.dumps(out)
+if mode == "literal_string_controls":
+    out['claim' if 'claim' in out else 'reason'] += '\nSecond line\tTail\rEnd'
+    serialized = json.dumps(out).replace('\\n', '\n').replace('\\t', '\t').replace('\\r', '\r')
+if mode == "invalid_completed":
+    serialized = '{"claim":"invalid", "decision":}'
+output.write_text(json.dumps({"work_id": p["work_id"], "output_json": serialized}), encoding="utf-8")
 print(json.dumps({"type": "turn.completed", "usage": {"input_tokens": 0, "output_tokens": 0}}), flush=True)

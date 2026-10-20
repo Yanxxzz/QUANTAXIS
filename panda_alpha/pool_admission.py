@@ -18,6 +18,10 @@ from .registry import verify_artifact
 
 IDENTITY = "pool_admission_v1_20261010"
 BALANCED_IDENTITY = "pool_admission_v2_20261010_balanced"
+PROSPECTIVE_IDENTITY = "pool_admission_v3_20261020_prospective"
+QUALITY_REVIEW_METRICS = frozenset({"net50", "p25_fold_net", "turnover",
+                                   "size_direction_rank_ic", "size_net30", "size_net50",
+                                   "max_abs_corr_existing_pool"})
 CONTRACTS = ("source_coverage", "point_in_time_universe", "execution_audit",
              "size_stress", "temporal_stability", "actual_factor_diversity",
              "official_transfer", "direction_parity", "current_pool_snapshot",
@@ -249,7 +253,9 @@ def assess_pool_admission(evidence: dict, policy: dict, *, evidence_directory=".
                           window_check=None) -> dict:
     pending, failed, economic = [], [], []
     metrics, receipts = {}, {}
-    balanced = policy.get("identity") == BALANCED_IDENTITY
+    prospective = policy.get("identity") == PROSPECTIVE_IDENTITY
+    balanced = policy.get("identity") in (BALANCED_IDENTITY, PROSPECTIVE_IDENTITY)
+    quality_reviews = []
     result = {"policy": policy.get("identity"), "effective_policy_sha256": plan_digest(policy),
               "candidate_ids": evidence.get("plan", {}).get("candidate_ids", []),
               "official_total_points_gain_verified": False, "pool_operations": 0,
@@ -267,7 +273,7 @@ def assess_pool_admission(evidence: dict, policy: dict, *, evidence_directory=".
             result["tier"] = "rejected" if failed else "pending"
         return result
 
-    if evidence.get("schema_version") != 1 or policy.get("identity") not in (IDENTITY, BALANCED_IDENTITY):
+    if evidence.get("schema_version") != 1 or policy.get("identity") not in (IDENTITY, BALANCED_IDENTITY, PROSPECTIVE_IDENTITY):
         pending.append("prospective_evidence_schema")
         return finish()
     plan = evidence.get("plan", {})
@@ -357,13 +363,22 @@ def assess_pool_admission(evidence: dict, policy: dict, *, evidence_directory=".
                     value = _number(q.get(key), key)
                     violates = value < gate[threshold] if op == ">=" else value > gate[threshold]
                     if violates:
-                        failed.append(f"common:{key}")
+                        if prospective and key in QUALITY_REVIEW_METRICS:
+                            quality_reviews.append(f"common:{candidate}:{key}")
+                        else:
+                            failed.append(f"common:{key}")
                 for key in ("p25_fold_net", "size_net50"):
                     if _number(q.get(key), key) <= 0:
-                        failed.append(f"common:{key}")
+                        if prospective:
+                            quality_reviews.append(f"common:{candidate}:{key}")
+                        else:
+                            failed.append(f"common:{key}")
                 if q["cumulative_hypotheses"] < policy.get("minimum_hypotheses", 0):
                     pending.append("multiple-testing denominator is older than retained research history")
             metrics["quality_by_candidate"] = by_candidate
+            if prospective:
+                result["review_items"] = sorted(set(quality_reviews))
+                result["manual_review_required"] = True
         except (ValueError, TypeError) as exc:
             pending.append(f"quality: {exc}")
     if not ledger or not points:
@@ -487,7 +502,8 @@ def assess_pool_admission(evidence: dict, policy: dict, *, evidence_directory=".
         metrics["B"] = {"status": "pending", "reason": "Post-effective B and its backend denominator require separate evidence; historical A cannot fill B"}
         if balanced:
             grade = _grade_increment(comparisons, policy, len(complete))
-            result.update(tier=grade["tier"], review_items=grade["review_items"])
+            result.update(tier="tradeoff_review" if quality_reviews and not grade["rejected"] else grade["tier"],
+                          review_items=sorted(set(grade["review_items"] + quality_reviews)))
             economic.extend(grade["rejected"])
         if any(not item.startswith("risk_tradeoff_review@") for item in pending):
             metrics["economic_observations_pending_certification"] = list(economic)
@@ -580,7 +596,7 @@ def _forward_review(shadow, plan, baseline, proposed, policy, contracts):
                 b_by_member["baseline"][key] != b_by_member["proposed"][key]):
             raise ValueError("Unchanged members must use identical original B records")
     comparisons, review_items = {}, []
-    balanced = policy.get("identity") == BALANCED_IDENTITY
+    balanced = policy.get("identity") in (BALANCED_IDENTITY, PROSPECTIVE_IDENTITY)
     forward_increment = False
     for cost in policy["one_way_costs"]:
         statistics_by_side, c_by_side = {}, {}

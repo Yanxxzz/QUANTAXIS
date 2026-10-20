@@ -117,6 +117,15 @@ def validate_request(request: dict) -> dict:
     verify_artifacts(request.get("artifacts"))
     actual = input_fields(request)
     primary = set(request["primary_fields"])
-    if not primary.issubset(actual) or actual - primary - set(controls):
-        raise ValueError("Declared primary/control fields differ from executable inputs")
+    declared_controls = set(controls)
+    if candidate.get("formula"):
+        # The formula evaluator and native daily-field provider resolve names
+        # without case distinctions. Preserve the original frozen request and
+        # its hash; compare only the actual input identities canonically.
+        actual = {name.casefold() for name in actual}
+        primary = {name.casefold() for name in primary}
+        declared_controls = {name.casefold() for name in declared_controls}
+    if not primary.issubset(actual) or actual - primary - declared_controls:
+        raise ValueError("Declared primary/control fields differ from executable inputs: "
+                         f"actual={sorted(actual)}, primary={sorted(primary)}, controls={sorted(declared_controls)}")
     return {"request_hash": digest(request), "fingerprint": fingerprint(candidate, window, request["cycle"], request["groups"])}

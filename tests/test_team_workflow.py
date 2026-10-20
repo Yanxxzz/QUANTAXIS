@@ -90,6 +90,28 @@ def test_immutable_request_exact_duplicate_and_separate_directions(team):
                        "allocation_reason": "test", "diversity_check": "test"})
 
 
+@pytest.mark.parametrize("declared", [["close"], ["CLOSE"], ["Close"]])
+def test_formula_field_case_aliases_preserve_frozen_request_identity(team, declared):
+    from panda_alpha.team.contracts import validate_request
+    request = synthetic_request("market", team[4])
+    request["candidate"]["formula"] = "RANK(CLOSE / REF(CLOSE, 1))"
+    request["primary_fields"] = declared
+    original = deepcopy(request)
+    identity = validate_request(request)
+    task = team[0].board.submit(request)
+    assert request == original
+    assert task["request_hash"] == identity["request_hash"] == digest(original)
+    assert task["request"] == original
+
+
+def test_formula_case_aliases_do_not_hide_an_undeclared_input(team):
+    request = synthetic_request("market", team[4])
+    request["candidate"]["formula"] = "RANK(CLOSE / VOLUME)"
+    request["primary_fields"] = ["close"]
+    with pytest.raises(ValueError, match="actual=.*volume"):
+        team[0].board.submit(request)
+
+
 def test_default_offline_rejects_even_execute_before_account_access(team):
     task = ready(team)
     with pytest.raises(ValueError, match="offline"):

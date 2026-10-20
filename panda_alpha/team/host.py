@@ -121,7 +121,7 @@ class Host:
                 # a supplemental cache-only snapshot, never edit their event or
                 # repeat the website execution to obtain the newer schema.
                 root = Path(self.db.execute("PRAGMA database_list").fetchone()[2]).resolve().parent
-                binding = self.c.evidence(task_id, root / "source-material" / (digest(result["payload"]) + ".evidence.json"))
+                binding = self.c.evidence(task_id, root / "source-material" / (digest(result["payload"]) + ".evidence-v2.json"))
             if binding:
                 packet["delivery_observation"] = {"artifact": binding, "observation": read_artifact(binding)}
         if prior:
@@ -267,8 +267,10 @@ class Host:
             if action == "freeze":
                 if any(t["owner"] == task["owner"] and t["state"] == "ready" for t in tasks.values()):
                     continue  # Free the existing ready slot before asking for an impossible freeze.
-                peer = next((t for t in reversed(list(tasks.values())) if t["owner"] != task["owner"] and
-                             set(t["request"]["risk_exposures"]) & set(task["request"]["risk_exposures"])), None)
+                peers = [t for t in reversed(list(tasks.values())) if t["owner"] != task["owner"]]
+                peer = next((t for t in peers if
+                             set(t["request"]["risk_exposures"]) & set(task["request"]["risk_exposures"])),
+                            peers[0] if peers else None)
                 if peer and not any(e["kind"] == "cross_review" for e in self.c.board.events(task_id)):
                     return self._issue(state, peer["owner"], "cross_review", task_id,
                                        peer_task_id=peer["task_id"], peer_request_hash=peer["request_hash"])
