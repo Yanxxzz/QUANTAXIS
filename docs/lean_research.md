@@ -36,3 +36,9 @@ python -m panda_alpha.team screen-bind --ledger DB --task ID --version N --input
 `local_screen_required` 时服务只等待程序交接，不调用审查模型；原截止/停止开关有效。绑定后原 runtime 继续，不新开模型阶段或重置预算。缺输入不能伪造为不可得；算子不等价、损坏或哈希变化必须修复，不转收费回测。
 
 旧 spec 缺少 `workflow` 时保持原四角色协议。旧终态、失败、两库、A/B 资格及官网额度不迁移、不复活。本次仅离线软件验收，研究仍停止，没有新模型或官网质量对照，不声称因子表现或实际额度比例已改善。
+
+## 从原件复核后补上的前提
+
+历史C1包缺少语义检查，而后来的公开源码回放已证明其本地/DSL实现不等价。新lean筛选在读本地收益或选择官网替代前，要求manifest的 `definition_semantics` 绑定非空原件：公式状态 `equivalent`，Python状态 `explicit_python_tested`。`mismatch`、未核验或原件哈希变化都不能进入收费替代，也不浪费Skeptic调用。旧包不补写，旧四角色合同不迁移；新材料需绑定实际冻结代码和输入，正面声明不是自动证明。
+
+三个历史反例、真实瓶颈、原件复现和一个未启动的有限研究方案见[深化审视](research_depth_audit.md)。方案保留官网32点/6槽、worker16次含重试，主聊天计入同一窗口额度。配置的 `research_enabled=false`、`execution_enabled=false`、截止为空；它不是启动许可。

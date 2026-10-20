@@ -1,0 +1,83 @@
+{
+  "schema": "limited-research-plan-v1",
+  "status": "prepared_not_authorized",
+  "baseline_pr": 18,
+  "research_enabled": false,
+  "execution_enabled": false,
+  "absolute_deadline": null,
+  "startup_requires": "New explicit finite authorization, fresh shared quota snapshot, real activity balance, original ledger usage and absolute deadline. This file grants no permission.",
+  "limits": {
+    "new_mechanisms": 1,
+    "worker_attempts_including_retries": 16,
+    "worker_attempts_reserved_for_confirmation_or_material_objection": 8,
+    "website_credits_max": 32,
+    "website_runs_max": 6,
+    "website_primary_reservation_max": 8,
+    "website_confirmation_reserve": 16,
+    "website_technical_reserve": 8,
+    "worker_max_attempts_per_work": 2,
+    "main_chat_in_shared_quota_accounting": true,
+    "purchase_recharge_subscription": false,
+    "new_roles_or_backtest_engine": false,
+    "automatic_pool_change": false
+  },
+  "mechanisms": [
+    {
+      "mechanism_id": "lagged_peer_information_diffusion_v1",
+      "candidate_id": "PREPARED_PEER_DIFFUSION_20261020",
+      "priority": 1,
+      "registered_or_executed": false,
+      "hypothesis": "Returns of previously similar stocks contain incremental information about subsequent own-stock returns, after controlling own reversal, trend and risk. Information diffusion is an unproved interpretation.",
+      "definition": {
+        "clock": "Asia/Shanghai; form after T closing data are available; enter next actual session open; never trade at T close",
+        "source_universe": "Original fixed 80 symbols in night_factor_20261020/local-data/capture.json; supplied-source falsification only, not representative all-A or pool coverage",
+        "calendar": "Original independently stored 320-session baostock calendar; reindex full stock/calendar grid and preserve unknown cells",
+        "returns": "r[i,t]=log(adjusted_close[i,t]/adjusted_close[i,t-1]); finite positive prices required",
+        "market": "m[t]=median finite r[j,t] over frozen universe, only with at least60 securities; x[i,t]=r[i,t]-m[t]",
+        "peer_estimation": "At T use exactly60 calendar returns T-64 through T-5 inclusive. Eligible securities have all60 finite x and strictly positive variance; require at least60 eligible securities. Pearson correlations use only these complete arrays.",
+        "peers": "For each i choose the five highest strictly positive correlations with other eligible securities; ties by ascending six-digit symbol. Fewer than five gives undefined. Selection never uses T-4..T returns or future quotes.",
+        "score": "s[i,T]=mean over frozen five peers j of SUM(x[j,t],t=T-4..T) - SUM(x[i,t],t=T-4..T). All six recent paths must be complete; missing selected peers give undefined, with no substitute selection.",
+        "numeric_rule": "Constant arrays undefined, no epsilon signal creation or missing-value fill. Before labels, exact small fixtures, prefix/order invariance and an independently calculated Pearson oracle must pass for the frozen implementation.",
+        "direction": 1,
+        "groups": 10,
+        "held_group": 10,
+        "cycle": 5,
+        "minimum_assets": 60,
+        "costs_one_way": [0.003, 0.005],
+        "execution": "Existing prepare_study/evaluate_study holdings, cash, fees and potential daily-bar fills; unknown quote/status is pending, never zero return or future-based deletion"
+      },
+      "difference_from_prior_failures": "Predicts cross-security transfer beyond own r1/r5/r20. C1 pressure, own up-day breadth, MAX20, own prior peak and unsigned volume/magnitude coupling have no previously estimated peer-return term. Visible task catalog differs; the historical baseline count654 is not a complete novelty certificate.",
+      "strongest_alternative": "Ordinary own-stock reversal plus shared industry/market risk, illiquidity or stale quotes generates the entire apparent effect.",
+      "cheapest_discriminating_test": {
+        "label": "Arithmetic adjusted OPEN[T+6]/OPEN[T+1]-1 on the same independently calendared sample. Label failures are logged after legal signal selection and never change portfolio eligibility.",
+        "primary_controls": ["intercept", "centered_cross_section_rank_score", "own_r1", "own_r5", "own_r20", "sigma20", "log_mean_amount20", "beta60_to_same_frozen_market"],
+        "fit": "Per formation date, one fixed full-rank least-squares specification. Center and L2-normalize nonconstant regressors; SVD relative tolerance1e-10. Keep all eight columns; require60 common observations and at least10 residual degrees of freedom, else pending, never drop a control to obtain significance. Restore score coefficient to rank units.",
+        "target": "Mean coefficient of centered score rank; a one-unit rank difference represents its conditional five-session return contrast",
+        "minimum_material_effect": 0.001,
+        "time_segments": "Four consecutive blocks of equal numbers of scheduled formation dates, with any remainder in the last block; report every block, including missing estimates",
+        "uncertainty": "Moving block bootstrap of date coefficients, block length4 formation slots,9999 draws,seed20261020,95% percentile interval. Preserve missing formation slots; draw contiguous scheduled slots, omit missing coefficients only inside each draw and report valid counts. Require at least24 estimated dates, at least6 per segment and120 calendar sessions; otherwise limited evidence, not confirmation.",
+        "risk_scope": "Without as-of industry metadata this test does not exclude industry risk or prove a causal diffusion mechanism. No actual current-pool common ledger, hence no pool-increment pass."
+      },
+      "windows": {
+        "local_exploration": {"start": "2025-09-19", "end": "2026-09-18", "holding_end": "2026-09-18"},
+        "disjoint_confirmation_if_data_available": {"start": "2022-09-19", "end": "2023-09-18", "holding_end": "2023-09-18"},
+        "qualification": "Both windows have prior research exposure; neither is newly sealed OOS. Confirmation unavailable means pending, no window substitution. Future forward shadow must be frozen before its labels exist."
+      },
+      "frozen_decisions": {
+        "stop_fixed_definition": "95% upper bound of the conditional effect below0.001, or existing fixed_definition_weak jointly on both cost paths and same-support market wealth. Close this version only; no sign, peer count, lookback, group or window rescue.",
+        "research_value": "Implementable and not decisively excluded; uncertain effect or unavailable execution/confirmation evidence remains pending. A point estimate alone cannot buy a website run.",
+        "shadow_candidate": "Estimated effect positive and not materially excluded, positive net excess at both fixed costs,30bp net Sharpe at least0.5, positive net excess in at least3 of4 segments, complete scoped source/execution evidence and a usable unchanged-definition confirmation. This remains a pre-forward candidate, not a pool increment pass.",
+        "pool_review": "Existing prospective admission policy, original source/PIT gates, actual pool common ledger and forward shadow independently satisfied; never inferred from this plan, CI or model agreement.",
+        "do_not_spend": "Known semantic/numeric error, local scoped weakness, unresolved fundamental PIT, or website cannot answer the recorded question. Do not buy a summary as a substitute for an unavailable trading ledger."
+      },
+      "website_question_if_needed": "Only after free adaptation/preflight and explicit new authorization: does the exact frozen definition on an explicitly declared provider universe show the frozen long-side RankIC/Sharpe/excess? A larger provider peer universe changes peer identities and must be bound as a separate domain-specific implementation, never called the same fixed80 reproduction. Check data size/compute feasibility offline first; unavailable universe support or excessive cost means stop. Summaries cannot certify local execution gaps, financial PIT or actual pool increment."
+    }
+  ],
+  "process": [
+    "Before any new return labels: bind exact code, source/codes/calendar, controls, protocol hash and existing scientific registration; log all related prior exposures.",
+    "Deterministic local inputs/numeric/semantics tests and existing engine first. One independent Skeptic reviews only issues that could change the advance decision; seed definition does not need a second proposal.",
+    "No-model fixed planning/accounting/freeze/conclusion. Reviewer sees exact current artifacts and scoped evidence. Explicit material objections may use remaining bounded attempts; no ceremonial cross-role rounds.",
+    "Do not allocate primary website reservation above8 or primary worker attempts above8; preserve the other allocations. Recheck actual charges and earliest absolute deadline before any launch; retries consume the same cumulative bounds.",
+    "If no actionable new material, stop and save the blocker. Never wake models to check the clock. End by normal host stop, process/state and unsettled-run audit."
+  ]
+}

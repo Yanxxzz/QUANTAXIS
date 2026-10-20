@@ -34,10 +34,12 @@ def spec(**changes):
                 deadline=(datetime.now(timezone.utc) + timedelta(minutes=10)).isoformat()), **changes)
 
 
-def bind_screen(env, task, *, availability="unavailable"):
+def bind_screen(env, task, *, availability="unavailable", semantics=True):
     c, r, proof, root = env
     manifest = {"fingerprint": task["fingerprint"], "request_hash": task["request_hash"], "availability": availability,
                 "reason": "Adjusted source unavailable in this synthetic fixture", "artifacts": [proof]}
+    if semantics:
+        manifest["definition_semantics"] = {"status": "equivalent", "artifacts": [proof]}
     source = root / "input.json"
     write(source, manifest)
     config = synthetic_config()
@@ -92,12 +94,30 @@ def test_no_input_does_not_spend_critic_turn_or_guess_missing_data(env):
     assert host.state()["actions"] == 0 and not c.ledger.jobs()
 
 
+@pytest.mark.parametrize("existing_ready", [False, True])
+def test_unchecked_definition_is_not_a_lean_missing_data_fallback(env, existing_ready):
+    # Historical C1 had no semantics entry; a later public replay found that
+    # row-wise REF/MA and NaN-to-zero ranks differed from the local signal.
+    c, r, proof, root = env
+    task = c.board.submit(synthetic_request("market", proof))
+    if existing_ready:
+        with c.board.transaction():
+            c.board.advance(task["task_id"], "ready")  # Persisted seed from an older design review.
+    binding, _ = bind_screen(env, task, semantics=False)
+    host = Host(c, r, "lean", spec(seed_tasks=[task["task_id"]], local_screen_config=binding))
+    result = host.next()
+    assert result["reason"] == "local_screen_blocked"
+    assert "semantics evidence" in result["error"]
+    assert host.state()["actions"] == 0 and not c.ledger.jobs() and r.total == 0
+    assert not any(e["kind"] == "local_screen" for e in c.board.events(task["task_id"]))
+
+
 def test_local_reject_parks_without_critic_or_whole_mechanism_rejection(env, monkeypatch):
     c, r, proof, root = env
     task = c.board.submit(synthetic_request("market", proof))
     binding, _ = bind_screen(env, task)
     from panda_alpha.team.local_screen import LocalScreenBlocked
-    def local_reject(board, current, *_):
+    def local_reject(board, current, *_, **options):
         report = root / "weak.json"
         write(report, {"route": "local_reject", "scope": "fixed definition only"})
         board.event(current["task_id"], "steward", "local_screen", {"report": artifact(report), "route": "local_reject"})

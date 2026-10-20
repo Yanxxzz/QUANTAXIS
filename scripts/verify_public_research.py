@@ -34,6 +34,7 @@ PUBLIC_PATTERNS = (
     "README*.md", "AGENTS.md", "RESEARCH.md", "pyproject.toml",
     ".codex/agents/panda-*.toml", "config/team-grant.example.json",
     "config/team-host.example.json", "config/team-workers.example.json",
+    "config/research-depth-plan.v1.json",
     "tests/fixtures/statement_layout_original.json", "tests/fixtures/statement_layout_continuation.json",
 )
 PRIVATE_PARTS = {"research_runs", ".runtime", ".venv", "data", "_data_", ".git", "__pycache__"}
