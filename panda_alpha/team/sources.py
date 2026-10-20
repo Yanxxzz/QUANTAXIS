@@ -218,7 +218,7 @@ def refresh_watches(board, session_id, spec):
                 events = board.events(task["task_id"])
                 decisions = [e for e in events if e["kind"] in {"decision", "review", "conclusion"}]
                 results = [e for e in events if e["kind"] == "result"]
-                targets = results or [e for e in events if e["kind"] == "response"]
+                targets = results or [e for e in events if e["kind"] == "response"] or [e for e in events if e["kind"] == "proposal"]
                 if not decisions or not targets:
                     raise ValueError("Source watch needs an existing closure and review target")
                 value = {k: captured[k] for k in ("kind", "origin", "observed_at", "artifact", "limitations")}

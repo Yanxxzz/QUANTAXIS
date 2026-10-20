@@ -4,6 +4,8 @@
 
 ## 对话操作
 
+- 新有限研究默认使用 `config/team-host.example.json` 的 lean 流程：单主研究员、本地先筛、按需 Skeptic，程序调度/冻结/结案。具体见 `docs/lean_research.md`；不为角色齐全重复交接，不无变化唤醒模型。旧 spec/manifest 不改绑、不迁移。
+- 默认16次真实 worker 尝试含重试，high/xhigh、按任务分会话、单次180KB提示；保留原证据/PIT、失败和累计预算。模型尝试不是周额度单位，主聊天也控制上下文和无关工程量。
 - 研究默认由操作者在 Codex 对话中明确启动。打开聊天、查询状态、登录或重启电脑不代表启动授权；不要自行安装登录任务或定时自动化。
 - 启动、暂停或查询前阅读 `docs/chat_start.md`。使用 `service-prepare` 和 `host-control` 复用原宿主，不另建调度、模型会话或预算体系。
 - 先读取原账本的 `readiness` 和部署状态。可恢复会话沿用原 session/runtime/截止时间与累计次数；完成或过期的会话不能原地重置。

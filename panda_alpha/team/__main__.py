@@ -1,4 +1,4 @@
-"""One maintained entry point for the four-role research workflow."""
+"""One research entry point: local-first lean workflow or legacy four-role sessions."""
 from __future__ import annotations
 
 import argparse
@@ -20,7 +20,7 @@ def main(argv=None):
     demo.add_argument("--output", type=Path, required=True)
     rehearsal = commands.add_parser("host-demo", help="Three bounded offline rounds including restart and same-task evidence review")
     rehearsal.add_argument("--output", type=Path, required=True)
-    service = commands.add_parser("host-serve", help="Supervise four real Codex workers; default has no website execution")
+    service = commands.add_parser("host-serve", help="Supervise the frozen workflow's Codex workers; default has no website execution")
     service.add_argument("--ledger", type=Path, required=True)
     service.add_argument("--registry", type=Path, required=True)
     service.add_argument("--session", required=True)
@@ -54,6 +54,11 @@ def main(argv=None):
     source.add_argument("--ledger", type=Path, required=True)
     source.add_argument("--task", required=True)
     source.add_argument("--input", type=Path, required=True)
+    screen = commands.add_parser("screen-bind", help="Bind immutable local inputs to a proposal; no model or website execution")
+    screen.add_argument("--ledger", type=Path, required=True)
+    screen.add_argument("--task", required=True)
+    screen.add_argument("--version", type=int, required=True)
+    screen.add_argument("--input", type=Path, required=True, help="Existing local-screen config; source manifests must match this request")
     qualifications = commands.add_parser("qualifications", help="Offline fixed-ID inventory or evidence-bound migration preview")
     qualifications.add_argument("--ledger", type=Path, required=True)
     qualifications.add_argument("--registry", type=Path, required=True)
@@ -176,6 +181,10 @@ def main(argv=None):
                 from .sources import submit
                 receipt = submit(c.board, args.task, read(args.input))
                 result = {k: receipt[k] for k in ("event_id", "status", "reason", "artifact", "review")}
+            elif args.command == "screen-bind":
+                from .local_screen import bind_config
+                from .evidence import artifact
+                result = bind_config(c.board, args.task, args.version, artifact(args.input))
             elif args.command in {"init", "status", "plan"}:
                 result = c.plan()
             elif args.command == "packet":

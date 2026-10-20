@@ -20,6 +20,35 @@ class LocalScreenBlocked(ValueError):
     pass
 
 
+def bind_config(board, task_id, version, binding):
+    """Attach computed local inputs after a proposal, without a new model/session.
+
+    Inputs remain immutable and hash-bound. This only records a prerequisite;
+    screening, scientific-memory checks and spending gates run in their usual paths.
+    """
+    config = read_artifact(binding)
+    if config.get('local_screen', {}).get('enabled') is not True:
+        raise ValueError('Local binding must enable local-first routing')
+    with board.transaction():
+        task = board.expect(task_id, version, {'proposed'})
+        input_binding = config['local_screen'].get('inputs', {}).get(task['fingerprint'])
+        if not input_binding:
+            raise ValueError('Local binding requires inputs for this exact fingerprint')
+        manifest = read_artifact(input_binding)
+        if any(manifest.get(k) != task[k] for k in ('fingerprint', 'request_hash')):
+            raise ValueError('Local binding does not match the frozen request')
+        verify_artifacts(manifest.get('artifacts'))
+        previous = [e for e in board.events(task_id) if e['kind'] == 'local_screen_bound']
+        if previous:
+            if previous[-1]['payload']['config'] != binding:
+                raise ValueError('Local input binding is immutable; preserve the prior screen')
+            return previous[-1]['payload']
+        payload = {'request_hash': task['request_hash'], 'config': binding, 'funding_authorization': False}
+        board.event(task_id, 'operator', 'local_screen_bound', payload,
+                    'local-bind:' + digest({'task_id': task_id, **payload}))
+    return payload
+
+
 def local_first(board, task, config, registry):
     """Record one reproducible local route before any new remote job.
 

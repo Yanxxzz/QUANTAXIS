@@ -40,6 +40,13 @@ class Host:
                 raise ValueError("seed_tasks must be a list of existing task IDs")
             if type(spec.get("independent_source_review", False)) is not bool:
                 raise ValueError("independent_source_review must be a boolean")
+            if spec.get("workflow", "four_role") not in {"four_role", "lean"}:
+                raise ValueError("Unknown host workflow")
+            if spec.get("workflow") == "lean":
+                if spec.get("researcher", "market") not in INFORMATION:
+                    raise ValueError("Lean researcher must be market or fundamental")
+                if type(spec.get("max_model_attempts")) is not int or spec["max_model_attempts"] <= 0:
+                    raise ValueError("Lean workflow requires a positive max_model_attempts")
             for task_id in spec.get("seed_tasks", []):
                 self.c.board.task(task_id)
             from .sources import validate_watches
@@ -70,6 +77,8 @@ class Host:
         return {"status": "stopped", "reason": reason, "session_id": self.session_id}
 
     def _issue(self, state, role, action, task_id=None, **extra):
+        if state["spec"].get("workflow") == "lean" and state["actions"] >= state["spec"]["max_actions"]:
+            return self.stop("action_limit")
         task = self.c.board.task_packet(task_id) if task_id and action != "propose" else None
         identity = {"session_id": self.session_id, "round": state["round"], "role": role, "action": action,
                     "task_id": task_id, "version": task["version"] if task else None}
@@ -162,6 +171,21 @@ class Host:
                               if r["status"] in {"review_requested", "awaiting_conclusion"}}
             packet["independent_source_analyses"] = [e for e in self.c.board.events(task_id)
                 if e["kind"] == "source_analysis" and set(e["payload"]["source_receipt_ids"]) == active_sources]
+        if state["spec"].get("workflow") == "lean":
+            packet["context_policy"] = "task_scoped_v1"
+            if task:
+                screens = [e for e in self.c.board.events(task_id) if e["kind"] == "local_screen"]
+                if screens and "local_screen_observation" not in packet:
+                    from .evidence import read_artifact
+                    report = read_artifact(screens[-1]["payload"]["report"])
+                    packet["local_screen_observation"] = {"artifact": screens[-1]["payload"]["report"],
+                        **{k: report[k] for k in ("route", "local_status", "reason", "scope", "quality") if k in report}}
+            packet["workflow_instructions"] = (
+                "One researcher and an on-demand independent skeptic. Do not request ceremonial lead/cross-line turns. "
+                "Routine scheduling, freeze and exact review-conclusion mapping are deterministic host actions. "
+                "A proposal-mode review judges the frozen proposal and supplied local screen in one turn; "
+                "approve or park with concrete reasons, without inventing an author response. "
+                "Keep replies concise; preserve source/PIT, cost, exposed-window and pool-increment limitations.")
         with self.c.board.transaction():
             old = self.db.execute("SELECT state FROM team_host_work WHERE work_id=?", (work_id,)).fetchone()
             if old:
@@ -209,7 +233,7 @@ class Host:
                 continue
             return {"status": "work", "packet": packet}
         state = self.state()
-        if state["actions"] >= state["spec"]["max_actions"]:
+        if state["actions"] >= state["spec"]["max_actions"] and state["spec"].get("workflow") != "lean":
             return self.stop("action_limit")
         # External intake can append material while a role is running. Finish
         # its immutable packet first, then reopen only explicitly owned tasks.
@@ -264,9 +288,40 @@ class Host:
             if action in {"await_grant_or_dispatch", "resume_original_run"}:
                 continue
             task = tasks[task_id]
+            if state["spec"].get("workflow") == "lean":
+                if action == "challenge":
+                    screened = self._lean_screen(state, task)
+                    if screened.get("status") == "progress":
+                        return self.next(execution=execution, should_continue=should_continue)
+                    if screened.get("status"):
+                        return screened
+                    return self._issue(state, "skeptic", "review", task_id, review_mode="proposal",
+                                       local_screen_observation=screened)
+                if action == "review" and not any(e["kind"] == "response" for e in self.c.board.events(task_id)):
+                    return self._issue(state, "skeptic", "review", task_id, review_mode="proposal")
+                if action == "conclude":
+                    review = self.c.board.task_packet(task_id)["review_targets"]["result_review"]
+                    self.c.conclude(task_id, task["version"], {
+                        "operation_id": "lean-conclude:" + digest({"session": self.session_id, "review": review["event_id"]}),
+                        "review_event_id": review["event_id"],
+                        "decision": "close" if review["payload"]["decision"] == "reject" else review["payload"]["decision"],
+                        "reason": review["payload"]["claim"], "decider": "deterministic_host"}, self.registry)
+                    return self.next(execution=execution, should_continue=should_continue)
             if action == "freeze":
                 if any(t["owner"] == task["owner"] and t["state"] == "ready" for t in tasks.values()):
                     continue  # Free the existing ready slot before asking for an impossible freeze.
+                cross = [e for e in self.c.board.events(task_id) if e["kind"] == "cross_review"]
+                if state["spec"].get("workflow") == "lean" and not cross:
+                    review = [e for e in self.c.board.events(task_id) if e["kind"] == "review"][-1]
+                    self.c.board.freeze(task_id, task["version"], {"request_hash": task["request_hash"], "priority": 50,
+                        "allocation_reason": "Independent design approval; execution still requires local/source/funding gates",
+                        "diversity_check": "No pool-increment or independence claim from design approval",
+                        "review_event_id": review["event_id"], "decider": "deterministic_host", "cross_line_decisions": []},
+                        event_id="lean-freeze:" + digest({"session": self.session_id, "review": review["event_id"]}))
+                    return self.next(execution=execution, should_continue=should_continue)
+                if state["spec"].get("workflow") == "lean":
+                    # Existing explicit cross-line objections still need an actual disposition.
+                    return {"status": "waiting", "reason": "cross_line_disposition_required", "task_id": task_id}
                 peers = [t for t in reversed(list(tasks.values())) if t["owner"] != task["owner"]]
                 peer = next((t for t in peers if
                              set(t["request"]["risk_exposures"]) & set(task["request"]["risk_exposures"])),
@@ -284,6 +339,12 @@ class Host:
             job = self.c.ledger.get(task["fingerprint"])
             if job and not job["run_id"]:
                 return {"status": "waiting", "reason": "operator_reconciliation", "task_id": task["task_id"], "job_state": job["state"]}
+            if state["spec"].get("workflow") == "lean" and not job:
+                screened = self._lean_screen(state, task)
+                if screened.get("status") == "progress":
+                    return self.next(execution=execution, should_continue=should_continue)
+                if screened.get("status"):
+                    return screened
             if execution:
                 action = "resume" if job else "dispatch"
                 return self._issue(state, None, action, task["task_id"])
@@ -291,7 +352,48 @@ class Host:
             return {"status": "waiting", "reason": "execution_not_enabled", "tasks": [w["task_id"] for w in work]}
         if state["round"] >= state["spec"]["max_rounds"]:
             return self.stop("round_limit")
+        if state["spec"].get("workflow") == "lean":
+            owner = state["spec"].get("researcher", "market")
+            plan = {"decision": "research", "reason": "Frozen single-researcher objective",
+                    "assignments": [{"owner": owner, "brief": state["spec"]["objective"]}]}
+            with self.c.board.transaction():
+                self.db.execute("UPDATE team_host_sessions SET round=?,plan=? WHERE session_id=?",
+                                (state["round"] + 1, canonical(plan), self.session_id))
+            return self.next(execution=execution, should_continue=should_continue)
         return self._issue(state, "lead", "plan_round", next_round=state["round"] + 1)
+
+    def _lean_screen(self, state, task):
+        """Cheap fixed-definition evidence before spending an independent model turn."""
+        from .evidence import read_artifact
+        from .local_screen import local_first, LocalScreenBlocked
+        binding = state["spec"].get("local_screen_config")
+        if not binding:
+            attachments = [e for e in self.c.board.events(task["task_id"]) if e["kind"] == "local_screen_bound"]
+            binding = attachments[-1]["payload"]["config"] if attachments else None
+        if not binding:
+            return {"status": "waiting", "reason": "local_screen_required", "task_id": task["task_id"]}
+        try:
+            config = read_artifact(binding)
+            if config.get("local_screen", {}).get("enabled") is not True:
+                raise ValueError("Lean workflow requires local-first routing")
+            self.c.check_research(task, config, self.registry)
+            local_first(self.c.board, task, config, self.registry)
+        except LocalScreenBlocked as error:
+            events = [e for e in self.c.board.events(task["task_id"]) if e["kind"] == "local_screen"]
+            if str(error) == "Local-first route: local_reject" and events and events[-1]["payload"]["route"] == "local_reject":
+                # This is a scoped fixed-definition screen, never a global mechanism rejection.
+                self.c.board.decide(task["task_id"], task["version"], {
+                    "decision": "park", "reason": str(error), "decider": "deterministic_host",
+                    "local_report": events[-1]["payload"]["report"]},
+                    event_id="lean-local-stop:" + digest({"session": self.session_id, "screen": events[-1]["event_id"], "version": task["version"]}))
+                return {"status": "progress", "reason": "local_candidate_parked", "task_id": task["task_id"]}
+            return {"status": "waiting", "reason": "local_screen_blocked", "task_id": task["task_id"], "error": str(error)}
+        except ValueError as error:
+            return {"status": "waiting", "reason": "local_screen_blocked", "task_id": task["task_id"], "error": str(error)}
+        event = [e for e in self.c.board.events(task["task_id"]) if e["kind"] == "local_screen"][-1]
+        report = read_artifact(event["payload"]["report"])
+        return {"artifact": event["payload"]["report"], **{k: report[k] for k in
+                ("route", "local_status", "reason", "scope", "quality") if k in report}}
 
     def respond(self, work_id, response):
         if response.get("work_id") != work_id or not isinstance(response.get("output"), dict):
@@ -359,6 +461,8 @@ class Host:
         elif action == "propose":
             if out.get("decision") == "no_candidate":
                 text_fields(out, ("reason",))
+                if self.state()["spec"].get("workflow") == "lean":
+                    self.stop("no_informative_candidate")
             else:
                 request = out["request"]
                 if request["owner"] != p["role"] or request["task_id"] != task_id:
@@ -403,6 +507,9 @@ class Host:
             message = dict(out, event_id=p["work_id"], task_id=task_id, actor=p["role"], kind=action,
                            version=p["version"], request_hash=p["task"]["request_hash"])
             parent_kind = {"response": "challenge", "review": "response", "result_review": "result"}.get(action)
+            if action == "review" and p.get("review_mode") == "proposal":
+                parent_kind = "proposal"
+                message["review_mode"] = "proposal"
             if parent_kind:
                 message["reply_to"] = p["task"]["review_targets"][parent_kind]["event_id"]
             if action == "cross_review":

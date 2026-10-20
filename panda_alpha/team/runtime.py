@@ -26,11 +26,14 @@ DEFAULTS = {"turn_timeout": 600, "max_attempts": 3, "retry_backoff": 5,
 def worker_config(path):
     config = read(path)
     allowed = set(DEFAULTS) | {"codex_command", "model", "reasoning_effort", "context_files", "role_overrides", "prompt_format"}
+    allowed.update({"max_prompt_bytes", "session_scope"})
     if not isinstance(config, dict) or set(config) - allowed:
         raise ValueError("Unknown worker configuration fields")
     value = dict(DEFAULTS, **config)
     if value.get("prompt_format", "full") not in {"full", "lossless_refs_v1"}:
         raise ValueError("Unknown prompt_format")
+    if value.get("session_scope", "role") not in {"role", "task"}:
+        raise ValueError("Unknown session_scope")
     argv = value.get("codex_command")
     if not isinstance(argv, list) or not argv or any(not isinstance(a, str) or not a for a in argv):
         raise ValueError("An explicit trusted codex_command argv is required")
@@ -45,6 +48,8 @@ def worker_config(path):
     for key in ("max_attempts", "max_component_restarts"):
         if type(value[key]) is not int:
             raise ValueError(f"{key} must be an integer")
+    if "max_prompt_bytes" in value and (type(value["max_prompt_bytes"]) is not int or value["max_prompt_bytes"] <= 0):
+        raise ValueError("max_prompt_bytes must be a positive integer")
     # Read only non-secret model choices, never the login/auth file. Snapshot once.
     home = Path(os.environ.get("CODEX_HOME", str(Path.home() / ".codex")))
     user_config = home / "config.toml"
@@ -80,6 +85,10 @@ def prepare(ledger, registry, session, config, output, execution_config=None):
     # Read-only discovery; even a failed startup must not create a new session.
     with sqlite3.connect(ledger.as_uri() + "?mode=ro", uri=True) as db:
         row = db.execute("SELECT spec FROM team_host_sessions WHERE session_id=?", (session,)).fetchone()
+        seed_authors = set()
+        if row:
+            seeds = set(json.loads(row[0]).get("seed_tasks", []))
+            seed_authors = {owner for task_id, owner in db.execute("SELECT task_id,owner FROM team_tasks WHERE state='challenged'") if task_id in seeds}
     if row is None:
         raise ValueError("Initialize an explicitly bounded host session first")
     spec = json.loads(row[0])
@@ -97,6 +106,7 @@ def prepare(ledger, registry, session, config, output, execution_config=None):
         return root, previous
     workers, context = worker_config(config)
     value = {"binding": binding, "workers": workers, "context": context,
+             "active_roles": [role for role in ROLES if role in set(active_roles(spec)) | seed_authors],
              "deadline_epoch": timestamp(spec["deadline"]).timestamp(), "runtime_id": uuid.uuid4().hex}
     write(root / "manifest.json", value)
     return root, value
@@ -127,7 +137,7 @@ def coordinator(root, manifest):
                 write(root / "host-status.json", result)
                 if result.get("status") == "paused":
                     return result
-                if result.get("reason") not in {"role_response", "original_run"}:
+                if result.get("reason") not in {"role_response", "original_run", "local_screen_required"}:
                     return dict(result, terminal=True)
                 time.sleep(manifest["workers"]["poll_interval"])
             return {"status": "paused"}
@@ -175,7 +185,7 @@ def supervise(root, manifest, stop_event=None):
             state.update(status="running", process=identity())
             persist()
             # Start the sole coordinator first; workers cannot spend or mutate DBs.
-            for name in ("coordinator", *ROLES):
+            for name in ("coordinator", *manifest.get("active_roles", ROLES)):
                 record = state["components"][name]
                 folder = root / "components" / name
                 launch = record["launches"][-1] if record["launches"] else None
@@ -239,6 +249,15 @@ def supervise(root, manifest, stop_event=None):
             child.wait(timeout=5)
         persist()
     return state
+
+
+def active_roles(spec):
+    """Legacy deployments keep four roles; lean only launches usable roles."""
+    if spec.get("workflow") != "lean":
+        return ROLES
+    if spec.get("independent_source_review"):
+        return ("market", "fundamental", "skeptic")
+    return (spec.get("researcher", "market"), "skeptic")
 
 
 def serve(ledger, registry, session, workers, output, execution_config=None, stop_event=None):
