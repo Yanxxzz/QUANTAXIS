@@ -38,6 +38,8 @@ class Host:
                     raise ValueError(f"Host {key} must be a positive integer")
             if not isinstance(spec.get("seed_tasks", []), list):
                 raise ValueError("seed_tasks must be a list of existing task IDs")
+            if type(spec.get("seed_only", False)) is not bool or (spec.get("seed_only") and not spec.get("seed_tasks")):
+                raise ValueError("seed_only requires a boolean and existing seed tasks")
             if type(spec.get("independent_source_review", False)) is not bool:
                 raise ValueError("independent_source_review must be a boolean")
             if spec.get("workflow", "four_role") not in {"four_role", "lean"}:
@@ -351,6 +353,8 @@ class Host:
                 return self._issue(state, None, action, task["task_id"])
         if work:
             return {"status": "waiting", "reason": "execution_not_enabled", "tasks": [w["task_id"] for w in work]}
+        if state["spec"].get("seed_only"):
+            return self.stop("seed_tasks_complete")
         if state["round"] >= state["spec"]["max_rounds"]:
             return self.stop("round_limit")
         if state["spec"].get("workflow") == "lean":

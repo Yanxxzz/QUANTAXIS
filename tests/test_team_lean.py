@@ -112,6 +112,15 @@ def test_unchecked_definition_is_not_a_lean_missing_data_fallback(env, existing_
     assert not any(e["kind"] == "local_screen" for e in c.board.events(task["task_id"]))
 
 
+def test_seed_only_stops_without_generating_another_candidate(env):
+    c, r, proof, _ = env
+    task=c.board.submit(synthetic_request('market',proof))
+    c.board.decide(task['task_id'],task['version'],{'decision':'park','reason':'Frozen local stopping condition'})
+    host=Host(c,r,'only-seed',spec(seed_tasks=[task['task_id']],seed_only=True))
+    assert host.next()['reason']=='seed_tasks_complete'
+    assert host.state()['actions']==0 and not c.ledger.jobs() and r.total==0
+
+
 def test_local_reject_parks_without_critic_or_whole_mechanism_rejection(env, monkeypatch):
     c, r, proof, root = env
     task = c.board.submit(synthetic_request("market", proof))
