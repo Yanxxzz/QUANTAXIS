@@ -1,4 +1,7 @@
-"""Local durable receipts and process leases for the unattended role host."""
+"""宿主共用的原子文件、租约和进程出生身份工具。
+
+PID 可复用，因此恢复和终止都核验出生身份；不按裸 PID 猜测归属。
+"""
 from __future__ import annotations
 
 from contextlib import contextmanager

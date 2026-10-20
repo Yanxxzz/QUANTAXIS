@@ -1,4 +1,7 @@
-"""Describe delivered evidence without promoting report success into source truth."""
+"""验收原 Run 的报告结构与审查绑定，分别记录交付、来源和经济结论。
+
+报告成功不能代替 PIT 核验；漂亮的汇总指标也不是净收益或入池证明。
+"""
 from __future__ import annotations
 
 import hashlib

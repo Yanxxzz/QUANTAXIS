@@ -4,8 +4,10 @@ on:
   push:
     branches: [master, develop]
     tags: ['v*.*.*']
+    paths: ['panda_alpha/**', 'QUANTAXIS/**', 'config/**', 'research_bootstrap/**', 'requirements*.txt', 'pyproject.toml', 'setup.py', 'MANIFEST.in', 'docker/panda-alpha/**', '.github/workflows/docker-publish.yml', 'scripts/verify_compatibility.py']
   pull_request:
     branches: [master]
+    paths: ['panda_alpha/**', 'QUANTAXIS/**', 'config/**', 'research_bootstrap/**', 'requirements*.txt', 'pyproject.toml', 'setup.py', 'MANIFEST.in', 'docker/panda-alpha/**', '.github/workflows/docker-publish.yml', 'scripts/verify_compatibility.py']
   workflow_dispatch:
     inputs:
       publish:

@@ -1,4 +1,8 @@
-"""Supervise four real role workers and the existing single-writer coordinator."""
+"""监管已冻结流程的 worker 与单写入协调器，按原身份有限恢复。
+
+部署启停交给 operator/service；本层只负责子进程、超时和工作恢复。
+lean 仅启动所需角色，旧四角色 manifest 仍按其原绑定执行。
+"""
 from __future__ import annotations
 
 import argparse

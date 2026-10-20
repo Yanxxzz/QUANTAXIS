@@ -1,6 +1,6 @@
 # Panda Alpha 操作约定
 
-本项目的维护核心是 `panda_alpha/team/`，复用既有账本、预算和科学登记。角色分工及验证入口见 README，维护边界见 `docs/architecture.md`。
+日常入口是 `panda_alpha/team/`，复用既有取数、本地核算、官网执行、预算和科学登记。目标是在有限资源内提高官网积分潜力并找到可靠因子；研究价值、成本后表现和正式入池分阶段判断。先读 README 的使用顺序，按 `docs/architecture.md` 定位维护范围。
 
 ## 对话操作
 

@@ -52,6 +52,6 @@
 
 已完成回执的内层 `output_json` 若仅有字符串中的未转义换行、回车或制表符，工作者可原意转义后继续严格解析，保留原始 `answer.json` 并记录 `output-json-repair.json` 的原文哈希、输出摘要和变换次数，无需新增模型尝试。结构损坏、其他控制字符、身份不匹配及角色契约错误仍不能由该处理放行；已完成但无效的回执单列为 `invalid_model_reply`，不冒称网络中断。离线真实旧回复重放和全宿主协议演练分别核验，不改写历史失败。
 
-同一运行目录使用 supervisor 租约，同一 ledger 使用服务准入及协调写入租约。不要同时运行旧 `host-run` 或手工修改待办；团队 `pause` 只暂停新派发，停止整个进程组应使用 `host-control --action stop`。此处为单机监管与恢复，不是分布式主节点切换。默认通过[聊天入口](chat_start.md)显式恢复原部署；只有操作者重新选择并安装[Windows 登录服务](login_service.md)后，系统触发才参与恢复。
+同一运行目录使用 supervisor 租约，同一 ledger 使用服务准入及协调写入租约。不要同时运行旧 `host-run` 或手工修改待办；团队 `pause` 只暂停新派发，停止整个进程组应使用 `host-control --action stop`。此处为单机监管与恢复，不是分布式主节点切换。只通过[聊天入口](chat_start.md)显式恢复原部署；旧登录和分钟任务适配器已退役。
 
 参考：[Codex 非交互模式](https://learn.chatgpt.com/docs/non-interactive-mode)、[结构化输出示例](https://developers.openai.com/cookbook/examples/codex/build_iterative_repair_loops_with_codex)。接口以部署机器的 `codex exec --help` / `codex exec resume --help` 实测为准。

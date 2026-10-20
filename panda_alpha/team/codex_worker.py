@@ -1,4 +1,8 @@
-"""One durable, tool-restricted Codex session per research role."""
+"""执行一个持久化模型工作：工具受限，重试计费，回复按 work_id 接回。
+
+会话作用域由冻结 workers 配置决定；默认 lean 按任务隔离上下文。
+不在这里规划研究、取数、控制官网预算或批准作者自己的提案。
+"""
 from __future__ import annotations
 
 import json

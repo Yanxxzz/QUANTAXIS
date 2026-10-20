@@ -1,4 +1,8 @@
-"""Bounded host loop with durable role handoffs, not another experiment engine."""
+"""把任务推进到下一个有信息价值的动作，并持久化交接与停止原因。
+
+程序负责计划、冻结与结案；模型只负责提案和必要的独立判断。
+实际官网调用与累计用量仍由 coordinator 和 ExperimentLedger 管理。
+"""
 from __future__ import annotations
 
 from datetime import datetime, timezone

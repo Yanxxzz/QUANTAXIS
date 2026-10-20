@@ -1,1 +1,1 @@
-"""Four research roles, one task board, and the existing official execution ledger."""
+"""研究宿主：默认单研究员与按需审查，兼容旧四角色；共用原账本。"""

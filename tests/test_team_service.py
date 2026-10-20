@@ -1,5 +1,4 @@
 """Service restart tests use real processes and the offline role protocol fixture."""
-import json
 from pathlib import Path
 import subprocess
 import sys
@@ -23,9 +22,9 @@ def deployment(tmp_path, mode="ok", **kwargs):
 def launch_service(config):
     log = (config.parent / "launcher.log").open("ab")
     try:
-        # An unrelated working directory reproduces the Task Scheduler environment.
-        return subprocess.Popen([sys.executable, str(REPO / "scripts/team_service.py"), "--config", str(config)],
-            cwd=config.parent, stdout=log, stderr=log, creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
+        # Match operator.control: the frozen checkout supplies the module entry.
+        return subprocess.Popen([sys.executable, "-m", "panda_alpha.team.service", "--config", str(config)],
+            cwd=REPO, stdout=log, stderr=log, creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
     finally:
         log.close()
 
@@ -154,18 +153,3 @@ def test_service_restart_limit_and_deadline_survive_new_process(tmp_path):
     result = prepare_service(*old_args[:-1], old_args[-1], expired / "service", "PandaAlpha-Expired")
     assert run_service(result["config"])["reason"] == "deadline"
     assert not (old_args[-1] / "supervisor.json").exists()
-
-
-def test_login_plan_quotes_paths_without_installing_task(tmp_path):
-    if sys.platform != "win32":
-        pytest.skip("Windows login task adapter")
-    folder = tmp_path / "含 空格 $data"
-    folder.mkdir()
-    _, config = deployment(folder)
-    result = subprocess.run(["powershell.exe", "-NoProfile", "-File", str(REPO / "scripts/team-service.ps1"),
-        "-Action", "Plan", "-Config", str(config)], capture_output=True, text=True, encoding="utf-8", errors="replace")
-    assert result.returncode == 0, result.stderr
-    plan = json.loads(result.stdout)
-    assert plan["LogonType"] == "Interactive" and plan["RunLevel"] == "Limited"
-    assert plan["WebsiteExecution"] is False and plan["RestartCount"] == 3
-    assert '-Action Run -Config "' + str(config) + '"' in plan["Arguments"]

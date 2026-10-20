@@ -1,22 +1,26 @@
+# One behavior matrix: Windows and Linux, including both supported Python versions.
 name: Panda Alpha harness
 on:
   workflow_dispatch:
   push:
-    paths: ['panda_alpha/**', 'tests/**', 'scripts/**', 'requirements-panda-alpha.txt', 'config/**', 'docs/**', 'examples/**', 'research_bootstrap/**', 'README*.md', 'AGENTS.md', 'RESEARCH.md', '.codex/agents/**', '.gitignore', '.github/workflows/panda-alpha.yml']
+    paths: ['panda_alpha/**', 'QUANTAXIS/**', 'tests/**', 'scripts/**', 'requirements-panda-alpha.txt', 'requirements.txt', 'pyproject.toml', 'setup.py', 'MANIFEST.in', 'config/**', 'docs/**', 'examples/**', 'research_bootstrap/**', 'README*.md', 'AGENTS.md', 'RESEARCH.md', '.codex/agents/**', '.gitignore', '.github/workflows/**']
   pull_request:
-    paths: ['panda_alpha/**', 'tests/**', 'scripts/**', 'requirements-panda-alpha.txt', 'config/**', 'docs/**', 'examples/**', 'research_bootstrap/**', 'README*.md', 'AGENTS.md', 'RESEARCH.md', '.codex/agents/**', '.gitignore', '.github/workflows/panda-alpha.yml']
+    paths: ['panda_alpha/**', 'QUANTAXIS/**', 'tests/**', 'scripts/**', 'requirements-panda-alpha.txt', 'requirements.txt', 'pyproject.toml', 'setup.py', 'MANIFEST.in', 'config/**', 'docs/**', 'examples/**', 'research_bootstrap/**', 'README*.md', 'AGENTS.md', 'RESEARCH.md', '.codex/agents/**', '.gitignore', '.github/workflows/**']
 jobs:
   tests:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        include:
+          - {os: ubuntu-latest, python: '3.11'}
+          - {os: windows-latest, python: '3.11'}
+          - {os: ubuntu-latest, python: '3.12'}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: ${{ matrix.python }}
       - run: python -m pip install -r requirements-panda-alpha.txt
       - run: python -B scripts/verify_public_research.py
       - run: python -m pytest tests -q

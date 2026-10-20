@@ -1,4 +1,7 @@
-"""Small, immutable handoffs between researchers, reviewer and coordinator."""
+"""研究请求和角色交接的不可变契约；在写状态或收费前校验边界。
+
+这里只定义结构和身份，不计算因子、不裁定经济有效性。
+"""
 from __future__ import annotations
 
 from datetime import date, datetime, timezone
