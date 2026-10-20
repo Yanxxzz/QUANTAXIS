@@ -78,6 +78,7 @@ def status(path):
             "can_start": blocked is None and current in {"ready", "paused", "interrupted"},
             "starts": len(starts), "max_starts": config["max_starts"],
             "round": row[0], "actions": row[1], "bounds": binding["spec"],
+            "model_attempts_reserved": len(read(root / "model-budget.json", {"attempts": {}})["attempts"]),
             "website_execution": binding["execution_config"] is not None,
             "unsettled_jobs": unsettled, "remote_status": "not_queried",
             "stop_scope": "local_dispatch_and_polling"}

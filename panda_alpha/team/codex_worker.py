@@ -8,7 +8,7 @@ import subprocess
 import time
 
 from .contracts import canonical, digest
-from .runtime_io import active, identity, owned, read, terminate, write
+from .runtime_io import active, identity, lease, owned, read, terminate, write
 
 SCHEMA = {"type": "object", "properties": {"work_id": {"type": "string"},
           "output_json": {"type": "string"}}, "required": ["work_id", "output_json"], "additionalProperties": False}
@@ -67,7 +67,12 @@ def prompt(packet, context, prompt_format="full"):
                          "When independent_source_analyses are supplied, explicitly reconcile disagreements and unsupported claims "
                          "against the evidence, not majority agreement.",
     }.get(action, "claim (nonempty string), test (nonempty string), decision (string), artifacts (list)")
-    payload = {"packet": packet, "context": context, "output_keys": shape,
+    if action == "review" and packet.get("review_mode") == "proposal":
+        shape += ("; this is a direct independent design review: bind the frozen proposal, local_screen_observation "
+                  "and new evidence, choose approve|park. No challenge/author-response ceremony is required. "
+                  "Do not claim native source, economic or pool approval from a local screen.")
+    from .context_codec import focus_packet
+    payload = {"packet": focus_packet(packet), "context": context, "output_keys": shape,
                "format_note": "These keys belong directly inside output_json, with no nested output or action wrapper. "
                "Escape newline, carriage-return and tab characters within inner JSON strings. "
                "claim/test/reason/brief are strings, not objects. artifacts contains only supplied existing path+sha256 "
@@ -92,6 +97,23 @@ def prompt(packet, context, prompt_format="full"):
             "Return the exact work_id and output_json containing the serialized action-specific output object. "
             "The coordinator binds all event IDs and validates the reply; do not return a full event envelope.\n"
             + encoding_note + canonical(payload))
+
+
+def reserve_model_attempt(root, manifest, role, work_id, number):
+    """Count actual launch intents, including retries, across the frozen runtime."""
+    limit = manifest["binding"]["spec"].get("max_model_attempts")
+    if limit is None:
+        return True  # Preserve historical deployments with no such bound.
+    key = digest({"role": role, "work_id": work_id, "attempt": number})
+    with lease(root / "model-budget.lock"):
+        usage = read(root / "model-budget.json", {"attempts": {}})
+        if key in usage["attempts"]:
+            return True
+        if len(usage["attempts"]) >= limit:
+            return False
+        usage["attempts"][key] = {"role": role, "work_id": work_id, "attempt": number, "time": time.time()}
+        write(root / "model-budget.json", usage)
+    return True
 
 
 def events(folder):
@@ -189,7 +211,8 @@ def work(root, manifest, role, packet):
     response_path = root / "mailbox" / role / "responses" / (packet["work_id"] + ".json")
     if response_path.exists():
         return {"status": "done"}
-    session_path = base / "session.json"
+    session_path = (base / "sessions" / (digest(packet.get("task_id") or packet["work_id"]) + ".json")
+                    if config.get("session_scope") == "task" else base / "session.json")
     while active(root, manifest):
         attempt = state["attempts"][-1] if state["attempts"] else None
         if attempt and attempt["status"] == "launching":
@@ -209,9 +232,19 @@ def work(root, manifest, role, packet):
             folder = directory / str(number)
             folder.mkdir(parents=True, exist_ok=True)
             write(folder / "schema.json", SCHEMA)
-            (folder / "prompt.txt").write_text(prompt(packet, manifest["context"], config.get("prompt_format", "full")), encoding="utf-8")
+            rendered = prompt(packet, manifest["context"], config.get("prompt_format", "full"))
+            prompt_bytes = len(rendered.encode("utf-8"))
+            if config.get("max_prompt_bytes") and prompt_bytes > config["max_prompt_bytes"]:
+                state.update(status="attention", reason="prompt_size_limit", prompt_bytes=prompt_bytes)
+                write(state_path, state)
+                return state
+            if not reserve_model_attempt(root, manifest, role, packet["work_id"], number):
+                state.update(status="attention", reason="model_session_budget")
+                write(state_path, state)
+                return state
+            (folder / "prompt.txt").write_text(rendered, encoding="utf-8")
             attempt = {"number": number, "status": "launching", "started": time.time(),
-                       "resume_thread": read(session_path, {}).get("thread_id")}
+                       "resume_thread": read(session_path, {}).get("thread_id"), "prompt_bytes": prompt_bytes}
             state["attempts"].append(attempt)
             write(state_path, state)  # Durable intent before Popen.
             try:

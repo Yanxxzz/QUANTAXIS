@@ -123,7 +123,8 @@ class Board:
                 raise ValueError("Stale version or request hash")
             events = self.events(task["task_id"])
             parent = next((e for e in events if e["event_id"] == message.get("reply_to")), None)
-            states = {"challenge": {"proposed"}, "response": {"challenged"}, "review": {"answered"},
+            direct = kind == "review" and message.get("review_mode") == "proposal"
+            states = {"challenge": {"proposed"}, "response": {"challenged"}, "review": {"proposed", "answered"} if direct else {"answered"},
                       "result_review": {"result_ready"}, "note": {"proposed", "challenged", "answered", "reviewed"},
                       "cross_review": {"reviewed"}}
             if task["state"] not in states[kind]:
@@ -132,8 +133,8 @@ class Board:
                 raise ValueError("Independent skeptic must challenge and review")
             if kind == "response" and (actor != task["owner"] or not parent or parent["kind"] != "challenge"):
                 raise ValueError("Author response must reference the challenge")
-            if kind == "review" and (not parent or parent["kind"] != "response"):
-                raise ValueError("Review must reference the author response")
+            if kind == "review" and (not parent or parent["kind"] != ("proposal" if direct else "response")):
+                raise ValueError("Review must reference the frozen proposal" if direct else "Review must reference the author response")
             if kind == "result_review" and (not parent or parent["kind"] != "result"):
                 raise ValueError("Result review must reference the reconciled result")
             if kind == "result_review" and (not parent["payload"]["artifacts"] or
@@ -246,7 +247,8 @@ class Board:
                 raise ValueError("Source-only review cannot reopen an economic rejection")
             target = next((e for e in events if e["event_id"] == request["target_event_id"]), None)
             results = [e for e in events if e["kind"] == "result"]
-            kind = "result" if results else "response"
+            responses = [e for e in events if e["kind"] == "response"]
+            kind = "result" if results else "response" if responses else "proposal"
             targets = [e for e in events if e["kind"] == kind]
             if not target or not targets or target != targets[-1]:
                 raise ValueError("Re-review requires the original result or latest author response")
@@ -267,7 +269,7 @@ class Board:
         # Explicit targets survive a long append-only history; the eight-event
         # reading window must not hide the original Run or reopened response.
         targets = {kind: next((e for e in reversed(events) if e["kind"] == kind), None)
-                   for kind in ("challenge", "response", "result", "result_review", "evidence_review_requested")}
+                   for kind in ("proposal", "challenge", "response", "result", "result_review", "evidence_review_requested")}
         return dict(task, events=events[-8:], review_targets=targets, qualifications=board_state(task, events))
 
     def pause(self, reason):

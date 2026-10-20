@@ -1,7 +1,10 @@
 {
-  "objective": "用不同信息方向推进有限研究；先核验来源、挑战和证据，未获证则停止该执行路径。",
-  "max_rounds": 3,
-  "max_actions": 80,
+  "objective": "提出可检验的独特机制；本地程序先筛，数据确实不足时才申请必要官网验证，找到可靠好因子。",
+  "workflow": "lean",
+  "researcher": "market",
+  "max_rounds": 4,
+  "max_actions": 24,
+  "max_model_attempts": 16,
   "deadline": "2026-01-01T00:00:00+08:00",
   "seed_tasks": []
 }
