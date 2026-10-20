@@ -49,7 +49,7 @@ def bind_config(board, task_id, version, binding):
     return payload
 
 
-def local_first(board, task, config, registry):
+def local_first(board, task, config, registry, *, require_semantics=False):
     """Record one reproducible local route before any new remote job.
 
     The manifest belongs to one frozen request. A collector can supply cached
@@ -73,6 +73,11 @@ def local_first(board, task, config, registry):
         verify_artifacts(semantics.get('artifacts', []))
         raise LocalScreenBlocked('Definition/native semantics mismatch requires repair, not paid fallback')
     request = task['request']
+    if require_semantics:
+        expected = 'explicit_python_tested' if request['candidate'].get('code') else 'equivalent'
+        if semantics.get('status') != expected or not semantics.get('artifacts'):
+            raise LocalScreenBlocked('Lean screening requires positive hashed definition semantics evidence before labels or fallback')
+        verify_artifacts(semantics['artifacts'])
     options = {'costs': config['admission']['one_way_costs'],
                'minimum_assets': config['diversity']['minimum_assets'],
                'allow_official_fallback': policy.get('allow_official_fallback') is True}

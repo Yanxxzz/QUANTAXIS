@@ -271,7 +271,8 @@ class Host:
                 if task_id in tasks and tasks[task_id]["state"] == "ready" and self.c.ledger.get(tasks[task_id]["fingerprint"]) is None:
                     try:
                         self.c.check_research(tasks[task_id], local_config, self.registry)
-                        local_first(self.c.board, tasks[task_id], local_config, self.registry)
+                        local_first(self.c.board, tasks[task_id], local_config, self.registry,
+                                    require_semantics=state["spec"].get("workflow") == "lean")
                     except ValueError as error:
                         return {"status": "waiting", "reason": "local_screen_blocked", "task_id": task_id, "error": str(error)}
         for assignment, task_id in zip(assignments, current_ids):
@@ -377,7 +378,7 @@ class Host:
             if config.get("local_screen", {}).get("enabled") is not True:
                 raise ValueError("Lean workflow requires local-first routing")
             self.c.check_research(task, config, self.registry)
-            local_first(self.c.board, task, config, self.registry)
+            local_first(self.c.board, task, config, self.registry, require_semantics=True)
         except LocalScreenBlocked as error:
             events = [e for e in self.c.board.events(task["task_id"]) if e["kind"] == "local_screen"]
             if str(error) == "Local-first route: local_reject" and events and events[-1]["payload"]["route"] == "local_reject":

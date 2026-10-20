@@ -98,13 +98,14 @@ def test_real_local_engine_two_costs_and_idempotent_registration(local_env):
     quotes.to_parquet(manifest['quotes']['path'], index=False)
     manifest['quotes'] = artifact(manifest['quotes']['path'])
     manifest['artifacts'] = [manifest['quotes'], manifest['values'], manifest['calendar']]
+    manifest['definition_semantics'] = {'status': 'equivalent', 'artifacts': manifest['artifacts']}
     bind(local_env, manifest)
-    result = local_first(c.board, task, config, r)
+    result = local_first(c.board, task, config, r, require_semantics=True)
     assert result['route'] == 'official_validation'
     assert [x['cost'] for x in result['study']['cost_reviews']] == [.003, .005]
     assert result['preparation']['protocol']['direction'] == 1
     assert result['study']['official_runs'] == 0 and r.total == 1 and not c.ledger.jobs()
-    local_first(c.board, task, config, r)
+    assert local_first(c.board, task, config, r) == result  # Dispatch reuses the checked study.
     assert r.total == 1 and len(c.board.events('LOCAL')) == 1
 
 
