@@ -51,7 +51,18 @@ def prompt(packet, context, prompt_format="full"):
                            "seeing peer analyses. Identify counterexamples and distinguish local observations from native proof. "
                            "This note changes no qualification, budget, task definition or scientific conclusion.",
         "plan_round": "decision (research|stop), reason; research also needs assignments [{owner,brief}] for market and fundamental",
-        "propose": "request (full research request), OR decision=no_candidate and reason",
+        "propose": "request (object), OR decision=no_candidate and reason. The request MUST have top-level keys "
+                   "task_id, owner, mechanism_id, information_family, availability_clock, hypothesis, control, falsifier, "
+                   "candidate, window={start,end}, cycle, groups, primary_fields, control_fields, sources, "
+                   "risk_exposures and artifacts=[{path,sha256}]. "
+                   "candidate is a NESTED object with candidate_id, budget_mechanism_id (equal to mechanism_id), "
+                   "exactly one formula or code, direction (0 or 1), official_task (native_screen|source_diagnostic|key_confirmation), "
+                   "research_question, decision_if_pass, decision_if_fail, official_information_gap. "
+                   "Do not flatten candidate fields onto request or substitute name for candidate_id. "
+                   "For market information_family=trading_price_discovery; for fundamental=business_capital_allocation. "
+                   "primary_fields plus control_fields must exactly match executable formula/code inputs; "
+                   "diagnostic-only fields belong in control prose, not executable control_fields. "
+                   "Use only supplied existing artifact path+sha256 pairs; do not invent a Python preflight receipt.",
         "freeze": "priority, allocation_reason, diversity_check, cross_line_decisions; OR decision=park, reason",
         "conclude": "decision, reason agreeing with the independent result review",
         "result_review": "claim/test strings; decision=continue|confirm|source_pending|reject; artifacts must include the original "

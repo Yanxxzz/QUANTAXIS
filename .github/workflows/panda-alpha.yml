@@ -3,6 +3,8 @@ name: Panda Alpha harness
 on:
   workflow_dispatch:
   push:
+    branches: [master, develop]
+    tags: ['v*']
     paths: ['panda_alpha/**', 'QUANTAXIS/**', 'tests/**', 'scripts/**', 'requirements-panda-alpha.txt', 'requirements.txt', 'pyproject.toml', 'setup.py', 'MANIFEST.in', 'config/**', 'docs/**', 'examples/**', 'research_bootstrap/**', 'README*.md', 'AGENTS.md', 'RESEARCH.md', '.codex/agents/**', '.gitignore', '.github/workflows/**']
   pull_request:
     paths: ['panda_alpha/**', 'QUANTAXIS/**', 'tests/**', 'scripts/**', 'requirements-panda-alpha.txt', 'requirements.txt', 'pyproject.toml', 'setup.py', 'MANIFEST.in', 'config/**', 'docs/**', 'examples/**', 'research_bootstrap/**', 'README*.md', 'AGENTS.md', 'RESEARCH.md', '.codex/agents/**', '.gitignore', '.github/workflows/**']

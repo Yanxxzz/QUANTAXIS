@@ -11,7 +11,7 @@ from pathlib import Path
 import subprocess
 import tomllib
 
-from .contracts import INFORMATION, ROLES, canonical, digest, text_fields, timestamp, strings, verify_artifacts
+from .contracts import INFORMATION, ROLES, canonical, digest, text_fields, timestamp, strings, verify_artifacts, validate_request
 
 
 class Host:
@@ -476,6 +476,9 @@ class Host:
                 request = out["request"]
                 if request["owner"] != p["role"] or request["task_id"] != task_id:
                     raise ValueError("Proposal must use its assigned role and task identity")
+                # Report a contract error before dereferencing candidate/mechanism;
+                # otherwise models spend successive turns discovering opaque KeyErrors.
+                validate_request(request)
                 from ..evolution import Candidate, ResearchEngine
                 engine = ResearchEngine(registry=self.registry, memory=self.registry.reconciled_memory(),
                     research_context={k: request[k] for k in ("window", "cycle", "groups")})

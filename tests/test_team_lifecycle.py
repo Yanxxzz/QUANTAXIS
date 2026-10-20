@@ -93,6 +93,20 @@ def test_default_host_waits_before_any_platform_access(lifecycle):
         Host(c, registry, "free", spec(max_rounds=100))
 
 
+@pytest.mark.parametrize("missing", ["candidate", "mechanism_id"])
+def test_malformed_proposal_reports_contract_before_scientific_evaluation(lifecycle, missing):
+    c, registry, proof, _ = lifecycle
+    host = Host(c, registry, "malformed-proposal", spec(workflow="lean", researcher="market", max_model_attempts=4))
+    packet = host.next()["packet"]
+    request = synthetic_request("market", proof)
+    request["task_id"] = packet["task_id"]
+    request.pop(missing)
+    with pytest.raises(ValueError, match="Nonempty"):
+        host.respond(packet["work_id"], {"work_id": packet["work_id"], "output": {"request": request}})
+    assert c.board.tasks() == [] and registry.total == 0 and c.ledger.jobs() == []
+    assert c.board.db.execute("SELECT state FROM team_host_work WHERE work_id=?", (packet["work_id"],)).fetchone()[0] == "rejected"
+
+
 def test_host_delivery_restart_idempotency_invalid_reply_and_bounds(lifecycle):
     c, registry, _, _ = lifecycle
     host = Host(c, registry, "bounded", spec(max_actions=2))

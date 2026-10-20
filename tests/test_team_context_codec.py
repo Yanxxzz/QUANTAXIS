@@ -45,6 +45,32 @@ def test_nonbeneficial_and_small_input_stays_full():
     assert encode(value) == {"format": "full", "content": value}
 
 
+def test_repeated_short_evidence_keeps_distinct_qualification_revisions():
+    binding = {"path": "D:/research/originals/financial-report-2025.pdf", "sha256": "a" * 64}
+    pending = {"id": "B.PIT.001", "revision": 1, "status": "pending", "text": "Announcement boundary unverified", "evidence": [binding]}
+    resolved = dict(pending, revision=2, status="resolved")
+    value = {"task": {"qualifications": [pending, resolved]},
+             "events": [{"id": i, "artifacts": [binding], "qualifications": [pending, resolved]} for i in range(20)]}
+    before = deepcopy(value)
+    encoded = encode(value)
+    assert decode(encoded) == before and value == before
+    assert len(canonical(encoded)) < .8 * len(canonical(value))
+    assert decode(encoded)["task"]["qualifications"][0]["status"] == "pending"
+    assert decode(encoded)["task"]["qualifications"][1]["revision"] == 2
+
+
+def test_deep_pointer_does_not_expand_a_short_repeated_value():
+    repeated = {"proof": "retain this exact source evidence " * 6}
+    nested = repeated
+    for i in range(30):
+        nested = {"long-qualified-evidence-path-" + str(i): nested}
+    value = {"a": nested, "z": [repeated, "large original " * 1000, "large original " * 1000]}
+    encoded = encode(value)
+    assert decode(encoded) == value
+    assert encoded["content"]["z"][0] == repeated
+    assert len(canonical(encoded)) < len(canonical(value))
+
+
 @pytest.mark.parametrize("content", [
     {"a": {MARKER: "#/missing"}},
     {"a": {MARKER: "#/a"}},

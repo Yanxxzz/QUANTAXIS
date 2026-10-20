@@ -1,7 +1,12 @@
 # Packaging checks installation; behavior is tested once in panda-alpha.yml.
 name: Python package
 
-on: [push, pull_request]
+on:
+  workflow_dispatch:
+  push:
+    branches: [master, develop]
+    tags: ['v*']
+  pull_request:
 
 permissions:
   contents: read
