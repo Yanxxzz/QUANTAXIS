@@ -1,4 +1,4 @@
-# Panda Alpha：用有限资源研究好因子
+# Panda Alpha & QuantTaxis 因子研究
 
 目标是提高 PandaAI 官网比赛积分，找到经得起复核的优质因子。复用 [QUANTAXIS](https://github.com/yutiansut/QUANTAXIS) 的取数、回测和执行能力；本地先筛，必要时官网验证。保留成本、样本和失败证据，避免把一个漂亮指标当成目标已经实现。
 
