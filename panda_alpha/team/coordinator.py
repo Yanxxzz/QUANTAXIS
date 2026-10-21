@@ -1,4 +1,7 @@
-"""Deterministic coordination; agents supply hypotheses and reviews, not money."""
+"""连接任务板和既有执行器，确定性检查冻结定义、来源及授权。
+
+模型提交假说与审查；资金预留和原 Run 恢复走原 ExperimentLedger。
+"""
 from __future__ import annotations
 
 import hashlib

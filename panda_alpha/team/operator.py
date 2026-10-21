@@ -1,4 +1,8 @@
-"""Chat-operated start/stop/status around the existing bounded service entry."""
+"""聊天唯一启停入口：检查原部署，启动前留回执，查询不启动工作。
+
+service 保存部署生命周期，runtime 恢复组件；此层不重置它们的上限。
+模糊启动先对账，不能因看不到回执而再创建一次模型或官网运行。
+"""
 from __future__ import annotations
 
 from pathlib import Path
@@ -118,7 +122,7 @@ def control(path, action, wait_seconds=10, *, execute=False):
             write(path.parent / "manual-launch.json", launch)
             enable_service(path, True)
             try:
-                child = subprocess.Popen([config["python"], str(Path(config["repo"]) / "scripts/team_service.py"),
+                child = subprocess.Popen([config["python"], "-m", "panda_alpha.team.service",
                     "--config", str(path), "--launch", launch["id"]], cwd=config["repo"],
                     stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
                     shell=False, creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),

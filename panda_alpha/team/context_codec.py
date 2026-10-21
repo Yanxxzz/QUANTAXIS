@@ -61,7 +61,7 @@ def focus_packet(packet):
     return value
 
 
-def encode(value, *, minimum_bytes=4096):
+def encode(value, *, minimum_bytes=128):
     """Alias exact repeated values, never summarize or drop a qualification.
 
     Literal marker keys cause a full-format fallback, so source text cannot be
@@ -81,8 +81,13 @@ def encode(value, *, minimum_bytes=4096):
         serialized = canonical(node)
         if len(serialized.encode("utf-8")) >= minimum_bytes:
             if serialized in seen:
-                return {MARKER: seen[serialized]}
-            seen[serialized] = pointer
+                alias = {MARKER: seen[serialized]}
+                # Small evidence bindings repeat often, but a deep pointer can
+                # cost more than the original. Keep those occurrences inline.
+                if len(canonical(alias).encode("utf-8")) < len(serialized.encode("utf-8")):
+                    return alias
+            else:
+                seen[serialized] = pointer
         if isinstance(node, dict):
             keys = sorted(node, key=lambda k: (PRIORITY.index(k) if k in PRIORITY else len(PRIORITY), k))
             return {k: visit(node[k], pointer + "/" + k.replace("~", "~0").replace("/", "~1")) for k in keys}

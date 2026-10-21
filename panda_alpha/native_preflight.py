@@ -26,6 +26,7 @@ STRICT_PURPOSE = "full_universe_strict"
 SOURCE_TRANSFER_PURPOSE = "source_qualified_transfer_research"
 PROJECTION_RESEARCH_PURPOSE = "source_qualified_projection_research"
 FINANCIAL_DIAGNOSTIC_PURPOSE = "financial_source_diagnostic_research"
+CONDITIONAL_RESEARCH_PURPOSE = "conditional_domain_research"
 LIMITATION = ("Known local FactorSeries attribute-delegation/date-first contract only; "
               "not remote all-A input equivalence, server-success or billing assurance. "
               "Grouping uses conservative deterministic no-jitter qcut; remote tradeability "
@@ -67,18 +68,25 @@ def _definition(candidate: dict, window: dict, cycle: int, groups: int) -> dict:
         result["native_evaluation_contract"] = candidate.get("native_evaluation_contract")
     if purpose == FINANCIAL_DIAGNOSTIC_PURPOSE:
         result["native_diagnostic_contract"] = candidate.get("native_diagnostic_contract")
+    if purpose == CONDITIONAL_RESEARCH_PURPOSE:
+        result["native_conditional_contract"] = candidate.get("native_conditional_contract")
     return result
 
 
 def _purpose(candidate: dict) -> str:
     purpose = candidate.get("native_preflight_purpose", STRICT_PURPOSE)
     if purpose not in (STRICT_PURPOSE, SOURCE_TRANSFER_PURPOSE, PROJECTION_RESEARCH_PURPOSE,
-                       FINANCIAL_DIAGNOSTIC_PURPOSE):
+                       FINANCIAL_DIAGNOSTIC_PURPOSE, CONDITIONAL_RESEARCH_PURPOSE):
         raise NativePreflightError("Native preflight requires a known explicit coverage purpose")
     return purpose
 
 
 def _coverage_policy(purpose: str) -> dict:
+    if purpose == CONDITIONAL_RESEARCH_PURPOSE:
+        return {"minimum_post_warmup_date_coverage": .8,
+                "minimum_eligible_point_coverage": 1.0,
+                "outside_domain_finite_allowed": False,
+                "first_finite_trimming_allowed": False}
     if purpose == STRICT_PURPOSE:
         return {"minimum_post_warmup_date_coverage": .8,
                 "minimum_median_symbol_coverage": .8}
@@ -102,6 +110,12 @@ def _coverage_policy(purpose: str) -> dict:
 
 
 def _scope(purpose: str) -> dict:
+    if purpose == CONDITIONAL_RESEARCH_PURPOSE:
+        return {"purpose": purpose, "research_only": True,
+                "source_limited_exploration": True, "full_A_certified": False,
+                "full_PIT_certified": False, "admission_qualified": False,
+                "coverage_denominator": "predeclared_eligible_fixture_rows",
+                "economic_mask_or_live_membership_certified": False}
     if purpose == FINANCIAL_DIAGNOSTIC_PURPOSE:
         return {"purpose": purpose, "research_only": True,
                 "source_limited_exploration": True, "full_A_certified": False,
@@ -140,6 +154,44 @@ def _check_artifact(artifact: Any, label: str):
         raise NativePreflightError(f"Native preflight {label} evidence is missing") from exc
     if actual != artifact["sha256"]:
         raise NativePreflightError(f"Native preflight {label} evidence changed")
+
+
+def _conditional_bindings(contract: dict) -> list[dict]:
+    return [contract["eligibility_mask"], contract["mask_builder"], *contract["definition_artifacts"]]
+
+
+def _conditional_mask(contract, fixture: str, window: dict, cycle: int,
+                      groups: int, index: pd.MultiIndex) -> pd.Series:
+    """Verify a predeclared input mask; never derive it from finite output.
+
+    This binds provenance and point membership. Whether the declared mask
+    expresses the economic definition still needs independent evidence review.
+    No callable or module is loaded from the descriptor.
+    """
+    if (not isinstance(contract, dict) or contract.get("schema") != "native-conditional-domain-v1"
+            or contract.get("window") != window or contract.get("cycle") != cycle
+            or contract.get("groups") != groups or not contract.get("definition_artifacts")
+            or not isinstance(contract.get("definition_artifacts"), list)):
+        raise NativePreflightError("Conditional research requires a frozen domain contract")
+    _check_artifact(contract.get("fixture"), "conditional fixture")
+    if contract["fixture"] != _artifact(fixture):
+        raise NativePreflightError("Conditional mask belongs to a different input fixture")
+    for binding in _conditional_bindings(contract):
+        _check_artifact(binding, "conditional domain")
+    mask = pd.read_parquet(contract["eligibility_mask"]["path"])
+    if set(mask.columns) != {"date", "symbol", "eligible"}:
+        raise NativePreflightError("Conditional mask requires exact date/symbol/eligible columns")
+    mask["date"] = pd.to_datetime(mask["date"], errors="raise")
+    if (mask[["date", "symbol", "eligible"]].isna().any().any()
+            or not pd.api.types.is_bool_dtype(mask["eligible"])
+            or mask["date"].dt.tz is not None
+            or not mask["date"].eq(mask["date"].dt.normalize()).all()
+            or mask.duplicated(["date", "symbol"]).any()):
+        raise NativePreflightError("Conditional mask has invalid or duplicate observations")
+    series = mask.set_index(["date", "symbol"]).eligible
+    if len(series) != len(index) or not series.index.sort_values().equals(index.sort_values()):
+        raise NativePreflightError("Conditional mask must cover the complete source index")
+    return series.reindex(index)
 
 
 def _parameters(window: dict, cycle: int, groups: int):
@@ -484,7 +536,8 @@ def _daily_output_index(output: pd.Series, expected_index: pd.MultiIndex) -> pd.
 def _replay(code: str, fixture: str, fields: list[str], window: dict,
             cycle: int, groups: int, policy: dict, purpose: str = STRICT_PURPOSE,
             evaluation_contract: dict | None = None, fixture_reader=None,
-            diagnostic_contract: dict | None = None) -> dict:
+            diagnostic_contract: dict | None = None,
+            conditional_contract: dict | None = None) -> dict:
     start, end = _parameters(window, cycle, groups)
     projected = purpose == PROJECTION_RESEARCH_PURPOSE
     if fixture_reader is not None and not projected:
@@ -559,6 +612,14 @@ def _replay(code: str, fixture: str, fields: list[str], window: dict,
     values = output.to_numpy(dtype=float)
     if np.isinf(values).any():
         raise NativePreflightError("Native output contains infinite values")
+    conditional_mask = None
+    if purpose == CONDITIONAL_RESEARCH_PURPOSE:
+        conditional_mask = _conditional_mask(conditional_contract, fixture, window, cycle, groups, frame.index)
+        finite_output = np.isfinite(values)
+        if np.any(finite_output & ~conditional_mask.to_numpy()):
+            raise NativePreflightError("Conditional output is finite outside the frozen domain")
+        if np.any(conditional_mask.to_numpy() & ~finite_output):
+            raise NativePreflightError("Conditional output is missing inside the frozen domain")
     if projected:
         return _projection_proof(output, frame, fields, evaluation_contract, window, cycle, groups,
                                  policy, classes[0].__name__, input_hash)
@@ -577,7 +638,7 @@ def _replay(code: str, fixture: str, fields: list[str], window: dict,
     if unique.max() < groups:
         raise NativePreflightError("Native output has fewer distinct values than requested groups")
     first = count[count.gt(0)].index.min()
-    eligible_dates = (fixture_dates if purpose == SOURCE_TRANSFER_PURPOSE else
+    eligible_dates = (fixture_dates if purpose in {SOURCE_TRANSFER_PURPOSE, CONDITIONAL_RESEARCH_PURPOSE} else
                       fixture_dates[fixture_dates >= first])
     # The pinned public workflow first rejects nunique < group_cnt, then adds
     # random N(0,1e-10) jitter before qcut and skips ValueError dates. We cannot
@@ -620,6 +681,7 @@ def _replay(code: str, fixture: str, fields: list[str], window: dict,
             "post_warmup_date_coverage": coverage, "median_symbol_coverage": cross_coverage,
             "coverage_policy_purpose": purpose,
             "coverage_evaluation_basis": ("all_requested_fixture_dates" if purpose == SOURCE_TRANSFER_PURPOSE
+                                          or purpose == CONDITIONAL_RESEARCH_PURPOSE
                                           else "post_first_finite_fixture_dates"),
             "coverage_evaluation_dates": len(eligible_dates),
             "minimum_valid_symbols_on_usable_dates": int(count.reindex(eligible_dates)[good_dates].min()),
@@ -630,6 +692,11 @@ def _replay(code: str, fixture: str, fields: list[str], window: dict,
                                     "public_workflow_adds_random_jitter": True,
                                     "remote_filtering_cleaning_and_jitter_simulated": False},
             "output_index_restored": True, "date_filter_nonempty": True,
+            **({"eligible_fixture_points": int(conditional_mask.sum()),
+                "eligible_point_coverage": 1.0, "outside_domain_finite_points": 0,
+                "conditional_contract": conditional_contract,
+                "median_symbol_coverage_scope": "all fixture rows; descriptive only for a conditional domain"}
+               if conditional_mask is not None else {}),
             "output_sha256": hashlib.sha256(pd.util.hash_pandas_object(output, index=True).values.tobytes()).hexdigest()}
 
 
@@ -668,6 +735,10 @@ def build_native_preflight(candidate: dict, window: dict, cycle: int, groups: in
                "limitation": LIMITATION}
     projected = purpose == PROJECTION_RESEARCH_PURPOSE
     diagnostic = purpose == FINANCIAL_DIAGNOSTIC_PURPOSE
+    conditional = purpose == CONDITIONAL_RESEARCH_PURPOSE
+    if conditional:
+        receipt.update(passed=False, research_replay_passed=False,
+                       native_conditional_contract=candidate.get("native_conditional_contract"))
     if diagnostic:
         receipt.update(passed=False, research_replay_passed=False,
                        native_diagnostic_contract=candidate.get("native_diagnostic_contract"))
@@ -676,6 +747,13 @@ def build_native_preflight(candidate: dict, window: dict, cycle: int, groups: in
                        native_evaluation_contract=candidate.get("native_evaluation_contract"),
                        fixture_format="trusted_reader_descriptor" if fixture_reader is not None else "parquet")
     try:
+        if conditional:
+            contract = candidate.get("native_conditional_contract")
+            if not isinstance(contract, dict):
+                raise NativePreflightError("Conditional research requires a frozen domain contract")
+            for binding in _conditional_bindings(contract):
+                if binding not in receipt["source_evidence"]:
+                    raise NativePreflightError("Conditional mask, builder and definition must be source-bound")
         if diagnostic:
             contract = candidate.get("native_diagnostic_contract")
             _financial_diagnostic_contract(contract, window, cycle, groups)
@@ -696,8 +774,11 @@ def build_native_preflight(candidate: dict, window: dict, cycle: int, groups: in
                     raise NativePreflightError(f"Projection {label} must be bound in source evidence")
         receipt["proof"] = _replay(code, receipt["fixture"]["path"], fields, window, cycle, groups,
                                    receipt["policy"], purpose, candidate.get("native_evaluation_contract"), fixture_reader,
-                                   candidate.get("native_diagnostic_contract"))
-        receipt["research_replay_passed" if projected or diagnostic else "passed"] = True
+                                   candidate.get("native_diagnostic_contract"),
+                                   candidate.get("native_conditional_contract"))
+        receipt["research_replay_passed" if projected or diagnostic or conditional else "passed"] = True
+        if conditional:
+            receipt["status"] = "conditional_domain_research_replay_validated"
         if diagnostic:
             receipt["status"] = "financial_source_diagnostic_research_replay_validated"
         if projected:
@@ -723,9 +804,10 @@ def verify_native_preflight(candidate: dict, window: dict, cycle: int, groups: i
         raise NativePreflightError("Native preflight receipt is missing or invalid") from exc
     projected = purpose == PROJECTION_RESEARCH_PURPOSE
     diagnostic = purpose == FINANCIAL_DIAGNOSTIC_PURPOSE
+    conditional = purpose == CONDITIONAL_RESEARCH_PURPOSE
     success = (isinstance(receipt, dict) and
                (receipt.get("research_replay_passed") is True and receipt.get("passed") is False
-                if projected or diagnostic else receipt.get("passed") is True))
+                if projected or diagnostic or conditional else receipt.get("passed") is True))
     if (not isinstance(receipt, dict) or receipt.get("schema") != SCHEMA
             or not success or not isinstance(receipt.get("proof"), dict)):
         raise NativePreflightError("Native preflight has no successful replay proof")
@@ -737,6 +819,8 @@ def verify_native_preflight(candidate: dict, window: dict, cycle: int, groups: i
         raise NativePreflightError("Native preflight source or dispatch parameters changed")
     if receipt.get("harness") != _artifact(__file__):
         raise NativePreflightError("Native preflight harness changed; regenerate the receipt")
+    if conditional and receipt.get("native_conditional_contract") != candidate.get("native_conditional_contract"):
+        raise NativePreflightError("Native conditional domain contract changed")
     if (receipt.get("purpose", STRICT_PURPOSE) != purpose or
             receipt.get("scope", _scope(STRICT_PURPOSE)) != _scope(purpose)):
         raise NativePreflightError("Native preflight coverage purpose or research scope changed")
@@ -766,6 +850,11 @@ def verify_native_preflight(candidate: dict, window: dict, cycle: int, groups: i
         for artifact in artifacts:
             _check_artifact(artifact, label)
     _check_artifact(receipt.get("fixture"), "fixture")
+    if conditional:
+        contract = candidate["native_conditional_contract"]
+        for binding in _conditional_bindings(contract):
+            if binding not in receipt["source_evidence"]:
+                raise NativePreflightError("Conditional mask, builder and definition are not source-bound")
     if diagnostic and _artifact(contract["source_manifest"]["path"]) not in receipt["source_evidence"]:
         raise NativePreflightError("Financial diagnostic source manifest is not bound in source evidence")
     if projected:
@@ -779,7 +868,8 @@ def verify_native_preflight(candidate: dict, window: dict, cycle: int, groups: i
         proof = _replay(candidate["code"], receipt["fixture"]["path"], receipt.get("fields"),
                         window, cycle, groups, fixed_policy, purpose,
                         candidate.get("native_evaluation_contract"), fixture_reader,
-                        candidate.get("native_diagnostic_contract"))
+                        candidate.get("native_diagnostic_contract"),
+                        candidate.get("native_conditional_contract"))
     except Exception as exc:
         raise NativePreflightError("Native preflight replay failed; no official job was dispatched") from exc
     if proof != receipt["proof"]:
@@ -787,6 +877,8 @@ def verify_native_preflight(candidate: dict, window: dict, cycle: int, groups: i
     return {"receipt_path": str(Path(path).resolve()), "receipt_sha256": _sha(path),
             "definition_fingerprint": definition, "proof": proof, "purpose": purpose,
             "scope": _scope(purpose), "limitation": LIMITATION,
+            **({"research_replay_passed": True, "passed": False,
+                "native_conditional_contract": contract} if conditional else {}),
             **({"research_replay_passed": True, "passed": False,
                 "native_diagnostic_contract": contract} if diagnostic else {}),
             **({"research_replay_passed": True, "passed": False,

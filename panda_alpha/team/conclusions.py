@@ -1,4 +1,7 @@
-"""Durable intent plus idempotent registry facts: recover across two SQLite files."""
+"""跨两库结案：先保存意图，再幂等追加科学事实，最后关闭任务。
+
+中断后沿原结论恢复，保留失败与待核项，不增加新的试验分母。
+"""
 from __future__ import annotations
 
 import json

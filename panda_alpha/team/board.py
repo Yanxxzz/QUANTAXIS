@@ -1,4 +1,7 @@
-"""SQLite is the only mutable task authority; messages are append-only events."""
+"""任务板的唯一可写状态在 SQLite；消息与历史事件只追加。
+
+JSON 工作包是阅读视图，不是第二份任务状态或独立账户余额。
+"""
 from __future__ import annotations
 
 from contextlib import contextmanager

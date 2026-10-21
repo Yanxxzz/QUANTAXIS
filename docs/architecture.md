@@ -1,71 +1,79 @@
-# 架构与维护边界
+# 架构与维护地图
 
-入口是 `python -m panda_alpha.team`。默认精简流程复用既有宿主：单研究员、本地程序筛选、按需独立审查，确定性计划/冻结/结案；旧四角色协议保持兼容。官网执行、预算、科学登记及回测核算仍共用原内核。既有 A/B 来源资格仍待核，不因此扩大执行范围。
+日常入口是 `python -m panda_alpha.team`，人通过 Codex 聊天授权。目标是以有限模型和官网资源找到有积分潜力且可靠的因子。默认 lean：一个主研究员、本地程序先筛、必要独立审查；旧四角色协议为兼容原会话和明确选择的复杂研究保留。
 
-## 维护核心
+## 先理解一条运行链
 
-维护核心负责跨研究方向一致的约束与状态，修改时应覆盖实际边界行为和恢复路径。
+```mermaid
+flowchart LR
+  Chat[聊天启动或恢复] --> Operator[operator：显式命令]
+  Operator --> Service[service：部署启停及累计]
+  Service --> Runtime[runtime：组件监管与恢复]
+  Runtime --> Host[host：下一步和停止条件]
+  Host --> Local[local_screen：已有本地内核]
+  Host --> Worker[codex_worker：必要模型判断]
+  Host --> Coordinator[coordinator：冻结与执行]
+  Coordinator --> Ledger[platform：原 Run 和结算]
+```
 
-- `panda_alpha/team/contracts.py`：角色、研究请求、消息、冻结定义与授权契约。
-- `panda_alpha/team/board.py`：SQLite 任务板、协作记录与团队授权状态。
-- `panda_alpha/team/budget.py`：在真实研究轮和资金约束下形成资源计划；不维护四份模拟账户余额。
-- `panda_alpha/team/coordinator.py`：协调任务、检查冻结版本，并连接既有执行和恢复入口。
-- `panda_alpha/team/host.py`：有轮数、动作数和截止时间的调度、持久化交接，以及文件邮箱/显式命令适配器。
-- `panda_alpha/team/runtime.py`、`codex_worker.py`、`runtime_io.py`：四角色进程与协调器监管、受限 Codex 会话、有限重连及跨进程恢复。
-- `panda_alpha/team/service.py`、`operator.py`：有限部署的启动、停止及只读进程状态；聊天控制复用原宿主和累计次数，系统登录触发是可选适配器。
-- `panda_alpha/team/evidence.py`：缓存报告结构验收与带范围的独立审查，区分交付、来源和经济结论。
-- `panda_alpha/team/sources.py`、`public_docs.py`：显式文本接收、有限公开指南检查、原任务重审队列及只读就绪视图；复用原事件与重开协议，不创建新预算或试验引擎。
-- `panda_alpha/team/conclusions.py`：持久化结论意图、幂等科学事实和跨库恢复，保持原试验身份。
-- `panda_alpha/team/demo.py`、`panda_alpha/team/rehearsal.py`：基本演练与三轮中断恢复验收；脚本角色只用于测试。
-- `panda_alpha/team/__main__.py`：薄命令入口。
-- `.codex/agents/panda-{lead,market,fundamental,skeptic}.toml`：四角色职责、交接规则与工作边界。
-- `panda_alpha/platform.py`、`panda_alpha/research_budget.py`：实验指纹、原子预留、官网状态转换、共享研究轮配额及结算。
-- `panda_alpha/registry.py`、`panda_alpha/memory.py`、`panda_alpha/evolution.py`：唯一经济实验、历史约束、来源与执行修复、反思及机制重开。
-- `panda_alpha/study.py`、`panda_alpha/execution.py`、`panda_alpha/attribution.py`、`panda_alpha/portfolio.py`、`panda_alpha/admission.py`：已有公共核算、归因、组合与准入接口。
+`operator` 检查现场、保存启动回执，并在冻结 checkout 中执行 `python -m panda_alpha.team.service`。`service` 保留部署启动次数、启停开关和绑定；`runtime` 管理组件、模型超时和进程接管。三者处理不同生命周期，合并会把恢复边界混进聊天命令。
 
-团队层只增加协作和资源决策。原生兼容性由 `native_preflight.py` 等既有接口检查；行情及财报来源由 `data.py`、`sources.py` 和相关来源契约负责。不要在角色提示词或团队预算模块内复制这些计算和判定规则。
+`host` 不复制回测或余额。`local_screen` 调用已有 `study.prepare_study/evaluate_study`；`coordinator` 通过原执行器派发。`codex_worker` 只接收相关工作包，工具受限、尝试和原会话持久化。确定性计划、固定检查和结案不额外调用模型。
 
-角色提示词不是安全沙箱。`host-serve` 通过 Codex 只读沙箱和工具开关限制角色，只向模型传递工作包及显式证据文本；仅协调器拥有执行入口。外部 `host-run` 适配器的隔离仍由接入者落实。本机各进程使用同一操作系统账号；这不是跨账号、容器或分布式安全隔离。
+## 状态为何保留这些部分
 
-## 状态各有职责
+1. **实验账本**：真实指纹、预留、Factor/Run ID、状态和结算。任务板、消息、有限宿主工作与结案意图在同一 SQLite 文件，各表复用一个预算权威。
+2. **科学登记**：唯一经济定义、来源／执行／经济判断、失败与待核。实现修复不冒充新机制，费用路径不增加独立假说数。
+3. **不可变原件**：输入、代码、协议、原报告、模型回复、回执及 SHA256。JSON 包和热记忆是阅读与恢复视图，不独立裁决状态。
 
-1. **团队任务板**保存负责人、挑战、冻结版本、资源请求、授权和有限宿主会话。`team_host_work` 保存原始工作包及回复，`team_finalizations` 保存跨库结论断点。
-2. **ExperimentLedger**保存真实实验指纹、预算预留、Factor/Run ID、结算及执行断点。团队层复用它，不创建另一套平台余额。
-3. **ResearchRegistry**保存唯一经济定义及来源、执行、经济判断等科学事实。两档费用或软件修复不增加新的策略分母。
-4. **原件与结果文件**保存可复核证据；记录引用路径及 SHA256。热记忆和角色工作包是可再生成的阅读视图。
+跨两库结案采用“保存意图 → 幂等科学事实 → 关闭任务”。中断测试覆盖边界，不强行搬到一套新数据库。固定待核编号和证据绑定替代关系由 `qualifications.py` 与原事件共同维护。
 
-同一个事实不由多份可写 JSON 独立裁决。lead 通过团队协调入口维护共享状态，研究员写各自候选及附件，skeptic 提交挑战与审查证据。既有 `ResearchEngine.save_state` 不支持多个进程合并写入同一状态文件，不能让四个 agent 各自运行同一路径的 `plan/evolve`。
+`team/budget.py` 分配已获准范围，`research_budget.py` 检查共享研究轮，`platform.py` 原子预留及结算；它们不是三份余额。配置示例与旧研究模板都不构成当前授权。
 
-预算决策与执行约束分开：lead 选择有研究价值的实验，确定性代码检查真实授权、余额与预留、累计配额、冻结指纹和复盘节点。授权范围 grant 只能在已允许范围内派生精确实验 permit；它不充值、不伪造账户余额，也不扩大既有研究轮上限。
+## 按问题找文件
 
-## 可复用研究组件
+- **下一步为何等待或停止**：`team/host.py`、`team/local_screen.py`；先查 `host-status.json` 和原 session 工作，不靠模型重述现场。
+- **启动、断线、进程恢复**：`team/operator.py`、`service.py`、`runtime.py`、`runtime_io.py`、`codex_worker.py`；核验进程出生身份，不能只看 PID。
+- **请求或报告不合法**：`team/contracts.py`、`team/evidence.py`、`native_preflight.py`；交付、来源和经济分别判断。
+- **新来源和同任务重审**：`team/sources.py`、`public_docs.py`、`data_sources.py`；显式有限取数，完成查询断点复用，缺口不填零。
+- **本地收益或成本不一致**：`study.py`、`execution.py`、`attribution.py`、`evaluation.py`；从行情、独立日历及持仓账本复核同样本结果。
+- **原 Run、余额或未结算**：`platform.py`、`research_budget.py`；未知响应先对账，只恢复原 Run。
+- **历史约束或资格消失**：`registry.py`、`memory.py`、`qualifications.py`、`team/conclusions.py`；先查原事件，不靠清空或重登记修复。
+- **正式池判断**：`quality.py`、`pool_admission.py`、`pool_scoring.py`；探索价值、成本后表现、正式池增量分别报告。
 
-`panda_alpha/` 中的具体机制、财务科目和策略模块属于研究组件，例如年度盈利、营运资本、经营现金、融资行为和涨停事件研究。它们不是每次团队协作都必须加载的公共内核。
+## 每类目录的取舍
 
-组件进入维护范围的依据是当前任务确实依赖、接口清晰且有相应证据或测试。新研究先判断已有组件能否复用，再增加必要接口；不要把每次参数试验、单次修复或一个候选都包装成常驻框架。
+`panda_alpha/team/` 是流程核心。根包中的取数、核算、预算和科学记录为公共内核；经营科目、涨停事件、融资、现金和市场行为模块是研究组件。它们有现存调用、测试或历史协议，不因默认 lean 未导入就判为死代码。候选先放运行目录，有明确复用需求再提取公共模块。
 
-经营信息研究应先核对官网原生字段、期间和时点；有界来源诊断后再决定本地补源范围。市场行为研究也必须明确行情、复权、交易日历和成交假设。任一组件的来源验收不能扩大成完整全 A、完整 PIT 或生产可用认证。
+`scripts/` 包含数据运维、验证、旧 CLI 包装及绑定历史协议的运行器。`Invoke-PandaResearch.ps1` 保留环境恢复和退出码处理，不是第二个无人值守宿主。`research_io.py` 已收敛多份脚本 I/O，不再加一套脚本框架。
 
-## 历史运行脚本与研究证据
+`config/` 是模板和版本化政策；旧 v1/v2 用来解释旧判断，不删除或改成 v3。`.codex/agents/` 保留兼容提示，默认并不启动四个角色。`tests/` 验证软件，不证明因子或多 agent 更优。
 
-`scripts/` 同时包含仍维护的公共入口、数据操作、验证工具和历史研究运行器。`scripts/Invoke-PandaResearch.ps1`、`scripts/verify_public_research.py` 等公共入口继续保留；具体研究脚本以其绑定协议和既有证据范围理解，不默认升级为新的团队入口。
+`docs/`、`RESEARCH.md`、已有跟踪的 `research_runs/` 与 `research_bootstrap/` 保存说明、协议和冷启动材料。私有一次性程序留在忽略提交的运行目录。不能因为“Git 有历史”就无差别删除原件；旧研究复现使用冻结版本、代码哈希和原输入，不追改回执以接受新代码。
 
-`research_runs/` 保存私有或部分公开的冻结协议、运行脚本、输入凭证、账本、结果、修复版本及断点。`docs/` 内带日期的研究报告、`docs/results/` 和 `research_bootstrap/` 也是历史证据及冷启动材料。
+`QUANTAXIS/`、`qapro-rs/`、`docker/`、`doc/`、`qabook/`、`examples/` 是上游兼容层和可选材料。研究层无需整套服务，但构建、导入和用户策略仍依赖其中一部分，不做无证据的搬迁或重写。版权和许可保留。
 
-本次把 10 个研究、恢复和汇总脚本的重复 I/O 收敛到 `scripts/research_io.py`；保留旧入口、JSON 格式和历史输出语义。原 CLI 与团队入口共用 `ResearchRegistry.reconciled_memory` 的记忆对齐检查，不再各写一份。旧脚本保留用于复现和恢复，不能因新入口存在就重新执行其收费调用。新旧证据关系通过替代记录和哈希绑定说明，不能原位改写历史结果后沿用旧凭证。
+## 本次实际删除和合并
 
-存储释放、原始文件保留及脱敏规则继续采用 [research_storage.md](research_storage.md)。公开仓库不会自动包含用户行情库、账号配置和全部私有原件；合成演练也不依赖这些资料。
+2026-10-21 核对维护调用链及直接引用后：
 
-## 上游保留层
+- 删除旧计划任务安装器 `scripts/team-service.ps1`、登录自启说明及仅服务该适配器的两项测试。本机旧任务已卸载；聊天控制及真实子进程恢复回归保留。
+- 删除10行 `scripts/team_service.py` bootstrap。operator 已固定 `cwd=repo`，改用包模块入口，原 `--launch` 握手及解释器保持。删除 service 重复的 `--enable/--stop` 命令分支，程序接口仍供 operator 调用。
+- 删除 `pythonapp.yml`，其安装后 DataFrame 冒烟合入包装检查。完整回归从每事件5组减为3组，保留 Linux 3.11／3.12 和 Windows 3.11。包装仍检查两版 Python 的 sdist、wheel、元数据和 checkout 外导入。
+- Docker 按相关路径触发；上游书籍与发布本就手动，保持。README 改为安装、研究、控制、维护的使用顺序，过程结果引用研究报告。
 
-`QUANTAXIS/`、`qapro-rs/`、`qabook/`、`doc/`、`examples/` 等上游内容保持原路径。研究层可独立使用，新增协作功能不要求部署整套上游服务，也不调整上游许可与发布职责。
+研究分支由 PR 事件检查，主线／develop 及版本标签仍检查 push；同一研究分支不再同时触发 push 和 PR 两套相同行为回归。包装检查沿用同一触发方式。
 
-[README_UPSTREAM.md](../README_UPSTREAM.md) 和 [LICENSE](../LICENSE) 保留上游说明、版权与许可。架构整理不是重写上游框架，也不是清理历史研究材料的授权。
+随后真实提案暴露了另一处阻点：模型未收到完整的嵌套请求结构，连续用新调用发现 `candidate`、`mechanism_id` 和 `candidate_id`。现已在 worker 的动作契约中明确顶层字段、嵌套 candidate、机器标识及执行字段与诊断字段的区别；host 在科学判断前先调用原请求校验器，返回可理解的契约错误。原失败和4次已发生尝试保留，不算成4个新机制；仅结构修正复用原意见，不伪造新模型判断。
 
-## 当前交付与后续维护
+真实结果审查又暴露202,533字节工作包超过原180KB上限。`context_codec`现在也对重复的小型原件绑定使用精确引用；长指针比原值更大时仍内联。原工作包、证据、资格ID／修订／状态均不改，完整解码一致，实际提示178,432字节后完成原工作。增加两项针对该缺口的回归，没有提高提示上限或删去异议。
 
-维护验证包括三轮断网演练、同身份补证、原生形状报告负例、跨方向异议处置、科学记忆约束，以及真实子进程的超时、有限重连、进程中断与接管。`host-serve` 创建四个实际模型会话，文件邮箱仍是可复用传输层。当前通过 `host-control` 由聊天显式控制；`operator.py` 包装原宿主入口、真实进程状态及原账本未结算项，`service.py` 保留原部署、停止和累计审计。官网配置在准备时冻结，手动启动须显式 `--execute`；恢复仍走原 `ExistingExecutor` 和原 Run。停止检查复用运行开关，官网已接收的任务不被当作已撤销。Windows Task Scheduler 仅支持离线部署且需明确选择，本机已卸载。单机进程租约避免同一服务重复写入，尚未实现分布式主节点切换；进程验收不保证模型结论正确。
+后续H20确认被现有封存／暖机检查正确阻断；一次性诊断调用它太晚，部分信号和标签已曝光。保留失败，停止确认；准备顺序改为先核对实际暖机范围，再取数和生成标签。既有公共检查器无需重写，也不以换窗或解除封存解决方案冲突。
 
-跨库采用先持久化意图、再幂等写科学事实、最后关闭任务的恢复协议。外部角色请求可能重复送达，后端应按 `work_id` 去重；只承诺已记录回复和状态效果的幂等，不承诺外部模型调用恰好一次。改动这些边界时重放相应中断测试。
+没有证据要求重写 `quality.py`、另建回测器或合并账本：代码已区分成本受限、机制反证、来源不足和池增量。主要问题是入口及旧说明混杂、CI 重复，以及把某次研究门槛误读成所有探索的全局门槛。
 
-继续来源核验时保留原实验账本与研究轮累计，不通过新任务板、日期、方向或资金批次清零历史。真实经济研究仍需获证的输入、明确资金范围、有效 grant 和独立结果审查。具体流程见 [team_workflow.md](team_workflow.md)。
+## 修改与验收顺序
+
+先定位原件和实际调用者，再做最小修改。恢复改动跑 `test_team_service/operator/runtime/online_control`；覆盖暂停恢复、强杀接管原尝试、磁盘恢复、截止／启动上限、模糊启动阻断、原 Run 恢复及来源／PIT／grant 阻断。合成测试不能写成真实研究成功。
+
+交付前运行 `python -B scripts/verify_public_research.py`、`python -m pytest tests -q`，以及 checkout 外安装冒烟。CI 和审查次数不替代研究证据。清理遵守[证据存储](research_storage.md)，保留用户未提交策略、原失败、账本和冻结契约。

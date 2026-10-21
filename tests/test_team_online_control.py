@@ -160,15 +160,6 @@ def test_lost_remote_acknowledgement_is_never_reissued(tmp_path):
         cleanup(config, args[-1])
 
 
-def test_scheduler_cannot_install_an_online_deployment(tmp_path):
-    if sys.platform != "win32":
-        pytest.skip("Windows task adapter")
-    _, config, _, _ = online_deployment(tmp_path)
-    result = subprocess.run(["powershell.exe", "-NoProfile", "-File", str(REPO / "scripts/team-service.ps1"),
-        "-Action", "Plan", "-Config", str(config)], capture_output=True, timeout=15)
-    assert result.returncode != 0 and b"explicit host-control" in result.stderr
-
-
 def test_cli_prepare_requires_paired_online_flags(tmp_path):
     args = setup(tmp_path)
     command = [sys.executable, "-m", "panda_alpha.team", "service-prepare", "--ledger", str(args[0]),

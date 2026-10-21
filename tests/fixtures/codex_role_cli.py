@@ -7,7 +7,8 @@ import time
 argv = sys.argv[1:]
 output = Path(argv[argv.index("--output-last-message") + 1])
 folder = output.parent
-payload = json.loads(sys.stdin.read().split("\n", 1)[1])
+# Worker prompts are UTF-8 bytes, regardless of the Windows account code page.
+payload = json.loads(sys.stdin.buffer.read().decode("utf-8").split("\n", 1)[1])
 p = payload["packet"]
 mode = next((x["text"] for x in payload["context"] if x["path"].endswith("mode.txt")), "ok").strip()
 mode_path = next((Path(x["path"]) for x in payload["context"] if x["path"].endswith("mode.txt")), None)

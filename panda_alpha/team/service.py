@@ -1,4 +1,8 @@
-"""OS service lifecycle around the existing bounded, durable role supervisor."""
+"""Chat deployment lifecycle: preserve starts, stop requests and runtime binding.
+
+operator.py owns explicit user operations; runtime.py owns worker recovery.
+This module starts neither a Windows service nor a scheduled task.
+"""
 from __future__ import annotations
 
 import argparse
@@ -91,7 +95,7 @@ def stop_service(path):
 
 
 def run_service(path, stop_event=None, launch_id=None):
-    """Task Scheduler and foreground recovery tests share exactly this entry point."""
+    """Run the frozen chat deployment; retain cumulative starts across restarts."""
     path = Path(path).resolve()
     config = load_config(path)
     root = Path(config["runtime"])
@@ -164,17 +168,9 @@ def run_service(path, stop_event=None, launch_id=None):
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, required=True)
-    parser.add_argument("--stop", action="store_true", help="Request a graceful stop of this exact service instance")
-    parser.add_argument("--enable", action="store_true", help="Explicitly allow the stopped service to resume")
     parser.add_argument("--launch", help=argparse.SUPPRESS)
     args = parser.parse_args(argv)
     args.config = args.config.resolve()
-    if args.stop:
-        stop_service(args.config)
-        return
-    if args.enable:
-        enable_service(args.config, True)
-        return
     event = threading.Event()
     for signum in (signal.SIGINT, signal.SIGTERM):
         signal.signal(signum, lambda *_: event.set())

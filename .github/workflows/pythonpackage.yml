@@ -1,6 +1,12 @@
+# Packaging checks installation; behavior is tested once in panda-alpha.yml.
 name: Python package
 
-on: [push, pull_request]
+on:
+  workflow_dispatch:
+  push:
+    branches: [master, develop]
+    tags: ['v*']
+  pull_request:
 
 permissions:
   contents: read
@@ -40,8 +46,10 @@ jobs:
         from importlib.metadata import distribution
         from packaging.requirements import Requirement
         from packaging.version import Version
+        import pandas as pd
         import panda_alpha
         from panda_alpha.data import AxisProvider
+        from panda_alpha.diversity import as_factor_panel
         from panda_alpha.execution import ExecutionPolicy
         checkout = Path(os.environ['GITHUB_WORKSPACE']).resolve()
         package = distribution('quantaxis')
@@ -54,11 +62,11 @@ jobs:
             Requirement(requirement)
         assert callable(AxisProvider) and callable(ExecutionPolicy)
         assert any(e.name == 'panda-alpha' for e in package.entry_points)
+        panel = as_factor_panel(pd.DataFrame({'date': ['2024-01-02'], 'symbol': ['000001'], 'value': [1.0]}))
+        assert panel.loc[pd.Timestamp('2024-01-02'), '000001'] == 1.0
         print('Built Fork package metadata/imports verified:', package.version)
         PY
         panda-alpha --help
-    - name: Run research tests on the supported Python matrix
-      run: python -m pytest tests -q
     - name: Retain the artifacts verified by this job
       uses: actions/upload-artifact@v4
       with:

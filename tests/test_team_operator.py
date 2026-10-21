@@ -40,6 +40,9 @@ def test_status_is_read_only_and_missing_deployment_is_not_created(tmp_path, mon
 
 
 def test_manual_start_duplicate_stop_resume_and_finished_session(tmp_path):
+    # The package entry must preserve literal spaces, Unicode and shell-like characters.
+    tmp_path = tmp_path / "含 空格 $data"
+    tmp_path.mkdir()
     args, config = deployment(tmp_path, "hold")
     root = args[-1]
     manifest = read(root / "manifest.json")

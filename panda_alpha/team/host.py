@@ -1,4 +1,8 @@
-"""Bounded host loop with durable role handoffs, not another experiment engine."""
+"""把任务推进到下一个有信息价值的动作，并持久化交接与停止原因。
+
+程序负责计划、冻结与结案；模型只负责提案和必要的独立判断。
+实际官网调用与累计用量仍由 coordinator 和 ExperimentLedger 管理。
+"""
 from __future__ import annotations
 
 from datetime import datetime, timezone
@@ -7,7 +11,7 @@ from pathlib import Path
 import subprocess
 import tomllib
 
-from .contracts import INFORMATION, ROLES, canonical, digest, text_fields, timestamp, strings, verify_artifacts
+from .contracts import INFORMATION, ROLES, canonical, digest, text_fields, timestamp, strings, verify_artifacts, validate_request
 
 
 class Host:
@@ -472,6 +476,9 @@ class Host:
                 request = out["request"]
                 if request["owner"] != p["role"] or request["task_id"] != task_id:
                     raise ValueError("Proposal must use its assigned role and task identity")
+                # Report a contract error before dereferencing candidate/mechanism;
+                # otherwise models spend successive turns discovering opaque KeyErrors.
+                validate_request(request)
                 from ..evolution import Candidate, ResearchEngine
                 engine = ResearchEngine(registry=self.registry, memory=self.registry.reconciled_memory(),
                     research_context={k: request[k] for k in ("window", "cycle", "groups")})
