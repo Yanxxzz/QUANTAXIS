@@ -80,6 +80,14 @@ def fingerprint(candidate: dict, window: dict, cycle: int, groups: int) -> str:
             raise ValueError("Native financial diagnostic requires its nominal source contract")
         definition["native_preflight_purpose"] = candidate["native_preflight_purpose"]
         definition["native_diagnostic_contract"] = contract
+    if candidate.get("native_preflight_purpose") == "conditional_domain_research":
+        contract = candidate.get("native_conditional_contract")
+        if (candidate.get("formula") or not candidate.get("code") or not isinstance(contract, dict)
+                or contract.get("window") != window or contract.get("cycle") != cycle
+                or contract.get("groups") != groups):
+            raise ValueError("Conditional research must bind exact code, domain and dispatch parameters")
+        definition["native_preflight_purpose"] = candidate["native_preflight_purpose"]
+        definition["native_conditional_contract"] = contract
     return hashlib.sha256(json.dumps(definition, sort_keys=True).encode()).hexdigest()
 
 

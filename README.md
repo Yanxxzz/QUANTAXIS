@@ -66,10 +66,10 @@ CI 的行为回归集中在一份工作流，覆盖 Linux 3.11／3.12 和 Window
 
 ## 研究记录与当前边界
 
-截至2026-10-21，[顺序研究记录](docs/factor_continuation_20261021.md)已补充 H20 历史重复性、金额响应不对称和收益交替三个固定研究。H20 较早窗口方向RankIC **0.039825**、预选组Sharpe **−0.1845**；金额响应机制 **0.016765／0.5857**，均未过各自冻结的报告门槛。最后一个机制只做免费检验：条件均值方向符合预测，区间跨零，净成本缺报价，尚不能称为可靠好因子。原 H20 主窗好结果及原失败确认均保留，没有因子入池。
+截至2026-10-21，[收益交替机制的一次官网验证](docs/serial_alternation_native.md)已完成：方向周期RankIC **0.015701**、固定第1组Sharpe **0.6562**、报告年化超额 **2.29%**、179期。RankIC未达到事前0.02门槛，独立结果复核后停止该定义／窗口的追加验证；来源和净成本保持待核，没有因子入池。原 H20 主窗好结果、失败确认及[此前顺序研究](docs/factor_continuation_20261021.md)全部保留。
 
-人类将剩余官网额度改为50点／20次，历史用量保留；本批新增2次Run、10点活动算力，累计36次／92点，研究轮余 **40点／18次**、未结算0。9次新worker加此前7次达到原定16次上限，全部研究部署停止、任务板paused。worker与绝对截止独立约束研究，余额不是消费目标或新的启动许可。旧 A/A控制/B 待核6/0/10保留，原因见[来源审视](docs/research_depth_audit.md)。官网不提供逐日输入或参与股票导出，不反复索取不存在的接口。
+最近一次明确授权只执行上述1次官网Run，新增 **6点活动算力、2次必要worker**；旧16次worker及历史用量保留。累计37次／98点，同一研究轮余 **34点／17次**、未结算0，全部所属研究进程已停止、任务板paused。worker与绝对截止独立约束研究，余额不是消费目标或新的启动许可。旧 A/A控制/B 待核6/0/10保留，原因见[来源审视](docs/research_depth_audit.md)。官网不提供逐日输入或参与股票导出，不反复索取不存在的接口。
 
 [负协偏度](docs/coskewness_research.md)、[同伴传导](docs/peer_diffusion_research.md)及 [RESEARCH.md](RESEARCH.md) 中此前研究的失败保留，不据本次主窗覆盖旧结论。
 
-后续结果集中在 [RESEARCH.md](RESEARCH.md) 与冻结运行目录，不把每日过程逐段堆回入门说明。精简流程见[lean 研究](docs/lean_research.md)，原生约束见[预检契约](docs/panda_alpha_native_contract.md)及[日期表示](docs/native_date_wire.md)。
+后续结果集中在 [RESEARCH.md](RESEARCH.md) 与冻结运行目录，不把每日过程逐段堆回入门说明。精简流程见[lean 研究](docs/lean_research.md)，原生约束见[预检契约](docs/panda_alpha_native_contract.md)、[日期表示](docs/native_date_wire.md)及[条件域预检](docs/native_conditional_domain.md)。
