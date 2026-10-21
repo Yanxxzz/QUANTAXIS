@@ -66,9 +66,9 @@ CI 的行为回归集中在一份工作流，覆盖 Linux 3.11／3.12 和 Window
 
 ## 研究记录与当前边界
 
-截至2026-10-21，PR #21已合并，随后完成[收盘价相对成交均价的单机制研究](docs/closing_displacement_research.md)。固定预测未通过本地条件检验：158个可估计期的主系数均值 **+0.001118**，预期为负，区间跨零。触发事前停止规则后提前结束，没有追加官网回测或新机制，没有因子入池。此前[收益交替官网结果](docs/serial_alternation_native.md)、H20及[顺序研究](docs/factor_continuation_20261021.md)的好坏记录全部保留。
+截至2026-10-21，PR #22已合并，随后完成[振幅收缩后的修复研究](docs/range_resolution_research.md)。本地固定条件检验暂时保留该预测，但区间跨零；一次官网初筛得到方向周期 RankIC **0.030469**、固定第1组 Sharpe **0.5294**、报告年化超额 **2.79%**。Sharpe低于事前0.6门槛，独立复核后停止，不追加确认，没有因子入池。[上一轮本地失败](docs/closing_displacement_research.md)、[收益交替官网结果](docs/serial_alternation_native.md)、H20及[顺序研究](docs/factor_continuation_20261021.md)全部保留。
 
-本轮最多4小时／16次worker，实际 **1次worker、官网0次／0点**，规划确认预算未用。交易状态类型错误的初版和修复重放均保留，独立程序复算一致；来源及完整净成本仍待核。累计37次／98点、剩 **34点／17次**、未结算0不变，全部所属研究进程已停止、任务板paused。余额不是消费目标或新的启动许可。旧 A/A控制/B 待核6/0/10保留，原因见[来源审视](docs/research_depth_audit.md)。官网不提供逐日输入或参与股票导出，不反复索取不存在的接口。
+本轮最多4小时／16次worker，实际 **3次worker、官网1次／4点活动算力**，规划确认预算未用。原格式失败、依赖预检失败和预留前预算阻断均保留，没有重复Run；来源及完整净成本仍待核。累计38次／102点、剩 **30点／16次**、未结算0，全部所属研究进程已停止、任务板paused。余额不是消费目标或新的启动许可。旧 A/A控制/B 待核6/0/10保留，原因见[来源审视](docs/research_depth_audit.md)。官网不提供逐日输入或参与股票导出，不反复索取不存在的接口。
 
 [负协偏度](docs/coskewness_research.md)、[同伴传导](docs/peer_diffusion_research.md)及 [RESEARCH.md](RESEARCH.md) 中此前研究的失败保留，不据本次主窗覆盖旧结论。
 
