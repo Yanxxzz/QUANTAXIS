@@ -138,7 +138,8 @@ def prepare(board, task, config, *, simulation=False):
     check_window(window["start"], window["end"], config["research"].get("sealed_windows", []), window.get("warmup_start"))
     configured = deepcopy(config)
     compute = configured["compute"]
-    compute["daily_credit_limit"] = min(compute["daily_credit_limit"], grant["max_total_credits"])
+    # Daily and grant caps have different histories. The planner/reservation
+    # checks deduct each history before taking the smaller remaining amount.
     compute["recharge_credit_limit"] = min(compute.get("recharge_credit_limit", 0), grant["max_recharge_credits"])
     compute["estimated_billing_batch_authorization"] = ticket(grant, task)
     compute["recharge_batch_authorization"] = ticket(grant, task)

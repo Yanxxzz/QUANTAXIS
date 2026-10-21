@@ -349,6 +349,28 @@ def test_synthetic_permission_never_uses_real_client(team):
         dispatch(task["request"]["candidate"], task["request"]["window"], prepared, c.ledger, client)
 
 
+@pytest.mark.parametrize("prior_daily,in_current_grant,budget,selected_count", [
+    (6, False, 4, 1),  # Earlier grants consumed the day, not the new grant.
+    (9, False, 1, 0),  # The day can still be tighter than the new grant.
+    (3, True, 1, 0),   # Current-grant spending still consumes its own cap.
+])
+def test_daily_and_new_grant_deduct_their_own_history(team, prior_daily, in_current_grant, budget, selected_count):
+    from panda_alpha.platform import beijing_day, budget_plan
+    c, _, config, grant, _ = team
+    task = ready(team)
+    grant = dict(grant, grant_id="new-bounded-grant", max_total_credits=4)
+    activate(c.board, grant)
+    configured = prepare(c.board, task, config, simulation=True)
+    definition = {"billing_authorization": {"estimated_billing": {"batch_id": grant["grant_id"]}}} if in_current_grant else {}
+    history = [{"fingerprint": "prior-grant-job", "day": beijing_day(), "state": "SETTLED",
+                "actual": prior_daily, "reserved": prior_daily, "definition": json.dumps(definition)}]
+    result = budget_plan([task["request"]["candidate"]], configured["compute"],
+                         SyntheticClient().balance(), jobs=history)
+    assert result["budget"] == budget
+    assert result["dispatch_ready"]
+    assert len(result["selected"]) == selected_count
+
+
 def test_atomic_reservation_rechecks_forged_permit_and_metadata(team):
     c, _, config, grant, _ = team
     task = ready(team)
