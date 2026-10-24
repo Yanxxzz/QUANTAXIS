@@ -92,4 +92,4 @@ python -m pytest tests -q
 
 ## 上游与许可
 
-基于 [QUANTAXIS](https://github.com/yutiansut/QUANTAXIS) 的数据、计算和回测能力；[上游原始说明](README_UPSTREAM.md)与版权保留。QuantaAlpha、DeepSeek Harness 等方法参考及各自声明保留在对应文档/插件目录。历史研究见 [RESEARCH.md](RESEARCH.md)。许可见 [LICENSE](LICENSE)。
+基于 [QUANTAXIS](https://github.com/yutiansut/QUANTAXIS) 的数据、计算和回测能力；[上游原始说明](README_UPSTREAM.md)与版权保留。方法参考与历史研究见 [RESEARCH.md](RESEARCH.md)。许可见 [LICENSE](LICENSE)。

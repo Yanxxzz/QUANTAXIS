@@ -225,17 +225,21 @@ class ExperimentLedger:
         try:
             if self.get(key):
                 raise ValueError("This exact candidate/window is already reserved; resume it")
+            if definition.get("backend_contract") == "quantfactra-v1" and any(
+                    row["state"] == "CANCELLED" and row.get("actual") is None for row in self.jobs()):
+                raise ValueError("Reconcile the prior unknown cancelled bill before dispatching another")
             active = self.db.execute("SELECT count(*) FROM jobs WHERE state NOT IN ('SETTLED','CANCELLED')").fetchone()[0]
             if active:
                 raise ValueError("Reconcile the prior job before dispatching another")
             spent = self.db.execute("SELECT COALESCE(SUM(COALESCE(actual,reserved)),0) FROM jobs WHERE day=? AND state!='CANCELLED'", (day,)).fetchone()[0]
             if spent + ceiling > daily_limit + 1e-9:
                 raise ValueError("Daily experiment budget exhausted")
+            from .backend_contract import check_cost_units
+            check_cost_units(self.jobs(), definition.get("cost_unit", "credits"))
             native = definition.get("backend_contract") == "quantfactra-v1"
             if native:
-                from .backend_contract import check_cost_units, validate_balance
+                from .backend_contract import validate_balance
                 validate_balance(balance, definition["cost_unit"])
-                check_cost_units(self.jobs(), definition["cost_unit"])
                 if balance["available"] is not None and ceiling > balance["available"]:
                     raise ValueError("Account balance below reservation")
             elif ceiling > balance["total"]:
@@ -411,6 +415,8 @@ def budget_plan(candidates: list[dict], compute: dict, balance: dict, *, jobs: l
         from .backend_contract import budget_plan as native_budget_plan
         return native_budget_plan(candidates, compute, balance, jobs=jobs, study_state=study_state)
     jobs = jobs or []
+    from .backend_contract import check_cost_units
+    check_cost_units(jobs, "credits")
     research_policy = load_policy(compute)
     ceiling = compute.get("cost_ceiling")
     if ceiling is not None and (type(ceiling) not in (int, float) or not math.isfinite(ceiling) or ceiling <= 0):
@@ -568,6 +574,8 @@ def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedg
     if existing:
         check_job_backend(existing, client)
         return existing  # Zero duplicate dispatches on resume.
+    from .backend_contract import check_cost_units
+    check_cost_units(ledger.jobs(), identity.get("cost_unit", "credits"))
     # Reject local loading errors before reserving funds or touching the account.
     # create also rechecks the bytes immediately before its service request.
     _frozen_code_path(candidate)

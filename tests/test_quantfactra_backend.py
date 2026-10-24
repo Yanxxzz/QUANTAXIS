@@ -175,6 +175,34 @@ def test_cost_units_are_not_silently_mixed(native):
         budget_plan([C], config["compute"], balance, jobs=ledger.jobs())
 
 
+def test_unknown_cancelled_bill_still_blocks_native_dispatch(native):
+    config, client, ledger, root = native
+    job = dispatch(C, W, config, ledger, client)
+    ledger.transition(job["fingerprint"], "RUNNING", "CANCELLED")
+    original = ledger.get(job["fingerprint"])
+    with pytest.raises(ValueError, match="prior job|budget slot"):
+        dispatch(dict(C, direction=0), W, config, ledger, client)
+    assert ledger.get(job["fingerprint"]) == original
+    assert original["actual"] is None and original["reserved"] == 1
+
+
+def test_legacy_adapter_cannot_enter_a_ledger_with_native_currency(native):
+    config, client, ledger, root = native
+    definition = {"backend_contract": "quantfactra-v1", "cost_unit": "USD", "billing_mode": "free"}
+    balance = {"schema": "quantfactra-balance-v1", "available": None, "unit": "USD", "billing_mode": "free"}
+    ledger.reserve("usd-fixture", C, definition, "exploration", 1, 10, balance)
+    ledger.transition("usd-fixture", "RESERVED", "SETTLED", actual=0)
+    original = ledger.jobs()
+    class Legacy:
+        def balance(self):
+            pytest.fail("Cost-unit mismatch must precede account access")
+    with pytest.raises(ValueError, match="Different cost units"):
+        dispatch(C, W, {"platform": {}, "research": config["research"], "compute": {}}, ledger, Legacy())
+    with pytest.raises(ValueError, match="Different cost units"):
+        ledger.reserve("legacy-direct", C, {}, "exploration", 1, 10, {"total": 100, "gift": 100})
+    assert ledger.jobs() == original
+
+
 def test_panda_numeric_status_is_not_interpreted_as_native_success(native, monkeypatch):
     config, client, ledger, root = native
     job = dispatch(C, W, config, ledger, client)

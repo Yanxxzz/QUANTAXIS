@@ -67,6 +67,8 @@ ID 会成为缓存文件名，需使用字母、数字、点、下划线或连�
 
 `compute.billing_mode` 必须与观察一致，取 `free` 或 `prepaid`。`cost_unit`、余额 `unit` 和账单 `unit` 必须相同。不同单位不能混进原实验账本；换单位不能清除或重标旧研究用量。
 
+平台点数没有自动等价关系。若不同供应商都把点数叫 credits，应使用能区分它们的单位标签或独立授权账本；本版本不进行换汇或跨平台点数换算。PandaAI 原账本默认单位仍为 credits。
+
 免费服务仍保留一个正数的规划预留，用于限制未结算任务和实验次数；最终费用只能由明确零费用回执结算为零。`None` 账单不会释放预留，也不会创建第二个 Run。
 
 预付费服务使用既有每日/批次/累计研究上限，必须有明确的 paid-credit 授权。兼容字段 `recharge_credit_limit` 与 `recharge_batch_authorization` 在这里表示付费额度许可，不代表平台存在 PandaAI 式充值钱包。估算费用还须有原 `estimated_billing_batch_authorization`；配置来源明确的服务端硬上限可沿原 cap 路径。实际超限或免费服务出现非零账单时进入人工可核验的 `BILLING_REVIEW`，保留预留。

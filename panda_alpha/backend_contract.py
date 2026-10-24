@@ -116,7 +116,8 @@ def budget_plan(candidates, compute, balance, *, jobs=None, study_state=None):
         problem = problem or "Daily experiment budget exhausted"
     if balance["available"] is not None and reservation > balance["available"]:
         problem = problem or "Available balance cannot fund this reservation"
-    if any(row["state"] not in {"SETTLED", "CANCELLED"} for row in jobs):
+    if any(row["state"] not in {"SETTLED", "CANCELLED"}
+           or (row["state"] == "CANCELLED" and row.get("actual") is None) for row in jobs):
         problem = problem or "Reconcile the prior job before dispatching another"
     policy = load_policy(compute)
     study = guard(policy, None, jobs, study_state, reservation)
