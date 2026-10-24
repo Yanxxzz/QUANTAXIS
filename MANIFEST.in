@@ -1,3 +1,15 @@
 include requirements.txt
 include requirements-panda-alpha.txt
+include requirements-quantfactra.txt
 include pyproject.toml
+include README_EN.md
+include CONTRIBUTING.md
+include CHANGELOG.md
+include AGENTS.md
+include config/quantfactra.example.json
+include config/quantfactra-policy.example.json
+include config/panda-alpha.example.json
+include config/research-workflow.v1.json
+include config/pool-admission.v3.json
+recursive-include docs *.md *.svg
+include docs/open-source-evidence.json

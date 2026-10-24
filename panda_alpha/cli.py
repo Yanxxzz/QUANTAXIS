@@ -196,9 +196,9 @@ def benchmark_definition(identifier, members, panels):
     raise ValueError("Benchmark ID is absent from the configured fixed pool")
 
 
-def main(argv=None):
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--config", default="config/panda-alpha.local.json")
+def main(argv=None, *, prog=None, default_config="config/panda-alpha.local.json"):
+    parser = argparse.ArgumentParser(prog=prog, description=__doc__)
+    parser.add_argument("--config", default=default_config)
     parser.add_argument("--trial-ledger", default="research_runs/research_trials.sqlite3")
     sub = parser.add_subparsers(dest="command", required=True)
     compact = sub.add_parser("compact", help="Build traceable research memory without deleting raw evidence")
@@ -594,11 +594,15 @@ def main(argv=None):
             return
         finally:
             trial_ledger.close()
-    from .platform import PandaClient, ExperimentLedger, budget_plan, dispatch, fingerprint, resume, read_experiment_jobs, read_research_state
-    client = PandaClient(cfg["platform"])
+    from .platform import ExperimentLedger, budget_plan, dispatch, fingerprint, resume, read_experiment_jobs, read_research_state
+    from .backends import backend_identity, create_backend
+    client = create_backend(cfg["platform"])
     if args.command == "account":
         balance = client.balance()
-        count = client.cli("factor_list", "--limit", "1", "--no-detail")["total"]
+        if backend_identity(client)["backend"] == "pandaai":
+            count = client.cli("factor_list", "--limit", "1", "--no-detail")["total"]
+        else:
+            count = client.factor_count() if callable(getattr(client, "factor_count", None)) else None
         print_compact({"balance": balance, "factor_count": count, "runs_started": 0})
     elif args.command == "schedule":
         plan = budget_plan(read(args.candidates)["candidates"], cfg["compute"], client.balance(),

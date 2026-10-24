@@ -1,0 +1,31 @@
+name: Bug report / 问题复现
+description: Report a reproducible problem with setup, workflow or adapters.
+title: "[Bug] "
+labels: []
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: 问题与预期行为 / Problem and expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: 最小复现 / Minimal reproduction
+      description: Provide commands and a synthetic input. Do not include credentials, account data or raw market data.
+      render: shell
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: 环境 / Environment
+      placeholder: OS, Python version, commit/version and adapter
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: 实际结果 / Actual result
+      description: Include relevant redacted errors and retained Run identifiers only when safe to share.

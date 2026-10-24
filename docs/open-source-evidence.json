@@ -1,0 +1,46 @@
+{
+  "observed_at_beijing": "2026-10-25",
+  "scope": "Public GitHub metadata and README comparison; stars are a snapshot, not evidence of causation",
+  "repositories": [
+    {
+      "repository": "freqtrade/freqtrade",
+      "stars": 55854,
+      "default_branch": "develop",
+      "readme_sha": "3d1a903ce1c76f32e5d3e7fc12f0e5c4845f2308",
+      "metadata_url": "https://api.github.com/repos/freqtrade/freqtrade",
+      "readme_url": "https://github.com/freqtrade/freqtrade/blob/develop/README.md"
+    },
+    {
+      "repository": "microsoft/qlib",
+      "stars": 49657,
+      "default_branch": "main",
+      "readme_sha": "a6963f6e40bd9ebee7dd2b5c88df94fe73a67dd4",
+      "metadata_url": "https://api.github.com/repos/microsoft/qlib",
+      "readme_url": "https://github.com/microsoft/qlib/blob/main/README.md"
+    },
+    {
+      "repository": "vnpy/vnpy",
+      "stars": 46029,
+      "default_branch": "master",
+      "readme_sha": "64eefd38fcb83a24b74ce6b1429b6ed6f58acc25",
+      "metadata_url": "https://api.github.com/repos/vnpy/vnpy",
+      "readme_url": "https://github.com/vnpy/vnpy/blob/master/README.md"
+    },
+    {
+      "repository": "TauricResearch/TradingAgents",
+      "stars": 113578,
+      "default_branch": "main",
+      "readme_sha": "cedcdb1e5bf56705cab3fa4b86944686cd62276c",
+      "metadata_url": "https://api.github.com/repos/TauricResearch/TradingAgents",
+      "readme_url": "https://github.com/TauricResearch/TradingAgents/blob/main/README.md"
+    },
+    {
+      "repository": "nautechsystems/nautilus_trader",
+      "stars": 30709,
+      "default_branch": "develop",
+      "readme_sha": "545ef0fe544ef4cb88a92cdc2773e0b5f061e91a",
+      "metadata_url": "https://api.github.com/repos/nautechsystems/nautilus_trader",
+      "readme_url": "https://github.com/nautechsystems/nautilus_trader/blob/develop/README.md"
+    }
+  ]
+}

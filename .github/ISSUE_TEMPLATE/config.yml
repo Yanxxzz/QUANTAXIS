@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Quick start / 首次运行
+    url: https://github.com/Yanxxzz/quantfactra/blob/master/docs/quickstart.md
+    about: Start with an offline adapter demo without provider accounts.

@@ -1,4 +1,4 @@
-"""Offline source-tree smoke for the public Panda Alpha research harness.
+"""Offline source-tree smoke for the public QuantFactra research workflow.
 
 Run with the interpreter that installed requirements-panda-alpha.txt. Optional
 --clean-tree copies an explicit source allowlist into a new directory and runs
@@ -27,11 +27,12 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 PUBLIC_PATTERNS = (
-    "panda_alpha/**/*.py", "tests/**/*.py", "scripts/*.py", "scripts/*.ps1",
-    "docs/*.md", ".github/workflows/panda-alpha.yml", "requirements-panda-alpha.txt",
-    "requirements-panda-alpha-akshare.txt",
-    "config/panda-alpha.example.json", "config/research-workflow.v1.json",
-    "README*.md", "AGENTS.md", "RESEARCH.md", "pyproject.toml",
+    "panda_alpha/**/*.py", "quant_research/**/*.py", "quantfactra/**/*.py", "tests/**/*.py", "scripts/*.py", "scripts/*.ps1",
+    "docs/*.md", "docs/assets/*.svg", "docs/open-source-evidence.json", ".github/workflows/panda-alpha.yml", "requirements-panda-alpha.txt",
+    "requirements-panda-alpha-akshare.txt", "requirements-quantfactra.txt",
+    "config/panda-alpha.example.json", "config/quantfactra.example.json", "config/quantfactra-policy.example.json", "config/research-workflow.v1.json",
+    "README*.md", "AGENTS.md", "CONTRIBUTING.md", "CHANGELOG.md", "RESEARCH.md", "pyproject.toml", ".gitattributes",
+    ".github/ISSUE_TEMPLATE/*.yml", ".github/pull_request_template.md",
     ".codex/agents/panda-*.toml", "config/team-grant.example.json",
     "config/team-host.example.json", "config/team-workers.example.json",
     "config/research-depth-plan.v1.json",
@@ -144,12 +145,18 @@ def run_smoke(root=ROOT):
             team = run_demo(Path(temporary) / "team")
         if team["status"] != "PILOT_READY" or team["official_runs"] != 0 or team["closed_tasks"] != 2:
             raise AssertionError("Team offline rehearsal did not stop before the pilot")
+        from quantfactra.demo import run_demo as first_run
+        with tempfile.TemporaryDirectory() as temporary:
+            first = first_run(Path(temporary) / "quantfactra")
+        if first["state"] != "SETTLED" or first["actual"] != 0 or first["external_calls"] != 0 or first["llm_calls"] != 0:
+            raise AssertionError("QuantFactra public demo did not complete its offline receipt lifecycle")
     return {"status": "PUBLIC_SOURCE_SMOKE_PASSED", "source_root": str(root),
             "python": sys.executable, "public_module_imports": imports,
             "cli_help": "passed_without_config", "financial_schemas_readable": [1, 2],
             "annual_asset_restatement_guard": "passed_from_original_text",
             "study_runs": len(study["runs"]), "cost_cases": len(study["cost_reviews"]),
             "team_offline_rehearsal": team["status"], "synthetic_team_tasks": team["closed_tasks"],
+            "quantfactra_first_run": first["state"],
             "official_runs": 0, "llm_calls": 0, "market_files_read": 0,
             "dependency_installation": "not_performed; reuse interpreter with requirements-panda-alpha.txt",
             "clean_tree_scope": "public source and synthetic fixtures; full repository pytest remains a separate CI step"}

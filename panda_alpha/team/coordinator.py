@@ -10,6 +10,7 @@ from pathlib import Path
 import subprocess
 
 from ..platform import ExperimentLedger, dispatch, resume
+from ..backends import check_backend_config, check_job_backend
 from .board import Board
 from .budget import prepare
 from .contracts import TASKS, canonical
@@ -53,7 +54,8 @@ class Coordinator:
         task = self.board.task(task_id)
         existing = self.ledger.get(task["fingerprint"])
         if existing:
-            self.adopt_existing(task, existing)
+            check_backend_config(client, config.get("platform", {}))
+            self.adopt_existing(task, existing, client)
             return existing  # Recover even if grant expired or mode was paused.
         if not execute:
             raise ValueError("Explicit execute is required; plan remains offline")
@@ -82,8 +84,9 @@ class Coordinator:
         if not engine.allows_research(view):
             raise ValueError("Existing research memory blocks this definition or retired direction")
 
-    def adopt_existing(self, task, job):
+    def adopt_existing(self, task, job, client):
         """Reuse old evidence without registering, charging, or claiming fresh OOS."""
+        check_job_backend(job, client)
         with self.board.transaction():
             if self.board.task(task["task_id"])["state"] == "ready":
                 self.board.event(task["task_id"], "steward", "reuse_existing", {
@@ -99,7 +102,7 @@ class Coordinator:
             simulation = definition.get("team_permit", {}).get("environment") == "synthetic"
             if simulation != (getattr(client, "simulation", False) is True):
                 raise ValueError("Resume client must match the persisted execution environment")
-            self.adopt_existing(task, existing)
+            self.adopt_existing(task, existing, client)
         result = resume(task["fingerprint"], self.ledger, client, Path(output_dir))
         job = self.ledger.get(task["fingerprint"])
         if job and job["state"] in {"SETTLED", "CANCELLED"}:
@@ -126,6 +129,9 @@ class Coordinator:
                                      "environment": json.loads(job["definition"] or "{}").get("team_permit", {}).get("environment", "unknown"),
                                      "receipt": json.loads(job["receipt"]) if job["receipt"] else None,
                                      "artifacts": artifacts}
+                    definition = json.loads(job["definition"] or "{}")
+                    if definition.get("backend_contract") == "quantfactra-v1":
+                        payload["backend_identity"] = definition["backend_identity"]
                     manifest = Path(output_dir) / (task["fingerprint"] + ".team-result.json")
                     manifest.parent.mkdir(parents=True, exist_ok=True)
                     manifest.write_text(canonical(payload), encoding="utf-8")

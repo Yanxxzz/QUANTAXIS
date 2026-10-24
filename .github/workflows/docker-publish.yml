@@ -4,10 +4,10 @@ on:
   push:
     branches: [master, develop]
     tags: ['v*.*.*']
-    paths: ['panda_alpha/**', 'QUANTAXIS/**', 'config/**', 'research_bootstrap/**', 'requirements*.txt', 'pyproject.toml', 'setup.py', 'MANIFEST.in', 'docker/panda-alpha/**', '.github/workflows/docker-publish.yml', 'scripts/verify_compatibility.py']
+    paths: ['panda_alpha/**', 'quantfactra/**', 'quant_research/**', 'QUANTAXIS/**', 'config/**', 'research_bootstrap/**', 'requirements*.txt', 'README*.md', 'CONTRIBUTING.md', 'CHANGELOG.md', 'AGENTS.md', 'pyproject.toml', 'setup.py', 'MANIFEST.in', 'docker/panda-alpha/**', '.github/workflows/docker-publish.yml', 'scripts/verify_compatibility.py']
   pull_request:
     branches: [master]
-    paths: ['panda_alpha/**', 'QUANTAXIS/**', 'config/**', 'research_bootstrap/**', 'requirements*.txt', 'pyproject.toml', 'setup.py', 'MANIFEST.in', 'docker/panda-alpha/**', '.github/workflows/docker-publish.yml', 'scripts/verify_compatibility.py']
+    paths: ['panda_alpha/**', 'quantfactra/**', 'quant_research/**', 'QUANTAXIS/**', 'config/**', 'research_bootstrap/**', 'requirements*.txt', 'README*.md', 'CONTRIBUTING.md', 'CHANGELOG.md', 'AGENTS.md', 'pyproject.toml', 'setup.py', 'MANIFEST.in', 'docker/panda-alpha/**', '.github/workflows/docker-publish.yml', 'scripts/verify_compatibility.py']
   workflow_dispatch:
     inputs:
       publish:
@@ -38,13 +38,13 @@ jobs:
       image: ${{ steps.image.outputs.name }}
     steps:
       - uses: actions/checkout@v4
-      - name: Select this fork's image name
+      - name: Select this project's image name
         id: image
         env:
-          IMAGE_NAME: ${{ vars.DOCKER_IMAGE || format('{0}/panda-alpha', github.repository_owner) }}
+          IMAGE_NAME: ${{ vars.DOCKER_IMAGE || format('{0}/quantfactra', github.repository_owner) }}
         run: echo "name=${IMAGE_NAME,,}" >> "$GITHUB_OUTPUT"
       - uses: docker/setup-buildx-action@v3
-      - name: Build the current fork's research image
+      - name: Build the current project's research image
         uses: docker/build-push-action@v6
         with:
           context: .
@@ -52,13 +52,15 @@ jobs:
           platforms: linux/amd64
           load: true
           push: false
-          tags: panda-alpha:ci
+          tags: quantfactra:ci
           cache-from: type=gha,scope=panda-alpha
           cache-to: type=gha,mode=max,scope=panda-alpha
       - name: Run the installed CLI without network access
         run: |
-          docker run --rm --network none panda-alpha:ci --help
-          docker run --rm --network none --entrypoint python panda-alpha:ci -c "from pathlib import Path; from panda_alpha.cli import get_config; cfg = get_config('/app/config/panda-alpha.example.json'); assert cfg['data']['provider'] == 'quantaxis'; assert Path(cfg['research']['memory']).is_file(); assert Path(cfg['research']['pool_snapshot']).is_file(); print('Offline configuration and bootstrap files are available')"
+          docker run --rm --network none quantfactra:ci --help
+          docker run --rm --network none quantfactra:ci demo --output research_runs/container_demo
+          docker run --rm --network none --entrypoint panda-alpha quantfactra:ci --help
+          docker run --rm --network none --entrypoint python quantfactra:ci -c "from pathlib import Path; from panda_alpha.cli import get_config; cfg = get_config('/app/config/panda-alpha.example.json'); assert cfg['data']['provider'] == 'quantaxis'; assert Path(cfg['research']['memory']).is_file(); assert Path(cfg['research']['pool_snapshot']).is_file(); print('Offline configuration and bootstrap files are available')"
 
   publish:
     name: Publish Docker Image (manual)

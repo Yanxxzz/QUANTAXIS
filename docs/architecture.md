@@ -1,6 +1,17 @@
 # 架构与维护地图
 
-日常入口是 `python -m panda_alpha.team`，人通过 Codex 聊天授权。目标是以有限模型和官网资源找到有积分潜力且可靠的因子。默认 lean：一个主研究员、本地程序先筛、必要独立审查；旧四角色协议为兼容原会话和明确选择的复杂研究保留。
+公开入口是 `python -m quantfactra`。开发者可以更换研究 AI 和回测平台，工作流继续保留定义、预算与证据。原 `panda_alpha` 实现及冻结会话保持兼容。默认 lean：一个主研究员、本地程序先筛、必要独立审查；旧四角色协议为兼容原会话和明确选择的复杂研究保留。
+
+## 给新开发者的地图
+
+- `quantfactra/`：公开 CLI、AI/工作流协议与适配器示例。`demo` 是断网也能运行的首次体验。
+- `panda_alpha/team/`：任务与角色工作流。Host 决定下一步，Coordinator 使用原账本协调执行与恢复。
+- `panda_alpha/platform.py`：唯一实验账本与既有执行控制。`backends.py` 加载明确配置的适配器并核对平台身份。
+- `panda_alpha/backend_contract.py`、`backend_reports.py`：中立状态、预检、费用回执及报告检查；原 PandaAI 路径继续保留。
+- `data.py`、`study.py`、`execution.py`：已有数据与持仓/现金/费用核算。接入新平台不复制一套本地回测器。
+- `registry.py`、`qualifications.py` 与 `team/evidence.py`：研究记录、来源资格与报告证据。执行成功不自动等于来源或经济通过。
+
+三个扩展位置各负其责：AI 使用[规划/消息接口](ai-integration.md)，平台使用[执行适配合同](backends.md)，数据继续采用现有 QUANTAXIS 兼容入口。公开 API 先保持小而明确；内部目录与性能改造等待真实使用问题，不为换品牌批量改写历史。
 
 ## 先理解一条运行链
 

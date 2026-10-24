@@ -1,0 +1,2 @@
+# Public dependency entry; keep one list for legacy research environments.
+-r requirements-panda-alpha.txt

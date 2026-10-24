@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="320" viewBox="0 0 900 320" role="img" aria-labelledby="title desc">
+  <title id="title">QuantFactra offline demo receipt</title><desc id="desc">Excerpt from an actual local synthetic adapter run: settled, zero cost, no external or model calls. Source remains pending and economics are not evaluated.</desc>
+  <rect width="900" height="320" rx="10" fill="#18222e"/>
+  <text x="34" y="40" fill="#9bafbf" font-family="Segoe UI,Arial,sans-serif" font-size="13" letter-spacing="1.2">ACTUAL OFFLINE RUN / SYNTHETIC ADAPTER</text>
+  <g font-family="Consolas,monospace" font-size="16">
+    <text x="34" y="83" fill="#e7edf3">$ python -m quantfactra demo --output research_runs/quickstart</text>
+    <text x="34" y="127" fill="#72ceb9">state             SETTLED</text>
+    <text x="34" y="157" fill="#e7edf3">actual            0.0 credits</text>
+    <text x="34" y="187" fill="#e7edf3">external_calls    0     llm_calls    0</text>
+    <text x="34" y="217" fill="#9bafbf">source_status     pending</text>
+    <text x="34" y="247" fill="#9bafbf">economic_status   not_evaluated</text>
+  </g>
+  <text x="34" y="290" fill="#9bafbf" font-family="Segoe UI,Arial,sans-serif" font-size="13">Lifecycle verification only. No investment returns or source certification.</text>
+</svg>

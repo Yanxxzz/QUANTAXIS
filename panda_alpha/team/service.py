@@ -25,8 +25,8 @@ REPO = Path(__file__).resolve().parents[2]
 
 def prepare_service(ledger, registry, session, workers, runtime, output, name, max_starts=10, *, execution_config=None):
     """Freeze a deployment without installing anything or starting a model."""
-    if not re.fullmatch(r"PandaAlpha-[A-Za-z0-9-]{1,48}", name):
-        raise ValueError("Service name must be PandaAlpha- followed by 1-48 letters, digits or hyphens")
+    if not re.fullmatch(r"(?:QuantFactra|PandaAlpha)-[A-Za-z0-9-]{1,48}", name):
+        raise ValueError("Service name must be QuantFactra- followed by 1-48 letters, digits or hyphens; legacy PandaAlpha- names remain supported")
     if type(max_starts) is not int or not 1 <= max_starts <= 100:
         raise ValueError("max_starts must be an integer from 1 to 100")
     root = Path(runtime).resolve()
@@ -53,7 +53,7 @@ def load_config(path):
     fields = {"schema", "name", "runtime", "workers", "manifest_hash", "python", "repo", "max_starts"}
     if not isinstance(config, dict) or set(config) != fields or config["schema"] != 1:
         raise ValueError("Invalid service deployment")
-    if not re.fullmatch(r"PandaAlpha-[A-Za-z0-9-]{1,48}", config["name"]):
+    if not re.fullmatch(r"(?:QuantFactra|PandaAlpha)-[A-Za-z0-9-]{1,48}", config["name"]):
         raise ValueError("Invalid service name")
     if type(config["max_starts"]) is not int or not 1 <= config["max_starts"] <= 100:
         raise ValueError("Invalid service start limit")
