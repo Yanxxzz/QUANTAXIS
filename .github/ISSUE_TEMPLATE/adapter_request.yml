@@ -1,0 +1,25 @@
+name: Adapter proposal / 平台接入
+description: Propose a backtest provider or AI integration with a concrete interface.
+title: "[Adapter] "
+labels: []
+body:
+  - type: input
+    id: provider
+    attributes:
+      label: 平台或模型 / Provider
+    validations:
+      required: true
+  - type: textarea
+    id: interface
+    attributes:
+      label: 官方接口与能力 / Official interface and capabilities
+      description: Link official documentation and describe create/start/status/report/billing or the model transport.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: 使用场景与首个可验证范围 / Use case and first verifiable scope
+      description: Distinguish a proposal, a synthetic contract check and a real integration.
+    validations:
+      required: true

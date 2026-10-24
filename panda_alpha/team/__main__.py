@@ -13,8 +13,8 @@ def read(path):
     return json.loads(Path(path).read_text(encoding="utf-8-sig"))
 
 
-def main(argv=None):
-    parser = argparse.ArgumentParser(description=__doc__)
+def main(argv=None, *, prog=None):
+    parser = argparse.ArgumentParser(prog=prog, description=__doc__)
     commands = parser.add_subparsers(dest="command", required=True)
     demo = commands.add_parser("demo", help="Offline synthetic end-to-end rehearsal; no account access")
     demo.add_argument("--output", type=Path, required=True)
@@ -230,9 +230,9 @@ def main(argv=None):
                             if args.execute:
                                 if not args.config:
                                     parser.error("--execute requires --config and an existing current grant")
-                                from ..platform import PandaClient
+                                from ..backends import create_backend
                                 config = read(args.config)
-                                executor = ExistingExecutor(c, registry, PandaClient(config.get("platform", {})), config, args.output / "results")
+                                executor = ExistingExecutor(c, registry, create_backend(config.get("platform", {})), config, args.output / "results")
                             if not 1 <= args.interval <= 60:
                                 parser.error("--interval must be from 1 to 60 seconds")
                             agents = MailboxAgents(args.mailbox) if args.mailbox else CommandAgents(read(args.commands), args.output / "role-replies")
@@ -244,9 +244,9 @@ def main(argv=None):
                 finally:
                     registry.close()
             else:
-                from ..platform import PandaClient
+                from ..backends import create_backend
                 config = read(args.config)
-                client = PandaClient(config.get("platform", {}))
+                client = create_backend(config.get("platform", {}))
                 if args.command == "dispatch":
                     from ..registry import ResearchRegistry
                     registry = ResearchRegistry(args.registry, historical=config["research"].get("history_denominator", 0))

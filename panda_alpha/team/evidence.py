@@ -63,6 +63,10 @@ def inspect_report(task, payload, *, include_reported_metrics=True):
             report = read_artifact(binding)
         elif name == str(payload["run_id"]) + ".logs.json":
             logs = read_artifact(binding)
+    if report.get("schema") == "quantfactra-report-v1":
+        from ..backend_reports import inspect_report as inspect_native_report
+        return inspect_native_report(task, payload, report, logs, verified,
+                                     include_reported_metrics=include_reported_metrics)
     analysis = report.get("factor_analysis") or {}
     dates, lines = _series(analysis.get("query_return_chart") or {})
     groups = [s for s in lines if re.fullmatch(r"(?:分组|组|group\s*)[1-9]\d*", str(s.get("name", "")), re.IGNORECASE)]
@@ -169,11 +173,16 @@ def validate_assessment(message, task, result_event, *, expected_environment=Non
             raise ValueError("Result evidence contract identity differs")
     if contract.get("run_id") != result_event["payload"]["run_id"]:
         raise ValueError("Result evidence contract refers to another Run")
-    reconstructed = inspect_report(task, {"run_id": contract["run_id"], "environment": contract["environment"], "artifacts": contract["artifacts"]},
+    reconstruction = {"run_id": contract["run_id"], "environment": contract["environment"], "artifacts": contract["artifacts"]}
+    if "backend_identity" in contract:
+        reconstruction["backend_identity"] = contract["backend_identity"]
+    reconstructed = inspect_report(task, reconstruction,
                                    include_reported_metrics=contract.get("schema") != "team-result-evidence-v1")
     if reconstructed != contract:
         raise ValueError("Result evidence contract observations changed")
     original = read_artifact(result_event["payload"]["artifacts"][0])
+    if "backend_identity" in contract and original.get("backend_identity") != contract["backend_identity"]:
+        raise ValueError("Reviewed backend identity differs from the original manifest")
     if original.get("fingerprint") != task["fingerprint"] or original.get("run_id") != contract["run_id"]:
         raise ValueError("Original manifest identity differs from the reviewed Run")
     environments = [e for e in (expected_environment, original.get("environment"),

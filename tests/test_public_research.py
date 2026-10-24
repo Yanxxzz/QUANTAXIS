@@ -14,12 +14,17 @@ from scripts.verify_public_research import ROOT, copy_public_tree, public_files
 class PublicResearchSourceTests(unittest.TestCase):
     def test_new_modules_tests_and_public_contract_are_in_source_list(self):
         files = public_files()
-        for item in ("panda_alpha/financial_statements.py", "panda_alpha/study.py",
+        for item in ("quantfactra/__main__.py", "quantfactra/adapters/demo.py", "quantfactra/demo.py",
+                     "docs/assets/quantfactra-hero.svg", "docs/assets/demo-receipt.svg",
+                     "config/quantfactra.example.json", "config/quantfactra-policy.example.json",
+                     "quant_research/__main__.py", "quant_research/cli.py",
+                     "panda_alpha/financial_statements.py", "panda_alpha/study.py",
                      "panda_alpha/registry.py", "tests/study_fixture.py",
                      "tests/test_financial_statements.py", "docs/panda_alpha_native_contract.md"):
             self.assertIn(item, files)
         self.assertFalse(any(item.startswith(("research_runs/", ".runtime/", ".venv/", "data/")) for item in files))
         self.assertNotIn("config/panda-alpha.local.json", files)
+        self.assertNotIn("config/quantfactra.local.json", files)
 
     def test_ci_tracks_public_contract_and_uses_the_single_dependency_entry(self):
         text = (ROOT / ".github/workflows/panda-alpha.yml").read_text(encoding="utf-8")
@@ -27,7 +32,7 @@ class PublicResearchSourceTests(unittest.TestCase):
                  for line in text.splitlines() if "paths:" in line]
         self.assertEqual(2, len(paths))
         self.assertEqual(paths[0], paths[1])
-        for item in ("panda_alpha/**", "tests/**", "scripts/**", "README*.md", "config/**", "docs/**", "examples/**"):
+        for item in ("panda_alpha/**", "quant_research/**", "quantfactra/**", "tests/**", "scripts/**", "README*.md", "config/**", "docs/**", "examples/**"):
             self.assertIn(item, paths[0])
         self.assertEqual(1, text.count("python -m pip install -r requirements-panda-alpha.txt"))
         self.assertEqual(1, text.count("pip install"))

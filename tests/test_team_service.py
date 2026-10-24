@@ -65,6 +65,14 @@ def test_prepare_is_offline_and_refuses_rebinding(tmp_path):
         prepare_service(*args[:-1], args[-1], config.parent, "unsafe name")
 
 
+def test_quantfactra_name_can_be_prepared_without_starting_service(tmp_path):
+    args = setup(tmp_path, "hold", deadline=120, turn_timeout=20)
+    prepared = prepare_service(*args[:-1], args[-1], tmp_path / "service", "QuantFactra-Test")
+    assert load_config(prepared["config"])["name"] == "QuantFactra-Test"
+    assert prepared["installed"] is False
+    assert not (args[-1] / "supervisor.json").exists()
+
+
 def test_graceful_stop_restarts_original_work_with_stale_stop_ignored(tmp_path):
     args, config = deployment(tmp_path, "hold")
     child = launch_service(config)

@@ -4,6 +4,7 @@
 .venv/
 research_runs/
 config/panda-alpha.local.json
+config/quantfactra.local.json
 /workers.local.json
 /host-session.json
 *.sqlite3

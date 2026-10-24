@@ -48,28 +48,38 @@ jobs:
         from packaging.version import Version
         import pandas as pd
         import panda_alpha
+        import quant_research
+        import quantfactra
         from panda_alpha.data import AxisProvider
         from panda_alpha.diversity import as_factor_panel
         from panda_alpha.execution import ExecutionPolicy
         checkout = Path(os.environ['GITHUB_WORKSPACE']).resolve()
-        package = distribution('quantaxis')
+        package = distribution('quantfactra')
         assert not Path(panda_alpha.__file__).resolve().is_relative_to(checkout)
+        assert not Path(quant_research.__file__).resolve().is_relative_to(checkout)
+        assert not Path(quantfactra.__file__).resolve().is_relative_to(checkout)
         assert not Path(importlib.util.find_spec('QUANTAXIS').origin).resolve().is_relative_to(checkout)
-        source_version = re.search(r"__version__ = '([^']+)'", (checkout / 'QUANTAXIS/__init__.py').read_text(encoding='utf-8')).group(1)
+        source_version = re.search(r'__version__ = "([^"]+)"', (checkout / 'panda_alpha/__init__.py').read_text(encoding='utf-8')).group(1)
         assert package.version == str(Version(source_version))
         assert (Path(panda_alpha.__file__).parent / 'data.py').read_bytes() == (checkout / 'panda_alpha/data.py').read_bytes()
         for requirement in package.requires or []:
             Requirement(requirement)
         assert callable(AxisProvider) and callable(ExecutionPolicy)
         assert any(e.name == 'panda-alpha' for e in package.entry_points)
+        assert any(e.name == 'quant-research' for e in package.entry_points)
+        assert any(e.name == 'quantfactra' for e in package.entry_points)
         panel = as_factor_panel(pd.DataFrame({'date': ['2024-01-02'], 'symbol': ['000001'], 'value': [1.0]}))
         assert panel.loc[pd.Timestamp('2024-01-02'), '000001'] == 1.0
         print('Built Fork package metadata/imports verified:', package.version)
         PY
         panda-alpha --help
+        quant-research --help
+        quant-research team --help
+        quantfactra --help
+        quantfactra demo --output quantfactra-installed-demo
     - name: Retain the artifacts verified by this job
       uses: actions/upload-artifact@v4
       with:
-        name: quantaxis-python-${{ matrix.python-version }}
+        name: quantfactra-python-${{ matrix.python-version }}
         path: dist/*
 

@@ -18,6 +18,8 @@ import sqlite3
 import subprocess
 from typing import Any
 
+from .backends import bind_backend, check_backend_config, check_job_backend, uses_native_contract
+
 from .research_budget import (load_policy, request as research_request,
                               guard as research_guard, read_state as research_state,
                               bind_policy)
@@ -229,7 +231,14 @@ class ExperimentLedger:
             spent = self.db.execute("SELECT COALESCE(SUM(COALESCE(actual,reserved)),0) FROM jobs WHERE day=? AND state!='CANCELLED'", (day,)).fetchone()[0]
             if spent + ceiling > daily_limit + 1e-9:
                 raise ValueError("Daily experiment budget exhausted")
-            if ceiling > balance["total"]:
+            native = definition.get("backend_contract") == "quantfactra-v1"
+            if native:
+                from .backend_contract import check_cost_units, validate_balance
+                validate_balance(balance, definition["cost_unit"])
+                check_cost_units(self.jobs(), definition["cost_unit"])
+                if balance["available"] is not None and ceiling > balance["available"]:
+                    raise ValueError("Account balance below reservation")
+            elif ceiling > balance["total"]:
                 raise ValueError("Account balance below reservation")
             from .team.budget import guard_reservation
             guard_reservation(self.db, key, candidate, definition, ceiling, balance)
@@ -245,7 +254,7 @@ class ExperimentLedger:
                     raise ValueError(check["blocker"])
                 bind_policy(self.db, policy)
             billing = definition.get("billing_authorization", {})
-            recharge_reserved = max(0., ceiling - float(balance["gift"]))
+            recharge_reserved = (ceiling if definition["billing_mode"] == "prepaid" else 0.) if native else max(0., ceiling - float(balance["gift"]))
             if billing:
                 problem = _batch_limit_problem(self.jobs(), billing, ceiling, recharge_reserved,
                                                additional_runs=1)
@@ -398,6 +407,9 @@ def budget_plan(candidates: list[dict], compute: dict, balance: dict, *, jobs: l
     Supplying current ledger jobs accounts for already consumed daily/batch
     budgets. Dispatch always supplies them and rechecks atomically at reserve.
     """
+    if balance.get("schema") == "quantfactra-balance-v1":
+        from .backend_contract import budget_plan as native_budget_plan
+        return native_budget_plan(candidates, compute, balance, jobs=jobs, study_state=study_state)
     jobs = jobs or []
     research_policy = load_policy(compute)
     ceiling = compute.get("cost_ceiling")
@@ -531,6 +543,8 @@ def budget_plan(candidates: list[dict], compute: dict, balance: dict, *, jobs: l
 def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedger, client: PandaClient,
              category: str = "exploration", *, before_dispatch=None, native_fixture_reader=None, before_remote=None) -> dict:
     research, compute = config["research"], config["compute"]
+    identity = check_backend_config(client, config.get("platform", {}))
+    native = uses_native_contract(client)
     if compute.get("team_permit", {}).get("environment") == "synthetic" and getattr(client, "simulation", False) is not True:
         raise ValueError("Synthetic permit cannot use an official client")
     cycle, groups = research["cycle"], research["groups"]
@@ -550,8 +564,10 @@ def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedg
             or "direction_evidence" in str(r) or "direction_requires_evidence" in str(r) for r in unresolved)):
         raise ValueError("Resolve legacy operator/source/direction evidence before official execution")
     key = fingerprint(candidate, window, cycle, groups)
-    if ledger.get(key):
-        return ledger.get(key)  # Zero duplicate dispatches on resume.
+    existing = ledger.get(key)
+    if existing:
+        check_job_backend(existing, client)
+        return existing  # Zero duplicate dispatches on resume.
     # Reject local loading errors before reserving funds or touching the account.
     # create also rechecks the bytes immediately before its service request.
     _frozen_code_path(candidate)
@@ -562,7 +578,10 @@ def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedg
     if study_check["blocker"]:
         raise ValueError(study_check["blocker"])
     native_preflight = None
-    if candidate.get("code") and not candidate.get("formula"):
+    if native:
+        from .backend_contract import preflight
+        native_preflight = preflight(client, candidate, window, cycle, groups, key)
+    elif candidate.get("code") and not candidate.get("formula"):
         from .native_preflight import verify_native_preflight
         if native_fixture_reader is None:
             native_preflight = verify_native_preflight(candidate, window, cycle, groups)
@@ -572,13 +591,13 @@ def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedg
             native_preflight = verify_native_preflight(candidate, window, cycle, groups,
                                                         fixture_reader=native_fixture_reader)
     recharge_authorization, risk_authorization = None, None
-    if compute.get("recharge_credit_limit", 0) > 0:
+    if not native and compute.get("recharge_credit_limit", 0) > 0:
         recharge_authorization = _batch_authorization(
             compute.get("recharge_batch_authorization"), "max_recharge_credits",
             float(compute["recharge_credit_limit"]), key)
     verified_cap = (compute.get("cost_ceiling") and compute.get("cost_ceiling_verified_at")
                     and compute.get("cost_ceiling_source") and compute.get("server_enforced_cap") is True)
-    if compute.get("allow_estimated_billing", False) and not verified_cap:
+    if not native and compute.get("allow_estimated_billing", False) and not verified_cap:
         minimum_risk = (_adaptive_estimate(compute, ledger.jobs()) or 0) if compute.get("cost_ceiling") is None else float(compute["daily_credit_limit"])
         risk_authorization = _batch_authorization(
             compute.get("estimated_billing_batch_authorization"), "max_total_credits",
@@ -588,14 +607,28 @@ def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedg
     if before_remote is not None:
         before_remote()
     balance = client.balance()
+    if native:
+        from .backend_contract import validate_balance
+        validate_balance(balance, identity["cost_unit"])
     plan = budget_plan([dict(candidate, experiment_category=category)], compute, balance,
                        jobs=ledger.jobs(), study_state=ledger.research_state())
     if not plan["dispatch_ready"] or not plan["selected"]:
         raise ValueError(plan["blocker"] or "No authorized budget slot")
     ceiling = float(plan["reservation_credit_estimate"])
-    if compute["billing_mode"] == "gift_only" and balance["gift"] < ceiling:
+    if native:
+        permissions = plan["billing_authorization"]
+        for purpose, permission in permissions.items():
+            _batch_authorization(permission, "max_recharge_credits" if purpose == "recharge" else "max_total_credits",
+                                 ceiling, key, estimated_risk=purpose == "estimated_billing")
+        recharge_authorization = permissions.get("recharge")
+        risk_authorization = permissions.get("estimated_billing")
+    if not native and compute["billing_mode"] == "gift_only" and balance["gift"] < ceiling:
         raise ValueError("Gift balance cannot fund the next reservation")
     definition = {"candidate": candidate, "window": window, "cycle": cycle, "groups": groups}
+    bind_backend(definition, identity)
+    if native:
+        definition.update(backend_contract="quantfactra-v1", cost_unit=identity["cost_unit"],
+                          billing_mode=balance["billing_mode"])
     if compute.get("team_permit") is not None:
         definition["team_permit"] = compute["team_permit"]
     permissions = {name: authorization for name, authorization in
@@ -604,7 +637,7 @@ def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedg
     if permissions:
         definition["billing_authorization"] = permissions
     definition["cost_basis"] = plan["cost_basis"]
-    definition["cost_ceiling"] = compute.get("cost_ceiling")
+    definition["cost_ceiling"] = plan["cost_ceiling"] if native else compute.get("cost_ceiling")
     definition["reservation_credit_estimate"] = ceiling
     definition["daily_credit_limit"] = compute["daily_credit_limit"]
     definition["official_test_not_pool_admission"] = True
@@ -625,13 +658,18 @@ def dispatch(candidate: dict, window: dict, config: dict, ledger: ExperimentLedg
         before_remote()
     guard_remote_mutation(ledger.db, key, "RESERVED")
     ledger.transition(key, "RESERVED", "CREATING")
-    factor_id = client.create(candidate, window, cycle, groups, "PA-" + key[:16])
+    factor_id = client.create(candidate, window, cycle, groups, ("QF-" if native else "PA-") + key[:16])
+    if native:
+        from .backend_contract import reference_id
+        reference_id(factor_id)
     ledger.transition(key, "CREATING", "CREATED", factor_id=factor_id)
     if before_remote is not None:
         before_remote()
     guard_remote_mutation(ledger.db, key, "CREATED")
     ledger.transition(key, "CREATED", "DISPATCHING")
     run_id = client.start(factor_id)
+    if native:
+        reference_id(run_id)
     ledger.transition(key, "DISPATCHING", "RUNNING", run_id=run_id)
     return ledger.get(key)
 
@@ -663,9 +701,13 @@ def resume(key: str, ledger: ExperimentLedger, client: PandaClient, output_dir: 
     job = ledger.get(key)
     if not job:
         raise ValueError("Unknown job")
+    check_job_backend(job, client)
     team_environment = json.loads(job.get("definition") or "{}").get("team_permit", {}).get("environment")
     if team_environment and (team_environment == "synthetic") != (getattr(client, "simulation", False) is True):
         raise ValueError("Resume client must match the persisted execution environment")
+    if uses_native_contract(client):
+        from .backend_contract import resume as native_resume
+        return native_resume(key, ledger, client, output_dir)
     if not job["run_id"]:
         return {"state": job["state"], "action": "Read factor_list/factor_info and reconcile ambiguous mutation before retrying"}
     if job["state"] == "SETTLED":

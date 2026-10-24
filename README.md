@@ -1,75 +1,95 @@
-# Panda Alpha & QuantTaxis 因子研究
+<p align="center"><img src="docs/assets/quantfactra-hero.svg" alt="QuantFactra — build research agents, keep the evidence" width="100%"></p>
 
-目标是提高 PandaAI 官网比赛积分，找到经得起复核的优质因子。复用 [QUANTAXIS](https://github.com/yutiansut/QUANTAXIS) 的取数、回测和执行能力；本地先筛，必要时官网验证。保留成本、样本和失败证据，避免把一个漂亮指标当成目标已经实现。
+<p align="center">
+  <a href="https://github.com/Yanxxzz/quantfactra/actions/workflows/panda-alpha.yml"><img src="https://github.com/Yanxxzz/quantfactra/actions/workflows/panda-alpha.yml/badge.svg" alt="QuantFactra CI"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-64748b" alt="MIT license"></a>
+  <a href="setup.py"><img src="https://img.shields.io/badge/python-3.11%20%7C%203.12-64748b" alt="Python 3.11 and 3.12"></a>
+</p>
 
-**日常只需要一个聊天入口。** 告诉 Codex 研究目标、预算、尝试上限及绝对截止，即可启动有限研究。默认一个主研究员、按需独立 Skeptic；计划、固定检查、预算和结案由程序完成。打开聊天、登录或重启电脑不会自动运行，不自动修改正式池。
+<p align="center"><b>面向 AI 开发者的量化因子研究工作流</b><br>让 Agent 提出假设，让程序保留定义、回测、费用与证据。</p>
 
-## 先跑通离线演示
+<p align="center"><a href="README_EN.md">English</a> · <a href="#先跑一个离线演示">快速开始</a> · <a href="docs/architecture.md">架构</a> · <a href="docs/backends.md">接入回测平台</a> · <a href="docs/ai-integration.md">接入 AI</a> · <a href="CONTRIBUTING.md">参与开发</a></p>
 
-推荐 Python 3.11；3.12 也在 CI 验证范围。研究层无需部署上游 Web、交易、Rust 或 Docker 服务。
+## QuantFactra 做什么？
 
-```powershell
-py -3.11 -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements-panda-alpha.txt
-.\.venv\Scripts\python.exe -m panda_alpha.team --help
-.\.venv\Scripts\python.exe -m panda_alpha.team host-demo --output research_runs/team_demo
+QuantFactra 帮你搭建和修改量化研究 Agent：从假设、因子实现、本地回放到外部回测与独立复核，持续记录“试了什么、为什么继续或停止、还缺什么证据”。
+
+- **研究可追踪**：冻结定义与比较规则，保留成功、失败、待核结果和数据范围。
+- **平台可替换**：PandaAI 是内置适配器；自己的回测平台通过 Python 接口接入，使用中立状态、报告和计费回执。
+- **AI 可组合**：使用现有 OpenAI 兼容规划接口，或让自己的 Agent 实现任务消息协议；研究账本和执行规则继续由程序维护。
+
+适合修改研究流程、实现新回测适配器、接入模型或开发工具的开发者。真实行情与回测源仍需自行提供；数据入口当前采用 QUANTAXIS 兼容结构。软件运行成功、来源验证、经济有效性和正式入池分别判断。
+
+## 先跑一个离线演示
+
+支持 Python 3.11 / 3.12。建议在虚拟环境中安装；完整说明见[快速开始](docs/quickstart.md)。
+
+```bash
+git clone https://github.com/Yanxxzz/quantfactra.git
+cd quantfactra
+python -m pip install -e .
+python -m quantfactra demo --output research_runs/quickstart
 ```
 
-演示使用合成角色和隔离账本，覆盖协作及中断恢复，不调用真实模型或官网。输出目录须尚不存在。
+打开 `research_runs/quickstart/report.html`。这次运行会生成独立实验账本、配置、预检、报告和零费用回执，实际走完 **创建 → 启动 → 原任务恢复 → 结算**。
 
-## 一次真实研究怎样推进
+<p align="center"><img src="docs/assets/demo-receipt.svg" alt="实际离线演示输出节选：SETTLED，0 费用，0 外部调用，来源与经济结论仍待核" width="780"></p>
 
-1. **选一个机制并冻结。** 先查看原始账本、代码、失败和可用数据，固定定义、方向、窗口、分组、成本、推进与停止条件；读取收益后不反号、换窗或改名挽救。
-2. **免费检查和本地筛选。** 先检查研究窗、实际暖机窗和封存范围，再取数及读取标签。StockDB／AKShare、独立交易日历、数值与原生预检，以及 `study.py` 的持仓账本负责实现、同样本对照和成本分析。模型不重复执行固定检查。
-3. **只审会改变决定的问题。** 本地证据明确弱时停放；值得推进或存在关键歧义时，交独立 Skeptic。默认主研究员 `high`、审查 `xhigh`，最多16次真实 worker 尝试含重试，按任务隔离会话；主聊天也计入共享额度。
-4. **必要时官网。** 输入难以免费取得时，写清缺口和一次 Run 能回答的问题；通过来源、代码及资金门槛后才派发。优先核实过的活动算力，为同代码确认保留预算。已有 Run 按原 ID 恢复，不重复创建。
-5. **记录决定，再按授权承接。** 原报告、代码、实际扣款和失败保留。区分“有研究价值”“待影子验证”“可提交入池审查”；关闭触发失败的固定定义，在同一有限授权内可顺序研究下一机制。时间、worker 或官网额度到限即停止，不为花完余额扩搜。
+演示只使用本地合成适配器，不访问模型、行情库或回测官网，也不生成投资收益。重复运行请换一个新的输出目录，以保留原件。
 
-本地有限样本不能代替全市场官网表现。外部数据不冒充官网实际输入；汇总 Sharpe 不冒充真实净成本或现池增量。财务报告期、公告边界及历史 PIT 门槛保持。
+## 如何理解整个项目？
 
-探索积分与正式入池分阶段判断：缺少真实池共同账本不能写成“因子已经失败”，也不能宣称组合增量通过。正式入池使用 [v3 准入政策](config/pool-admission.v3.json)；每次研究的推进条件在当次协议冻结，不把旧研究阈值套成所有新因子的统一规则。
-
-## 启动、停止和恢复
-
-Codex 先核对权威账本与旧部署，再通过 `host-init`、`service-prepare` 准备新有限会话。人只需在聊天明确启动；底层统一使用：
-
-```powershell
-python -m panda_alpha.team host-control --deployment DEPLOYMENT.json --action status
-python -m panda_alpha.team host-control --deployment DEPLOYMENT.json --action start
-python -m panda_alpha.team host-control --deployment DEPLOYMENT.json --action stop
+```mermaid
+flowchart LR
+  AI[你的 AI 或 Agent] --> W[研究工作流]
+  D[数据与本地核算] --> W
+  W <--> L[实验账本与证据]
+  W --> B[回测适配接口]
+  B --> P[PandaAI]
+  B --> C[你自己的回测平台]
+  B --> O[离线演示适配器]
 ```
 
-官网部署准备时绑定执行配置，启动时另带 `--execute`；该标志不激活或扩大资金授权。普通查询不联网、不启动模型。停止关闭本机派发和轮询，不表示远端取消或退款。
+**Agent 负责提案与判断；程序负责固定检查、执行、恢复和记账。** 平台适配器处理平台自己的语言、任务状态、计费和报告，不能替代研究来源审查。
 
-超时和断线沿原工作、模型会话、截止及累计次数恢复。完成或过期会话保持终态；未知创建状态先对账。**只维护聊天启动，不保留 Windows 登录／分钟自启安装器。** 详见[操作说明](docs/chat_start.md)和[宿主恢复](docs/unattended_host.md)。
+## 从哪里开始修改？
 
-## 维护者先看哪里
+1. **换回测平台**：读[适配指南](docs/backends.md)，参考[可运行适配器](quantfactra/adapters/demo.py)，实现自己的 `module:factory`。
+2. **接入自己的 AI**：读[AI 接入指南](docs/ai-integration.md)，选择规划接口或任务消息协议。
+3. **改研究流程**：读[架构与维护地图](docs/architecture.md)，再定位工作流、本地核算或证据模块。
+4. **给项目贡献代码**：读[贡献指南](CONTRIBUTING.md)，从文档、适配器示例或接口测试开始。
 
-- **流程与协作**：`panda_alpha/team/`。`host.py` 决定下一步，`coordinator.py` 连接执行，`operator.py → service.py → runtime.py` 分别管理聊天命令、部署生命周期和子进程恢复。
-- **官网与预算**：`platform.py`、`research_budget.py`。原实验账本记录预留、真实 Run、扣款与共享累计；配置示例不是当前授权或余额。
-- **本地证据**：`data.py`、`study.py`、`execution.py`、`native_preflight.py`。复用已有计算内核，不另造回测器。
-- **科学记录与准入**：`registry.py`、`memory.py`、`quality.py`、`pool_admission.py`。保留定义、失败、待核及证据替代；研究质量与正式准入分别判断。
-- **入口与材料**：`config/` 是模板，`tests/` 是软件回归，`docs/` 是专题说明。一次候选留在运行目录，不自动增加常驻模块。
-
-目录取舍、修改顺序与验证范围见[架构和维护地图](docs/architecture.md)。上游源码及历史组件供复用和复现，不是日常启动步骤；上游说明见 [README_UPSTREAM.md](README_UPSTREAM.md)，许可见 [LICENSE](LICENSE)。
-
-权威状态包括实验账本、科学登记及原件。任务板与实验账本共库，JSON 包是带哈希的视图和断点，不另维护余额或裁决。私有账户配置、行情和模型原文不提交 Git；清理针对可再生缓存和已校验的重复副本。见[证据存储](docs/research_storage.md)。
-
-## 检查改动
-
-```powershell
-.\.venv\Scripts\python.exe -B scripts/verify_public_research.py
-.\.venv\Scripts\python.exe -m pytest tests -q
+```bash
+python -m quantfactra --help
+python -m quantfactra research --help
+python -m quantfactra team --help
+python -m quantfactra team host-demo --output research_runs/team_demo
 ```
 
-CI 的行为回归集中在一份工作流，覆盖 Linux 3.11／3.12 和 Windows 3.11；包装工作流检查 sdist、wheel 和安装后的入口。研究分支由 PR 检查，主线与版本标签检查 push，避免同一分支重复跑两套。Docker 仅在相关文件变化或手动请求时构建；上游发布保持手动。软件通过不能证明因子质量。
+## 支持范围
 
-## 研究记录与当前边界
+- **PandaAI**：已有真实运行与恢复链，保留原钱包、原生预检和报告接口。当前维护不自动启动研究或修改正式池。
+- **QuantFactra v1 自定义适配器**：接口、原任务恢复、独立计费单位、免费/预付费回执和中立报告已具备；新官网必须完成自己的适配与验证。
+- **离线适配器**：用于上手和接口演练，可断网运行。
+- **本地核算**：复用 QUANTAXIS 数据结构与已有持仓、现金、费用核算，不另造一套回测器。
 
-截至2026-10-21，PR #21已合并，随后完成[收盘价相对成交均价的单机制研究](docs/closing_displacement_research.md)。固定预测未通过本地条件检验：158个可估计期的主系数均值 **+0.001118**，预期为负，区间跨零。触发事前停止规则后提前结束，没有追加官网回测或新机制，没有因子入池。此前[收益交替官网结果](docs/serial_alternation_native.md)、H20及[顺序研究](docs/factor_continuation_20261021.md)的好坏记录全部保留。
+真实财务来源/PIT、全市场覆盖、容量或收益改进不能由合成测试认证。新模型或新平台也不会继承旧平台的来源资格。
 
-本轮最多4小时／16次worker，实际 **1次worker、官网0次／0点**，规划确认预算未用。交易状态类型错误的初版和修复重放均保留，独立程序复算一致；来源及完整净成本仍待核。累计37次／98点、剩 **34点／17次**、未结算0不变，全部所属研究进程已停止、任务板paused。余额不是消费目标或新的启动许可。旧 A/A控制/B 待核6/0/10保留，原因见[来源审视](docs/research_depth_audit.md)。官网不提供逐日输入或参与股票导出，不反复索取不存在的接口。
+## 开发与兼容
 
-[负协偏度](docs/coskewness_research.md)、[同伴传导](docs/peer_diffusion_research.md)及 [RESEARCH.md](RESEARCH.md) 中此前研究的失败保留，不据本次主窗覆盖旧结论。
+```bash
+python -B scripts/verify_public_research.py
+python -m pytest tests -q
+```
 
-后续结果集中在 [RESEARCH.md](RESEARCH.md) 与冻结运行目录，不把每日过程逐段堆回入门说明。精简流程见[lean 研究](docs/lean_research.md)，原生约束见[预检契约](docs/panda_alpha_native_contract.md)、[日期表示](docs/native_date_wire.md)及[条件域预检](docs/native_conditional_domain.md)。
+公开名称、安装包和主命令统一为 **QuantFactra / `quantfactra`**。原 `panda_alpha`、`panda-alpha` 和 `quant-research` 入口为旧脚本保留；上游源码、历史结果、实验身份和账本不做批量改名或清零。新配置示例在 [config/quantfactra.example.json](config/quantfactra.example.json)，已有研究应继续使用原配置。
+
+## 参与与路线
+
+欢迎提交复现问题、文档改进和平台适配器。请用[Issue 模板](https://github.com/Yanxxzz/quantfactra/issues/new/choose)说明环境、最小复现和预期结果。[项目计划](docs/project-plan.md)列出当前优先级；[开源项目对照](docs/open-source-review.md)解释我们在上手、展示、文档与扩展方式上要学习什么。
+
+如果这个项目帮助你搭建了研究 Agent，欢迎 star，或分享一个可复现的使用案例。
+
+## 上游与许可
+
+基于 [QUANTAXIS](https://github.com/yutiansut/QUANTAXIS) 的数据、计算和回测能力；[上游原始说明](README_UPSTREAM.md)与版权保留。QuantaAlpha、DeepSeek Harness 等方法参考及各自声明保留在对应文档/插件目录。历史研究见 [RESEARCH.md](RESEARCH.md)。许可见 [LICENSE](LICENSE)。

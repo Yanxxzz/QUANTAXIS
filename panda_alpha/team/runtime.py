@@ -130,9 +130,9 @@ def coordinator(root, manifest):
                 if not active(root, manifest):
                     raise InterruptedError("Host paused or original deadline reached")
             if binding["execution_config"] is not None:
-                from ..platform import PandaClient
+                from ..backends import create_backend
                 config = binding["execution_config"]
-                executor = ExistingExecutor(c, registry, PandaClient(config.get("platform", {}), before_call=check_active),
+                executor = ExistingExecutor(c, registry, create_backend(config.get("platform", {}), before_call=check_active),
                                             config, root / "results", before_remote=check_active)
             host = Host(c, registry, binding["session"])
             agents = MailboxAgents(root / "mailbox")

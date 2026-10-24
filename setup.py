@@ -31,9 +31,9 @@ from setuptools import find_packages, setup
 """
 
 # 检查Python版本 - 与QARS2对齐到3.9+
-if sys.version_info < (3, 9) or sys.version_info >= (4, 0):
+if sys.version_info < (3, 11) or sys.version_info >= (3, 13):
     print('=' * 60)
-    print('错误: QUANTAXIS 2.1+ 需要 Python 3.9-3.12')
+    print('错误: QuantFactra 当前支持 Python 3.11 / 3.12')
     print(f'当前版本: Python {sys.version_info.major}.{sys.version_info.minor}.{sys.version_info.micro}')
     print('=' * 60)
     print('\n推荐使用:')
@@ -58,16 +58,16 @@ def read(fname):
     return (ROOT / fname).read_text(encoding='utf8')
 
 
-NAME = "quantaxis"
+NAME = "quantfactra"
 """
 
 """
-PACKAGES = find_packages(where=str(ROOT), include=["QUANTAXIS", "QUANTAXIS.*", "panda_alpha", "panda_alpha.*"])
+PACKAGES = find_packages(where=str(ROOT), include=["QUANTAXIS", "QUANTAXIS.*", "panda_alpha", "panda_alpha.*", "quant_research", "quant_research.*", "quantfactra", "quantfactra.*"])
 """
 
 """
 
-DESCRIPTION = "QUANTAXIS:Quantitative Financial Strategy Framework"
+DESCRIPTION = "QuantFactra: reproducible factor research and AI collaboration"
 
 
 # try:
@@ -76,20 +76,21 @@ DESCRIPTION = "QUANTAXIS:Quantitative Financial Strategy Framework"
 # except Exception:
 # with open("README_ENG.md", "r", encoding='utf-8') as fh:
 #     LONG_DESCRIPTION = fh.read()
-LONG_DESCRIPTION = 'QUANTAXIS Financial Framework'
+LONG_DESCRIPTION = read('README.md')
 
 """
 
 """
 
-KEYWORDS = ["quantaxis", "quant", "finance", "Backtest", 'Framework']
+KEYWORDS = ["quantfactra", "quantitative-finance", "factor-research", "backtesting", "ai-agents", "pandaai", "quantaxis"]
 """
 
 """
 
-AUTHOR_EMAIL = "yutiansut@qq.com"
+AUTHOR = "Yanxxzz and QuantFactra contributors"
+AUTHOR_EMAIL = None
 
-URL = "https://github.com/quantaxis/quantaxis"
+URL = "https://github.com/Yanxxzz/quantfactra"
 
 
 LICENSE = "MIT"
@@ -105,19 +106,19 @@ def read_requirements(path):
     return list(dict.fromkeys(requirements))
 
 
-INSTALL_REQUIRES = read_requirements('requirements.txt')
+INSTALL_REQUIRES = read_requirements('requirements-panda-alpha.txt')
+VERSION = re.search(r'__version__ = "(.*?)"', read('panda_alpha/__init__.py')).group(1)
 
 setup(
     name=NAME,
     version=VERSION,
     description=DESCRIPTION,
     long_description=LONG_DESCRIPTION,
+    long_description_content_type='text/markdown',
     classifiers=[
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.9',
-        'Programming Language :: Python :: 3.10',
         'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: 3.12',
         'Intended Audience :: Developers',
@@ -127,7 +128,7 @@ setup(
     ],
     install_requires=INSTALL_REQUIRES,
     # Python版本要求 - 与QARS2对齐
-    python_requires='>=3.9,<4.0',
+    python_requires='>=3.11,<3.13',
     # 可选依赖: Rust高性能组件
     extras_require={
         'rust': [
@@ -151,6 +152,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
+            'quantfactra=quantfactra.cli:main',
+            'quant-research=quant_research.cli:main',
             'panda-alpha=panda_alpha.cli:main',
             'quantaxis=QUANTAXIS.QACmd:QA_cmd',
             'quantaxisq=QUANTAXIS.QAFetch.QATdx_adv:bat',
